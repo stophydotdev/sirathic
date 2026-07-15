@@ -17,9 +17,7 @@ if raw_proxy:
 
     proxy = raw_proxy.rstrip("/")
     for engine in settings["engines"]:
-        if engine["name"] in {"bing", "startpage"}:
-            engine["proxies"] = {"http": [proxy], "https": [proxy]}
+        engine["proxies"] = {"http": [proxy], "https": [proxy]}
 
 target.write_text(yaml.safe_dump(settings, sort_keys=False))
 target.chmod(0o600)
-

@@ -8,7 +8,7 @@ a runtime lifecycle with the Sirathic API.
 ## Images
 
 - `sirathic-searxng`: six explicit engines, bounded timeouts, JSON output, and
-  runtime Decodo injection for Bing and Startpage.
+  runtime Decodo injection for every engine.
 - `sirathic-crawl4ai`: text-oriented browser defaults and a direct-first proxy
   fallback list rendered from runtime secrets.
 - `cache`: a disposable Valkey-compatible Redis service used by the Sirathic API
@@ -30,7 +30,7 @@ direct, then retries through stable datacenter sessions. SearXNG uses the port i
 `DECODO_PROXY_URL`, normally Decodo's rotating port `10000`.
 
 Startpage is opportunistic: datacenter exits can still receive its CAPTCHA. Its
-timeout is deliberately shorter and it has no retry, so Bing and the four direct
+timeout is deliberately shorter and it has no retry, so the other proxied
 engines can return without waiting through repeated challenges.
 
 Sirathic should reach both services through private networking:
