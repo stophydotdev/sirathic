@@ -22,6 +22,9 @@ const DEFAULT_TIMEOUT_MS = 25_000
 const RESULTS_PER_PAGE = 20
 const EVERGREEN_SEARCH_TTL_SECONDS = 6 * 60 * 60
 const CURRENT_SEARCH_TTL_SECONDS = 10 * 60
+// Bump when the SearXNG engine pool or search semantics change so cached
+// responses cannot report removed engines or preserve obsolete ranking inputs.
+const SEARCH_CACHE_PROFILE = "residential-text-v2"
 
 export function searchCacheTtl(query: string): number {
   return /\b(?:breaking|current|currently|latest|news|recent|recently|today|tonight|this (?:week|month|year)|202[4-9])\b/i.test(query)
@@ -32,6 +35,7 @@ export function searchCacheTtl(query: string): number {
 export async function searchSearxng(opts: SearchOptions, config: SearxngConfig): Promise<SearchResponse> {
   const requested = opts.limit && opts.limit > 0 ? opts.limit : RESULTS_PER_PAGE
   const key = cacheKey("search", {
+    profile: SEARCH_CACHE_PROFILE,
     categories: config.categories ?? env.SEARXNG_CATEGORIES ?? "",
     locale: opts.locale ?? "en",
     query: normalizeQuery(opts.query),
@@ -213,7 +217,7 @@ function pageQualityScore(url: URL, kind: ResearchSource): number {
 }
 
 const QUERY_STOP_WORDS = new Set([
-  "a", "an", "and", "are", "as", "do", "for", "how", "i", "in", "is", "islam", "islamic", "me", "muslim", "my", "of", "or", "the", "to", "what", "who", "why",
+  "a", "an", "and", "are", "as", "biography", "do", "evidence", "for", "hadith", "how", "i", "in", "is", "islam", "islamic", "me", "muslim", "my", "of", "or", "quran", "ruling", "scholarly", "the", "to", "what", "who", "why",
 ])
 
 function queryTerms(query: string): string[] {
@@ -222,6 +226,20 @@ function queryTerms(query: string): string[] {
     .replace(/site:\S+/g, " ")
     .match(/[\p{L}\p{N}]+/gu)
     ?.filter((term) => term.length > 1 && !QUERY_STOP_WORDS.has(term)) ?? []
+}
+
+function userIntentText(query: string): string {
+  return query
+    .replace(/site:\S+/gi, " ")
+    .replace(
+      /^(?:Quran evidence|Hadith evidence|Islamic biography|Hanafi ruling|Shafii ruling|Maliki ruling|Shia ruling|Islamic counseling guidance|practical Islamic guidance|scholarly ruling|آية من القرآن|حديث|سيرة إسلامية|فتوى)\s+/iu,
+      "",
+    )
+    .trim()
+}
+
+function normalizedSearchText(value: string): string {
+  return value.toLowerCase().match(/[\p{L}\p{N}]+/gu)?.join(" ") ?? ""
 }
 
 function relevanceScore(hit: SearchHit, query: string): number {
@@ -233,8 +251,11 @@ function relevanceScore(hit: SearchHit, query: string): number {
   const titleMatches = terms.filter((term) => title.includes(term)).length
   const snippetMatches = terms.filter((term) => snippet.includes(term)).length
   const coverage = titleMatches / terms.length
+  const intent = normalizedSearchText(userIntentText(query))
+  const normalizedTitle = normalizedSearchText(hit.title)
+  const exactIntentTitle = intent.length >= 3 && (normalizedTitle === intent || normalizedTitle.startsWith(`${intent} `)) ? 60 : 0
 
-  return titleMatches * 12 + snippetMatches * 3 + (coverage === 1 ? 15 : 0)
+  return titleMatches * 12 + snippetMatches * 3 + (coverage === 1 ? 15 : 0) + exactIntentTitle
 }
 
 function authorityScore(tier: SourceTier, kind: ResearchSource): number {
@@ -281,11 +302,24 @@ type ExpertLane = {
   secondaryDomain: string
 }
 
+function isBiographyQuestion(question: string): boolean {
+  const normalized = question.toLowerCase()
+  return (
+    /\b(?:biograph(?:y|ical)|life of)\b/u.test(normalized) ||
+    /\bwho (?:is|was) (?!a\b|an\b|the\b|allah\b|god\b)[\p{L}]/u.test(normalized) ||
+    /(?:سيرة|حياة)\s/u.test(normalized) ||
+    /من هو (?!الله\b)[\p{Script=Arabic}]/u.test(normalized)
+  )
+}
+
 // Keep one site per query. Production engines returned no results for combined
 // `site:a OR site:b` filters even when each single-domain query worked.
 function expertLane(question: string): ExpertLane {
   const normalized = question.toLowerCase()
 
+  if (isBiographyQuestion(normalized)) {
+    return { prefix: "Islamic biography", primaryDomain: "islamqa.info", secondaryDomain: "yaqeeninstitute.org" }
+  }
   if (/\bhanafi\b|حنفي/u.test(normalized)) {
     return { prefix: "Hanafi ruling", primaryDomain: "islamqa.org", secondaryDomain: "askimam.org" }
   }
@@ -327,7 +361,9 @@ function primaryEvidenceQueries(question: string): [string, string] {
 }
 
 function expertQuery(question: string, lane: ExpertLane, domain: string): string {
-  const prefix = /\p{Script=Arabic}/u.test(question) ? "فتوى" : lane.prefix
+  const prefix = /\p{Script=Arabic}/u.test(question)
+    ? lane.prefix === "Islamic biography" ? "سيرة إسلامية" : "فتوى"
+    : lane.prefix
   return `${prefix} ${question} site:${domain}`
 }
 
@@ -336,7 +372,10 @@ export function planResearchQueries(question: string, mode: ResearchMode): strin
   const [quranQuery, hadithQuery] = primaryEvidenceQueries(subject)
   const lane = expertLane(subject)
   const primaryExpertQuery = expertQuery(subject, lane, lane.primaryDomain)
-  if (mode !== "quality") return [quranQuery, hadithQuery, primaryExpertQuery]
+  if (mode !== "quality") {
+    if (isBiographyQuestion(subject)) return [subject, quranQuery, primaryExpertQuery]
+    return [quranQuery, hadithQuery, primaryExpertQuery]
+  }
   return [subject, quranQuery, hadithQuery, primaryExpertQuery, expertQuery(subject, lane, lane.secondaryDomain)]
 }
 

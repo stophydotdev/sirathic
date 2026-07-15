@@ -96,6 +96,11 @@ describe("Islamic research tool selection", () => {
     expect(planResearchQueries("كيف يتعامل المسلم مع الوسواس في الصلاة؟", "balanced")[2]).toBe(
       "فتوى كيف يتعامل المسلم مع الوسواس في الصلاة؟ site:islamqa.info",
     )
+    expect(planResearchQueries("Who is Muhammad?", "balanced")).toEqual([
+      "Who is Muhammad?",
+      "Quran evidence Who is Muhammad? site:quran.com",
+      "Islamic biography Who is Muhammad? site:islamqa.info",
+    ])
 
     const qualityQueries = planResearchQueries("Can a traveler combine prayers?", "quality")
     expect(qualityQueries).toHaveLength(5)
@@ -178,6 +183,34 @@ describe("Islamic research tool selection", () => {
     expect(result[0]?.url).toBe("https://sunnah.com/bukhari:1")
     expect(result[0]?.matchedQueries).toBe(2)
     expect(result[0]?.faviconUrl).toBe("https://sunnah.com/favicon.ico")
+  })
+
+  test("does not rank query-planner scaffolding above the user's subject", async () => {
+    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const result = rankSearchCandidates([
+      {
+        query: "Quran evidence who is Muhammad site:quran.com",
+        results: [{
+          url: "https://quran.com/2/99/tafsirs/en-tafisr-ibn-kathir",
+          title: "Surah Muhammad - 2",
+          snippet: "A verse from Surah Muhammad.",
+          score: 8,
+          engines: ["startpage"],
+        }],
+      },
+      {
+        query: "Islamic biography who is Muhammad site:islamqa.info",
+        results: [{
+          url: "https://islamqa.info/en/answers/11575/who-is-muhammad",
+          title: "Who Is Muhammad? - Islam Question & Answer",
+          snippet: "A concise biography of the Prophet Muhammad.",
+          score: 2,
+          engines: ["startpage"],
+        }],
+      },
+    ])
+
+    expect(result[0]?.url).toBe("https://islamqa.info/en/answers/11575/who-is-muhammad")
   })
 
   test("builds broad and trusted-source queries without a model", async () => {
