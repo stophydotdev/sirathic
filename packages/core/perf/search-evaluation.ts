@@ -1,3 +1,4 @@
+/** Reviewed live-search cases for measuring retrieval quality. */
 export type SearchExpectation = {
   label: string
   domains: string[]

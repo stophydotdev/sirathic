@@ -1,5 +1,5 @@
-import { askWithEvents } from "../packages/core/src/index"
-import type { AIProvider, ResearchMode, ResearchSource, Source } from "../packages/core/src/types"
+import { askWithEvents } from "../src/index"
+import type { AIProvider, ResearchMode, ResearchSource, Source } from "../src/types"
 
 const validModes = new Set<ResearchMode>(["speed", "balanced", "quality"])
 const validSources = new Set<ResearchSource>(["quran", "hadith", "web"])

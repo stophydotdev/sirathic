@@ -16,7 +16,7 @@ services:
   searxng:
     image: sirathic/searxng:local
     build:
-      context: ..
+      context: ../..
       dockerfile: infra/searxng/Dockerfile
     environment:
       # Local-only fallback. Production deployments must provide a secret.
@@ -29,7 +29,7 @@ services:
   crawl4ai:
     image: sirathic/crawl4ai:local
     build:
-      context: ./crawl4ai
+      context: ../crawl4ai
     environment:
       DECODO_PROXY_URL: ${DECODO_PROXY_URL:-}
       DECODO_FETCH_PORTS: ${DECODO_FETCH_PORTS:-10001,10002,10003}

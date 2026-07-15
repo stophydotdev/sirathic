@@ -110,7 +110,7 @@ describe("Islamic research tool selection", () => {
     const searxngRenderer = await Bun.file(new URL("../../../infra/searxng/render_settings.py", import.meta.url)).text()
     const searxngDockerfile = await Bun.file(new URL("../../../infra/searxng/Dockerfile", import.meta.url)).text()
     const crawl4aiRenderer = await Bun.file(new URL("../../../infra/crawl4ai/render_config.py", import.meta.url)).text()
-    const infraCompose = await Bun.file(new URL("../../../infra/compose.yml", import.meta.url)).text()
+    const infraCompose = await Bun.file(new URL("../../../infra/local/compose.yml", import.meta.url)).text()
 
     expect(getResearchPolicy("speed")).toEqual({ queryCount: 3, initialFetches: 3, extraFetches: 0, maxSteps: 2 })
     expect(getResearchPolicy("balanced")).toEqual({ queryCount: 3, initialFetches: 3, extraFetches: 2, maxSteps: 3 })
@@ -137,7 +137,7 @@ describe("Islamic research tool selection", () => {
     expect(searxngSettings.match(/timeout: 1\.1/g)).toHaveLength(4)
     expect(searxngRenderer).toContain('urlunsplit(("http", parsed.netloc')
     expect(searxngDockerfile).toContain("GRANIAN_BLOCKING_THREADS=32")
-    expect(infraCompose).toContain("context: ..\n      dockerfile: infra/searxng/Dockerfile")
+    expect(infraCompose).toContain("context: ../..\n      dockerfile: infra/searxng/Dockerfile")
     expect(crawl4aiRenderer).toContain('"server": f"http://{parsed.hostname}:{port}"')
     expect(searchDeadline("speed")).toBeGreaterThan(1_200)
   })

@@ -1,6 +1,6 @@
-import { planResearchQueries, rankSearchCandidates, searchSearxng } from "../packages/core/src/tools/webSearch"
-import type { ResearchMode, SearchBatch } from "../packages/core/src/types"
-import { searchEvaluationCases } from "./fixtures/search-evaluation"
+import { planResearchQueries, rankSearchCandidates, searchSearxng } from "../src/tools/webSearch"
+import type { ResearchMode, SearchBatch } from "../src/types"
+import { searchEvaluationCases } from "./search-evaluation"
 
 type CaseResult = {
   id: string

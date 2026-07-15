@@ -51,17 +51,42 @@ CRAWL4AI_URL=http://crawl4ai.internal:11235
 REDIS_URL=redis://cache.internal:6379
 ```
 
-## Local verification
+## Local development
+
+Local infrastructure has an explicit lifecycle separate from the application.
+`bun dev` starts only the Sirathic packages, so it can use either these local
+services or private Railway endpoints configured in `apps/server/.env`.
+
+The Compose definition lives under `infra/local` to distinguish local
+orchestration from the production service images in this directory. Compose
+waits on the services' own health checks; no generated container names are used.
 
 ```bash
 cp infra/.env.example infra/.env
 # Add proxy credentials only if proxy-path testing is required.
-docker compose --env-file infra/.env -f infra/compose.yml up --build -d
+bun infra:up
 redis-cli -u redis://localhost:6379 ping
 bun search "what is islam"
+bun dev
 ```
 
 The Compose file binds SearXNG to `18888` and Crawl4AI to `11235` for local
 testing. Production platforms build the two Dockerfiles as separate services.
 The SearXNG image also includes `/opt/sirathic/benchmark.py` for internal,
 repeatable concurrency and result-quality measurements.
+
+Stop the local services with `bun infra:down`.
+
+## Core research tools
+
+The development probes live beside the core module they exercise while their
+short root commands remain stable:
+
+```bash
+bun search "salah times"                           # SearXNG, no LLM
+bun query "why do Muslims pray five times a day?"  # complete answer pipeline
+```
+
+Search quality evaluation is package-local at
+`packages/core/perf/evaluate-search.ts`; it is intentionally not another root
+package command.

@@ -1,4 +1,4 @@
-import { planResearchQueries, rankSearchCandidates, searchSearxng } from "../packages/core/src/tools/webSearch"
+import { planResearchQueries, rankSearchCandidates, searchSearxng } from "../src/tools/webSearch"
 
 const searxngUrl = process.env.SEARXNG_URL ?? "http://localhost:18888"
 const query = process.argv.slice(2).join(" ").trim()
