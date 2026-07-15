@@ -3,12 +3,15 @@ use_default_settings:
     keep_only:
       - brave
       - duckduckgo
+      - google
       - startpage
+      - wolframalpha
 
 general:
   instance_name: "sirathic-searxng"
 
 search:
+  autocomplete: "google"
   ban_time_on_fail: 1
   max_ban_time_on_fail: 5
   suspended_times:
@@ -23,7 +26,7 @@ search:
 
 outgoing:
   request_timeout: 1.8
-  max_request_timeout: 2.1
+  max_request_timeout: 2.8
   extra_proxy_timeout: 0
   pool_connections: 200
   pool_maxsize: 100
@@ -40,11 +43,19 @@ engines:
     disabled: false
     timeout: 2.0
     retries: 0
+  - name: google
+    disabled: true
+    timeout: 1.6
+    retries: 0
   - name: startpage
     disabled: false
     timeout: 1.6
     retries: 0
     retry_on_http_error: [403, 429]
+  - name: wolframalpha
+    disabled: false
+    timeout: 2.6
+    retries: 0
 
 server:
   bind_address: "0.0.0.0"

@@ -7,9 +7,10 @@ a runtime lifecycle with the Sirathic API.
 
 ## Images
 
-- `sirathic-searxng`: three measured engines, bounded timeouts, JSON output, and
-  runtime Decodo injection for every engine. Its Granian WSGI worker has 32
-  blocking threads so concurrent searches do not queue behind the image's
+- `sirathic-searxng`: three measured web engines plus Wolfram Alpha, bounded
+  timeouts, JSON output, and runtime Decodo injection for every engine. Its
+  Granian WSGI worker has 32 blocking threads so concurrent searches do not
+  queue behind the image's
   four-thread default, backed by a 200-connection HTTP pool with 100 keepalive
   slots for concurrent engine fan-out.
 - `sirathic-crawl4ai`: text-oriented browser defaults and a direct-first proxy
@@ -44,9 +45,15 @@ best-effort rather than an API-grade search guarantee. Google, Bing, Yahoo,
 Qwant, Mojeek, Mwmbl, and Yandex are excluded after failing domain accuracy or
 repeated-request reliability checks.
 
+Google provides autocomplete suggestions only; it is not enabled as a search
+engine because the datacenter exits consistently receive its CAPTCHA. The
+no-key Wolfram Alpha engine is available explicitly with `!wa` or
+`engines=wolframalpha` for computational and factual queries and is enabled in
+the general engine set, matching Vane's integration.
+
 Startpage and Brave receive a 1.6-second budget; DuckDuckGo receives 2 seconds.
-All three run in parallel, so a degraded secondary cannot hold the search phase
-beyond the 2.1-second SearXNG boundary.
+The engines run in parallel. Web engines retain their 1.6- to 2-second budgets;
+the 2.8-second maximum accommodates Wolfram Alpha through the proxy.
 
 Engine suspensions are capped at one second. A rotating proxy can move the next
 request to a healthy exit, so a CAPTCHA or rate limit from one exit must not
