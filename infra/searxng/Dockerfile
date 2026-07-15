@@ -1,5 +1,7 @@
 FROM searxng/searxng@sha256:0872beb1d495d41f2dda73d7aea83746657afdd2be3010eb1b11f5a541555c9e
 
+ENV GRANIAN_BLOCKING_THREADS=32
+
 COPY --chown=searxng:searxng infra/searxng/settings.yml /opt/sirathic/settings.yml
 COPY --chown=searxng:searxng infra/searxng/render_settings.py /opt/sirathic/render_settings.py
 COPY --chown=searxng:searxng infra/searxng/benchmark.py /opt/sirathic/benchmark.py
