@@ -3,9 +3,9 @@ use_default_settings:
     keep_only:
       - bing
       - startpage
-      - yep
+      - duckduckgo
+      - qwant
       - mwmbl
-      - wiby
       - yandex
 
 general:
@@ -35,15 +35,15 @@ engines:
     timeout: 1.1
     retries: 0
     retry_on_http_error: [403, 429]
-  - name: yep
+  - name: duckduckgo
+    disabled: false
+    timeout: 1.1
+    retries: 0
+  - name: qwant
     disabled: false
     timeout: 1.1
     retries: 0
   - name: mwmbl
-    disabled: false
-    timeout: 1.1
-    retries: 0
-  - name: wiby
     disabled: false
     timeout: 1.1
     retries: 0
