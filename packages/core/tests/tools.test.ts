@@ -85,6 +85,9 @@ describe("Islamic research tool selection", () => {
     expect(planResearchQueries("I feel overwhelmed by anxiety. What should I do?", "balanced")[2]).toContain(
       "site:aboutislam.net",
     )
+    expect(planResearchQueries("Is a marriage valid without a wali?", "balanced")[2]).toBe(
+      "scholarly ruling Is a marriage valid without a wali? site:islamqa.info",
+    )
     expect(planResearchQueries("ما حكم الجمع بين الصلاتين للمسافر؟", "balanced")).toEqual([
       "آية من القرآن ما حكم الجمع بين الصلاتين للمسافر؟ site:quran.com",
       "حديث ما حكم الجمع بين الصلاتين للمسافر؟ site:sunnah.com",

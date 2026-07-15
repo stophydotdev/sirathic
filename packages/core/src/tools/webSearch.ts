@@ -301,7 +301,7 @@ function expertLane(question: string): ExpertLane {
   if (/\p{Script=Arabic}/u.test(normalized)) {
     return { prefix: "scholarly ruling", primaryDomain: "islamqa.info", secondaryDomain: "islamweb.net" }
   }
-  if (/abuse|anxiety|conflict|depress|lonely|marriage|mental health|overwhelm|relationship|stress|قلق|اكتئاب|زواج|وسواس|إساءة/u.test(normalized)) {
+  if (/abuse|anxiety|conflict|counsel|depress|lonely|mental health|overwhelm|stress|قلق|اكتئاب|وسواس|إساءة/u.test(normalized)) {
     return { prefix: "Islamic counseling guidance", primaryDomain: "aboutislam.net", secondaryDomain: "yaqeeninstitute.org" }
   }
   if (/career|daily routine|focus|goal|habit|plan their day|productiv|work-life|روتين|عمل/u.test(normalized)) {
