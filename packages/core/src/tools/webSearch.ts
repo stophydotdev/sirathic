@@ -419,6 +419,7 @@ export function rankSearchCandidates(
           relevance
         existing.relevance += relevance
         if (hit.snippet.length > existing.snippet.length) existing.snippet = hit.snippet
+        if (!existing.publishedDate && hit.publishedDate) existing.publishedDate = hit.publishedDate
         continue
       }
 
@@ -428,6 +429,7 @@ export function rankSearchCandidates(
         url,
         title: hit.title,
         snippet: hit.snippet.slice(0, 600),
+        ...(hit.publishedDate ? { publishedDate: hit.publishedDate } : {}),
         domain,
         faviconUrl: `${parsed.origin}/favicon.ico`,
         tier: hit.source.tier,

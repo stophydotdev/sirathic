@@ -1,11 +1,12 @@
 import { chatModel } from "@sirathic/llm"
-import { generateText, streamText } from "ai"
+import { generateObject, generateText, streamText } from "ai"
+import { z } from "zod"
 import { ANSWER_PROMPT } from "./prompt"
-import { hasPerplexityAnswerShape, stripInvalidCitationPassages, validateCitations } from "./citations"
+import { hasPerplexityAnswerShape, normalizePerplexityAnswerShape, stripInvalidCitationPassages, validateCitations } from "./citations"
 import { formatSources, numberSources, webToSource } from "./source"
 import { fetchUrl } from "./tools/webFetch"
 import { planResearchQueries, rankSearchCandidates, searchSearxng } from "./tools/webSearch"
-import type { AskEventEmitter, AskOptions, AskResult, GatherResult, RawSource, ResearchMode, ResearchPolicy, ResearchTrace, SearchCandidate, Source } from "./types"
+import type { AskEventEmitter, AskOptions, AskResult, GatherResult, PublicSearchResult, RawSource, ResearchMode, ResearchPolicy, ResearchTrace, SearchCandidate, Source } from "./types"
 
 const RESEARCH_POLICIES: Record<ResearchMode, ResearchPolicy> = {
   speed: { queryCount: 3, initialFetches: 3, extraFetches: 0, maxSteps: 2 },
@@ -23,6 +24,14 @@ Requirements:
 - Use short natural paragraphs. Add descriptive level-2 sections only when useful; use lists only for genuine steps or comparisons.
 - Remove unsupported claims, malformed markdown, repetition, empty headings, and incomplete sections.
 - Do not include raw URLs, a bibliography, or a Sources section.`
+const RESEARCH_AGENT_PROMPT = `You are Sirathic's research agent. Before any search runs, create the web-search plan and the related searches a user may want next.
+
+Requirements:
+- Preserve the user's exact subject and intent in every query.
+- Make each query distinct: primary Qur'an evidence, authentic hadith evidence, and the appropriate scholarly or practical expert lane. For quality mode, also include a broad query and a second expert viewpoint.
+- Put at most one site:domain filter in each query. Use quran.com for Qur'an, sunnah.com for hadith, and a relevant trusted scholarly domain for expert queries.
+- Related searches must be concise standalone questions, directly relevant, and must not repeat the original question.
+- Do not answer the question. Return only the requested structured plan.`
 
 export function getResearchPolicy(mode: ResearchMode): ResearchPolicy {
   return RESEARCH_POLICIES[mode]
@@ -42,13 +51,51 @@ export function answerTokenBudget(mode: ResearchMode): number {
   return 900
 }
 
+async function generateResearchPlan(
+  question: string,
+  opts: AskOptions,
+  policy: ResearchPolicy,
+): Promise<{ queries: string[]; relatedQuestions: string[] }> {
+  const fallbackQueries = planResearchQueries(question, opts.mode ?? "balanced")
+  try {
+    const schema = z.object({
+      queries: z.array(z.string().min(3).max(240)).length(policy.queryCount),
+      related_questions: z.array(z.string().min(8).max(160)).length(5),
+    })
+    const result = await generateObject({
+      model: chatModel(opts.model, { provider: opts.provider }),
+      system: RESEARCH_AGENT_PROMPT,
+      prompt: `Question: ${question}\nMode: ${opts.mode ?? "balanced"}\nRequired search count: ${policy.queryCount}\n\nRecommended trusted lanes:\n${fallbackQueries.map((query) => `- ${query}`).join("\n")}`,
+      schema,
+      temperature: 0,
+      maxOutputTokens: 500,
+    })
+    const queries = result.object.queries.map((query, index) => {
+      const trimmed = query.trim().replace(/\s+/g, " ")
+      const fallback = fallbackQueries[index] ?? question
+      const expectedSiteFilter = /\bsite:\S+/iu.test(fallback)
+      const siteFilters = trimmed.match(/\bsite:\S+/giu) ?? []
+      if (siteFilters.length > 1 || (expectedSiteFilter && siteFilters.length !== 1)) return fallback
+      return trimmed
+    })
+    const relatedQuestions = [...new Set(result.object.related_questions.map((item) => item.trim()))].slice(0, 5)
+    const distinctIntents = new Set(
+      queries.map((query) => query.toLowerCase().replace(/\bsite:\S+/giu, "").replace(/\s+/g, " ").trim()),
+    )
+    if (distinctIntents.size !== queries.length) return { queries: fallbackQueries, relatedQuestions }
+    return { queries, relatedQuestions }
+  } catch {
+    return { queries: fallbackQueries, relatedQuestions: [] }
+  }
+}
+
 export async function gather(question: string, opts: AskOptions = {}, emit?: AskEventEmitter): Promise<GatherResult> {
   const mode = opts.mode ?? "balanced"
   const policy = getResearchPolicy(mode)
-  const queries = planResearchQueries(question, mode)
+  const { queries, relatedQuestions } = await generateResearchPlan(question, { ...opts, mode }, policy)
   const prefetched = new Map<string, Promise<RawSource | undefined>>()
-  const attempts = await Promise.all(
-    queries.map(async (query) => {
+  const runQueries = (searchQueries: string[]) => Promise.all(
+    searchQueries.map(async (query) => {
       try {
         const response = await searchSearxng(
           { query, limit: 12, timeoutMs: searchDeadline(mode) },
@@ -64,14 +111,22 @@ export async function gather(question: string, opts: AskOptions = {}, emit?: Ask
       }
     }),
   )
-  const batches = attempts.map(({ query, results }) => ({ query, results }))
+  const attempts = await runQueries(queries)
+  let batches = attempts.map(({ query, results }) => ({ query, results }))
   if (attempts.every((attempt) => attempt.error !== undefined)) {
     throw new Error("Trusted search is temporarily unavailable. Please try again.", {
       cause: attempts[0]?.error,
     })
   }
-  const candidates = rankSearchCandidates(batches, opts.sources).slice(0, 12)
-  const research: ResearchTrace = { generatedQueries: queries, queries, sources: candidates }
+  let candidates = rankSearchCandidates(batches, opts.sources).slice(0, 12)
+  if (candidates.length === 0) {
+    const attempted = new Set(queries.map((query) => query.toLowerCase()))
+    const retryQueries = planResearchQueries(question, mode).filter((query) => !attempted.has(query.toLowerCase()))
+    const retryAttempts = await runQueries(retryQueries)
+    batches = [...batches, ...retryAttempts.map(({ query, results }) => ({ query, results }))]
+    candidates = rankSearchCandidates(batches, opts.sources).slice(0, 12)
+  }
+  const research: ResearchTrace = { generatedQueries: queries, queries: batches.map((batch) => batch.query), sources: candidates }
   await emit?.({ type: "search-results", ...research })
   await emit?.({ type: "tool-complete", tools: ["searchSources"], found: candidates.length })
 
@@ -80,7 +135,7 @@ export async function gather(question: string, opts: AskOptions = {}, emit?: Ask
     collected.push(...await fetchCandidates(candidates.slice(policy.initialFetches, policy.initialFetches + policy.extraFetches), prefetched))
   }
   await emit?.({ type: "tool-complete", tools: ["fetchSources"], found: collected.length })
-  return { sources: numberSources(collected), research }
+  return { sources: numberSources(collected), research, related_questions: relatedQuestions }
 }
 
 async function fetchCandidate(candidate: SearchCandidate): Promise<RawSource | undefined> {
@@ -184,7 +239,7 @@ async function enforceCitations(
     && hasPerplexityAnswerShape(repair.text)
   ) return repair.text
 
-  const groundedRepair = stripInvalidCitationPassages(repair.text, repairValidation)
+  const groundedRepair = normalizePerplexityAnswerShape(stripInvalidCitationPassages(repair.text, repairValidation))
   if (
     repair.finishReason !== "length"
     && groundedRepair.length >= 20
@@ -195,16 +250,50 @@ async function enforceCitations(
   return "I found relevant evidence, but could not produce a complete answer with reliable citations. Please try the inquiry again or narrow the question."
 }
 
+function resultMetadata(sources: Source[], research: ResearchTrace, relatedQuestions: string[]) {
+  const candidates = new Map(research.sources.map((candidate) => [candidate.url, candidate]))
+  const searchResults: PublicSearchResult[] = sources.map((source) => {
+    const candidate = candidates.get(source.url)
+    return {
+      title: candidate?.title ?? source.label,
+      url: source.url,
+      date: candidate?.publishedDate ?? null,
+      last_updated: null,
+      snippet: candidate?.snippet ?? source.text.slice(0, 600),
+      source: "web",
+    }
+  })
+  return {
+    citations: sources.map((source) => source.url),
+    search_results: searchResults,
+    related_questions: relatedQuestions,
+  }
+}
+
+function completedResult(
+  answer: string,
+  sources: Source[],
+  research: ResearchTrace,
+  relatedQuestions: string[],
+): AskResult {
+  return { answer, ...resultMetadata(sources, research, relatedQuestions), sources, research }
+}
+
 export async function ask(question: string, opts: AskOptions = {}): Promise<AskResult> {
-  const { sources, research } = await gather(question, opts)
-  if (sources.length === 0) return { answer: NO_EVIDENCE_ANSWER, sources, research }
+  const { sources, research, related_questions } = await gather(question, opts)
+  if (sources.length === 0) return completedResult(NO_EVIDENCE_ANSWER, sources, research, related_questions)
   const result = await generateAnswer(question, sources, opts)
-  return { answer: await completeAnswer(question, sources, opts, result.text, result.finishReason), sources, research }
+  return completedResult(
+    await completeAnswer(question, sources, opts, result.text, result.finishReason),
+    sources,
+    research,
+    related_questions,
+  )
 }
 
 export async function askStream(question: string, opts: AskOptions = {}) {
-  const { sources, research } = await gather(question, opts)
-  return { sources, research, stream: streamText({ ...answerRequest(question, sources, opts), onError: () => {} }) }
+  const { sources, research, related_questions } = await gather(question, opts)
+  return { sources, research, related_questions, stream: streamText({ ...answerRequest(question, sources, opts), onError: () => {} }) }
 }
 
 export async function askWithEvents(
@@ -216,12 +305,12 @@ export async function askWithEvents(
 
   try {
     await emit({ type: "research-start", mode })
-    const { sources, research } = await gather(question, opts, emit)
+    const { sources, research, related_questions } = await gather(question, opts, emit)
     await emit({ type: "sources", sources })
 
     if (sources.length === 0) {
       await emit({ type: "answer-delta", delta: NO_EVIDENCE_ANSWER })
-      const completed = { answer: NO_EVIDENCE_ANSWER, sources, research }
+      const completed = completedResult(NO_EVIDENCE_ANSWER, sources, research, related_questions)
       await emit({ type: "done", ...completed })
       return completed
     }
@@ -243,7 +332,7 @@ export async function askWithEvents(
       await emit({ type: "answer-replace", answer, reason: "citation-validation" })
     }
 
-    const completed = { answer, sources, research }
+    const completed = completedResult(answer, sources, research, related_questions)
     await emit({ type: "done", ...completed })
     return completed
   } catch (error) {

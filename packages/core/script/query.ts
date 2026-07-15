@@ -86,6 +86,10 @@ try {
       showSources(event.sources)
     } else if (event.type === "done") {
       console.log(event.answer)
+      if (event.related_questions.length > 0) {
+        console.log("\nRelated questions")
+        for (const question of event.related_questions) console.log(`- ${question}`)
+      }
       console.error(`\n[done] ${((Date.now() - started) / 1_000).toFixed(1)}s`)
     } else if (event.type === "error") {
       emittedError = true

@@ -62,6 +62,19 @@ export function hasPerplexityAnswerShape(answer: string): boolean {
   )
 }
 
+export function normalizePerplexityAnswerShape(answer: string): string {
+  const blocks = answer.split(/\n{2,}/u).map((block) => block.trim()).filter(Boolean)
+  while (blocks.length > 1 && blocks[0]?.split("\n").every((line) => isStructuralMarkdown(line.trim()))) blocks.shift()
+  if (blocks.length === 0) return ""
+
+  const firstLines = (blocks[0] ?? "").split("\n")
+  firstLines[0] = (firstLines[0] ?? "")
+    .replace(/^\s*(?:[-*+]\s+|\d+[.)]\s+)/u, "")
+    .replace(/^\*{1,2}([^*]+)\*{1,2}:?/u, "$1:")
+  blocks[0] = firstLines.join("\n")
+  return blocks.join("\n\n")
+}
+
 export function stripInvalidCitationPassages(answer: string, validation: CitationValidation): string {
   const uncited = new Set(validation.uncitedPassages)
   const invalidMarkers = validation.invalidIndexes.map((index) => `[${index}]`)

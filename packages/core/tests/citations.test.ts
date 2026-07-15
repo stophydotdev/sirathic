@@ -98,11 +98,14 @@ describe("answer citation validation", () => {
   })
 
   test("requires direct prose before headings or lists", async () => {
-    const { hasPerplexityAnswerShape } = await import("../src/citations")
+    const { hasPerplexityAnswerShape, normalizePerplexityAnswerShape } = await import("../src/citations")
     expect(hasPerplexityAnswerShape("Prayer begins with intention.[1]\n\n## Steps\n\nThen stand.[1]")).toBe(true)
     expect(hasPerplexityAnswerShape("## Steps\n\nThen stand.[1]")).toBe(false)
     expect(hasPerplexityAnswerShape("1. Stand and recite.[1]")).toBe(false)
     expect(hasPerplexityAnswerShape("Prayer begins with intention.[1]\n\n- **")).toBe(false)
+    expect(normalizePerplexityAnswerShape("## Steps\n\n1. **Face the Qiblah**: Stand toward Makkah.[1]")).toBe(
+      "Face the Qiblah: Stand toward Makkah.[1]",
+    )
   })
 
   test("does not require citations on headings and removes empty sections", async () => {

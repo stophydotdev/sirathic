@@ -23,6 +23,18 @@ describe("POST /v1/ask", () => {
     const app = createApp({
       ask: async (question) => ({
         answer: `Grounded answer for: ${question}`,
+        citations: ["https://quran.com/2/255"],
+        search_results: [
+          {
+            title: "Ayat al-Kursi",
+            url: "https://quran.com/2/255",
+            date: null,
+            last_updated: null,
+            snippet: "Ayat al-Kursi",
+            source: "web",
+          },
+        ],
+        related_questions: ["What verses surround Ayat al-Kursi?"],
         research: { generatedQueries: [question], queries: [`${question} site:quran.com`], sources: [] },
         sources: [
           {
@@ -47,6 +59,18 @@ describe("POST /v1/ask", () => {
     expect(response.status).toBe(200)
     expect(await response.json()).toEqual({
       answer: "Grounded answer for: What is Ayat al-Kursi?",
+      citations: ["https://quran.com/2/255"],
+      search_results: [
+        {
+          title: "Ayat al-Kursi",
+          url: "https://quran.com/2/255",
+          date: null,
+          last_updated: null,
+          snippet: "Ayat al-Kursi",
+          source: "web",
+        },
+      ],
+      related_questions: ["What verses surround Ayat al-Kursi?"],
       research: {
         generatedQueries: ["What is Ayat al-Kursi?"],
         queries: ["What is Ayat al-Kursi? site:quran.com"],
@@ -90,7 +114,23 @@ describe("POST /v1/ask", () => {
         await emit({ type: "tool-complete", tools: ["searchSources"], found: 3 })
         await emit({ type: "sources", sources })
         await emit({ type: "answer-delta", delta: "Allah is Ever-Living.[1]" })
-        const result = { answer: "Allah is Ever-Living.[1]", sources, research }
+        const result = {
+          answer: "Allah is Ever-Living.[1]",
+          citations: ["https://quran.com/2/255"],
+          search_results: [
+            {
+              title: "Ayat al-Kursi",
+              url: "https://quran.com/2/255",
+              date: null,
+              last_updated: null,
+              snippet: "Ayat al-Kursi",
+              source: "web" as const,
+            },
+          ],
+          related_questions: ["What verses surround Ayat al-Kursi?"],
+          sources,
+          research,
+        }
         await emit({ type: "done", ...result })
         return result
       },

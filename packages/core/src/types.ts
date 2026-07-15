@@ -58,8 +58,20 @@ export interface AskOptions {
 
 export interface AskResult {
   answer: string
+  citations: string[]
+  search_results: PublicSearchResult[]
+  related_questions: string[]
   sources: Source[]
   research: ResearchTrace
+}
+
+export interface PublicSearchResult {
+  title: string
+  url: string
+  date: string | null
+  last_updated: string | null
+  snippet: string
+  source: "web"
 }
 
 export interface ResearchTrace {
@@ -71,6 +83,7 @@ export interface ResearchTrace {
 export interface GatherResult {
   sources: Source[]
   research: ResearchTrace
+  related_questions: string[]
 }
 
 export type AskEvent =
@@ -166,6 +179,7 @@ export interface SearchCandidate {
   url: string
   title: string
   snippet: string
+  publishedDate?: string
   domain: string
   faviconUrl: string
   tier: SourceTier

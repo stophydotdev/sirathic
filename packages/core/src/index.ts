@@ -11,6 +11,7 @@ export type {
   AskResult,
   BuildToolsOptions,
   CitationValidation,
+  PublicSearchResult,
   RawSource,
   ResearchTrace,
   ResearchMode,
