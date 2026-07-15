@@ -19,12 +19,18 @@ bun run smoke:fetch https://quran.com/1   # or pass your own URLs
 
 bun run smoke:search                      # a couple of default queries
 bun run smoke:search "salah times"        # or pass your own queries
+bun run eval:search -- --mode balanced     # reviewed search-quality corpus
 ```
 
 `smoke:fetch` needs Crawl4AI up; `smoke:search` needs SearXNG up
 (`SEARXNG_URL` selects the external endpoint). Run them with
 `bun --env-file=apps/server/.env scripts/smoke-fetch.ts` (or
 `smoke-search.ts`) to exercise the configured proxy.
+
+`eval:search` runs the production query planner, SearXNG client, allowlist, and
+ranker against reviewed Quran, hadith, fiqh, madhhab, guidance, counseling,
+finance, and Arabic cases. Use `--limit N` for a quick sample, `--json` for an
+artifact, and `--assert` to enforce the checked-in quality thresholds.
 
 ## What to look for
 

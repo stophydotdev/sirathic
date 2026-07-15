@@ -5,6 +5,7 @@ import { cacheKey, cached, normalizeQuery } from "../cache"
 import { filterToAllowlist } from "./sourceRegistry"
 import type {
   ResearchSource,
+  ResearchMode,
   SearchBatch,
   SearchCandidate,
   SearchHit,
@@ -307,6 +308,14 @@ export function routeSearchQueries(queries: string[], question = queries[0] ?? "
     `${subject} ${EXPERT_SITES}`,
     `${subject} ${OFFICIAL_SITES}`,
   ].slice(0, queries.length)
+}
+
+export function planResearchQueries(question: string, mode: ResearchMode): string[] {
+  const queryCount = mode === "quality" ? 5 : 3
+  const querySlots = Array.from({ length: queryCount }, () => question)
+  return queryCount === 5
+    ? buildPrioritySearchQueries(question)
+    : routeSearchQueries(querySlots, question)
 }
 
 export function rankSearchCandidates(

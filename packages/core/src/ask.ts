@@ -4,7 +4,7 @@ import { ANSWER_PROMPT } from "./prompt"
 import { stripInvalidCitationPassages, validateCitations } from "./citations"
 import { formatSources, numberSources, webToSource } from "./source"
 import { fetchUrl } from "./tools/webFetch"
-import { buildPrioritySearchQueries, rankSearchCandidates, routeSearchQueries, searchSearxng } from "./tools/webSearch"
+import { planResearchQueries, rankSearchCandidates, searchSearxng } from "./tools/webSearch"
 import type { AskEventEmitter, AskOptions, AskResult, GatherResult, RawSource, ResearchMode, ResearchPolicy, ResearchTrace, SearchCandidate, Source } from "./types"
 
 const RESEARCH_POLICIES: Record<ResearchMode, ResearchPolicy> = {
@@ -36,10 +36,7 @@ export function answerTokenBudget(mode: ResearchMode): number {
 export async function gather(question: string, opts: AskOptions = {}, emit?: AskEventEmitter): Promise<GatherResult> {
   const mode = opts.mode ?? "balanced"
   const policy = getResearchPolicy(mode)
-  const querySlots = Array.from({ length: policy.queryCount }, () => question)
-  const queries = policy.queryCount === 5
-    ? buildPrioritySearchQueries(question)
-    : routeSearchQueries(querySlots, question)
+  const queries = planResearchQueries(question, mode)
   const prefetched = new Map<string, Promise<RawSource | undefined>>()
   const attempts = await Promise.all(
     queries.map(async (query) => {
