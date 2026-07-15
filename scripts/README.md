@@ -11,18 +11,16 @@ repository. Set `SEARXNG_URL` and `CRAWL4AI_URL` in `apps/server/.env` to their
 private endpoints before running these scripts. Their proxy credentials and
 operational configuration belong to those external deployments.
 
-## Smoke tests
+## Commands
 
 ```bash
-bun run smoke:fetch                       # quran.com, sunnah.com, dorar.net
-bun run smoke:fetch https://quran.com/1   # or pass your own URLs
-
+bun query "why do Muslims pray five times a day?"  # full researched answer
 bun search "salah times"                  # trusted SearXNG search, no LLM
 ```
 
-`smoke:fetch` needs Crawl4AI up; `search` needs SearXNG up. The search command
-runs three deterministic evidence lanes through SearXNG and the trusted ranker;
-it never calls an LLM. `SEARXNG_URL` selects the external endpoint.
+`query` runs the complete research and answer pipeline. `search` runs three
+deterministic evidence lanes through SearXNG and the trusted ranker; it never
+calls an LLM. `SEARXNG_URL` selects the external endpoint.
 
 The internal `evaluate-search.ts` runner remains available for reviewed quality
 checks without adding another package command.

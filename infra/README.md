@@ -59,7 +59,6 @@ cp infra/.env.example infra/.env
 docker compose --env-file infra/.env -f infra/compose.yml up --build -d
 redis-cli -u redis://localhost:6379 ping
 bun search "what is islam"
-bun --env-file=apps/server/.env scripts/smoke-fetch.ts https://quran.com/2/183
 ```
 
 The Compose file binds SearXNG to `18888` and Crawl4AI to `11235` for local

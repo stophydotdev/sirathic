@@ -11,8 +11,7 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "test": "bun test",
-    "typecheck": "tsc --noEmit",
-    "ask": "bun --env-file=../../apps/server/.env src/bin.ts"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@sirathic/env": "workspace:*",
