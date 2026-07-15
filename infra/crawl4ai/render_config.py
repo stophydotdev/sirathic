@@ -29,7 +29,7 @@ if raw_proxy:
     proxies = ["direct"]
     proxies.extend(
         {
-            "server": f"{parsed.scheme}://{parsed.hostname}:{port}",
+            "server": f"http://{parsed.hostname}:{port}",
             "username": unquote(parsed.username),
             "password": unquote(parsed.password),
         }
@@ -39,4 +39,3 @@ if raw_proxy:
 
 target.write_text(yaml.safe_dump(config, sort_keys=False))
 target.chmod(0o600)
-

@@ -28,6 +28,10 @@ credentialed URL, for example `https://user:password@dc.decodo.com:10000`.
 Credentials are rendered only into the container's writable runtime layer and
 are never copied into an image.
 
+The renderers normalize the endpoint to an HTTP CONNECT proxy. This is required
+even when Railway's credential variable uses an `https://` prefix; passing that
+scheme directly to httpx makes it attempt unsupported TLS with the proxy itself.
+
 For Crawl4AI, `DECODO_FETCH_PORTS` defaults to `10001,10002,10003`. A page starts
 direct, then retries through stable datacenter sessions. SearXNG uses the port in
 `DECODO_PROXY_URL`, normally Decodo's rotating port `10000`.
