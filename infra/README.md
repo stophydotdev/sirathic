@@ -40,6 +40,9 @@ Startpage is opportunistic: datacenter exits can still receive its CAPTCHA. Its
 timeout is deliberately shorter and it has no retry, so the other proxied
 engines can return without waiting through repeated challenges.
 
+Search engines receive a 1.3-second budget. This covers the observed proxy
+overhead while remaining below Sirathic's shortest search deadline.
+
 Sirathic should reach both services through private networking:
 
 ```dotenv

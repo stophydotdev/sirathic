@@ -14,8 +14,8 @@ search:
     - json
 
 outgoing:
-  request_timeout: 1.0
-  max_request_timeout: 1.2
+  request_timeout: 1.2
+  max_request_timeout: 1.4
   extra_proxy_timeout: 0
   pool_connections: 200
   pool_maxsize: 100
@@ -25,21 +25,21 @@ outgoing:
 engines:
   - name: bing
     disabled: false
-    timeout: 1.1
+    timeout: 1.3
     retries: 0
     retry_on_http_error: [403, 429]
   - name: startpage
     disabled: false
-    timeout: 1.1
+    timeout: 1.3
     retries: 0
     retry_on_http_error: [403, 429]
   - name: mwmbl
     disabled: false
-    timeout: 1.1
+    timeout: 1.3
     retries: 0
   - name: yandex
     disabled: false
-    timeout: 1.1
+    timeout: 1.3
     retries: 0
 
 server:
