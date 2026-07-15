@@ -97,6 +97,7 @@ describe("Islamic research tool selection", () => {
     expect(searxngSettings).toContain("pool_connections: 200")
     expect(searxngSettings).toContain("pool_maxsize: 100")
     expect(searxngSettings).toContain("- bing")
+    expect(searxngSettings).toContain("- brave")
     expect(searxngSettings).toContain("- startpage")
     expect(searxngSettings).toContain("- mwmbl")
     expect(searxngSettings).toContain("- yandex")
@@ -104,7 +105,7 @@ describe("Islamic research tool selection", () => {
     expect(searxngSettings).not.toContain("- qwant\n")
     expect(searxngSettings).not.toContain("- yep\n")
     expect(searxngSettings).not.toContain("- wiby\n")
-    expect(searxngSettings.match(/timeout: 1\.1/g)).toHaveLength(4)
+    expect(searxngSettings.match(/timeout: 1\.1/g)).toHaveLength(5)
     expect(searchDeadline("speed")).toBeGreaterThan(1_200)
   })
 

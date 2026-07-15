@@ -2,6 +2,7 @@ use_default_settings:
   engines:
     keep_only:
       - bing
+      - brave
       - startpage
       - mwmbl
       - yandex
@@ -24,6 +25,11 @@ outgoing:
 
 engines:
   - name: bing
+    disabled: false
+    timeout: 1.1
+    retries: 0
+    retry_on_http_error: [403, 429]
+  - name: brave
     disabled: false
     timeout: 1.1
     retries: 0
