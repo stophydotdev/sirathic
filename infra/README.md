@@ -39,10 +39,13 @@ direct, then retries through stable datacenter sessions. SearXNG uses the port i
 
 Startpage, Brave, and DuckDuckGo all enforce single-domain `site:` filters when
 they return results. Startpage had the strongest isolated reliability; Brave and
-DuckDuckGo are opportunistic secondaries. Datacenter exits can still trigger
-timeouts, CAPTCHA, and rate limits under a short burst, so this pool is
-best-effort rather than an API-grade search guarantee. Google, Bing, Yahoo,
-Qwant, Mojeek, Mwmbl, and Yandex are excluded after failing domain accuracy or
+DuckDuckGo are opportunistic secondaries. DuckDuckGo returned relevant normal
+results and exact-domain `site:` results over direct egress, but every measured
+datacenter-proxy attempt received a CAPTCHA. Datacenter exits can also trigger
+timeouts and rate limits under a short burst, so this pool is best-effort rather
+than an API-grade search guarantee. Qwant returned access denied for both normal
+and `site:` queries with direct and proxied egress. Google, Bing, Yahoo, Qwant,
+Mojeek, Mwmbl, and Yandex are excluded after failing domain accuracy or
 repeated-request reliability checks.
 
 Google provides autocomplete suggestions only; it is not enabled as a search
