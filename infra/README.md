@@ -1,7 +1,7 @@
 # Sirathic infrastructure images
 
 Thin, independently deployable infrastructure for Sirathic's external search,
-crawl, and cache dependencies. It lives in this repository so client and
+crawl, cache, and lexical-search dependencies. It lives in this repository so client and
 infrastructure changes can be reviewed together, but the services do not share
 a runtime lifecycle with the Sirathic API.
 
@@ -18,6 +18,9 @@ a runtime lifecycle with the Sirathic API.
 - `cache`: a disposable Valkey-compatible Redis service used by the Sirathic API
   for SearXNG results and cleaned Crawl4AI evidence. Local Compose caps it at
   512 MB with LFU eviction and intentionally disables persistence.
+- `elastic`: a persistent, vector-free Elasticsearch index for normalized source
+  passages. Templates in `infra/elastic` provide language-aware BM25 search and
+  typed fields for source authority, references, topics, schools, and regions.
 
 Both upstream bases are pinned by digest. Renovate or a deliberate maintenance
 change should update the digest; never change them to `latest` in production.
@@ -73,6 +76,7 @@ Sirathic should reach both services through private networking:
 SEARXNG_URL=http://searxng.internal:8080
 CRAWL4AI_URL=http://crawl4ai.internal:11235
 REDIS_URL=redis://cache.internal:6379
+ELASTICSEARCH_URL=http://elastic.internal:9200
 ```
 
 ## Local development
@@ -90,6 +94,7 @@ cp infra/.env.example infra/.env
 # Add proxy credentials only if proxy-path testing is required.
 bun infra:up
 redis-cli -u redis://localhost:6379 ping
+curl http://localhost:9200/_cluster/health
 bun search "what is islam"
 bun dev
 ```

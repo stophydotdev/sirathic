@@ -1,0 +1,22 @@
+{
+  "index_patterns": ["sirathic-passages-*"],
+  "priority": 100,
+  "composed_of": ["sirathic-passages-common"],
+  "template": {
+    "mappings": {
+      "properties": {
+        "title": {
+          "type": "text",
+          "analyzer": "standard",
+          "fields": { "exact": { "type": "keyword", "ignore_above": 1024 } }
+        },
+        "body": { "type": "text", "analyzer": "standard" },
+        "excerpt": { "type": "text", "analyzer": "standard" }
+      }
+    }
+  },
+  "_meta": {
+    "description": "Fallback template for Sirathic languages without a tuned analyzer",
+    "schema_version": 1
+  }
+}
