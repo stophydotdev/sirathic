@@ -8,8 +8,8 @@ Sirathic does not depend on a prebuilt corpus or vector RAG system to answer que
 
 ```text
 Question
-  -> trusted query planner (<1 second speed-mode deadline)
-       -> searchSources(3–5 parallel queries)
+  -> trusted query planner (no extra model call)
+       -> searchSources(3–5 parallel single-domain evidence lanes)
        -> authority ranking + URL deduplication
        -> fetchSources(top 3 URLs)
        -> optionally fetch 1–2 more when evidence is insufficient
@@ -23,6 +23,9 @@ This is application-orchestrated retrieval: explicit search and fetch tools cont
 ## What is implemented
 
 - Three-query speed/balanced research and five-query quality research, executed in parallel.
+- Intent-routed expert lanes for madhhab, counseling, practical guidance,
+  finance, Arabic, and general rulings; each query uses one domain because
+  search engines drop combined multi-domain `site:` expressions.
 - Canonical URL deduplication and authority-aware ranking across query results.
 - Allowlisted discovery restricted to citable Tier A/B domains; Tier C and off-list results are excluded.
 - Three-page parallel fetching with direct-HTML first, Crawl4AI static/browser fallback, and up to two adaptive extra fetches.
@@ -44,10 +47,10 @@ This is application-orchestrated retrieval: explicit search and fetch tools cont
 
 ## Next tracer bullets
 
-1. Create a reviewed evaluation set covering Qur'an, hadith, daily fiqh, disagreement, Arabic queries, and insufficient-evidence behavior.
-2. Evaluate domain-specific search adapters behind `searchSources` without expanding the public interface.
-3. Validate that every answer sentence requiring evidence has a valid citation.
-4. Add Arabic query/search evaluation and complete the RTL web experience.
+1. Evaluate domain-specific Quran, hadith, and Arabic search adapters behind `searchSources` without expanding the public interface.
+2. Validate that every answer sentence requiring evidence is supported by its cited source.
+3. Add insufficient-evidence and conflicting-scholarly-view cases to the reviewed evaluation corpus.
+4. Complete Arabic retrieval coverage and the RTL web experience.
 5. Add authentication, rate limits, observability, and query-level cost/latency budgets.
 
 ## When local indexing becomes justified

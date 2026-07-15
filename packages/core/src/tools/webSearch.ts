@@ -275,47 +275,78 @@ function intentScore(role: SourceRole, topics: SourceTopic[], query: string): nu
   return Math.min(roleMatches * 20, 50) + Math.min(topicMatches * 6, 24)
 }
 
-export function buildPrioritySearchQueries(query: string): string[] {
-  const normalized = query.trim().replace(/\s+/g, " ")
-  if (!normalized) throw new Error("search query is required")
-
-  return [
-    normalized,
-    `${normalized} site:quran.com`,
-    `${normalized} site:sunnah.com`,
-    `${normalized} site:islamqa.info OR site:islamweb.net OR site:seekersguidance.org OR site:islamqa.org`,
-    `${normalized} site:aboutislam.net OR site:productivemuslim.com OR site:dar-alifta.org OR site:aliftaa.jo`,
-  ]
+type ExpertLane = {
+  prefix: string
+  primaryDomain: string
+  secondaryDomain: string
 }
 
-const EXPERT_SITES = "site:islamqa.info OR site:islamweb.net OR site:seekersguidance.org OR site:islamqa.org"
-const OFFICIAL_SITES = "site:aboutislam.net OR site:productivemuslim.com OR site:dar-alifta.org OR site:aliftaa.jo"
+// Keep one site per query. Production engines returned no results for combined
+// `site:a OR site:b` filters even when each single-domain query worked.
+function expertLane(question: string): ExpertLane {
+  const normalized = question.toLowerCase()
 
-export function routeSearchQueries(queries: string[], question = queries[0] ?? ""): string[] {
-  const subject = question.trim().replace(/\s+/g, " ")
-  if (queries.length === 3) {
-    return [
-      `${subject} site:quran.com`,
-      `${subject} site:sunnah.com`,
-      `${subject} ${EXPERT_SITES}`,
-    ]
+  if (/\bhanafi\b|حنفي/u.test(normalized)) {
+    return { prefix: "Hanafi ruling", primaryDomain: "islamqa.org", secondaryDomain: "askimam.org" }
   }
+  if (/\bshafi(?:i|['’]i)\b|شافعي/u.test(normalized)) {
+    return { prefix: "Shafii ruling", primaryDomain: "islamqa.org", secondaryDomain: "muftiwp.gov.my" }
+  }
+  if (/\bmaliki\b|مالكي/u.test(normalized)) {
+    return { prefix: "Maliki ruling", primaryDomain: "islamqa.org", secondaryDomain: "malikifiqhqa.com" }
+  }
+  if (/\bshia\b|\bshi['’]?a\b|شيعي/u.test(normalized)) {
+    return { prefix: "Shia ruling", primaryDomain: "sistani.org", secondaryDomain: "al-islam.org" }
+  }
+  if (/\p{Script=Arabic}/u.test(normalized)) {
+    return { prefix: "scholarly ruling", primaryDomain: "islamqa.info", secondaryDomain: "islamweb.net" }
+  }
+  if (/abuse|anxiety|conflict|depress|lonely|marriage|mental health|overwhelm|relationship|stress|قلق|اكتئاب|زواج|وسواس|إساءة/u.test(normalized)) {
+    return { prefix: "Islamic counseling guidance", primaryDomain: "aboutislam.net", secondaryDomain: "yaqeeninstitute.org" }
+  }
+  if (/career|daily routine|focus|goal|habit|plan their day|productiv|work-life|روتين|عمل/u.test(normalized)) {
+    return { prefix: "practical Islamic guidance", primaryDomain: "productivemuslim.com", secondaryDomain: "seekersguidance.org" }
+  }
+  if (/business|debt|finance|income|interest|money|mortgage|riba|zakat|دين|ربا|زكاة/u.test(normalized)) {
+    return { prefix: "scholarly ruling", primaryDomain: "islamqa.info", secondaryDomain: "dar-alifta.org" }
+  }
+  return { prefix: "scholarly ruling", primaryDomain: "islamqa.info", secondaryDomain: "islamweb.net" }
+}
 
-  return [
-    subject,
-    `${subject} site:quran.com`,
-    `${subject} site:sunnah.com`,
-    `${subject} ${EXPERT_SITES}`,
-    `${subject} ${OFFICIAL_SITES}`,
-  ].slice(0, queries.length)
+function normalizedQuestion(question: string): string {
+  const normalized = question.trim().replace(/\s+/g, " ")
+  if (!normalized) throw new Error("search query is required")
+  return normalized
+}
+
+function primaryEvidenceQueries(question: string): [string, string] {
+  const arabic = /\p{Script=Arabic}/u.test(question)
+  return arabic
+    ? [`آية من القرآن ${question} site:quran.com`, `حديث ${question} site:sunnah.com`]
+    : [`Quran evidence ${question} site:quran.com`, `Hadith evidence ${question} site:sunnah.com`]
+}
+
+function expertQuery(question: string, lane: ExpertLane, domain: string): string {
+  const prefix = /\p{Script=Arabic}/u.test(question) ? "فتوى" : lane.prefix
+  return `${prefix} ${question} site:${domain}`
 }
 
 export function planResearchQueries(question: string, mode: ResearchMode): string[] {
-  const queryCount = mode === "quality" ? 5 : 3
-  const querySlots = Array.from({ length: queryCount }, () => question)
-  return queryCount === 5
-    ? buildPrioritySearchQueries(question)
-    : routeSearchQueries(querySlots, question)
+  const subject = normalizedQuestion(question)
+  const [quranQuery, hadithQuery] = primaryEvidenceQueries(subject)
+  const lane = expertLane(subject)
+  const primaryExpertQuery = expertQuery(subject, lane, lane.primaryDomain)
+  if (mode !== "quality") return [quranQuery, hadithQuery, primaryExpertQuery]
+  return [subject, quranQuery, hadithQuery, primaryExpertQuery, expertQuery(subject, lane, lane.secondaryDomain)]
+}
+
+export function buildPrioritySearchQueries(query: string): string[] {
+  return planResearchQueries(query, "quality")
+}
+
+export function routeSearchQueries(queries: string[], question = queries[0] ?? ""): string[] {
+  const planned = planResearchQueries(question, queries.length > 3 ? "quality" : "balanced")
+  return planned.slice(0, queries.length)
 }
 
 export function rankSearchCandidates(

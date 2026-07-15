@@ -65,7 +65,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("enforces trusted source lanes when the model emits broad queries", async () => {
-    const { routeSearchQueries } = await import("../src/tools/webSearch")
+    const { planResearchQueries, routeSearchQueries } = await import("../src/tools/webSearch")
 
     expect(
       routeSearchQueries([
@@ -74,10 +74,31 @@ describe("Islamic research tool selection", () => {
         "practical guidance for Muslims daily life",
       ]),
     ).toEqual([
-      "how should a Muslim plan their day site:quran.com",
-      "how should a Muslim plan their day site:sunnah.com",
-      "how should a Muslim plan their day site:islamqa.info OR site:islamweb.net OR site:seekersguidance.org OR site:islamqa.org",
+      "Quran evidence how should a Muslim plan their day site:quran.com",
+      "Hadith evidence how should a Muslim plan their day site:sunnah.com",
+      "practical Islamic guidance how should a Muslim plan their day site:productivemuslim.com",
     ])
+
+    expect(planResearchQueries("In the Hanafi school, does bleeding invalidate wudu?", "balanced")[2]).toBe(
+      "Hanafi ruling In the Hanafi school, does bleeding invalidate wudu? site:islamqa.org",
+    )
+    expect(planResearchQueries("I feel overwhelmed by anxiety. What should I do?", "balanced")[2]).toContain(
+      "site:aboutislam.net",
+    )
+    expect(planResearchQueries("ما حكم الجمع بين الصلاتين للمسافر؟", "balanced")).toEqual([
+      "آية من القرآن ما حكم الجمع بين الصلاتين للمسافر؟ site:quran.com",
+      "حديث ما حكم الجمع بين الصلاتين للمسافر؟ site:sunnah.com",
+      "فتوى ما حكم الجمع بين الصلاتين للمسافر؟ site:islamqa.info",
+    ])
+    expect(planResearchQueries("كيف يتعامل المسلم مع الوسواس في الصلاة؟", "balanced")[2]).toBe(
+      "فتوى كيف يتعامل المسلم مع الوسواس في الصلاة؟ site:islamqa.info",
+    )
+
+    const qualityQueries = planResearchQueries("Can a traveler combine prayers?", "quality")
+    expect(qualityQueries).toHaveLength(5)
+    expect(qualityQueries).toContain("scholarly ruling Can a traveler combine prayers? site:islamqa.info")
+    expect(qualityQueries).toContain("scholarly ruling Can a traveler combine prayers? site:islamweb.net")
+    expect(qualityQueries.some((query) => query.includes(" OR site:"))).toBe(false)
   })
 
   test("gives each research mode explicit query and fetch budgets", async () => {
@@ -145,10 +166,10 @@ describe("Islamic research tool selection", () => {
 
     expect(buildPrioritySearchQueries("what is islam")).toEqual([
       "what is islam",
-      "what is islam site:quran.com",
-      "what is islam site:sunnah.com",
-      "what is islam site:islamqa.info OR site:islamweb.net OR site:seekersguidance.org OR site:islamqa.org",
-      "what is islam site:aboutislam.net OR site:productivemuslim.com OR site:dar-alifta.org OR site:aliftaa.jo",
+      "Quran evidence what is islam site:quran.com",
+      "Hadith evidence what is islam site:sunnah.com",
+      "scholarly ruling what is islam site:islamqa.info",
+      "scholarly ruling what is islam site:islamweb.net",
     ])
   })
 
