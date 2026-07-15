@@ -63,8 +63,8 @@ describe("answer citation validation", () => {
     expect(validateCitations(answer, sources).valid).toBe(true)
   })
 
-  test("removes only an uncited sentence instead of its entire cited bullet", async () => {
-    const { stripInvalidCitationPassages, validateCitations } = await import("../src/citations")
+  test("accepts a Perplexity-style citation for the complete bullet", async () => {
+    const { validateCitations } = await import("../src/citations")
     const sources = [
       {
         index: 1,
@@ -77,10 +77,52 @@ describe("answer citation validation", () => {
       },
     ]
     const answer = "- Begin with a practical intention. Actions are judged by intentions.[1]"
+    expect(validateCitations(answer, sources).valid).toBe(true)
+  })
+
+  test("treats a wrapped list item as one citable passage", async () => {
+    const { validateCitations } = await import("../src/citations")
+    const sources = [
+      {
+        index: 1,
+        kind: "web" as const,
+        label: "Prayer guide",
+        url: "https://example.com/prayer",
+        domain: "example.com",
+        faviconUrl: "https://example.com/favicon.ico",
+        text: "Prayer steps",
+      },
+    ]
+    const answer = "1. Stand and recite.\n   - Bow, then prostrate.\n   - Complete the prayer with tasleem.[1]"
+    expect(validateCitations(answer, sources).valid).toBe(true)
+  })
+
+  test("requires direct prose before headings or lists", async () => {
+    const { hasPerplexityAnswerShape } = await import("../src/citations")
+    expect(hasPerplexityAnswerShape("Prayer begins with intention.[1]\n\n## Steps\n\nThen stand.[1]")).toBe(true)
+    expect(hasPerplexityAnswerShape("## Steps\n\nThen stand.[1]")).toBe(false)
+    expect(hasPerplexityAnswerShape("1. Stand and recite.[1]")).toBe(false)
+    expect(hasPerplexityAnswerShape("Prayer begins with intention.[1]\n\n- **")).toBe(false)
+  })
+
+  test("does not require citations on headings and removes empty sections", async () => {
+    const { stripInvalidCitationPassages, validateCitations } = await import("../src/citations")
+    const sources = [
+      {
+        index: 1,
+        kind: "hadith" as const,
+        label: "Sahih al-Bukhari 1",
+        url: "https://sunnah.com/bukhari:1",
+        domain: "sunnah.com",
+        faviconUrl: "https://sunnah.com/favicon.ico",
+        text: "Actions are judged by intentions.",
+      },
+    ]
+    const answer = "## Direct answer\n\nActions are judged by intentions.[1]\n\n## Empty section\n\n**Also empty:**"
     const validation = validateCitations(answer, sources)
     const sanitized = stripInvalidCitationPassages(answer, validation)
 
-    expect(sanitized).toBe("-  Actions are judged by intentions.[1]")
-    expect(validateCitations(sanitized, sources).valid).toBe(true)
+    expect(validation.valid).toBe(true)
+    expect(sanitized).toBe("## Direct answer\n\nActions are judged by intentions.[1]")
   })
 })

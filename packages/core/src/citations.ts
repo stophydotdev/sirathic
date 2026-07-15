@@ -1,41 +1,30 @@
 import type { CitationValidation, Source } from "./types"
 
 function splitCitablePassages(answer: string): string[] {
-  const passages: string[] = []
-  let current = ""
-  let inDoubleQuote = false
+  return answer
+    .split(/\n{2,}/u)
+    .map((block) => block
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line && !isStructuralMarkdown(line))
+      .join("\n"))
+    .filter(Boolean)
+}
 
-  const flush = () => {
-    if (current.trim()) passages.push(current.trim())
-    current = ""
+function isStructuralMarkdown(value: string): boolean {
+  return /^#{1,6}\s+\S/u.test(value) || /^\*{1,2}[^*]+\*{1,2}:?$/u.test(value) || /^\*{1,2}$/u.test(value)
+}
+
+function removeTrailingEmptySections(answer: string): string {
+  const blocks = answer.split(/\n{2,}/u).map((block) => block.trim()).filter(Boolean)
+  while (blocks.length > 0 && blocks.at(-1)?.split("\n").every((line) => isStructuralMarkdown(line.trim()))) {
+    blocks.pop()
   }
+  return blocks.join("\n\n")
+}
 
-  for (let index = 0; index < answer.length; index++) {
-    const character = answer[index] ?? ""
-    current += character
-
-    if (character === '"') inDoubleQuote = !inDoubleQuote
-    else if (character === "“") inDoubleQuote = true
-    else if (character === "”") inDoubleQuote = false
-
-    if (character === "\n") {
-      flush()
-      continue
-    }
-    if (inDoubleQuote || !/[.!?؟]/u.test(character)) continue
-
-    const remainder = answer.slice(index + 1)
-    const whitespace = remainder.match(/^\s+/u)?.[0]
-    if (!whitespace) continue
-    const next = remainder.slice(whitespace.length)
-    if (next.startsWith("[")) continue
-
-    index += whitespace.length
-    flush()
-  }
-
-  flush()
-  return passages
+function normalizeCitablePassage(passage: string): string {
+  return passage.trim().replace(/^[-*#>\d.)\s]+/, "")
 }
 
 export function validateCitations(answer: string, sources: Source[]): CitationValidation {
@@ -51,7 +40,7 @@ export function validateCitations(answer: string, sources: Source[]): CitationVa
     sources.length === 0
       ? []
       : splitCitablePassages(answer)
-          .map((passage) => passage.trim().replace(/^[-*#>\d.)\s]+/, ""))
+          .map(normalizeCitablePassage)
           .filter((passage) => passage.length >= 32 && /\p{L}/u.test(passage) && !/\[\d+\]/.test(passage))
 
   return {
@@ -61,19 +50,30 @@ export function validateCitations(answer: string, sources: Source[]): CitationVa
   }
 }
 
-export function stripInvalidCitationPassages(answer: string, validation: CitationValidation): string {
-  let sanitized = answer
-  for (const passage of validation.uncitedPassages) sanitized = sanitized.replace(passage, "")
+export function hasPerplexityAnswerShape(answer: string): boolean {
+  const lines = answer.split("\n").map((line) => line.trim()).filter(Boolean)
+  const first = lines[0] ?? ""
+  if (!first || /^(?:#{1,6}\s|[-*+]\s|\d+[.)]\s|\*{1,2}[^*]+\*{1,2}:?)/u.test(first)) return false
 
+  return !lines.some((line) =>
+    /^[-*+]\s*\*{0,2}\s*$/u.test(line)
+    || /^\d+[.)]\s*\*{0,2}\s*$/u.test(line)
+    || (/\*\*/u.test(line) && (line.match(/\*\*/gu)?.length ?? 0) % 2 !== 0),
+  )
+}
+
+export function stripInvalidCitationPassages(answer: string, validation: CitationValidation): string {
+  const uncited = new Set(validation.uncitedPassages)
   const invalidMarkers = validation.invalidIndexes.map((index) => `[${index}]`)
-  sanitized = sanitized
-    .split("\n")
-    .filter((line) => !invalidMarkers.some((marker) => line.includes(marker)))
-    .join("\n")
+  const sanitized = answer
+    .split(/\n{2,}/u)
+    .filter((block) => !invalidMarkers.some((marker) => block.includes(marker)))
+    .filter((block) => !splitCitablePassages(block).some((passage) => uncited.has(normalizeCitablePassage(passage))))
+    .join("\n\n")
     .replace(/^\s*[-*]\s*$/gm, "")
     .replace(/[ \t]+\n/g, "\n")
     .replace(/\n{3,}/g, "\n\n")
     .trim()
 
-  return sanitized
+  return removeTrailingEmptySections(sanitized)
 }

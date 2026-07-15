@@ -320,6 +320,9 @@ function expertLane(question: string): ExpertLane {
   if (isBiographyQuestion(normalized)) {
     return { prefix: "Islamic biography", primaryDomain: "islamqa.info", secondaryDomain: "yaqeeninstitute.org" }
   }
+  if (/(?:best way|how) to (?:offer |perform )?(?:pray|prayer)|(?:pray|prayer) (?:correctly|step by step)|كيفية الصلاة/u.test(normalized)) {
+    return { prefix: "Description of the Prophets Prayer", primaryDomain: "islamqa.info", secondaryDomain: "seekersguidance.org" }
+  }
   if (/\bhanafi\b|حنفي/u.test(normalized)) {
     return { prefix: "Hanafi ruling", primaryDomain: "islamqa.org", secondaryDomain: "askimam.org" }
   }

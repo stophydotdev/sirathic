@@ -88,6 +88,9 @@ describe("Islamic research tool selection", () => {
     expect(planResearchQueries("Is a marriage valid without a wali?", "balanced")[2]).toBe(
       "scholarly ruling Is a marriage valid without a wali? site:islamqa.info",
     )
+    expect(planResearchQueries("What is the best way to pray in Islam?", "balanced")[2]).toBe(
+      "Description of the Prophets Prayer What is the best way to pray in Islam? site:islamqa.info",
+    )
     expect(planResearchQueries("ما حكم الجمع بين الصلاتين للمسافر؟", "balanced")).toEqual([
       "آية من القرآن ما حكم الجمع بين الصلاتين للمسافر؟ site:quran.com",
       "حديث ما حكم الجمع بين الصلاتين للمسافر؟ site:sunnah.com",
@@ -123,9 +126,9 @@ describe("Islamic research tool selection", () => {
     expect(searchDeadline("speed")).toBe(2_400)
     expect(searchDeadline("balanced")).toBe(2_400)
     expect(searchDeadline("quality")).toBe(2_800)
-    expect(answerTokenBudget("speed")).toBe(300)
-    expect(answerTokenBudget("balanced")).toBe(700)
-    expect(answerTokenBudget("quality")).toBe(1_400)
+    expect(answerTokenBudget("speed")).toBe(600)
+    expect(answerTokenBudget("balanced")).toBe(900)
+    expect(answerTokenBudget("quality")).toBe(1_600)
     expect(searxngSettings).toContain("request_timeout: 1.8")
     expect(searxngSettings).toContain("max_request_timeout: 2.8")
     expect(searxngSettings).toContain('autocomplete: "google"')

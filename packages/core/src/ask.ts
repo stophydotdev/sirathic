@@ -1,7 +1,7 @@
 import { chatModel } from "@sirathic/llm"
 import { generateText, streamText } from "ai"
 import { ANSWER_PROMPT } from "./prompt"
-import { stripInvalidCitationPassages, validateCitations } from "./citations"
+import { hasPerplexityAnswerShape, stripInvalidCitationPassages, validateCitations } from "./citations"
 import { formatSources, numberSources, webToSource } from "./source"
 import { fetchUrl } from "./tools/webFetch"
 import { planResearchQueries, rankSearchCandidates, searchSearxng } from "./tools/webSearch"
@@ -14,6 +14,15 @@ const RESEARCH_POLICIES: Record<ResearchMode, ResearchPolicy> = {
 }
 
 const NO_EVIDENCE_ANSWER = "I couldn't find enough relevant, trusted sources to answer this question. Try rephrasing it or use quality mode."
+const CITATION_REPAIR_PROMPT = `You are the final citation and formatting editor for Sirathic. Rewrite the draft into a complete Perplexity-style answer using only the supplied Search results.
+
+Requirements:
+- Start with a direct prose answer, never a title, heading, label, or list.
+- Put citations at the end of every substantive paragraph or bullet. Each citation must support every claim in that passage.
+- Keep only valid citation indexes from the supplied results.
+- Use short natural paragraphs. Add descriptive level-2 sections only when useful; use lists only for genuine steps or comparisons.
+- Remove unsupported claims, malformed markdown, repetition, empty headings, and incomplete sections.
+- Do not include raw URLs, a bibliography, or a Sources section.`
 
 export function getResearchPolicy(mode: ResearchMode): ResearchPolicy {
   return RESEARCH_POLICIES[mode]
@@ -28,9 +37,9 @@ export function searchDeadline(mode: ResearchMode): number {
 }
 
 export function answerTokenBudget(mode: ResearchMode): number {
-  if (mode === "speed") return 300
-  if (mode === "quality") return 1_400
-  return 700
+  if (mode === "speed") return 600
+  if (mode === "quality") return 1_600
+  return 900
 }
 
 export async function gather(question: string, opts: AskOptions = {}, emit?: AskEventEmitter): Promise<GatherResult> {
@@ -104,42 +113,93 @@ function answerRequest(
   sources: Source[],
   opts: AskOptions,
   model = chatModel(opts.model, { provider: opts.provider }),
+  maxOutputTokens = answerTokenBudget(opts.mode ?? "balanced"),
 ) {
   return {
     model,
     system: ANSWER_PROMPT,
     prompt: `Query: ${question}\n\nSearch results:\n${formatSources(sources)}`,
-    maxOutputTokens: answerTokenBudget(opts.mode ?? "balanced"),
+    maxOutputTokens,
     temperature: 0,
   }
 }
 
-async function generateAnswer(question: string, sources: Source[], opts: AskOptions, system = ANSWER_PROMPT, prompt?: string) {
+async function generateAnswer(
+  question: string,
+  sources: Source[],
+  opts: AskOptions,
+  system = ANSWER_PROMPT,
+  prompt?: string,
+  maxOutputTokens?: number,
+) {
   return generateText({
-    ...answerRequest(question, sources, opts),
+    ...answerRequest(question, sources, opts, undefined, maxOutputTokens),
     system,
     ...(prompt ? { prompt } : {}),
   })
 }
 
+async function completeAnswer(
+  question: string,
+  sources: Source[],
+  opts: AskOptions,
+  answer: string,
+  finishReason: string,
+): Promise<string> {
+  if (finishReason !== "length") return enforceCitations(question, answer, sources, opts)
+
+  const retryBudget = Math.max(answerTokenBudget(opts.mode ?? "balanced") * 2, 1_200)
+  const retry = await generateAnswer(
+    question,
+    sources,
+    opts,
+    `${ANSWER_PROMPT}\n\nCompletion requirement: Return a complete answer within the token budget. Never stop mid-sentence or leave a heading unfinished.`,
+    undefined,
+    retryBudget,
+  )
+  return enforceCitations(question, retry.text, sources, opts)
+}
+
 async function enforceCitations(
+  question: string,
   answer: string,
   sources: Source[],
+  opts: AskOptions,
 ): Promise<string> {
   const validation = validateCitations(answer, sources)
-  if (validation.valid) return answer
+  if (validation.valid && hasPerplexityAnswerShape(answer)) return answer
 
-  const sanitized = stripInvalidCitationPassages(answer, validation)
-  if (sanitized.length >= 20 && validateCitations(sanitized, sources).valid) return sanitized
+  const repair = await generateAnswer(
+    question,
+    sources,
+    opts,
+    CITATION_REPAIR_PROMPT,
+    `Query: ${question}\n\nSearch results:\n${formatSources(sources)}\n\nDraft to repair:\n${answer}`,
+    Math.max(answerTokenBudget(opts.mode ?? "balanced"), 900),
+  )
+  const repairValidation = validateCitations(repair.text, sources)
+  if (
+    repair.finishReason !== "length"
+    && repairValidation.valid
+    && hasPerplexityAnswerShape(repair.text)
+  ) return repair.text
 
-  return "I found relevant evidence, but the draft did not meet Sirathic's citation requirements. Please try the inquiry again or narrow the question."
+  const groundedRepair = stripInvalidCitationPassages(repair.text, repairValidation)
+  if (
+    repair.finishReason !== "length"
+    && groundedRepair.length >= 20
+    && validateCitations(groundedRepair, sources).valid
+    && hasPerplexityAnswerShape(groundedRepair)
+  ) return groundedRepair
+
+  return "I found relevant evidence, but could not produce a complete answer with reliable citations. Please try the inquiry again or narrow the question."
 }
 
 export async function ask(question: string, opts: AskOptions = {}): Promise<AskResult> {
   const { sources, research } = await gather(question, opts)
   if (sources.length === 0) return { answer: NO_EVIDENCE_ANSWER, sources, research }
   const result = await generateAnswer(question, sources, opts)
-  return { answer: await enforceCitations(result.text, sources), sources, research }
+  return { answer: await completeAnswer(question, sources, opts, result.text, result.finishReason), sources, research }
 }
 
 export async function askStream(question: string, opts: AskOptions = {}) {
@@ -177,7 +237,7 @@ export async function askWithEvents(
       }
     }
 
-    const validatedAnswer = await enforceCitations(answer, sources)
+    const validatedAnswer = await completeAnswer(question, sources, opts, answer, await result.finishReason)
     if (validatedAnswer !== answer) {
       answer = validatedAnswer
       await emit({ type: "answer-replace", answer, reason: "citation-validation" })
