@@ -43,7 +43,7 @@ for (let index = 0; index < args.length; index++) {
     }
     sources = requested
   } else if (argument === "--help" || argument === "-h") {
-    console.log('usage: bun run query [--provider openai|openrouter] [--model model-id] [--mode speed|balanced|quality] [--sources quran,hadith,web] "your question"')
+    console.log('usage: bun query [--provider openai|openrouter] [--model model-id] [--mode speed|balanced|quality] [--sources quran,hadith,web] "your question"')
     process.exit(0)
   } else if (argument) {
     questionParts.push(argument)
@@ -52,7 +52,7 @@ for (let index = 0; index < args.length; index++) {
 
 const question = questionParts.join(" ").trim()
 if (!question) {
-  console.error('usage: bun run query [--provider openai|openrouter] [--model model-id] [--mode speed|balanced|quality] [--sources quran,hadith,web] "your question"')
+  console.error('usage: bun query [--provider openai|openrouter] [--model model-id] [--mode speed|balanced|quality] [--sources quran,hadith,web] "your question"')
   process.exit(1)
 }
 
