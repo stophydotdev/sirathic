@@ -17,20 +17,14 @@ operational configuration belong to those external deployments.
 bun run smoke:fetch                       # quran.com, sunnah.com, dorar.net
 bun run smoke:fetch https://quran.com/1   # or pass your own URLs
 
-bun run smoke:search                      # a couple of default queries
-bun run smoke:search "salah times"        # or pass your own queries
-bun run eval:search -- --mode balanced     # reviewed search-quality corpus
+bun search "salah times"                  # direct SearXNG query, no LLM
 ```
 
-`smoke:fetch` needs Crawl4AI up; `smoke:search` needs SearXNG up
-(`SEARXNG_URL` selects the external endpoint). Run them with
-`bun --env-file=apps/server/.env scripts/smoke-fetch.ts` (or
-`smoke-search.ts`) to exercise the configured proxy.
+`smoke:fetch` needs Crawl4AI up; `search` needs SearXNG up. `SEARXNG_URL`
+selects the external endpoint.
 
-`eval:search` runs the production query planner, SearXNG client, allowlist, and
-ranker against reviewed Quran, hadith, fiqh, madhhab, guidance, counseling,
-finance, and Arabic cases. Use `--limit N` for a quick sample, `--json` for an
-artifact, and `--assert` to enforce the checked-in quality thresholds.
+The internal `evaluate-search.ts` runner remains available for reviewed quality
+checks without adding another package command.
 
 ## What to look for
 

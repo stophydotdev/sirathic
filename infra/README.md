@@ -58,7 +58,7 @@ cp infra/.env.example infra/.env
 # Add proxy credentials only if proxy-path testing is required.
 docker compose --env-file infra/.env -f infra/compose.yml up --build -d
 redis-cli -u redis://localhost:6379 ping
-bun --env-file=apps/server/.env scripts/smoke-search.ts "what is islam"
+bun search "what is islam"
 bun --env-file=apps/server/.env scripts/smoke-fetch.ts https://quran.com/2/183
 ```
 
