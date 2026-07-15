@@ -54,3 +54,5 @@ bun --env-file=apps/server/.env scripts/smoke-fetch.ts https://quran.com/2/183
 
 The Compose file binds SearXNG to `18888` and Crawl4AI to `11235` for local
 testing. Production platforms build the two Dockerfiles as separate services.
+The SearXNG image also includes `/opt/sirathic/benchmark.py` for internal,
+repeatable concurrency and result-quality measurements.
