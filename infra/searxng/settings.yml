@@ -16,13 +16,11 @@ search:
     - json
 
 outgoing:
-  # Sirathic is an interactive answer engine. Return the engines that answered
-  # quickly instead of making the caller wait several seconds for a slow exit.
   request_timeout: 1.0
   max_request_timeout: 1.2
   extra_proxy_timeout: 0
-  pool_connections: 50
-  pool_maxsize: 20
+  pool_connections: 200
+  pool_maxsize: 100
   keepalive_expiry: 30.0
   enable_http2: true
 
@@ -34,8 +32,6 @@ engines:
     retry_on_http_error: [403, 429]
   - name: startpage
     disabled: false
-    # Startpage often challenges datacenter exits. Keep it as a useful optional
-    # contributor, but never let it dominate end-to-end search latency.
     timeout: 1.1
     retries: 0
     retry_on_http_error: [403, 429]

@@ -10,7 +10,8 @@ a runtime lifecycle with the Sirathic API.
 - `sirathic-searxng`: six explicit engines, bounded timeouts, JSON output, and
   runtime Decodo injection for every engine. Its Granian WSGI worker has 32
   blocking threads so concurrent searches do not queue behind the image's
-  four-thread default.
+  four-thread default, backed by a 200-connection HTTP pool with 100 keepalive
+  slots for concurrent engine fan-out.
 - `sirathic-crawl4ai`: text-oriented browser defaults and a direct-first proxy
   fallback list rendered from runtime secrets.
 - `cache`: a disposable Valkey-compatible Redis service used by the Sirathic API

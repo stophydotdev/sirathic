@@ -94,6 +94,8 @@ describe("Islamic research tool selection", () => {
     expect(answerTokenBudget("balanced")).toBe(700)
     expect(answerTokenBudget("quality")).toBe(1_400)
     expect(searxngSettings).toContain("max_request_timeout: 1.2")
+    expect(searxngSettings).toContain("pool_connections: 200")
+    expect(searxngSettings).toContain("pool_maxsize: 100")
     expect(searxngSettings.match(/timeout: 1\.1/g)).toHaveLength(6)
     expect(searchDeadline("speed")).toBeGreaterThan(1_200)
   })
