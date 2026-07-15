@@ -1,9 +1,9 @@
 use_default_settings:
   engines:
     keep_only:
-      - brave
       - duckduckgo
       - google
+      - mojeek
       - startpage
       - wolframalpha
 
@@ -34,28 +34,32 @@ outgoing:
   enable_http2: true
 
 engines:
-  - name: brave
-    disabled: false
-    timeout: 1.6
-    retries: 0
-    retry_on_http_error: [403, 429]
   - name: duckduckgo
     disabled: false
     timeout: 2.0
     retries: 0
+    categories: [general]
   - name: google
     disabled: true
     timeout: 1.6
     retries: 0
+    categories: [general]
+  - name: mojeek
+    disabled: false
+    timeout: 1.6
+    retries: 0
+    categories: [general]
   - name: startpage
     disabled: false
     timeout: 1.6
     retries: 0
     retry_on_http_error: [403, 429]
+    categories: [general]
   - name: wolframalpha
-    disabled: false
+    disabled: true
     timeout: 2.6
     retries: 0
+    categories: [general]
 
 server:
   bind_address: "0.0.0.0"

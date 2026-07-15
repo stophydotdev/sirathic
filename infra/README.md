@@ -25,7 +25,7 @@ change should update the digest; never change them to `latest` in production.
 ## Runtime secrets
 
 Set `DECODO_PROXY_URL` independently on both deployments. It must be a complete
-credentialed URL, for example `https://user:password@dc.decodo.com:10000`.
+credentialed URL, for example `https://user:password@gate.decodo.com:10000`.
 Credentials are rendered only into the container's writable runtime layer and
 are never copied into an image.
 
@@ -34,29 +34,34 @@ even when Railway's credential variable uses an `https://` prefix; passing that
 scheme directly to httpx makes it attempt unsupported TLS with the proxy itself.
 
 For Crawl4AI, `DECODO_FETCH_PORTS` defaults to `10001,10002,10003`. A page starts
-direct, then retries through stable datacenter sessions. SearXNG uses the port in
-`DECODO_PROXY_URL`, normally Decodo's rotating port `10000`.
+direct, then retries through stable proxy sessions. SearXNG uses the endpoint in
+`DECODO_PROXY_URL`, normally Decodo's rotating residential port `10000`.
 
-Startpage, Brave, and DuckDuckGo all enforce single-domain `site:` filters when
-they return results. Startpage had the strongest isolated reliability; Brave and
-DuckDuckGo are opportunistic secondaries. DuckDuckGo returned relevant normal
-results and exact-domain `site:` results over direct egress, but every measured
-datacenter-proxy attempt received a CAPTCHA. Datacenter exits can also trigger
-timeouts and rate limits under a short burst, so this pool is best-effort rather
-than an API-grade search guarantee. Qwant returned access denied for both normal
-and `site:` queries with direct and proxied egress. Google, Bing, Yahoo, Qwant,
-Mojeek, Mwmbl, and Yandex are excluded after failing domain accuracy or
-repeated-request reliability checks.
+Startpage, DuckDuckGo, and Mojeek are the measured residential-proxy web pool.
+Startpage had the best combination of relevance, latency, and exact single-domain
+`site:` filtering. Mojeek was the only engine to respond to every query in the
+sequential benchmark and provides an independent index, though it degraded under
+concurrency. DuckDuckGo returned high-quality normal and exact-domain results
+with occasional CAPTCHA failures. The combined pool retained a 100% useful-result
+and expected-source hit rate in both sequential and five-concurrent tests.
+Google, Bing, Brave, Yahoo, Qwant, Yandex, Yep, and the tested regional and small
+indexes are excluded after CAPTCHA, rate-limit, empty anti-bot responses,
+protocol, domain-filtering, relevance, or reliability failures.
 
 Google provides autocomplete suggestions only; it is not enabled as a search
-engine because the datacenter exits consistently receive its CAPTCHA. The
+engine because the residential exits consistently receive its CAPTCHA. The
 no-key Wolfram Alpha engine is available explicitly with `!wa` or
-`engines=wolframalpha` for computational and factual queries and is enabled in
-the general engine set, matching Vane's integration.
+`engines=wolframalpha` for computational and factual queries. It is excluded
+from ordinary searches because its proxy timeout materially increases latency
+under concurrency.
 
-Startpage and Brave receive a 1.6-second budget; DuckDuckGo receives 2 seconds.
-The engines run in parallel. Web engines retain their 1.6- to 2-second budgets;
-the 2.8-second maximum accommodates Wolfram Alpha through the proxy.
+Startpage and Mojeek receive a 1.6-second budget; DuckDuckGo receives 2 seconds.
+The engines run in parallel. The 2.8-second maximum accommodates an explicit
+Wolfram Alpha request through the proxy without extending normal web engines.
+
+Only the `general` category is loaded. Image, video, news, map, music, social,
+torrent, and other vertical engines remain unavailable to keep search output
+text-focused and bound the long-term latency and proxy cost.
 
 Engine suspensions are capped at one second. A rotating proxy can move the next
 request to a healthy exit, so a CAPTCHA or rate limit from one exit must not
