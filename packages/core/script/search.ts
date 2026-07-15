@@ -15,7 +15,7 @@ try {
   const responses = await Promise.all(
     queries.map(async (searchQuery) => {
       try {
-        const response = await searchSearxng({ query: searchQuery, limit: 12, timeoutMs: 1_500 }, { searxngUrl })
+        const response = await searchSearxng({ query: searchQuery, limit: 12, timeoutMs: 2_400 }, { searxngUrl })
         return { query: searchQuery, response }
       } catch {
         return { query: searchQuery, response: undefined }

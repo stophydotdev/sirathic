@@ -1,21 +1,29 @@
 use_default_settings:
   engines:
     keep_only:
-      - bing
+      - brave
+      - duckduckgo
       - startpage
-      - mwmbl
-      - yandex
 
 general:
   instance_name: "sirathic-searxng"
 
 search:
+  ban_time_on_fail: 1
+  max_ban_time_on_fail: 5
+  suspended_times:
+    SearxEngineAccessDenied: 1
+    SearxEngineCaptcha: 1
+    SearxEngineTooManyRequests: 1
+    cf_SearxEngineCaptcha: 1
+    cf_SearxEngineAccessDenied: 1
+    recaptcha_SearxEngineCaptcha: 1
   formats:
     - json
 
 outgoing:
-  request_timeout: 1.0
-  max_request_timeout: 1.2
+  request_timeout: 1.8
+  max_request_timeout: 2.1
   extra_proxy_timeout: 0
   pool_connections: 200
   pool_maxsize: 100
@@ -23,24 +31,20 @@ outgoing:
   enable_http2: true
 
 engines:
-  - name: bing
+  - name: brave
     disabled: false
-    timeout: 1.1
+    timeout: 1.6
     retries: 0
     retry_on_http_error: [403, 429]
+  - name: duckduckgo
+    disabled: false
+    timeout: 2.0
+    retries: 0
   - name: startpage
     disabled: false
-    timeout: 1.1
+    timeout: 1.6
     retries: 0
     retry_on_http_error: [403, 429]
-  - name: mwmbl
-    disabled: false
-    timeout: 1.1
-    retries: 0
-  - name: yandex
-    disabled: false
-    timeout: 1.1
-    retries: 0
 
 server:
   bind_address: "0.0.0.0"

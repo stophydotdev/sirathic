@@ -7,7 +7,7 @@ a runtime lifecycle with the Sirathic API.
 
 ## Images
 
-- `sirathic-searxng`: four measured engines, bounded timeouts, JSON output, and
+- `sirathic-searxng`: three measured engines, bounded timeouts, JSON output, and
   runtime Decodo injection for every engine. Its Granian WSGI worker has 32
   blocking threads so concurrent searches do not queue behind the image's
   four-thread default, backed by a 200-connection HTTP pool with 100 keepalive
@@ -36,12 +36,21 @@ For Crawl4AI, `DECODO_FETCH_PORTS` defaults to `10001,10002,10003`. A page start
 direct, then retries through stable datacenter sessions. SearXNG uses the port in
 `DECODO_PROXY_URL`, normally Decodo's rotating port `10000`.
 
-Startpage is opportunistic: datacenter exits can still receive its CAPTCHA. Its
-timeout is deliberately shorter and it has no retry, so the other proxied
-engines can return without waiting through repeated challenges.
+Startpage, Brave, and DuckDuckGo all enforce single-domain `site:` filters when
+they return results. Startpage had the strongest isolated reliability; Brave and
+DuckDuckGo are opportunistic secondaries. Datacenter exits can still trigger
+timeouts, CAPTCHA, and rate limits under a short burst, so this pool is
+best-effort rather than an API-grade search guarantee. Google, Bing, Yahoo,
+Qwant, Mojeek, Mwmbl, and Yandex are excluded after failing domain accuracy or
+repeated-request reliability checks.
 
-Search engines receive a 1.1-second budget. Longer waits did not recover blocked
-engines in production testing, so the tighter limit preserves response speed.
+Startpage and Brave receive a 1.6-second budget; DuckDuckGo receives 2 seconds.
+All three run in parallel, so a degraded secondary cannot hold the search phase
+beyond the 2.1-second SearXNG boundary.
+
+Engine suspensions are capped at one second. A rotating proxy can move the next
+request to a healthy exit, so a CAPTCHA or rate limit from one exit must not
+disable that engine globally for SearXNG's multi-hour default.
 
 Sirathic should reach both services through private networking:
 

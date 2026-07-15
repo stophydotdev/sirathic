@@ -20,11 +20,11 @@ export function getResearchPolicy(mode: ResearchMode): ResearchPolicy {
 }
 
 export function searchDeadline(mode: ResearchMode): number {
-  // SearXNG's upstream engine budget is 1.1s. Leave enough room for its JSON
-  // response and local/proxy network overhead without turning a slow engine
-  // into a false "no trusted evidence" result.
-  if (mode === "quality") return 1_800
-  return 1_500
+  // Proxied search engines complete in roughly 0.4–2.0s. Leave enough room
+  // for SearXNG to serialize its JSON without turning viable results into a
+  // false "no trusted evidence" response.
+  if (mode === "quality") return 2_800
+  return 2_400
 }
 
 export function answerTokenBudget(mode: ResearchMode): number {
