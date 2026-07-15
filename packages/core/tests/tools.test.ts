@@ -84,6 +84,7 @@ describe("Islamic research tool selection", () => {
     const { answerTokenBudget, getResearchPolicy, searchDeadline } = await import("../src/ask")
     const searxngSettings = await Bun.file(new URL("../../../infra/searxng/settings.yml", import.meta.url)).text()
     const searxngRenderer = await Bun.file(new URL("../../../infra/searxng/render_settings.py", import.meta.url)).text()
+    const searxngDockerfile = await Bun.file(new URL("../../../infra/searxng/Dockerfile", import.meta.url)).text()
     const crawl4aiRenderer = await Bun.file(new URL("../../../infra/crawl4ai/render_config.py", import.meta.url)).text()
 
     expect(getResearchPolicy("speed")).toEqual({ queryCount: 3, initialFetches: 3, extraFetches: 0, maxSteps: 2 })
@@ -109,6 +110,7 @@ describe("Islamic research tool selection", () => {
     expect(searxngSettings).not.toContain("- wiby\n")
     expect(searxngSettings.match(/timeout: 1\.1/g)).toHaveLength(4)
     expect(searxngRenderer).toContain('urlunsplit(("http", parsed.netloc')
+    expect(searxngDockerfile).toContain("GRANIAN_BLOCKING_THREADS=64")
     expect(crawl4aiRenderer).toContain('"server": f"http://{parsed.hostname}:{port}"')
     expect(searchDeadline("speed")).toBeGreaterThan(1_200)
   })
