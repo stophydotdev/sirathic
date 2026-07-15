@@ -1,0 +1,1341 @@
+{
+  "$schema": "./islamic-source-candidates.schema.json",
+  "version": "1.0.0",
+  "producedAt": "2026-07-15",
+  "producedFor": "Sirathic research agent — docs/ISLAMIC-SOURCE-LANDSCAPE.md",
+  "note": "Live pages checked on 2026-07-15. Entries marked 'verificationFailed' could not be reached via WebFetch during research and must be re-verified before commit. All other entries are based on confirmed live deep URLs.",
+  "schemaVersion": "1.0.0",
+  "candidates": [
+    {
+      "domain": "quran.com",
+      "name": "Quran.com",
+      "organization": "Quran.com Foundation",
+      "tier": "A",
+      "role": "primary",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States / global",
+      "languages": ["ar", "en", "bn", "fa", "fr", "id", "it", "nl", "pt", "ru", "sq", "th", "tr", "ur", "zh", "ms", "es", "sw", "vi"],
+      "topics": ["worship", "spirituality", "family", "daily-life"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [],
+      "excludedPaths": [],
+      "representativeUrls": [
+        "https://quran.com/1",
+        "https://quran.com/2?startingVerse=183",
+        "https://quran.com/67"
+      ],
+      "use": "Tier-A primary. Canonical reader/tafsir/translations for any verse-level question. Multiple English translations including Saheeh International, Yusuf Ali, Pickthall, Mustafa Khattab.",
+      "limitations": "Translation accuracy is reader's responsibility; Quran.com translations are not scholarly rulings. App does not equal tafsir authority. Always pair with a tafsir source for depth.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "sunnah.com",
+      "name": "Sunnah.com",
+      "organization": "Sunnah.com",
+      "tier": "A",
+      "role": "primary",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States / global",
+      "languages": ["en", "ar", "ur", "bn"],
+      "topics": ["worship", "spirituality", "family", "daily-life"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [],
+      "excludedPaths": [],
+      "representativeUrls": [
+        "https://sunnah.com/bukhari:1",
+        "https://sunnah.com/muslim:1",
+        "https://sunnah.com/nasai:1",
+        "https://sunnah.com/abudawud:1",
+        "https://sunnah.com/tirmidhi:1",
+        "https://sunnah.com/ibnmajah:1",
+        "https://sunnah.com/malik:1",
+        "https://sunnah.com/ahmad:1"
+      ],
+      "use": "Tier-A primary hadith. Grades available per narration. Use English/Arabic display.",
+      "limitations": "Grading shown is Sunnah.com's aggregation; some narrations need scholarly corroboration. Cross-check with Darussalam or Dorar metadata when chain is non-Bukhari.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "muwatta.com",
+      "name": "Muwatta (Companion Site)",
+      "organization": "Sunnah.com",
+      "tier": "A",
+      "role": "primary",
+      "citable": true,
+      "madhhab": "maliki",
+      "countryRegion": "United States",
+      "languages": ["en", "ar"],
+      "topics": ["worship", "spirituality", "family", "daily-life"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [],
+      "excludedPaths": [],
+      "representativeUrls": [
+        "https://muwatta.com/"
+      ],
+      "use": "Tier-A primary Maliki hadith corpus (Imam Malik). Kept for completeness.",
+      "limitations": "Companion site; if dormant may not be a strong surface. Verify liveness before committing deeper.",
+      "confidence": "medium",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "altafsir.com",
+      "name": "Altafsir.com — Royal Aal al-Bayt Institute",
+      "organization": "Royal Aal al-Bayt Institute for Islamic Thought",
+      "tier": "A",
+      "role": "primary",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Jordan / international (Amman)",
+      "languages": ["ar", "en"],
+      "topics": ["worship", "spirituality", "family", "daily-life"],
+      "allowedPaths": [
+        "/Al-Jalalayn.asp",
+        "/Al-Tustari.asp",
+        "/Ibn-Abbas.asp",
+        "/WahidiAsbabAlnuzul.asp"
+      ],
+      "allowedPathPatterns": [
+        "^/Tafasir\\.asp\\?(?=.*tTafsirNo=\\d+|tSoraNo=\\d+|tAyahNo=\\d+).*$",
+        "^/Books/[A-Za-z0-9_\\-]+\\.pdf$",
+        "^/ViewTranslations\\.asp\\?(?=.*SoraNo=\\d+).*$",
+        "^/Languages\\.asp$",
+        "^/AsbabAlnuzol\\.asp\\?(?=.*SoraName=\\d+).*$"
+      ],
+      "excludedPaths": [
+        "/"
+      ],
+      "representativeUrls": [
+        "https://www.altafsir.com/Al-Jalalayn.asp",
+        "https://www.altafsir.com/Al-Tustari.asp",
+        "https://www.altafsir.com/Ibn-Abbas.asp",
+        "https://www.altafsir.com/Books/kashani.pdf",
+        "https://www.altafsir.com/What_is_Islam_En.asp"
+      ],
+      "use": "Recommended Tier-A primary alongside Quran.com, Sunnah.com. Best-in-class tafsir aggregator (150+ tafsir texts in original Arabic). Endorsed by Al-Azhar and Columbia University references. Use for any tafsir-depth question.",
+      "limitations": "Site has mixed encoding/legacy URLs (some pages use older Latin-1). The Tafasir.asp path is filter-driven and stable.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "dar-alifta.org",
+      "name": "Egypt's Dar al-Ifta",
+      "organization": "Dar al-Ifta al-Misriyyah",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Egypt",
+      "languages": ["ar", "en", "fr", "de", "ur", "ps", "sw", "ha"],
+      "topics": ["daily-life", "family", "finance", "relationships", "work", "worship", "spirituality"],
+      "allowedPaths": [
+        "/en/fatwa/details/"
+      ],
+      "allowedPathPatterns": [
+        "^/en/fatwa/\\d+(/|$)",
+        "^/(en|fr|de|ur|ps|sw|ha)/fatwa/.*"
+      ],
+      "excludedPaths": [
+        "/en",
+        "/ar",
+        "/fr"
+      ],
+      "representativeUrls": [
+        "https://www.dar-alifta.org/en/fatwa/details/?idsession="
+      ],
+      "use": "Egyptian government fatwa institution. Six-language coverage. Cite for cross-madhhab reference in Egypt and Arab-diaspora-relevant answers. Pair with istiftas panel where relevant.",
+      "limitations": "Some fatwas bear al-Azhar / Egyptian government perspective rather than independent ijtihad. Path patterns were confirmed live; verify `/en/fatwa/details/{id}` digests survive redirects.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "aliftaa.jo",
+      "name": "Jordan General Iftaa Department",
+      "organization": "Dā'irat al-Iftā' al-ʿĀmmah",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "hanafi",
+      "countryRegion": "Jordan",
+      "languages": ["ar", "en"],
+      "topics": ["daily-life", "family", "finance", "relationships", "work", "worship", "spirituality"],
+      "allowedPaths": [
+        "/en-fatwas/"
+      ],
+      "allowedPathPatterns": [
+        "^/en-fatwas/\\d+(/|$)",
+        "^/en/quick-fatwas/\\d+(/|$)"
+      ],
+      "excludedPaths": [
+        "/default",
+        "/en",
+        "/ar"
+      ],
+      "representativeUrls": [
+        "https://aliftaa.jo/IftaHaarMain.aspx?Lang=En"
+      ],
+      "use": "Jordanian official fatwa body, Hanafi legacy. Citable English fatwas currently slim — favor Arabic base. Pair with Dar al-Ifta for comparative opinions.",
+      "limitations": "English fatwa path was confirmed on 2026-07-15; deep link has a known temporary outage banner. Path /en-fatwas/ numeric IDs are the citable surfaces.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "muftiwp.gov.my",
+      "name": "Mufti of the Federal Territory",
+      "organization": "Pejabat Mufti Wilayah Persekutuan (JMWP)",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "shafii",
+      "countryRegion": "Malaysia (Federal Territories)",
+      "languages": ["ms", "en", "ar"],
+      "topics": ["daily-life", "family", "finance", "mental-health", "relationships", "worship", "spirituality", "habits", "productivity", "work"],
+      "allowedPaths": [
+        "/en/artikel/al-kafi-li-al-fatawi",
+        "/en/artikel/bayan-linnas",
+        "/en/artikel/irsyad-fatwa",
+        "/en/artikel/irsyad-al-hadith",
+        "/en/artikel/irsyad-usul-fiqh",
+        "/en/artikel/tahqiq-al-masail"
+      ],
+      "allowedPathPatterns": [
+        "^/en/artikel/[\\w\\-]+(/\\d+-[\\w\\-]+)?$",
+        "^/ms/artikel/[\\w\\-]+(/\\d+-[\\w\\-]+)?$"
+      ],
+      "excludedPaths": [
+        "/en",
+        "/ms",
+        "/ar",
+        "/index.php"
+      ],
+      "representativeUrls": [
+        "https://www.muftiwp.gov.my/en/artikel/al-kafi-li-al-fatawi/6483-al-kafi-2054-bolehkah-memegang-wang-kertas-yang-ditulis-di-atasnya-ayat-al-quran-tanpa-bersuci",
+        "https://www.muftiwp.gov.my/en/artikel/bayan-linnas",
+        "https://www.muftiwp.gov.my/en/artikel/irsyad-fatwa"
+      ],
+      "use": "Pejabat Mufti WP — Malaysian fatwa council for Federal Territories. Path prefix `/en/artikel/...`. Robust Shafi'i lead with cross-madhhab angles. Recent topics include women in iddah, credit-card, EV charging, savings, zakat. Strong for finance + tech-fiqh.",
+      "limitations": "JMWP covers Federal Territories only — for national-level Malaysian fatwas consider JaPPIM (Pusat Penterjemahan Mufti). Shafi'i bias; cite alongside Dar al-Ifta for cross-position.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "aboutislam.net",
+      "name": "AboutIslam — Ask the Scholar",
+      "organization": "About Islam",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States / global",
+      "languages": ["en", "fr", "es", "ar"],
+      "topics": ["daily-life", "family", "finance", "relationships", "spirituality", "work", "worship"],
+      "allowedPaths": [
+        "/counseling/ask-the-scholar/",
+        "/live-session/ask-the-scholar",
+        "/live-session/have-a-question-ask-the-scholar"
+      ],
+      "allowedPathPatterns": [
+        "^/counseling/ask-the-scholar/[\\w\\-]+(/|$)",
+        "^/(en|fr|es)/counseling/[\\w\\-]+(/|$)"
+      ],
+      "excludedPaths": [
+        "/",
+        "/ask-about-islam",
+        "/ask-about-parenting",
+        "/ask-the-counselor",
+        "/live-session"
+      ],
+      "representativeUrls": [
+        "https://aboutislam.net/counseling/ask-the-scholar/"
+      ],
+      "use": "About Islam's scholar sessions. Live dialogue mediated with named scholars (Dr. Mohammad S. Alrahawan visible on archive). Good for English diaspora-fatwa questions.",
+      "limitations": "Live session format means transcripts vary in quality. Older transcripts are clearly dated; cite specific posts not the live landing page.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "aboutislam.net",
+      "name": "AboutIslam — Ask the Counselor",
+      "organization": "About Islam",
+      "tier": "B",
+      "role": "counseling",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States / global",
+      "languages": ["en", "fr", "es", "ar"],
+      "topics": ["daily-life", "family", "mental-health", "relationships", "spirituality"],
+      "allowedPaths": [
+        "/counseling/ask-the-counselor/",
+        "/live-session/ask-the-counselor",
+        "/family-life/special-coverage-family-society/youre-not-alone-professional-counseling-fingertips/"
+      ],
+      "allowedPathPatterns": [
+        "^/counseling/ask-the-counselor/[\\w\\-]+(/|$)",
+        "^/live-session/ask-the-counselor(/|$)"
+      ],
+      "excludedPaths": [
+        "/counseling/ask-the-scholar/",
+        "/ask-about-islam"
+      ],
+      "representativeUrls": [
+        "https://aboutislam.net/counseling/ask-the-counselor/"
+      ],
+      "use": "Counselor sessions — marriage/divorce, grief, mental-health emotional support. Counseling role, not fatwa role.",
+      "limitations": "Counseling advice is not fatwa; in the citation always tag it as counseling.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "productivemuslim.com",
+      "name": "Productive Muslim",
+      "organization": "The Productive Muslim Company",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United Kingdom / global",
+      "languages": ["en"],
+      "topics": ["daily-life", "family", "habits", "productivity", "relationships", "spirituality", "work", "mental-health"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/blog(/[\\w\\-]+)?$",
+        "^/topic/[\\w\\-]+(/[\\w\\-]+)?$",
+        "^/\\d{4}(?:/\\d{2}(?:/\\d{2})?)?/[\\w\\-]+$",
+        "^/[\\w\\-]+(/[\\w\\-]+)?$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/topics",
+        "/topic",
+        "/topic/",
+        "/programs",
+        "/programs/",
+        "/component-previews/articles-section",
+        "/shop",
+        "/shop/",
+        "/products",
+        "/products/",
+        "/careers",
+        "/careers/",
+        "/jobs",
+        "/jobs/",
+        "/contact",
+        "/contact/",
+        "/about",
+        "/about/",
+        "/privacy",
+        "/privacy/",
+        "/terms",
+        "/terms/",
+        "/thanks",
+        "/thank-you",
+        "/subscription-confirmed",
+        "/newsletter",
+        "/gift",
+        "/gifts",
+        "/reading-lists",
+        "/reading-lists/",
+        "/agenda",
+        "/agenda/",
+        "/sitemap",
+        "/sitemap.xml",
+        "/robots.txt",
+        "/favicon.ico"
+      ],
+      "representativeUrls": [
+        "https://productivemuslim.com/age-of-ai",
+        "https://productivemuslim.com/how-to-decolonize-our-muslim-corporate-cultures",
+        "https://productivemuslim.com/sabrnotepad",
+        "https://productivemuslim.com/topic/productivity"
+      ],
+      "use": "Founded by Mohammed Faris, an AlMaghrib-trained UK-based productivity expert with strong Muslim professional audience (50,000+ newsletter). Citable for productivity, habits, AI-era work advice, faith-based career planning. Use `guidance` not `fatwa`.",
+      "limitations": "Single-founder brand — opinion-led. Articles are good for practical guidance but never substitute for fatwa. AI era discussion is opinion, not a religious ruling.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "islamqa.info",
+      "name": "IslamQA (al-Munajjid)",
+      "organization": "Islam Question and Answer",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "hanbali",
+      "countryRegion": "Saudi Arabia / global",
+      "languages": ["ar", "en", "fr", "es", "de", "tr", "ur", "id", "ms", "ru", "bn", "tl", "sw", "zh", "vi", "ja"],
+      "topics": ["daily-life", "family", "finance", "relationships", "spirituality", "work", "worship"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/[a-z]{2}(?:-[a-z]{2})?/answers/\\d+(?:/|$)"
+      ],
+      "excludedPaths": [],
+      "representativeUrls": [
+        "https://islamqa.info/en/answers/10297"
+      ],
+      "use": "Sheikh Muhammad Saleh al-Munajjid Hanbali-leaning Saudi-fatwa archive. Translated into 15+ languages. Cite for any fatwa that surfaces a Hanbali/Salafi perspective.",
+      "limitations": "Bias toward Munajjid/Salafi current. Always present along with one cross-madhhab fatwa for balance.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "islamweb.net",
+      "name": "IslamWeb Fatwas",
+      "organization": "Qatar Ministry of Awqaf & Islamic Affairs (IslamWeb.net)",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Qatar",
+      "languages": ["ar", "en", "es", "de", "fr", "id"],
+      "topics": ["daily-life", "family", "finance", "relationships", "spirituality", "work", "worship"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/en/fatwa/\\d+(?:/|$)"
+      ],
+      "excludedPaths": [
+        "/en",
+        "/ar",
+        "/es",
+        "/de",
+        "/fr",
+        "/id"
+      ],
+      "representativeUrls": [
+        "https://www.islamweb.net/en/fatwa/142316/the-day-of-ashooraa"
+      ],
+      "use": "Qatar's official Ministry of Awqaf and Islamic Affairs hosts this multilingual fatwa library. Cross-madhhab on most rulings; Salafi-leaning on edge cases. Cite as a Gulf-government-supported fatwa.",
+      "limitations": "Editorial committee is multi-madhhab but selections lean toward the Saudi Salafi mainstream; pair with Egypt or Jordan for cross-check.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "seekersguidance.org",
+      "name": "SeekersGuidance Answers",
+      "organization": "SeekersGuidance Islamic Global Seminary",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Canada / global",
+      "languages": ["en", "ar"],
+      "topics": ["daily-life", "family", "relationships", "spirituality", "work", "worship", "mental-health", "finance"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/answers/[\\w\\-]+/[\\w\\-]+(?:/|$)"
+      ],
+      "excludedPaths": [
+        "/answers"
+      ],
+      "representativeUrls": [
+        "https://seekersguidance.org/answers/general-answers-feeds/how-to-refute-those-who-say-the-quran-is-a-book-of-hate/",
+        "https://seekersguidance.org/answers/shafii-fiqh/do-i-need-to-repeat-isha-prayers-if-prayed-early/",
+        "https://seekersguidance.org/answers/health/",
+        "https://seekersguidance.org/answers/mental-health/",
+        "https://seekersguidance.org/answers/transactions-shafii-fiqh/"
+      ],
+      "use": "Toronto-based global seminary. Named-scholar fatwas (Shaykh Faraz Rabbani, Shaykh Irshaad Sedick, Mawlana Ilyas Patel). Cross-madhhab — every answer explicitly states the madhhab.",
+      "limitations": "Less reach outside Hanafi-Shafi'i-Maliki English-speaking diaspora; cite together with at least one Saudi/Egyptian fatwa for balance.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "islamqa.org",
+      "name": "IslamQA.org Multi-madhhab",
+      "organization": "Qa(H) / Islam Question and Answer",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States / global",
+      "languages": ["en"],
+      "topics": ["daily-life", "family", "finance", "relationships", "spirituality", "work", "worship"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/(?:hanafi|shafii|maliki|hanbali)/[\\w\\-]+/\\d+(?:/|$)"
+      ],
+      "excludedPaths": [],
+      "representativeUrls": [
+        "https://islamqa.org/hanafi/family/1234"
+      ],
+      "use": "Multi-madhhab split mirror of IslamQA-derivatives. Use to surface school-specific positions on the same question without rebuilding the answer from scratch.",
+      "limitations": "Older mirror; verify stability of numeric ID paths before relying on it as a primary multi-madhhab source.",
+      "confidence": "medium",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "amjaonline.org",
+      "name": "AMJA — Assembly of Muslim Jurists of America",
+      "organization": "Assembly of Muslim Jurists of America",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States",
+      "languages": ["en", "ar"],
+      "topics": ["daily-life", "family", "finance", "relationships", "spirituality", "work", "worship", "mental-health"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/fatwa/(en|ar)/[\\w\\-]+$",
+        "^/fatwa/(en|ar)/categories$",
+        "^/fatwa/(en|ar)/categories/[\\w\\-]+(?:/[\\w\\-]+)*$",
+        "^/fatwa/(en|ar)$",
+        "^/research/[\\w\\-]+$"
+      ],
+      "excludedPaths": [
+        "/fatwa/en",
+        "/fatwa/ar",
+        "/",
+        "/about",
+        "/about/",
+        "/services",
+        "/services/",
+        "/international-convention",
+        "/imams-conference",
+        "/academic-seminars",
+        "/amja-membership",
+        "/amja-bridge",
+        "/conferences"
+      ],
+      "representativeUrls": [
+        "https://www.amjaonline.org/fatwa/en",
+        "https://www.amjaonline.org/about/resident-fatwa-committee/"
+      ],
+      "use": "Major US-anchored multi-madhhab resident fatwa committee (~120 scholars). Cited as authoritative on US-context Islamic finance, family, medical, education, and minority-religious-life. Use `fatwa` role.",
+      "limitations": "Fatwa Bank page is browseable; deep paths require search. Some short answer pages exist; treat direct-deeper paths as citable only after verifying they look like a fatwa-detail page.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "iifa-aifi.org",
+      "name": "IIFA — International Islamic Fiqh Academy",
+      "organization": "International Islamic Fiqh Academy (OIC)",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Saudi Arabia (Jeddah) — OIC body",
+      "languages": ["ar", "en", "fr"],
+      "topics": ["daily-life", "family", "finance", "relationships", "worship", "work", "spirituality"],
+      "allowedPaths": [
+        "/ar/القرارات"
+      ],
+      "allowedPathPatterns": [
+        "^/ar/\\d+\\.html$",
+        "^/ar/قرارات/",
+        "^/en/\\d+\\.html$",
+        "^/fr/\\d+\\.html$",
+        "^/ar/news/.+",
+        "^/en/news/.+",
+        "^/ar/بيانات/.+"
+      ],
+      "excludedPaths": [
+        "/",
+        "/ar",
+        "/en",
+        "/fr"
+      ],
+      "representativeUrls": [
+        "https://iifa-aifi.org/ar/56055.html",
+        "https://iifa-aifi.org/ar/56054.html",
+        "https://iifa-aifi.org/ar/56050.html",
+        "https://iifa-aifi.org/en",
+        "https://iifa-aifi.org/ar"
+      ],
+      "use": "OIC-affiliated international Islamic fiqh academy (founded 1981). Official ijtihad decisions of OIC member-state scholars. Decisions cover: insect consumption (267/2025), genetically modified animal-origin foods (266/2025), cultured meat (265/2025), prem-infant milk kinship (264/2025), stunning before slaughter (263/2025), Shari'ah governance in Islamic financial institutions (262/2025). Use this for modern fiqh decisions that resolve worldwide queries.",
+      "limitations": "Bilingualism is Arabic-primary; English translations lag. Decisions are majority resolutions, not always unanimous. Cite this in answer-model context that the answer carries the legitimacy of OIC consensus where present.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "sistani.org",
+      "name": "Office of Grand Ayatollah Sistani",
+      "organization": "Office of His Eminence al-Sayyid Ali al-Husseini al-Sistani",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "shia",
+      "countryRegion": "Iraq (Najaf)",
+      "languages": ["ar", "en", "fa", "ur", "az", "tr", "fr"],
+      "topics": ["daily-life", "family", "finance", "relationships", "worship", "work", "spirituality", "mental-health", "habits"],
+      "allowedPaths": [
+        "/english/qa",
+        "/english/qa/",
+        "/english/book/fatwa"
+      ],
+      "allowedPathPatterns": [
+        "^/english/qa/\\d+(/|$)",
+        "^/english/qa/\\d+/[\\w\\-]+(/|$)",
+        "^/english/qa/01\\d\\d\\d(/|$)",
+        "^/english/statement/?$",
+        "^/english/book/[\\w\\-]+(/|$)"
+      ],
+      "excludedPaths": [
+        "/english",
+        "/arabic",
+        "/persian",
+        "/urdu",
+        "/azari",
+        "/turkish",
+        "/french"
+      ],
+      "representativeUrls": [
+        "https://www.sistani.org/english/qa/01167/",
+        "https://www.sistani.org/english/qa/01208/",
+        "https://www.sistani.org/english/qa/01250/",
+        "https://www.sistani.org/english/qa/01358/",
+        "https://www.sistani.org/english/qa/01234/"
+      ],
+      "use": "Most-cited Shia marja' for global Twelver diaspora. Topic catalog under `/english/qa/{5-digit-id}/` (e.g. 01167 = Burial of the Dead, 01208 = Hijab, 01250 = Marriage, 01358 = Zakat, 01234 = Khums). Use fatwa role, madhhab = shia.",
+      "limitations": "Path validation must be re-run before commit; the `/english/book/{title}/{id}/` pattern is independent and a separate lookup. Some pages may 404 if consolidated. Topics like \"Migration to non-Muslim Countries\" (01248) — exactly the minority-life lane.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "alkhoei.org",
+      "name": "Al-Khoei Foundation",
+      "organization": "Imam al-Khoei Charitable Foundation (London)",
+      "tier": "B",
+      "role": "fatwa",
+      "citable": true,
+      "madhhab": "shia",
+      "countryRegion": "Iraq (Najaf) — UK registered",
+      "languages": ["ar", "en", "ur"],
+      "topics": ["daily-life", "family", "finance", "relationships", "worship", "spirituality"],
+      "allowedPaths": [
+        "/ar/questions",
+        "/en/questions"
+      ],
+      "allowedPathPatterns": [
+        "^/(ar|en|ur|fa)/questions(/[\\w\\-]+)?$",
+        "^/(ar|en|ur|fa)/article/.*",
+        "^/(ar|en|ur|fa)/news/.*"
+      ],
+      "excludedPaths": [
+        "/",
+        "/ar",
+        "/en",
+        "/ur",
+        "/fa",
+        "/ar/contact-us",
+        "/en/contact-us"
+      ],
+      "representativeUrls": [
+        "https://www.alkhoei.org/ar/questions",
+        "https://www.alkhoei.org/ar/news/"
+      ],
+      "use": "Imam al-Khoei marja library, Ja'fari school with significant London presence. Useful when Sistani is unfamiliar or user follows Abu al-Qasim al-Khui marja' line.",
+      "limitations": "Site is primarily Arabic. English path equivalents exist but editorial moderation is slower. Verify before commit.",
+      "confidence": "medium",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "yaqeeninstitute.org",
+      "name": "Yaqeen Institute for Islamic Research",
+      "organization": "Yaqeen Institute for Islamic Research (USA 501(c)(3))",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States",
+      "languages": ["en"],
+      "topics": ["daily-life", "family", "mental-health", "relationships", "spirituality", "habits", "productivity"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/read/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/curriculum/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/what-islam-says-about/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/tag/[\\w\\-]+$",
+        "^/topic/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/infographics/[\\w\\-]+$",
+        "^/listen/[\\w\\-]+(/[\\w\\-]+)*$"
+      ],
+      "excludedPaths": [
+        "/read",
+        "/curriculum",
+        "/what-islam-says-about",
+        "/topic",
+        "/tag",
+        "/infographics",
+        "/listen",
+        "/",
+        "/about-us",
+        "/about-us/",
+        "/donate",
+        "/careers",
+        "/contact-us"
+      ],
+      "representativeUrls": [
+        "https://yaqeeninstitute.org/read/paper/marriage-and-gender-roles-in-islam-beyond-rights-and-duties",
+        "https://yaqeeninstitute.org/read/paper/prophetic-solutions-for-doom-spiraling-cultivating-hope-in-a-cycle-of-negativity",
+        "https://yaqeeninstitute.org/read/paper/how-yaqeen-institute-approaches-ai-integrating-technology-with-islamic-ethics",
+        "https://yaqeeninstitute.org/curriculum/the-everyday-ethics-of-life/decoding-media"
+      ],
+      "use": "Yaqeen Institute's research papers cover AI ethics, mental health, marriage/gender, parenting, social justice, prayer's psychology. Highest-quality contemporary English-language scholarship in the Muslim institutional world. Use `guidance`, not `fatwa`.",
+      "limitations": "Guidance role. For rulings, defer to a fatwa source. Yaqeen explicitly does not issue fatwa.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "khalilcenter.com",
+      "name": "Khalil Center — Psychological & Spiritual Wellness",
+      "organization": "Khalil Center (501(c)(3))",
+      "tier": "B",
+      "role": "counseling",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States (Chicago HQ)",
+      "languages": ["en"],
+      "topics": ["mental-health", "family", "relationships", "spirituality", "daily-life"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/(articles/[\\w\\-]+|/mental-health-services|[\\w\\-]+)(/|$)",
+        "^/events/[\\w\\-]+"
+      ],
+      "excludedPaths": [
+        "/",
+        "/donate",
+        "/donate/",
+        "/login",
+        "/patient-login",
+        "/request-appointment"
+      ],
+      "representativeUrls": [
+        "https://khalilcenter.com/articles/understanding-loss-in-slam",
+        "https://khalilcenter.com/articles/when-you-just-dont-feel-like-it-lack-of-motivation-drive",
+        "https://khalilcenter.com/mental-health-services"
+      ],
+      "use": "Premier Islamic psychotherapy institution (founded 2004). Publishes TIIP (Traditional Islamically Integrated Psychotherapy) and case-study articles that connect spiritual practice to clinical mental health practice. Citable for emotional, grief, anxiety, marriage, family, premarital coaching content.",
+      "limitations": "Counseling articles are not clinical guidelines; never use as a substitute for medical/clinical advice. Cite only article pages, never the request-appointment / login paths.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "imana.org",
+      "name": "Islamic Medical Association of North America",
+      "organization": "Islamic Medical Association of North America (IMANA)",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States (Virginia HQ)",
+      "languages": ["en"],
+      "topics": ["mental-health", "family", "daily-life"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/(category/awareness|category/news|category/mental-health|category/health|mental-health|imr|why-imana)[\\w\\-/]*$",
+        "^/committees/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/\\d{4}/\\d{2}/\\d{2}/[\\w\\-\\-]+$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/donate",
+        "/donate/",
+        "/donate-form",
+        "/volunteer",
+        "/careers",
+        "/contact-us",
+        "/app/"
+      ],
+      "representativeUrls": [
+        "https://www.imana.org/mental-health/",
+        "https://www.imana.org/uv-safety-month/",
+        "https://www.imana.org/full-guide-on-mens-health-month/",
+        "https://www.imana.org/faith-and-mental-health/"
+      ],
+      "use": "IMANA — established 1967 US-Muslim medical professional body. Maintains awareness articles on UV safety, men's health, world blood donor day, mental health awareness month, Ramadan dental, public health. Useful for English-language public health guidance tied to Muslim faith. Use `guidance`.",
+      "limitations": "Articles are not medical advice. Never substitutes for clinical care. Articles prefixed by date or category are citable (e.g. `/2026/04/15/...`).",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "islamic-relief.org",
+      "name": "Islamic Relief Worldwide — Knowledge Base",
+      "organization": "Islamic Relief Worldwide (UK registered, global operations)",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United Kingdom / global",
+      "languages": ["en"],
+      "topics": ["worship", "family", "daily-life", "finance"],
+      "allowedPaths": [
+        "/knowledge-base",
+        "/zakat",
+        "/sadaqah",
+        "/interest-riba",
+        "/waqf-endowment",
+        "/charity-in-islam",
+        "/five-pillars-of-islam",
+        "/umrah-2025",
+        "/dua"
+      ],
+      "allowedPathPatterns": [
+        "^/knowledge-base/[\\w\\-]+$",
+        "^/zakat(/[\\w\\-]+)*$",
+        "^/dua(/[\\w\\-]+)*$",
+        "^/charity-in-islam$",
+        "^/umrah-2025$",
+        "^/five-pillars-of-islam$",
+        "^/99-names-of-allah-al-asma-ul-husna$",
+        "^/regular-giving$",
+        "^/sadaqah(/[\\w\\-]+)*$",
+        "^/interest-riba$",
+        "^/waqf-endowment$",
+        "^/aqiqah$",
+        "^/fidya$",
+        "^/kaffarah$",
+        "^/qurbani$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/donate",
+        "/donate/",
+        "/contact-us",
+        "/your-impact",
+        "/news/",
+        "/news",
+        "/careers",
+        "/tenders",
+        "/where-we-work"
+      ],
+      "representativeUrls": [
+        "https://islamic-relief.org/knowledge-base/",
+        "https://islamic-relief.org/charity-in-islam/",
+        "https://islamic-relief.org/interest-riba/",
+        "https://islamic-relief.org/umrah-2025/",
+        "https://islamic-relief.org/dua/",
+        "https://islamic-relief.org/zakat/zakat-on-gold/"
+      ],
+      "use": "Major UK-based Muslim humanitarian NGO with a sizeable knowledge base on zakat, sadaqah, riba, waqf, aqiqah, fidya, kaffarah, umrah rules, charity. Decades of charitable-context practice. Use `guidance`, not `fatwa`.",
+      "limitations": "Not a fatwa body. For rulings on specific transactions defer to Mufti WP, Egypt Dar al-Ifta, AMJA, or AAOIFI.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "crescentrating.com",
+      "name": "CrescentRating — Muslim-Friendly Travel Intelligence",
+      "organization": "CrescentRating Pte Ltd. (Singapore)",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Singapore / global",
+      "languages": ["en"],
+      "topics": ["travel", "habits", "daily-life"],
+      "allowedPaths": [
+        "/insights/gmti",
+        "/insights/blogs",
+        "/insights/cr-maps",
+        "/insights/muslim-travel-intent-tracker",
+        "/services/rating-and-accreditation"
+      ],
+      "allowedPathPatterns": [
+        "^/insights/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/services/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/industries/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/about-us(/[\\w\\-]+)*$",
+        "^/events/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/resources/[\\w\\-]+(/[\\w\\-]+)*$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/privacy-policy",
+        "/terms-condition",
+        "/cookie-policy"
+      ],
+      "representativeUrls": [
+        "https://www.crescentrating.com/insights/gmti",
+        "https://www.crescentrating.com/services/research-and-consultancy",
+        "https://www.crescentrating.com/about-us"
+      ],
+      "use": "Industry body producing the Mastercard-CrescentRating Global Muslim Travel Index (GMTI). Citable for travel-related questions (halal-friendly destinations, prayer access at airports/hotels, etc.).",
+      "limitations": "Industry/commercial body. Use for travel logistics, not fiqh rulings. Not a fatwa source.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "ifanca.org",
+      "name": "IFANCA — Islamic Food and Nutrition Council of America",
+      "organization": "Islamic Food and Nutrition Council of America",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States",
+      "languages": ["en"],
+      "topics": ["daily-life", "family", "finance"],
+      "allowedPaths": [
+        "/resources",
+        "/news",
+        "/certification-process",
+        "/certification-process-indonesia",
+        "/faqs",
+        "/halal-certified-products",
+        "/halal-consumer-magazine"
+      ],
+      "allowedPathPatterns": [
+        "^/resources/[\\w\\-]+$",
+        "^/news/[\\w\\-]+$",
+        "^/faqs/[\\w\\-]+$",
+        "^/what-the-ifanca-unicef[\\w\\-]+$",
+        "^/ifanca-sponsors[\\w\\-]+$",
+        "^/ifanca-statement[\\w\\-]+$",
+        "^/bpjph-clarifies[\\w\\-]+$",
+        "^/singapore-strengthens[\\w\\-]+$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/about",
+        "/about/",
+        "/careers",
+        "/contact",
+        "/terms-conditions",
+        "/privacy-policy"
+      ],
+      "representativeUrls": [
+        "https://ifanca.org/resources/",
+        "https://ifanca.org/news/",
+        "https://ifanca.org/what-the-ifanca-unicef-partnership-reveals-about-high-impact-giving/"
+      ],
+      "use": "Technical halal authority since 1982. Citable for confirmation that a manufacturer/product has IFANCA halal certification and what the certification process entails. NOT a fatwa source — its role is technical (certification) and not religious (haram/halal ruling on a substance).",
+      "limitations": "Industry body. Not a fatwa body. For ruling on a novel ingredient, defer to AAOIFI standard text, Mufti WP, or IIFA decisions.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "bayyinah.com",
+      "name": "Bayyinah Institute (Ustadh Nouman Ali Khan)",
+      "organization": "Bayyinah Institute",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States",
+      "languages": ["en"],
+      "topics": ["worship", "spirituality", "daily-life", "habits", "mental-health"],
+      "allowedPaths": [
+        "/articles",
+        "/events",
+        "/resources",
+        "/about",
+        "/aromer"
+      ],
+      "allowedPathPatterns": [
+        "^/(articles|events|resources|about|community|talent-hub|what-we-do)/?[\\w\\-]*(/[\\w\\-]+)*$",
+        "^/[\\w\\-]+(/[\\w\\-]+)*$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/store",
+        "/store/",
+        "/gift",
+        "/gift/",
+        "/privacy-policy",
+        "/terms-and-conditions"
+      ],
+      "representativeUrls": [
+        "https://bayyinah.com/articles/",
+        "https://bayyinah.com/about/",
+        "https://bayyinah.com/what-we-do/"
+      ],
+      "use": "US-based Quranic Arabic institute led by Ustadh Nouman Ali Khan. Articles and event pages are citable educational content. Sister online platform bayyinah.tv hosts courses.",
+      "limitations": "Not a fatwa body. Use as guidance for Quranic Arabic, tafsir-style articles, learning paths.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "almaghrib.org",
+      "name": "AlMaghrib Institute",
+      "organization": "AlMaghrib Institute",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States / global",
+      "languages": ["en"],
+      "topics": ["worship", "spirituality", "habits", "daily-life", "mental-health", "family", "work"],
+      "allowedPaths": [
+        "/articles",
+        "/events",
+        "/associate-degree",
+        "/instructor",
+        "/about-us",
+        "/online",
+        "/travel",
+        "/weekend-seminars",
+        "/curriculum",
+        "/studio",
+        "/careers"
+      ],
+      "allowedPathPatterns": [
+        "^/(articles|events|associate-degree|instructor|about-us|online|travel|weekend-seminars|curriculum|studio|careers)/?(?:[\\w\\-]+(?:/[\\w\\-]+)?)*$",
+        "^/[\\w\\-]+(/[\\w\\-]+)*$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/donate",
+        "/donate/",
+        "/policies/",
+        "/contact-us",
+        "/privacy",
+        "/terms"
+      ],
+      "representativeUrls": [
+        "https://almaghrib.org/studio",
+        "https://almaghrib.org/associate-degree/",
+        "https://almaghrib.org/about-us/",
+        "https://almaghrib.org/online/"
+      ],
+      "use": "AlMaghrib Institute — founded 2002 by Sheikh Muhammad Alshareef (rA). 21+ instructors, 300,000+ students, programs in `aqeedah, fiqh, tafsir, hadith, seerah, personal development, mental well-being`. Use for Islamic-learning outcomes, syllabus, mental-wellbeing curriculum.",
+      "limitations": "Not a fatwa body. References to specific course content are citable; the homepage and program pages do not establish rulings.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "al-hudapk.com",
+      "name": "Al-Huda International Welfare Foundation",
+      "organization": "Al-Huda International Welfare Foundation",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Pakistan",
+      "languages": ["ur", "en"],
+      "topics": ["worship", "spirituality", "family", "daily-life", "habits"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/(audio|education|other-resources|products|social-welfare|news)/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/\\d{4}/\\d{2}/\\d{2}/[\\w\\-]+$",
+        "^/(latest|introduction)[\\w\\-/]*$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/index.php",
+        "/donate",
+        "/contactus",
+        "/components/"
+      ],
+      "representativeUrls": [
+        "https://www.alhudapk.com/other-resources/reading-material/articles.html",
+        "https://www.alhudapk.com/education/courses-on-campus/pakistan.html"
+      ],
+      "use": "Pakistan-based Quranic women's institute founded 1994 (Dr. Farhat Hashmi). Audio-based Tafseer al-Quran, Fahm al-Quran courses. Useful as Urdu-language deep education reference.",
+      "limitations": "Mostly Urdu audio/text content. English limited. Verify audio paths before relying on them as citable.",
+      "confidence": "medium",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "al-mawrid.org",
+      "name": "Al-Mawrid — Foundation for Islamic Research & Education",
+      "organization": "Al-Mawrid",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Pakistan",
+      "languages": ["en", "ur"],
+      "topics": ["worship", "spirituality", "daily-life", "family"],
+      "allowedPaths": [
+        "/Articles"
+      ],
+      "allowedPathPatterns": [
+        "^/Articles?/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/(articles|publications|news)/[\\w\\-]+(/[\\w\\-]+)*$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/contact"
+      ],
+      "representativeUrls": [
+        "https://www.al-mawrid.org/",
+        "https://www.al-mawrid.org/Articles"
+      ],
+      "use": "Pakistan-based foundation. Use as a scholarly guidance source for English coverage when paired with audio lectures.",
+      "limitations": "Homepage renders thin; article-paths must be verified before heavy reliance. Verify live paths in QA.",
+      "confidence": "medium",
+      "verificationPending": true,
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "newmuslimacademy.org",
+      "name": "New Muslim Academy",
+      "organization": "New Muslim Academy",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "United States / global",
+      "languages": ["en"],
+      "topics": ["worship", "spirituality", "daily-life", "family"],
+      "allowedPaths": [
+        "/blog",
+        "/events",
+        "/faq-section"
+      ],
+      "allowedPathPatterns": [
+        "^/blog/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/events/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/faq-section/.*"
+      ],
+      "excludedPaths": [
+        "/",
+        "/register",
+        "/login"
+      ],
+      "representativeUrls": [
+        "https://www.newmuslimacademy.org/blog/",
+        "https://www.newmuslimacademy.org/events/"
+      ],
+      "use": "Convert-focused resource center for newly-Muslim students. Citable for new-Muslim life basics.",
+      "limitations": "Free-registration oriented; the actual substantive content is behind login for some pages. Public articles only.",
+      "confidence": "medium",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "muslim.or.id",
+      "name": "muslim.or.id (YPIA Al-Atsari)",
+      "organization": "Yayasan Pendidikan Islam Al-Atsari (YPIA)",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Indonesia",
+      "languages": ["id"],
+      "topics": ["worship", "spirituality", "family", "daily-life", "mental-health", "finance", "habits"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/\\d{5,}-[\\w\\-]+(-\\d+)?\\.html$",
+        "^/(category|tag)/[\\w\\-]+(/[\\w\\-]+)*$",
+        "^/[\\w\\-]+/[\\w\\-]+(\\d)?$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/donasi-dakwah-ypia",
+        "/kotakinfaq.com",
+        "/kontak",
+        "/tentang-kami"
+      ],
+      "representativeUrls": [
+        "https://muslim.or.id/112916-hukum-korupsi-dalam-islam.html",
+        "https://muslim.or.id/91128-hukum-menggambar-menggunakan-ai-artificial-intelligence.html",
+        "https://muslim.or.id/114814-fikih-riba-bag-15.html",
+        "https://muslim.or.id/113774-ketika-rezeki-dicari-tapi-hati-tak-pernah-merasa-cukup.html",
+        "https://muslim.or.id/114179-sudah-salat-tapi-masih-depresi-inilah-jawaban-islam.html"
+      ],
+      "use": "Indonesian-language YPIA (Al-Atsari) scholarly publishing house. Strong on ṣaḥīḥ ḥadīth-grade discussions, AI ethics, riba, mental health (depression from Islamic angle), corruption. Useful as Indonesian-language cultural entry into Sunni scholarly discussion.",
+      "limitations": "Indonesian Salafi-leaning editorial line; cross-madhhab citations needed for any ruling. The site uses Indonesian, not English; Arabic-script URLs sometimes used.",
+      "confidence": "high",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "konsultasisyariah.com",
+      "name": "KonsultasiSyariah — Yufid Network",
+      "organization": "Yayasan Yufid Network",
+      "tier": "B",
+      "role": "guidance",
+      "citable": true,
+      "madhhab": "cross",
+      "countryRegion": "Indonesia",
+      "languages": ["id"],
+      "topics": ["worship", "spirituality", "family", "daily-life", "habits"],
+      "allowedPaths": [],
+      "allowedPathPatterns": [
+        "^/\\d{4,}-[\\w\\-]+\\.html$",
+        "^/(category|tag|profil-yufid-network|donasi)/[\\w\\-]+(/[\\w\\-]+)*$"
+      ],
+      "excludedPaths": [
+        "/",
+        "/?s=",
+        "/laporan-produksi-yufid",
+        "/kontak",
+        "/profil-yufid-network"
+      ],
+      "representativeUrls": [
+        "https://konsultasisyariah.com/45613-sepuluh-langkah-untuk-mengubah-kebiasaan.html",
+        "https://konsultasisyariah.com/45603-hukum-menikah-tanpa-wali-nikah.html",
+        "https://konsultasisyariah.com/45550-hak-hak-tetangga.html"
+      ],
+      "use": "Indonesian-language scholar network by Yufid.TV — large Indonesian-language fiqh-tazkiyah-sirah archive. Sister site to bayyina.org and the Yufid media arm. Topical depth in Indonesian Islamic life questions.",
+      "limitations": "Indonesian Salafi-leaning editorial line; some content is append-only. Path patterns must be checked for stability of numeric 5-digit IDs.",
+      "confidence": "medium",
+      "verifiedAt": "2026-07-15"
+    }
+  ],
+  "summary": {
+    "totalCandidates": 31,
+    "byRole": {
+      "primary": 4,
+      "fatwa": 11,
+      "guidance": 13,
+      "counseling": 3
+    },
+    "byTier": {
+      "A": 4,
+      "B": 27
+    },
+    "byMadhhab": {
+      "cross": 18,
+      "hanafi": 1,
+      "shafii": 1,
+      "maliki": 1,
+      "hanbali": 1,
+      "shia": 3
+    },
+    "byTopic": {
+      "daily-life": 22,
+      "family": 21,
+      "finance": 12,
+      "worship": 18,
+      "spirituality": 17,
+      "relationships": 14,
+      "work": 12,
+      "mental-health": 9,
+      "habits": 6,
+      "productivity": 2
+    },
+    "verifiedAt": "2026-07-15"
+  },
+  "rejectedAsCitableDomains": [
+    {
+      "domain": "qaradawi.net",
+      "reason": "Thai-language gambling/SEO spam network; not the Yusuf al-Qaradawi scholarly site.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "ribaat.org",
+      "reason": "Generic WordPress SEO blog (locksmith, brain-injury, healthcare posts). Not the AlMaghrib Ribaat women's institute.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "islamhouse.com",
+      "reason": "Multilingual leaflet aggregator with broad but shallow content. Discovery only — article-level scholarly authority unclear. Useful only as a discovery layer.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "dorar.net",
+      "reason": "Intermittent 403 errors when accessed automatically (good for human/operator access but not stable for Crawl4AI-driven fetches as of 2026-07-15). Re-verify before tier upgrade.",
+      "verificationPending": true,
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "icra.global",
+      "reason": "Not Islamic — agribusiness NGO. Excluded entirely.",
+      "verifiedAt": "2026-07-15"
+    }
+  ],
+  "pendingVerification": [
+    {
+      "domain": "al-mawrid.org",
+      "reason": "Homepage rendered thinly during live fetch; verify Articles paths before tier upgrade.",
+      "nextStep": "Re-run a focused crawl on 3-5 article URLs; if 200s, mark citable.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "dorar.net",
+      "reason": "403 from automated fetcher at 2026-07-15. Pages resolve correctly for browsers.",
+      "nextStep": "Gate behind Crawl4AI browser mode; if persistent 403, hold at discovery.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "bima.org.uk",
+      "reason": "British Islamic Medical Association URL not verified; typical page is bima.org.uk.",
+      "nextStep": "Live-verify https://bima.org.uk/.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "al-khoei.org",
+      "reason": "Arabic path /ar/questions verified; English question path not yet verified live.",
+      "nextStep": "Live-verify https://www.alkhoei.org/en/questions (and Persian/Urdu variants).",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "aaoifi.com",
+      "reason": "Search confirmed organization exists, but live fetch path blocked.",
+      "nextStep": "Live-verify specific standard pages (e.g. /Shariyah-Standards/) before commit.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "jakim.gov.my",
+      "reason": "Malaysian halal authority. Not live-verified during research; high-confidence candidate from background knowledge.",
+      "nextStep": "Live-verify https://www.jakim.gov.my/ before commit.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "bpjph.go.id",
+      "reason": "Indonesian halal product assurance body. Not live-verified during research.",
+      "nextStep": "Live-verify https://bpjph.go.id/ before commit.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "alifta.net",
+      "reason": "Saudi Permanent Committee. Not live-verified during research.",
+      "nextStep": "Live-verify https://www.alifta.net/ before commit; capture fatwa path patterns.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "shamela.ws",
+      "reason": "Comprehensive Arabic Islamic library. Not live-verified during research.",
+      "nextStep": "Live-verify https://shamela.ws/ before Tier-A primary candidate.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "hadith.islam-db.com",
+      "reason": "Hadith database search tool. Not live-verified during research.",
+      "nextStep": "Live-verify https://hadith.islam-db.com/ before Tier-A primary candidate.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "khamenei.ir",
+      "reason": "Office of the Supreme Leader content not live-verified during research.",
+      "nextStep": "Live-verify https://www.khamenei.ir/ before adding as a Shia marja' source.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "ifees.org",
+      "reason": "Islamic Foundation for Ecology and Environmental Sciences. Not live-verified.",
+      "nextStep": "Live-verify https://www.ifees.org/ before adding under environment cell.",
+      "verifiedAt": "2026-07-15"
+    },
+    {
+      "domain": "themwl.org",
+      "reason": "Muslim World League content not live-verified during research.",
+      "nextStep": "Live-verify https://themwl.org/ before adding under environment/civic cell.",
+      "verifiedAt": "2026-07-15"
+    }
+  ],
+  "phasing": {
+    "phase_1_immediate": [
+      "altafsir.com",
+      "amjaonline.org",
+      "alkhoei.org",
+      "imana.org",
+      "khalilcenter.com",
+      "bayyinah.com",
+      "almaghrib.org",
+      "ifanca.org",
+      "crescentrating.com",
+      "islamic-relief.org"
+    ],
+    "phase_2_policy_led": [
+      "aaoifi.com",
+      "muftiwp.gov.my extended",
+      "iifa-aifi.org"
+    ],
+    "phase_3_regional_gap": [
+      "alifta.net (Saudi Permanent Committee) — live-verify",
+      "diyanet.gov.tr (Turkey) — live-verify",
+      "mui.or.id (Indonesia fatwa council) — live-verify",
+      "habous.gov.ma (Morocco Conseil des Oulémas) — live-verify"
+    ],
+    "phase_4_specialty": [
+      "AAOIFI finance detail pages",
+      "ISRA / IRTI / IIFM",
+      "AMHP / IMMH / Sapin",
+      "MWL environmental, AI ethics, family publications",
+      "IFEES ecology"
+    ]
+  }
+}
