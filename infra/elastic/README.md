@@ -36,6 +36,11 @@ networking at `http://elastic.railway.internal:9200`. Elasticsearch security is
 disabled because traffic remains inside the project network; never add a public
 domain or TCP proxy without first enabling authentication and TLS.
 
+Set `RAILWAY_DOCKERFILE_PATH=/infra/elastic/Dockerfile` on the Railway service so
+deployments connected to the monorepo build this image. The entrypoint prepares
+Railway's root-owned volume before the upstream Elasticsearch entrypoint drops
+to its unprivileged runtime user.
+
 ## Index convention
 
 Create versioned indices as `sirathic-passages-{language}-{version}`, for example

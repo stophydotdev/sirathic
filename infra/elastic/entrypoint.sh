@@ -3,6 +3,10 @@ set -euo pipefail
 
 readonly elasticsearch_url="${ELASTICSEARCH_URL:-http://127.0.0.1:9200}"
 
+if [[ "$(id -u)" == "0" ]]; then
+  chown -R 1000:0 /usr/share/elasticsearch/data
+fi
+
 /usr/local/bin/docker-entrypoint.sh &
 elasticsearch_pid=$!
 
