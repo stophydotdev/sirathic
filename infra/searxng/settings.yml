@@ -1,0 +1,64 @@
+use_default_settings:
+  engines:
+    keep_only:
+      - bing
+      - startpage
+      - yep
+      - mwmbl
+      - wiby
+      - yandex
+
+general:
+  instance_name: "sirathic-searxng"
+
+search:
+  formats:
+    - json
+
+outgoing:
+  # Sirathic is an interactive answer engine. Return the engines that answered
+  # quickly instead of making the caller wait several seconds for a slow exit.
+  request_timeout: 1.0
+  max_request_timeout: 1.2
+  extra_proxy_timeout: 0
+  pool_connections: 50
+  pool_maxsize: 20
+  keepalive_expiry: 30.0
+  enable_http2: true
+
+engines:
+  - name: bing
+    disabled: false
+    timeout: 1.1
+    retries: 0
+    retry_on_http_error: [403, 429]
+  - name: startpage
+    disabled: false
+    # Startpage often challenges datacenter exits. Keep it as a useful optional
+    # contributor, but never let it dominate end-to-end search latency.
+    timeout: 1.1
+    retries: 0
+    retry_on_http_error: [403, 429]
+  - name: yep
+    disabled: false
+    timeout: 1.1
+    retries: 0
+  - name: mwmbl
+    disabled: false
+    timeout: 1.1
+    retries: 0
+  - name: wiby
+    disabled: false
+    timeout: 1.1
+    retries: 0
+  - name: yandex
+    disabled: false
+    timeout: 1.1
+    retries: 0
+
+server:
+  bind_address: "0.0.0.0"
+  port: 8080
+  method: "GET"
+  limiter: false
+  public_instance: false
