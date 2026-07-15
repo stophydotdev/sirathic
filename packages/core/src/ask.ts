@@ -10,8 +10,8 @@ import type { AskEventEmitter, AskOptions, AskResult, GatherResult, PublicSearch
 
 const RESEARCH_POLICIES: Record<ResearchMode, ResearchPolicy> = {
   speed: { queryCount: 3, initialFetches: 3, extraFetches: 0, maxSteps: 2 },
-  balanced: { queryCount: 3, initialFetches: 3, extraFetches: 2, maxSteps: 3 },
-  quality: { queryCount: 5, initialFetches: 3, extraFetches: 2, maxSteps: 3 },
+  balanced: { queryCount: 5, initialFetches: 6, extraFetches: 2, maxSteps: 3 },
+  quality: { queryCount: 5, initialFetches: 8, extraFetches: 2, maxSteps: 3 },
 }
 
 const NO_EVIDENCE_ANSWER = "I couldn't find enough relevant, trusted sources to answer this question. Try rephrasing it or use quality mode."
@@ -28,7 +28,7 @@ const RESEARCH_AGENT_PROMPT = `You are Sirathic's research agent. Before any sea
 
 Requirements:
 - Preserve the user's exact subject and intent in every query.
-- Make each query distinct: primary Qur'an evidence, authentic hadith evidence, and the appropriate scholarly or practical expert lane. For quality mode, also include a broad query and a second expert viewpoint.
+- Make each query distinct. With three queries use primary Qur'an evidence, authentic hadith evidence, and the appropriate expert lane. With five queries also include a broad query and a second expert viewpoint.
 - Put at most one site:domain filter in each query. Use quran.com for Qur'an, sunnah.com for hadith, and a relevant trusted scholarly domain for expert queries.
 - Related searches must be concise standalone questions, directly relevant, and must not repeat the original question.
 - Do not answer the question. Return only the requested structured plan.`
@@ -47,8 +47,8 @@ export function searchDeadline(mode: ResearchMode): number {
 
 export function answerTokenBudget(mode: ResearchMode): number {
   if (mode === "speed") return 600
-  if (mode === "quality") return 1_600
-  return 900
+  if (mode === "quality") return 2_200
+  return 1_600
 }
 
 async function generateResearchPlan(
@@ -224,6 +224,13 @@ async function enforceCitations(
   const validation = validateCitations(answer, sources)
   if (validation.valid && hasPerplexityAnswerShape(answer)) return answer
 
+  const groundedDraft = normalizePerplexityAnswerShape(stripInvalidCitationPassages(answer, validation))
+  if (
+    groundedDraft.length >= 20
+    && validateCitations(groundedDraft, sources).valid
+    && hasPerplexityAnswerShape(groundedDraft)
+  ) return groundedDraft
+
   const repair = await generateAnswer(
     question,
     sources,
@@ -251,18 +258,14 @@ async function enforceCitations(
 }
 
 function resultMetadata(sources: Source[], research: ResearchTrace, relatedQuestions: string[]) {
-  const candidates = new Map(research.sources.map((candidate) => [candidate.url, candidate]))
-  const searchResults: PublicSearchResult[] = sources.map((source) => {
-    const candidate = candidates.get(source.url)
-    return {
-      title: candidate?.title ?? source.label,
-      url: source.url,
-      date: candidate?.publishedDate ?? null,
-      last_updated: null,
-      snippet: candidate?.snippet ?? source.text.slice(0, 600),
-      source: "web",
-    }
-  })
+  const searchResults: PublicSearchResult[] = research.sources.map((candidate) => ({
+    title: candidate.title,
+    url: candidate.url,
+    date: candidate.publishedDate ?? null,
+    last_updated: null,
+    snippet: candidate.snippet,
+    source: "web",
+  }))
   return {
     citations: sources.map((source) => source.url),
     search_results: searchResults,

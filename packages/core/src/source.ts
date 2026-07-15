@@ -1,6 +1,6 @@
 import type { RawSource, Source, WebHit } from "./types"
 
-const MAX_SOURCES = 5
+const MAX_SOURCES = 10
 const MAX_SOURCE_CHARS = 4_000
 
 function sourceIdentity(url: string) {

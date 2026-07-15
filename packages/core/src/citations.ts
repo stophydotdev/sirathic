@@ -67,11 +67,16 @@ export function normalizePerplexityAnswerShape(answer: string): string {
   while (blocks.length > 1 && blocks[0]?.split("\n").every((line) => isStructuralMarkdown(line.trim()))) blocks.shift()
   if (blocks.length === 0) return ""
 
-  const firstLines = (blocks[0] ?? "").split("\n")
-  firstLines[0] = (firstLines[0] ?? "")
-    .replace(/^\s*(?:[-*+]\s+|\d+[.)]\s+)/u, "")
-    .replace(/^\*{1,2}([^*]+)\*{1,2}:?/u, "$1:")
-  blocks[0] = firstLines.join("\n")
+  const firstLine = (blocks[0] ?? "").split("\n")[0] ?? ""
+  const startedAsList = /^\s*(?:[-*+]\s+|\d+[.)]\s+)/u.test(firstLine)
+  const indexes = startedAsList ? blocks.keys() : [0].values()
+  for (const index of indexes) {
+    const lines = (blocks[index] ?? "").split("\n")
+    lines[0] = (lines[0] ?? "")
+      .replace(/^\s*(?:[-*+]\s+|\d+[.)]\s+)/u, "")
+      .replace(/^\*{1,2}([^*]+)\*{1,2}:?/u, "$1:")
+    blocks[index] = lines.join("\n")
+  }
   return blocks.join("\n\n")
 }
 

@@ -375,7 +375,7 @@ export function planResearchQueries(question: string, mode: ResearchMode): strin
   const [quranQuery, hadithQuery] = primaryEvidenceQueries(subject)
   const lane = expertLane(subject)
   const primaryExpertQuery = expertQuery(subject, lane, lane.primaryDomain)
-  if (mode !== "quality") {
+  if (mode === "speed") {
     if (isBiographyQuestion(subject)) return [subject, quranQuery, primaryExpertQuery]
     return [quranQuery, hadithQuery, primaryExpertQuery]
   }
@@ -387,7 +387,7 @@ export function buildPrioritySearchQueries(query: string): string[] {
 }
 
 export function routeSearchQueries(queries: string[], question = queries[0] ?? ""): string[] {
-  const planned = planResearchQueries(question, queries.length > 3 ? "quality" : "balanced")
+  const planned = planResearchQueries(question, queries.length > 3 ? "balanced" : "speed")
   return planned.slice(0, queries.length)
 }
 
@@ -459,15 +459,8 @@ export function rankSearchCandidates(
 
   const relevant = ranked.filter((candidate) => candidate.relevance >= 12)
   if (relevant.length > 0) {
-    const firstByDomain = new Map<string, SearchCandidate>()
-    for (const candidate of relevant) {
-      if (!firstByDomain.has(candidate.domain)) firstByDomain.set(candidate.domain, candidate)
-    }
-    const diverse = relevant.filter((candidate) => firstByDomain.get(candidate.domain) === candidate)
-    const selected = new Set(diverse.map((candidate) => candidate.url))
-    const remainingRelevant = relevant.filter((candidate) => !selected.has(candidate.url))
     const relevantUrls = new Set(relevant.map((candidate) => candidate.url))
-    return [...diverse, ...remainingRelevant, ...ranked.filter((candidate) => !relevantUrls.has(candidate.url))]
+    return [...relevant, ...ranked.filter((candidate) => !relevantUrls.has(candidate.url))]
   }
 
   const firstByKind = new Map<ResearchSource, SearchCandidate>()

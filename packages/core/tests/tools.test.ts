@@ -79,27 +79,27 @@ describe("Islamic research tool selection", () => {
       "practical Islamic guidance how should a Muslim plan their day site:productivemuslim.com",
     ])
 
-    expect(planResearchQueries("In the Hanafi school, does bleeding invalidate wudu?", "balanced")[2]).toBe(
+    expect(planResearchQueries("In the Hanafi school, does bleeding invalidate wudu?", "balanced")[3]).toBe(
       "Hanafi ruling In the Hanafi school, does bleeding invalidate wudu? site:islamqa.org",
     )
-    expect(planResearchQueries("I feel overwhelmed by anxiety. What should I do?", "balanced")[2]).toContain(
+    expect(planResearchQueries("I feel overwhelmed by anxiety. What should I do?", "balanced")[3]).toContain(
       "site:aboutislam.net",
     )
-    expect(planResearchQueries("Is a marriage valid without a wali?", "balanced")[2]).toBe(
+    expect(planResearchQueries("Is a marriage valid without a wali?", "speed")[2]).toBe(
       "scholarly ruling Is a marriage valid without a wali? site:islamqa.info",
     )
-    expect(planResearchQueries("What is the best way to pray in Islam?", "balanced")[2]).toBe(
+    expect(planResearchQueries("What is the best way to pray in Islam?", "speed")[2]).toBe(
       "Description of the Prophets Prayer What is the best way to pray in Islam? site:islamqa.info",
     )
-    expect(planResearchQueries("ما حكم الجمع بين الصلاتين للمسافر؟", "balanced")).toEqual([
+    expect(planResearchQueries("ما حكم الجمع بين الصلاتين للمسافر؟", "speed")).toEqual([
       "آية من القرآن ما حكم الجمع بين الصلاتين للمسافر؟ site:quran.com",
       "حديث ما حكم الجمع بين الصلاتين للمسافر؟ site:sunnah.com",
       "فتوى ما حكم الجمع بين الصلاتين للمسافر؟ site:islamqa.info",
     ])
-    expect(planResearchQueries("كيف يتعامل المسلم مع الوسواس في الصلاة؟", "balanced")[2]).toBe(
+    expect(planResearchQueries("كيف يتعامل المسلم مع الوسواس في الصلاة؟", "balanced")[3]).toBe(
       "فتوى كيف يتعامل المسلم مع الوسواس في الصلاة؟ site:islamqa.info",
     )
-    expect(planResearchQueries("Who is Muhammad?", "balanced")).toEqual([
+    expect(planResearchQueries("Who is Muhammad?", "speed")).toEqual([
       "Who is Muhammad?",
       "Quran evidence Who is Muhammad? site:quran.com",
       "Islamic biography Who is Muhammad? site:islamqa.info",
@@ -121,14 +121,14 @@ describe("Islamic research tool selection", () => {
     const infraCompose = await Bun.file(new URL("../../../infra/local/compose.yml", import.meta.url)).text()
 
     expect(getResearchPolicy("speed")).toEqual({ queryCount: 3, initialFetches: 3, extraFetches: 0, maxSteps: 2 })
-    expect(getResearchPolicy("balanced")).toEqual({ queryCount: 3, initialFetches: 3, extraFetches: 2, maxSteps: 3 })
-    expect(getResearchPolicy("quality")).toEqual({ queryCount: 5, initialFetches: 3, extraFetches: 2, maxSteps: 3 })
+    expect(getResearchPolicy("balanced")).toEqual({ queryCount: 5, initialFetches: 6, extraFetches: 2, maxSteps: 3 })
+    expect(getResearchPolicy("quality")).toEqual({ queryCount: 5, initialFetches: 8, extraFetches: 2, maxSteps: 3 })
     expect(searchDeadline("speed")).toBe(2_400)
     expect(searchDeadline("balanced")).toBe(2_400)
     expect(searchDeadline("quality")).toBe(2_800)
     expect(answerTokenBudget("speed")).toBe(600)
-    expect(answerTokenBudget("balanced")).toBe(900)
-    expect(answerTokenBudget("quality")).toBe(1_600)
+    expect(answerTokenBudget("balanced")).toBe(1_600)
+    expect(answerTokenBudget("quality")).toBe(2_200)
     expect(searxngSettings).toContain("request_timeout: 1.8")
     expect(searxngSettings).toContain("max_request_timeout: 2.8")
     expect(searxngSettings).toContain('autocomplete: "google"')

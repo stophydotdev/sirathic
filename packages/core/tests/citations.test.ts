@@ -106,6 +106,9 @@ describe("answer citation validation", () => {
     expect(normalizePerplexityAnswerShape("## Steps\n\n1. **Face the Qiblah**: Stand toward Makkah.[1]")).toBe(
       "Face the Qiblah: Stand toward Makkah.[1]",
     )
+    expect(normalizePerplexityAnswerShape("1. **First**: Begin.[1]\n\n2. **Second**: Continue.[1]")).toBe(
+      "First: Begin.[1]\n\nSecond: Continue.[1]",
+    )
   })
 
   test("does not require citations on headings and removes empty sections", async () => {
