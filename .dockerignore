@@ -1,0 +1,9 @@
+.git
+.turbo
+node_modules
+**/node_modules
+.next
+**/.next
+**/.env
+infra/postgres/data
+infra/redis/data

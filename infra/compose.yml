@@ -16,7 +16,8 @@ services:
   searxng:
     image: sirathic/searxng:local
     build:
-      context: ./searxng
+      context: ..
+      dockerfile: infra/searxng/Dockerfile
     environment:
       # Local-only fallback. Production deployments must provide a secret.
       SEARXNG_SECRET: ${SEARXNG_SECRET:-development-only-change-me}
