@@ -5,6 +5,7 @@ ENV GRANIAN_BLOCKING_THREADS=32
 COPY --chown=searxng:searxng infra/searxng/settings.yml /opt/sirathic/settings.yml
 COPY --chown=searxng:searxng infra/searxng/render_settings.py /opt/sirathic/render_settings.py
 COPY --chown=searxng:searxng infra/searxng/benchmark.py /opt/sirathic/benchmark.py
+COPY --chown=searxng:searxng infra/searxng/smoke_test.py /opt/sirathic/smoke_test.py
 COPY infra/searxng/entrypoint.sh /opt/sirathic/entrypoint.sh
 
 RUN chmod 0555 /opt/sirathic/entrypoint.sh \
