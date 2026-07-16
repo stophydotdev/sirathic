@@ -15,6 +15,10 @@ a runtime lifecycle with the Sirathic API.
   slots for concurrent engine fan-out.
 - `sirathic-crawl4ai`: text-oriented browser defaults and a direct-first proxy
   fallback list rendered from runtime secrets.
+- `sirathic-camoufox`: a private remote Playwright browser for AI agents.
+- `sirathic-firecrawl`: the self-hosted crawl API and its browser worker.
+- `sirathic-tailscale`: a private tailnet gateway to Railway services, with
+  fixed TCP mappings and persistent node identity.
 - `cache`: a disposable Valkey-compatible Redis service used by the Sirathic API
   for SearXNG results and cleaned Crawl4AI evidence. Local Compose caps it at
   512 MB with LFU eviction and intentionally disables persistence.

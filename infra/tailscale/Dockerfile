@@ -1,0 +1,1 @@
+FROM ghcr.io/brody192/tailscale-forwarder@sha256:cd9ea9714f490cd7339deefe4a5f7d11c73f2e224d75e46f3318444af3cdc7ad
