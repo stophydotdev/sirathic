@@ -24,7 +24,9 @@
     "lint": "oxlint",
     "test": "turbo test",
     "infra:up": "docker compose --env-file infra/.env -f infra/local/compose.yml up --build --wait -d",
-    "infra:down": "docker compose --env-file infra/.env -f infra/local/compose.yml down"
+    "infra:down": "docker compose --env-file infra/.env -f infra/local/compose.yml down",
+    "firecrawl:up": "docker compose --env-file ${FIRECRAWL_ENV_FILE:-infra/firecrawl/.env.example} -f infra/firecrawl/compose.yml up --build --wait -d",
+    "firecrawl:down": "docker compose --env-file ${FIRECRAWL_ENV_FILE:-infra/firecrawl/.env.example} -f infra/firecrawl/compose.yml down"
   },
   "devDependencies": {
     "@types/bun": "1.3.13",
