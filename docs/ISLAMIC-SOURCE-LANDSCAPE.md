@@ -204,7 +204,7 @@ Already covered. Refinements:
 3. **muwatta.com** — primary, low utility.
 4. **altafsir.com** — promote to Tier-A `primary` (alongside Sunni scholarly interpretation). When the user asks for tafsir depth this is the cleanest aggregator.
 
-Working set: keep at most five Tier-A primaries. **quran.com**, **sunnah.com**, **muwatta.com**, **altafsir.com**, **dorar.net** as the fifth (hadith corroboration: chain visualization and grading; access is intermittently 403, gate via Crawl4AI; if persistent failure, replace with **shamela.ws** or **hadith.islam-db.com** after live check).
+Working set: keep at most five Tier-A primaries. **quran.com**, **sunnah.com**, **muwatta.com**, **altafsir.com**, **dorar.net** as the fifth (hadith corroboration: chain visualization and grading; access is intermittently 403, gate via Firecrawl browser scraping; if persistent failure, replace with **shamela.ws** or **hadith.islam-db.com** after live check).
 
 ---
 
@@ -453,7 +453,7 @@ These are the **single-most-important** candidates to feed into the registry pip
 15. **AMHP + Institute of Muslim Mental Health** — needed for the mental-health / disability matrix cell; **live-verified** URLs collected from the task brief even though WebFetch couldn't return content directly.
 16. **Muslim Council of Elders (`muslimcouncilofelders.com`)** — covers minority-fiqh and global scope; live verification pending.
 17. **IFEES (ifees.org) / Islamic Foundation for Ecology** — environmental/civic cell.
-18. **Dorar (dorar.net)** — hadith corroboration / chain viewer; intermittent 403 from automated fetchers; gate behind Crawl4AI and degrade to discovery only if persistent.
+18. **Dorar (dorar.net)** — hadith corroboration / chain viewer; intermittent 403 from automated fetchers; gate behind Firecrawl browser scraping and degrade to discovery only if persistent.
 
 Re-verification date cutoff for this report: **2026-07-15**. Re-run the allowlist audit every 90 days; any entry that fails three consecutive re-verifications goes from citable to discovery-only.
 

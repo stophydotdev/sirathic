@@ -1216,7 +1216,7 @@
     },
     {
       "domain": "dorar.net",
-      "reason": "Intermittent 403 errors when accessed automatically (good for human/operator access but not stable for Crawl4AI-driven fetches as of 2026-07-15). Re-verify before tier upgrade.",
+      "reason": "Intermittent 403 errors when accessed automatically (good for human/operator access but not stable for Firecrawl-driven fetches as of 2026-07-15). Re-verify before tier upgrade.",
       "verificationPending": true,
       "verifiedAt": "2026-07-15"
     },
@@ -1236,7 +1236,7 @@
     {
       "domain": "dorar.net",
       "reason": "403 from automated fetcher at 2026-07-15. Pages resolve correctly for browsers.",
-      "nextStep": "Gate behind Crawl4AI browser mode; if persistent 403, hold at discovery.",
+      "nextStep": "Gate behind Firecrawl browser scraping; if persistent 403, hold at discovery.",
       "verifiedAt": "2026-07-15"
     },
     {
