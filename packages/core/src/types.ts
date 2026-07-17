@@ -192,28 +192,21 @@ export interface SearchCandidate {
   score: number
 }
 
-export interface SearxngConfig {
-  searxngUrl: string
-  searxngApiKey?: string
+export interface FirecrawlConfig {
+  firecrawlUrl: string
+  firecrawlApiKey?: string
   userAgent?: string
-  categories?: string
 }
 
-export type CrawlMode = "auto" | "static" | "browser"
-export type EngineMode = Exclude<CrawlMode, "auto">
-export type MarkdownVariant = "fit" | "raw" | "citations"
 export type FetchFailureReason = "invalid-url" | "too-large" | "http-error" | "timeout" | "no-markdown" | "transport"
 
 export interface FetchOptions {
   url: string
-  crawl4aiUrl?: string
-  crawlMode?: CrawlMode
-  markdownVariant?: MarkdownVariant
+  firecrawlUrl?: string
+  firecrawlApiKey?: string
   timeoutMs?: number
   maxBytes?: number
   userAgent?: string
-  browserConfig?: Record<string, unknown>
-  crawlerConfig?: Record<string, unknown>
 }
 
 export interface FetchSuccess {
@@ -231,8 +224,7 @@ export interface FetchSuccess {
   byteSize: number
   truncated: boolean
   fetchedAt: string
-  via: "direct" | "crawl4ai"
-  crawlMode: "direct" | EngineMode
+  via: "firecrawl"
 }
 
 export interface FetchFailure {
@@ -244,17 +236,3 @@ export interface FetchFailure {
 }
 
 export type FetchResult = FetchSuccess | FetchFailure
-
-export interface Crawl4AIResult {
-  success?: boolean
-  url?: unknown
-  final_url?: unknown
-  redirected_url?: unknown
-  status_code?: unknown
-  status?: unknown
-  error_message?: unknown
-  markdown?: unknown
-  metadata?: unknown
-  links?: unknown
-  media?: unknown
-}

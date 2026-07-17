@@ -1,11 +1,11 @@
-import { crawl } from "./webFetch/crawl4ai"
-import { fetchDirect } from "./webFetch/direct"
+import { env } from "@sirathic/env/server"
+import { scrapeFirecrawl } from "./webFetch/firecrawl"
 import { fail } from "./webFetch/result"
 import { tool } from "ai"
 import { z } from "zod"
 import { classifyDomain } from "./sourceRegistry"
 import { cacheKey, cached } from "../cache"
-import type { FetchFailure, FetchOptions, FetchResult, ResearchSource } from "../types"
+import type { FetchOptions, FetchResult, ResearchSource } from "../types"
 
 const MAX_FETCH_CHARS = 6_000
 const DAY = 24 * 60 * 60
@@ -13,10 +13,8 @@ const DAY = 24 * 60 * 60
 export async function fetchUrl(opts: FetchOptions): Promise<FetchResult> {
   const canonicalUrl = canonicalizeUrl(opts.url)
   const key = cacheKey("fetch", {
-    crawl4aiUrl: opts.crawl4aiUrl,
-    fetchStrategy: "direct-v1",
-    markdownVariant: opts.markdownVariant ?? "fit",
-    mode: opts.crawlMode ?? "auto",
+    firecrawlUrl: opts.firecrawlUrl ?? env.FIRECRAWL_URL,
+    fetchStrategy: "firecrawl-v2",
     url: canonicalUrl,
   })
 
@@ -25,16 +23,7 @@ export async function fetchUrl(opts: FetchOptions): Promise<FetchResult> {
 
 async function fetchUrlUncached(opts: FetchOptions): Promise<FetchResult> {
   if (!isValidUrl(opts.url)) return fail(opts.url, "invalid-url", { message: "invalid url" })
-
-  const mode = opts.crawlMode ?? "auto"
-  if (mode !== "auto") return crawl(opts, mode)
-
-  const direct = await fetchDirect(opts)
-  if (direct.ok || !shouldEscalate(direct)) return direct
-
-  const text = await crawl(opts, "static")
-  if (text.ok || !shouldEscalate(text)) return text
-  return crawl(opts, "browser")
+  return scrapeFirecrawl(opts)
 }
 
 function canonicalizeUrl(value: string): string {
@@ -67,12 +56,6 @@ export function fetchCacheTtl(url: string): number {
   if (source?.role === "fatwa") return 7 * DAY
   if (source?.tier === "A" || source?.tier === "B") return 3 * DAY
   return DAY
-}
-
-export function shouldEscalate(result: FetchFailure): boolean {
-  if (result.reason === "no-markdown" || result.reason === "timeout" || result.reason === "transport") return true
-  if (result.reason !== "http-error") return false
-  return result.status === 403 || result.status === 408 || result.status === 429 || Boolean(result.status && result.status >= 500)
 }
 
 function isValidUrl(url: string): boolean {
