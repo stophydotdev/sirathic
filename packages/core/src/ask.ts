@@ -1,11 +1,12 @@
 import { chatModel } from "@sirathic/llm"
+import { env } from "@sirathic/env/server"
 import { generateObject, generateText, streamText } from "ai"
 import { z } from "zod"
 import { ANSWER_PROMPT } from "./prompt"
 import { hasPerplexityAnswerShape, normalizePerplexityAnswerShape, stripInvalidCitationPassages, validateCitations } from "./citations"
 import { formatSources, numberSources, webToSource } from "./source"
 import { fetchUrl } from "./tools/webFetch"
-import { planResearchQueries, rankSearchCandidates, searchSearxng } from "./tools/webSearch"
+import { planResearchQueries, rankSearchCandidates, SEARCH_RESULTS_PER_QUERY, searchFirecrawl, selectDiscoveryResults } from "./tools/webSearch"
 import type { AskEventEmitter, AskOptions, AskResult, GatherResult, PublicSearchResult, RawSource, ResearchMode, ResearchPolicy, ResearchTrace, SearchCandidate, Source } from "./types"
 
 const RESEARCH_POLICIES: Record<ResearchMode, ResearchPolicy> = {
@@ -38,11 +39,10 @@ export function getResearchPolicy(mode: ResearchMode): ResearchPolicy {
 }
 
 export function searchDeadline(mode: ResearchMode): number {
-  // Proxied search engines complete in roughly 0.4–2.0s. Leave enough room
-  // for SearXNG to serialize its JSON without turning viable results into a
-  // false "no trusted evidence" response.
-  if (mode === "quality") return 2_800
-  return 2_400
+  // Firecrawl fans each request into its internal search service. Give the
+  // private Railway hop enough room without letting one query stall research.
+  if (mode === "quality") return 15_000
+  return 10_000
 }
 
 export function answerTokenBudget(mode: ResearchMode): number {
@@ -97,9 +97,9 @@ export async function gather(question: string, opts: AskOptions = {}, emit?: Ask
   const runQueries = (searchQueries: string[]) => Promise.all(
     searchQueries.map(async (query) => {
       try {
-        const response = await searchSearxng(
-          { query, limit: 12, timeoutMs: searchDeadline(mode) },
-          { searxngUrl: process.env.SEARXNG_URL ?? "http://localhost:18888" },
+        const response = await searchFirecrawl(
+          { query, limit: SEARCH_RESULTS_PER_QUERY, timeoutMs: searchDeadline(mode) },
+          { firecrawlUrl: env.FIRECRAWL_URL, firecrawlApiKey: env.FIRECRAWL_API_KEY },
         )
         const earlyCandidate = rankSearchCandidates([{ query, results: response.results }], opts.sources)[0]
         if (earlyCandidate && !prefetched.has(earlyCandidate.url)) {
@@ -118,13 +118,13 @@ export async function gather(question: string, opts: AskOptions = {}, emit?: Ask
       cause: attempts[0]?.error,
     })
   }
-  let candidates = rankSearchCandidates(batches, opts.sources).slice(0, 12)
+  let candidates = selectDiscoveryResults(batches, opts.sources)
   if (candidates.length === 0) {
     const attempted = new Set(queries.map((query) => query.toLowerCase()))
     const retryQueries = planResearchQueries(question, mode).filter((query) => !attempted.has(query.toLowerCase()))
     const retryAttempts = await runQueries(retryQueries)
     batches = [...batches, ...retryAttempts.map(({ query, results }) => ({ query, results }))]
-    candidates = rankSearchCandidates(batches, opts.sources).slice(0, 12)
+    candidates = selectDiscoveryResults(batches, opts.sources)
   }
   const research: ResearchTrace = { generatedQueries: queries, queries: batches.map((batch) => batch.query), sources: candidates }
   await emit?.({ type: "search-results", ...research })

@@ -6,12 +6,12 @@ import { filterToAllowlist } from "./sourceRegistry"
 import type {
   ResearchSource,
   ResearchMode,
+  FirecrawlConfig,
   SearchBatch,
   SearchCandidate,
   SearchHit,
   SearchOptions,
   SearchResponse,
-  SearxngConfig,
   SourceRole,
   SourceTier,
   SourceTopic,
@@ -19,12 +19,14 @@ import type {
 } from "../types"
 
 const DEFAULT_TIMEOUT_MS = 25_000
-const RESULTS_PER_PAGE = 20
+export const MAX_DISCOVERY_RESULTS = 30
+const RESULTS_PER_PAGE = MAX_DISCOVERY_RESULTS
+export const SEARCH_RESULTS_PER_QUERY = MAX_DISCOVERY_RESULTS
 const EVERGREEN_SEARCH_TTL_SECONDS = 6 * 60 * 60
 const CURRENT_SEARCH_TTL_SECONDS = 10 * 60
-// Bump when the SearXNG engine pool or search semantics change so cached
-// responses cannot report removed engines or preserve obsolete ranking inputs.
-const SEARCH_CACHE_PROFILE = "residential-text-v2"
+// Bump when Firecrawl search semantics change so cached responses cannot
+// preserve obsolete ranking inputs.
+const SEARCH_CACHE_PROFILE = "firecrawl-v2"
 
 export function searchCacheTtl(query: string): number {
   return /\b(?:breaking|current|currently|latest|news|recent|recently|today|tonight|this (?:week|month|year)|202[4-9])\b/i.test(query)
@@ -32,95 +34,82 @@ export function searchCacheTtl(query: string): number {
     : EVERGREEN_SEARCH_TTL_SECONDS
 }
 
-export async function searchSearxng(opts: SearchOptions, config: SearxngConfig): Promise<SearchResponse> {
+export async function searchFirecrawl(opts: SearchOptions, config: FirecrawlConfig): Promise<SearchResponse> {
   const requested = opts.limit && opts.limit > 0 ? opts.limit : RESULTS_PER_PAGE
   const key = cacheKey("search", {
     profile: SEARCH_CACHE_PROFILE,
-    categories: config.categories ?? env.SEARXNG_CATEGORIES ?? "",
     locale: opts.locale ?? "en",
     query: normalizeQuery(opts.query),
     requested,
-    searxngUrl: config.searxngUrl.replace(/\/$/, ""),
+    firecrawlUrl: config.firecrawlUrl.replace(/\/$/, ""),
   })
 
   return cached(
     key,
     searchCacheTtl(opts.query),
-    () => searchSearxngUncached(opts, config, requested),
+    () => searchFirecrawlUncached(opts, config, requested),
     (response) => response.results.length > 0,
   )
 }
 
-async function searchSearxngUncached(
+async function searchFirecrawlUncached(
   opts: SearchOptions,
-  config: SearxngConfig,
+  config: FirecrawlConfig,
   requested: number,
 ): Promise<SearchResponse> {
-  if (!config.searxngUrl) {
-    throw new Error("searxng: searxngUrl is required (e.g. http://localhost:18888)")
+  if (!config.firecrawlUrl) throw new Error("firecrawl: firecrawlUrl is required")
+
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "User-Agent": config.userAgent ?? "sirathic/firecrawl-search",
+  }
+  if (config.firecrawlApiKey) headers.Authorization = `Bearer ${config.firecrawlApiKey}`
+
+  let response: Response
+  try {
+    response = await fetch(`${config.firecrawlUrl.replace(/\/$/, "")}/v2/search`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        query: opts.query,
+        limit: Math.min(requested, 100),
+        sources: ["web"],
+        timeout: timeoutMs,
+        ignoreInvalidURLs: true,
+      }),
+      signal: AbortSignal.timeout(timeoutMs + 1_000),
+    })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "request failed"
+    if (/timeout|aborted/i.test(message)) throw new Error(`firecrawl timed out after ${timeoutMs}ms`)
+    throw new Error(`firecrawl search failed: ${message}`)
   }
 
-  const pageCount = Math.ceil(requested / RESULTS_PER_PAGE)
-
-  const results: SearchHit[] = []
-  const unresponsive = new Map<string, string>()
-
-  for (let pageno = 1; pageno <= pageCount; pageno++) {
-    const page = parseSearxngPage(await requestPage(opts, config, pageno))
-    results.push(...page.results)
-    for (const entry of page.unresponsiveEngines) {
-      if (!unresponsive.has(entry.engine)) unresponsive.set(entry.engine, entry.reason)
-    }
-    if (page.results.length === 0) break
-  }
+  const text = await response.text()
+  if (!response.ok) throw new Error(`firecrawl ${response.status}: ${firecrawlError(text, response.statusText)}`)
+  const parsed = parseFirecrawlSearchResponse(text)
 
   return {
     query: opts.query,
     retrievedAt: new Date().toISOString(),
-    results: results.slice(0, requested),
-    unresponsiveEngines: [...unresponsive].map(([engine, reason]) => ({ engine, reason })),
+    results: parsed.results.slice(0, requested),
+    unresponsiveEngines: parsed.unresponsiveEngines,
   }
 }
 
-async function requestPage(opts: SearchOptions, config: SearxngConfig, pageno: number): Promise<string> {
-  const params = new URLSearchParams({
-    q: opts.query,
-    language: opts.locale ?? "en",
-    categories: config.categories ?? env.SEARXNG_CATEGORIES ?? "",
-    pageno: String(pageno),
-    format: "json",
-  })
-
-  const url = `${config.searxngUrl.replace(/\/$/, "")}/search?${params.toString()}`
-
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "User-Agent": config.userAgent ?? "sirathic/websearch",
-  }
-  if (config.searxngApiKey) headers.Authorization = `Bearer ${config.searxngApiKey}`
-
-  const controller = new AbortController()
-  const timer = setTimeout(() => controller.abort(), opts.timeoutMs ?? DEFAULT_TIMEOUT_MS)
-
-  try {
-    const res = await fetch(url, { signal: controller.signal, headers })
-    const body = await res.text()
-    if (!res.ok) throw new Error(`searxng ${res.status}: ${body.slice(0, 500)}`)
-    return body
-  } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") {
-      throw new Error(`searxng timed out after ${opts.timeoutMs ?? DEFAULT_TIMEOUT_MS}ms`)
-    }
-    throw error
-  } finally {
-    clearTimeout(timer)
-  }
-}
-
-export function parseSearxngPage(text: string): { results: SearchHit[]; unresponsiveEngines: UnresponsiveEngine[] } {
+export function parseFirecrawlSearchResponse(text: string): { results: SearchHit[]; unresponsiveEngines: UnresponsiveEngine[] } {
   const payload = parseJson(text)
-  const rawResults = Array.isArray(payload?.results) ? payload.results : []
+  if (!payload || payload.success !== true) {
+    throw new Error(`firecrawl search returned an unsuccessful response: ${firecrawlError(text, "invalid response")}`)
+  }
+  const data = payload.data
+  const rawResults = Array.isArray(data)
+    ? data
+    : isRecord(data) && Array.isArray(data.web)
+      ? data.web
+      : []
 
   const results = rawResults
     .map((item, index): SearchHit | undefined => {
@@ -128,33 +117,26 @@ export function parseSearxngPage(text: string): { results: SearchHit[]; unrespon
       return {
         url: item.url,
         title: stringValue(item.title) ?? "",
-        snippet: stringValue(item.content) ?? "",
-        score: typeof item.score === "number" ? item.score : 1 / (index + 1),
-        engines: engineList(item),
-        publishedDate: stringValue(item.publishedDate),
+        snippet: stringValue(item.description) ?? stringValue(item.markdown) ?? "",
+        score: 1 / (index + 1),
+        engines: ["firecrawl"],
+        publishedDate: firecrawlPublishedDate(item),
       } satisfies SearchHit
     })
     .filter((hit): hit is SearchHit => Boolean(hit))
 
-  return { results, unresponsiveEngines: parseUnresponsive(payload?.unresponsive_engines) }
+  const warning = stringValue(payload.warning)
+  return { results, unresponsiveEngines: warning ? [{ engine: "firecrawl", reason: warning }] : [] }
 }
 
-function engineList(item: Record<string, unknown>): string[] {
-  if (Array.isArray(item.engines)) {
-    return item.engines.filter((e): e is string => typeof e === "string")
-  }
-  const single = stringValue(item.engine)
-  return single ? [single] : []
+function firecrawlPublishedDate(item: Record<string, unknown>): string | undefined {
+  const metadata = isRecord(item.metadata) ? item.metadata : undefined
+  return stringValue(item.publishedDate) ?? stringValue(metadata?.publishedTime) ?? stringValue(metadata?.publishedDate)
 }
 
-function parseUnresponsive(value: unknown): UnresponsiveEngine[] {
-  if (!Array.isArray(value)) return []
-  return value
-    .map((entry): UnresponsiveEngine | undefined => {
-      if (!Array.isArray(entry) || typeof entry[0] !== "string") return undefined
-      return { engine: entry[0], reason: typeof entry[1] === "string" ? entry[1] : "" }
-    })
-    .filter((entry): entry is UnresponsiveEngine => Boolean(entry))
+function firecrawlError(text: string, fallback: string): string {
+  const payload = parseJson(text)
+  return stringValue(payload?.error) ?? fallback
 }
 
 function parseJson(text: string): Record<string, unknown> | undefined {
@@ -470,6 +452,13 @@ export function rankSearchCandidates(
   return [...diverse, ...ranked.filter((candidate) => !selected.has(candidate.url))]
 }
 
+export function selectDiscoveryResults(
+  batches: SearchBatch[],
+  enabledSources: ResearchSource[] = ["quran", "hadith", "web"],
+): SearchCandidate[] {
+  return rankSearchCandidates(batches, enabledSources).slice(0, MAX_DISCOVERY_RESULTS)
+}
+
 export async function searchPrioritySources(
   query: string,
   enabledSources: ResearchSource[] = ["quran", "hadith", "web"],
@@ -477,12 +466,15 @@ export async function searchPrioritySources(
   const queries = buildPrioritySearchQueries(query)
   const batches = await Promise.all(
     queries.map(async (searchQuery) => {
-      const response = await searchSearxng({ query: searchQuery, limit: 12 }, { searxngUrl: env.SEARXNG_URL })
+      const response = await searchFirecrawl(
+        { query: searchQuery, limit: SEARCH_RESULTS_PER_QUERY },
+        { firecrawlUrl: env.FIRECRAWL_URL, firecrawlApiKey: env.FIRECRAWL_API_KEY },
+      )
       return { query: searchQuery, results: response.results }
     }),
   )
 
-  return { queries, batches, candidates: rankSearchCandidates(batches, enabledSources).slice(0, 12) }
+  return { queries, batches, candidates: selectDiscoveryResults(batches, enabledSources) }
 }
 
 export function createSearchSourcesTool(options: {
@@ -506,22 +498,28 @@ export function createSearchSourcesTool(options: {
       const routedQueries = routeSearchQueries(queries, options.question)
       let batches = await Promise.all(
         routedQueries.map(async (query) => {
-          const response = await searchSearxng({ query, limit: 12 }, { searxngUrl: env.SEARXNG_URL })
+          const response = await searchFirecrawl(
+            { query, limit: SEARCH_RESULTS_PER_QUERY },
+            { firecrawlUrl: env.FIRECRAWL_URL, firecrawlApiKey: env.FIRECRAWL_API_KEY },
+          )
           return { query, results: response.results }
         }),
       )
-      let candidates = rankSearchCandidates(batches, options.sources).slice(0, 12)
+      let candidates = selectDiscoveryResults(batches, options.sources)
       if (candidates.length === 0 && options.question) {
         const attempted = new Set(routedQueries)
         const fallbackQueries = buildPrioritySearchQueries(options.question).filter((query) => !attempted.has(query))
         const fallbackBatches = await Promise.all(
           fallbackQueries.map(async (query) => {
-            const response = await searchSearxng({ query, limit: 12 }, { searxngUrl: env.SEARXNG_URL })
+            const response = await searchFirecrawl(
+              { query, limit: SEARCH_RESULTS_PER_QUERY },
+              { firecrawlUrl: env.FIRECRAWL_URL, firecrawlApiKey: env.FIRECRAWL_API_KEY },
+            )
             return { query, results: response.results }
           }),
         )
         batches = [...batches, ...fallbackBatches]
-        candidates = rankSearchCandidates(batches, options.sources).slice(0, 12)
+        candidates = selectDiscoveryResults(batches, options.sources)
       }
       options.onCandidates?.(candidates)
       options.onSearchResults?.({ generatedQueries: queries, queries: batches.map((batch) => batch.query), sources: candidates })
