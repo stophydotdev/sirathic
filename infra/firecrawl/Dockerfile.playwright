@@ -1,8 +1,0 @@
-FROM ghcr.io/firecrawl/playwright-service@sha256:c2cb9d7e982f9ddaf7902ec79da1e63961ae3760f315cddaa161200a7937162b
-
-ENV PORT=3000
-
-EXPOSE 3000
-
-HEALTHCHECK --interval=15s --timeout=10s --start-period=45s --retries=8 \
-  CMD node -e 'fetch("http://127.0.0.1:3000/health").then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))'
