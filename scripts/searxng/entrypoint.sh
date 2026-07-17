@@ -5,4 +5,3 @@ set -eu
 chown searxng:searxng /etc/searxng/settings.yml
 
 exec /usr/local/searxng/entrypoint.sh
-
