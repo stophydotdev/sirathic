@@ -2,7 +2,7 @@ import { env } from "@sirathic/env/server"
 import { tool } from "ai"
 import { z } from "zod"
 import { cacheKey, cached, normalizeQuery } from "../cache"
-import { filterToAllowlist } from "./sourceRegistry"
+import { classifyDomain, filterToAllowlist } from "./sourceRegistry"
 import type {
   ResearchSource,
   ResearchMode,
@@ -21,12 +21,12 @@ import type {
 const DEFAULT_TIMEOUT_MS = 25_000
 export const MAX_DISCOVERY_RESULTS = 30
 const RESULTS_PER_PAGE = MAX_DISCOVERY_RESULTS
-export const SEARCH_RESULTS_PER_QUERY = MAX_DISCOVERY_RESULTS
+export const SEARCH_RESULTS_PER_QUERY = 15
 const EVERGREEN_SEARCH_TTL_SECONDS = 6 * 60 * 60
 const CURRENT_SEARCH_TTL_SECONDS = 10 * 60
 // Bump when Firecrawl search semantics change so cached responses cannot
 // preserve obsolete ranking inputs.
-const SEARCH_CACHE_PROFILE = "firecrawl-v2"
+const SEARCH_CACHE_PROFILE = "firecrawl-v3"
 
 export function searchCacheTtl(query: string): number {
   return /\b(?:breaking|current|currently|latest|news|recent|recently|today|tonight|this (?:week|month|year)|202[4-9])\b/i.test(query)
@@ -40,6 +40,7 @@ export async function searchFirecrawl(opts: SearchOptions, config: FirecrawlConf
     profile: SEARCH_CACHE_PROFILE,
     locale: opts.locale ?? "en",
     query: normalizeQuery(opts.query),
+    includeDomains: opts.includeDomains?.map((domain) => domain.toLowerCase()).sort() ?? [],
     requested,
     firecrawlUrl: config.firecrawlUrl.replace(/\/$/, ""),
   })
@@ -72,13 +73,7 @@ async function searchFirecrawlUncached(
     response = await fetch(`${config.firecrawlUrl.replace(/\/$/, "")}/v2/search`, {
       method: "POST",
       headers,
-      body: JSON.stringify({
-        query: opts.query,
-        limit: Math.min(requested, 100),
-        sources: ["web"],
-        timeout: timeoutMs,
-        ignoreInvalidURLs: true,
-      }),
+      body: JSON.stringify(firecrawlSearchRequestBody(opts, requested, timeoutMs)),
       signal: AbortSignal.timeout(timeoutMs + 1_000),
     })
   } catch (error) {
@@ -96,6 +91,17 @@ async function searchFirecrawlUncached(
     retrievedAt: new Date().toISOString(),
     results: parsed.results.slice(0, requested),
     unresponsiveEngines: parsed.unresponsiveEngines,
+  }
+}
+
+export function firecrawlSearchRequestBody(opts: SearchOptions, requested: number, timeoutMs: number) {
+  return {
+    query: opts.query,
+    limit: Math.min(requested, 100),
+    sources: ["web"],
+    timeout: timeoutMs,
+    ignoreInvalidURLs: true,
+    ...(opts.includeDomains?.length ? { includeDomains: opts.includeDomains } : {}),
   }
 }
 
@@ -182,7 +188,12 @@ function isDirectSourcePage(url: URL): boolean {
     const individualHadith = /^\/[^/]+:\d+[a-z]?$|^\/[^/]+\/\d+\/\d+[a-z]?$/i.test(url.pathname)
     if (!individualHadith) return false
   }
-  if (domain === "quran.com" && !/^\/(?:\d+|[a-z][a-z'-]*)(?::|\/)\d+(?:\/|$)/i.test(url.pathname)) return false
+  if (domain === "quran.com") {
+    if (!/^\/(?:\d+|[a-z][a-z'-]*)(?::|\/)\d+\/?$/i.test(url.pathname)) return false
+    const firstPart = url.pathname.split("/").filter(Boolean)[0]?.toLowerCase()
+    if (firstPart && ["ayah", "hizb", "juz", "manzil", "page", "rub"].includes(firstPart)) return false
+  }
+  if (domain.endsWith(".quran.com")) return false
   if (url.pathname === "/" || url.pathname.startsWith("/tags/") || url.pathname.startsWith("/tag/")) return false
   return true
 }
@@ -199,7 +210,7 @@ function pageQualityScore(url: URL, kind: ResearchSource): number {
 }
 
 const QUERY_STOP_WORDS = new Set([
-  "a", "an", "and", "are", "as", "biography", "do", "evidence", "for", "hadith", "how", "i", "in", "is", "islam", "islamic", "me", "muslim", "my", "of", "or", "quran", "ruling", "scholarly", "the", "to", "what", "who", "why",
+  "a", "an", "and", "are", "as", "biography", "do", "evidence", "for", "hadith", "how", "i", "in", "is", "islam", "islamic", "me", "muslim", "my", "of", "or", "quran", "ruling", "scholarly", "should", "the", "to", "what", "who", "why",
 ])
 
 function queryTerms(query: string): string[] {
@@ -323,6 +334,12 @@ function expertLane(question: string): ExpertLane {
   if (/abuse|anxiety|conflict|counsel|depress|lonely|mental health|overwhelm|stress|قلق|اكتئاب|وسواس|إساءة/u.test(normalized)) {
     return { prefix: "Islamic counseling guidance", primaryDomain: "aboutislam.net", secondaryDomain: "yaqeeninstitute.org" }
   }
+  if (/aqeedah|belief|faith|good life|meaning of life|purpose of life|spiritual|عقيدة|إيمان|معنى الحياة|الهدف من الحياة/u.test(normalized)) {
+    return { prefix: "Islamic explanation", primaryDomain: "yaqeeninstitute.org", secondaryDomain: "seekersguidance.org" }
+  }
+  if (/become (?:a )?(?:better|good|great|strong) muslim|better muslim|good muslim|great muslim|improve (?:my |your )?(?:faith|iman)/u.test(normalized)) {
+    return { prefix: "Islamic practical guidance", primaryDomain: "islamqa.info", secondaryDomain: "seekersguidance.org" }
+  }
   if (/career|daily routine|focus|goal|habit|plan their day|productiv|work-life|روتين|عمل/u.test(normalized)) {
     return { prefix: "practical Islamic guidance", primaryDomain: "productivemuslim.com", secondaryDomain: "seekersguidance.org" }
   }
@@ -338,39 +355,53 @@ function normalizedQuestion(question: string): string {
   return normalized
 }
 
-function primaryEvidenceQueries(question: string): [string, string] {
-  const arabic = /\p{Script=Arabic}/u.test(question)
-  return arabic
-    ? [`آية من القرآن ${question} site:quran.com`, `حديث ${question} site:sunnah.com`]
-    : [`Quran evidence ${question} site:quran.com`, `Hadith evidence ${question} site:sunnah.com`]
-}
-
-function expertQuery(question: string, lane: ExpertLane, domain: string): string {
-  const prefix = /\p{Script=Arabic}/u.test(question)
-    ? lane.prefix === "Islamic biography" ? "سيرة إسلامية" : "فتوى"
-    : lane.prefix
-  return `${prefix} ${question} site:${domain}`
+function compactKeywords(question: string): string {
+  const terms = question
+    .toLowerCase()
+    .match(/[\p{L}\p{N}]+/gu)
+    ?.filter((term) => term.length > 1 && !["a", "an", "and", "are", "do", "does", "how", "i", "is", "me", "my", "of", "or", "should", "the", "to", "what", "who", "why"].includes(term)) ?? []
+  return [...new Set(terms)].slice(0, 8).join(" ") || question
 }
 
 export function planResearchQueries(question: string, mode: ResearchMode): string[] {
   const subject = normalizedQuestion(question)
-  const [quranQuery, hadithQuery] = primaryEvidenceQueries(subject)
-  const lane = expertLane(subject)
-  const primaryExpertQuery = expertQuery(subject, lane, lane.primaryDomain)
-  if (mode === "speed") {
-    if (isBiographyQuestion(subject)) return [subject, quranQuery, primaryExpertQuery]
-    return [quranQuery, hadithQuery, primaryExpertQuery]
-  }
-  return [subject, quranQuery, hadithQuery, primaryExpertQuery, expertQuery(subject, lane, lane.secondaryDomain)]
+  if (mode === "speed") return [subject]
+
+  const keywords = compactKeywords(subject)
+  return [subject, `${keywords} Quran Sunnah`, `${keywords} Islamic guidance`]
 }
 
 export function buildPrioritySearchQueries(query: string): string[] {
   return planResearchQueries(query, "quality")
 }
 
-export function routeSearchQueries(queries: string[], question = queries[0] ?? ""): string[] {
-  const planned = planResearchQueries(question, queries.length > 3 ? "balanced" : "speed")
-  return planned.slice(0, queries.length)
+export function buildFocusedSearchRequests(question: string): SearchOptions[] {
+  const subject = normalizedQuestion(question)
+  const keywords = compactKeywords(subject)
+  const lane = expertLane(subject)
+  const selfImprovement = /become (?:a )?(?:better|good|great|strong) muslim|better muslim|good muslim|great muslim|improve (?:my |your )?(?:faith|iman)/iu.test(subject)
+  if (selfImprovement) {
+    return [
+      { query: "qualities righteous believers faith good deeds character", includeDomains: ["quran.com"] },
+      { query: "best Muslims good character faith deeds", includeDomains: ["sunnah.com"] },
+      { query: "how to become a better Muslim practical steps", includeDomains: [lane.primaryDomain] },
+    ]
+  }
+  return [
+    { query: `${keywords} Quran guidance verses`, includeDomains: ["quran.com"] },
+    { query: `${keywords} authentic hadith character`, includeDomains: ["sunnah.com"] },
+    { query: `${keywords} ${lane.prefix}`, includeDomains: [lane.primaryDomain] },
+  ]
+}
+
+export function routeSearchQueries(queries: string[], _question = queries[0] ?? ""): string[] {
+  return [...new Set(queries.map((query) => query.trim().replace(/\s+/g, " ")).filter((query) => query.length >= 3))].slice(0, 3)
+}
+
+function candidateIdentity(title: string, url: string, kind: ResearchSource): string {
+  if (kind !== "quran") return url
+  const ayah = title.match(/\bsurah\s+(.+?)\s+ayah\s+(\d+)\b/i)
+  return ayah ? `quran:${normalizedSearchText(ayah[1] ?? "")}:${ayah[2]}` : url
 }
 
 export function rankSearchCandidates(
@@ -383,15 +414,21 @@ export function rankSearchCandidates(
   for (const batch of batches) {
     const { citable } = filterToAllowlist(batch.results)
     for (const hit of citable) {
-      const url = canonicalUrl(hit.url)
+      let url = canonicalUrl(hit.url)
       if (!url) continue
-      const parsed = new URL(url)
+      let parsed = new URL(url)
       if (!isDirectSourcePage(parsed)) continue
       const domain = parsed.hostname.replace(/^www\./, "")
       const kind = sourceKind(domain)
       if (!enabled.has(kind)) continue
+      if (kind === "quran" || kind === "hadith") {
+        parsed.search = ""
+        url = parsed.toString()
+        parsed = new URL(url)
+      }
+      const identity = candidateIdentity(hit.title, url, kind)
 
-      const existing = candidates.get(url)
+      const existing = candidates.get(identity)
       if (existing) {
         const relevance = relevanceScore(hit, batch.query) + intentScore(hit.source.role, hit.source.topics ?? [], batch.query)
         existing.queries.add(batch.query)
@@ -407,7 +444,7 @@ export function rankSearchCandidates(
 
       const queries = new Set([batch.query])
       const relevance = relevanceScore(hit, batch.query) + intentScore(hit.source.role, hit.source.topics ?? [], batch.query)
-      candidates.set(url, {
+      candidates.set(identity, {
         url,
         title: hit.title,
         snippet: hit.snippet.slice(0, 600),
@@ -439,11 +476,8 @@ export function rankSearchCandidates(
     }))
     .sort((a, b) => b.score - a.score || b.matchedQueries - a.matchedQueries)
 
-  const relevant = ranked.filter((candidate) => candidate.relevance >= 12)
-  if (relevant.length > 0) {
-    const relevantUrls = new Set(relevant.map((candidate) => candidate.url))
-    return [...relevant, ...ranked.filter((candidate) => !relevantUrls.has(candidate.url))]
-  }
+  const relevant = ranked.filter((candidate) => candidate.relevance > 0)
+  if (relevant.length > 0) return relevant
 
   const firstByKind = new Map<ResearchSource, SearchCandidate>()
   for (const candidate of ranked) if (!firstByKind.has(candidate.kind)) firstByKind.set(candidate.kind, candidate)
@@ -457,6 +491,138 @@ export function selectDiscoveryResults(
   enabledSources: ResearchSource[] = ["quran", "hadith", "web"],
 ): SearchCandidate[] {
   return rankSearchCandidates(batches, enabledSources).slice(0, MAX_DISCOVERY_RESULTS)
+}
+
+export function selectVisibleSearchResults(
+  batches: SearchBatch[],
+  citableCandidates: SearchCandidate[],
+): SearchCandidate[] {
+  const trustedByIdentity = new Map(
+    citableCandidates.map((candidate) => [candidateIdentity(candidate.title, candidate.url, candidate.kind), candidate]),
+  )
+  const visible = new Map<string, SearchCandidate>()
+  const batchIdentities: string[][] = []
+
+  for (const batch of batches) {
+    const identities: string[] = []
+    for (const hit of batch.results) {
+      let url = canonicalUrl(hit.url)
+      if (!url) continue
+      const parsed = new URL(url)
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") continue
+      const domain = parsed.hostname.replace(/^www\./, "")
+      const kind = sourceKind(domain)
+      if (kind === "quran" || kind === "hadith") {
+        parsed.search = ""
+        url = parsed.toString()
+      }
+      const identity = candidateIdentity(hit.title, url, kind)
+      if (!identities.includes(identity)) identities.push(identity)
+      const trusted = trustedByIdentity.get(identity)
+      const existing = visible.get(identity)
+      if (existing) {
+        existing.matchedQueries += 1
+        existing.score += Math.min(Math.max(hit.score, 0), 10)
+        if (trusted && existing.role === "discovery") visible.set(identity, { ...trusted, matchedQueries: existing.matchedQueries })
+        continue
+      }
+
+      if (trusted) {
+        visible.set(identity, trusted)
+        continue
+      }
+
+      const source = classifyDomain(url)
+      visible.set(identity, {
+        url,
+        title: hit.title,
+        snippet: hit.snippet.slice(0, 600),
+        ...(hit.publishedDate ? { publishedDate: hit.publishedDate } : {}),
+        domain,
+        faviconUrl: `${parsed.origin}/favicon.ico`,
+        tier: "C",
+        role: "discovery",
+        topics: source?.topics ?? [],
+        source: source?.name ?? domain,
+        kind,
+        matchedQueries: 1,
+        relevance: relevanceScore(hit, batch.query),
+        score: Math.min(Math.max(hit.score, 0), 10),
+      })
+    }
+    batchIdentities.push(identities)
+  }
+
+  const selectedIdentities: string[] = []
+  const selected = new Set<string>()
+  const add = (identity: string) => {
+    if (selected.size >= MAX_DISCOVERY_RESULTS || selected.has(identity) || !visible.has(identity)) return
+    selected.add(identity)
+    selectedIdentities.push(identity)
+  }
+
+  for (const identity of batchIdentities[0]?.slice(0, 10) ?? []) add(identity)
+  const remaining = batchIdentities.map((identities) => identities.filter((identity) => !selected.has(identity)))
+  let added = true
+  for (let index = 0; selected.size < MAX_DISCOVERY_RESULTS && added; index++) {
+    added = false
+    for (const identities of remaining) {
+      const identity = identities[index]
+      if (identity && !selected.has(identity)) {
+        add(identity)
+        added = true
+      }
+    }
+  }
+
+  return selectedIdentities.map((identity) => visible.get(identity)).filter((candidate): candidate is SearchCandidate => Boolean(candidate))
+}
+
+function evidenceGroup(candidate: SearchCandidate): string {
+  const parsed = new URL(candidate.url)
+  const firstPathPart = parsed.pathname.split("/").filter(Boolean)[0] ?? parsed.hostname
+  if (candidate.kind === "web") return `${candidate.kind}:${parsed.hostname}`
+  return `${candidate.kind}:${firstPathPart.split(":")[0]}`
+}
+
+export function selectFetchCandidates(candidates: SearchCandidate[], limit: number): SearchCandidate[] {
+  if (limit <= 0 || candidates.length === 0) return []
+  const kindOrder: ResearchSource[] = ["quran", "hadith", "web"]
+  const availableKinds = kindOrder.filter((kind) => candidates.some((candidate) => candidate.kind === kind))
+  const quota = Math.ceil(limit / availableKinds.length)
+  const byKind = new Map<ResearchSource, SearchCandidate[]>()
+
+  for (const kind of availableKinds) {
+    const bucket = candidates.filter((candidate) => candidate.kind === kind)
+    const seenGroups = new Set<string>()
+    const diverse = bucket.filter((candidate) => {
+      const group = evidenceGroup(candidate)
+      if (seenGroups.has(group)) return false
+      seenGroups.add(group)
+      return true
+    })
+    const diverseUrls = new Set(diverse.map((candidate) => candidate.url))
+    byKind.set(kind, [...diverse, ...bucket.filter((candidate) => !diverseUrls.has(candidate.url))].slice(0, quota))
+  }
+
+  const selected: SearchCandidate[] = []
+  for (let index = 0; index < quota && selected.length < limit; index++) {
+    for (const kind of availableKinds) {
+      const candidate = byKind.get(kind)?.[index]
+      if (candidate) selected.push(candidate)
+      if (selected.length === limit) break
+    }
+  }
+
+  const selectedUrls = new Set(selected.map((candidate) => candidate.url))
+  for (const candidate of candidates) {
+    if (selected.length === limit) break
+    if (!selectedUrls.has(candidate.url)) {
+      selected.push(candidate)
+      selectedUrls.add(candidate.url)
+    }
+  }
+  return selected
 }
 
 export async function searchPrioritySources(
@@ -484,15 +650,11 @@ export function createSearchSourcesTool(options: {
   onCandidates?: (candidates: SearchCandidate[]) => void
   onSearchResults?: (research: { generatedQueries: string[]; queries: string[]; sources: SearchCandidate[] }) => void
 }) {
-  const queryCount = Math.min(5, Math.max(3, options.queryCount))
-  const strategy =
-    queryCount === 3
-      ? "Slot 1: broad user intent. Slot 2: combined Qur'an/hadith primary evidence. Slot 3: the appropriate expert lane—formal fatwa, practical guidance, or counseling."
-      : "Slot 1: broad user intent. Slot 2: Qur'an evidence. Slot 3: hadith evidence. Slot 4: the appropriate expert lane—formal fatwa, practical guidance, or counseling. Slot 5: Arabic terminology, madhhab disagreement, community wording, or another missing viewpoint."
+  const queryLimit = Math.min(3, Math.max(1, options.queryCount))
   return tool({
-    description: `Generate exactly ${queryCount} genuinely distinct search intents for the user's question and run them in parallel across the broad web. ${strategy} For question-and-answer research, prefer individual answers from IslamQA.info, IslamWeb Fatwas, SeekersGuidance Answers, IslamQA.org, and official iftaa archives. Preserve the subject in every query; avoid cosmetic rewordings. Returns deduplicated candidates after relevance, page-quality, authority, and trust ranking; these are leads until fetchSources reads them.`,
+    description: `Generate one to three short, keyword-based search queries and run them in parallel. Do not split a simple question merely to fill the query budget. For a multi-part question, give each query a distinct evidence need. Use natural search terms rather than labels such as "Quran evidence" or "scholarly ruling". Returns trusted candidates after relevance, page-quality, authority, and source-policy ranking; these remain leads until fetchSources reads them.`,
     inputSchema: z.object({
-      queries: z.array(z.string().min(3)).length(queryCount).describe(`Exactly ${queryCount} distinct search queries`),
+      queries: z.array(z.string().min(3)).min(1).max(queryLimit).describe(`One to ${queryLimit} concise, distinct search queries`),
     }),
     execute: async ({ queries }) => {
       const routedQueries = routeSearchQueries(queries, options.question)
@@ -508,21 +670,25 @@ export function createSearchSourcesTool(options: {
       let candidates = selectDiscoveryResults(batches, options.sources)
       if (candidates.length === 0 && options.question) {
         const attempted = new Set(routedQueries)
-        const fallbackQueries = buildPrioritySearchQueries(options.question).filter((query) => !attempted.has(query))
+        const fallbackRequests = buildFocusedSearchRequests(options.question).filter((request) => !attempted.has(request.query))
         const fallbackBatches = await Promise.all(
-          fallbackQueries.map(async (query) => {
+          fallbackRequests.map(async (request) => {
             const response = await searchFirecrawl(
-              { query, limit: SEARCH_RESULTS_PER_QUERY },
+              { ...request, limit: SEARCH_RESULTS_PER_QUERY },
               { firecrawlUrl: env.FIRECRAWL_URL, firecrawlApiKey: env.FIRECRAWL_API_KEY },
             )
-            return { query, results: response.results }
+            return { query: request.query, results: response.results }
           }),
         )
         batches = [...batches, ...fallbackBatches]
         candidates = selectDiscoveryResults(batches, options.sources)
       }
       options.onCandidates?.(candidates)
-      options.onSearchResults?.({ generatedQueries: queries, queries: batches.map((batch) => batch.query), sources: candidates })
+      options.onSearchResults?.({
+        generatedQueries: queries,
+        queries: batches.map((batch) => batch.query),
+        sources: selectVisibleSearchResults(batches, candidates),
+      })
       return candidates
     },
   })

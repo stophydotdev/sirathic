@@ -14,6 +14,8 @@ export type {
   PublicSearchResult,
   RawSource,
   ResearchTrace,
+  ResearchComplexity,
+  ResearchIntent,
   ResearchMode,
   ResearchPolicy,
   ResearchSource,

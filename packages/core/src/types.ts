@@ -43,11 +43,23 @@ export interface WebHit {
 export type ResearchMode = "speed" | "balanced" | "quality"
 
 export interface ResearchPolicy {
-  maxSteps: number
-  queryCount: number
+  initialQueryMin: number
+  initialQueryMax: number
+  maxSearchRounds: number
   initialFetches: number
   extraFetches: number
 }
+
+export type ResearchIntent =
+  | "ruling"
+  | "belief_explanation"
+  | "spiritual_guidance"
+  | "practical_guidance"
+  | "counseling"
+  | "biography"
+  | "comparison"
+
+export type ResearchComplexity = "simple" | "multi_part"
 
 export interface AskOptions {
   provider?: AIProvider
@@ -144,6 +156,7 @@ export interface AllowlistResult<T> {
 
 export interface SearchOptions {
   query: string
+  includeDomains?: string[]
   limit?: number
   timeoutMs?: number
   locale?: string

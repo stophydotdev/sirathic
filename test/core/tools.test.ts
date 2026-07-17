@@ -4,7 +4,7 @@ process.env.OPENAI_API_KEY ||= "test-key"
 
 describe("Islamic research tool selection", () => {
   test("maps Firecrawl v2 web search results", async () => {
-    const { parseFirecrawlSearchResponse } = await import("../../packages/core/src/tools/webSearch")
+    const { firecrawlSearchRequestBody, parseFirecrawlSearchResponse } = await import("../../packages/core/src/tools/webSearch")
     const result = parseFirecrawlSearchResponse(JSON.stringify({
       success: true,
       data: {
@@ -26,6 +26,17 @@ describe("Islamic research tool selection", () => {
       publishedDate: "2026-07-17",
     }])
     expect(result.unresponsiveEngines).toEqual([])
+    expect(firecrawlSearchRequestBody({
+      query: "becoming a better Muslim character",
+      includeDomains: ["quran.com"],
+    }, 15, 10_000)).toEqual({
+      query: "becoming a better Muslim character",
+      limit: 15,
+      sources: ["web"],
+      timeout: 10_000,
+      ignoreInvalidURLs: true,
+      includeDomains: ["quran.com"],
+    })
   })
 
   test("scrapes through the configured Firecrawl v2 endpoint", async () => {
@@ -87,61 +98,38 @@ describe("Islamic research tool selection", () => {
     expect(Object.keys(buildTools({ sources: ["hadith"] }))).toEqual(["searchSources", "fetchSources"])
   })
 
-  test("gives three-query and five-query searches distinct Perplexity-style intent slots", async () => {
+  test("lets the model choose one to three short search queries", async () => {
     const { buildTools } = await import("../../packages/core/src/tools")
-    const balanced = buildTools({ queryCount: 3 }).searchSources
-    const quality = buildTools({ queryCount: 5 }).searchSources
+    const simple = buildTools({ queryCount: 1 }).searchSources
+    const adaptive = buildTools({ queryCount: 5 }).searchSources
 
-    expect(balanced?.description).toContain("appropriate expert lane—formal fatwa, practical guidance, or counseling")
-    expect(quality?.description).toContain("Slot 5: Arabic terminology, madhhab disagreement")
+    expect(simple?.description).toContain("one to three short, keyword-based")
+    expect(adaptive?.description).toContain("Do not split a simple question")
   })
 
-  test("enforces trusted source lanes when the model emits broad queries", async () => {
+  test("preserves AI search wording and uses compact fallback queries", async () => {
     const { planResearchQueries, routeSearchQueries } = await import("../../packages/core/src/tools/webSearch")
 
     expect(
       routeSearchQueries([
-        "how should a Muslim plan their day",
-        "Islam daily routines Quran hadith",
-        "practical guidance for Muslims daily life",
+        "Muslim productive daily routine",
+        "Islam daily planning Quran Sunnah",
+        "Hayat Tayyibah daily habits",
       ]),
     ).toEqual([
-      "Quran evidence how should a Muslim plan their day site:quran.com",
-      "Hadith evidence how should a Muslim plan their day site:sunnah.com",
-      "practical Islamic guidance how should a Muslim plan their day site:productivemuslim.com",
+      "Muslim productive daily routine",
+      "Islam daily planning Quran Sunnah",
+      "Hayat Tayyibah daily habits",
     ])
 
-    expect(planResearchQueries("In the Hanafi school, does bleeding invalidate wudu?", "balanced")[3]).toBe(
-      "Hanafi ruling In the Hanafi school, does bleeding invalidate wudu? site:islamqa.org",
-    )
-    expect(planResearchQueries("I feel overwhelmed by anxiety. What should I do?", "balanced")[3]).toContain(
-      "site:aboutislam.net",
-    )
-    expect(planResearchQueries("Is a marriage valid without a wali?", "speed")[2]).toBe(
-      "scholarly ruling Is a marriage valid without a wali? site:islamqa.info",
-    )
-    expect(planResearchQueries("What is the best way to pray in Islam?", "speed")[2]).toBe(
-      "Description of the Prophets Prayer What is the best way to pray in Islam? site:islamqa.info",
-    )
-    expect(planResearchQueries("ما حكم الجمع بين الصلاتين للمسافر؟", "speed")).toEqual([
-      "آية من القرآن ما حكم الجمع بين الصلاتين للمسافر؟ site:quran.com",
-      "حديث ما حكم الجمع بين الصلاتين للمسافر؟ site:sunnah.com",
-      "فتوى ما حكم الجمع بين الصلاتين للمسافر؟ site:islamqa.info",
+    expect(planResearchQueries("How should a Muslim live a good life?", "speed")).toEqual([
+      "How should a Muslim live a good life?",
     ])
-    expect(planResearchQueries("كيف يتعامل المسلم مع الوسواس في الصلاة؟", "balanced")[3]).toBe(
-      "فتوى كيف يتعامل المسلم مع الوسواس في الصلاة؟ site:islamqa.info",
-    )
-    expect(planResearchQueries("Who is Muhammad?", "speed")).toEqual([
-      "Who is Muhammad?",
-      "Quran evidence Who is Muhammad? site:quran.com",
-      "Islamic biography Who is Muhammad? site:islamqa.info",
+    expect(planResearchQueries("How should a Muslim live a good life?", "balanced")).toEqual([
+      "How should a Muslim live a good life?",
+      "muslim live good life Quran Sunnah",
+      "muslim live good life Islamic guidance",
     ])
-
-    const qualityQueries = planResearchQueries("Can a traveler combine prayers?", "quality")
-    expect(qualityQueries).toHaveLength(5)
-    expect(qualityQueries).toContain("scholarly ruling Can a traveler combine prayers? site:islamqa.info")
-    expect(qualityQueries).toContain("scholarly ruling Can a traveler combine prayers? site:islamweb.net")
-    expect(qualityQueries.some((query) => query.includes(" OR site:"))).toBe(false)
   })
 
   test("gives each research mode explicit query and fetch budgets", async () => {
@@ -150,9 +138,9 @@ describe("Islamic research tool selection", () => {
     const searxngRenderer = await Bun.file(new URL("../../scripts/searxng/render_settings.py", import.meta.url)).text()
     const searxngDockerfile = await Bun.file(new URL("../../searxng/Dockerfile", import.meta.url)).text()
 
-    expect(getResearchPolicy("speed")).toEqual({ queryCount: 3, initialFetches: 3, extraFetches: 0, maxSteps: 2 })
-    expect(getResearchPolicy("balanced")).toEqual({ queryCount: 5, initialFetches: 6, extraFetches: 2, maxSteps: 3 })
-    expect(getResearchPolicy("quality")).toEqual({ queryCount: 5, initialFetches: 8, extraFetches: 2, maxSteps: 3 })
+    expect(getResearchPolicy("speed")).toEqual({ initialQueryMin: 1, initialQueryMax: 2, maxSearchRounds: 1, initialFetches: 3, extraFetches: 0 })
+    expect(getResearchPolicy("balanced")).toEqual({ initialQueryMin: 1, initialQueryMax: 3, maxSearchRounds: 2, initialFetches: 6, extraFetches: 2 })
+    expect(getResearchPolicy("quality")).toEqual({ initialQueryMin: 1, initialQueryMax: 3, maxSearchRounds: 2, initialFetches: 8, extraFetches: 2 })
     expect(searchDeadline("speed")).toBe(10_000)
     expect(searchDeadline("balanced")).toBe(10_000)
     expect(searchDeadline("quality")).toBe(15_000)
@@ -217,7 +205,7 @@ describe("Islamic research tool selection", () => {
     expect(result[0]?.faviconUrl).toBe("https://sunnah.com/favicon.ico")
   })
 
-  test("requests and exposes up to thirty discoveries without increasing the page-fetch budget", async () => {
+  test("requests fifteen results per query and exposes up to thirty combined discoveries", async () => {
     const { MAX_DISCOVERY_RESULTS, SEARCH_RESULTS_PER_QUERY, selectDiscoveryResults } = await import("../../packages/core/src/tools/webSearch")
     const results = Array.from({ length: 36 }, (_, index) => ({
       url: `https://islamqa.info/en/answers/${index + 1}/research-result-${index + 1}`,
@@ -228,7 +216,7 @@ describe("Islamic research tool selection", () => {
     }))
 
     expect(MAX_DISCOVERY_RESULTS).toBe(30)
-    expect(SEARCH_RESULTS_PER_QUERY).toBe(30)
+    expect(SEARCH_RESULTS_PER_QUERY).toBe(15)
     expect(selectDiscoveryResults([{ query: "research evidence", results }])).toHaveLength(30)
   })
 
@@ -260,15 +248,18 @@ describe("Islamic research tool selection", () => {
     expect(result[0]?.url).toBe("https://islamqa.info/en/answers/11575/who-is-muhammad")
   })
 
-  test("builds broad and trusted-source queries without a model", async () => {
-    const { buildPrioritySearchQueries } = await import("../../packages/core/src/tools/webSearch")
+  test("builds a compact adaptive fallback without a model", async () => {
+    const { buildFocusedSearchRequests, buildPrioritySearchQueries } = await import("../../packages/core/src/tools/webSearch")
 
     expect(buildPrioritySearchQueries("what is islam")).toEqual([
       "what is islam",
-      "Quran evidence what is islam site:quran.com",
-      "Hadith evidence what is islam site:sunnah.com",
-      "scholarly ruling what is islam site:islamqa.info",
-      "scholarly ruling what is islam site:islamweb.net",
+      "islam Quran Sunnah",
+      "islam Islamic guidance",
+    ])
+    expect(buildFocusedSearchRequests("how to become a great Muslim?")).toEqual([
+      { query: "qualities righteous believers faith good deeds character", includeDomains: ["quran.com"] },
+      { query: "best Muslims good character faith deeds", includeDomains: ["sunnah.com"] },
+      { query: "how to become a better Muslim practical steps", includeDomains: ["islamqa.info"] },
     ])
   })
 
@@ -282,6 +273,7 @@ describe("Islamic research tool selection", () => {
           { url: "https://sunnah.com/bukhari:50", title: "Bukhari 50", snippet: "Islam", score: 2, engines: ["bing"] },
           { url: "https://quran.com/3/85", title: "Quran 3:85", snippet: "Islam", score: 1, engines: ["bing"] },
           { url: "https://quran.com/learning-plans/what-is-ihsan", title: "What is Ihsan?", snippet: "Islam", score: 5, engines: ["bing"] },
+          { url: "https://quran.com/page/297", title: "Page 297", snippet: "Islam", score: 5, engines: ["bing"] },
         ],
       },
     ])
@@ -309,6 +301,40 @@ describe("Islamic research tool selection", () => {
     expect(result.slice(0, 3).map((source) => source.kind)).toEqual(["quran", "hadith", "web"])
   })
 
+  test("selects fetched evidence across source kinds and hadith collections", async () => {
+    const { selectFetchCandidates } = await import("../../packages/core/src/tools/webSearch")
+    const candidates = [
+      { kind: "hadith", url: "https://sunnah.com/malik/47/6" },
+      { kind: "hadith", url: "https://sunnah.com/malik/47/8" },
+      { kind: "hadith", url: "https://sunnah.com/bukhari:6029" },
+      { kind: "quran", url: "https://quran.com/16/97" },
+      { kind: "quran", url: "https://quran.com/33/21" },
+      { kind: "web", url: "https://seekersguidance.org/answers/general/good-life" },
+      { kind: "web", url: "https://yaqeeninstitute.org/read/paper/good-character" },
+    ] as Parameters<typeof selectFetchCandidates>[0]
+
+    const selected = selectFetchCandidates(candidates, 6)
+    expect(selected.filter((candidate) => candidate.kind === "quran")).toHaveLength(2)
+    expect(selected.filter((candidate) => candidate.kind === "hadith")).toHaveLength(2)
+    expect(selected.filter((candidate) => candidate.kind === "web")).toHaveLength(2)
+    expect(selected.map((candidate) => candidate.url)).toContain("https://sunnah.com/bukhari:6029")
+  })
+
+  test("deduplicates alternate Quran URLs for the same ayah", async () => {
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
+    const result = rankSearchCandidates([{
+      query: "good life Quran",
+      results: [
+        { url: "https://quran.com/an-nahl/97", title: "Surah An-Nahl Ayah 97 - Quran.com", snippet: "a good life", score: 1, engines: ["firecrawl"] },
+        { url: "https://quran.com/16:97?translations=20", title: "Surah An-Nahl Ayah 97 - Quran.com", snippet: "a good life", score: 0.5, engines: ["firecrawl"] },
+      ],
+    }])
+
+    expect(result).toHaveLength(1)
+    expect(result[0]?.url).toBe("https://quran.com/an-nahl/97")
+    expect(result[0]?.matchedQueries).toBe(1)
+  })
+
   test("prefers direct ayat and individual hadith over commentary and collection indexes", async () => {
     const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const result = rankSearchCandidates([
@@ -326,12 +352,36 @@ describe("Islamic research tool selection", () => {
     expect(result.map((source) => source.url)).toEqual([
       "https://quran.com/5/3",
       "https://sunnah.com/bukhari:50",
-      "https://quran.com/10:71/tafsirs/en-tafisr-ibn-kathir",
     ])
   })
 
+  test("drops irrelevant trusted pages once relevant candidates exist", async () => {
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
+    const result = rankSearchCandidates([{
+      query: "purpose life",
+      results: [
+        { url: "https://quran.com/al-muminun/115", title: "Created with purpose", snippet: "You were not created without purpose", score: 0.1, engines: ["firecrawl"] },
+        { url: "https://quran.com/al-baqarah/65", title: "Sabbath breakers", snippet: "A historical account", score: 1, engines: ["firecrawl"] },
+      ],
+    }])
+
+    expect(result.map((source) => source.url)).toEqual(["https://quran.com/al-muminun/115"])
+  })
+
+  test("reports missing evidence lanes for adaptive follow-up searches", async () => {
+    const { researchCoverageGaps } = await import("../../packages/core/src/ask")
+    const quranOnly = [{ kind: "quran", role: "primary" }] as Parameters<typeof researchCoverageGaps>[0]
+
+    expect(researchCoverageGaps(quranOnly, ["quran", "hadith", "web"], "spiritual_guidance")).toContain(
+      "a trusted scholarly explanation or guidance page",
+    )
+    expect(researchCoverageGaps(quranOnly, ["quran"], "spiritual_guidance")).not.toContain(
+      "a trusted scholarly explanation or guidance page",
+    )
+  })
+
   test("classifies mixed domains by page role instead of trusting the whole domain", async () => {
-    const { classifyDomain } = await import("../../packages/core/src/tools/sourceRegistry")
+    const { classifyDomain, isRegisteredSourceDomain } = await import("../../packages/core/src/tools/sourceRegistry")
 
     expect(classifyDomain("https://aboutislam.net/counseling/ask-the-counselor/mental-health/ocd")?.role).toBe("counseling")
     expect(classifyDomain("https://aboutislam.net/live-session/ask-the-scholar-general-fatwa-session/")?.role).toBe("fatwa")
@@ -339,6 +389,8 @@ describe("Islamic research tool selection", () => {
     expect(classifyDomain("https://productivemuslim.com/how-to-have-an-incredibly-productive-day-at-work/")?.role).toBe("guidance")
     expect(classifyDomain("https://www.dar-alifta.org/en/fatwa/details/8336/example")?.role).toBe("fatwa")
     expect(classifyDomain("https://reddit.com/r/islam/comments/example")?.role).toBe("discovery")
+    expect(isRegisteredSourceDomain("islamqa.info")).toBe(true)
+    expect(isRegisteredSourceDomain("islamicguidance.com")).toBe(false)
   })
 
   test("cites individual scholarly answers but treats their indexes as discovery only", async () => {
@@ -363,6 +415,51 @@ describe("Islamic research tool selection", () => {
 
     expect(result.citable.map((item) => item.source.role)).toEqual(["guidance"])
     expect(result.leads.map((item) => item.source.role)).toEqual(["discovery"])
+  })
+
+  test("keeps broad Firecrawl results visible without making them citable", async () => {
+    const { selectDiscoveryResults, selectVisibleSearchResults } = await import("../../packages/core/src/tools/webSearch")
+    const batches = [{
+      query: "how to become a great Muslim",
+      results: [
+        { url: "https://www.wikihow.com/Become-a-Strong-Muslim", title: "How to Become a Strong Muslim", snippet: "Pray, read the Quran, and give charity.", score: 1, engines: ["firecrawl"] },
+        { url: "https://aboutislam.net/reading-islam/understanding-islam/true-muslim", title: "Principles of a True Muslim", snippet: "Principles for becoming a good Muslim.", score: 0.5, engines: ["firecrawl"] },
+        { url: "https://quran.com/16/97", title: "Surah An-Nahl Ayah 97", snippet: "A believer who does good will have a good life.", score: 0.25, engines: ["firecrawl"] },
+      ],
+    }]
+
+    const citable = selectDiscoveryResults(batches)
+    const visible = selectVisibleSearchResults(batches, citable)
+
+    expect(citable.map((candidate) => candidate.url)).toEqual(["https://quran.com/16/97"])
+    expect(visible.map((candidate) => candidate.url)).toEqual([
+      "https://www.wikihow.com/Become-a-Strong-Muslim",
+      "https://aboutislam.net/reading-islam/understanding-islam/true-muslim",
+      "https://quran.com/16/97",
+    ])
+    expect(visible[0]?.role).toBe("discovery")
+    expect(visible[2]?.role).toBe("primary")
+  })
+
+  test("reserves natural-query results while representing later focused searches", async () => {
+    const { selectVisibleSearchResults } = await import("../../packages/core/src/tools/webSearch")
+    const makeResults = (domain: string, count: number) => Array.from({ length: count }, (_, index) => ({
+      url: `https://${domain}/result-${index + 1}`,
+      title: `${domain} result ${index + 1}`,
+      snippet: "Relevant result",
+      score: 1 / (index + 1),
+      engines: ["firecrawl"],
+    }))
+    const visible = selectVisibleSearchResults([
+      { query: "natural question", results: makeResults("broad.example", 15) },
+      { query: "Quran terms", results: makeResults("quran-results.example", 15) },
+      { query: "hadith terms", results: makeResults("hadith-results.example", 15) },
+    ], [])
+
+    expect(visible.slice(0, 10).every((candidate) => candidate.domain === "broad.example")).toBe(true)
+    expect(visible.some((candidate) => candidate.domain === "quran-results.example")).toBe(true)
+    expect(visible.some((candidate) => candidate.domain === "hadith-results.example")).toBe(true)
+    expect(visible).toHaveLength(30)
   })
 
   test("ranks the appropriate expert lane before loosely related authority", async () => {

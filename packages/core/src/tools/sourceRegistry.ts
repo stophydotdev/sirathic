@@ -127,6 +127,11 @@ export const registry: SourceDomain[] = [
   discovery("shiachat.com", "ShiaChat", { madhhab: "shia" }),
 ]
 
+export function isRegisteredSourceDomain(domain: string): boolean {
+  const host = domain.toLowerCase().replace(/^www\./, "")
+  return registry.some((entry) => host === entry.domain || host.endsWith(`.${entry.domain}`))
+}
+
 function normalizedPath(pathname: string): string {
   if (pathname === "/") return pathname
   return pathname.replace(/\/+$/, "")
