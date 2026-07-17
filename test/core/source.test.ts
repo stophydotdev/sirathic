@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
-import type { RawSource } from "../src/types"
-import { numberSources } from "../src/source"
+import type { RawSource } from "../../packages/core/src/types"
+import { numberSources } from "../../packages/core/src/source"
 
 describe("answer evidence sources", () => {
   test("keeps enough fetched pages for the quality research profile", () => {

@@ -22,7 +22,7 @@ describe("Next API proxy", () => {
       { preconnect: originalFetch.preconnect },
     )
 
-    const { POST } = await import("../app/v1/[...path]/route")
+    const { POST } = await import("../../apps/web/app/v1/[...path]/route")
     const request = new Request("http://localhost:3001/v1/ask", {
       method: "POST",
       headers: { "content-type": "application/json" },

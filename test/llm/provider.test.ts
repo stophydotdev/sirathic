@@ -1,10 +1,9 @@
 import { describe, expect, test } from "bun:test"
 
-process.env.DATABASE_URL ||= "postgres://unused"
 process.env.OPENAI_API_KEY ||= "test-openai-key"
 process.env.OPENROUTER_API_KEY ||= "test-openrouter-key"
 
-const { chatModel } = await import("../src/index")
+const { chatModel } = await import("../../packages/llm/src/index")
 
 describe("AI providers", () => {
   test("creates an OpenAI Chat Completions model", () => {

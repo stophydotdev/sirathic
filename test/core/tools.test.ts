@@ -1,46 +1,78 @@
 import { describe, expect, test } from "bun:test"
 
-process.env.DATABASE_URL ||= "postgres://unused"
 process.env.OPENAI_API_KEY ||= "test-key"
 
 describe("Islamic research tool selection", () => {
-  test("uses direct HTML as clean evidence without launching a browser", async () => {
-    const { fetchDirect } = await import("../src/tools/webFetch/direct")
-    const article = `<html lang="en"><head><title>Direct evidence</title></head><body><nav>Noise</nav><main><h1>Keeping promises</h1><p>${"A trustworthy person keeps promises and deals honestly with other people. ".repeat(6)}</p></main><script>noise()</script></body></html>`
-    const result = await fetchDirect(
-      { url: "https://example.com/evidence" },
-      async () => new Response(article, { status: 200, headers: { "content-type": "text/html" } }),
-    )
+  test("maps Firecrawl v2 web search results", async () => {
+    const { parseFirecrawlSearchResponse } = await import("../../packages/core/src/tools/webSearch")
+    const result = parseFirecrawlSearchResponse(JSON.stringify({
+      success: true,
+      data: {
+        web: [{
+          url: "https://example.com/research",
+          title: "Research result",
+          description: "A useful result from Firecrawl.",
+          metadata: { publishedTime: "2026-07-17" },
+        }],
+      },
+    }))
 
-    expect(result.ok).toBe(true)
-    if (!result.ok) return
-    expect(result.via).toBe("direct")
-    expect(result.title).toBe("Direct evidence")
-    expect(result.markdown).toContain("Keeping promises")
-    expect(result.markdown).not.toContain("Noise")
-    expect(result.markdown).not.toContain("noise()")
+    expect(result.results).toEqual([{
+      url: "https://example.com/research",
+      title: "Research result",
+      snippet: "A useful result from Firecrawl.",
+      score: 1,
+      engines: ["firecrawl"],
+      publishedDate: "2026-07-17",
+    }])
+    expect(result.unresponsiveEngines).toEqual([])
   })
 
-  test("escalates only retryable Crawl4AI failures", async () => {
-    const { shouldEscalate } = await import("../src/tools/webFetch")
-    const failure = (reason: "http-error" | "no-markdown" | "timeout" | "transport", status?: number) => ({
-      ok: false as const,
-      url: "https://example.com",
-      reason,
-      status,
-    })
+  test("scrapes through the configured Firecrawl v2 endpoint", async () => {
+    const { scrapeFirecrawl } = await import("../../packages/core/src/tools/webFetch/firecrawl")
+    let request: { url: string; init?: RequestInit } | undefined
+    const result = await scrapeFirecrawl(
+      {
+        url: "https://example.com/evidence",
+        firecrawlUrl: "http://firecrawl-api.railway.internal:3002",
+        firecrawlApiKey: "test-firecrawl-key",
+      },
+      async (input, init) => {
+        request = { url: String(input), init }
+        return Response.json({
+          success: true,
+          data: {
+            markdown: "# Reliable evidence\n\nThe source text.",
+            metadata: {
+              title: "Reliable evidence",
+              sourceURL: "https://example.com/evidence",
+              statusCode: 200,
+              language: "en",
+            },
+          },
+        })
+      },
+    )
 
-    expect(shouldEscalate(failure("transport"))).toBe(true)
-    expect(shouldEscalate(failure("no-markdown"))).toBe(true)
-    expect(shouldEscalate(failure("http-error", 403))).toBe(true)
-    expect(shouldEscalate(failure("http-error", 429))).toBe(true)
-    expect(shouldEscalate(failure("http-error", 503))).toBe(true)
-    expect(shouldEscalate(failure("http-error", 404))).toBe(false)
+    expect(request?.url).toBe("http://firecrawl-api.railway.internal:3002/v2/scrape")
+    expect(request?.init?.method).toBe("POST")
+    const requestHeaders = request?.init?.headers as Record<string, string> | undefined
+    expect(requestHeaders?.Authorization).toBe("Bearer test-firecrawl-key")
+    expect(JSON.parse(String(request?.init?.body))).toMatchObject({
+      url: "https://example.com/evidence",
+      formats: ["markdown"],
+      onlyMainContent: true,
+    })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.via).toBe("firecrawl")
+    expect(result.title).toBe("Reliable evidence")
+    expect(result.markdown).toContain("The source text.")
   })
 
   test("uses long evidence TTLs and short time-sensitive search TTLs", async () => {
-    const { fetchCacheTtl } = await import("../src/tools/webFetch")
-    const { searchCacheTtl } = await import("../src/tools/webSearch")
+    const { fetchCacheTtl } = await import("../../packages/core/src/tools/webFetch")
+    const { searchCacheTtl } = await import("../../packages/core/src/tools/webSearch")
 
     expect(fetchCacheTtl("https://quran.com/2/183")).toBe(30 * 24 * 60 * 60)
     expect(fetchCacheTtl("https://sunnah.com/bukhari:1")).toBe(30 * 24 * 60 * 60)
@@ -50,13 +82,13 @@ describe("Islamic research tool selection", () => {
   })
 
   test("exposes only the two batched research tools", async () => {
-    const { buildTools } = await import("../src/tools")
+    const { buildTools } = await import("../../packages/core/src/tools")
     expect(Object.keys(buildTools())).toEqual(["searchSources", "fetchSources"])
     expect(Object.keys(buildTools({ sources: ["hadith"] }))).toEqual(["searchSources", "fetchSources"])
   })
 
   test("gives three-query and five-query searches distinct Perplexity-style intent slots", async () => {
-    const { buildTools } = await import("../src/tools")
+    const { buildTools } = await import("../../packages/core/src/tools")
     const balanced = buildTools({ queryCount: 3 }).searchSources
     const quality = buildTools({ queryCount: 5 }).searchSources
 
@@ -65,7 +97,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("enforces trusted source lanes when the model emits broad queries", async () => {
-    const { planResearchQueries, routeSearchQueries } = await import("../src/tools/webSearch")
+    const { planResearchQueries, routeSearchQueries } = await import("../../packages/core/src/tools/webSearch")
 
     expect(
       routeSearchQueries([
@@ -113,19 +145,17 @@ describe("Islamic research tool selection", () => {
   })
 
   test("gives each research mode explicit query and fetch budgets", async () => {
-    const { answerTokenBudget, getResearchPolicy, searchDeadline } = await import("../src/ask")
-    const searxngSettings = await Bun.file(new URL("../../../infra/searxng/settings.yml", import.meta.url)).text()
-    const searxngRenderer = await Bun.file(new URL("../../../infra/searxng/render_settings.py", import.meta.url)).text()
-    const searxngDockerfile = await Bun.file(new URL("../../../infra/searxng/Dockerfile", import.meta.url)).text()
-    const crawl4aiRenderer = await Bun.file(new URL("../../../infra/crawl4ai/render_config.py", import.meta.url)).text()
-    const infraCompose = await Bun.file(new URL("../../../infra/local/compose.yml", import.meta.url)).text()
+    const { answerTokenBudget, getResearchPolicy, searchDeadline } = await import("../../packages/core/src/ask")
+    const searxngSettings = await Bun.file(new URL("../../searxng/settings.yml", import.meta.url)).text()
+    const searxngRenderer = await Bun.file(new URL("../../scripts/searxng/render_settings.py", import.meta.url)).text()
+    const searxngDockerfile = await Bun.file(new URL("../../searxng/Dockerfile", import.meta.url)).text()
 
     expect(getResearchPolicy("speed")).toEqual({ queryCount: 3, initialFetches: 3, extraFetches: 0, maxSteps: 2 })
     expect(getResearchPolicy("balanced")).toEqual({ queryCount: 5, initialFetches: 6, extraFetches: 2, maxSteps: 3 })
     expect(getResearchPolicy("quality")).toEqual({ queryCount: 5, initialFetches: 8, extraFetches: 2, maxSteps: 3 })
-    expect(searchDeadline("speed")).toBe(2_400)
-    expect(searchDeadline("balanced")).toBe(2_400)
-    expect(searchDeadline("quality")).toBe(2_800)
+    expect(searchDeadline("speed")).toBe(10_000)
+    expect(searchDeadline("balanced")).toBe(10_000)
+    expect(searchDeadline("quality")).toBe(15_000)
     expect(answerTokenBudget("speed")).toBe(600)
     expect(answerTokenBudget("balanced")).toBe(1_600)
     expect(answerTokenBudget("quality")).toBe(2_200)
@@ -157,15 +187,14 @@ describe("Islamic research tool selection", () => {
     expect(searxngSettings.match(/timeout: 1\.6/g)).toHaveLength(3)
     expect(searxngSettings).toContain("timeout: 2.0")
     expect(searxngSettings).toContain("timeout: 2.6")
-    expect(searxngRenderer).toContain('urlunsplit(("http", parsed.netloc')
+    expect(searxngRenderer).toContain('os.environ.get("PROXY_URL")')
+    expect(searxngRenderer).toContain('{"all://": [proxy]}')
     expect(searxngDockerfile).toContain("GRANIAN_BLOCKING_THREADS=32")
-    expect(infraCompose).toContain("context: ../..\n      dockerfile: infra/searxng/Dockerfile")
-    expect(crawl4aiRenderer).toContain('"server": f"http://{parsed.hostname}:{port}"')
     expect(searchDeadline("speed")).toBeGreaterThan(2_100)
   })
 
   test("deduplicates and authority-ranks results from multiple queries", async () => {
-    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const result = rankSearchCandidates([
       {
         query: "intentions hadith",
@@ -188,8 +217,23 @@ describe("Islamic research tool selection", () => {
     expect(result[0]?.faviconUrl).toBe("https://sunnah.com/favicon.ico")
   })
 
+  test("requests and exposes up to thirty discoveries without increasing the page-fetch budget", async () => {
+    const { MAX_DISCOVERY_RESULTS, SEARCH_RESULTS_PER_QUERY, selectDiscoveryResults } = await import("../../packages/core/src/tools/webSearch")
+    const results = Array.from({ length: 36 }, (_, index) => ({
+      url: `https://islamqa.info/en/answers/${index + 1}/research-result-${index + 1}`,
+      title: `Research result ${index + 1}`,
+      snippet: "Research evidence for the user question.",
+      score: 1 / (index + 1),
+      engines: ["firecrawl"],
+    }))
+
+    expect(MAX_DISCOVERY_RESULTS).toBe(30)
+    expect(SEARCH_RESULTS_PER_QUERY).toBe(30)
+    expect(selectDiscoveryResults([{ query: "research evidence", results }])).toHaveLength(30)
+  })
+
   test("does not rank query-planner scaffolding above the user's subject", async () => {
-    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const result = rankSearchCandidates([
       {
         query: "Quran evidence who is Muhammad site:quran.com",
@@ -217,7 +261,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("builds broad and trusted-source queries without a model", async () => {
-    const { buildPrioritySearchQueries } = await import("../src/tools/webSearch")
+    const { buildPrioritySearchQueries } = await import("../../packages/core/src/tools/webSearch")
 
     expect(buildPrioritySearchQueries("what is islam")).toEqual([
       "what is islam",
@@ -229,7 +273,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("keeps direct evidence pages but drops internal search pages", async () => {
-    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const result = rankSearchCandidates([
       {
         query: "what is islam",
@@ -249,7 +293,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("puts the best Quran, hadith, and scholarly source in the first three", async () => {
-    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const result = rankSearchCandidates([
       {
         query: "what is islam",
@@ -266,7 +310,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("prefers direct ayat and individual hadith over commentary and collection indexes", async () => {
-    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const result = rankSearchCandidates([
       {
         query: "what is islam",
@@ -287,7 +331,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("classifies mixed domains by page role instead of trusting the whole domain", async () => {
-    const { classifyDomain } = await import("../src/tools/sourceRegistry")
+    const { classifyDomain } = await import("../../packages/core/src/tools/sourceRegistry")
 
     expect(classifyDomain("https://aboutislam.net/counseling/ask-the-counselor/mental-health/ocd")?.role).toBe("counseling")
     expect(classifyDomain("https://aboutislam.net/live-session/ask-the-scholar-general-fatwa-session/")?.role).toBe("fatwa")
@@ -298,7 +342,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("cites individual scholarly answers but treats their indexes as discovery only", async () => {
-    const { classifyDomain } = await import("../src/tools/sourceRegistry")
+    const { classifyDomain } = await import("../../packages/core/src/tools/sourceRegistry")
 
     expect(classifyDomain("https://islamqa.info/en/answers/123/example")?.role).toBe("fatwa")
     expect(classifyDomain("https://islamqa.info/en")?.citable).toBe(false)
@@ -311,7 +355,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("keeps discovery pages as leads and never as citable evidence", async () => {
-    const { filterToAllowlist } = await import("../src/tools/sourceRegistry")
+    const { filterToAllowlist } = await import("../../packages/core/src/tools/sourceRegistry")
     const result = filterToAllowlist([
       { url: "https://reddit.com/r/islam/comments/example" },
       { url: "https://productivemuslim.com/how-to-have-an-incredibly-productive-day-at-work/" },
@@ -322,7 +366,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("ranks the appropriate expert lane before loosely related authority", async () => {
-    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const practical = rankSearchCandidates([
       {
         query: "how do I plan my day as a Muslim",
@@ -347,7 +391,7 @@ describe("Islamic research tool selection", () => {
   })
 
   test("prefers IslamQA within an equally relevant fatwa lane", async () => {
-    const { rankSearchCandidates } = await import("../src/tools/webSearch")
+    const { rankSearchCandidates } = await import("../../packages/core/src/tools/webSearch")
     const result = rankSearchCandidates([
       {
         query: "is this work income halal or haram",

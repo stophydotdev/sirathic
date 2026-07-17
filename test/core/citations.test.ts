@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test"
 
 describe("answer citation validation", () => {
   test("rejects citation numbers that do not resolve to gathered evidence", async () => {
-    const { validateCitations } = await import("../src/citations")
+    const { validateCitations } = await import("../../packages/core/src/citations")
     const sources = [
       {
         index: 1,
@@ -23,7 +23,7 @@ describe("answer citation validation", () => {
   })
 
   test("rejects substantive uncited passages when evidence was gathered", async () => {
-    const { validateCitations } = await import("../src/citations")
+    const { validateCitations } = await import("../../packages/core/src/citations")
     const sources = [
       {
         index: 1,
@@ -45,7 +45,7 @@ describe("answer citation validation", () => {
   })
 
   test("accepts a citation placed after a closing quotation", async () => {
-    const { validateCitations } = await import("../src/citations")
+    const { validateCitations } = await import("../../packages/core/src/citations")
     const sources = [
       {
         index: 1,
@@ -64,7 +64,7 @@ describe("answer citation validation", () => {
   })
 
   test("accepts a Perplexity-style citation for the complete bullet", async () => {
-    const { validateCitations } = await import("../src/citations")
+    const { validateCitations } = await import("../../packages/core/src/citations")
     const sources = [
       {
         index: 1,
@@ -81,7 +81,7 @@ describe("answer citation validation", () => {
   })
 
   test("treats a wrapped list item as one citable passage", async () => {
-    const { validateCitations } = await import("../src/citations")
+    const { validateCitations } = await import("../../packages/core/src/citations")
     const sources = [
       {
         index: 1,
@@ -98,7 +98,7 @@ describe("answer citation validation", () => {
   })
 
   test("requires direct prose before headings or lists", async () => {
-    const { hasPerplexityAnswerShape, normalizePerplexityAnswerShape } = await import("../src/citations")
+    const { hasPerplexityAnswerShape, normalizePerplexityAnswerShape } = await import("../../packages/core/src/citations")
     expect(hasPerplexityAnswerShape("Prayer begins with intention.[1]\n\n## Steps\n\nThen stand.[1]")).toBe(true)
     expect(hasPerplexityAnswerShape("## Steps\n\nThen stand.[1]")).toBe(false)
     expect(hasPerplexityAnswerShape("1. Stand and recite.[1]")).toBe(false)
@@ -112,7 +112,7 @@ describe("answer citation validation", () => {
   })
 
   test("does not require citations on headings and removes empty sections", async () => {
-    const { stripInvalidCitationPassages, validateCitations } = await import("../src/citations")
+    const { stripInvalidCitationPassages, validateCitations } = await import("../../packages/core/src/citations")
     const sources = [
       {
         index: 1,

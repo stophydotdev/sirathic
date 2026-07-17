@@ -1,20 +1,15 @@
 import { describe, expect, test } from "bun:test"
 
-process.env.DATABASE_URL ||= "postgres://unused"
 process.env.OPENAI_API_KEY ||= "test-key"
 
-const { createApp } = await import("./app")
+const { createApp } = await import("../../apps/server/src/app")
 
 describe("research interface", () => {
-  test("serves the Sirathic research workspace", async () => {
+  test("identifies the API service", async () => {
     const response = await createApp().request("/")
-    const html = await response.text()
 
     expect(response.status).toBe(200)
-    expect(response.headers.get("content-type")).toContain("text/html")
-    expect(html).toContain("Ask Sirathic")
-    expect(html).toContain("Research depth")
-    expect(html).toContain("Source families")
+    expect(await response.json()).toEqual({ name: "sirathic", status: "ok" })
   })
 })
 
