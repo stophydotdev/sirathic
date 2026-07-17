@@ -5,7 +5,7 @@ single place that touches `process.env`.
 
 | Import | Key vars |
 |--------|----------|
-| `@sirathic/env/server` | `DATABASE_URL`, AI provider keys/models, search and fetch URLs |
+| `@sirathic/env/server` | AI provider keys/models, Firecrawl, and cache URLs |
 
 Importing the server environment validates its values at load; missing or invalid
 configuration fails fast with a readable error.
@@ -19,4 +19,4 @@ const provider = env.AI_PROVIDER
 const model = provider === "openai" ? env.OPENAI_MODEL : env.OPENROUTER_MODEL
 ```
 
-See `.env.example` at the repo root for the full list.
+See `apps/server/.env.example` for the full list.
