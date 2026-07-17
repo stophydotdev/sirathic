@@ -1,5 +1,6 @@
-import { askWithEvents } from "../src/index"
-import type { AIProvider, ResearchMode, ResearchSource, Source } from "../src/types"
+import { askWithEvents } from "../packages/core/src/index"
+import { MAX_DISCOVERY_RESULTS } from "../packages/core/src/tools/webSearch"
+import type { AIProvider, ResearchMode, ResearchSource, Source } from "../packages/core/src/types"
 
 const validModes = new Set<ResearchMode>(["speed", "balanced", "quality"])
 const validSources = new Set<ResearchSource>(["quran", "hadith", "web"])
@@ -77,8 +78,11 @@ try {
     } else if (event.type === "search-results") {
       console.error(`\n[queries] ${event.queries.length}`)
       for (const query of event.queries) console.error(`  - ${query}`)
-      console.error(`\n[discovered] ${event.sources.length}`)
-      for (const source of event.sources) console.error(`  - ${source.title}\n    ${source.url}`)
+      const discoveries = event.sources.slice(0, MAX_DISCOVERY_RESULTS)
+      console.error(`\n[discovered] ${discoveries.length}/${MAX_DISCOVERY_RESULTS}`)
+      for (const [index, source] of discoveries.entries()) {
+        console.error(`  ${index + 1}. ${source.title}\n     ${source.url}`)
+      }
     } else if (event.type === "tool-complete") {
       const action = event.tools.includes("searchSources") ? "ranked candidates" : "pages fetched"
       console.error(`[research] ${event.found} ${action}`)
