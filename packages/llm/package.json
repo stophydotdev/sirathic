@@ -9,9 +9,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "check-types": "tsc --noEmit",
-    "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@ai-sdk/openai": "4.0.13",

@@ -8,9 +8,7 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "dev": "bun --watch src/index.ts",
-    "start": "bun run src/index.ts",
-    "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "start": "bun run src/index.ts"
   },
   "dependencies": {
     "@sirathic/core": "workspace:*",
