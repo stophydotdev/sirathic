@@ -13,8 +13,6 @@ import { cors } from "hono/cors"
 import { secureHeaders } from "hono/secure-headers"
 import { streamSSE } from "hono/streaming"
 
-const publicAsset = (name: string) => Bun.file(new URL(`../public/${name}`, import.meta.url))
-
 export interface AppDependencies {
   ask?: (question: string, options?: AskOptions) => Promise<AskResult>
   askEvents?: (question: string, options: AskOptions, emit: AskEventEmitter) => Promise<AskResult>
@@ -35,9 +33,7 @@ export function createApp(dependencies: AppDependencies = {}) {
     }),
   )
 
-  app.get("/", async (c) => c.html(await publicAsset("index.html").text()))
-  app.get("/app.css", async (c) => c.body(await publicAsset("app.css").text(), 200, { "Content-Type": "text/css; charset=UTF-8" }))
-  app.get("/app.js", async (c) => c.body(await publicAsset("app.js").text(), 200, { "Content-Type": "text/javascript; charset=UTF-8" }))
+  app.get("/", (c) => c.json({ name: "sirathic", status: "ok" }))
   app.get("/healthz", (c) => c.json({ ok: true }))
 
   app.post("/v1/ask", async (c) => {
