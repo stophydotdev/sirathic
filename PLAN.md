@@ -27,14 +27,15 @@ This is application-orchestrated retrieval: explicit search and fetch tools cont
   finance, Arabic, and general rulings; each query uses one domain because
   search engines drop combined multi-domain `site:` expressions.
 - Canonical URL deduplication and authority-aware ranking across query results.
+- Up to 30 ranked search discoveries are returned separately from the smaller fetched evidence set.
 - Allowlisted discovery restricted to citable Tier A/B domains; Tier C and off-list results are excluded.
-- Three-page parallel fetching with direct-HTML first, Crawl4AI static/browser fallback, and up to two adaptive extra fetches.
+- Three-page parallel fetching through Firecrawl, with up to two adaptive extra fetches.
 - Each completed search lane may speculatively begin fetching its best trusted page while the other lanes finish; only the final global ranking becomes citable evidence.
 - Search transparency returns the executed query plan and every ranked discovery separately from fetched citation evidence.
 - Clickable source metadata including canonical URL, domain, and favicon.
 - Grounded answer synthesis restricted to gathered evidence.
 - CLI answer flow and `POST /v1/ask` JSON API.
-- Behavioral tests for direct source tools and the HTTP answer surface.
+- Behavioral tests for Firecrawl source tools and the HTTP answer surface.
 
 ## Trust rules
 

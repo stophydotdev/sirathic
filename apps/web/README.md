@@ -9,13 +9,13 @@ from the Hono API.
 From the repository root:
 
 ```bash
-bun run infra:up
 bun run dev
 ```
 
 The API listens on `http://localhost:3000` and Next.js listens on
 `http://localhost:3001`. Next proxies `/v1/*` to the API, preserving SSE
-streaming without exposing a private backend hostname to the browser.
+streaming without exposing a private backend hostname to the browser. Local API
+development uses the Firecrawl endpoint configured in `apps/server/.env`.
 
 For a deployed environment, set this on the web service:
 

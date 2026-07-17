@@ -61,18 +61,16 @@ We are not (v1):
 - `packages/core` — tool-calling research module and grounded answer synthesis
 - `apps/server` — Hono HTTP API and SSE research stream
 - `apps/web` — Bun-managed Next.js research interface
-- `infra` — independently deployed SearXNG, Crawl4AI, and disposable Valkey cache; no secrets
-
-`packages/db` is reserved for future application data and is not part of the current answer path. See `PLAN.md` for the current tool-calling flow.
+- `searxng` — the custom SearXNG image Railway builds for Firecrawl; no secrets
 
 ### Infrastructure boundary
 
-SearXNG and Crawl4AI are externally hosted dependencies, not applications under
-`apps`. Sirathic owns their thin deployment images under `infra`, plus their
-TypeScript clients and contracts. Their scaling, proxy credentials, internal
-Redis, and runtime configuration belong to their respective deployments. The API reaches them over
-private networking through `SEARXNG_URL` and `CRAWL4AI_URL`. Do not bundle the
-API, SearXNG, Crawl4AI, and Redis into one container or one process lifecycle.
+Firecrawl and SearXNG are externally hosted dependencies, not applications under
+`apps`. Railway runs Firecrawl, Playwright, and the Tailscale gateway from
+upstream images; Sirathic keeps only its custom SearXNG image under `searxng`.
+The API reaches Firecrawl over private networking through `FIRECRAWL_URL`; it
+never calls SearXNG or Playwright directly. Do not bundle the API, Firecrawl,
+SearXNG, or Redis into one process lifecycle.
 
 A single machine or hosting project is acceptable initially, but each component
 must remain an independently restartable service. Infrastructure credentials
@@ -82,10 +80,8 @@ that uses them.
 
 ### Data and cache boundary
 
-- PostgreSQL is durable application storage. Losing it is data loss.
-- Redis/Valkey is a dedicated, externally hosted cache shared by Sirathic
-  instances. It is not Crawl4AI's embedded Redis.
-- SearXNG and Crawl4AI are disposable compute. Their local state must never be
+- Redis/Valkey is an externally hosted cache shared by Sirathic instances.
+- SearXNG and Firecrawl workers are disposable compute. Their local state must never be
   treated as durable Sirathic data.
 - Final LLM answers are never cached. Search results and cleaned source evidence
   are cached; every answer is newly synthesized for the user's exact question.
