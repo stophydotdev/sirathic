@@ -5,5 +5,3 @@ node_modules
 .next
 **/.next
 **/.env
-infra/postgres/data
-infra/redis/data
