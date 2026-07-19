@@ -55,13 +55,13 @@ engines:
     retries: 0
     categories: [general]
   - name: mojeek
-    disabled: false
-    timeout: 4.0
+    disabled: true
+    timeout: 2.5
     retries: 0
     categories: [general]
   - name: startpage
     disabled: false
-    timeout: 2.5
+    timeout: 2.0
     retries: 0
     retry_on_http_error: [403, 429]
     categories: [general]
