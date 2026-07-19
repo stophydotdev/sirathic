@@ -1,5 +1,9 @@
 import { firecrawl } from "./firecrawl";
-import { WebFetchOptions, WebFetchResult, WebScrapeResponse } from "./types";
+import type {
+  WebFetchOptions,
+  WebFetchResult,
+  WebScrapeResponse,
+} from "./types";
 
 export const webFetch = async (
   url: string,

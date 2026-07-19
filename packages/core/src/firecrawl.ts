@@ -1,5 +1,5 @@
 import { env } from "@sirathic/env/server";
-import { FirecrawlResponse } from "./types";
+import type { FirecrawlResponse } from "./types";
 
 export class FirecrawlError extends Error {
   constructor(

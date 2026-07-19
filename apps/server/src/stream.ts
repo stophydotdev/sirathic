@@ -1,4 +1,4 @@
-import SessionManager from "@sirathic/core/session";
+import type SessionManager from "@sirathic/core/session";
 
 export const streamSession = (
   session: SessionManager,
@@ -10,7 +10,7 @@ export const streamSession = (
   const encoder = new TextEncoder();
 
   const write = (payload: Record<string, unknown>) => {
-    writer.write(encoder.encode(JSON.stringify(payload) + "\n"));
+    writer.write(encoder.encode(`${JSON.stringify(payload)}\n`));
   };
 
   if (firstEvent) write(firstEvent);

@@ -1,7 +1,7 @@
 import z from "zod";
 import { webSearch } from "@sirathic/core/webSearch";
-import { Chunk } from "@sirathic/core/types";
-import { ResearchAction } from "../../types";
+import type { Chunk } from "@sirathic/core/types";
+import type { ResearchAction } from "../../types";
 
 const actionSchema = z.object({
   queries: z
@@ -69,7 +69,8 @@ const webSearchAction: ResearchAction<typeof actionSchema> = {
         return speedModePrompt;
     }
   },
-  enabled: (config) => config.classification.classification.skipSearch === false,
+  enabled: (config) =>
+    config.classification.classification.skipSearch === false,
   execute: async (input, additionalConfig) => {
     const queries = (
       Array.isArray(input.queries) ? input.queries : [input.queries]

@@ -1,8 +1,8 @@
 import SearchAgent from "@sirathic/core/agents/search";
 import SessionManager from "@sirathic/core/session";
 import { getLLM } from "@sirathic/core/models";
-import { SearchAgentMode } from "@sirathic/core/agents/search/types";
-import { Chunk, ResearchSubStep } from "@sirathic/core/types";
+import type { SearchAgentMode } from "@sirathic/core/agents/search/types";
+import type { Chunk, ResearchSubStep } from "@sirathic/core/types";
 
 const query = process.argv[2];
 const mode = (process.argv[3] ?? "balanced") as SearchAgentMode;

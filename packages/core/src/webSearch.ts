@@ -1,5 +1,9 @@
 import { firecrawl } from "./firecrawl";
-import { WebSearchOptions, WebSearchResponse, WebSearchResult } from "./types";
+import type {
+  WebSearchOptions,
+  WebSearchResponse,
+  WebSearchResult,
+} from "./types";
 
 export const webSearch = async (
   query: string,

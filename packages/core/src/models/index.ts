@@ -1,4 +1,4 @@
-import { LanguageModel } from "ai";
+import type { LanguageModel } from "ai";
 import { env } from "@sirathic/env/server";
 import openrouterProvider from "./providers/openrouter";
 

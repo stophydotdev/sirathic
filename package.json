@@ -11,6 +11,9 @@
     "dev": "bun --hot apps/server/src/index.ts",
     "start": "bun apps/server/src/index.ts",
     "typecheck": "tsc --noEmit",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "format": "biome format --write",
     "search": "bun scripts/search.ts",
     "fetch": "bun scripts/fetch.ts",
     "ask": "bun scripts/ask.ts",
@@ -24,6 +27,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.5.4",
     "@types/node": "^20",
     "typescript": "7"
   }

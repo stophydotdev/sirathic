@@ -1,4 +1,4 @@
-import { ChatTurnMessage } from "../types";
+import type { ChatTurnMessage } from "../types";
 
 const formatChatHistoryAsString = (history: ChatTurnMessage[]) => {
   return history

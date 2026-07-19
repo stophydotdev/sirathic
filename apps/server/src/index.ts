@@ -9,7 +9,7 @@ import { appRouter } from "@sirathic/api/routers/index";
 import SearchAgent from "@sirathic/core/agents/search";
 import SessionManager from "@sirathic/core/session";
 import { getLLM } from "@sirathic/core/models";
-import { ChatTurnMessage } from "@sirathic/core/types";
+import type { ChatTurnMessage } from "@sirathic/core/types";
 import { streamSession } from "./stream";
 
 const app = new Hono();

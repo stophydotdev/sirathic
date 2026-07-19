@@ -2,16 +2,14 @@ import { generateText, Output } from "ai";
 import z from "zod";
 import { classifierPrompt } from "@sirathic/core/prompts/search/classifier";
 import formatChatHistoryAsString from "@sirathic/core/utils/formatHistory";
-import { ClassifierInput } from "./types";
+import type { ClassifierInput } from "./types";
 
 const schema = z.object({
   classification: z.object({
     skipSearch: z
       .boolean()
       .describe("Indicates whether to skip the search step."),
-    quranSearch: z
-      .boolean()
-      .describe("Indicates whether to search the Quran."),
+    quranSearch: z.boolean().describe("Indicates whether to search the Quran."),
     hadithSearch: z
       .boolean()
       .describe("Indicates whether to search hadith collections."),

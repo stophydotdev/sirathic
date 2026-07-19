@@ -1,6 +1,6 @@
 import z from "zod";
 import { FIQH_DOMAINS, buildSiteScope } from "@sirathic/core/islamicSources";
-import { ResearchAction } from "../../types";
+import type { ResearchAction } from "../../types";
 import { executeScopedSearch } from "./scopedSearch";
 
 const schema = z.object({

@@ -1,5 +1,5 @@
-import { tool, ToolSet } from "ai";
-import {
+import { tool, type ToolSet } from "ai";
+import type {
   ActionEnabledConfig,
   ActionOutput,
   AdditionalConfig,
@@ -10,15 +10,15 @@ class ActionRegistry {
   private static actions: Map<string, ResearchAction> = new Map();
 
   static register(action: ResearchAction<any>) {
-    this.actions.set(action.name, action);
+    ActionRegistry.actions.set(action.name, action);
   }
 
   static get(name: string): ResearchAction | undefined {
-    return this.actions.get(name);
+    return ActionRegistry.actions.get(name);
   }
 
   static getAvailableActions(config: ActionEnabledConfig): ResearchAction[] {
-    return Array.from(this.actions.values()).filter((action) =>
+    return Array.from(ActionRegistry.actions.values()).filter((action) =>
       action.enabled(config),
     );
   }
@@ -28,7 +28,7 @@ class ActionRegistry {
     additionalConfig: AdditionalConfig,
     onOutput: (output: ActionOutput) => void,
   ): ToolSet {
-    const availableActions = this.getAvailableActions(config);
+    const availableActions = ActionRegistry.getAvailableActions(config);
 
     return Object.fromEntries(
       availableActions.map((action) => [
@@ -58,7 +58,7 @@ class ActionRegistry {
   }
 
   static getAvailableActionsDescriptions(config: ActionEnabledConfig): string {
-    const availableActions = this.getAvailableActions(config);
+    const availableActions = ActionRegistry.getAvailableActions(config);
 
     return availableActions
       .map(

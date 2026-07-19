@@ -1,4 +1,4 @@
-import { LanguageModel } from "ai";
+import type { LanguageModel } from "ai";
 
 type Model = {
   name: string;

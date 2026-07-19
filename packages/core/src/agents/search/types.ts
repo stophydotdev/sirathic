@@ -1,7 +1,11 @@
-import { LanguageModel } from "ai";
-import z from "zod";
-import { ChatTurnMessage, Chunk, ResearchSubStepData } from "@sirathic/core/types";
-import { ClassifierOutput } from "./classifier";
+import type { LanguageModel } from "ai";
+import type z from "zod";
+import type {
+  ChatTurnMessage,
+  Chunk,
+  ResearchSubStepData,
+} from "@sirathic/core/types";
+import type { ClassifierOutput } from "./classifier";
 
 type SearchAgentMode = "speed" | "balanced" | "quality";
 

@@ -1,5 +1,5 @@
 import z from "zod";
-import { ResearchAction } from "../../types";
+import type { ResearchAction } from "../../types";
 
 const schema = z.object({
   plan: z

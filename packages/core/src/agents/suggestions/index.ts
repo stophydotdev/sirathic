@@ -1,8 +1,8 @@
-import { generateText, LanguageModel, Output } from "ai";
+import { generateText, type LanguageModel, Output } from "ai";
 import z from "zod";
 import { suggestionGeneratorPrompt } from "@sirathic/core/prompts/suggestions";
 import formatChatHistoryAsString from "@sirathic/core/utils/formatHistory";
-import { ChatTurnMessage } from "@sirathic/core/types";
+import type { ChatTurnMessage } from "@sirathic/core/types";
 
 type SuggestionGeneratorInput = {
   chatHistory: ChatTurnMessage[];

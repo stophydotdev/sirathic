@@ -1,6 +1,6 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { env } from "@sirathic/env/server";
-import { ModelProvider } from "../../types";
+import type { ModelProvider } from "../../types";
 
 const openrouterProvider: ModelProvider = {
   id: "openrouter",

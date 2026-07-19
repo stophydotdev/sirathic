@@ -1,7 +1,7 @@
 import z from "zod";
 import { webFetch } from "@sirathic/core/webFetch";
-import { Chunk } from "@sirathic/core/types";
-import { ResearchAction } from "../../types";
+import type { Chunk } from "@sirathic/core/types";
+import type { ResearchAction } from "../../types";
 
 const MAX_CONTENT_CHARS = 8000;
 
@@ -28,7 +28,9 @@ const scrapeURLAction: ResearchAction<typeof schema> = {
       .filter((url) => !additionalConfig.scrapedUrls.has(url))
       .slice(0, 3);
 
-    urls.forEach((url) => additionalConfig.scrapedUrls.add(url));
+    urls.forEach((url) => {
+      additionalConfig.scrapedUrls.add(url);
+    });
 
     if (urls.length === 0) {
       return {

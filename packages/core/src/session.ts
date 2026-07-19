@@ -1,6 +1,6 @@
 import { EventEmitter } from "node:events";
-import { applyPatch, Operation } from "rfc6902";
-import { Block } from "./types";
+import { applyPatch, type Operation } from "rfc6902";
+import type { Block } from "./types";
 
 const sessions =
   (global as any)._sessionManagerSessions || new Map<string, SessionManager>();
@@ -26,16 +26,16 @@ class SessionManager {
   }
 
   static getSession(id: string): SessionManager | undefined {
-    return this.sessions.get(id);
+    return SessionManager.sessions.get(id);
   }
 
   static getAllSessions(): SessionManager[] {
-    return Array.from(this.sessions.values());
+    return Array.from(SessionManager.sessions.values());
   }
 
   static createSession(): SessionManager {
     const session = new SessionManager();
-    this.sessions.set(session.id, session);
+    SessionManager.sessions.set(session.id, session);
     return session;
   }
 

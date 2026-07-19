@@ -1,10 +1,10 @@
 import { streamText } from "ai";
 import { getWriterPrompt } from "@sirathic/core/prompts/search/writer";
-import SessionManager from "@sirathic/core/session";
-import { Chunk, ResearchBlock, TextBlock } from "@sirathic/core/types";
+import type SessionManager from "@sirathic/core/session";
+import type { Chunk, ResearchBlock, TextBlock } from "@sirathic/core/types";
 import { classify } from "./classifier";
 import Researcher from "./researcher";
-import { SearchAgentInput } from "./types";
+import type { SearchAgentInput } from "./types";
 
 class SearchAgent {
   async searchAsync(session: SessionManager, input: SearchAgentInput) {

@@ -12,6 +12,8 @@ const page = await webFetch(url);
 const elapsed = ((performance.now() - start) / 1000).toFixed(2);
 
 console.log(`# ${page.title}`);
-console.log(`# ${page.url} (status ${page.statusCode ?? "?"}, ${page.markdown.length} chars, ${elapsed}s)`);
+console.log(
+  `# ${page.url} (status ${page.statusCode ?? "?"}, ${page.markdown.length} chars, ${elapsed}s)`,
+);
 console.log();
 console.log(page.markdown);

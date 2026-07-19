@@ -1,7 +1,7 @@
 import { generateText, hasToolCall, isStepCount } from "ai";
 import { getResearcherPrompt } from "@sirathic/core/prompts/search/researcher";
 import formatChatHistoryAsString from "@sirathic/core/utils/formatHistory";
-import { ActionOutput, ResearcherInput, ResearcherOutput } from "../types";
+import type { ActionOutput, ResearcherInput, ResearcherOutput } from "../types";
 import { ActionRegistry } from "./actions";
 
 class Researcher {

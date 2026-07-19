@@ -1,4 +1,4 @@
-import { SearchAgentMode } from "@sirathic/core/agents/search/types";
+import type { SearchAgentMode } from "@sirathic/core/agents/search/types";
 
 const getSpeedPrompt = (
   actionDesc: string,

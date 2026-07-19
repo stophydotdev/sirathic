@@ -1,5 +1,5 @@
 import z from "zod";
-import { ResearchAction } from "../../types";
+import type { ResearchAction } from "../../types";
 
 const actionDescription = `
 Use this action ONLY when you have completed all necessary research and are ready to provide a final answer to the user. This indicates that you have gathered sufficient information from previous steps and are concluding the research process.

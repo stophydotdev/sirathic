@@ -1,8 +1,8 @@
 import { cached } from "@sirathic/core/cache";
 import { webFetch } from "@sirathic/core/webFetch";
 import { webSearch } from "@sirathic/core/webSearch";
-import { Chunk } from "@sirathic/core/types";
-import { AdditionalConfig } from "../../types";
+import type { Chunk } from "@sirathic/core/types";
+import type { AdditionalConfig } from "../../types";
 
 const SEARCH_TTL_MS = 30 * 60 * 1000;
 const PAGE_TTL_MS = 6 * 60 * 60 * 1000;
@@ -59,9 +59,9 @@ export const executeScopedSearch = async (input: {
     .filter((r) => !input.additionalConfig.scrapedUrls.has(r.metadata.url))
     .slice(0, input.scrapeTop);
 
-  toScrape.forEach((r) =>
-    input.additionalConfig.scrapedUrls.add(r.metadata.url),
-  );
+  toScrape.forEach((r) => {
+    input.additionalConfig.scrapedUrls.add(r.metadata.url);
+  });
 
   if (toScrape.length > 0) {
     input.additionalConfig.emitSubStep({
