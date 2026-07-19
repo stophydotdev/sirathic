@@ -1,4 +1,4 @@
-import { webFetch } from "../lib/webFetch";
+import { webFetch } from "@sirathic/core/webFetch";
 
 const url = process.argv[2];
 

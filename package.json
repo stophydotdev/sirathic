@@ -2,42 +2,29 @@
   "name": "sirathic",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
+    "dev": "bun --hot apps/server/src/index.ts",
+    "start": "bun apps/server/src/index.ts",
+    "typecheck": "tsc --noEmit",
     "search": "bun scripts/search.ts",
     "fetch": "bun scripts/fetch.ts",
     "ask": "bun scripts/ask.ts",
     "answer": "bun scripts/answer.ts"
   },
   "dependencies": {
-    "@openrouter/ai-sdk-provider": "^3.0.0",
-    "@t3-oss/env-nextjs": "^0.13.11",
+    "@sirathic/api": "workspace:*",
+    "@sirathic/core": "workspace:*",
+    "@sirathic/env": "workspace:*",
     "ai": "^7.0.31",
-    "next": "16.2.10",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "rfc6902": "^5.2.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.10",
-    "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "ignoreScripts": [
-    "sharp",
-    "unrs-resolver"
-  ],
-  "trustedDependencies": [
-    "sharp",
-    "unrs-resolver"
-  ]
+  }
 }

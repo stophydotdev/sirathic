@@ -1,4 +1,4 @@
-import { webSearch } from "../lib/webSearch";
+import { webSearch } from "@sirathic/core/webSearch";
 
 const query = process.argv[2];
 const limit = process.argv[3] ? Number(process.argv[3]) : undefined;

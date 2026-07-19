@@ -1,5 +1,5 @@
 import { streamText } from "ai";
-import { getLLM } from "../lib/models";
+import { getLLM } from "@sirathic/core/models";
 
 const question = process.argv[2];
 const model = process.argv[3];

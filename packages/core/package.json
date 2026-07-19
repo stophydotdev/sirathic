@@ -1,0 +1,20 @@
+{
+  "name": "@sirathic/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./agents/search": "./src/agents/search/index.ts",
+    "./agents/suggestions": "./src/agents/suggestions/index.ts",
+    "./models": "./src/models/index.ts",
+    "./prompts/suggestions": "./src/prompts/suggestions/index.ts"
+  },
+  "dependencies": {
+    "@openrouter/ai-sdk-provider": "^3.0.0",
+    "@sirathic/env": "workspace:*",
+    "ai": "^7.0.31",
+    "rfc6902": "^5.2.0",
+    "zod": "^4.4.3"
+  }
+}
