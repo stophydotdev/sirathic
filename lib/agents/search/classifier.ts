@@ -9,6 +9,17 @@ const schema = z.object({
     skipSearch: z
       .boolean()
       .describe("Indicates whether to skip the search step."),
+    quranSearch: z
+      .boolean()
+      .describe("Indicates whether to search the Quran."),
+    hadithSearch: z
+      .boolean()
+      .describe("Indicates whether to search hadith collections."),
+    fiqhSearch: z
+      .boolean()
+      .describe(
+        "Indicates whether to search fatwa and scholarly rulings sources.",
+      ),
   }),
   standaloneFollowUp: z
     .string()
