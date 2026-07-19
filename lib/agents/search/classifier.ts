@@ -20,6 +20,11 @@ const schema = z.object({
       .describe(
         "Indicates whether to search fatwa and scholarly rulings sources.",
       ),
+    haramAssistance: z
+      .boolean()
+      .describe(
+        "Indicates the query seeks active assistance with something impermissible in Islam.",
+      ),
   }),
   standaloneFollowUp: z
     .string()

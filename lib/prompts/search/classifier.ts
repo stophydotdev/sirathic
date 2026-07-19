@@ -7,9 +7,8 @@ It will be shared a detailed conversation history and a user query and it has to
 <labels>
 NOTE: BY GENERAL KNOWLEDGE WE MEAN INFORMATION THAT IS OBVIOUS, WIDELY KNOWN, OR CAN BE INFERRED WITHOUT EXTERNAL SOURCES FOR EXAMPLE MATHEMATICAL FACTS, BASIC SCIENTIFIC KNOWLEDGE, COMMON HISTORICAL EVENTS, ETC.
 1. skipSearch (boolean): Deeply analyze whether the user's query can be answered without performing any search.
-   - Set it to true if the query is straightforward, factual, or can be answered based on general knowledge.
-   - Set it to true for writing tasks or greeting messages that do not require external information.
-   - Set it to false if the query requires up-to-date information, specific details, or context that cannot be inferred from general knowledge.
+   - Set it to true ONLY for greetings, casual conversation, pure writing or editing tasks on text the user provided, and trivial arithmetic.
+   - Set it to false for ANY knowledge question on ANY topic (technology, science, productivity, health, history, religion, news, how-things-work) — the answer must be grounded in cited sources even if it seems like common knowledge.
    - Set it to false for any religious question where the answer should be grounded in cited sources, even if the answer seems commonly known.
    - ALWAYS SET SKIPSEARCH TO FALSE IF YOU ARE UNCERTAIN OR IF THE QUERY IS AMBIGUOUS OR IF YOU'RE NOT SURE.
 2. quranSearch (boolean): Determine if the query would benefit from searching the Quran directly.
@@ -21,6 +20,11 @@ NOTE: BY GENERAL KNOWLEDGE WE MEAN INFORMATION THAT IS OBVIOUS, WIDELY KNOWN, OR
 4. fiqhSearch (boolean): Determine if the query asks about Islamic rulings, practice, or scholarly opinion.
    - Set it to true if the query asks whether something is halal or haram, how to perform an act of worship, or what scholars or madhhabs say for example "Is X permissible?", "How do I pray while traveling?", "What is the ruling on fasting when sick?"
    - Set it to false if the query is purely about Quranic text, pure hadith lookup, or non-religious topics.
+5. haramAssistance (boolean): Determine if the query seeks ACTIVE ASSISTANCE with or facilitation of something clearly impermissible in Islam.
+   - Set it to true when the user wants help DOING the impermissible thing, for example: gambling or betting tips and odds, alcohol recommendations or cocktail recipes, facilitating dating/hookups or zina, optimizing interest-based (riba) earnings, horoscopes and fortune-telling, or obtaining pornography.
+   - Set it to FALSE when the user is asking ABOUT a haram topic to learn or understand it, for example: "what is riba?", "why is alcohol haram?", "is crypto halal?", "what does Islam say about gambling?" — learning about a topic is never haram assistance.
+   - Set it to FALSE for neutral everyday queries (technology, productivity, work, education, health, finance mechanics) — these are beneficial and fully allowed.
+   - When true, also set quranSearch, hadithSearch, and fiqhSearch to false — no search will be performed for such requests.
 </labels>
 
 <standalone_followup>
@@ -39,7 +43,8 @@ You must respond in the following JSON format without any extra text, explanatio
     "skipSearch": boolean,
     "quranSearch": boolean,
     "hadithSearch": boolean,
-    "fiqhSearch": boolean
+    "fiqhSearch": boolean,
+    "haramAssistance": boolean
   },
   "standaloneFollowUp": string
 }

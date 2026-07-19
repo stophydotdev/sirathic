@@ -19,7 +19,10 @@ class SearchAgent {
       let finalContext =
         "<Query to be answered without searching; Search not made; Answer directly from your general knowledge without citations; The 'no relevant information' fallback does not apply here>";
 
-      if (!classification.classification.skipSearch) {
+      if (classification.classification.haramAssistance) {
+        finalContext =
+          "<The user's request seeks active assistance with something impermissible in Islam; No search was made and none will be; Follow the Values Alignment instructions: decline gently, briefly explain why in light of Islamic teachings, and offer a beneficial halal alternative; Do not use citations; The 'no relevant information' fallback does not apply here>";
+      } else if (!classification.classification.skipSearch) {
         const researchBlockId = crypto.randomUUID();
 
         session.emitBlock({
