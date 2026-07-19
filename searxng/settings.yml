@@ -1,0 +1,79 @@
+use_default_settings:
+  engines:
+    keep_only:
+      - duckduckgo
+      - google
+      - bing
+      - mojeek
+      - startpage
+      - bing images
+      - google news
+      - bing news
+
+general:
+  instance_name: "sirathic-searxng"
+
+search:
+  safe_search: 2
+  autocomplete: "google"
+  ban_time_on_fail: 1
+  max_ban_time_on_fail: 5
+  suspended_times:
+    SearxEngineAccessDenied: 1
+    SearxEngineCaptcha: 1
+    SearxEngineTooManyRequests: 1
+    cf_SearxEngineCaptcha: 1
+    cf_SearxEngineAccessDenied: 1
+    recaptcha_SearxEngineCaptcha: 1
+  formats:
+    - html
+    - json
+
+outgoing:
+  request_timeout: 2.5
+  max_request_timeout: 4.0
+  extra_proxy_timeout: 0
+  pool_connections: 200
+  pool_maxsize: 100
+  keepalive_expiry: 30.0
+  enable_http2: true
+
+engines:
+  - name: duckduckgo
+    disabled: false
+    timeout: 2.0
+    retries: 0
+    categories: [general]
+  - name: google
+    disabled: true
+    timeout: 2.0
+    retries: 0
+    categories: [general]
+  - name: bing
+    disabled: false
+    timeout: 2.0
+    retries: 0
+    categories: [general]
+  - name: mojeek
+    disabled: false
+    timeout: 1.6
+    retries: 0
+    categories: [general]
+  - name: startpage
+    disabled: false
+    timeout: 1.6
+    retries: 0
+    retry_on_http_error: [403, 429]
+    categories: [general]
+  - name: bing images
+    disabled: false
+    timeout: 2.5
+    retries: 0
+  - name: google news
+    disabled: false
+    timeout: 2.5
+    retries: 0
+  - name: bing news
+    disabled: false
+    timeout: 2.5
+    retries: 0
