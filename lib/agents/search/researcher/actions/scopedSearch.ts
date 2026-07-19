@@ -7,12 +7,14 @@ import { AdditionalConfig } from "../../types";
 const SEARCH_TTL_MS = 30 * 60 * 1000;
 const PAGE_TTL_MS = 6 * 60 * 60 * 1000;
 const MAX_PAGE_CHARS = 6000;
+const SCRAPE_TIMEOUT_MS = 20_000;
 
 export const executeScopedSearch = async (input: {
   queries: string[];
   siteScope: string;
   scrapeTop: number;
   additionalConfig: AdditionalConfig;
+  filterUrl?: (url: string) => boolean;
 }): Promise<Chunk[]> => {
   const queries = (
     Array.isArray(input.queries) ? input.queries : [input.queries]
@@ -47,6 +49,7 @@ export const executeScopedSearch = async (input: {
 
   const seenUrls = new Set<string>();
   const uniqueSnippets = snippets.filter((r) => {
+    if (input.filterUrl && !input.filterUrl(r.metadata.url)) return false;
     if (seenUrls.has(r.metadata.url)) return false;
     seenUrls.add(r.metadata.url);
     return true;
@@ -67,7 +70,7 @@ export const executeScopedSearch = async (input: {
     toScrape.map(async (r) => {
       try {
         const page = await cached(`page:${r.metadata.url}`, PAGE_TTL_MS, () =>
-          webFetch(r.metadata.url),
+          webFetch(r.metadata.url, { timeoutMs: SCRAPE_TIMEOUT_MS }),
         );
 
         pages.push({

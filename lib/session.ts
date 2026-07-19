@@ -19,9 +19,10 @@ class SessionManager {
   constructor(id?: string) {
     this.id = id ?? crypto.randomUUID();
 
-    setTimeout(() => {
+    const ttlTimer = setTimeout(() => {
       SessionManager.sessions.delete(this.id);
     }, this.TTL_MS);
+    ttlTimer.unref?.();
   }
 
   static getSession(id: string): SessionManager | undefined {

@@ -83,3 +83,5 @@ if (sources.length > 0) {
     console.log(`[${i + 1}] ${s.metadata.title} — ${s.metadata.url}`);
   });
 }
+
+process.exit(0);

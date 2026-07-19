@@ -30,11 +30,22 @@ const quranSearchAction: ResearchAction<typeof schema> = {
     config.classification.classification.quranSearch === true &&
     config.classification.classification.skipSearch === false,
   execute: async (input, additionalConfig) => {
+    const seenPaths = new Set<string>();
+
     const results = await executeScopedSearch({
       queries: input.queries,
       siteScope: buildSiteScope([QURAN_DOMAIN]),
       scrapeTop: 2,
       additionalConfig,
+      filterUrl: (url) => {
+        const localeFreePath = new URL(url).pathname.replace(
+          /^\/[a-z]{2}(-[a-z]+)?\//i,
+          "/",
+        );
+        if (seenPaths.has(localeFreePath)) return false;
+        seenPaths.add(localeFreePath);
+        return true;
+      },
     });
 
     return {

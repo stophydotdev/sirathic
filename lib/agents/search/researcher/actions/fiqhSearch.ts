@@ -33,7 +33,7 @@ const fiqhSearchAction: ResearchAction<typeof schema> = {
     const results = await executeScopedSearch({
       queries: input.queries,
       siteScope: buildSiteScope(FIQH_DOMAINS),
-      scrapeTop: 3,
+      scrapeTop: 2,
       additionalConfig,
     });
 

@@ -80,7 +80,7 @@ class Researcher {
 
     return {
       findings: actionOutput,
-      searchFindings: filteredSearchResults,
+      searchFindings: filteredSearchResults.slice(0, 25),
     };
   }
 }

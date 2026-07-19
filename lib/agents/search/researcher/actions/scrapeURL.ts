@@ -36,7 +36,7 @@ const scrapeURLAction: ResearchAction<typeof schema> = {
     await Promise.all(
       urls.map(async (url) => {
         try {
-          const page = await webFetch(url);
+          const page = await webFetch(url, { timeoutMs: 30_000 });
 
           results.push({
             content: page.markdown.slice(0, MAX_CONTENT_CHARS),
