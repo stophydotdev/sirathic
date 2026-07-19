@@ -1,5 +1,6 @@
-import { LanguageModel, ModelMessage } from "ai";
-import { Chunk } from "@/lib/types";
+import { LanguageModel } from "ai";
+import { ChatTurnMessage, Chunk } from "@/lib/types";
+import { ClassifierOutput } from "./classifier";
 
 type SearchAgentMode = "speed" | "balanced" | "quality";
 
@@ -10,14 +11,21 @@ type SearchAgentConfig = {
 };
 
 type SearchAgentInput = {
-  chatHistory: ModelMessage[];
+  chatHistory: ChatTurnMessage[];
   followUp: string;
   config: SearchAgentConfig;
 };
 
 type SearchAgentOutput = {
+  classification: ClassifierOutput;
   sources: Chunk[];
   textStream: AsyncIterable<string>;
+};
+
+type ClassifierInput = {
+  chatHistory: ChatTurnMessage[];
+  query: string;
+  llm: LanguageModel;
 };
 
 export type {
@@ -25,4 +33,5 @@ export type {
   SearchAgentConfig,
   SearchAgentInput,
   SearchAgentOutput,
+  ClassifierInput,
 };

@@ -12,7 +12,7 @@ if (!query || !["speed", "balanced", "quality"].includes(mode)) {
 
 const agent = new SearchAgent();
 
-const { sources, textStream } = await agent.searchAsync({
+const { classification, sources, textStream } = await agent.searchAsync({
   chatHistory: [],
   followUp: query,
   config: {
@@ -22,11 +22,20 @@ const { sources, textStream } = await agent.searchAsync({
   },
 });
 
+console.log(
+  classification.classification.skipSearch
+    ? "> search skipped"
+    : `> searching: ${classification.standaloneFollowUp}`,
+);
+console.log();
+
 for await (const chunk of textStream) {
   process.stdout.write(chunk);
 }
 
-console.log("\n\nSources:");
-sources.forEach((s, i) => {
-  console.log(`[${i + 1}] ${s.metadata.title} — ${s.metadata.url}`);
-});
+if (sources.length > 0) {
+  console.log("\n\nSources:");
+  sources.forEach((s, i) => {
+    console.log(`[${i + 1}] ${s.metadata.title} — ${s.metadata.url}`);
+  });
+}

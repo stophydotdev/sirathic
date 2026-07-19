@@ -1,3 +1,8 @@
+type ChatTurnMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
 type Chunk = {
   content: string;
   metadata: {
@@ -54,6 +59,7 @@ type WebScrapeResponse = {
 };
 
 export type {
+  ChatTurnMessage,
   Chunk,
   FirecrawlResponse,
   WebSearchResult,
