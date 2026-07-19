@@ -1,3 +1,11 @@
+type Chunk = {
+  content: string;
+  metadata: {
+    title: string;
+    url: string;
+  };
+};
+
 type FirecrawlResponse = {
   success: boolean;
   error?: string;
@@ -46,6 +54,7 @@ type WebScrapeResponse = {
 };
 
 export type {
+  Chunk,
   FirecrawlResponse,
   WebSearchResult,
   WebSearchOptions,
