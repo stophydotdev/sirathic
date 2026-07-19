@@ -6,6 +6,7 @@ import planAction from "./plan";
 import quranSearchAction from "./quranSearch";
 import scrapeURLAction from "./scrapeURL";
 import webSearchAction from "./webSearch";
+import youtubeSearchAction from "./youtubeSearch";
 
 ActionRegistry.register(webSearchAction);
 ActionRegistry.register(doneAction);
@@ -14,5 +15,6 @@ ActionRegistry.register(scrapeURLAction);
 ActionRegistry.register(quranSearchAction);
 ActionRegistry.register(hadithSearchAction);
 ActionRegistry.register(fiqhSearchAction);
+ActionRegistry.register(youtubeSearchAction);
 
 export { ActionRegistry };

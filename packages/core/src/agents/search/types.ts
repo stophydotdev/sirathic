@@ -9,9 +9,12 @@ import type { ClassifierOutput } from "./classifier";
 
 type SearchAgentMode = "speed" | "balanced" | "quality";
 
+type SearchSources = "web" | "youtube";
+
 type SearchAgentConfig = {
   llm: LanguageModel;
   mode: SearchAgentMode;
+  sources: SearchSources[];
   systemInstructions: string;
 };
 
@@ -37,6 +40,7 @@ type ActionOutput =
 type ActionEnabledConfig = {
   classification: ClassifierOutput;
   mode: SearchAgentMode;
+  sources: SearchSources[];
 };
 
 type AdditionalConfig = {
@@ -73,6 +77,7 @@ type ResearcherOutput = {
 
 export type {
   SearchAgentMode,
+  SearchSources,
   SearchAgentConfig,
   SearchAgentInput,
   ClassifierInput,

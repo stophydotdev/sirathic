@@ -70,6 +70,7 @@ const webSearchAction: ResearchAction<typeof actionSchema> = {
     }
   },
   enabled: (config) =>
+    config.sources.includes("web") &&
     config.classification.classification.skipSearch === false,
   execute: async (input, additionalConfig) => {
     const queries = (

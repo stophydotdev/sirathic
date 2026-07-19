@@ -71,6 +71,7 @@ agent.searchAsync(session, {
   config: {
     llm: getLLM(),
     mode,
+    sources: process.env.STOPHY_API_KEY ? ["web", "youtube"] : ["web"],
     systemInstructions: "None",
   },
 });

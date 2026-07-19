@@ -18,6 +18,7 @@ class Researcher {
     const enabledConfig = {
       classification: input.classification,
       mode: input.config.mode,
+      sources: input.config.sources,
     };
 
     const availableTools = ActionRegistry.getAvailableActionTools(

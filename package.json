@@ -8,16 +8,16 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun --hot apps/server/src/index.ts",
-    "start": "bun apps/server/src/index.ts",
+    "dev": "bun run --filter server dev",
+    "start": "bun run --filter server start",
     "typecheck": "tsc --noEmit",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "format": "biome format --write",
-    "search": "bun scripts/search.ts",
-    "fetch": "bun scripts/fetch.ts",
-    "ask": "bun scripts/ask.ts",
-    "answer": "bun scripts/answer.ts"
+    "search": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/search.ts",
+    "fetch": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/fetch.ts",
+    "ask": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/ask.ts",
+    "answer": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/answer.ts"
   },
   "dependencies": {
     "@sirathic/api": "workspace:*",

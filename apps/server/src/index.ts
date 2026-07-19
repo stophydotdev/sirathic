@@ -40,6 +40,10 @@ const chatBodySchema = z.object({
   optimizationMode: z
     .enum(["speed", "balanced", "quality"])
     .default("balanced"),
+  sources: z
+    .array(z.enum(["web", "youtube"]))
+    .optional()
+    .default(["web", "youtube"]),
   history: z
     .array(z.tuple([z.enum(["human", "assistant"]), z.string()]))
     .optional()
@@ -82,6 +86,7 @@ app.post("/chat", async (c) => {
     config: {
       llm,
       mode: body.optimizationMode,
+      sources: body.sources,
       systemInstructions: body.systemInstructions || "None",
     },
   });

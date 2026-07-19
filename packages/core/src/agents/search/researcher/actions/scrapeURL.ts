@@ -1,4 +1,5 @@
 import z from "zod";
+import { getStophy, isYoutubeUrl } from "@sirathic/core/stophy";
 import { webFetch } from "@sirathic/core/webFetch";
 import type { Chunk } from "@sirathic/core/types";
 import type { ResearchAction } from "../../types";
@@ -49,6 +50,30 @@ const scrapeURLAction: ResearchAction<typeof schema> = {
     await Promise.all(
       urls.map(async (url) => {
         try {
+          if (isYoutubeUrl(url)) {
+            const stophy = getStophy();
+
+            const [details, transcript] = await Promise.all([
+              stophy.videoDetails(url),
+              stophy.transcript(url),
+            ]);
+
+            const video =
+              "video" in details.data ? details.data.video : undefined;
+
+            results.push({
+              content: transcript.data.text.slice(0, MAX_CONTENT_CHARS),
+              metadata: {
+                title: video
+                  ? `${video.title} — ${video.author ?? "YouTube"} (YouTube)`
+                  : "YouTube video",
+                url,
+              },
+            });
+
+            return;
+          }
+
           const page = await webFetch(url, { timeoutMs: 30_000 });
 
           results.push({
