@@ -24,7 +24,18 @@ const scrapeURLAction: ResearchAction<typeof schema> = {
   getDescription: () => actionDescription,
   enabled: (_) => true,
   execute: async (input, additionalConfig) => {
-    const urls = input.urls.slice(0, 3);
+    const urls = input.urls
+      .filter((url) => !additionalConfig.scrapedUrls.has(url))
+      .slice(0, 3);
+
+    urls.forEach((url) => additionalConfig.scrapedUrls.add(url));
+
+    if (urls.length === 0) {
+      return {
+        type: "search_results",
+        results: [],
+      };
+    }
 
     additionalConfig.emitSubStep({
       type: "reading",

@@ -25,6 +25,7 @@ class Researcher {
       {
         llm: input.config.llm,
         mode: input.config.mode,
+        scrapedUrls: new Set<string>(),
         emitSubStep: (subStep) => input.onSubStep?.(subStep),
       },
       (output) => actionOutput.push(output),

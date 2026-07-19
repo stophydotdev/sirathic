@@ -55,7 +55,13 @@ export const executeScopedSearch = async (input: {
     return true;
   });
 
-  const toScrape = uniqueSnippets.slice(0, input.scrapeTop);
+  const toScrape = uniqueSnippets
+    .filter((r) => !input.additionalConfig.scrapedUrls.has(r.metadata.url))
+    .slice(0, input.scrapeTop);
+
+  toScrape.forEach((r) =>
+    input.additionalConfig.scrapedUrls.add(r.metadata.url),
+  );
 
   if (toScrape.length > 0) {
     input.additionalConfig.emitSubStep({

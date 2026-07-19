@@ -38,6 +38,7 @@ type ActionEnabledConfig = {
 type AdditionalConfig = {
   llm: LanguageModel;
   mode: SearchAgentMode;
+  scrapedUrls: Set<string>;
   emitSubStep: (subStep: ResearchSubStep) => void;
 };
 

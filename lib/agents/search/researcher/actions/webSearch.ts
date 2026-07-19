@@ -25,21 +25,18 @@ If this tool is present and no other tools are more relevant, you MUST use this 
 const balancedModePrompt = `
 Use this tool to perform web searches based on the provided queries. This is useful when you need to gather information from the web to answer the user's questions. You can provide up to 3 queries at a time. You will have to use this every single time if this is present and relevant.
 
-You can call this tool several times if needed to gather enough information.
-Start initially with broader queries to get an overview, then narrow down with more specific queries based on the results you receive.
+One well-planned call is usually enough. Choose queries that together cover the different aspects of the question, and use only as many as you need (1-3).
+Only call this tool again if the first results left a specific, named gap that prevents answering.
 
 Your queries shouldn't be sentences but rather keywords that are SEO friendly and can be used to search the web for information.
 
-For example if the user is asking about Tesla, your actions should be like:
-1. __reasoning_preamble "The user is asking about Tesla. I will start with broader queries to get an overview of Tesla, then narrow down with more specific queries based on the results I receive." then
-2. web_search ["Tesla", "Tesla latest news", "Tesla stock price"] then
-3. __reasoning_preamble "Based on the previous search results, I will now narrow down my queries to focus on Tesla's recent developments and stock performance." then
-4. web_search ["Tesla Q2 2025 earnings", "Tesla new model 2025", "Tesla stock analysis"] then done.
-5. __reasoning_preamble "I have gathered enough information to provide a comprehensive answer."
-6. done.
+For example if the user is asking about Tesla's latest earnings, your actions should be like:
+1. __reasoning_preamble "The user is asking about Tesla's earnings. I will search for the latest earnings report, key figures, and market reaction in one round." then
+2. web_search ["Tesla Q2 2026 earnings", "Tesla earnings key figures", "Tesla stock reaction earnings"] then
+3. __reasoning_preamble "The results cover the earnings report and reaction; I have enough to answer."
+4. done.
 
-You can search for 3 queries in one go, make sure to utilize all 3 queries to maximize the information you can gather. If a question is simple, then split your queries to cover different aspects or related topics to get a comprehensive understanding.
-If this tool is present and no other tools are more relevant, you MUST use this tool to get the needed information. You can call this tools, multiple times as needed.
+If this tool is present and no other tools are more relevant, you MUST use this tool to get the needed information.
 `;
 
 const qualityModePrompt = `
@@ -59,7 +56,7 @@ const webSearchAction: ResearchAction<typeof actionSchema> = {
   name: "web_search",
   schema: actionSchema,
   getToolDescription: () =>
-    "Use this tool to perform web searches based on the provided queries. This is useful when you need to gather information from the web to answer the user's questions. You can provide up to 3 queries at a time. You will have to use this every single time if this is present and relevant.",
+    "Use this tool to perform general web searches based on the provided queries. Use it for everyday, non-religious information needs. For religious questions, prefer quran_search, hadith_search, and fiqh_search when they are available — only use web_search for religious topics if those tools are absent or a contemporary/factual angle is needed. Up to 3 queries at a time.",
   getDescription: (config) => {
     switch (config.mode) {
       case "speed":

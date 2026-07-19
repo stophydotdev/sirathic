@@ -39,6 +39,17 @@ class ActionRegistry {
           execute: async (params) => {
             const output = await action.execute(params, additionalConfig);
             onOutput(output);
+
+            if (output.type === "search_results") {
+              return {
+                type: "search_results",
+                results: output.results.map((r) => ({
+                  metadata: r.metadata,
+                  content: r.content.slice(0, 1200),
+                })),
+              };
+            }
+
             return output;
           },
         }),

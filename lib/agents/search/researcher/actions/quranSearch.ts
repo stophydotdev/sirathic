@@ -16,7 +16,7 @@ Use this tool to search the Quran for verses, surahs, themes, and tafsir. This s
 Use this whenever the user's question touches the Quran directly ("what does the Quran say about...") or whenever Quranic evidence would strengthen the answer to a religious question.
 
 Your queries should name the theme, story, or verse you are looking for, e.g. "patience", "Surah Al-Kahf", "story of Yusuf", "verse about charity".
-You can provide up to 3 queries at a time. Split queries across different aspects of the topic to maximize coverage.
+Use only as many queries as needed (1-3, often 1-2 suffice). One call is normally enough — call it once with well-chosen queries and do not call it again unless a specific gap remains.
 The tool reads the top matching pages so you receive the full verse text and translation, not just snippets.
 `;
 

@@ -16,7 +16,7 @@ Use this tool to search the hadith collections (Bukhari, Muslim, Abu Dawud, Tirm
 Use this whenever the user's question touches the Sunnah or sayings of the Prophet Muhammad (peace be upon him), or whenever prophetic evidence would strengthen the answer to a religious question.
 
 Your queries should name the topic or wording you are looking for, e.g. "intentions", "kindness to neighbors", "fasting travel", "actions are by intentions".
-You can provide up to 3 queries at a time. Split queries across different aspects of the topic to maximize coverage.
+Use only as many queries as needed (1-3, often 1-2 suffice). One call is normally enough — call it once with well-chosen queries and do not call it again unless a specific gap remains.
 The tool reads the top matching pages so you receive the full hadith text, reference, and grading, not just snippets.
 `;
 

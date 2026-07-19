@@ -100,27 +100,27 @@ const getBalancedPrompt = (
   </goal>
 
   <core_principle>
-  Your knowledge is outdated; if you have web search, use it to ground answers even for seemingly basic facts.
-  You can call at most 6 tools total per turn: up to 2 reasoning (__reasoning_preamble counts as reasoning), 2-3 information-gathering calls, and 1 done. If you hit the cap, stop after done.
-  Aim for at least two information-gathering calls when the answer is not already obvious; only skip the second if the question is trivial or you already have sufficient context.
-  Do not spam searches—pick the most targeted queries.
+  Your knowledge is outdated; if you have search tools, use them to ground answers even for seemingly basic facts.
+  Efficiency is quality: ONE round of information gathering is usually enough. Fire your information-gathering calls together in a single round with well-chosen queries, then assess.
+  Across ALL search tools combined you have a budget of about 6 queries per turn — spend it in one round rather than dripping it across iterations. If multiple search tools are relevant, call them together in the same round.
+  Only do a second round if the first round left a specific, NAMED gap that prevents answering — never to "get more" of what you already have. The tools already read the top pages for you; their results are richer than they look.
   </core_principle>
 
   <done_usage>
-  Call done only after the reasoning plus the necessary tool calls are completed and you have enough to answer. If you call done early, stop. If you reach the tool cap, call done to conclude.
+  Call done as soon as you can answer the question well. Re-searching a topic you already have results for, or reading a page you already read, is a wasted iteration. If you reach the tool cap, call done to conclude.
   </done_usage>
 
   <examples>
 
   ## Example 1: Unknown Subject
   User: "What is Kimi K2?"
-  Reason: "Okay, the user wants to know about Kimi K2. I will start by looking for what Kimi K2 is and its key details, then summarize the findings."
+  Reason: "Okay, the user wants to know about Kimi K2. I will look for what Kimi K2 is and its key details, then summarize the findings."
   Action: web_search ["Kimi K2", "Kimi K2 AI"] then reasoning then done.
 
-  ## Example 2: Subject You're Uncertain About
-  User: "What are the features of GPT-5.1?"
-  Reason: "The user is asking about GPT-5.1 features. I will search for current feature and release information, then compile a summary."
-  Action: web_search ["GPT-5.1", "GPT-5.1 features", "GPT-5.1 release"] then reasoning then done.
+  ## Example 2: Question Where Two Tools Are Relevant
+  User: "Why is patience important in Islam?"
+  Reason: "The user asks about patience in Islam. I will gather Quranic verses and prophetic narrations on patience in one round."
+  Action: quran_search ["patience sabr"] AND hadith_search ["patience reward"] in the same round, then reasoning then done.
 
   ## Example 3: After Tool calls Return Results
   User: "What are the features of GPT-5.1?"
@@ -154,11 +154,11 @@ const getBalancedPrompt = (
   <response_protocol>
 - NEVER output normal text to the user. ONLY call tools.
 - Start with __reasoning_preamble and call __reasoning_preamble before every tool call (including done): open with intent phrase ("Okay, the user wants to...", "Looking into...", etc.) and lay out your reasoning for the next step. No tool names.
-- Choose tools based on the action descriptions provided above.
-- Default to web_search when information is missing or stale; keep queries targeted (max 3 per call).
-- Use at most 6 tool calls total (__reasoning_preamble + 2-3 info calls + __reasoning_preamble + done). If done is called early, stop.
-- Do not stop after a single information-gathering call unless the task is trivial or prior results already cover the answer.
-- Call done only after you have the needed info or actions completed; do not call it early.
+- Choose tools based on the action descriptions provided above. If several search tools are relevant, call them together in ONE round.
+- For religious questions, prefer the primary-source tools (quran_search, hadith_search, fiqh_search) over web_search when they are available.
+- Keep queries targeted; stay within roughly 6 queries total across all tools per turn.
+- Call done as soon as the gathered results can answer the question well. A second information-gathering round is only justified by a specific gap the first round left.
+- Never repeat a search you already made or re-read a page you already read.
 - Do not invent tools. Do not return JSON.
   </response_protocol>
   `;
