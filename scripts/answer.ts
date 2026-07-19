@@ -20,13 +20,20 @@ const { classification, sources, textStream } = await agent.searchAsync({
     mode,
     systemInstructions: "None",
   },
+  onSubStep: (subStep) => {
+    if (subStep.type === "reasoning") {
+      console.log(`> ${subStep.reasoning}`);
+    } else if (subStep.type === "searching") {
+      console.log(`> searching: ${subStep.queries.join(" | ")}`);
+    } else if (subStep.type === "reading") {
+      console.log(`> reading: ${subStep.urls.join(" | ")}`);
+    }
+  },
 });
 
-console.log(
-  classification.classification.skipSearch
-    ? "> search skipped"
-    : `> searching: ${classification.standaloneFollowUp}`,
-);
+if (classification.classification.skipSearch) {
+  console.log("> search skipped");
+}
 console.log();
 
 for await (const chunk of textStream) {

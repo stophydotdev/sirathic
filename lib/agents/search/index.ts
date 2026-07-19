@@ -1,8 +1,8 @@
 import { streamText } from "ai";
 import { getWriterPrompt } from "@/lib/prompts/search/writer";
-import { webSearch } from "@/lib/webSearch";
 import { Chunk } from "@/lib/types";
 import { classify } from "./classifier";
+import Researcher from "./researcher";
 import { SearchAgentInput, SearchAgentOutput } from "./types";
 
 class SearchAgent {
@@ -18,15 +18,17 @@ class SearchAgent {
       "<Query to be answered without searching; Search not made>";
 
     if (!classification.classification.skipSearch) {
-      const results = await webSearch(classification.standaloneFollowUp);
+      const researcher = new Researcher();
 
-      searchFindings = results.map((r) => ({
-        content: r.description || r.title,
-        metadata: {
-          title: r.title,
-          url: r.url,
-        },
-      }));
+      const researchResults = await researcher.research({
+        chatHistory: input.chatHistory,
+        followUp: input.followUp,
+        classification,
+        config: input.config,
+        onSubStep: input.onSubStep,
+      });
+
+      searchFindings = researchResults.searchFindings;
 
       finalContext = searchFindings
         .map(
