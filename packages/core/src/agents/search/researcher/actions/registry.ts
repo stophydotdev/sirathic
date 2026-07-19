@@ -43,9 +43,11 @@ class ActionRegistry {
             if (output.type === "search_results") {
               return {
                 type: "search_results",
+                note: "You are seeing short excerpts only. The FULL content of every result below (complete transcripts and pages) is already captured and will be handed to the answer writer. Never re-search, re-read, or look for summaries of these — judge sufficiency by topic coverage, not excerpt length.",
                 results: output.results.map((r) => ({
                   metadata: r.metadata,
-                  content: r.content.slice(0, 1200),
+                  fullContentCaptured: r.content.length > 1200,
+                  excerpt: r.content.slice(0, 1200),
                 })),
               };
             }

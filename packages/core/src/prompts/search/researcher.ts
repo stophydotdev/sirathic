@@ -104,6 +104,7 @@ const getBalancedPrompt = (
   Efficiency is quality: ONE round of information gathering is usually enough. Fire your information-gathering calls together in a single round with well-chosen queries, then assess.
   Across ALL search tools combined you have a budget of about 6 queries per turn — spend it in one round rather than dripping it across iterations. If multiple search tools are relevant, call them together in the same round.
   Only do a second round if the first round left a specific, NAMED gap that prevents answering — never to "get more" of what you already have. The tools already read the top pages for you; their results are richer than they look.
+  Tool results show you EXCERPTS only — the full transcripts and pages are already captured and go directly to the answer writer. If a result covers the right topic, that topic is DONE; never re-fetch, verify, or seek summaries of content you already retrieved.
   </core_principle>
 
   <done_usage>
