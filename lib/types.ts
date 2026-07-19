@@ -58,9 +58,44 @@ type WebScrapeResponse = {
   };
 };
 
+type ResearchSubStepData =
+  | { type: "reasoning"; reasoning: string }
+  | { type: "searching"; queries: string[] }
+  | { type: "reading"; urls: string[] };
+
+type ResearchSubStep = { id: string } & ResearchSubStepData;
+
+type TextBlock = {
+  id: string;
+  type: "text";
+  data: string;
+};
+
+type ResearchBlock = {
+  id: string;
+  type: "research";
+  data: {
+    subSteps: ResearchSubStep[];
+  };
+};
+
+type SourceBlock = {
+  id: string;
+  type: "source";
+  data: Chunk[];
+};
+
+type Block = TextBlock | ResearchBlock | SourceBlock;
+
 export type {
   ChatTurnMessage,
   Chunk,
+  ResearchSubStepData,
+  ResearchSubStep,
+  TextBlock,
+  ResearchBlock,
+  SourceBlock,
+  Block,
   FirecrawlResponse,
   WebSearchResult,
   WebSearchOptions,

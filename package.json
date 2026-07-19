@@ -19,6 +19,7 @@
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "rfc6902": "^5.2.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

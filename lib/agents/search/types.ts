@@ -1,6 +1,6 @@
 import { LanguageModel } from "ai";
 import z from "zod";
-import { ChatTurnMessage, Chunk } from "@/lib/types";
+import { ChatTurnMessage, Chunk, ResearchSubStepData } from "@/lib/types";
 import { ClassifierOutput } from "./classifier";
 
 type SearchAgentMode = "speed" | "balanced" | "quality";
@@ -15,13 +15,6 @@ type SearchAgentInput = {
   chatHistory: ChatTurnMessage[];
   followUp: string;
   config: SearchAgentConfig;
-  onSubStep?: (subStep: ResearchSubStep) => void;
-};
-
-type SearchAgentOutput = {
-  classification: ClassifierOutput;
-  sources: Chunk[];
-  textStream: AsyncIterable<string>;
 };
 
 type ClassifierInput = {
@@ -30,10 +23,7 @@ type ClassifierInput = {
   llm: LanguageModel;
 };
 
-type ResearchSubStep =
-  | { type: "reasoning"; reasoning: string }
-  | { type: "searching"; queries: string[] }
-  | { type: "reading"; urls: string[] };
+type ResearchSubStep = ResearchSubStepData;
 
 type ActionOutput =
   | { type: "search_results"; results: Chunk[] }
@@ -80,7 +70,6 @@ export type {
   SearchAgentMode,
   SearchAgentConfig,
   SearchAgentInput,
-  SearchAgentOutput,
   ClassifierInput,
   ResearchSubStep,
   ActionOutput,
