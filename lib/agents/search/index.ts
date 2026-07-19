@@ -15,7 +15,7 @@ class SearchAgent {
 
     let searchFindings: Chunk[] = [];
     let finalContext =
-      "<Query to be answered without searching; Search not made>";
+      "<Query to be answered without searching; Search not made; Answer directly from your general knowledge without citations; The 'no relevant information' fallback does not apply here>";
 
     if (!classification.classification.skipSearch) {
       const researcher = new Researcher();
