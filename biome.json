@@ -6,28 +6,26 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["apps/**", "packages/**", "scripts/**", "*.json"]
+    "includes": [
+      "apps/**",
+      "packages/**",
+      "scripts/**",
+      "tools/oxlint/sirathic/**",
+      "*.json"
+    ]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2
   },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "preset": "recommended",
-      "suspicious": {
-        "noExplicitAny": "off",
-        "noConsole": "off"
-      },
-      "complexity": {
-        "noStaticOnlyClass": "off"
-      },
-      "style": {
-        "noNonNullAssertion": "off"
-      }
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
+  },
+  "linter": {
+    "enabled": false
   },
   "assist": {
     "actions": {
