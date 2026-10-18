@@ -7,6 +7,15 @@ import { hadithLink } from "./hadithLinks";
 const LICENSED = "hadeethenc-en";
 const MACHINE_TRANSLATED = "sirathic-en";
 
+export const citableId = (hadith: {
+  id: string;
+  book: string;
+  arabicNumber: string | null;
+}) =>
+  hadith.book === "ahmad" && hadith.arabicNumber
+    ? `ahmad:${hadith.arabicNumber}`
+    : hadith.id;
+
 export const hadithGetInput = z.object({
   ids: z.array(z.string().trim().min(1)).min(1).max(20),
 });
@@ -106,7 +115,9 @@ export const hadithGet = async (input: z.input<typeof hadithGetInput>) => {
     [...exact, ...firstVariants].map((hadith) => [hadith.id, hadith]),
   );
   return {
-    hadiths: ids.flatMap((id) => byId.get(id) ?? byId.get(`${id}a`) ?? []),
+    hadiths: ids
+      .flatMap((id) => byId.get(id) ?? byId.get(`${id}a`) ?? [])
+      .map((hadith) => Object.assign(hadith, { id: citableId(hadith) })),
     missing: ids.filter((id) => !byId.has(id) && !byId.has(`${id}a`)),
   };
 };
