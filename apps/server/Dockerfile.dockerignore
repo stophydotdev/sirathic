@@ -1,0 +1,11 @@
+**
+!package.json
+!bun.lock
+!tsconfig.json
+!apps/server/package.json
+!apps/server/src
+!apps/web/package.json
+!packages/*/package.json
+!packages/*/src
+**/node_modules
+**/.env*
