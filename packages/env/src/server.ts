@@ -13,6 +13,8 @@ export const env = createEnv({
         message: "TOKEN_KEY must be 32 random bytes in base64",
       })
       .optional(),
+    RAILWAY_ENVIRONMENT_NAME: z.string().default("local"),
+    RAILWAY_GIT_COMMIT_SHA: z.string().default("local"),
     PORT: z.coerce.number().default(3000),
   },
   runtimeEnv: process.env,

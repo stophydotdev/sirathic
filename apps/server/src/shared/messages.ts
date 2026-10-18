@@ -10,6 +10,10 @@ export type Mode = z.infer<typeof mode>;
 
 export const feedback = z.enum(["up", "down"]);
 
+export const device = z.enum(["phone", "tablet", "desktop"]);
+
+export type Device = z.infer<typeof device>;
+
 export const messageMetadata = z.object({
   createdAt: z.number().optional(),
   mode: mode.optional(),

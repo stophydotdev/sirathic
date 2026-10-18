@@ -436,3 +436,17 @@ export const loginSessions = pgTable(
   },
   (table) => [index("login_sessions_user").on(table.userId)],
 );
+
+export const events = pgTable(
+  "events",
+  {
+    id: uuid().primaryKey(),
+    name: text().notNull(),
+    owner: text(),
+    environment: text().notNull(),
+    version: text().notNull(),
+    props: jsonb().notNull(),
+    at: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("events_name_at").on(table.name, table.at)],
+);

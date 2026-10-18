@@ -6,7 +6,9 @@ import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { z } from "zod";
 import { chatResponse } from "./chat/response";
 import { chatTitle } from "./chat/title";
-import { type ChatMessage, mode } from "./shared/messages";
+import { clientOf } from "./client";
+import { track } from "./events";
+import { type ChatMessage, device, mode } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./respond";
 import {
   answerOptions,
@@ -39,6 +41,16 @@ const chatBody = z.object({
   model: z.string().min(1).optional(),
   mode: mode.default("quick"),
   incognito: z.boolean().default(false),
+  trigger: z
+    .enum(["submit-message", "regenerate-message"])
+    .optional()
+    .catch(undefined),
+  device: device.optional().catch(undefined),
+  language: z
+    .string()
+    .regex(/^[a-z]{2,3}$/u)
+    .optional()
+    .catch(undefined),
 });
 
 const SESSION_COOKIE = "sirathic_session";
@@ -86,6 +98,27 @@ app.post("/api/chat", (c) =>
     }).catch((err: Error) => {
       throw new StatusError(400, err.message);
     });
+    const owner = input.incognito ? undefined : by;
+    const modelName = input.model ?? DEFAULT_MODEL;
+    const asked = validated.findLast((message) => message.role === "user");
+    track(
+      {
+        name: "answer.requested",
+        props: {
+          mode: input.mode,
+          model: modelName,
+          turn: validated.filter((message) => message.role === "user").length,
+          regenerate: input.trigger === "regenerate-message",
+          incognito: input.incognito,
+          files:
+            asked?.parts.filter((part) => part.type === "file").length ?? 0,
+          device: input.device,
+          language: input.language,
+          ...clientOf(c.req.raw.headers),
+        },
+      },
+      owner,
+    );
     let saving = Promise.resolve();
     const save = (messages: typeof validated) => {
       if (input.incognito) return saving;
@@ -114,7 +147,7 @@ app.post("/api/chat", (c) =>
           });
     return chatResponse({
       models: { model: chosen, small },
-      modelName: input.model ?? DEFAULT_MODEL,
+      modelName,
       messages: validated,
       mode: input.mode,
       abortSignal: c.req.raw.signal,
@@ -131,6 +164,7 @@ app.post("/api/chat", (c) =>
       },
       title,
       save,
+      record: (event) => track(event, owner),
     });
   }),
 );
@@ -138,6 +172,10 @@ app.post("/api/chat", (c) =>
 app.post("/api/auth/device", (c) =>
   respond(async () => {
     const login = await startDeviceLogin();
+    track({
+      name: "signin",
+      props: { step: "started", ...clientOf(c.req.raw.headers) },
+    });
     setCookie(c, DEVICE_COOKIE, await seal(JSON.stringify(login)), {
       httpOnly: true,
       secure: secure(c),
@@ -164,6 +202,7 @@ app.get("/api/auth/device", (c) =>
     }
     deleteCookie(c, DEVICE_COOKIE, { path: "/api/auth" });
     if (polled.status === "expired") {
+      track({ name: "signin", props: { step: "expired" } });
       return c.json({ status: "expired" as const });
     }
     setCookie(c, SESSION_COOKIE, await signIn(polled.tokens), {

@@ -7,6 +7,7 @@ import {
   identityOf,
   refreshDeviceTokens,
 } from "./chatgpt/device";
+import { track } from "./events";
 import { StatusError } from "./respond";
 import { seal, unseal } from "./vault";
 
@@ -61,6 +62,10 @@ export async function signIn(tokens: DeviceTokens) {
     .values({ id: identity.subject, ...profile })
     .onConflictDoUpdate({ target: users.id, set: profile });
   access.delete(identity.subject);
+  track(
+    { name: "signin", props: { step: "completed", plan: profile.plan } },
+    identity.subject,
+  );
   const token = Buffer.from(
     crypto.getRandomValues(new Uint8Array(32)),
   ).toString("base64url");

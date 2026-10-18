@@ -6,7 +6,7 @@ import { useChatOptions } from "@/components/chat-options";
 import { usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";
-import type { ChatMessage } from "@sirathic/server/messages";
+import type { ChatMessage, Device } from "@sirathic/server/messages";
 import { useChat } from "@ai-sdk/react";
 import {
   type AttachmentAdapter,
@@ -63,6 +63,11 @@ const attachments = new CompositeAttachmentAdapter([
   pdfs,
 ]);
 
+const deviceOf = (): Device => {
+  if (!matchMedia("(pointer: coarse)").matches) return "desktop";
+  return Math.min(screen.width, screen.height) < 600 ? "phone" : "tablet";
+};
+
 const transport = new DefaultChatTransport<ChatMessage>({
   api: "/api/chat",
   body: () => {
@@ -72,6 +77,8 @@ const transport = new DefaultChatTransport<ChatMessage>({
       model: override?.model ?? chosenModel(),
       mode: override?.mode ?? options.mode,
       incognito: options.incognito,
+      device: deviceOf(),
+      language: document.documentElement.lang,
     };
   },
 });

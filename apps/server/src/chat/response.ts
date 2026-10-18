@@ -4,18 +4,22 @@ import {
   createIdGenerator,
   createUIMessageStream,
   createUIMessageStreamResponse,
+  type FinishReason,
   getToolName,
   type InferUIMessageChunk,
   isStepCount,
   isToolUIPart,
   type LanguageModel,
+  type LanguageModelUsage,
   Output,
   smoothStream,
   streamText,
   ToolLoopAgent,
+  type UIMessageStreamOutcome,
 } from "ai";
 import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
+import type { Event } from "../events";
 import { citations } from "./citations";
 import { readPdfs } from "./pdf";
 import { reasonOf } from "../respond";
@@ -147,6 +151,7 @@ export function chatResponse({
   options,
   title,
   save,
+  record,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   options: { answer: ProviderOptions; side: ProviderOptions };
@@ -157,7 +162,19 @@ export function chatResponse({
   preferences: Promise<Settings>;
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
+  record: (event: Event) => void;
 }) {
+  const startedAt = performance.now();
+  const since = () => Math.round(performance.now() - startedAt);
+  const calls = new Map<string, { tool: string; at: number }>();
+  let failedTools = 0;
+  let ended:
+    | { outcome: UIMessageStreamOutcome; finishReason?: FinishReason }
+    | undefined;
+  let firstTextMs: number | undefined;
+  let httpStatus: number | undefined;
+  let usage: LanguageModelUsage | undefined;
+  let text = "";
   const sources = citations(messages);
   const shorten = shortenEarlierResults(messages, sources.numberOf);
   const tools = sirathicTools(sources.add);
@@ -215,21 +232,55 @@ export function chatResponse({
           sources.transform(),
           smoothStream({ chunking: "word" }),
         ],
+        onEnd: ({ outcome, finishReason }) => {
+          ended = { outcome, finishReason };
+        },
+        messageMetadata: ({ part }) => {
+          if (part.type === "finish") usage = part.totalUsage;
+          return undefined;
+        },
         onError: (error) => {
           if (APICallError.isInstance(error)) {
+            httpStatus = error.statusCode;
             return `${error.statusCode ?? "error"}: ${error.message || error.responseBody || "the model call failed"}`;
           }
           return error instanceof Error ? error.message : String(error);
         },
       });
-      let text = "";
       let related: ReturnType<typeof relatedQuestions> | undefined;
       let finish: InferUIMessageChunk<ChatMessage> | undefined;
       for await (const chunk of answer) {
         if (chunk.type === "start") continue;
         if (chunk.type === "finish") finish = chunk;
         else writer.write(chunk);
-        if (chunk.type === "text-delta") text += chunk.delta;
+        if (chunk.type === "text-delta") {
+          firstTextMs ??= since();
+          text += chunk.delta;
+        }
+        if (chunk.type === "tool-input-available") {
+          calls.set(chunk.toolCallId, {
+            tool: chunk.toolName,
+            at: performance.now(),
+          });
+        }
+        if (
+          chunk.type === "tool-output-available" ||
+          chunk.type === "tool-output-error"
+        ) {
+          const call = calls.get(chunk.toolCallId);
+          const ok = chunk.type === "tool-output-available";
+          if (!ok) failedTools += 1;
+          if (call) {
+            record({
+              name: "tool.completed",
+              props: {
+                tool: call.tool,
+                ms: Math.round(performance.now() - call.at),
+                ok,
+              },
+            });
+          }
+        }
         if (chunk.type === "tool-output-available" && !related) {
           related = relatedQuestions(
             models.small,
@@ -248,10 +299,31 @@ export function chatResponse({
     },
     onError: (error) =>
       error instanceof Error ? error.message : String(error),
-    onEnd: ({ messages: answered }) =>
-      save(answered).catch((err: Error) => {
+    onEnd: ({ messages: answered, outcome }) => {
+      record({
+        name: "answer.completed",
+        props: {
+          mode,
+          model: modelName,
+          outcome: ended?.outcome.status ?? outcome.status,
+          finishReason: ended?.finishReason,
+          httpStatus,
+          totalMs: since(),
+          firstTextMs,
+          toolCalls: calls.size,
+          failedTools,
+          cited: new Set(text.match(/\[\d+\]/g)).size,
+          words: text.split(/\s+/).filter(Boolean).length,
+          inputTokens: usage?.inputTokens,
+          cachedInputTokens: usage?.inputTokenDetails.cacheReadTokens,
+          outputTokens: usage?.outputTokens,
+          reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
+        },
+      });
+      return save(answered).catch((err: Error) => {
         console.error(`session not saved: ${reasonOf(err)}`);
-      }),
+      });
+    },
   });
   return createUIMessageStreamResponse({
     stream,

@@ -4,6 +4,7 @@ import { youtubeSearch } from "@sirathic/core/tools/youtubeSearch";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { DEFAULT_MODEL, models } from "./chatgpt/codex";
+import { track } from "./events";
 import {
   hadithBooks,
   hadithCollections,
@@ -55,13 +56,19 @@ const t = initTRPC
   .context<Awaited<ReturnType<typeof createContext>>>()
   .create();
 
-const procedure = t.procedure.use(async ({ next }) => {
+const procedure = t.procedure.use(async ({ ctx, next, path }) => {
   const result = await next();
   if (!result.ok && result.error.cause instanceof StatusError) {
     throw new TRPCError({
       code: TRPC_CODES[result.error.cause.status],
       message: result.error.cause.message,
     });
+  }
+  if (!result.ok && result.error.code === "INTERNAL_SERVER_ERROR") {
+    track(
+      { name: "api.failed", props: { route: path, code: result.error.code } },
+      ctx.user?.id,
+    );
   }
   return result;
 });
@@ -118,9 +125,14 @@ export const appRouter = t.router({
     removeAll: signedIn.mutation(({ ctx }) => deleteAllSessions(ctx.owner)),
     feedback: signedIn
       .input(feedbackInput.safeExtend({ id: sessionId }))
-      .mutation(({ ctx, input: { id, ...feedback } }) =>
-        setFeedback(id, ctx.owner, feedback),
-      ),
+      .mutation(async ({ ctx, input: { id, ...feedback } }) => {
+        const saved = await setFeedback(id, ctx.owner, feedback);
+        track(
+          { name: "feedback.given", props: { value: feedback.value } },
+          ctx.owner,
+        );
+        return saved;
+      }),
     fork: signedIn
       .input(forkInput.safeExtend({ id: sessionId }))
       .mutation(({ ctx, input: { id, ...fork } }) =>
@@ -140,7 +152,16 @@ export const appRouter = t.router({
     index: procedure.query(() => quranIndex()),
     surah: procedure
       .input(z.object({ number: z.number().int().min(1).max(114) }))
-      .query(({ input }) => quranSurah(input.number)),
+      .query(({ ctx, input }) => {
+        track(
+          {
+            name: "library.read",
+            props: { kind: "quran", surah: input.number },
+          },
+          ctx.user?.id,
+        );
+        return quranSurah(input.number);
+      }),
     tafsir: procedure
       .input(
         z.object({
@@ -184,7 +205,10 @@ export const appRouter = t.router({
           surah: z.number().int().min(1).max(114),
         }),
       )
-      .query(({ input }) => quranTimings(input.recitation, input.surah)),
+      .query(({ ctx, input }) => {
+        track({ name: "quran.audio", props: input }, ctx.user?.id);
+        return quranTimings(input.recitation, input.surah);
+      }),
   }),
   hadith: t.router({
     collections: procedure.query(() => hadithCollections()),
@@ -199,9 +223,20 @@ export const appRouter = t.router({
           page: z.number().int().min(0).default(0),
         }),
       )
-      .query(({ input }) =>
-        hadithPage(input.collection, input.book, input.page),
-      ),
+      .query(({ ctx, input }) => {
+        track(
+          {
+            name: "library.read",
+            props: {
+              kind: "hadith",
+              collection: input.collection,
+              book: input.book,
+            },
+          },
+          ctx.user?.id,
+        );
+        return hadithPage(input.collection, input.book, input.page);
+      }),
   }),
   media: t.router({
     images: signedIn
