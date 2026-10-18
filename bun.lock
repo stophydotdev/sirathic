@@ -96,7 +96,7 @@
         "drizzle-orm": "^0.45.4",
         "linkedom": "^0.18.13",
         "mathjs": "^15.2.0",
-        "stophy": "2.0.0",
+        "stophy": "3.0.0",
         "turndown": "^7.2.4",
         "yahoo-finance2": "^4.0.3",
         "zod": "^4.4.3",
@@ -1922,7 +1922,7 @@
 
     "stdin-discarder": ["stdin-discarder@0.2.2", "", {}, "sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ=="],
 
-    "stophy": ["stophy@2.0.0", "", {}, "sha512-+J5xCxN8g2CE33eJleTub+DFW6gwOZfO3a0BBIatsVu2Cntv4yxoV2wXq+VtlopPFcCsuJDYEtCuwzt9/p9Hgw=="],
+    "stophy": ["stophy@3.0.0", "", {}, "sha512-S0NW9kfNjidHRlukntzc5q8kRCQ6Vg6PlvRoAYAhoIrAU40H8j+V1Afr9p52ISvIpZgFAc1b48TmFiMyA6MPZg=="],
 
     "string-width": ["string-width@8.3.0", "", { "dependencies": { "get-east-asian-width": "^1.5.0", "strip-ansi": "^7.1.2" } }, "sha512-ZbmZM0JCihQN91dWnxoipT2KOEyHqEyfRXUyjuRhW8b/xnqPDoq4gWEVApTVa9db2wN8mmoikgFBbjh71+cGeQ=="],
 
