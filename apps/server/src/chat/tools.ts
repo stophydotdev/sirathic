@@ -515,11 +515,19 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
   };
 };
 
+const unlessAllFail = async <Value>(runs: Promise<Value>[]) => {
+  const settled = await Promise.allSettled(runs);
+  const done = settled.flatMap((run) =>
+    run.status === "fulfilled" ? [run.value] : [],
+  );
+  const failed = settled.find((run) => run.status === "rejected");
+  if (done.length === 0 && failed) throw failed.reason;
+  return done;
+};
+
 const searchWeb = async (cite: Cite, queries: string[], limit: number) => {
-  const found = await Promise.all(
-    queries.map((query) =>
-      webSearch({ query, limit: LISTED_PER_QUERY }).catch(() => []),
-    ),
+  const found = await unlessAllFail(
+    queries.map((query) => webSearch({ query, limit: LISTED_PER_QUERY })),
   );
   const hits = interleave(
     found.map((list) => list.filter((hit) => !textBlocked(hit.url))),
@@ -540,11 +548,11 @@ const searchWeb = async (cite: Cite, queries: string[], limit: number) => {
 };
 
 const searchNews = async (cite: Cite, queries: string[]) => {
-  const found = await Promise.all(
+  const found = await unlessAllFail(
     queries.map((query) =>
-      newsSearch({ query, limit: SEARCH_LIMITS.news })
-        .then((result) => result.articles)
-        .catch(() => []),
+      newsSearch({ query, limit: SEARCH_LIMITS.news }).then(
+        (result) => result.articles,
+      ),
     ),
   );
   const articles = interleave(
@@ -584,20 +592,30 @@ const searchAll = async (
   } satisfies Record<SearchSource, () => Promise<Searched>>;
   const done = await Promise.all(
     chosen.map(async (name) => {
-      const found = await runs[name]().catch((err: Error) => {
-        console.warn(`search ${name} failed: ${reasonOf(err)}`);
-        return { results: [], sources: [], text: "" };
-      });
+      const found = await runs[name]().then(
+        (searched) => ({ ...searched, failed: false }),
+        (err: Error) => {
+          console.warn(`search ${name} failed: ${reasonOf(err)}`);
+          return { results: [], sources: [], text: "", failed: true };
+        },
+      );
       return { name, found };
     }),
   );
+  const failed = done
+    .filter(({ found }) => found.failed)
+    .map(({ name }) => name);
   return {
     results: Object.fromEntries(
       done.map(({ name, found }) => [name, found.results]),
     ),
     sources: done.flatMap(({ found }) => found.sources),
-    text: done
-      .map(({ found }) => found.text)
+    text: [
+      ...done.map(({ found }) => found.text),
+      failed.length > 0
+        ? `Search failed for ${failed.join(", ")}. Those results are missing, not empty.`
+        : "",
+    ]
       .filter((text) => text)
       .join("\n\n"),
   };
