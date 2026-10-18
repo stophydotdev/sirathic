@@ -1,20 +1,37 @@
 {
-  "name": "server",
+  "name": "@sirathic/server",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "main": "src/index.ts",
+  "exports": {
+    "./messages": "./src/shared/messages.ts",
+    "./router": "./src/router.ts",
+    "./settings": "./src/shared/settings.ts",
+    "./sources": "./src/shared/sources.ts"
+  },
   "scripts": {
-    "dev": "bun --hot src/index.ts",
+    "dev": "bun --hot --env-file=.env --env-file=.env.local src/index.ts",
     "compile": "bun build --compile --minify --sourcemap ./src/index.ts --outfile server",
-    "start": "bun src/index.ts"
+    "start": "bun --env-file=.env --env-file=.env.local src/index.ts",
+    "chatgpt-login": "bun src/chatgpt/login.ts",
+    "bench": "bun --env-file=.env --env-file=.env.local bench/answer.ts",
+    "bench:judge": "bun --env-file=.env --env-file=.env.local bench/judge.ts",
+    "bench:perplexity": "bun --env-file=.env --env-file=.env.local bench/perplexity.ts",
+    "bench:summary": "bun bench/summary.ts"
   },
   "dependencies": {
-    "@hono/trpc-server": "^0.4.0",
-    "@sirathic/api": "workspace:*",
+    "@ai-sdk/openai": "4.0.93",
+    "@hono/trpc-server": "0.4.2",
     "@sirathic/core": "workspace:*",
+    "@sirathic/db": "workspace:*",
     "@sirathic/env": "workspace:*",
+    "@trpc/server": "11.19.0",
+    "ai": "7.0.140",
+    "drizzle-orm": "^0.45.4",
     "hono": "^4.9.0",
+    "jose": "6.2.12",
+    "unpdf": "^1.9.0",
     "zod": "^4.4.3"
   }
 }

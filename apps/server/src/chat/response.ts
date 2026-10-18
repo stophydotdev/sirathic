@@ -1,0 +1,259 @@
+import {
+  APICallError,
+  createAgentUIStream,
+  createIdGenerator,
+  createUIMessageStream,
+  createUIMessageStreamResponse,
+  getToolName,
+  type InferUIMessageChunk,
+  isStepCount,
+  isToolUIPart,
+  type LanguageModel,
+  Output,
+  smoothStream,
+  streamText,
+  ToolLoopAgent,
+} from "ai";
+import { z } from "zod";
+import type { ProviderOptions } from "../chatgpt/codex";
+import { citations } from "./citations";
+import { readPdfs } from "./pdf";
+import type { ChatMessage, Mode } from "../shared/messages";
+import type { Settings } from "../shared/settings";
+import { shortenEarlierResults } from "./history";
+import { answerRules, searchPrompt } from "./prompt";
+import { CORE_TOOLS, sirathicTools } from "./tools";
+
+const MAX_STEPS = 10;
+const RESEARCH_STEPS = 16;
+
+export function answerAgent({
+  model,
+  modelName,
+  tools,
+  mode,
+  settings,
+  rules,
+  mustSearch,
+  started,
+  shorten,
+  answerOptions,
+}: {
+  model: LanguageModel;
+  modelName: string;
+  tools: ReturnType<typeof sirathicTools>;
+  mode: Mode;
+  settings: Settings;
+  rules: string;
+  mustSearch: boolean;
+  started: ReadonlySet<string>;
+  shorten: ReturnType<typeof shortenEarlierResults>;
+  answerOptions: ProviderOptions;
+}) {
+  const usable = Object.keys(tools).filter(
+    (name): name is keyof typeof tools => name in tools,
+  );
+  return new ToolLoopAgent({
+    model,
+    instructions: searchPrompt(new Date(), mode, modelName, settings),
+    tools,
+    stopWhen: isStepCount(mode === "research" ? RESEARCH_STEPS : MAX_STEPS),
+    allowSystemInMessages: true,
+    prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
+      const loaded = new Set(
+        steps.flatMap((step) =>
+          step.toolCalls.flatMap((call) =>
+            !call.dynamic && call.toolName === "moreTools"
+              ? call.input.tools
+              : [],
+          ),
+        ),
+      );
+      const activeTools = usable.filter(
+        (name) => started.has(name) || loaded.has(name),
+      );
+      return stepNumber === 0 && mustSearch
+        ? { toolChoice: "required", activeTools }
+        : {
+            activeTools,
+            messages: [
+              ...initialMessages.map(shorten),
+              ...responseMessages,
+              { role: "system", content: rules },
+            ],
+          };
+    },
+    providerOptions:
+      settings.answerLength === "short"
+        ? answerOptions
+        : {
+            ...answerOptions,
+            openai: { ...answerOptions.openai, textVerbosity: "medium" },
+          },
+  });
+}
+
+const RELATED_LIMIT = 5;
+const RELATED_PROMPT =
+  "Suggest 4 short follow-up questions the user might ask next. Each under 10 words. Don't repeat the question or anything the answer already covers.";
+
+const calledTools = (messages: ChatMessage[]) =>
+  messages.flatMap((message) =>
+    message.parts.flatMap((part) => {
+      if (!isToolUIPart(part)) return [];
+      return part.type === "tool-moreTools" && part.state === "output-available"
+        ? part.input.tools
+        : [getToolName(part)];
+    }),
+  );
+
+const lastQuestion = (messages: ChatMessage[]) =>
+  messages
+    .findLast((message) => message.role === "user")
+    ?.parts.map((part) => (part.type === "text" ? part.text : ""))
+    .join("") ?? "";
+
+function relatedQuestions(
+  model: LanguageModel,
+  conversation: string,
+  providerOptions: ProviderOptions,
+  abortSignal: AbortSignal,
+) {
+  const result = streamText({
+    model,
+    instructions: RELATED_PROMPT,
+    prompt: conversation,
+    output: Output.array({ element: z.string(), maxItems: RELATED_LIMIT }),
+    providerOptions,
+    abortSignal,
+  });
+  return result.output.then(
+    (questions) => questions,
+    (err: Error) => {
+      console.warn(`related questions skipped: ${err.message}`);
+      return undefined;
+    },
+  );
+}
+
+export function chatResponse({
+  models,
+  modelName,
+  messages,
+  mode,
+  abortSignal,
+  preferences,
+  options,
+  title,
+  save,
+}: {
+  models: { model: LanguageModel; small: LanguageModel };
+  options: { answer: ProviderOptions; side: ProviderOptions };
+  modelName: string;
+  messages: ChatMessage[];
+  mode: Mode;
+  abortSignal: AbortSignal;
+  preferences: Promise<Settings>;
+  title: Promise<string | undefined> | undefined;
+  save: (messages: ChatMessage[]) => Promise<void>;
+}) {
+  const sources = citations(messages);
+  const shorten = shortenEarlierResults(messages, sources.numberOf);
+  const tools = sirathicTools(sources.add);
+  const recent = messages
+    .filter((message) => message.role === "user")
+    .slice(-2)
+    .map((message) =>
+      message.parts
+        .map((part) => (part.type === "text" ? part.text : ""))
+        .join(" "),
+    )
+    .join(" ");
+  const started = new Set([...CORE_TOOLS, ...calledTools(messages)]);
+  const mustSearch =
+    messages.filter((message) => message.role === "user").length === 1;
+  const messageId = createIdGenerator({ prefix: "msg", size: 16 });
+  const stream = createUIMessageStream<ChatMessage>({
+    originalMessages: messages,
+    generateId: messageId,
+    execute: async ({ writer }) => {
+      writer.write({
+        type: "start",
+        messageId: messageId(),
+        messageMetadata: { createdAt: Date.now(), mode, model: modelName },
+      });
+      let streaming = true;
+      void title?.then((named) => {
+        if (streaming && named) {
+          writer.write({
+            type: "data-title",
+            data: { title: named },
+            transient: true,
+          });
+        }
+      });
+      const settings = await preferences;
+      const agent = answerAgent({
+        model: models.model,
+        modelName,
+        tools,
+        mode,
+        settings,
+        rules: answerRules(settings, recent),
+        mustSearch,
+        started,
+        shorten,
+        answerOptions: options.answer,
+      });
+      const answer = await createAgentUIStream({
+        agent,
+        uiMessages: await readPdfs(messages),
+        originalMessages: messages,
+        abortSignal,
+        experimental_transform: [
+          sources.transform(),
+          smoothStream({ chunking: "word" }),
+        ],
+        onError: (error) => {
+          if (APICallError.isInstance(error)) {
+            return `${error.statusCode ?? "error"}: ${error.message || error.responseBody || "the model call failed"}`;
+          }
+          return error instanceof Error ? error.message : String(error);
+        },
+      });
+      let text = "";
+      let related: ReturnType<typeof relatedQuestions> | undefined;
+      let finish: InferUIMessageChunk<ChatMessage> | undefined;
+      for await (const chunk of answer) {
+        if (chunk.type === "start") continue;
+        if (chunk.type === "finish") finish = chunk;
+        else writer.write(chunk);
+        if (chunk.type === "text-delta") text += chunk.delta;
+        if (chunk.type === "tool-output-available" && !related) {
+          related = relatedQuestions(
+            models.small,
+            lastQuestion(messages),
+            options.side,
+            abortSignal,
+          );
+        }
+      }
+      const questions = text ? await related : undefined;
+      if (questions?.length) {
+        writer.write({ type: "data-related", data: { questions } });
+      }
+      streaming = false;
+      if (finish) writer.write(finish);
+    },
+    onError: (error) =>
+      error instanceof Error ? error.message : String(error),
+    onEnd: ({ messages: answered }) =>
+      save(answered).catch((err: Error) => {
+        console.error(`session not saved: ${err.message}`);
+      }),
+  });
+  return createUIMessageStreamResponse({
+    stream,
+    headers: { "cache-control": "no-cache, no-transform" },
+  });
+}

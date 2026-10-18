@@ -3,11 +3,16 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    FIRECRAWL_URL: z.url(),
-    OPENROUTER_API_KEY: z.string().optional(),
+    DATABASE_URL: z.url(),
+    REDIS_URL: z.url(),
+    OPENAI_API_KEY: z.string().optional(),
     STOPHY_API_KEY: z.string().optional(),
-    LLM_MODEL: z.string().default("openai/gpt-5.4-mini"),
-    CORS_ORIGIN: z.string().default("*"),
+    TOKEN_KEY: z
+      .base64()
+      .refine((key) => Buffer.from(key, "base64").length === 32, {
+        message: "TOKEN_KEY must be 32 random bytes in base64",
+      })
+      .optional(),
     PORT: z.coerce.number().default(3000),
   },
   runtimeEnv: process.env,

@@ -1,0 +1,1090 @@
+[
+  {
+    "kind": "islamic",
+    "question": "is music haram in islam"
+  },
+  {
+    "kind": "islamic",
+    "question": "Can I pray Fajr after sunrise?"
+  },
+  {
+    "kind": "islamic",
+    "question": "what breaks wudu"
+  },
+  {
+    "kind": "islamic",
+    "question": "zakat on gold nisab"
+  },
+  {
+    "kind": "islamic",
+    "question": "can I combine dhuhr and asr while traveling"
+  },
+  {
+    "kind": "islamic",
+    "question": "is a mortgage halal"
+  },
+  {
+    "kind": "islamic",
+    "question": "is shaving the beard haram"
+  },
+  {
+    "kind": "islamic",
+    "question": "how many rakats is taraweeh"
+  },
+  {
+    "kind": "islamic",
+    "question": "is 'seek knowledge even if you have to go to China' an authentic hadith"
+  },
+  {
+    "kind": "islamic",
+    "question": "what does surah al asr teach"
+  },
+  {
+    "kind": "islamic",
+    "question": "what is tawakkul"
+  },
+  {
+    "kind": "islamic",
+    "question": "can a woman on her period read the quran"
+  },
+  {
+    "kind": "islamic",
+    "question": "is bitcoin halal"
+  },
+  {
+    "kind": "islamic",
+    "question": "difference between sunni and shia"
+  },
+  {
+    "kind": "islamic",
+    "question": "what happened at the battle of badr"
+  },
+  {
+    "kind": "islamic",
+    "question": "how to pray istikhara"
+  },
+  {
+    "kind": "general",
+    "question": "what's the best browser"
+  },
+  {
+    "kind": "general",
+    "question": "bun latest release"
+  },
+  {
+    "kind": "general",
+    "question": "latest news gaza ceasefire"
+  },
+  {
+    "kind": "general",
+    "question": "who is Omar Suleiman"
+  },
+  {
+    "kind": "general",
+    "question": "best noise cancelling headphones 2026"
+  },
+  {
+    "kind": "general",
+    "question": "who won the 2026 world cup"
+  },
+  {
+    "kind": "general",
+    "question": "does intermittent fasting lower blood sugar"
+  },
+  {
+    "kind": "general",
+    "question": "capital of kazakhstan"
+  },
+  {
+    "kind": "general",
+    "question": "latest iphone model"
+  },
+  {
+    "kind": "general",
+    "question": "how to remove a stripped screw"
+  },
+  {
+    "kind": "general",
+    "question": "who is the UN secretary general"
+  },
+  {
+    "kind": "general",
+    "question": "python or javascript for beginners"
+  },
+  {
+    "kind": "general",
+    "question": "what causes the northern lights"
+  },
+  {
+    "kind": "general",
+    "question": "best budget mirrorless camera 2026"
+  },
+  {
+    "kind": "general",
+    "question": "how much water should I drink a day"
+  },
+  {
+    "kind": "general",
+    "question": "tallest building in the world"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Prayer",
+    "question": "What is the ruling of Qabd (placing the right hand over the left) in prayer?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafis hold that placing the right hand over the left (qabd) is a Sunnah act in prayer.",
+      "maliki": "The Malikis, disagreed, stating that letting the hands rest naturally (irsal) is recommended, while qabd is disliked in obligatory prayers. However, they permitted it in voluntary prayers, as previously detailed under the term (Irsal) in section 4 (394).",
+      "shafii": "The Shafi’is hold that placing the right hand over the left (qabd) is a Sunnah act in prayer.",
+      "hanbali": "The Hanbalis hold that placing the right hand over the left (qabd) is a Sunnah act in prayer."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Prayer",
+    "question": "What is the ruling on performing the funeral prayer for the absent deceased?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "Abu Hanifa held that the funeral prayer for an absent person is not prescribed. His response to the story of Najashi and the prayer offered for him is that this was a special privilege of the Prophet ﷺ.",
+      "maliki": "Malik held that the funeral prayer for an absent person is not prescribed. His response to the story of Najashi and the prayer offered for him is that this was a special privilege of the Prophet ﷺ.",
+      "shafii": "Al-Shafi'i considered the funeral prayer for an absent person to be prescribed, as it has been established through two authentic hadiths, and claiming it as a special privilege of the prophet requires evidence.",
+      "hanbali": "Ahmad considered the funeral prayer for an absent person to be prescribed, as it has been established through two authentic hadiths, and claiming it as a special privilege requires evidence."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Prayer",
+    "question": "Should the inhabitants of polar regions, where there is constant daylight for six months and constant night for another six months as geographers say, pray the prayers for which they do not find a time by estimating a time for each prayer, or are these prayers dropped for them?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "Some Hanafi scholars have concluded that these prayers are not dropped for them, and they should estimate a time for each prayer. In the six months of constant daylight, they estimate times for Maghrib, Isha, Witr, and Fajr prayers. Similarly, during the other six months, they estimate times for Subh (Fajr), Dhuhr, and Asr prayers, considering the nearest countries where the five prayer times do not vanish.",
+      "maliki": "The school does not have an opinion on the topic.",
+      "shafii": "The school does not have an opinion on the topic.",
+      "hanbali": "The school does not have an opinion on the topic."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Prayer",
+    "question": "What is the ruling on Imamah (leadership in prayer) of a distinguishing child in obligatory prayer?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The leadership of a discerning child for an adult in obligatory prayer is not valid because leadership requires completeness, and the child is not one of completeness; also, because it is not secure from him to maintain the prayer condition.",
+      "maliki": "The leadership of a distinguishing child for an adult in obligatory prayer is not valid because leadership requires completeness, and the child is not one of completeness; also, because it is not secure from him to maintain the prayer condition.",
+      "shafii": "The leadership of a discerning child for an adult in obligatory prayer is valid.",
+      "hanbali": "The leadership of a discerning child for an adult in obligatory prayer is not valid because leadership requires completeness, and the child is not one of completeness; also, because it is not secure from him to maintain the prayer condition."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Prayer",
+    "question": "What is the ruling on prayer in the bathroom?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "Prayer in the bathroom is valid as long as it is not impure.",
+      "maliki": "Prayer in the bathroom is valid as long as it is not impure.",
+      "shafii": "Prayer in the bathroom is valid as long as it is not impure.",
+      "hanbali": "In one narration, prayer in the bathroom is valid as long as it is not impure. However, the relied upon opinion among the Hanbalis is that prayer in the bathroom is not valid under any circumstance."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Prayer",
+    "question": "What is the ruling on delaying the prayer beyond its prescribed time without an excuse?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "Delaying the prayer beyond its prescribed time without an excuse is considered a grave sin, and it necessitates sincere repentance and feeling regret over the negligence committed by the individual.",
+      "maliki": "In the Maliki school, delaying the prayer beyond its designated time without a legitimate excuse is regarded as a serious sin. The individual must repent sincerely and feel remorseful for the negligence.",
+      "shafii": "The Shafeii school holds that delaying the prayer beyond the appointed time without an excuse is a significant sin, and the person should engage in honest repentance and experience regret for their negligent actions.",
+      "hanbali": "The Hanbali position is that delaying the prayer beyond its specified time without any valid excuse is considered a grave sin, which requires the person to sincerely repent and feel regret for their negligence in fulfilling this obligation."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Prayer",
+    "question": "What is the ruling on the muezzin saying \"Pray in your homes\" during heavy rain, wind, or cold, and should this be done after the adhan?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "The practice is permissible and aligned with the teachings of the Prophet ﷺ, who instructed the muezzin to announce \"Pray in your dwellings\" during adverse weather conditions such as cold and rainy nights following the adhan.",
+      "maliki": "The practice is permissible and aligned with the teachings of the Prophet ﷺ, who instructed the muezzin to announce \"Pray in your dwellings\" during adverse weather conditions such as cold and rainy nights following the adhan.",
+      "shafii": "The practice is permissible and aligned with the teachings of the Prophet ﷺ, who instructed the muezzin to announce \"Pray in your dwellings\" during adverse weather conditions such as cold and rainy nights following the adhan.",
+      "hanbali": "The practice is permissible and aligned with the teachings of the Prophet ﷺ, who instructed the muezzin to announce \"Pray in your dwellings\" during adverse weather conditions such as cold and rainy nights following the adhan."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Purity",
+    "question": "What is the ruling on the nullification of ablution by touching a woman?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "According to the Hanafi school, ablution is not nullified by touch.",
+      "maliki": "According to the Maliki school, ablution is nullified by touch if it is done with intention of pleasure or pleasure is found at the time of touch. Additionally, kissing on the mouth nullifies ablution absolutely, except if it is for farewell or mercy, in which case it does not nullify.",
+      "shafii": "According to the Shafi'i school, touching nullifies ablution in every case.",
+      "hanbali": "The well-known opinion from Ahmad's school is that touching women with desire nullifies ablution, while it does not if the touch is without desire."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Purity",
+    "question": "What is the effect of vomiting on wudu (ablution)?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "According to the Hanafi school, vomiting invalidates wudu if it fills the mouth, whether it is food or water, even if it has not changed.",
+      "maliki": "The Maliki school holds that vomiting does not invalidate wudu.",
+      "shafii": "The Shafi'i school holds that vomiting does not invalidate wudu.",
+      "hanbali": "For the Hanbali school, vomiting invalidates wudu if it is considered repulsive by an individual according to their own view."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Purity",
+    "question": "Does doubt nullify ablution?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafi school does not hold that doubt about the continuation or nullification of ablution is among the nullifiers. They maintain the principle of certainty in the prior state, so doubt itself does not nullify ablution.",
+      "maliki": "The Maliki school holds that doubt is one of the nullifiers of ablution. They outline three scenarios where doubt necessitates ablution: doubting whether an event or reason has nullified the ablution after knowing prior purity, doubting if ablution was performed after knowing there was an event, and doubting which preceded the other in the case of knowing both purity and an event occurred.",
+      "shafii": "The Shafeii school does not consider doubt about the continuation or nullification of ablution as one of the nullifiers. Someone who is certain of their prior state follows that certainty.",
+      "hanbali": "The Hanbali school believes that doubt regarding the continuation or nullification of ablution is not among the nullifiers. The individual should follow the certainty of their prior state."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Purity",
+    "question": "What is the ruling on nullifying ablution with pus coming out of the body?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "Ablution is nullified by pus coming out of the body to a place where purification is required. According to Al-Sarakhsi, if the wound's head swells and pus or something similar appears, it does not nullify unless it goes beyond the swelling.",
+      "maliki": "Ablution is not nullified by pus coming out of the body, because the impurity that nullifies ablution is limited to what exits from the two passages. Hence, impurity from other areas, such as from pus, does not nullify ablution.",
+      "shafii": "Ablution is not nullified by pus coming out of the body. The Shafi'i school holds that only the impurity that exits from the two passages nullifies ablution, and impurities from other areas, like pus, do not affect it.",
+      "hanbali": "The Hanbali school does not have an opinion on the topic."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Purity",
+    "question": "What is the ruling on Al-Muwalat in ablution, defined as washing the body parts in succession such that the first limb does not dry before beginning the second?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafi school considers Al-Muwalat in ablution as Sunnah.",
+      "maliki": "In one opinion, the Maliki school considers Al-Muwalat in ablution as Sunnah. However, in the well-known opinion, they state that it is obligatory.",
+      "shafii": "The Shafi'i school considers Al-Muwalat in ablution as Sunnah in the correct new opinion, while in the old opinion, they state that it is obligatory.",
+      "hanbali": "There is one narration in the Hanbali school that considers Al-Muwalat in ablution as Sunnah. However, according to the doctrine, they state that it is obligatory."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Purity",
+    "question": "What should one do if they forget to wash an obligatory spot on it during Wudu?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "In the Hanafi school, if someone forgets to wash a limb or a spot on a limb that is obligatory in Wudu, they must rectify it as soon as the omission is realized to ensure the Wudu's validity.",
+      "maliki": "The Maliki school states that if a person omits washing a limb or part of it during Wudu, they should correct it immediately upon remembering to maintain the completeness and validity of the Wudu.",
+      "shafii": "According to the Shafeii school, if one forgets to wash a limb or part of it in Wudu, they are required to wash it as soon as they recall, as omitting it invalidates the Wudu.",
+      "hanbali": "In the Hanbali school, forgetting to wash a limb or a portion of it during Wudu requires the individual to wash the omitted part immediately upon recall to ensure the Wudu's validity."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Purity",
+    "question": "What is the ruling on the prayer of someone who has pus on their clothes or body?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "The Hanafi school states that if a human being's body or clothes are affected by pus, the prayer is not permissible if it is a lot, as one of the conditions of prayer is the purification of the clothes, body, and place. However, if the pus is minimal, it is excused and prayer with it is permissible.",
+      "maliki": "The Maliki school states that if a human being's body or clothes are affected by pus, the prayer is not permissible if it is a lot, as one of the conditions of prayer is the purification of the clothes, body, and place. However, if the pus is minimal, it is excused and prayer with it is permissible.",
+      "shafii": "The Shafeii school states that if a human being's body or clothes are affected by pus, the prayer is not permissible if it is a lot, as one of the conditions of prayer is the purification of the clothes, body, and place. However, if the pus is minimal, it is excused and prayer with it is permissible.",
+      "hanbali": "The Hanbali school states that if a human being's body or clothes are affected by pus, the prayer is not permissible if it is a lot, as one of the conditions of prayer is the purification of the clothes, body, and place. However, if the pus is minimal, it is excused and prayer with it is permissible."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Marriage",
+    "question": "Does a divorce during menstruation count?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The majority of scholars hold that divorce during menstruation is considered a bid‘ah (innovation), but if it occurs, it takes effect. It is recommended to reconcile with the wife after such a divorce.",
+      "maliki": "Malik holds that reconciliation is obligatory due to the hadith of Ibn Umar: \"Command him to reconcile with her, then hold her until she becomes pure, then menstruates, and then becomes pure again.\" If he reconciles with her, it is obligatory among most jurists to hold her until she is pure from menstruation, and it is recommended to hold her until she menstruates another cycle.",
+      "shafii": "The majority of scholars hold that divorce during menstruation is considered a bid‘ah (innovation), but if it occurs, it takes effect. It is recommended to reconcile with the wife after such a divorce.",
+      "hanbali": "The majority of scholars hold that divorce during menstruation is considered a bid‘ah (innovation), but if it occurs, it takes effect. It is recommended to reconcile with the wife after such a divorce."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Marriage",
+    "question": "Can a woman conduct a marriage contract for helself or for others?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "According to Abu Hanifa's first narration, which is the apparent narration, it is permissible for an adult, sane free woman to conduct her marriage and the marriage of others absolutely, although it is contrary to the more recommended practice.",
+      "maliki": "The Malikiyah are of the opinion that a woman does not conduct marriage for herself or others, meaning that she has no authority in the marriage contract for herself or others.",
+      "shafii": "The Shafi'iyah hold the view that a woman does not conduct marriage for herself or others, meaning that she has no authority in the marriage contract for herself or others.",
+      "hanbali": "The Hanabilah believe that a woman does not conduct marriage for herself or others, meaning that she has no authority in the marriage contract for herself or others."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Marriage",
+    "question": "What is the ruling on marriage with the intention of divorce?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "In the Hanafi school, marriage with the intention of divorce is considered valid whether or not the woman or her guardian is aware of this intention. This is because the contract is free from any condition that would invalidate it, and it is not invalidated by intention.",
+      "maliki": "The Maliki school, as stated decisively in Al-Mughni and Al-Sharh, holds that if a man marries a woman with the intention of divorcing her after a set period, the marriage remains valid unless there is an explicit condition. However, Biharam from the Maliki school holds that the marriage is invalid if the woman understands the husband's intended temporary nature of the marriage.",
+      "shafii": "The Shafi'i school holds that such a marriage remains valid since there is no explicit condition that would nullify it. However, they consider this form of marriage disliked (makruh) as a precautionary measure due to the differing opinions on its validity. They argue that if an explicit condition renders a contract invalid, then concealing the same condition should at least make it disliked.",
+      "hanbali": "The Hanbali school has two opinions. The predominant opinion, as stated decisively in Al-Mughni and Al-Sharh, holds that the marriage is valid if there is no explicit condition, as mere intention does not nullify the contract. However, another strong Hanbali opinion, along with Al-Awza'i, holds that this marriage is invalid, as it resembles temporary marriage (nikah al-mut‘ah)."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Marriage",
+    "question": "What is the ruling if the divorce (ṭalāq) was repeated several times in a single sitting for a wife who has not yet been consummated (ghayr madkhūl bihā)?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafis hold that the occurrence of divorce is counted as one, whether the sitting is unified or not, because the divorcee becomes a stranger with the first one, and the divorce of a stranger is invalid.",
+      "maliki": "The Malikis hold that three divorces take effect if they were pronounced consecutively. However, if the pronouncements were separated, then only one divorce takes effect.",
+      "shafii": "The Shafi'is hold that the occurrence of divorce is counted as one, whether the sitting is unified or not, because the divorcee becomes a stranger with the first one, and the divorce of a stranger is invalid.",
+      "hanbali": "The Hanbalis hold that three divorces take effect if they were pronounced consecutively. However, if the pronouncements were separated, then only one divorce takes effect."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Marriage",
+    "question": "When does the iddah (waiting period) begin in the case of a divorce or death?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The waiting period begins immediately after the divorce or death of the husband. This is because the cause of the waiting period is either divorce or death, so it starts as soon as the cause occurs. If the wife does not learn of the divorce or death until after the waiting period has already passed, then her waiting period is considered to have ended.",
+      "maliki": "The waiting period for divorce begins from the time the woman becomes aware of it. If the husband acknowledges during his lifetime that he had divorced her in the past, and the full waiting period has already passed before his acknowledgment, she must start her waiting period anew from the time of his acknowledgment. If he dies during this period, she inherits from him because she is still in her waiting period, but he does not inherit from her, as her waiting period has ended by his own admission—unless there is legal testimony proving the exact date of the divorce. This applies specifically to ṭalāq rajʿī (revocable divorce), while in ṭalāq bāʾin (irrevocable divorce), mutual inheritance is not applicable. However, in the case of the husband's death, the waiting period starts immediately upon his passing.",
+      "shafii": "The waiting period for death begins from the time of the husband's passing, while the waiting period for divorce (ʿiddah al-aqrāʾ, based on menstrual cycles) begins immediately from the time of divorce. Each of these events marks the time when the waiting period becomes obligatory. If the wife only learns of her husband's death or divorce after the waiting period has already passed, she does not have to observe any waiting period retroactively.",
+      "hanbali": "If a woman's husband divorces her or dies while he is far away from her, her waiting period starts from the moment of divorce or death, not from the time she becomes aware of it. This is the predominant opinion within the Hanbali school."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Marriage",
+    "question": "What is the ruling on \"Nikah Al-Mut'ah\" (Temporary Marriage)?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "The Hanafi school has ruled \"Nikah Al-Mut'ah\" as impermissible.",
+      "maliki": "The Maliki school has ruled \"Nikah Al-Mut'ah\" as impermissible.",
+      "shafii": "The Shafi'i school has ruled \"Nikah Al-Mut'ah\" as impermissible.",
+      "hanbali": "The Hanbali school has ruled \"Nikah Al-Mut'ah\" as impermissible."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Marriage",
+    "question": "Can a marriage be annulled if one of the spouses deceives the other by concealing a defect that contradicts enjoyment or the completeness of enjoyment?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "In the Hanafi school, if one spouse deceives the other by hiding a defect that affects the marriage, the harmed party does have the option of annulment. The defect should be significant enough to deter marital harmony or fulfillment.",
+      "maliki": "The Maliki school supports the annulment option if deceit regarding a defect is present, as long as the defect prevents proper marital enjoyment or fulfillment. The burden of proof and context of deception are important considerations in such rulings.",
+      "shafii": "According to the Shafeii school, deception by concealing a defect grants the deceived party the right to seek annulment. This is on the condition that the defect hinders the natural purpose and fulfillment of the marriage.",
+      "hanbali": "The Hanbali school upholds the option of annulment for the deceived partner if a significant deception regarding a defect impacts marital enjoyment or completeness. The school emphasizes fairness and the preservation of marital rights."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Fasting",
+    "question": "What is the effect of cupping on fasting?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "Cupping does not invalidate fasting.",
+      "maliki": "Cupping is considered disliked while fasting.",
+      "shafii": "Cupping is considered disliked while fasting.",
+      "hanbali": "Cupping invalidates fasting."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Fasting",
+    "question": "What is the ruling on delaying the making up of missed fasts of Ramadan?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafis state that delaying the making up of missed fasts is permissible in general and not sinful, even if another Ramadan passes. However, they recommend hastening to perform the duty promptly.",
+      "maliki": "It is sinful to delay making up the missed fasts without a valid excuse after the designated time has passed.",
+      "shafii": "It is sinful to delay making up the missed fasts without a valid excuse after the designated time has passed.",
+      "hanbali": "It is sinful to delay making up the missed fasts without a valid excuse after the designated time has passed."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Fasting",
+    "question": "What is the ruling on voluntary fasting before making up for missed days in Ramadan?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafi school allowed voluntary fasting before making up missed days from Ramadan without it being disliked, as making up for missed days is not immediately obligatory.",
+      "maliki": "The Maliki school considered it permissible but disliked it, due to the delay of a mandatory act.",
+      "shafii": "The Shafi'i school considered it permissible but disliked it, due to the delay of a mandatory act.",
+      "hanbali": "The Hanbali school held the view that voluntary fasting before making up missed days from Ramadan is prohibited and not valid, even if there is ample time for making it up."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Fasting",
+    "question": "What is the effect of vomiting on fasting?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "if a fasting person is overcome by vomiting (meaning it overwhelms him), his fast is not invalidated, but if intentional it is invalidated. According to Abu Yusuf, the fast is invalidated if vomit returns by itself without the action of the fasting person. However, according to Muhammad, the fast is not invalidated due to the absence of an action from him.",
+      "maliki": "if a fasting person is overcome by vomiting (meaning it overwhelms him), his fast is not invalidated, but if intentional it is invalidated. If vomit returns by itself without the action of the fasting person, the fast is invalidated.",
+      "shafii": "if a fasting person is overcome by vomiting (meaning it overwhelms him), his fast is not invalidated, but if intentional it is invalidated. If vomit returns by itself without the action of the fasting person, the fast is invalidated.",
+      "hanbali": "If a fasting person is overcome by vomiting (meaning it overwhelms him), his fast is not invalidated, but if intentional it is invalidated. If vomit returns by itself without the action of the fasting person, the fast is not invalidated."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Fasting",
+    "question": "What if a fasting person rinsed the mouth and water entered his stomach, is his fast invalidated?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafis said: If a fasting person rinsed the mouth and water entered his stomach, his fast is invalidated if he was aware of his fast, and he must make it up.",
+      "maliki": "The Malikis said: If something reaches his throat or stomach that is likely to go to his throat from the remnants of rinsing water or the moisture of a toothstick, he has broken his fast and must make it up in obligatory fasts only. However, if the effect of rinsing reaches the throat in a non-obligatory fast, it does not invalidate the fast.",
+      "shafii": "The Shafi'is said: If a fasting person rinsed the mouth or inhaled water and it reached his stomach or brain, there are three opinions: the most correct opinion according to the companions is that if he exaggerated, he has broken his fast, otherwise, he has not. The second opinion is that it breaks the fast absolutely, and the third is that it does not break the fast absolutely. The dispute is concerning someone who is aware of their fast and knows the prohibition; if he was forgetful or ignorant, his fast is not invalidated without disagreement.",
+      "hanbali": "The Hanbalis said: If a fasting person rinsed the mouth or inhaled water while performing ablution and the water reached his throat unintentionally and without wastefulness, there is nothing upon him, because it reached his throat without wastefulness and unintentionally."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Fasting",
+    "question": "Does masturbation by hand invalidate fasting?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "The majority of the Hanafi school agree that masturbation by hand invalidates fasting.",
+      "maliki": "According to the Maliki school, masturbation by hand invalidates fasting.",
+      "shafii": "According to the Shafi'i school, masturbation by hand invalidates fasting.",
+      "hanbali": "According to the Hanbali school, masturbation by hand invalidates fasting."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Fasting",
+    "question": "What should a woman do regarding fasting if her menstrual blood stops after dawn?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "She must refrain from eating and drinking.",
+      "maliki": "She is allowed to continue consuming the invalidators of fasting and is not recommended to refrain.",
+      "shafii": "Refraining from eating and drinking is not obligatory.",
+      "hanbali": "She must refrain from eating and drinking."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Hajj and Umrah",
+    "question": "Is Hajj still a must for a woman without a husband or mahram?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafis state that Hajj is not obligatory for a woman without a husband or mahram because if she does not have a husband or mahram, her safety cannot be guaranteed.",
+      "maliki": "The Malikis hold that Hajj is obligatory for her if she finds a husband, a mahram, or a trustworthy group.",
+      "shafii": "Shafi'is hold that Hajj is obligatory for her if she finds a husband, a mahram, or a trustworthy group.",
+      "hanbali": "It is not obligated on her to perform Hajj because if she does not have a husband or mahram, her safety cannot be guaranteed."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Hajj and Umrah",
+    "question": "What is the ruling on applying perfume to body and clothing in preparation for and during Ihram?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "Perfuming during ihram is prohibited. Applying perfume before entering into Ihram is recommended as a preparation for Ihram. Perfuming clothing is prohibited during the preparation and state of Ihram.",
+      "maliki": "Perfuming during ihram is prohibited. Applying perfume on body before entering into Ihram is disliked. Perfuming clothing before entering Ihram is prohibited.",
+      "shafii": "Perfuming during ihram is prohibited. Applying perfume before entering into Ihram is recommended. Perfuming clothing in prepartion for Ihram is prohibited in one opinion and allowed in another opinion of the school.",
+      "hanbali": "Perfuming during ihram is prohibited. Applying perfume before entering into Ihram is recommended as a preparation for Ihram. Perfuming clothing is prohibited during the preparation and state of Ihram."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Hajj and Umrah",
+    "question": "What is the ruling on the Farewell Tawaf?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "It is considered obligatory.",
+      "maliki": "It is recommended.",
+      "shafii": "In the more apparent view of the school, it is obligatory.",
+      "hanbali": "It is considered obligatory."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Hajj and Umrah",
+    "question": "If a woman enters the state of Ihram for Hajj as Mufrada or Qarinah, and then menstruation or postpartum bleeding prevents her from performing Tawaf, what should she do regarding the Hajj rites and Tawaf?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafis said: If a woman enters ihram for Hajj, whether performing Ifrad or Qiran, and then menstruation or postpartum bleeding prevents her from performing Tawaf, she remains in ihram, proceeds with standing at Arafat, and completes all other Hajj rituals except Tawaf and Sa'i. Once she becomes pure, she performs one Tawaf and one Sa'i if she is performing Ifrad. If she is performing Qiran, she performs two Tawafs and one Sa'i. The Farewell Tawaf remains obligatory by consensus. If a woman enters ihram for Umrah and then menstruates before standing at Arafat, without enough time to purify herself and complete Umrah before entering ihram for Hajj, she should enter ihram for Hajj, perform its rituals as if she were performing Ifrad, and consider her Umrah nullified. If she wishes to perform Umrah later, she does so after completing Hajj. If she menstruates during the Days of Sacrifice after having had enough time to perform Tawaf al-Ifadah but delays it due to menstruation, she is required to offer a compensatory sacrifice. However, if she menstruates before or soon after the Day of Sacrifice, without enough time to perform Tawaf, and delays it due to that, no penalty or sin is incurred.",
+      "maliki": "The Malikis said: If a woman enters ihram for Hajj, whether performing Ifrad or Qiran, and then menstruation or postpartum bleeding prevents her from performing Tawaf, she remains in ihram, proceeds with standing at Arafat, and completes all other Hajj rituals except Tawaf and Sa'i. Once she becomes pure, she performs one Tawaf and one Sa'i. The Farewell Tawaf remains obligatory by consensus. The Tawaf of Arrival is waived because menstruation is a valid excuse that nullifies the requirement, even if it were obligatory—unless the obstacle is removed and there is enough time to perform Tawaf al-Qudum, in which case it becomes obligatory. If a woman menstruates during the Days of Sacrifice after having had enough time to perform Tawaf al-Ifadah but delays it due to menstruation, no penalty or sin is incurred, as the time for performing Tawaf al-Ifadah extends until the end of Dhul-Hijjah.",
+      "shafii": "The Shafi‘is said: If a woman enters ihram for Hajj, whether performing Ifrad or Qiran, and then menstruation or postpartum bleeding prevents her from performing Tawaf, she remains in ihram, proceeds with standing at Arafat, and completes all other Hajj rituals except Tawaf and Sa'i. Once she becomes pure, she performs one Tawaf and one Sa'i. The Farewell Tawaf remains obligatory by consensus. If a woman enters ihram for Umrah and then menstruates before standing at Arafat, without enough time to purify herself and complete Umrah before entering ihram for Hajj, her Umrah is not nullified; rather, she enters ihram for Hajj and is considered a Qarinah. The Tawaf and Sa’i performed for Hajj suffice for both Hajj and Umrah. Additionally, she is required to offer the sacrifice of Qiran. If she menstruates during the Days of Sacrifice after having had enough time to perform Tawaf al-Ifadah but delays it due to menstruation, no penalty or sin is incurred.",
+      "hanbali": "The Hanbalis said: If a woman enters ihram for Hajj, whether performing Ifrad or Qiran, and then menstruation or postpartum bleeding prevents her from performing Tawaf, she remains in ihram, proceeds with standing at Arafat, and completes all other Hajj rituals except Tawaf and Sa'i. Once she becomes pure, she performs one Tawaf and one Sa'i. The Farewell Tawaf remains obligatory by consensus. If a woman enters ihram for Umrah and then menstruates before standing at Arafat, without enough time to purify herself and complete Umrah before entering ihram for Hajj, her Umrah is not nullified; rather, she enters ihram for Hajj and is considered a Qarinah. The Tawaf and Sa’i performed for Hajj suffice for both Hajj and Umrah. Additionally, she is required to offer the sacrifice of Qiran. If she menstruates during the Days of Sacrifice after having had enough time to perform Tawaf al-Ifadah but delays it due to menstruation, no penalty or sin is incurred."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Hajj and Umrah",
+    "question": "What is the ruling on the delay of Hajj if someone is capable?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "According to the Hanafi school, Hajj is obligatory immediately. Delaying it is only permissible if there is a valid reason, as otherwise it would be sinful to delay.",
+      "maliki": "The Maliki school holds that Hajj is obligatory immediately once a person has the capability to perform it. Delaying Hajj without a valid excuse would be considered sinful.",
+      "shafii": "According to the Shafeii school, Hajj is obligatory immediately. Delaying it is only permissible if there is a valid reason, as otherwise it would be sinful to delay.",
+      "hanbali": "The Hanbali school asserts that Hajj is obligatory immediately upon having the capability. Delaying Hajj without a valid excuse is considered a sin in this school."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Hajj and Umrah",
+    "question": "If a person is financially struggling is Hajj obligatory for them? What about the one who was capable of performing Hajj but did not do so, and then became financially struggling?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "Muslims unanimously agree that Hajj is only obligatory on those who are financially capable (istita‘ah).\n\nIf a person reached the age of maturity and was financially capable but delayed Hajj until he became poor, the obligation remains upon him. When he regains financial ability, he must perform Hajj. If he dies without performing Hajj, he is sinful. If he left a will, the obligation must be fulfilled from his estate before inheritance is distributed.",
+      "maliki": "Muslims unanimously agree that Hajj is only obligatory on those who are financially capable (istita‘ah).\n\nIf a person reached the age of maturity and was financially capable but delayed Hajj until he became poor, the obligation remains upon him. When he regains financial ability, he must perform Hajj. If he dies without performing Hajj, he is sinful. If he left a will, the obligation must be fulfilled from his estate before inheritance is distributed.",
+      "shafii": "Muslims unanimously agree that Hajj is only obligatory on those who are financially capable (istita‘ah).\n\nIf a person reached the age of maturity and was financially capable but delayed Hajj until he became poor, the obligation remains upon him. When he regains financial ability, he must perform Hajj. If he dies without performing Hajj, he is sinful. If he left a will, the obligation must be fulfilled from his estate before inheritance is distributed.",
+      "hanbali": "\"Muslims unanimously agree that Hajj is only obligatory on those who are financially capable (istita‘ah).\n\nThe Hanbali school also states that if a financially incapable person (mu‘sir, someone in hardship) performs Hajj without harming others, such as walking to Hajj and earning money through his skills or receiving assistance from someone who voluntarily supports him, and not begging from people. Then, Hajj is recommended for him (mustahabb).\n\nIf a person reached the age of maturity and was financially capable but delayed Hajj until he became poor, the obligation remains upon him. When he regains financial ability, he must perform Hajj. If he dies without performing Hajj, he is sinful. If he left a will, the obligation must be fulfilled from his estate before inheritance is distributed.\""
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Zakat",
+    "question": "if someone owes past Zakat but later loses the wealth on which Zakat was due, does the obligation of Zakat remain?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "According to the Hanafi school of thought, the obligation to pay zakat does not remain upon an individual who has become insolvent due to the loss of wealth in which zakat is due.",
+      "maliki": "According to the Maliki school, the obligation to pay zakat remains upon an individual who has become insolvent due to the loss of wealth in which zakat is due.",
+      "shafii": "According to the Shafeii school, the obligation to pay zakat remains upon an individual who has become insolvent due to the loss of wealth in which zakat is due.",
+      "hanbali": "According to the Hanbali school, the obligation to pay zakat remains upon an individual who has become insolvent due to the loss of wealth in which zakat is due."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Zakat",
+    "question": "How far into future is it permissible to advance zakat?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The Hanafi scholars allowed the advancement of zakat for years, due to the existence of the cause for obligation, which is the ownership of a growing nisab.",
+      "maliki": "The Maliki scholars did not allow advancing zakat by more than one month before the lunar year ends, and even that is disliked",
+      "shafii": "The Shafi'i scholars held the view that it is not permissible to advance zakat for more than one year, as the zakat of years other than the first year has not completed its term, and advancing before the completion of its term is not permissible, just as advancing before reaching the complete nisab in visible zakat.",
+      "hanbali": "The Hanbali scholars restricted it to just two years, adhering to what has been narrated. It has been narrated that Ali (may Allah be pleased with him) reported that the Prophet (peace be upon him) collected the zakat of two years in advance from Al-Abbas (may Allah be pleased with him) due to the saying of the Prophet (peace be upon him): \"As for Al-Abbas, it is upon me and with it together.\" And what Abu Dawood narrated that the Prophet (peace be upon him) borrowed from Al-Abbas the zakat of two years."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Zakat",
+    "question": "What is the ruling on giving zakat to the grandfather?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "It is not permissible for a grandchild to give his zakat to his grandfather, regardless of the degree of ascent, because both would benefit from the other's wealth, which is akin to giving it to oneself in a certain way. Furthermore, the maintenance of each is obligatory on the other, and one might inherit from the other.",
+      "maliki": "It is permissible for a grandchild to give his zakat to his grandfather, provided they have not obliged themselves with the other's maintenance.",
+      "shafii": "It is not permissible for a grandchild to give his zakat to his grandfather, regardless of the degree of ascent, because both would benefit from the other's wealth, which is akin to giving it to oneself in a certain way. Furthermore, the maintenance of each is obligatory on the other, and one might inherit from the other.",
+      "hanbali": "It is not permissible for a grandchild to give his zakat to his grandfather, regardless of the degree of ascent, because both would benefit from the other's wealth, which is akin to giving it to oneself in a certain way. Furthermore, the maintenance of each is obligatory on the other, and one might inherit from the other."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Zakat",
+    "question": "What is the ruling if zakat is given to someone thought to be eligible, but it turns out to be a mistake?",
+    "agreement": false,
+    "schools": {
+      "hanafi": "The view of Abu Hanifa and Muhammad is that if Zakat is given to someone mistakenly believed to be eligible, it remains valid.\nThe second opinion is that of Abu Yusuf, and it states that the Zakat does not count as fulfilled, and the giver must pay it again. However, the giver cannot reclaim the Zakat already given.",
+      "maliki": "The Zakat is Not Valid and Must Be Given Again, if the giver was the owner of the wealth (rabb al-māl). \n\nThe zakat is valid, if the giver was the ruler (sultan), a guardian (waṣī), or a judge’s appointee and returning the zakat was impossible.",
+      "shafii": "The correct opinion in the Shafi‘i school is that if the giver was the imam (state authority), the zakat must be retrieved from the recipient, unless it is impossible to take it back. In that case, no compensation is required. However, if the giver was a private individual (not the state), the zakat does not count as paid. If the person did not specify that the payment was zakat, they cannot retrieve it. If they explicitly stated it was zakat, they may take it back if it is still present, or claim its equivalent if it has been lost or spent. If retrieving it is impossible, there are two opinions on whether they must compensate for it. Imam Nawawi states that the stronger view is that the zakat does not count, and the person must give zakat again.\n\nThe weaker opinion in the Shafi’i and Maliki schools, as long as the giver was the ruler (sultan), a guardian (waṣī), or a judge’s appointee and returning the zakat was impossible.",
+      "hanbali": "The Hanbalis state that zakat is invalid and must be repaid, except where the giver thought the recipient was poor, but they turned out to be wealthy. In such a case, the zakat is valid. However, if the zakat was mistakenly given to someone who was never eligible (e.g., a wealthy person, a non-Muslim, etc.), they say that the giver must reclaim it with any additional gains, whether the wealth remains intact or has increased through investment."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Zakat",
+    "question": "Does a professional have to pay zakat on his tools of work?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "The scholars agree that there is no Zakat on tools of work used by professionals, as they are considered essential needs exempt from Zakat.",
+      "maliki": "The scholars agree that there is no Zakat on tools of work used by professionals, as they are considered essential needs exempt from Zakat.",
+      "shafii": "The scholars agree that there is no Zakat on tools of work used by professionals, as they are considered essential needs exempt from Zakat.",
+      "hanbali": "The scholars agree that there is no Zakat on tools of work used by professionals, as they are considered essential needs exempt from Zakat."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "fiqhqa",
+    "topic": "Zakat",
+    "question": "Can a woman give voluntary sadaqah from her husband's wealth?",
+    "agreement": true,
+    "schools": {
+      "hanafi": "The Hanafi school holds that it is permissible for a woman to give charity from her husband's household with his explicit permission. It is also permissible to give a small amount as charity from her husband's wealth without his permission or prohibition.",
+      "maliki": "The Maliki school agrees that a woman can give charity from her husband's household with his explicit permission and considers it permissible for her to give a small amount as charity from his wealth without his permission or prohibition.",
+      "shafii": "According to the Shafeii school, it is permissible for a woman to give charity from her husband's household with his explicit permission. Additionally, giving a small amount from his wealth as charity without his permission or prohibition is also permissible.",
+      "hanbali": "The Hanbali school concurs that it is permissible for a woman to give charity from her husband's household with his explicit permission. They also concur that she may give a small amount as charity from his wealth without his permission or prohibition."
+    },
+    "source": "https://huggingface.co/datasets/MBZUAI/FiqhQA"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "finance",
+    "question": "What exactly makes HPP halal (UK)? I am failing to understand how exactly HPP differs from conventional mortgage. As far as I understand all UK islamic mortgages are based on HPP.",
+    "source": "https://www.reddit.com/r/IslamicFinance/comments/1gd8aax/what_exactly_makes_hpp_halal_uk/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "finance",
+    "question": "Trading Standard futures in crypto. Halal or Haram? After researching, I found that only spot can be traded and not perpetual futures.",
+    "source": "https://www.reddit.com/r/IslamicFinance/comments/1eydv04/trading_standard_futures_in_crypto_halal_or_haram/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "finance",
+    "question": "What is the ruling on car insurance and medical insurance? Are they both haram?",
+    "source": "https://www.reddit.com/r/islam/comments/7p89qs/what_is_the_ruling_on_car_insurance_and_medical/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "finance",
+    "question": "Student loans UK- permissible?",
+    "source": "https://www.reddit.com/r/islam/comments/u184n4/student_loans_uk_permissible/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "finance",
+    "question": "Interest on savings? Most banks in the west issue interest on savings accounts we have, usually small amounts like 0.5%. My question is...what do people do with this money?",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1792az7/interest_on_savings/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "finance",
+    "question": "Do I need to pay zakat on my gold jewelry? I received it as part of my dowry from my husband and as a gift from my mom, and I wear it occasionally for parties or with our traditional clothes. Scholars in my country said that since I wear the gold at least once a year, I'm not supposed to pay zakat on it.",
+    "source": "https://www.reddit.com/r/IslamicFinance/comments/1ja7gbj/zakat_on_gold/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "work",
+    "question": "Is it haram for me to serve alcohol at my job? I'm planning on working at a mediterranean restaurant so I'd mainly be serving food but they do have an alcohol menu.",
+    "source": "https://www.reddit.com/r/progressive_islam/comments/1nmxk39/is_it_haram_for_me_to_serve_alcohol_at_my_job/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "work",
+    "question": "Is it haram to work as a software engineer at a bank? I'm a full stack developer at a bank in the Netherlands, mainly frontend development, with some backend and infrastructure tasks.",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1uo3nrt/working_as_a_software_engineer_at_a_bank/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "marriage",
+    "question": "Legal divorce finalized. Is she still Islamically my wife? She was the one who wanted to end the marriage and filed for divorce. Does that count as khula? Is she required to return the mahr? No formal Islamic talaq or khula process has taken place through an imam.",
+    "source": "https://www.reddit.com/r/MuslimMarriage/comments/1rc2lmb/legal_divorce_finalized_is_she_still_islamically/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "marriage",
+    "question": "My friend is divorcing his wife after he caught her having an affair. He wants to keep the mahr he gave because she is the one who broke the marriage contract. What is the ruling in this matter?",
+    "source": "https://www.reddit.com/r/MuslimMarriage/comments/rhfpw9/mahr_after_divorce/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "marriage",
+    "question": "My husband won't let me take birth control, does Islam allow me to go against him and take it for my own health and well being? I had twins with a c-section and getting pregnant again now would be a serious risk to my physical and mental health.",
+    "source": "https://www.reddit.com/r/MuslimMarriage/comments/1ij51lg/my_husband_wont_let_me_take_birth_control_does/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "marriage",
+    "question": "What's the view on sperm donors and IVF in Islam? My wife and I are both infertile. Would it be OK for her to go through IVF, and if I can't do it with my own, to use a sperm donor?",
+    "source": "https://www.reddit.com/r/islam/comments/j2k52z/whats_the_view_on_sperm_donors_and_ivf_in_islam/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "marriage",
+    "question": "Husband refuses khula. I'm a convert in the UK and had a Nikkah only, no civil marriage. The marriage was a nightmare from start to finish and he refuses to give me khula. What can I do?",
+    "source": "https://www.reddit.com/r/progressive_islam/comments/100ohb3/husband_refuses_khula/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "family",
+    "question": "Why aren't adopted children mahrams to their parents?",
+    "source": "https://www.reddit.com/r/islam/comments/w3ssp3/why_arent_adopted_children_mahrams_to_their/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "family",
+    "question": "Why do brothers inherit from their deceased brother if he only had daughters?",
+    "source": "https://www.reddit.com/r/islam/comments/150b7ub/why_do_brother_inherit_their_deceased_brother_if/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "family",
+    "question": "Burying a non Muslim parent: I am a revert and my dad is Christian. He already paid for his funeral, which includes cremation. It concerns me that he wishes to be cremated and I am not sure what to do moving forward.",
+    "source": "https://www.reddit.com/r/islam/comments/1fgf5ql/burying_non_muslim_parent/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "family",
+    "question": "Can I pray for my deceased father? He did not die a Muslim. My mom tells me every night to pray for him.",
+    "source": "https://www.reddit.com/r/islam/comments/1c4whvi/can_i_pray_for_my_deceased_father/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "Can I recite the Quran on my period if I'm helping someone memorise? I'm teaching my father some short duas and surahs, and he needs me to recite slowly so he can repeat after me.",
+    "source": "https://www.reddit.com/r/islam/comments/1rjv7c5/can_i_recite_the_quran_on_my_period_if_im_helping/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "Is praying in a chair or sitting down valid? I'm going back to school and there's no masjid around my school, living in France, it's complicated to openly perform salah with sujood in front of strangers.",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/n1qtbv/is_praying_in_a_chair_or_sitting_down_valid_im/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "I am 5 weeks pregnant and my doctor advised me not to bend forward at all, as my pregnancy is risky. Even if I pray sitting on a chair, I have to bend for sujood. What can I do?",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1srkb2c/salah_during_pregnancy/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "How to determine salah times on a flight?",
+    "source": "https://www.reddit.com/r/islam/comments/9lmbse/how_to_determine_salah_times_on_a_flight/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "Do I have to go to jummah if I work a night shift the day before and have a night shift the same day? I finish work at 6am, jummah is at 13:00, and I need sleep to function for my next shift.",
+    "source": "https://www.reddit.com/r/islam/comments/1wyq1nw/do_i_have_to_go_jummah_if_i_work_night_shift_day/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "Can I combine Dhuhr and Asr prayer at the time of Dhuhr, if I think that I will be on the road (traveling roughly 1,800 km with the car) at the time of Asr?",
+    "source": "https://www.reddit.com/r/islam/comments/1eagq0c/can_i_combine_prayers_if_i_am_traveling_later/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "Is my wudu actually valid with 'halal' nail polish? The brand says its water-permeable gel polish is tested and certified for wudu. Can I rely on the certification or the scholarly opinion that permits it?",
+    "source": "https://www.reddit.com/r/islam/comments/1wxyo4b/is_my_wudu_actually_valid_with_halal_nail_polish/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "I'm struggling with waswasa during wudu and prayer. Every time I pray, especially in sujood, it feels like I passed wind even though I don't hear any sound or smell any odour, so I keep repeating my wudu and prayer. What should I do?",
+    "source": "https://www.reddit.com/r/islam/comments/1tsw9k4/im_struggling_with_my_salah_and_wudu_i_want_to/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "worship",
+    "question": "I'm a convert and got a tattoo after my conversion, stopped praying, but I want to get back on the right path. Can I pray? Are my prayers invalid now, and is ghusl of no use?",
+    "source": "https://www.reddit.com/r/islam/comments/747zoz/im_a_convert_and_got_a_tattoo_after_my_conversion/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "fasting",
+    "question": "Can I take my ADHD meds during Ramadan fasting? I take 2-3 pills through the day to focus during classes, and going through school without my medication is almost impossible.",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/11xf77e/can_i_take_my_adhd_meds_during_ramadan_fasting/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "fasting",
+    "question": "Can I break my fast for a medical test? I have to give a urine test after drinking water tomorrow for medical reasons, is this permissible?",
+    "source": "https://www.reddit.com/r/islam/comments/u6ca35/can_i_break_my_fast_for_a_medical_test_i_have_to/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "fasting",
+    "question": "Do breastfeeding moms who miss Ramadan fast have to make up the whole month after they are done?",
+    "source": "https://www.reddit.com/r/islam/comments/1asgx5x/do_breastfeeding_moms_who_miss_ramadan_fast_have/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "food",
+    "question": "Why is pig gelatine haram? It's boiled down, extracted and purified into pure gelatin, which is just the same thing as cow or fish gelatin.",
+    "source": "https://www.reddit.com/r/islam/comments/v0cv5f/why_is_pig_gelatine_haram_while_i_do_know_that/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "food",
+    "question": "Why is liquid vanilla extract considered halal when the liquid is alcohol (35% or higher) and can intoxicate you?",
+    "source": "https://www.reddit.com/r/islam/comments/152v93a/why_is_liquid_vanilla_extract_considered_halal/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "food",
+    "question": "I'd like to travel to Texas to eat traditional BBQ. Can I eat meat from Ahl al-Kitab in small Texan towns, or do I need to find halal meat?",
+    "source": "https://www.reddit.com/r/islam/comments/1v4ll9q/trip_to_texas_for_meat/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "daily life",
+    "question": "Is it permissible to use a perfume that has alcohol or ethyl alcohol?",
+    "source": "https://www.reddit.com/r/islam/comments/xggcy1/is_it_permissable_to_use_a_perfume_that_has/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "daily life",
+    "question": "Is keeping a protection dog INSIDE the house haram? My friend says the hadith about losing a qirat of reward every day doesn't say anything about inside the house, and wants a hadith or Quran verse that does.",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1i0ezuu/is_keeping_a_protection_dog_inside_the_house_haram/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "daily life",
+    "question": "I have a school project where I have to draw an animal in its natural habitat, but I realized it's haram to draw faces of animals, and the teacher is quite strict so he would not give me an exception. What do I do?",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1jzcx6o/i_have_this_school_project_coming_up_where_i_have/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "daily life",
+    "question": "Is music really haram? Looking for different perspectives.",
+    "source": "https://www.reddit.com/r/progressive_islam/comments/1s16d7x/is_music_really_haram_looking_for_different/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "daily life",
+    "question": "Is it permissible to eat Christmas dinner on Christmas day with no intentions of celebrating? I'm a revert and although my family don't celebrate Christmas they have Christmas dinner.",
+    "source": "https://www.reddit.com/r/islam/comments/18pgo7h/is_it_permissible_to_eat_christmas_dinner_on/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "medicine",
+    "question": "Is donating blood and organs after death haram?",
+    "source": "https://www.reddit.com/r/islam/comments/mxh069/is_donating_blood_and_organs_after_death_haram/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "belief",
+    "question": "Can I be Muslim if I believe in evolution?",
+    "source": "https://www.reddit.com/r/islam/comments/tnluyz/can_i_be_muslim_if_i_believe_in_evolution/"
+  },
+  {
+    "kind": "islamic",
+    "set": "reddit",
+    "topic": "belief",
+    "question": "Trying to understand qadr and free will. Can you accidentally marry the wrong person who Allah hasn't written for you because of free will?",
+    "source": "https://www.reddit.com/r/Hijabis/comments/187v9am/trying_to_understand_qadr_and_free_will_can_you/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Is this hadith authentic? Abu Qatadah reported: The Prophet, peace and blessings be upon him, said, \"Verily, you will never leave anything for the sake of Allah Almighty but that Allah will replace it with something better for you.\" Source: Musnad Ahmad 23074",
+    "source": "https://www.reddit.com/r/islam/comments/16il9nc/is_this_hadith_authentic_abu_qatadah_reported_the/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Mufti Menk shared a story of how Satan created music to distract the people of Prophet Sheeth (PBUH). But is this story authentic? Other than this video, I can't find this story anywhere in the Quran, hadith or tafsirs.",
+    "source": "https://www.reddit.com/r/islam/comments/wp78i8/mufti_menk_shared_a_story_of_how_satan_created/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Could someone explain to me the meaning of this hadith, or if it is authentic or weak? (Sunan Ibn Majah 4337) It sounds a bit strange to me.",
+    "source": "https://www.reddit.com/r/islam/comments/10q4yht/could_someone_explain_to_me_the_meaning_of_this/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Can anyone clarify which narration of this hadith is more authentic? https://sunnah.com/abudawud/34/20 and https://sunnah.com/urn/52420. The first one says 20 companions of the Prophet put on silk while the second one does not, and both are graded sahih.",
+    "source": "https://www.reddit.com/r/islam/comments/hq21b4/salamu_alaikum_can_anyone_clarify_which_narration/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Is this hadith fabricated? I saw on Instagram that Allah checks our deeds on Thursdays and then decides to either forgive us or not, but He leaves the deeds of those who are in a conflict or haven't talked to each other.",
+    "source": "https://www.reddit.com/r/islam/comments/1ibauho/is_this_hadith_fabricated/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "I came across a post on my Facebook feed claiming the hadith about fasting on Ashura is a fabrication. Thoughts?",
+    "source": "https://www.reddit.com/r/islam/comments/73wwdy/i_came_across_this_on_my_fb_feed_claiming_the/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Is the hadith about Prophet Muhammad and the Jewish neighbour fabricated? A Jewish woman in Mecca would throw garbage on his doorstep, one day she fell sick, the Prophet visited her, and she accepted Islam.",
+    "source": "https://www.reddit.com/r/islam/comments/518y8f/the_hadith_about_prophet_mohammad_and_the_jewish/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Is the hadith about music being forbidden in Islam weak? \"There will be people from my Ummah who will seek to make lawful fornication, the wearing of silk, wine drinking and the use of musical instruments.\"",
+    "source": "https://www.reddit.com/r/islam/comments/11ce3y/is_the_hadith_about_music_being_forbidden_in/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Is this hadith really authentic? Iyas bin 'Abdullah bin Abu Dhubab said: \"The Prophet said: 'Do not beat the female slaves of Allah.' Then 'Umar came to the Prophet and said: 'O Messenger of Allah, the women have become bold towards their husbands? So order the beating of them,' and they were beaten.\"",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1ino8o8/is_this_hadith_really_authentic/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Are there any verses in the Quran which say that those who leave the faith were never truly Muslims to begin with?",
+    "source": "https://www.reddit.com/r/islam/comments/t9wj5n/question_are_there_any_verses_in_the_quran_which/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Does Allah remain on the Throne or in the lowest heaven? The Quran says Allah is established above the Throne, but a hadith book says He descends to the lowest heaven.",
+    "source": "https://www.reddit.com/r/Quran/comments/1w31x11/does_allah_remain_on_the_throne_or_in_the_lowest/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Did the Prophet have the right to express his own independent opinion?",
+    "source": "https://www.reddit.com/r/Quran/comments/1waegtw/did_the_prophet_have_the_right_to_express_his_own/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "What will happen to those who write books with their own hands?",
+    "source": "https://www.reddit.com/r/Quran/comments/1we2cmn/what_will_happen_to_those_who_write_books_with/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "I have a chronic illness that causes me severe fatigue and pain. I've already repented to Allah for my sins. Can my illness still elevate my rank?",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1vndfqh/i_have_a_chronic_illness_if_ive_already_repented/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Is it a South Asian myth or an actual hadith that you must cover your hair and have wudu to read the Qur'an?",
+    "source": "https://www.reddit.com/r/MuslimLounge/comments/1rsx6xa/is_it_a_south_asian_myth_or_actual_hadith_that/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Sahih Muslim 1633, combining prayers? Some people online say that based on this hadith of Ibn 'Abbas we can combine our prayers at any time for any reason. I've heard we can combine or shorten prayers during travel, but never just because we want to. Is this accurate?",
+    "source": "https://www.reddit.com/r/islam/comments/1129uhj/sahih_muslim_1633_combining_prayers/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Do you know any hadith or verse from the Quran related to the concept of free will? I just need any hadith and any verse that indicates the free will of humans.",
+    "source": "https://www.reddit.com/r/islam/comments/1n33dhj/do_you_know_any_hadith_or_verse_from_quran_that/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Out of all 73 sects of Islam, which will be the saved group?",
+    "source": "https://www.reddit.com/r/islam/comments/2etcsb/out_of_all_73_sects_of_islam_which_do_you_think/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "If marriage in several hadiths is described as being 'half of your deen', how come it isn't one of the pillars of Islam?",
+    "source": "https://www.reddit.com/r/islam/comments/ccg05z/if_marriage_in_several_hadiths_is_described_as/"
+  },
+  {
+    "kind": "islamic",
+    "set": "quote",
+    "question": "Is getting a tattoo a major sin for men too? I got one when I was 17 and I'm finding my way back to Islam.",
+    "source": "https://www.reddit.com/r/islam/comments/15dnckm/is_tattoo_considered_as_major_sin_for_men_too/"
+  }
+]

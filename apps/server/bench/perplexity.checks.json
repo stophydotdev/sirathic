@@ -1,0 +1,92 @@
+[
+  {
+    "question": "What should one do if they forget to wash an obligatory spot on it during Wudu?",
+    "answer": "bc7198f2a22ae589",
+    "reason": "73c3819cd8e9a9dd",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The cited fatwa does say what the answer says, so this isn't a misreading of the source. The objection is that the answer presents a mainly Hanbali view as the general ruling while the other schools differ. That faults the ruling itself, and the source text can't disprove it."
+    }
+  },
+  {
+    "question": "What is the ruling on marriage with the intention of divorce?",
+    "answer": "f90ee9e752b0352a",
+    "reason": "209e719ac1a4bf9b",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The grader's fault is about what the Hanbali school actually holds: it says Al-Mughni and Al-Sharh treat the marriage as valid, so invalidity is only the secondary opinion. That challenges the school's position itself, not how the answer used its sources. Source [6] does quote Ibn ʿUthaymeen saying \"The well known Hanbali view is that it is haraam and the marriage contract is invalid,\" but a source repeating a claim doesn't make it right. The source texts can't disprove the grader's claim about the school's main opinion, so the verdict is upheld."
+    }
+  },
+  {
+    "question": "What is the ruling if the divorce (ṭalāq) was repeated several times in a single sitting for a wife who has not yet been consummated (ghayr madkhūl bihā)?",
+    "answer": "b6fd5944de1d658f",
+    "reason": "746d72d9575035c",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The grader faults the schools' positions, not how the source was used. It says the Malikis and Hanbalis count three when the words are said together. Source [3] does call one divorce the majority view, which matches the answer. But a source repeating a claim doesn't prove the claim, so the verdict stands."
+    }
+  },
+  {
+    "question": "What is the ruling on the delay of Hajj if someone is capable?",
+    "answer": "4670d2f95a6d5bdf",
+    "reason": "d302d1c2fee6fcdc",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The grader's complaint is about a school's position. It says the dataset holds that the Shafi'i school treats Hajj as due right away, so the answer's claim that the Shafi'i school allows flexibility is wrong. The cited sources do back the answer. [1] says the Shafi'i school considers Hajj an obligation with flexibility in time and sees no sin in delaying it. [6] says al-Shafi'i held it could be done at one's leisure, but that hastening is better. Still, this check only covers citation faults: a source cited for something it doesn't say, or a wrong reference detail. A dispute over what a school actually holds is outside that scope, and a source repeating a claim doesn't make it right. The verdict stands, even though the grader's own note suggests the dataset may be the one that's wrong."
+    }
+  },
+  {
+    "question": "What is the ruling if zakat is given to someone thought to be eligible, but it turns out to be a mistake?",
+    "answer": "c92b5b197dbffd62",
+    "reason": "f7ea018f7d7d9764",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The cited source does not disprove the fault. It supports it. Source [2] says the Hanbalis accept the zakat only when someone thought poor turns out to be well-off. Where the recipient was never eligible (a non-Muslim, or a descendant of the Prophet), it says the Hanbalis hold that it does not count. Only Ibn 'Uthaymeen extends validity to every mistaken-eligibility case. The answer pairs the Hanbali view with that broader view and gives it as a general rule. The reason also faults how a school's position is stated, which the rules say to uphold."
+    }
+  },
+  {
+    "question": "Burying a non Muslim parent: I am a revert and my dad is Christian. He already paid for his funeral, which includes cremation. It concerns me that he wishes to be cremated and I am not sure what to do moving forward.",
+    "answer": "28fdb9558a343f94",
+    "reason": "b0cd029ed588e3c1",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The reason faults the answer's presentation of a ruling: it implies scholars differ on whether a Muslim may take part in a cremation. That is a fault about the ruling or school position, not about what a source says, so the verdict stands. The cited texts don't disprove the reason either. [3] and [2] allow attending the funeral of a non-Muslim parent but not joining in its rites. [11] says to leave the burial to the parent's co-religionists when any are available. [5] forbids carrying out a cremation. None of them allows a Muslim to take part in one."
+    }
+  },
+  {
+    "question": "Could someone explain to me the meaning of this hadith, or if it is authentic or weak? (Sunan Ibn Majah 4337) It sounds a bit strange to me.",
+    "answer": "e4db05bae89ec4a8",
+    "reason": "9b7e79681e73cc40",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The answer calls the explanation of 'his inheritance from the people of Hell' a 'compiler's note' and cites [1], whose text is not provided. The available sources [3] and [29] both show the explanation is introduced by 'qāla Hishām ibn Khālid' (Hisham ibn Khalid said). Hisham is the narrator who passed the hadith to Ibn Mājah, not the compiler. The source texts confirm the misattribution rather than disprove it, so the verdict stands."
+    }
+  },
+  {
+    "question": "Mufti Menk shared a story of how Satan created music to distract the people of Prophet Sheeth (PBUH). But is this story authentic? Other than this video, I can't find this story anywhere in the Quran, hadith or tafsirs.",
+    "answer": "8a7791b7d5c22c4c",
+    "reason": "fcd3f43542a5a39f",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The fault is that the answer leaves out that Ibn Kathir's tafsir on 33:33 quotes the story with a chain (Ibn Abi Hatim to Ibn Abbas). That tafsir passage is not among the source texts, so nothing above can disprove it. [52] cites Ibn Kathir only on Sheeth's name and the 50-scriptures hadith. [2] gives no chain and doesn't mention Ibn Kathir. [31] says the stories about Sheeth come from Israeliyat, which doesn't rule out a chained report in the tafsir. Also, neither [2] nor [31], as shown, attributes the claim to Ibn Kathir, so the answer's framing isn't supported by its own citations."
+    }
+  },
+  {
+    "question": "Can anyone clarify which narration of this hadith is more authentic? https://sunnah.com/abudawud/34/20 and https://sunnah.com/urn/52420. The first one says 20 companions of the Prophet put on silk while the second one does not, and both are graded sahih.",
+    "answer": "f09d3081a0a3fd05",
+    "reason": "1be54046a785e177",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The text of [2] backs the grader. It is Abu Dawud 403, about Bilal giving the Dhuhr adhan once the sun had passed its height, followed by Abu Dawud 4030–4037 on clothing. It does not contain the Bukhari narration (URN 52420) about unlawful sex, alcohol, musical instruments or the collapsing mountain, which is what the answer cites it for. So [2] is the wrong reference."
+    }
+  },
+  {
+    "question": "Sahih Muslim 1633, combining prayers? Some people online say that based on this hadith of Ibn 'Abbas we can combine our prayers at any time for any reason. I've heard we can combine or shorten prayers during travel, but never just because we want to. Is this accurate?",
+    "answer": "b234e93a11327ef3",
+    "reason": "a4856b1484a9933e",
+    "check": {
+      "verdict": "overturned",
+      "reason": "The cited source [2] is the fawazahmed0 database page for Sahih Muslim 1633. Its text is Ibn 'Abbas's combining hadith (Medina, no fear or rain, 'so that his Ummah not face hardship'), listed as Arabic Number 705.04, Book 6 Hadith 64. Source [25] gives the same hadith as Sahih Muslim 705 d. So in the database the answer cites, 1633 is the combining hadith, and it matches 705d. The answer cites both. The grader's claim that the database uses sunnah.com numbering, where 1633 would be 'Umar's Khaybar waqf hadith, is disproved by the source text itself. There is no mismatch to point out."
+    }
+  }
+]
