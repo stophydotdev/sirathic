@@ -1,0 +1,8 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "deploy": {
+    "startCommand": "bun run db:crawl",
+    "cronSchedule": "0 3 1,15 * *",
+    "restartPolicyType": "NEVER"
+  }
+}
