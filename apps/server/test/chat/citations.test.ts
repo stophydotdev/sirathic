@@ -77,3 +77,21 @@ test("a citation stays when it fits, or when the named verse wasn't retrieved", 
     await Promise.all(cases.map(({ text }) => linked(urls, [text]))),
   ).toEqual(cases.map(({ expected }) => expected));
 });
+
+test("a citation after one that used the named verse keeps its own verse", async () => {
+  const cases = [
+    {
+      urls: [quran("2:286"), quran("65:7")],
+      text: "Allah says in 2:286 that no soul is burdened beyond its capacity [1]. At-Talaq says it too [2].",
+      expected: `Allah says in 2:286 that no soul is burdened beyond its capacity [1](${quran("2:286")}). At-Talaq says it too [2](${quran("65:7")}).`,
+    },
+    {
+      urls: [quran("2:183"), quran("2:185")],
+      text: "Fasting was prescribed (2:183) [1], and the month is Ramadan [2].",
+      expected: `Fasting was prescribed (2:183) [1](${quran("2:183")}), and the month is Ramadan [2](${quran("2:185")}).`,
+    },
+  ];
+  expect(
+    await Promise.all(cases.map(({ urls, text }) => linked(urls, [text]))),
+  ).toEqual(cases.map(({ expected }) => expected));
+});

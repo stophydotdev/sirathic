@@ -13,10 +13,16 @@ const UNFINISHED = /^\[\d*(\](\([^)\s]*)?)?$/;
 const QURAN_URL = /^https:\/\/quran\.com\/(\d+)\/(\d+)$/;
 const VERSE_KEY = /\b(\d{1,3}):(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/g;
 const PARAGRAPH = "\n\n";
+const CITED = /\[\d+\](?:\([^)\s]+\))?|\ue200cite\ue202[^\ue201]*\ue201/g;
 
 const paragraphOf = (text: string) => {
   const start = text.lastIndexOf(PARAGRAPH);
   return start === -1 ? text : text.slice(start + PARAGRAPH.length);
+};
+
+const sinceLastCitation = (text: string) => {
+  const last = [...text.matchAll(CITED)].at(-1);
+  return last === undefined ? text : text.slice(last.index + last[0].length);
 };
 
 function holdFrom(text: string) {
@@ -59,13 +65,13 @@ export function citations(history: UIMessage[]) {
     const cited = QURAN_URL.exec(byNumber.get(number) ?? "");
     if (!cited) return number;
     const [surah, ayah] = [Number(cited[1]), Number(cited[2])];
-    const named = [...paragraphOf(before).matchAll(VERSE_KEY)].map(
-      ([, namedSurah, from, to]) => ({
-        surah: Number(namedSurah),
-        from: Number(from),
-        to: Number(to ?? from),
-      }),
-    );
+    const named = [
+      ...sinceLastCitation(paragraphOf(before)).matchAll(VERSE_KEY),
+    ].map(([, namedSurah, from, to]) => ({
+      surah: Number(namedSurah),
+      from: Number(from),
+      to: Number(to ?? from),
+    }));
     const last = named.at(-1);
     if (
       last === undefined ||
