@@ -1,8 +1,7 @@
-import { env } from "@sirathic/env/server";
 import { z } from "zod";
 import { cacheFor } from "../cache";
+import { stophy } from "../stophy";
 
-const API = "https://api.stophy.dev/v1/web/images";
 const DAY_MS = 24 * 60 * 60_000;
 
 export const imageSearchInput = z.object({
@@ -22,8 +21,6 @@ const images = z.array(
   }),
 );
 
-const imagesResponse = z.object({ data: z.object({ results: images }) });
-
 const imageCache = cacheFor({
   namespace: "images:v1",
   schema: images,
@@ -34,19 +31,11 @@ const imageCache = cacheFor({
 export const imageSearch = async (input: z.input<typeof imageSearchInput>) => {
   const { query, limit } = imageSearchInput.parse(input);
   return imageCache(`${limit}:${query.toLowerCase()}`, async () => {
-    const response = await fetch(API, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        ...(env.STOPHY_API_KEY && {
-          authorization: `Bearer ${env.STOPHY_API_KEY}`,
-        }),
-      },
-      body: JSON.stringify({ query, safeSearch: true, limit }),
+    const { data } = await stophy.web.images({
+      query,
+      safeSearch: true,
+      limit,
     });
-    if (!response.ok) {
-      throw new Error(`Image search failed with ${response.status}`);
-    }
-    return imagesResponse.parse(await response.json()).data.results;
+    return data.results;
   });
 };
