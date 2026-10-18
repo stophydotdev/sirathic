@@ -1,4 +1,4 @@
-import { webSearch } from "@sirathic/core/webSearch";
+import { webSearch } from "@sirathic/core/tools/webSearch";
 
 const query = process.argv[2];
 const limit = process.argv[3] ? Number(process.argv[3]) : undefined;
@@ -9,7 +9,7 @@ if (!query) {
 }
 
 const start = performance.now();
-const results = await webSearch(query, { limit });
+const results = await webSearch({ query, limit });
 const elapsed = ((performance.now() - start) / 1000).toFixed(2);
 
 if (results.length === 0) {

@@ -4,18 +4,24 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./*": "./src/*.ts",
-    "./agents/search": "./src/agents/search/index.ts",
-    "./agents/suggestions": "./src/agents/suggestions/index.ts",
-    "./models": "./src/models/index.ts",
-    "./prompts/suggestions": "./src/prompts/suggestions/index.ts"
+    "./search/*": "./src/search/*.ts",
+    "./tools/*": "./src/tools/*.ts",
+    "./web/*": "./src/web/*.ts"
   },
   "dependencies": {
-    "@openrouter/ai-sdk-provider": "^3.0.0",
+    "@mozilla/readability": "^0.6.0",
+    "@sirathic/db": "workspace:*",
     "@sirathic/env": "workspace:*",
-    "ai": "^7.0.31",
-    "rfc6902": "^5.2.0",
-    "stophy": "^0.3.0",
+    "adhan": "^4.4.6",
+    "drizzle-orm": "^0.45.4",
+    "linkedom": "^0.18.13",
+    "mathjs": "^15.2.0",
+    "stophy": "2.0.0",
+    "turndown": "^7.2.4",
+    "yahoo-finance2": "^4.0.3",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/turndown": "^5.0.6"
   }
 }
