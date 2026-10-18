@@ -1,0 +1,51 @@
+name: Desktop
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["desktop-v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS
+            os: macos-latest
+            app: dist/mac-arm64/Sirathic.app/Contents/MacOS/Sirathic
+          - name: Windows
+            os: windows-latest
+            app: dist/win-unpacked/Sirathic.exe
+          - name: Linux
+            os: ubuntu-latest
+            app: dist/linux-unpacked/desktop
+    defaults:
+      run:
+        shell: bash
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - name: Allow the Electron sandbox on Ubuntu
+        if: runner.os == 'Linux'
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - name: Smoke test
+        run: ${{ runner.os == 'Linux' && 'xvfb-run -a' || '' }} bun smoke.ts ${{ matrix.app }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sirathic-${{ matrix.name }}
+          path: |
+            apps/desktop/dist/*.dmg
+            apps/desktop/dist/*.exe
+            apps/desktop/dist/*.AppImage
+          if-no-files-found: error
