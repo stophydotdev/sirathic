@@ -3,12 +3,11 @@ import { env } from "@sirathic/env/server";
 import { validateUIMessages } from "ai";
 import { type Context, Hono } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
-import { logger } from "hono/logger";
 import { z } from "zod";
 import { chatResponse } from "./chat/response";
 import { chatTitle } from "./chat/title";
 import { type ChatMessage, mode } from "./shared/messages";
-import { parseBody, respond, StatusError } from "./respond";
+import { parseBody, reasonOf, respond, StatusError } from "./respond";
 import {
   answerOptions,
   chatModel,
@@ -66,7 +65,12 @@ const pendingLogin = async (c: Context) => {
 
 const app = new Hono();
 
-app.use(logger());
+app.use(async (c, next) => {
+  const started = performance.now();
+  await next();
+  const ms = Math.round(performance.now() - started);
+  console.log(`${c.req.method} ${c.req.path} ${c.res.status} ${ms}ms`);
+});
 
 app.get("/", (c) => c.text("OK"));
 
@@ -92,7 +96,7 @@ app.post("/api/chat", (c) =>
     };
     const saved = save(validated);
     saved.catch((err: Error) => {
-      console.error(`session not saved: ${err.message}`);
+      console.error(`session not saved: ${reasonOf(err)}`);
     });
     const chosen = chatModel(user, input.model);
     const small = chatModel(user);
@@ -105,7 +109,7 @@ app.post("/api/chat", (c) =>
             ),
           )
           .catch((err: Error) => {
-            console.error(`title not set: ${err.message}`);
+            console.error(`title not set: ${reasonOf(err)}`);
             return undefined;
           });
     return chatResponse({
@@ -115,7 +119,7 @@ app.post("/api/chat", (c) =>
       mode: input.mode,
       abortSignal: c.req.raw.signal,
       preferences: getSettings(by).catch((err: Error) => {
-        console.error(`settings not read: ${err.message}`);
+        console.error(`settings not read: ${reasonOf(err)}`);
         return DEFAULT_SETTINGS;
       }),
       options: {

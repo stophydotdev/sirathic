@@ -94,6 +94,7 @@ import {
 } from "@sirathic/core/tools/zakatCalculator";
 import { tool } from "ai";
 import { z } from "zod";
+import { reasonOf } from "../respond";
 import type { Source } from "../shared/sources";
 import {
   fiqhBlock,
@@ -584,7 +585,7 @@ const searchAll = async (
   const done = await Promise.all(
     chosen.map(async (name) => {
       const found = await runs[name]().catch((err: Error) => {
-        console.warn(`search ${name} failed: ${err.message}`);
+        console.warn(`search ${name} failed: ${reasonOf(err)}`);
         return { results: [], sources: [], text: "" };
       });
       return { name, found };

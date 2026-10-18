@@ -1,3 +1,4 @@
+import { DrizzleQueryError } from "drizzle-orm/errors";
 import { z } from "zod";
 
 type ApiError = { error: string };
@@ -10,6 +11,14 @@ export class StatusError extends Error {
     super(message);
   }
 }
+
+export const reasonOf = (err: Error) => {
+  if (!(err instanceof DrizzleQueryError)) return err.message;
+  const cause = err.cause;
+  return cause instanceof Error && "code" in cause
+    ? `${cause.name} ${String(cause.code)}`
+    : "query failed";
+};
 
 export async function respond<Result>(run: () => Promise<Result>) {
   try {

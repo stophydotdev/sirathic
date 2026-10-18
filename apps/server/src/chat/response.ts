@@ -18,6 +18,7 @@ import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
 import { citations } from "./citations";
 import { readPdfs } from "./pdf";
+import { reasonOf } from "../respond";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";
@@ -249,7 +250,7 @@ export function chatResponse({
       error instanceof Error ? error.message : String(error),
     onEnd: ({ messages: answered }) =>
       save(answered).catch((err: Error) => {
-        console.error(`session not saved: ${err.message}`);
+        console.error(`session not saved: ${reasonOf(err)}`);
       }),
   });
   return createUIMessageStreamResponse({
