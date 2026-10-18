@@ -7,6 +7,8 @@
     "dev": "bun --bun next dev --webpack --port 3001",
     "build": "bun --bun next build --webpack",
     "start": "bun --bun next start --port 3001",
+    "preview": "NEXT_PUBLIC_SERVER=https://api.sirathic.com opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "NEXT_PUBLIC_SERVER=https://api.sirathic.com opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "typecheck": "tsc-rs --noEmit -p ."
   },
   "dependencies": {
@@ -14,6 +16,7 @@
     "@assistant-ui/react": "^0.15.28",
     "@assistant-ui/react-ai-sdk": "^1.4.17",
     "@assistant-ui/react-markdown": "^0.14.22",
+    "@opennextjs/cloudflare": "1.20.12",
     "@sirathic/server": "workspace:*",
     "@trpc/client": "11.19.0",
     "ai": "7.0.140",
@@ -23,7 +26,7 @@
     "katex": "^0.19.0",
     "lucide-react": "^1.57.0",
     "motion": "^14.3.0",
-    "next": "16.4.0",
+    "next": "16.4.1",
     "radix-ui": "^1.8.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -43,6 +46,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "4.151.1"
   }
 }
