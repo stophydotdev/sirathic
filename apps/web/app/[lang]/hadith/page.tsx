@@ -23,7 +23,7 @@ export default function Hadith() {
       <ThreadShell>
         <div className="h-full overflow-y-auto">
           <div className="mx-auto w-full max-w-[720px] px-6 pt-3 pb-16">
-            <h1 className="flex h-8 items-center ps-10 text-xl font-medium tracking-tight md:ps-0">
+            <h1 className="flex h-8 items-center ps-10 text-xl font-medium tracking-tight lg:ps-0">
               {t("Hadith")}
             </h1>
             {failed && (

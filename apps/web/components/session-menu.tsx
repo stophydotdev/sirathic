@@ -253,7 +253,7 @@ export const SessionRow: FC<{
       {trailing}
       <SessionMenu
         session={session}
-        className="opacity-0 group-focus-within/session:opacity-100 group-hover/session:opacity-100"
+        className="opacity-0 group-focus-within/session:opacity-100 group-hover/session:opacity-100 pointer-coarse:opacity-100"
       />
     </div>
   );

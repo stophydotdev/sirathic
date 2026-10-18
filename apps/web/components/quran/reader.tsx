@@ -1001,7 +1001,7 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
     <main className="h-dvh">
       <ThreadShell>
         <div className="flex h-full flex-col">
-          <header className="border-border/50 flex h-14 shrink-0 items-center gap-1 border-b pe-3 ps-14 md:ps-6">
+          <header className="border-border/50 flex h-14 shrink-0 items-center gap-1 border-b pe-3 ps-14 lg:ps-6">
             <DropdownMenu>
               <DropdownMenuTrigger
                 aria-label={t("Surah")}

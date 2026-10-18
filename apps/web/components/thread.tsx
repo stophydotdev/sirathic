@@ -203,7 +203,7 @@ const TabBar: FC = () => {
   const href = useLocalePath();
 
   return (
-    <div className="bg-background border-border/50 sticky top-0 z-20 border-b pe-6 ps-14 md:ps-6 print:hidden">
+    <div className="bg-background border-border/50 sticky top-0 z-20 border-b pe-6 ps-14 lg:ps-6 print:hidden">
       <div className="absolute top-0 end-4 flex h-14 items-center">
         <HeaderActions />
       </div>
@@ -212,7 +212,7 @@ const TabBar: FC = () => {
           <a
             href={href("/")}
             aria-label={t("New chat")}
-            className={cn(iconButton, "md:hidden")}
+            className={cn(iconButton, "lg:hidden")}
           >
             <PlusIcon className="size-4.5" />
           </a>
@@ -360,7 +360,7 @@ const EmptyState: FC = () => {
   const t = useT();
   return (
     <div className="relative flex h-full flex-col px-6 pb-4 md:justify-center md:pb-[12vh]">
-      <span className="absolute top-3 start-11 flex h-8 items-center text-xl font-medium tracking-tight md:hidden">
+      <span className="absolute top-3 start-11 flex h-8 items-center text-xl font-medium tracking-tight lg:hidden">
         sirathic
       </span>
       <div className="absolute top-3 end-4">

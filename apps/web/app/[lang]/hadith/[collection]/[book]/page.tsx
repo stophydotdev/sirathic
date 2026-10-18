@@ -97,7 +97,7 @@ export default function Book() {
           <div className="mx-auto w-full max-w-5xl px-6 pt-3 pb-16">
             <Link
               href={href(`/hadith/${params.collection}`)}
-              className="text-muted-foreground hover:text-foreground ms-10 flex h-8 w-fit items-center gap-1 text-sm md:ms-0"
+              className="text-muted-foreground hover:text-foreground ms-10 flex h-8 w-fit items-center gap-1 text-sm lg:ms-0"
             >
               <ChevronLeftIcon className="size-4 rtl:rotate-180" />
               {first?.collection.nameEn ?? t("Books")}

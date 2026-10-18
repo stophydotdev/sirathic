@@ -92,7 +92,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
     <div className="relative flex h-full w-full overflow-hidden print:h-auto print:overflow-visible">
       <aside
         className={cn(
-          "bg-sidebar border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 md:flex print:hidden",
+          "bg-sidebar border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 lg:flex print:hidden",
           collapsed ? "w-14" : "w-60",
         )}
       >
@@ -136,7 +136,9 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             <PlusIcon className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("New")}</span>}
             {!collapsed && (
-              <kbd className="text-muted-foreground font-sans text-xs">⌃I</kbd>
+              <kbd className="text-muted-foreground font-sans text-xs pointer-coarse:hidden">
+                ⌃I
+              </kbd>
             )}
           </NewButton>
           {NAV_LINKS.map(({ path, label, Icon }) => (
@@ -153,7 +155,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       </aside>
 
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <div className="absolute top-3 start-2 z-30 md:hidden print:hidden">
+        <div className="absolute top-3 start-2 z-30 lg:hidden print:hidden">
           <SheetTrigger asChild>
             <Button
               variant="ghost"
