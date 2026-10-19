@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./cache": "./src/cache.ts",
     "./search/*": "./src/search/*.ts",
     "./tools/*": "./src/tools/*.ts",
     "./web/*": "./src/web/*.ts"

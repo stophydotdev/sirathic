@@ -1,4 +1,5 @@
 import { trpcServer } from "@hono/trpc-server";
+import { countUp } from "@sirathic/core/cache";
 import { env } from "@sirathic/env/server";
 import { validateUIMessages } from "ai";
 import { Hono } from "hono";
@@ -29,6 +30,8 @@ import {
 } from "./sessions";
 
 const IDLE_TIMEOUT_SECONDS = 255;
+const NOOR_DAILY_ANSWERS = 30;
+const NOOR_COUNT_KEEP_SECONDS = 2 * 24 * 60 * 60;
 
 const chatBody = z.object({
   id: sessionId,
@@ -82,6 +85,22 @@ app.post("/api/chat", (c) =>
     const small = user.via === "chatgpt" ? chatModel(user) : NOOR_SIDE_MODEL;
     if (!modelName || !chosen || !small) {
       throw new StatusError(403, "sign in with ChatGPT to use this model");
+    }
+    if (noorModel(modelName)) {
+      const day = new Date().toISOString().slice(0, 10);
+      const used = await countUp(
+        `noor-answers:${by}:${day}`,
+        NOOR_COUNT_KEEP_SECONDS,
+      ).catch((err: Error) => {
+        console.error(`noor answers not counted: ${reasonOf(err)}`);
+        return 0;
+      });
+      if (used > NOOR_DAILY_ANSWERS) {
+        throw new StatusError(
+          429,
+          `You've used today's ${NOOR_DAILY_ANSWERS} Noor answers. They come back tomorrow.`,
+        );
+      }
     }
     const asked = validated.findLast((message) => message.role === "user");
     track(

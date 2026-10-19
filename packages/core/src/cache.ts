@@ -11,6 +11,13 @@ const connected = Promise.race([
   Bun.sleep(1_000),
 ]);
 
+export const countUp = async (key: string, keepSeconds: number) => {
+  await connected;
+  const count = await redis.incr(key);
+  if (count === 1) await redis.expire(key, keepSeconds);
+  return count;
+};
+
 type CacheOptions<Value> = {
   namespace: string;
   schema: z.ZodType<Value>;
