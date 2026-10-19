@@ -3,11 +3,13 @@ import { notFound } from "next/navigation";
 import { I18nProvider } from "@/components/i18n";
 import { hasLocale, isRtl, LOCALES } from "@/components/locales";
 import { themeScript } from "@/components/preferences";
+import { SITE } from "@/lib/seo";
 import { getDictionary } from "./dictionaries";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "Sirathic",
+  metadataBase: new URL(SITE),
+  title: { default: "Sirathic", template: "%s · Sirathic" },
   description: "Islamic answering engine.",
 };
 

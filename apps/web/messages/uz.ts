@@ -372,3 +372,17 @@ export default {
   "Download for Windows": "Windows учун юклаб олиш",
   "Download for Linux": "Linux учун юклаб олиш",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "Бепул исломий жавоблар тизими. Жавоблар Қуръон, саҳиҳлик даражаси кўрсатилган ҳадислар ва уламолар ҳукмларига асосланади ва манбаларини кўрсатади.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "Қуръоннинг 114 та сураси араб тилида, таржима ва тафсир билан.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "{name} сураси ({number}): араб матни, таржима ва тафсир",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "{name} сураси араб тилида, таржима ва тафсир билан. {count} та оят.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "Бухорий, Муслим ва бошқа йирик ҳадис тўпламлари, араб ва инглиз тилларида.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, китобма-китоб, араб ва инглиз тилларида.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{collection} тўпламидан {count} та ҳадис, араб ва инглиз тилларида.",

@@ -372,3 +372,17 @@ export default {
   "Download for Windows": "Preuzmi za Windows",
   "Download for Linux": "Preuzmi za Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "Besplatni islamski sistem odgovora. Odgovori se oslanjaju na Kur'an, hadise s ocjenom vjerodostojnosti i stavove učenjaka i navode svoje izvore.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "Svih 114 sura Kur'ana na arapskom, s prijevodom i tefsirom.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "Sura {name} ({number}): arapski, prijevod i tefsir",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "Sura {name} na arapskom, s prijevodom i tefsirom. {count} ajeta.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "Buhari, Muslim i ostale velike zbirke hadisa, na arapskom i engleskom.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, knjigu po knjigu, na arapskom i engleskom.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{count} hadisa iz zbirke {collection}, na arapskom i engleskom.",

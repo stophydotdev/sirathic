@@ -372,3 +372,17 @@ export default {
   "Download for Windows": "دابەزاندن بۆ Windows",
   "Download for Linux": "دابەزاندن بۆ Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "بزوێنەری وەڵامی ئیسلامی بەخۆڕایی. وەڵامەکان لە قورئان، فەرموودەکان لەگەڵ پلەی دروستییان و ڕای زانایانەوە دێن و سەرچاوەکانیان دەڵێن.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "هەموو 114 سوورەتی قورئان بە عەرەبی، لەگەڵ وەرگێڕان و تەفسیر.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "سوورەتی {name} ({number}): عەرەبی، وەرگێڕان و تەفسیر",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "سوورەتی {name} بە عەرەبی، لەگەڵ وەرگێڕان و تەفسیر. {count} ئایەت.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "بوخاری، موسلیم و کۆمەڵە فەرموودە گەورەکانی تر، بە عەرەبی و ئینگلیزی.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}، کتێب بە کتێب، بە عەرەبی و ئینگلیزی.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{count} فەرموودە لە {collection}، بە عەرەبی و ئینگلیزی.",

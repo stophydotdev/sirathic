@@ -18,6 +18,7 @@ import {
   loadTranslation,
   MEMORIZE_MODES,
   type MemorizeMode,
+  SAHEEH_INTERNATIONAL,
   type TranslationText,
   useReading,
 } from "@/components/quran/reading";
@@ -825,15 +826,20 @@ const ModeButton: FC<{
   </button>
 );
 
-export const Reader: FC<{ number: number }> = ({ number }) => {
+export const Reader: FC<{
+  number: number;
+  text: SurahText | undefined;
+  pageTranslation: { id: number; rows: TranslationText } | undefined;
+}> = ({ number, text, pageTranslation }) => {
   const t = useT();
   const href = useLocalePath();
   const router = useRouter();
-  const [text, setText] = useState<SurahText>();
-  const [failed, setFailed] = useState(false);
   const [list, setList] = useState<Surah[]>([]);
   const [translationList, setTranslationList] = useState<TranslationInfo[]>([]);
-  const translation = useReading((state) => state.translation);
+  const translation =
+    useReading((state) => state.translation) ??
+    pageTranslation?.id ??
+    SAHEEH_INTERNATIONAL;
   const transliterationOn = useReading((state) => state.transliteration);
   const setTranslation = useReading((state) => state.setTranslation);
   const setTransliteration = useReading((state) => state.setTransliteration);
@@ -866,22 +872,6 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
       () => undefined,
     );
   }, []);
-
-  useEffect(() => {
-    let active = true;
-    setText(undefined);
-    api.quran.surah.query({ number }).then(
-      (found) => {
-        if (active) setText(found);
-      },
-      () => {
-        if (active) setFailed(true);
-      },
-    );
-    return () => {
-      active = false;
-    };
-  }, [number]);
 
   useEffect(() => {
     if (!text) return;
@@ -926,9 +916,14 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
     (entry) => entry.kind === "transliteration",
   )?.id;
 
+  const pageTranslationId = pageTranslation?.id;
   useEffect(() => {
     setTranslationRows(undefined);
-    if (translation === undefined) return;
+    if (
+      translation === SAHEEH_INTERNATIONAL ||
+      translation === pageTranslationId
+    )
+      return;
     let active = true;
     loadTranslation(translation, number).then(
       (rows) => {
@@ -939,7 +934,7 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
     return () => {
       active = false;
     };
-  }, [translation, number]);
+  }, [translation, number, pageTranslationId]);
 
   useEffect(() => {
     setTransliterationRows(undefined);
@@ -956,10 +951,14 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
     };
   }, [transliterationOn, transliterationId, number]);
 
+  const rows =
+    translation === pageTranslation?.id
+      ? pageTranslation.rows
+      : translationRows;
   const translatedOf = (ayah: Ayah): Translated => {
-    if (translation === undefined || !translationRows)
+    if (translation === SAHEEH_INTERNATIONAL || !rows)
       return { text: ayah.textEn, notes: footnotesOf(ayah.footnotesEn) };
-    const row = translationRows.find((entry) => entry.ayah === ayah.ayah);
+    const row = rows.find((entry) => entry.ayah === ayah.ayah);
     return row
       ? {
           text: row.text,
@@ -1094,10 +1093,8 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent className="max-h-(--radix-dropdown-menu-content-available-height) w-72 overflow-y-auto">
                       <DropdownMenuRadioGroup
-                        value={String(translation ?? 0)}
-                        onValueChange={(value) =>
-                          setTranslation(Number(value) || undefined)
-                        }
+                        value={String(translation)}
+                        onValueChange={(value) => setTranslation(Number(value))}
                       >
                         {[...translationGroups].map(([lang, entries]) => (
                           <Fragment key={lang}>
@@ -1106,7 +1103,9 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
                               {nativeName(lang)}
                             </DropdownMenuLabel>
                             {lang === "en" && (
-                              <DropdownMenuRadioItem value="0">
+                              <DropdownMenuRadioItem
+                                value={String(SAHEEH_INTERNATIONAL)}
+                              >
                                 Saheeh International
                               </DropdownMenuRadioItem>
                             )}
@@ -1167,7 +1166,7 @@ export const Reader: FC<{ number: number }> = ({ number }) => {
           </header>
           <div className="min-h-0 flex-1 overflow-y-auto">
             <div className="mx-auto w-full max-w-[720px] px-6 pt-4 pb-16">
-              {failed && (
+              {!text && (
                 <p className="text-muted-foreground text-sm">
                   {t("This surah could not be loaded. Try again later.")}
                 </p>

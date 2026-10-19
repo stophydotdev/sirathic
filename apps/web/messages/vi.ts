@@ -372,3 +372,17 @@ export default {
   "Download for Windows": "Tải xuống cho Windows",
   "Download for Linux": "Tải xuống cho Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "Công cụ giải đáp về Hồi giáo miễn phí. Câu trả lời dựa trên Qur'an, hadith kèm mức độ xác thực và ý kiến của các học giả, và có dẫn nguồn.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "Toàn bộ 114 chương Qur'an bằng tiếng Ả Rập, kèm bản dịch và tafsir.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "Chương {name} ({number}): tiếng Ả Rập, bản dịch và tafsir",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "Chương {name} bằng tiếng Ả Rập, kèm bản dịch và tafsir. {count} câu.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "Bukhari, Muslim và các tuyển tập hadith lớn khác, bằng tiếng Ả Rập và tiếng Anh.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, từng quyển, bằng tiếng Ả Rập và tiếng Anh.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{count} hadith từ {collection}, bằng tiếng Ả Rập và tiếng Anh.",

@@ -371,3 +371,17 @@ export default {
   "Download for Windows": "Aawto ngam Windows",
   "Download for Linux": "Aawto ngam Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "Jaabotorde Lislaam alaa njoɓdi. Jaabooje ɗee ummotoo e Alkur'aana, hadiisaaji e darja mum'en, e fatwaaji jaŋngooɓe ɓee, ɗe ina tinnda ɗo ɗe ummii.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "Simoore 114 Alkur'aana ɗee fof e ɗemngal araabeere, e firo e tafsiir.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "Simoore {name} ({number}): araabeere, firo e tafsiir",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "Simoore {name} e ɗemngal araabeere, e firo e tafsiir. Aaye {count}.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "Buhaari, Muslim e kawtal hadiisaaji mawɗi goɗɗi, e araabeere e engeleere.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, deftere kala, e araabeere e engeleere.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "Hadiisaaji {count} iwde e {collection}, e araabeere e engeleere.",

@@ -365,3 +365,17 @@ export default {
   "Download for Windows": "ดาวน์โหลดสำหรับ Windows",
   "Download for Linux": "ดาวน์โหลดสำหรับ Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "เครื่องมือตอบคำถามเกี่ยวกับอิสลามที่ใช้ฟรี คำตอบมาจากอัลกุรอาน หะดีษพร้อมระดับความถูกต้อง และคำวินิจฉัยของนักวิชาการ พร้อมระบุแหล่งที่มา",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "อัลกุรอานครบทั้ง 114 ซูเราะฮ์เป็นภาษาอาหรับ พร้อมคำแปลและตัฟซีร",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "ซูเราะฮ์{name} ({number}): ภาษาอาหรับ คำแปล และตัฟซีร",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "ซูเราะฮ์{name}เป็นภาษาอาหรับ พร้อมคำแปลและตัฟซีร {count} อายะฮ์",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "บุคอรี มุสลิม และประมวลหะดีษสำคัญอื่น ๆ เป็นภาษาอาหรับและภาษาอังกฤษ",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection} ทีละเล่ม เป็นภาษาอาหรับและภาษาอังกฤษ",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "หะดีษ {count} บทจาก {collection} เป็นภาษาอาหรับและภาษาอังกฤษ",

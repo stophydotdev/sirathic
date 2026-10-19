@@ -7,10 +7,11 @@ export type TranslationText = Awaited<
 >;
 
 const STORAGE_KEY = "sirathicReading";
+export const SAHEEH_INTERNATIONAL = 0;
 export const MEMORIZE_MODES = ["off", "hide", "first"] as const;
 export type MemorizeMode = (typeof MEMORIZE_MODES)[number];
 const saved = z.object({
-  translation: z.number().int().positive().optional().catch(undefined),
+  translation: z.number().int().nonnegative().optional().catch(undefined),
   transliteration: z.boolean().catch(false),
   memorize: z.enum(MEMORIZE_MODES).catch("off"),
   tafsir: z.number().int().positive().optional().catch(undefined),

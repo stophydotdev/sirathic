@@ -370,3 +370,17 @@ export default {
   "Download for Windows": "دانلود برای Windows",
   "Download for Linux": "دانلود برای Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "موتور پاسخ‌گویی اسلامی رایگان. پاسخ‌ها بر پایهٔ قرآن، احادیث همراه با درجهٔ اعتبار و فتاوای علما است و منابع خود را ذکر می‌کند.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "همهٔ 114 سورهٔ قرآن به عربی، همراه با ترجمه و تفسیر.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "سورهٔ {name} ({number}): متن عربی، ترجمه و تفسیر",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "سورهٔ {name} به عربی، همراه با ترجمه و تفسیر. {count} آیه.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "بخاری، مسلم و دیگر مجموعه‌های بزرگ حدیث، به عربی و انگلیسی.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}، کتاب به کتاب، به عربی و انگلیسی.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{count} حدیث از {collection}، به عربی و انگلیسی.",

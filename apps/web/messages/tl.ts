@@ -375,3 +375,17 @@ export default {
   "Download for Windows": "I-download para sa Windows",
   "Download for Linux": "I-download para sa Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "Libreng makinang sumasagot tungkol sa Islam. Nagmumula ang mga sagot sa Qur'an, sa mga hadith kasama ang grado ng mga ito, at sa mga hatol ng mga iskolar, at binabanggit ang mga pinagmulan.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "Lahat ng 114 na surah ng Qur'an sa Arabe, may salin at tafsir.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "Surah {name} ({number}): Arabe, salin at tafsir",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "Surah {name} sa Arabe, may salin at tafsir. {count} ayah.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "Bukhari, Muslim at iba pang pangunahing koleksiyon ng hadith, sa Arabe at Ingles.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, bawat aklat, sa Arabe at Ingles.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{count} hadith mula sa {collection}, sa Arabe at Ingles.",

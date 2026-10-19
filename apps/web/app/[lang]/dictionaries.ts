@@ -1,4 +1,12 @@
-import type { Locale, Messages } from "@/components/locales";
+import {
+  hasLocale,
+  type Locale,
+  type Messages,
+  translate,
+  type Values,
+} from "@/components/locales";
+import type { MessageKey } from "@/messages/en";
+import { notFound } from "next/navigation";
 
 const dictionaries = {
   ar: () => import("@/messages/ar").then((module) => module.default),
@@ -35,3 +43,13 @@ const dictionaries = {
 
 export const getDictionary = async (locale: Locale) =>
   locale === "en" ? undefined : dictionaries[locale]();
+
+export const translator = async (lang: string) => {
+  if (!hasLocale(lang)) notFound();
+  const messages = await getDictionary(lang);
+  return {
+    locale: lang,
+    t: <Key extends MessageKey>(key: Key, ...values: Values<Key>) =>
+      translate(messages, key, ...values),
+  };
+};

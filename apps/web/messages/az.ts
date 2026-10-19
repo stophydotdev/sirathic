@@ -373,3 +373,17 @@ export default {
   "Download for Windows": "Windows üçün yüklə",
   "Download for Linux": "Linux üçün yüklə",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "Pulsuz İslami cavab sistemi. Cavablar Qurana, səhihlik dərəcəsi göstərilmiş hədislərə və alimlərin hökmlərinə əsaslanır və mənbələrini göstərir.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "Quranın 114 surəsinin hamısı ərəbcə, tərcümə və təfsirlə.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "{name} surəsi ({number}): ərəbcə, tərcümə və təfsir",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "{name} surəsi ərəbcə, tərcümə və təfsirlə. {count} ayə.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "Buxari, Müslim və digər böyük hədis topluları, ərəbcə və ingiliscə.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, kitab-kitab, ərəbcə və ingiliscə.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{collection} toplusundan {count} hədis, ərəbcə və ingiliscə.",

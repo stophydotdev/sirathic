@@ -372,3 +372,17 @@ export default {
   "Download for Windows": "Unduh untuk Windows",
   "Download for Linux": "Unduh untuk Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "Mesin penjawab Islami gratis. Jawaban bersumber dari Al-Qur'an, hadis beserta derajatnya, dan pendapat ulama, serta menyebutkan sumbernya.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "Seluruh 114 surah Al-Qur'an dalam bahasa Arab, dengan terjemahan dan tafsir.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "Surah {name} ({number}): Arab, terjemahan, dan tafsir",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "Surah {name} dalam bahasa Arab, dengan terjemahan dan tafsir. {count} ayat.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "Bukhari, Muslim, dan kitab hadis besar lainnya, dalam bahasa Arab dan Inggris.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, kitab demi kitab, dalam bahasa Arab dan Inggris.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{count} hadis dari {collection}, dalam bahasa Arab dan Inggris.",

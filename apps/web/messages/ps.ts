@@ -371,3 +371,17 @@ export default {
   "Download for Windows": "د Windows لپاره ښکته کول",
   "Download for Linux": "د Linux لپاره ښکته کول",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "وړیا اسلامي ځوابونو انجن. ځوابونه له قرآن، د درجې سره حدیثونو او د علماوو له فتواوو راځي او خپلې سرچينې ښيي.",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "د قرآن ټولې 114 سورتونه په عربي، له ژباړې او تفسیر سره.",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "{name} سورت ({number}): عربي، ژباړه او تفسیر",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "{name} سورت په عربي، له ژباړې او تفسیر سره. {count} آیتونه.",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "بخاري، مسلم او نورې لویې د حدیثو ټولګې، په عربي او انګلیسي.",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}، کتاب په کتاب، په عربي او انګلیسي.",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "له {collection} څخه {count} حدیثونه، په عربي او انګلیسي.",

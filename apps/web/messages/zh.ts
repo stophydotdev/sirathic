@@ -363,3 +363,17 @@ export default {
   "Download for Windows": "下载 Windows 版",
   "Download for Linux": "下载 Linux 版",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "免费的伊斯兰问答引擎。回答依据《古兰经》、标明真实等级的圣训和学者的教法意见，并注明出处。",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "《古兰经》全部 114 章阿拉伯原文，附译文和经注。",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "{name}（第 {number} 章）：阿拉伯原文、译文和经注",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "{name} 章阿拉伯原文，附译文和经注。共 {count} 节。",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "布哈里、穆斯林等主要圣训集，阿拉伯文和英文对照。",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}，按卷浏览，阿拉伯文和英文对照。",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{collection} 中的 {count} 段圣训，阿拉伯文和英文对照。",

@@ -366,3 +366,17 @@ export default {
   "Download for Windows": "ទាញយកសម្រាប់ Windows",
   "Download for Linux": "ទាញយកសម្រាប់ Linux",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "ម៉ាស៊ីនឆ្លើយសំណួរអំពីអ៊ីស្លាមដោយឥតគិតថ្លៃ។ ចម្លើយផ្អែកលើគម្ពីរគួរអាន ហាឌីសដែលមានកម្រិតភាពត្រឹមត្រូវ និងមតិរបស់អ្នកប្រាជ្ញ ហើយបញ្ជាក់ប្រភព។",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "ជំពូកទាំង 114 នៃគម្ពីរគួរអានជាភាសាអារ៉ាប់ ព្រមទាំងការបកប្រែ និងតាហ្វសៀរ។",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "ជំពូក {name} ({number}): ភាសាអារ៉ាប់ ការបកប្រែ និងតាហ្វសៀរ",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "ជំពូក {name} ជាភាសាអារ៉ាប់ ព្រមទាំងការបកប្រែ និងតាហ្វសៀរ។ {count} អាយ៉ាត់។",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "បុខរី មូស្លីម និងប្រជុំហាឌីសធំៗផ្សេងទៀត ជាភាសាអារ៉ាប់ និងអង់គ្លេស។",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection} តាមសៀវភៅនីមួយៗ ជាភាសាអារ៉ាប់ និងអង់គ្លេស។",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "ហាឌីស {count} ពី {collection} ជាភាសាអារ៉ាប់ និងអង់គ្លេស។",

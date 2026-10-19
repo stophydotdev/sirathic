@@ -1,97 +1,31 @@
-"use client";
+import type { Metadata } from "next";
+import { loadBooks } from "@/lib/server-api";
+import { alternatesOf } from "@/lib/seo";
+import { translator } from "../../dictionaries";
+import { Collection } from "./collection";
 
-import { useLocalePath, useT } from "@/components/i18n";
-import { ThreadShell } from "@/components/thread-shell";
-import { api } from "@/lib/trpc";
-import { ChevronLeftIcon } from "lucide-react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/hadith/[collection]">): Promise<Metadata> {
+  const { lang, collection } = await params;
+  const { locale, t } = await translator(lang);
+  const data = await loadBooks(collection);
+  const alternates = alternatesOf(locale, `/hadith/${collection}`, ["en"]);
+  if (!data) return { title: t("Hadith"), alternates };
+  return {
+    title: data.collection.nameEn,
+    description: t("{collection}, book by book, in Arabic and English.", {
+      collection: data.collection.nameEn,
+    }),
+    alternates,
+  };
+}
 
-type Books = Awaited<ReturnType<typeof api.hadith.books.query>>;
-
-export default function Collection() {
-  const { collection } = useParams<{ collection: string }>();
-  const [data, setData] = useState<Books>();
-  const [failed, setFailed] = useState(false);
-  const t = useT();
-  const href = useLocalePath();
-
-  useEffect(() => {
-    api.hadith.books.query({ collection }).then(setData, () => setFailed(true));
-  }, [collection]);
-
-  const books = (data?.books ?? []).toSorted(
-    (a, b) => Number(a.number === 0) - Number(b.number === 0),
-  );
-
+export default async function CollectionPage({
+  params,
+}: PageProps<"/[lang]/hadith/[collection]">) {
+  const { collection } = await params;
   return (
-    <main className="h-dvh">
-      <ThreadShell>
-        <div className="h-full overflow-y-auto">
-          <div className="mx-auto w-full max-w-5xl px-6 pt-3 pb-16">
-            <Link
-              href={href("/hadith")}
-              className="text-muted-foreground hover:text-foreground ms-10 flex h-8 w-fit items-center gap-1 text-sm lg:ms-0"
-            >
-              <ChevronLeftIcon className="size-4 rtl:rotate-180" />
-              {t("Hadith")}
-            </Link>
-            {failed && (
-              <p className="text-muted-foreground mt-6 text-sm">
-                {t("This collection could not be loaded.")}
-              </p>
-            )}
-            {data && (
-              <>
-                <div className="mt-4 flex items-baseline gap-3">
-                  <h1 className="text-xl font-medium tracking-tight">
-                    {data.collection.nameEn}
-                  </h1>
-                  <span lang="ar" className="text-xl">
-                    {data.collection.nameAr}
-                  </span>
-                </div>
-                <p className="text-muted-foreground mt-1 text-sm tabular-nums">
-                  {t("{count} hadith in {books} books", {
-                    count: data.collection.hadiths.toLocaleString(),
-                    books: data.books.length,
-                  })}
-                </p>
-                <div className="mt-4 flex flex-col">
-                  {books.map((book) => (
-                    <Link
-                      key={book.number}
-                      href={href(`/hadith/${collection}/${book.number}`)}
-                      className="odd:bg-muted hover:bg-foreground/10 grid grid-cols-[2.2em_1fr_auto] items-center gap-3 rounded-md px-3 py-2.5 text-[15px]"
-                    >
-                      <span className="text-muted-foreground tabular-nums">
-                        {book.number === 0 ? "–" : book.number}
-                      </span>
-                      <span className="truncate">
-                        {book.number === 0
-                          ? t("Other hadith")
-                          : (book.name ??
-                            t("Book {number}", { number: book.number }))}
-                      </span>
-                      <span className="text-muted-foreground text-sm tabular-nums">
-                        {book.number !== 0 &&
-                        book.first !== null &&
-                        book.last !== null
-                          ? t("{first} to {last}", {
-                              first: book.first,
-                              last: book.last,
-                            })
-                          : t("{count} hadith", { count: book.hadiths })}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </ThreadShell>
-    </main>
+    <Collection collection={collection} data={await loadBooks(collection)} />
   );
 }

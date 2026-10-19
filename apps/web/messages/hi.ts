@@ -372,3 +372,17 @@ export default {
   "Download for Windows": "Windows के लिए डाउनलोड करें",
   "Download for Linux": "Linux के लिए डाउनलोड करें",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "मुफ़्त इस्लामी उत्तर इंजन। जवाब क़ुरआन, दर्जे के साथ हदीसों और विद्वानों के फ़तवों पर आधारित होते हैं, और अपने स्रोत बताते हैं।",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "क़ुरआन की सभी 114 सूरहें अरबी में, अनुवाद और तफ़सीर के साथ।",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "सूरह {name} ({number}): अरबी, अनुवाद और तफ़सीर",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "सूरह {name} अरबी में, अनुवाद और तफ़सीर के साथ। {count} आयतें।",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "बुख़ारी, मुस्लिम और अन्य प्रमुख हदीस संग्रह, अरबी और अंग्रेज़ी में।",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}, किताब-दर-किताब, अरबी और अंग्रेज़ी में।",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{collection} से {count} हदीसें, अरबी और अंग्रेज़ी में।",

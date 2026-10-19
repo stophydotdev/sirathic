@@ -372,3 +372,17 @@ export default {
   "Download for Windows": "Windows 版をダウンロード",
   "Download for Linux": "Linux 版をダウンロード",
 } satisfies Messages;
+  "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
+    "無料のイスラームの回答エンジン。回答はクルアーン、真正性の等級つきのハディース、学者の見解にもとづき、出典を示します。",
+  "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
+    "クルアーン全114章のアラビア語原文を、翻訳とタフスィールつきで。",
+  "Surah {name} ({number}): Arabic, translation and tafsir":
+    "{name}章（第{number}章）：アラビア語、翻訳、タフスィール",
+  "Surah {name} in Arabic, with translation and tafsir. {count} ayahs.":
+    "{name}章のアラビア語原文を、翻訳とタフスィールつきで。全{count}節。",
+  "Bukhari, Muslim and the other major hadith collections, in Arabic and English.":
+    "ブハーリー、ムスリムなどの主要なハディース集を、アラビア語と英語で。",
+  "{collection}, book by book, in Arabic and English.":
+    "{collection}を巻ごとに、アラビア語と英語で。",
+  "{count} hadith from {collection}, in Arabic and English.":
+    "{collection}の{count}件のハディースを、アラビア語と英語で。",
