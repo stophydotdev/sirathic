@@ -358,4 +358,17 @@ export default {
   Investments: "Đầu tư",
   Stock: "Hàng hóa",
   "Owed to you": "Khoản người khác nợ bạn",
+  "Also on {first} and {second}.": "Cũng có cho {first} và {second}.",
+  "Free.": "Miễn phí.",
+  "Open Sirathic": "Mở Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "Ứng dụng máy tính chạy trên Mac, Windows và Linux. Trên điện thoại hoặc máy tính bảng, hãy dùng sirathic.com trong trình duyệt.",
+  "Islamic answering engine.": "Công cụ giải đáp về Hồi giáo.",
+  "Sirathic for Mac": "Sirathic cho Mac",
+  "Sirathic for Windows": "Sirathic cho Windows",
+  "Sirathic for Linux": "Sirathic cho Linux",
+  "Sirathic for desktop": "Sirathic cho máy tính",
+  "Download for Mac": "Tải xuống cho Mac",
+  "Download for Windows": "Tải xuống cho Windows",
+  "Download for Linux": "Tải xuống cho Linux",
 } satisfies Messages;

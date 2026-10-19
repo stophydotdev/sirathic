@@ -351,4 +351,17 @@ export default {
   Investments: "การลงทุน",
   Stock: "สินค้าคงคลัง",
   "Owed to you": "เงินที่ผู้อื่นค้างคุณ",
+  "Also on {first} and {second}.": "มีสำหรับ {first} และ {second} ด้วย",
+  "Free.": "ฟรี",
+  "Open Sirathic": "เปิด Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "แอปเดสก์ท็อปใช้งานได้บน Mac, Windows และ Linux บนโทรศัพท์หรือแท็บเล็ต ให้ใช้ sirathic.com ในเบราว์เซอร์",
+  "Islamic answering engine.": "เครื่องมือตอบคำถามเกี่ยวกับอิสลาม",
+  "Sirathic for Mac": "Sirathic สำหรับ Mac",
+  "Sirathic for Windows": "Sirathic สำหรับ Windows",
+  "Sirathic for Linux": "Sirathic สำหรับ Linux",
+  "Sirathic for desktop": "Sirathic สำหรับเดสก์ท็อป",
+  "Download for Mac": "ดาวน์โหลดสำหรับ Mac",
+  "Download for Windows": "ดาวน์โหลดสำหรับ Windows",
+  "Download for Linux": "ดาวน์โหลดสำหรับ Linux",
 } satisfies Messages;

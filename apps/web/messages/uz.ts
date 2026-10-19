@@ -358,4 +358,17 @@ export default {
   Investments: "Сармоялар",
   Stock: "Савдо моли",
   "Owed to you": "Сизга қарзлар",
+  "Also on {first} and {second}.": "{first} ва {second} учун ҳам бор.",
+  "Free.": "Бепул.",
+  "Open Sirathic": "Sirathic'ни очиш",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "Компьютер иловаси Mac, Windows ва Linux'да ишлайди. Телефон ёки планшетда браузерингизда sirathic.com'дан фойдаланинг.",
+  "Islamic answering engine.": "Исломий жавоблар тизими.",
+  "Sirathic for Mac": "Mac учун Sirathic",
+  "Sirathic for Windows": "Windows учун Sirathic",
+  "Sirathic for Linux": "Linux учун Sirathic",
+  "Sirathic for desktop": "Компьютер учун Sirathic",
+  "Download for Mac": "Mac учун юклаб олиш",
+  "Download for Windows": "Windows учун юклаб олиш",
+  "Download for Linux": "Linux учун юклаб олиш",
 } satisfies Messages;

@@ -358,4 +358,17 @@ export default {
   Investments: "Investasi",
   Stock: "Barang dagangan",
   "Owed to you": "Piutang",
+  "Also on {first} and {second}.": "Juga tersedia untuk {first} dan {second}.",
+  "Free.": "Gratis.",
+  "Open Sirathic": "Buka Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "Aplikasi desktop berjalan di Mac, Windows, dan Linux. Di ponsel atau tablet, gunakan sirathic.com di peramban Anda.",
+  "Islamic answering engine.": "Mesin penjawab Islami.",
+  "Sirathic for Mac": "Sirathic untuk Mac",
+  "Sirathic for Windows": "Sirathic untuk Windows",
+  "Sirathic for Linux": "Sirathic untuk Linux",
+  "Sirathic for desktop": "Sirathic untuk desktop",
+  "Download for Mac": "Unduh untuk Mac",
+  "Download for Windows": "Unduh untuk Windows",
+  "Download for Linux": "Unduh untuk Linux",
 } satisfies Messages;

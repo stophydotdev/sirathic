@@ -358,4 +358,17 @@ export default {
   Investments: "وەبەرهێنانەکان",
   Stock: "کاڵای بازرگانی",
   "Owed to you": "قەرزەکانت لای خەڵک",
+  "Also on {first} and {second}.": "بۆ {first} و {second}یش هەیە.",
+  "Free.": "بەخۆڕایی.",
+  "Open Sirathic": "کردنەوەی Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "ئەپی دێسکتۆپ لەسەر Mac و Windows و Linux کار دەکات. لە مۆبایل یان تابلێت، sirathic.com لە وێبگەڕەکەتدا بەکاربهێنە.",
+  "Islamic answering engine.": "بزوێنەری وەڵامی ئیسلامی.",
+  "Sirathic for Mac": "Sirathic بۆ Mac",
+  "Sirathic for Windows": "Sirathic بۆ Windows",
+  "Sirathic for Linux": "Sirathic بۆ Linux",
+  "Sirathic for desktop": "Sirathic بۆ دێسکتۆپ",
+  "Download for Mac": "دابەزاندن بۆ Mac",
+  "Download for Windows": "دابەزاندن بۆ Windows",
+  "Download for Linux": "دابەزاندن بۆ Linux",
 } satisfies Messages;

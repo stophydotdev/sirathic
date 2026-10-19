@@ -349,4 +349,17 @@ export default {
   Investments: "投资",
   Stock: "商品存货",
   "Owed to you": "应收款",
+  "Also on {first} and {second}.": "也支持 {first} 和 {second}。",
+  "Free.": "免费。",
+  "Open Sirathic": "打开 Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "桌面应用支持 Mac、Windows 和 Linux。在手机或平板上，请在浏览器中使用 sirathic.com。",
+  "Islamic answering engine.": "伊斯兰问答引擎。",
+  "Sirathic for Mac": "Sirathic Mac 版",
+  "Sirathic for Windows": "Sirathic Windows 版",
+  "Sirathic for Linux": "Sirathic Linux 版",
+  "Sirathic for desktop": "Sirathic 桌面版",
+  "Download for Mac": "下载 Mac 版",
+  "Download for Windows": "下载 Windows 版",
+  "Download for Linux": "下载 Linux 版",
 } satisfies Messages;

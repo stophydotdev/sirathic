@@ -358,4 +358,17 @@ export default {
   Investments: "مەبلەغلەر",
   Stock: "سودا ماللىرى",
   "Owed to you": "سىزگە تېگىشلىك قەرزلەر",
+  "Also on {first} and {second}.": "{first} ۋە {second} ئۈچۈنمۇ بار.",
+  "Free.": "ھەقسىز.",
+  "Open Sirathic": "Sirathic نى ئېچىش",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "ئۈستەلئۈستى ئەپى Mac، Windows ۋە Linux دا ئىشلەيدۇ. تېلېفون ياكى تاختا كومپيۇتېردا توركۆرگۈچىڭىزدە sirathic.com نى ئىشلىتىڭ.",
+  "Islamic answering engine.": "ئىسلامىي سوئال-جاۋاب سىستېمىسى.",
+  "Sirathic for Mac": "Mac ئۈچۈن Sirathic",
+  "Sirathic for Windows": "Windows ئۈچۈن Sirathic",
+  "Sirathic for Linux": "Linux ئۈچۈن Sirathic",
+  "Sirathic for desktop": "ئۈستەلئۈستى ئۈچۈن Sirathic",
+  "Download for Mac": "Mac ئۈچۈن چۈشۈرۈش",
+  "Download for Windows": "Windows ئۈچۈن چۈشۈرۈش",
+  "Download for Linux": "Linux ئۈچۈن چۈشۈرۈش",
 } satisfies Messages;

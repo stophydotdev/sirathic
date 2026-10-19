@@ -357,4 +357,17 @@ export default {
   Investments: "پانګونې",
   Stock: "سوداګریز توکي",
   "Owed to you": "ستاسو پور پر خلکو",
+  "Also on {first} and {second}.": "د {first} او {second} لپاره هم شته.",
+  "Free.": "وړیا.",
+  "Open Sirathic": "Sirathic پرانیستل",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "د کمپیوټر اپ په Mac، Windows او Linux چلېږي. په ټیلیفون یا ټابلیټ کې، په خپل براوزر کې sirathic.com وکاروئ.",
+  "Islamic answering engine.": "د اسلامي پوښتنو ځواب ورکوونکی.",
+  "Sirathic for Mac": "د Mac لپاره Sirathic",
+  "Sirathic for Windows": "د Windows لپاره Sirathic",
+  "Sirathic for Linux": "د Linux لپاره Sirathic",
+  "Sirathic for desktop": "د کمپیوټر لپاره Sirathic",
+  "Download for Mac": "د Mac لپاره ښکته کول",
+  "Download for Windows": "د Windows لپاره ښکته کول",
+  "Download for Linux": "د Linux لپاره ښکته کول",
 } satisfies Messages;

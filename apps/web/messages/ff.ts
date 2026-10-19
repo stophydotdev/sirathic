@@ -357,4 +357,17 @@ export default {
   Investments: "Ɓeydugol jawdi",
   Stock: "Marsandiis",
   "Owed to you": "Ko yimɓe njoppi maa",
+  "Also on {first} and {second}.": "Ena woodi kadi ngam {first} e {second}.",
+  "Free.": "Alaa njoɓdi.",
+  "Open Sirathic": "Uddit Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "Jaaɓnirgal ordinateer ngal ena huuwa e Mac, Windows e Linux. E telefon walla tablet, huutoro sirathic.com e wanngorde maa.",
+  "Islamic answering engine.": "Jaabotorde Lislaam.",
+  "Sirathic for Mac": "Sirathic ngam Mac",
+  "Sirathic for Windows": "Sirathic ngam Windows",
+  "Sirathic for Linux": "Sirathic ngam Linux",
+  "Sirathic for desktop": "Sirathic ngam ordinateer",
+  "Download for Mac": "Aawto ngam Mac",
+  "Download for Windows": "Aawto ngam Windows",
+  "Download for Linux": "Aawto ngam Linux",
 } satisfies Messages;

@@ -354,4 +354,17 @@ export default {
   Investments: "বিনিয়োগ",
   Stock: "ব্যবসার পণ্য",
   "Owed to you": "অন্যদের কাছে আপনার পাওনা",
+  "Also on {first} and {second}.": "{first} ও {second}-এর জন্যও আছে।",
+  "Free.": "বিনামূল্যে।",
+  "Open Sirathic": "Sirathic খুলুন",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "ডেস্কটপ অ্যাপ Mac, Windows ও Linux-এ চলে। ফোন বা ট্যাবলেটে আপনার ব্রাউজারে sirathic.com ব্যবহার করুন।",
+  "Islamic answering engine.": "ইসলামি উত্তর ইঞ্জিন।",
+  "Sirathic for Mac": "Mac-এর জন্য Sirathic",
+  "Sirathic for Windows": "Windows-এর জন্য Sirathic",
+  "Sirathic for Linux": "Linux-এর জন্য Sirathic",
+  "Sirathic for desktop": "ডেস্কটপের জন্য Sirathic",
+  "Download for Mac": "Mac-এর জন্য ডাউনলোড করুন",
+  "Download for Windows": "Windows-এর জন্য ডাউনলোড করুন",
+  "Download for Linux": "Linux-এর জন্য ডাউনলোড করুন",
 } satisfies Messages;

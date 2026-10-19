@@ -361,4 +361,17 @@ export default {
   Investments: "Mga puhunan",
   Stock: "Paninda",
   "Owed to you": "Utang sa iyo",
+  "Also on {first} and {second}.": "Mayroon din para sa {first} at {second}.",
+  "Free.": "Libre.",
+  "Open Sirathic": "Buksan ang Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "Gumagana ang desktop app sa Mac, Windows, at Linux. Sa phone o tablet, gamitin ang sirathic.com sa iyong browser.",
+  "Islamic answering engine.": "Makinang sumasagot tungkol sa Islam.",
+  "Sirathic for Mac": "Sirathic para sa Mac",
+  "Sirathic for Windows": "Sirathic para sa Windows",
+  "Sirathic for Linux": "Sirathic para sa Linux",
+  "Sirathic for desktop": "Sirathic para sa desktop",
+  "Download for Mac": "I-download para sa Mac",
+  "Download for Windows": "I-download para sa Windows",
+  "Download for Linux": "I-download para sa Linux",
 } satisfies Messages;

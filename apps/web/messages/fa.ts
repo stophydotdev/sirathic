@@ -356,4 +356,17 @@ export default {
   Investments: "سرمایه‌گذاری‌ها",
   Stock: "کالای تجاری",
   "Owed to you": "طلب شما",
+  "Also on {first} and {second}.": "برای {first} و {second} هم هست.",
+  "Free.": "رایگان.",
+  "Open Sirathic": "باز کردن Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "برنامهٔ دسکتاپ روی Mac، Windows و Linux کار می‌کند. در تلفن یا تبلت، از sirathic.com در مرورگر خود استفاده کنید.",
+  "Islamic answering engine.": "موتور پاسخ‌گویی اسلامی.",
+  "Sirathic for Mac": "Sirathic برای Mac",
+  "Sirathic for Windows": "Sirathic برای Windows",
+  "Sirathic for Linux": "Sirathic برای Linux",
+  "Sirathic for desktop": "Sirathic برای دسکتاپ",
+  "Download for Mac": "دانلود برای Mac",
+  "Download for Windows": "دانلود برای Windows",
+  "Download for Linux": "دانلود برای Linux",
 } satisfies Messages;

@@ -358,4 +358,17 @@ export default {
   Investments: "投資",
   Stock: "商品在庫",
   "Owed to you": "受け取る予定の債権",
+  "Also on {first} and {second}.": "{first} と {second} にも対応。",
+  "Free.": "無料。",
+  "Open Sirathic": "Sirathic を開く",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "デスクトップアプリは Mac、Windows、Linux で使えます。スマートフォンやタブレットでは、ブラウザで sirathic.com をご利用ください。",
+  "Islamic answering engine.": "イスラームの回答エンジン。",
+  "Sirathic for Mac": "Mac 版 Sirathic",
+  "Sirathic for Windows": "Windows 版 Sirathic",
+  "Sirathic for Linux": "Linux 版 Sirathic",
+  "Sirathic for desktop": "デスクトップ版 Sirathic",
+  "Download for Mac": "Mac 版をダウンロード",
+  "Download for Windows": "Windows 版をダウンロード",
+  "Download for Linux": "Linux 版をダウンロード",
 } satisfies Messages;

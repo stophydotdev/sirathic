@@ -359,4 +359,17 @@ export default {
   Investments: "Инвестиции",
   Stock: "Товарные запасы",
   "Owed to you": "Вам должны",
+  "Also on {first} and {second}.": "Также для {first} и {second}.",
+  "Free.": "Бесплатно.",
+  "Open Sirathic": "Открыть Sirathic",
+  "The desktop app runs on Mac, Windows and Linux. On a phone or tablet, use sirathic.com in your browser.":
+    "Приложение для компьютера работает на Mac, Windows и Linux. На телефоне или планшете откройте sirathic.com в браузере.",
+  "Islamic answering engine.": "Исламская система ответов.",
+  "Sirathic for Mac": "Sirathic для Mac",
+  "Sirathic for Windows": "Sirathic для Windows",
+  "Sirathic for Linux": "Sirathic для Linux",
+  "Sirathic for desktop": "Sirathic для компьютера",
+  "Download for Mac": "Скачать для Mac",
+  "Download for Windows": "Скачать для Windows",
+  "Download for Linux": "Скачать для Linux",
 } satisfies Messages;
