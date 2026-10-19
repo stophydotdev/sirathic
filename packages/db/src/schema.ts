@@ -463,8 +463,6 @@ export const events = pgTable(
     id: uuid().primaryKey(),
     name: text().notNull(),
     owner: text(),
-    environment: text().notNull(),
-    version: text().notNull(),
     props: jsonb().notNull(),
     at: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },

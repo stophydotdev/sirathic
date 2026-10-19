@@ -25,7 +25,6 @@ type Batch = {
 };
 
 const apiKey = env.OPENAI_API_KEY;
-if (apiKey === undefined) throw new Error("OPENAI_API_KEY is not set");
 
 const RATE_LIMIT_WAIT_MS = 2_000;
 

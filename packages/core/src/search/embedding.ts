@@ -22,9 +22,6 @@ const queryCache = cacheFor({
 });
 
 const fetchEmbedding = async (text: string) => {
-  if (env.OPENAI_API_KEY === undefined) {
-    throw new Error("OPENAI_API_KEY is not set");
-  }
   const response = await fetch("https://api.openai.com/v1/embeddings", {
     method: "POST",
     headers: {

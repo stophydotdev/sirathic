@@ -5,7 +5,6 @@ const IV_BYTES = 12;
 let key: Promise<CryptoKey> | undefined;
 
 const tokenKey = () => {
-  if (!env.TOKEN_KEY) throw new Error("TOKEN_KEY is not set");
   key ??= crypto.subtle.importKey(
     "raw",
     Uint8Array.from(Buffer.from(env.TOKEN_KEY, "base64")),

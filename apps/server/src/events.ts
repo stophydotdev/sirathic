@@ -1,6 +1,5 @@
 import { db } from "@sirathic/db";
 import { events } from "@sirathic/db/schema";
-import { env } from "@sirathic/env/server";
 import type { FinishReason, UIMessageStreamOutcome } from "ai";
 import type { z } from "zod";
 import type { Client } from "./client";
@@ -72,8 +71,6 @@ export function track({ name, props }: Event, owner?: string) {
       id: Bun.randomUUIDv7(),
       name,
       owner,
-      environment: env.RAILWAY_ENVIRONMENT_NAME,
-      version: env.RAILWAY_GIT_COMMIT_SHA.slice(0, 7),
       props,
     })
     .catch((err: Error) => {
