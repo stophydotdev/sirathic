@@ -12,7 +12,8 @@ import { PlatformLogo } from "./logos";
 export type System = "mac" | "windows" | "linux" | "phone" | "unknown";
 type Desktop = Extract<System, "mac" | "windows" | "linux">;
 
-const RELEASES = "https://download.sirathic.com";
+const RELEASES =
+  "https://github.com/stophydotdev/sirathic/releases/latest/download";
 const FILES = {
   macArm: `${RELEASES}/Sirathic-mac-arm64.dmg`,
   macIntel: `${RELEASES}/Sirathic-mac-x64.dmg`,
