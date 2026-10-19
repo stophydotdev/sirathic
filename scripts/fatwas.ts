@@ -28,6 +28,7 @@ type Fatwa = Omit<typeof fatwas.$inferInsert, "source" | "url">;
 type Site = {
   source: typeof sources.$inferInsert;
   sitemaps: string[];
+  listings?: { start: string[]; follow: RegExp };
   follow?: RegExp;
   page: RegExp;
   skip?: RegExp;
@@ -89,6 +90,44 @@ const sitemapUrls = async (url: string, site: Site): Promise<string[]> => {
     return [...found, ...(await inTurn(rest))];
   };
   return inTurn(children);
+};
+
+const HREF = /href="([^"#]+)"/gu;
+
+const listedUrls = async (site: Site): Promise<string[]> => {
+  const { listings } = site;
+  if (!listings) return [];
+  const seen = new Set(listings.start);
+  const pages = new Set<string>();
+  const walk = async (frontier: string[]): Promise<void> => {
+    const queue = [...frontier];
+    const next: string[] = [];
+    const visit = async (): Promise<void> => {
+      const url = queue.shift();
+      if (url === undefined) return;
+      const html = await get(url).catch((error: Error) => {
+        console.warn(error.message);
+        return "";
+      });
+      for (const [, href = ""] of html.matchAll(HREF)) {
+        const link = URL.parse(decode(href), url)?.href ?? "";
+        const page = site.page.exec(link)?.[0];
+        if (page) pages.add(page);
+        else if (listings.follow.test(link) && !seen.has(link)) {
+          seen.add(link);
+          next.push(link);
+        }
+      }
+      return visit();
+    };
+    await Promise.all(Array.from({ length: site.parallel }, visit));
+    console.log(
+      `${site.source.name}: ${pages.size} pages listed, ${next.length} listing pages next`,
+    );
+    if (next.length > 0) await walk(next);
+  };
+  await walk(listings.start);
+  return [...pages];
 };
 
 const clean = (markdown: string) =>
@@ -248,36 +287,101 @@ const articleSite = ({
 
 const by = (name: string) => () => name;
 
+const ISLAMQA_ANSWER = /^https:\/\/islamqa\.info\/([a-z]{2})\/answers\/(\d+)/u;
+
+const headingLine = (label: string | undefined, end = "\\s*$") =>
+  label ? new RegExp(`^## ${RegExp.escape(label.trim())}${end}`, "mu") : /$^/u;
+
 const SITES: Site[] = [
   {
     source: {
       name: "islamqa.info",
-      url: "https://islamqa.info/en",
+      url: "https://islamqa.info",
       version: VERSION,
       license:
         "Not reviewed. islamqa.info/en/terms permits personal use; confirm reuse terms before launch",
       credit: "Islam Question & Answer (islamqa.info)",
     },
-    sitemaps: ["https://islamqa.info/sitemaps/en/answers/1/sitemap.xml"],
-    page: /^https:\/\/islamqa\.info\/en\/answers\/\d+/u,
+    sitemaps: ["https://islamqa.info/sitemaps/sitemap-index.xml"],
+    page: ISLAMQA_ANSWER,
     parallel: 32,
     parse: (markdown, html, url) => {
+      const [, lang, number] = ISLAMQA_ANSWER.exec(url) ?? [];
       const title = titleOf(markdown);
-      const answer = between(markdown, /^## Answer\s*$/mu, /^## Source:/mu);
-      if (!title || !answer) return undefined;
+      const answerLabel = /<h2[^>]*>([^<]+)<hr/u.exec(html)?.[1];
+      const summaryLabel =
+        /<h2 class="[^"]*tw-text-secondary[^"]*">([^<]+)<\/h2>/u.exec(
+          html,
+        )?.[1];
+      const sourceLabel =
+        /<h2>([^<]+?)(?:<!-- -->)?:\s*<\/h2><p data-sut="fatwa-source"/u.exec(
+          html,
+        )?.[1];
+      const answer = between(
+        markdown,
+        headingLine(answerLabel),
+        headingLine(sourceLabel, ":"),
+      );
+      if (!title || !answer || !number) return undefined;
       return {
-        id: `islamqa.info:${/\/answers\/(\d+)/u.exec(url)?.[1]}`,
+        id:
+          lang === "en"
+            ? `islamqa.info:${number}`
+            : `islamqa.info:${lang}:${number}`,
         school: "hanbali",
         answeredBy: "IslamQA",
         title,
-        question: between(markdown, /^## Question \d+\s*$/mu, /^## /mu),
+        question: between(
+          markdown,
+          new RegExp(`^## .+ ${number}\\s*$`, "mu"),
+          /^## /mu,
+        ),
         summary: between(
           markdown,
-          /^## Summary of answer\s*$/mu,
+          headingLine(summaryLabel),
           /^(Similar Topics|## )/mu,
         ),
         answer,
         publishedAt: publishedOf(html),
+      };
+    },
+  },
+  {
+    source: {
+      name: "islamweb.net",
+      url: "https://www.islamweb.net/en/fatawa/",
+      version: VERSION,
+      license: "Not reviewed. Confirm reuse terms before launch",
+      credit: "Islamweb Fatwa Center (Qatar Ministry of Awqaf)",
+    },
+    sitemaps: [],
+    listings: {
+      start: ["https://www.islamweb.net/en/fatawa/"],
+      follow:
+        /^https:\/\/www\.islamweb\.net\/en\/fatawa\/\d+\/[^?]*(\?pageno=\d+&tab=1)?$/u,
+    },
+    page: /^https:\/\/www\.islamweb\.net\/(ar|en)\/fatwa\/\d+\//u,
+    parallel: 8,
+    parse: (markdown, html, url) => {
+      const [, lang, number] = /\/(ar|en)\/fatwa\/(\d+)\//u.exec(url) ?? [];
+      const title = /<h2[^>]*>([\s\S]*?)<\/h2>/u
+        .exec(html)?.[1]
+        ?.replaceAll(/<[^>]+>/gu, "")
+        .trim();
+      const headings = [...markdown.matchAll(/^### .+$/gmu)];
+      const [asked, answered] = headings;
+      if (!title || !asked || !answered) return undefined;
+      const answer = markdown.slice(answered.index + answered[0].length).trim();
+      if (answer.length < 100) return undefined;
+      return {
+        id: `islamweb.net:${lang}:${number}`,
+        answeredBy: "Islamweb Fatwa Center",
+        title: decode(title),
+        question:
+          markdown
+            .slice(asked.index + asked[0].length, answered.index)
+            .trim() || undefined,
+        answer,
       };
     },
   },
@@ -558,6 +662,15 @@ const SITES: Site[] = [
     page: /^https:\/\/productivemuslim\.com\/(?!blog\/|reading-list\/).+/u,
   }),
   articleSite({
+    name: "aboutislam.net",
+    url: "https://aboutislam.net",
+    credit: "AboutIslam",
+    sitemaps: ["https://aboutislam.net/sitemap_index.xml"],
+    follow: /^(post|counseling|live_session)-sitemap\d*\.xml$/u,
+    page: /^https:\/\/aboutislam\.net\/(counseling|live-session|reading-islam|family-life|shariah|spirituality|muslim-issues|science|blog)\/.+/u,
+    parallel: 4,
+  }),
+  articleSite({
     name: "dar-alifta.org",
     url: "https://www.dar-alifta.org",
     credit: "Dar al-Ifta al-Misriyyah",
@@ -643,13 +756,14 @@ const crawl = async (site: Site) => {
   await mkdir(`${RAW_DIR}/${new URL(site.source.url).hostname}`, {
     recursive: true,
   });
-  const found = (
-    await Promise.all(site.sitemaps.map((url) => sitemapUrls(url, site)))
-  )
-    .flat()
-    .filter((url) => site.page.test(url) && !site.skip?.test(url));
+  const found = [
+    ...(
+      await Promise.all(site.sitemaps.map((url) => sitemapUrls(url, site)))
+    ).flat(),
+    ...(await listedUrls(site)),
+  ].filter((url) => site.page.test(url) && !site.skip?.test(url));
   const urls = [...new Set(found)];
-  console.log(`${site.source.name}: ${urls.length} pages in the sitemaps`);
+  console.log(`${site.source.name}: ${urls.length} pages found`);
   if (DRY) {
     const mine = SAMPLES.filter((url) => site.page.test(url));
     const picks =
