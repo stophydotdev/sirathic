@@ -14,8 +14,24 @@ export default {
     artifactName: "Sirathic-windows.${ext}",
   },
   linux: {
-    target: { target: "AppImage", arch: ["x64", "arm64"] },
+    target: [
+      { target: "AppImage", arch: ["x64", "arm64"] },
+      { target: "deb", arch: ["x64", "arm64"] },
+      { target: "rpm", arch: ["x64", "arm64"] },
+      { target: "pacman", arch: ["x64", "arm64"] },
+    ],
     category: "Education",
+    executableName: "sirathic",
+    maintainer:
+      "Hussein Hakizimana <189969103+hakiiizimana@users.noreply.github.com>",
     artifactName: "Sirathic-linux-${arch}.${ext}",
+  },
+  deb: { packageName: "sirathic" },
+  rpm: { packageName: "sirathic" },
+  pacman: {
+    packageName: "sirathic",
+    depends: ["gtk3", "nss", "alsa-lib", "mesa", "xdg-utils"],
+    compression: "zstd",
+    artifactName: "Sirathic-linux-${arch}.pkg.tar.zst",
   },
 } satisfies Configuration;

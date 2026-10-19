@@ -3,6 +3,7 @@
   "productName": "Sirathic",
   "version": "0.1.0",
   "description": "Sirathic for Mac, Windows and Linux",
+  "homepage": "https://sirathic.com",
   "author": "Hussein Hakizimana",
   "private": true,
   "type": "module",
