@@ -3,6 +3,7 @@ import { fatwas } from "@sirathic/db/schema";
 import { inArray } from "drizzle-orm";
 import { z } from "zod";
 import { hybridIds } from "../search/hybridSearch";
+import { onePerAnswer } from "../search/onePerAnswer";
 
 const ROWS_PER_PAGE = 3;
 
@@ -32,12 +33,6 @@ export const fatwaSearch = async (input: z.input<typeof fatwaSearchInput>) => {
     .from(fatwas)
     .where(inArray(fatwas.id, ids));
   const byId = new Map(rows.map((row) => [row.id, row]));
-  const pages = new Set<string>();
-  const best = ids.flatMap((id) => {
-    const row = byId.get(id);
-    if (row === undefined || pages.has(row.url)) return [];
-    pages.add(row.url);
-    return [row];
-  });
-  return { fatwas: best.slice(0, limit) };
+  const ranked = ids.flatMap((id) => byId.get(id) ?? []);
+  return { fatwas: onePerAnswer(ranked).slice(0, limit) };
 };
