@@ -288,6 +288,7 @@ export default {
   "in {minutes}m": "sau {minutes} phút",
   "in {hours}h {minutes}m": "sau {hours} giờ {minutes} phút",
   "Prayer times": "Giờ cầu nguyện",
+  "Ask Sirathic": "Hỏi Sirathic",
   "{school} Asr": "Asr ({school})",
   Qibla: "Qibla",
   "You are at the Kaaba.": "Bạn đang ở Kaaba.",

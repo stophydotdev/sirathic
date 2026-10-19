@@ -23,6 +23,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { AskSelection } from "@/components/ask-selection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
@@ -222,6 +223,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       <SearchDialog open={searching} onOpenChange={setSearching} />
       <SignInDialog />
       <CookieCard />
+      <AskSelection />
     </div>
   );
 };

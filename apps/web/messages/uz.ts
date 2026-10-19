@@ -288,6 +288,7 @@ export default {
   "in {minutes}m": "{minutes} дақиқадан сўнг",
   "in {hours}h {minutes}m": "{hours} соат {minutes} дақиқадан сўнг",
   "Prayer times": "Намоз вақтлари",
+  "Ask Sirathic": "Sirathic'дан сўраш",
   "{school} Asr": "Аср ({school})",
   Qibla: "Қибла",
   "You are at the Kaaba.": "Сиз Каъбадасиз.",

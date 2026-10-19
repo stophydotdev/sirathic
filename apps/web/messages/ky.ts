@@ -290,6 +290,7 @@ export default {
   "in {minutes}m": "{minutes} мүнөттөн кийин",
   "in {hours}h {minutes}m": "{hours} саат {minutes} мүнөттөн кийин",
   "Prayer times": "Намаз убакыттары",
+  "Ask Sirathic": "Sirathicтен суроо",
   "{school} Asr": "Аср ({school})",
   Qibla: "Кыбла",
   "You are at the Kaaba.": "Сиз Каабадасыз.",

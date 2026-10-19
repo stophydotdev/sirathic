@@ -282,6 +282,7 @@ export default {
   "in {minutes}m": "อีก {minutes} นาที",
   "in {hours}h {minutes}m": "อีก {hours} ชม. {minutes} นาที",
   "Prayer times": "เวลาละหมาด",
+  "Ask Sirathic": "ถาม Sirathic",
   "{school} Asr": "อัศร์ ({school})",
   Qibla: "กิบลัต",
   "You are at the Kaaba.": "คุณอยู่ที่กะอ์บะฮ์",

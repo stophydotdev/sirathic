@@ -675,6 +675,7 @@ const VerseRow: FC<{
   return (
     <article
       id={`ayah-${ayah.ayah}`}
+      data-ask-ref={reference}
       className={cn(
         "border-border/50 -mx-3 scroll-mt-4 border-b px-3 py-5 transition-colors",
         current && "bg-super/10 rounded-xl border-transparent",

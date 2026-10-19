@@ -288,6 +288,7 @@ export default {
   "in {minutes}m": "за {minutes} мин",
   "in {hours}h {minutes}m": "за {hours} ч {minutes} мин",
   "Prayer times": "Времена намаза",
+  "Ask Sirathic": "Питај Sirathic",
   "{school} Asr": "Икиндија ({school})",
   Qibla: "Кибла",
   "You are at the Kaaba.": "Налазите се код Кабе.",

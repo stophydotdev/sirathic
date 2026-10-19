@@ -288,6 +288,7 @@ export default {
   "in {minutes}m": "{minutes} dk sonra",
   "in {hours}h {minutes}m": "{hours} sa {minutes} dk sonra",
   "Prayer times": "Namaz vakitleri",
+  "Ask Sirathic": "Sirathic'e sor",
   "{school} Asr": "İkindi ({school})",
   Qibla: "Kıble",
   "You are at the Kaaba.": "Kâbe'desiniz.",

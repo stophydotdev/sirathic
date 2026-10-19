@@ -283,6 +283,7 @@ export default {
   "in {minutes}m": "ក្នុងរយៈពេល {minutes} នាទី",
   "in {hours}h {minutes}m": "ក្នុងរយៈពេល {hours} ម៉ោង {minutes} នាទី",
   "Prayer times": "ម៉ោងសឡាត",
+  "Ask Sirathic": "សួរ Sirathic",
   "{school} Asr": "អាសរ៍ ({school})",
   Qibla: "គិបឡាត់",
   "You are at the Kaaba.": "អ្នកនៅកាអ្ពះ។",

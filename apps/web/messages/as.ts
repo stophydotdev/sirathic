@@ -283,6 +283,7 @@ export default {
   "in {minutes}m": "{minutes} মিনিটত",
   "in {hours}h {minutes}m": "{hours} ঘণ্টা {minutes} মিনিটত",
   "Prayer times": "নামাজৰ সময়",
+  "Ask Sirathic": "Sirathic-ক সোধক",
   "{school} Asr": "আছৰ ({school})",
   Qibla: "কিবলা",
   "You are at the Kaaba.": "আপুনি কাবাত আছে।",

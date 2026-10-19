@@ -260,6 +260,7 @@ export const MESSAGES = [
   "in {minutes}m",
   "in {hours}h {minutes}m",
   "Prayer times",
+  "Ask Sirathic",
   "{school} Asr",
   "Qibla",
   "You are at the Kaaba.",

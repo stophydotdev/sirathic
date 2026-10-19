@@ -282,6 +282,7 @@ export default {
   "in {minutes}m": "{minutes} 分钟后",
   "in {hours}h {minutes}m": "{hours} 小时 {minutes} 分钟后",
   "Prayer times": "礼拜时间",
+  "Ask Sirathic": "问 Sirathic",
   "{school} Asr": "晡礼（{school}）",
   Qibla: "朝向",
   "You are at the Kaaba.": "你就在克尔白。",

@@ -1,6 +1,7 @@
 "use client";
 
 import { MODE_DETAILS, useChatOptions } from "@/components/chat-options";
+import { takeDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
 import { ModelPicker } from "@/components/model-picker";
@@ -133,6 +134,10 @@ export const Composer: FC<{
   const aui = useAui();
   const text = useAuiState((s) => s.composer.text);
   const setMode = useChatOptions((s) => s.setMode);
+  useEffect(() => {
+    const draft = takeDraft();
+    if (draft) aui.thread().composer().setText(draft);
+  }, [aui]);
   const [focused, setFocused] = useState(false);
   const [active, setActive] = useState(0);
   const [picked, setPicked] = useState(false);

@@ -283,6 +283,7 @@ export default {
   "in {minutes}m": "{minutes} నిమిషాల్లో",
   "in {hours}h {minutes}m": "{hours} గంటల {minutes} నిమిషాల్లో",
   "Prayer times": "నమాజ్ సమయాలు",
+  "Ask Sirathic": "Sirathicని అడగండి",
   "{school} Asr": "అస్ర్ ({school})",
   Qibla: "ఖిబ్లా",
   "You are at the Kaaba.": "మీరు కాబా వద్ద ఉన్నారు.",

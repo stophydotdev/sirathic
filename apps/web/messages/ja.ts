@@ -289,6 +289,7 @@ export default {
   "in {minutes}m": "あと {minutes} 分",
   "in {hours}h {minutes}m": "あと {hours} 時間 {minutes} 分",
   "Prayer times": "礼拝時刻",
+  "Ask Sirathic": "Sirathicに聞く",
   "{school} Asr": "アスル（{school}）",
   Qibla: "キブラ",
   "You are at the Kaaba.": "あなたはカアバにいます。",

@@ -288,6 +288,7 @@ export default {
   "in {minutes}m": "دوای {minutes} خولەک",
   "in {hours}h {minutes}m": "دوای {hours} کاتژمێر و {minutes} خولەک",
   "Prayer times": "کاتەکانی نوێژ",
+  "Ask Sirathic": "لە Sirathic بپرسە",
   "{school} Asr": "عەسر ({school})",
   Qibla: "قیبلە",
   "You are at the Kaaba.": "تۆ لە کەعبەیت.",

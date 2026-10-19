@@ -286,6 +286,7 @@ export default {
   "in {minutes}m": "{minutes} دقیقه دیگر",
   "in {hours}h {minutes}m": "{hours} ساعت و {minutes} دقیقه دیگر",
   "Prayer times": "اوقات نماز",
+  "Ask Sirathic": "از Sirathic بپرسید",
   "{school} Asr": "عصر ({school})",
   Qibla: "قبله",
   "You are at the Kaaba.": "شما در کعبه هستید.",

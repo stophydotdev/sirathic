@@ -287,6 +287,7 @@ export default {
   "in {minutes}m": "په {minutes} دقیقو کې",
   "in {hours}h {minutes}m": "په {hours} ساعتونو او {minutes} دقیقو کې",
   "Prayer times": "د لمانځه وختونه",
+  "Ask Sirathic": "له Sirathic وپوښتئ",
   "{school} Asr": "مازدیګر ({school})",
   Qibla: "قبله",
   "You are at the Kaaba.": "تاسو په کعبه کې یاست.",

@@ -20,12 +20,14 @@ const HadithRow: FC<{ hadith: Hadith; collection: string }> = ({
 }) => {
   const english = hadith.english ?? "";
   const [lead = "", narrator] = NARRATOR.exec(english) ?? [];
+  const reference = `${collection} ${hadith.id.split(":")[1] ?? hadith.number}`;
 
   return (
-    <article className="border-border/50 flex flex-col gap-3.5 border-b py-5">
-      <span className="text-sm font-[470]">
-        {collection} {hadith.id.split(":")[1] ?? hadith.number}
-      </span>
+    <article
+      data-ask-ref={reference}
+      className="border-border/50 flex flex-col gap-3.5 border-b py-5"
+    >
+      <span className="text-sm font-[470]">{reference}</span>
       <div className="grid gap-4 lg:grid-cols-2 lg:gap-7">
         {english && (
           <p className="text-[15px] leading-relaxed">

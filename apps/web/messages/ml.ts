@@ -285,6 +285,7 @@ export default {
   "in {minutes}m": "{minutes} മിനിറ്റിൽ",
   "in {hours}h {minutes}m": "{hours} മണിക്കൂർ {minutes} മിനിറ്റിൽ",
   "Prayer times": "നമസ്കാര സമയങ്ങൾ",
+  "Ask Sirathic": "Sirathic-നോട് ചോദിക്കുക",
   "{school} Asr": "അസ്ർ ({school})",
   Qibla: "ഖിബ്‌ല",
   "You are at the Kaaba.": "നിങ്ങൾ കഅ്ബയിലാണ്.",

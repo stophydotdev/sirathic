@@ -288,6 +288,7 @@ export default {
   "in {minutes}m": "dalam {minutes} mnt",
   "in {hours}h {minutes}m": "dalam {hours} j {minutes} mnt",
   "Prayer times": "Jadwal salat",
+  "Ask Sirathic": "Tanya Sirathic",
   "{school} Asr": "Asar ({school})",
   Qibla: "Kiblat",
   "You are at the Kaaba.": "Anda berada di Ka'bah.",

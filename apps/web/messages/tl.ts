@@ -291,6 +291,7 @@ export default {
   "in {minutes}m": "sa loob ng {minutes} min",
   "in {hours}h {minutes}m": "sa loob ng {hours} oras {minutes} min",
   "Prayer times": "Oras ng dasal",
+  "Ask Sirathic": "Itanong sa Sirathic",
   "{school} Asr": "Asr ({school})",
   Qibla: "Qibla",
   "You are at the Kaaba.": "Nasa Kaaba ka.",

@@ -289,6 +289,7 @@ export default {
   "in {minutes}m": "через {minutes} мин",
   "in {hours}h {minutes}m": "через {hours} ч {minutes} мин",
   "Prayer times": "Время намаза",
+  "Ask Sirathic": "Спросить Sirathic",
   "{school} Asr": "Аср ({school})",
   Qibla: "Кибла",
   "You are at the Kaaba.": "Вы у Каабы.",

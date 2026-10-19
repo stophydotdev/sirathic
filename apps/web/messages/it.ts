@@ -290,6 +290,7 @@ export default {
   "in {minutes}m": "tra {minutes} min",
   "in {hours}h {minutes}m": "tra {hours} h {minutes} min",
   "Prayer times": "Orari di preghiera",
+  "Ask Sirathic": "Chiedi a Sirathic",
   "{school} Asr": "Asr {school}",
   Qibla: "Qibla",
   "You are at the Kaaba.": "Sei alla Kaaba.",

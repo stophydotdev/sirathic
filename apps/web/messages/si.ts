@@ -283,6 +283,7 @@ export default {
   "in {minutes}m": "විනාඩි {minutes}කින්",
   "in {hours}h {minutes}m": "පැය {hours} විනාඩි {minutes}කින්",
   "Prayer times": "සලාත් වේලාවන්",
+  "Ask Sirathic": "Sirathic ගෙන් අසන්න",
   "{school} Asr": "අසර් ({school})",
   Qibla: "කිබ්ලාව",
   "You are at the Kaaba.": "ඔබ කඃබාවේ සිටී.",

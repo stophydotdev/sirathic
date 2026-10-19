@@ -287,6 +287,7 @@ export default {
   "in {minutes}m": "e nder hoɗɗe {minutes}",
   "in {hours}h {minutes}m": "e nder waktuuji {hours} e hoɗɗe {minutes}",
   "Prayer times": "Waktuuji juulde",
+  "Ask Sirathic": "Naamno Sirathic",
   "{school} Asr": "Alansaraa ({school})",
   Qibla: "Qibla",
   "You are at the Kaaba.": "Aɗa woni ka Kaaba.",
