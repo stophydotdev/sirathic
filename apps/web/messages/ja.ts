@@ -143,7 +143,9 @@ export default {
     "ログインすると質問でき、チャットも保存されます",
   "Sign in": "ログイン",
   "Signed in with ChatGPT": "ChatGPT でログイン中",
+  "Signed in with Google": "Google でログイン中",
   "Your ChatGPT account": "あなたの ChatGPT アカウント",
+  "Your Google account": "あなたの Google アカウント",
   "Sign out": "ログアウト",
   "Signs you out on this browser": "このブラウザからログアウトします",
   Appearance: "表示",
@@ -199,11 +201,15 @@ export default {
   "No settings found": "設定が見つかりません",
   "No chat models available": "利用できるモデルがありません",
   "Manage models": "モデルを管理",
+  "Longer answers that explain more": "より長く、詳しく説明します",
   "Open ChatGPT": "ChatGPT を開く",
   "Waiting for approval": "承認を待っています",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "初めてですか？ChatGPT →「設定」→「セキュリティ」でデバイスコードによるログインをオンにしてください。ChatGPT には Codex と表示されますが、問題ありません。",
   "Continue with ChatGPT": "ChatGPT で続ける",
+  "Continue with Google": "Google で続ける",
+  "Use your ChatGPT plan for GPT models":
+    "GPT モデルにはあなたの ChatGPT プランを使います",
   "Get a new code": "新しいコードを取得",
   "Try again": "もう一度試す",
   "Your question stays in the box while you sign in.":
@@ -212,6 +218,7 @@ export default {
   "Sign In": "ログイン",
   "Account menu": "アカウントメニュー",
   "ChatGPT account": "ChatGPT アカウント",
+  "Google account": "Google アカウント",
   Incognito: "シークレットモード",
   "All settings": "すべての設定",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Mac 版をダウンロード",
   "Download for Windows": "Windows 版をダウンロード",
   "Download for Linux": "Linux 版をダウンロード",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "無料のイスラームの回答エンジン。回答はクルアーン、真正性の等級つきのハディース、学者の見解にもとづき、出典を示します。",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}を巻ごとに、アラビア語と英語で。",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection}の{count}件のハディースを、アラビア語と英語で。",
+} satisfies Messages;

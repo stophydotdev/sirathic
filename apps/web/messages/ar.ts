@@ -141,7 +141,9 @@ export default {
   "Sign in to ask and keep your chats": "سجّل الدخول لتسأل وتحفظ محادثاتك",
   "Sign in": "تسجيل الدخول",
   "Signed in with ChatGPT": "مسجّل الدخول عبر ChatGPT",
+  "Signed in with Google": "مسجّل الدخول عبر Google",
   "Your ChatGPT account": "حسابك في ChatGPT",
+  "Your Google account": "حسابك في Google",
   "Sign out": "تسجيل الخروج",
   "Signs you out on this browser": "يسجّل خروجك من هذا المتصفح",
   Appearance: "المظهر",
@@ -194,11 +196,15 @@ export default {
   "No settings found": "لم يُعثر على إعدادات",
   "No chat models available": "لا توجد نماذج محادثة متاحة",
   "Manage models": "إدارة النماذج",
+  "Longer answers that explain more": "إجابات أطول تشرح أكثر",
   "Open ChatGPT": "فتح ChatGPT",
   "Waiting for approval": "في انتظار الموافقة",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "أول مرة؟ فعّل تسجيل الدخول برمز الجهاز في ChatGPT ← الإعدادات ← الأمان. سيذكر ChatGPT اسم Codex، وهذا متوقع.",
   "Continue with ChatGPT": "المتابعة عبر ChatGPT",
+  "Continue with Google": "المتابعة عبر Google",
+  "Use your ChatGPT plan for GPT models":
+    "استخدم اشتراكك في ChatGPT لنماذج GPT",
   "Get a new code": "احصل على رمز جديد",
   "Try again": "حاول مرة أخرى",
   "Your question stays in the box while you sign in.":
@@ -207,6 +213,7 @@ export default {
   "Sign In": "تسجيل الدخول",
   "Account menu": "قائمة الحساب",
   "ChatGPT account": "حساب ChatGPT",
+  "Google account": "حساب Google",
   Incognito: "التصفح الخفي",
   "All settings": "كل الإعدادات",
   "Assalamu alaikum. Sign in to start asking.":
@@ -366,7 +373,6 @@ export default {
   "Download for Mac": "تحميل لنظام Mac",
   "Download for Windows": "تحميل لنظام Windows",
   "Download for Linux": "تحميل لنظام Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "محرك إجابات إسلامي مجاني. تأتي الإجابات من القرآن والأحاديث مع درجاتها وأحكام العلماء، وتذكر مصادرها.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -381,3 +387,4 @@ export default {
     "{collection} كتابًا بعد كتاب، بالعربية والإنجليزية.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} حديث من {collection}، بالعربية والإنجليزية.",
+} satisfies Messages;

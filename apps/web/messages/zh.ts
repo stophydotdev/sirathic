@@ -139,7 +139,9 @@ export default {
   "Sign in to ask and keep your chats": "登录后即可提问并保存对话",
   "Sign in": "登录",
   "Signed in with ChatGPT": "已通过 ChatGPT 登录",
+  "Signed in with Google": "已通过 Google 登录",
   "Your ChatGPT account": "你的 ChatGPT 账号",
+  "Your Google account": "你的 Google 账号",
   "Sign out": "退出登录",
   "Signs you out on this browser": "在此浏览器上退出登录",
   Appearance: "外观",
@@ -192,11 +194,15 @@ export default {
   "No settings found": "未找到设置",
   "No chat models available": "没有可用的对话模型",
   "Manage models": "管理模型",
+  "Longer answers that explain more": "更长的回答，解释更充分",
   "Open ChatGPT": "打开 ChatGPT",
   "Waiting for approval": "等待确认",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "第一次使用？请在 ChatGPT → 设置 → 安全 中开启设备码登录。ChatGPT 会显示 Codex，这是正常的。",
   "Continue with ChatGPT": "使用 ChatGPT 继续",
+  "Continue with Google": "使用 Google 继续",
+  "Use your ChatGPT plan for GPT models":
+    "使用你的 ChatGPT 套餐来使用 GPT 模型",
   "Get a new code": "获取新代码",
   "Try again": "重试",
   "Your question stays in the box while you sign in.":
@@ -205,6 +211,7 @@ export default {
   "Sign In": "登录",
   "Account menu": "账号菜单",
   "ChatGPT account": "ChatGPT 账号",
+  "Google account": "Google 账号",
   Incognito: "无痕模式",
   "All settings": "全部设置",
   "Assalamu alaikum. Sign in to start asking.":
@@ -362,7 +369,6 @@ export default {
   "Download for Mac": "下载 Mac 版",
   "Download for Windows": "下载 Windows 版",
   "Download for Linux": "下载 Linux 版",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "免费的伊斯兰问答引擎。回答依据《古兰经》、标明真实等级的圣训和学者的教法意见，并注明出处。",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -377,3 +383,4 @@ export default {
     "{collection}，按卷浏览，阿拉伯文和英文对照。",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} 中的 {count} 段圣训，阿拉伯文和英文对照。",
+} satisfies Messages;

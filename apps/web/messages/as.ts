@@ -139,7 +139,9 @@ export default {
   "Sign in to ask and keep your chats": "প্ৰশ্ন সুধিবলৈ আৰু চেট ৰাখিবলৈ ছাইন ইন কৰক",
   "Sign in": "ছাইন ইন",
   "Signed in with ChatGPT": "ChatGPTৰে ছাইন ইন কৰা আছে",
+  "Signed in with Google": "Googleৰে ছাইন ইন কৰা আছে",
   "Your ChatGPT account": "আপোনাৰ ChatGPT একাউণ্ট",
+  "Your Google account": "আপোনাৰ Google একাউণ্ট",
   "Sign out": "ছাইন আউট",
   "Signs you out on this browser": "এই ব্ৰাউজাৰৰ পৰা ছাইন আউট কৰে",
   Appearance: "ৰূপ",
@@ -193,11 +195,15 @@ export default {
   "No settings found": "কোনো ছেটিং পোৱা নগ'ল",
   "No chat models available": "কোনো মডেল উপলব্ধ নাই",
   "Manage models": "মডেল পৰিচালনা কৰক",
+  "Longer answers that explain more": "অধিক ব্যাখ্যা থকা দীঘল উত্তৰ",
   "Open ChatGPT": "ChatGPT খোলক",
   "Waiting for approval": "অনুমোদনৰ অপেক্ষাত",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "প্ৰথমবাৰ? ChatGPT → Settings → Securityত ডিভাইচ ক'ডেৰে ছাইন-ইন অন কৰক। ChatGPTত Codex লিখা দেখিব, সেয়া স্বাভাৱিক।",
   "Continue with ChatGPT": "ChatGPTৰে আগবাঢ়ক",
+  "Continue with Google": "Googleৰে আগবাঢ়ক",
+  "Use your ChatGPT plan for GPT models":
+    "GPT মডেলৰ বাবে আপোনাৰ ChatGPT প্লেন ব্যৱহাৰ কৰক",
   "Get a new code": "নতুন ক'ড লওক",
   "Try again": "আকৌ চেষ্টা কৰক",
   "Your question stays in the box while you sign in.":
@@ -206,6 +212,7 @@ export default {
   "Sign In": "ছাইন ইন",
   "Account menu": "একাউণ্ট মেনু",
   "ChatGPT account": "ChatGPT একাউণ্ট",
+  "Google account": "Google একাউণ্ট",
   Incognito: "ইনকগনিট'",
   "All settings": "সকলো ছেটিংছ",
   "Assalamu alaikum. Sign in to start asking.":
@@ -365,7 +372,6 @@ export default {
   "Download for Mac": "Macৰ বাবে ডাউনল'ড কৰক",
   "Download for Windows": "Windowsৰ বাবে ডাউনল'ড কৰক",
   "Download for Linux": "Linuxৰ বাবে ডাউনল'ড কৰক",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "বিনামূলীয়া ইছলামীয় উত্তৰ ইঞ্জিন। উত্তৰসমূহ কোৰআন, মানসহ হাদীছ আৰু আলিমসকলৰ ফতোৱাৰ পৰা আহে, আৰু উৎস উল্লেখ কৰে।",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -380,3 +386,4 @@ export default {
     "{collection}, গ্ৰন্থ অনুসৰি, আৰবী আৰু ইংৰাজীত।",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection}ৰ পৰা {count}টা হাদীছ, আৰবী আৰু ইংৰাজীত।",
+} satisfies Messages;

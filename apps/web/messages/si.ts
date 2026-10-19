@@ -139,7 +139,9 @@ export default {
   "Sign in to ask and keep your chats": "ප්‍රශ්න ඇසීමට සහ කතාබස් තබා ගැනීමට පිවිසෙන්න",
   "Sign in": "පිවිසෙන්න",
   "Signed in with ChatGPT": "ChatGPT සමඟ පිවිසී ඇත",
+  "Signed in with Google": "Google සමඟ පිවිසී ඇත",
   "Your ChatGPT account": "ඔබේ ChatGPT ගිණුම",
+  "Your Google account": "ඔබේ Google ගිණුම",
   "Sign out": "නික්මෙන්න",
   "Signs you out on this browser": "මෙම බ්‍රවුසරයෙන් ඔබව නික්මවයි",
   Appearance: "පෙනුම",
@@ -193,11 +195,15 @@ export default {
   "No settings found": "සැකසුම් කිසිවක් හමු නොවීය",
   "No chat models available": "මාදිලි කිසිවක් නැත",
   "Manage models": "මාදිලි කළමනාකරණය කරන්න",
+  "Longer answers that explain more": "වැඩිපුර පැහැදිලි කරන දිගු පිළිතුරු",
   "Open ChatGPT": "ChatGPT විවෘත කරන්න",
   "Waiting for approval": "අනුමැතිය සඳහා රැඳී සිටී",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "පළමු වතාවද? ChatGPT → Settings → Security හි උපාංග කේත පිවිසුම සක්‍රිය කරන්න. ChatGPT හි Codex ලෙස පෙන්වයි, එය සාමාන්‍යයි.",
   "Continue with ChatGPT": "ChatGPT සමඟ ඉදිරියට යන්න",
+  "Continue with Google": "Google සමඟ ඉදිරියට යන්න",
+  "Use your ChatGPT plan for GPT models":
+    "GPT මාදිලි සඳහා ඔබේ ChatGPT සැලැස්ම භාවිතා කරන්න",
   "Get a new code": "නව කේතයක් ගන්න",
   "Try again": "නැවත උත්සාහ කරන්න",
   "Your question stays in the box while you sign in.":
@@ -206,6 +212,7 @@ export default {
   "Sign In": "පිවිසෙන්න",
   "Account menu": "ගිණුම් මෙනුව",
   "ChatGPT account": "ChatGPT ගිණුම",
+  "Google account": "Google ගිණුම",
   Incognito: "අප්‍රකට",
   "All settings": "සියලු සැකසුම්",
   "Assalamu alaikum. Sign in to start asking.":
@@ -365,7 +372,6 @@ export default {
   "Download for Mac": "Mac සඳහා බාගන්න",
   "Download for Windows": "Windows සඳහා බාගන්න",
   "Download for Linux": "Linux සඳහා බාගන්න",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "නොමිලේ ලබාදෙන ඉස්ලාමීය පිළිතුරු එන්ජිම. පිළිතුරු කුර්ආනය, තත්ත්වය සඳහන් හදීස් සහ විද්වතුන්ගේ තීන්දු මත පදනම් වන අතර ඒවායේ මූලාශ්‍ර සඳහන් කරයි.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -380,3 +386,4 @@ export default {
     "{collection}, ග්‍රන්ථයෙන් ග්‍රන්ථය, අරාබි සහ ඉංග්‍රීසි භාෂාවෙන්.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} වෙතින් හදීස් {count}, අරාබි සහ ඉංග්‍රීසි භාෂාවෙන්.",
+} satisfies Messages;

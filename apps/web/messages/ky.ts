@@ -144,7 +144,9 @@ export default {
     "Суроо берүү жана маектерди сактоо үчүн кириңиз",
   "Sign in": "Кирүү",
   "Signed in with ChatGPT": "ChatGPT аркылуу кирдиңиз",
+  "Signed in with Google": "Google аркылуу кирдиңиз",
   "Your ChatGPT account": "ChatGPT аккаунтуңуз",
+  "Your Google account": "Google аккаунтуңуз",
   "Sign out": "Чыгуу",
   "Signs you out on this browser": "Бул браузерде аккаунттан чыгарат",
   Appearance: "Көрүнүш",
@@ -200,11 +202,15 @@ export default {
   "No settings found": "Жөндөө табылган жок",
   "No chat models available": "Маек модели жок",
   "Manage models": "Моделдерди башкаруу",
+  "Longer answers that explain more": "Көбүрөөк түшүндүргөн узунураак жооптор",
   "Open ChatGPT": "ChatGPT'ни ачуу",
   "Waiting for approval": "Ырастоо күтүлүүдө",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Биринчи жолубу? ChatGPT → Жөндөөлөр → Коопсуздук бөлүмүндө түзмөк коду аркылуу кирүүнү күйгүзүңүз. ChatGPT Codex деп жазат, бул кадимки нерсе.",
   "Continue with ChatGPT": "ChatGPT аркылуу улантуу",
+  "Continue with Google": "Google аркылуу улантуу",
+  "Use your ChatGPT plan for GPT models":
+    "GPT моделдери үчүн ChatGPT планыңызды колдонуңуз",
   "Get a new code": "Жаңы код алуу",
   "Try again": "Кайра аракет кылуу",
   "Your question stays in the box while you sign in.":
@@ -213,6 +219,7 @@ export default {
   "Sign In": "Кирүү",
   "Account menu": "Аккаунт менюсу",
   "ChatGPT account": "ChatGPT аккаунту",
+  "Google account": "Google аккаунту",
   Incognito: "Инкогнито",
   "All settings": "Бардык жөндөөлөр",
   "Assalamu alaikum. Sign in to start asking.":
@@ -373,7 +380,6 @@ export default {
   "Download for Mac": "Mac үчүн жүктөп алуу",
   "Download for Windows": "Windows үчүн жүктөп алуу",
   "Download for Linux": "Linux үчүн жүктөп алуу",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Акысыз исламий жооп берүү системасы. Жооптор Куранга, ишенимдүүлүк даражасы көрсөтүлгөн хадистерге жана аалымдардын өкүмдөрүнө таянат жана булактарын көрсөтөт.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -388,3 +394,4 @@ export default {
     "{collection}: бардык китептери, араб жана англис тилдеринде.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} жыйнагынан {count} хадис, араб жана англис тилдеринде.",
+} satisfies Messages;

@@ -140,7 +140,9 @@ export default {
     "ప్రశ్నలు అడగడానికి, మీ చాట్‌లను దాచుకోవడానికి సైన్ ఇన్ చేయండి",
   "Sign in": "సైన్ ఇన్",
   "Signed in with ChatGPT": "ChatGPTతో సైన్ ఇన్ అయ్యారు",
+  "Signed in with Google": "Googleతో సైన్ ఇన్ అయ్యారు",
   "Your ChatGPT account": "మీ ChatGPT ఖాతా",
+  "Your Google account": "మీ Google ఖాతా",
   "Sign out": "సైన్ అవుట్",
   "Signs you out on this browser": "ఈ బ్రౌజర్ నుండి మిమ్మల్ని సైన్ అవుట్ చేస్తుంది",
   Appearance: "రూపం",
@@ -193,11 +195,15 @@ export default {
   "No settings found": "సెట్టింగ్‌లు ఏవీ దొరకలేదు",
   "No chat models available": "మోడల్స్ ఏవీ అందుబాటులో లేవు",
   "Manage models": "మోడల్స్ నిర్వహించండి",
+  "Longer answers that explain more": "మరింత వివరించే పొడవైన సమాధానాలు",
   "Open ChatGPT": "ChatGPT తెరవండి",
   "Waiting for approval": "ఆమోదం కోసం వేచి ఉంది",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "మొదటిసారా? ChatGPT → Settings → Securityలో డివైస్ కోడ్ సైన్-ఇన్ ఆన్ చేయండి. ChatGPTలో Codex అని కనిపిస్తుంది, అది మామూలే.",
   "Continue with ChatGPT": "ChatGPTతో కొనసాగండి",
+  "Continue with Google": "Googleతో కొనసాగండి",
+  "Use your ChatGPT plan for GPT models":
+    "GPT మోడల్‌ల కోసం మీ ChatGPT ప్లాన్‌ను ఉపయోగించండి",
   "Get a new code": "కొత్త కోడ్ పొందండి",
   "Try again": "మళ్ళీ ప్రయత్నించండి",
   "Your question stays in the box while you sign in.":
@@ -206,6 +212,7 @@ export default {
   "Sign In": "సైన్ ఇన్",
   "Account menu": "ఖాతా మెనూ",
   "ChatGPT account": "ChatGPT ఖాతా",
+  "Google account": "Google ఖాతా",
   Incognito: "ఇన్‌కాగ్నిటో",
   "All settings": "అన్ని సెట్టింగ్‌లు",
   "Assalamu alaikum. Sign in to start asking.":
@@ -366,7 +373,6 @@ export default {
   "Download for Mac": "Mac కోసం డౌన్‌లోడ్ చేయండి",
   "Download for Windows": "Windows కోసం డౌన్‌లోడ్ చేయండి",
   "Download for Linux": "Linux కోసం డౌన్‌లోడ్ చేయండి",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "ఉచిత ఇస్లామిక్ సమాధానాల ఇంజిన్. సమాధానాలు ఖురాన్, ప్రామాణికత స్థాయితో కూడిన హదీసులు, పండితుల తీర్పుల నుండి వస్తాయి, వాటి మూలాలను పేర్కొంటాయి.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -381,3 +387,4 @@ export default {
     "{collection}, గ్రంథం వారీగా, అరబిక్ మరియు ఇంగ్లీష్‌లో.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} నుండి {count} హదీసులు, అరబిక్ మరియు ఇంగ్లీష్‌లో.",
+} satisfies Messages;

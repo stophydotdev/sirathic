@@ -141,7 +141,9 @@ export default {
     "برای پرسیدن و نگه‌داشتن گفتگوها وارد شوید",
   "Sign in": "ورود",
   "Signed in with ChatGPT": "با ChatGPT وارد شده‌اید",
+  "Signed in with Google": "با Google وارد شده‌اید",
   "Your ChatGPT account": "حساب ChatGPT شما",
+  "Your Google account": "حساب Google شما",
   "Sign out": "خروج",
   "Signs you out on this browser": "شما را از این مرورگر خارج می‌کند",
   Appearance: "ظاهر",
@@ -196,11 +198,15 @@ export default {
   "No settings found": "تنظیمی پیدا نشد",
   "No chat models available": "مدلی در دسترس نیست",
   "Manage models": "مدیریت مدل‌ها",
+  "Longer answers that explain more": "پاسخ‌های بلندتر با توضیح بیشتر",
   "Open ChatGPT": "باز کردن ChatGPT",
   "Waiting for approval": "در انتظار تأیید",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "بار اول است؟ ورود با کد دستگاه را در ChatGPT ← تنظیمات ← امنیت روشن کنید. ChatGPT نام Codex را نشان می‌دهد و این طبیعی است.",
   "Continue with ChatGPT": "ادامه با ChatGPT",
+  "Continue with Google": "ادامه با Google",
+  "Use your ChatGPT plan for GPT models":
+    "از اشتراک ChatGPT خود برای مدل‌های GPT استفاده کنید",
   "Get a new code": "گرفتن کد تازه",
   "Try again": "دوباره امتحان کنید",
   "Your question stays in the box while you sign in.":
@@ -209,6 +215,7 @@ export default {
   "Sign In": "ورود",
   "Account menu": "منوی حساب",
   "ChatGPT account": "حساب ChatGPT",
+  "Google account": "حساب Google",
   Incognito: "ناشناس",
   "All settings": "همه تنظیمات",
   "Assalamu alaikum. Sign in to start asking.":
@@ -369,7 +376,6 @@ export default {
   "Download for Mac": "دانلود برای Mac",
   "Download for Windows": "دانلود برای Windows",
   "Download for Linux": "دانلود برای Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "موتور پاسخ‌گویی اسلامی رایگان. پاسخ‌ها بر پایهٔ قرآن، احادیث همراه با درجهٔ اعتبار و فتاوای علما است و منابع خود را ذکر می‌کند.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -384,3 +390,4 @@ export default {
     "{collection}، کتاب به کتاب، به عربی و انگلیسی.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} حدیث از {collection}، به عربی و انگلیسی.",
+} satisfies Messages;

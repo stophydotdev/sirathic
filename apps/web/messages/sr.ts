@@ -142,7 +142,9 @@ export default {
     "Пријавите се да бисте питали и чували разговоре",
   "Sign in": "Пријави се",
   "Signed in with ChatGPT": "Пријављени преко ChatGPT-а",
+  "Signed in with Google": "Пријављени преко Google-а",
   "Your ChatGPT account": "Ваш ChatGPT налог",
+  "Your Google account": "Ваш Google налог",
   "Sign out": "Одјави се",
   "Signs you out on this browser": "Одјављује вас у овом прегледачу",
   Appearance: "Изглед",
@@ -198,11 +200,15 @@ export default {
   "No settings found": "Нема пронађених подешавања",
   "No chat models available": "Нема доступних модела",
   "Manage models": "Управљај моделима",
+  "Longer answers that explain more": "Дужи одговори који више објашњавају",
   "Open ChatGPT": "Отвори ChatGPT",
   "Waiting for approval": "Чека се одобрење",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Први пут? Укључите пријаву кодом уређаја у ChatGPT → Подешавања → Безбедност. ChatGPT ће приказати Codex, то је очекивано.",
   "Continue with ChatGPT": "Настави преко ChatGPT-а",
+  "Continue with Google": "Настави преко Google-а",
+  "Use your ChatGPT plan for GPT models":
+    "Користите свој ChatGPT план за GPT моделе",
   "Get a new code": "Добиј нови код",
   "Try again": "Покушај поново",
   "Your question stays in the box while you sign in.":
@@ -211,6 +217,7 @@ export default {
   "Sign In": "Пријави се",
   "Account menu": "Мени налога",
   "ChatGPT account": "ChatGPT налог",
+  "Google account": "Google налог",
   Incognito: "Анонимно",
   "All settings": "Сва подешавања",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Преузми за Mac",
   "Download for Windows": "Преузми за Windows",
   "Download for Linux": "Преузми за Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Бесплатни исламски систем одговора. Одговори се ослањају на Куран, хадисе с оценом веродостојности и ставове учењака и наводе своје изворе.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}, књигу по књигу, на арапском и енглеском.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} хадиса из збирке {collection}, на арапском и енглеском.",
+} satisfies Messages;

@@ -142,7 +142,9 @@ export default {
     "सवाल पूछने और अपनी चैट सहेजने के लिए साइन इन करें",
   "Sign in": "साइन इन करें",
   "Signed in with ChatGPT": "ChatGPT से साइन इन किया",
+  "Signed in with Google": "Google से साइन इन किया",
   "Your ChatGPT account": "आपका ChatGPT खाता",
+  "Your Google account": "आपका Google खाता",
   "Sign out": "साइन आउट करें",
   "Signs you out on this browser": "इस ब्राउज़र से साइन आउट करता है",
   Appearance: "रूप",
@@ -198,11 +200,15 @@ export default {
   "No settings found": "कोई सेटिंग नहीं मिली",
   "No chat models available": "कोई मॉडल उपलब्ध नहीं है",
   "Manage models": "मॉडल प्रबंधित करें",
+  "Longer answers that explain more": "लंबे जवाब, ज़्यादा विस्तार से",
   "Open ChatGPT": "ChatGPT खोलें",
   "Waiting for approval": "मंज़ूरी का इंतज़ार",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "पहली बार? ChatGPT → Settings → Security में डिवाइस कोड से साइन-इन चालू करें। ChatGPT में Codex लिखा दिखेगा, यह सामान्य है।",
   "Continue with ChatGPT": "ChatGPT के साथ जारी रखें",
+  "Continue with Google": "Google के साथ जारी रखें",
+  "Use your ChatGPT plan for GPT models":
+    "GPT मॉडल के लिए अपने ChatGPT प्लान का उपयोग करें",
   "Get a new code": "नया कोड लें",
   "Try again": "फिर कोशिश करें",
   "Your question stays in the box while you sign in.":
@@ -211,6 +217,7 @@ export default {
   "Sign In": "साइन इन करें",
   "Account menu": "खाता मेन्यू",
   "ChatGPT account": "ChatGPT खाता",
+  "Google account": "Google खाता",
   Incognito: "इनकॉग्निटो",
   "All settings": "सभी सेटिंग्स",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Mac के लिए डाउनलोड करें",
   "Download for Windows": "Windows के लिए डाउनलोड करें",
   "Download for Linux": "Linux के लिए डाउनलोड करें",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "मुफ़्त इस्लामी उत्तर इंजन। जवाब क़ुरआन, दर्जे के साथ हदीसों और विद्वानों के फ़तवों पर आधारित होते हैं, और अपने स्रोत बताते हैं।",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}, किताब-दर-किताब, अरबी और अंग्रेज़ी में।",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} से {count} हदीसें, अरबी और अंग्रेज़ी में।",
+} satisfies Messages;

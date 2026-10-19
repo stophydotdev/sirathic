@@ -142,7 +142,9 @@ export default {
     "Mag-sign in para magtanong at itago ang iyong mga chat",
   "Sign in": "Mag-sign in",
   "Signed in with ChatGPT": "Naka-sign in gamit ang ChatGPT",
+  "Signed in with Google": "Naka-sign in gamit ang Google",
   "Your ChatGPT account": "Ang iyong ChatGPT account",
+  "Your Google account": "Ang iyong Google account",
   "Sign out": "Mag-sign out",
   "Signs you out on this browser": "Ina-sign out ka sa browser na ito",
   Appearance: "Itsura",
@@ -200,11 +202,16 @@ export default {
   "No settings found": "Walang nahanap na setting",
   "No chat models available": "Walang available na modelo",
   "Manage models": "Pamahalaan ang mga modelo",
+  "Longer answers that explain more":
+    "Mas mahabang sagot na mas maraming paliwanag",
   "Open ChatGPT": "Buksan ang ChatGPT",
   "Waiting for approval": "Naghihintay ng pag-apruba",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Unang beses? I-on ang pag-sign in gamit ang device code sa ChatGPT → Settings → Security. Makikita mo ang Codex sa ChatGPT, normal iyon.",
   "Continue with ChatGPT": "Magpatuloy gamit ang ChatGPT",
+  "Continue with Google": "Magpatuloy gamit ang Google",
+  "Use your ChatGPT plan for GPT models":
+    "Gamitin ang iyong ChatGPT plan para sa mga GPT model",
   "Get a new code": "Kumuha ng bagong code",
   "Try again": "Subukan ulit",
   "Your question stays in the box while you sign in.":
@@ -213,6 +220,7 @@ export default {
   "Sign In": "Mag-sign in",
   "Account menu": "Menu ng account",
   "ChatGPT account": "ChatGPT account",
+  "Google account": "Google account",
   Incognito: "Incognito",
   "All settings": "Lahat ng setting",
   "Assalamu alaikum. Sign in to start asking.":
@@ -374,7 +382,6 @@ export default {
   "Download for Mac": "I-download para sa Mac",
   "Download for Windows": "I-download para sa Windows",
   "Download for Linux": "I-download para sa Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Libreng makinang sumasagot tungkol sa Islam. Nagmumula ang mga sagot sa Qur'an, sa mga hadith kasama ang grado ng mga ito, at sa mga hatol ng mga iskolar, at binabanggit ang mga pinagmulan.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -389,3 +396,4 @@ export default {
     "{collection}, bawat aklat, sa Arabe at Ingles.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadith mula sa {collection}, sa Arabe at Ingles.",
+} satisfies Messages;

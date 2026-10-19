@@ -141,7 +141,9 @@ export default {
     "প্রশ্ন করতে ও চ্যাট সংরক্ষণ করতে সাইন ইন করুন",
   "Sign in": "সাইন ইন",
   "Signed in with ChatGPT": "ChatGPT দিয়ে সাইন ইন করা আছে",
+  "Signed in with Google": "Google দিয়ে সাইন ইন করা আছে",
   "Your ChatGPT account": "আপনার ChatGPT অ্যাকাউন্ট",
+  "Your Google account": "আপনার Google অ্যাকাউন্ট",
   "Sign out": "সাইন আউট",
   "Signs you out on this browser": "এই ব্রাউজার থেকে সাইন আউট করে",
   Appearance: "চেহারা",
@@ -195,11 +197,15 @@ export default {
   "No settings found": "কোনো সেটিং পাওয়া যায়নি",
   "No chat models available": "কোনো মডেল নেই",
   "Manage models": "মডেল পরিচালনা করুন",
+  "Longer answers that explain more": "আরও ব্যাখ্যাসহ দীর্ঘ উত্তর",
   "Open ChatGPT": "ChatGPT খুলুন",
   "Waiting for approval": "অনুমোদনের অপেক্ষায়",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "প্রথমবার? ChatGPT → Settings → Security-তে ডিভাইস কোড দিয়ে সাইন-ইন চালু করুন। ChatGPT-তে Codex লেখা দেখাবে, এটাই স্বাভাবিক।",
   "Continue with ChatGPT": "ChatGPT দিয়ে চালিয়ে যান",
+  "Continue with Google": "Google দিয়ে চালিয়ে যান",
+  "Use your ChatGPT plan for GPT models":
+    "GPT মডেলের জন্য আপনার ChatGPT প্ল্যান ব্যবহার করুন",
   "Get a new code": "নতুন কোড নিন",
   "Try again": "আবার চেষ্টা করুন",
   "Your question stays in the box while you sign in.":
@@ -208,6 +214,7 @@ export default {
   "Sign In": "সাইন ইন",
   "Account menu": "অ্যাকাউন্ট মেনু",
   "ChatGPT account": "ChatGPT অ্যাকাউন্ট",
+  "Google account": "Google অ্যাকাউন্ট",
   Incognito: "ইনকগনিটো",
   "All settings": "সব সেটিংস",
   "Assalamu alaikum. Sign in to start asking.":
@@ -367,7 +374,6 @@ export default {
   "Download for Mac": "Mac-এর জন্য ডাউনলোড করুন",
   "Download for Windows": "Windows-এর জন্য ডাউনলোড করুন",
   "Download for Linux": "Linux-এর জন্য ডাউনলোড করুন",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "বিনামূল্যের ইসলামি উত্তর ইঞ্জিন। উত্তরগুলো আসে কুরআন, মানসহ হাদিস ও আলেমদের ফতোয়া থেকে, এবং সূত্র উল্লেখ করে।",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -382,3 +388,4 @@ export default {
     "{collection}, গ্রন্থ ধরে ধরে, আরবি ও ইংরেজিতে।",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} থেকে {count}টি হাদিস, আরবি ও ইংরেজিতে।",
+} satisfies Messages;

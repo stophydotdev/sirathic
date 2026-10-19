@@ -2,6 +2,8 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chat-options";
+import { saveDraft } from "@/components/draft";
+import { GoogleIcon } from "@/components/google-icon";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
 import { OpenAIIcon } from "@/components/openai-icon";
@@ -64,7 +66,12 @@ const devicePoll = z.object({
   status: z.enum(["pending", "expired", "signed-in"]),
 });
 
-const apiError = z.object({ error: z.string() });
+const apiError = z.union([
+  z.object({ error: z.string() }).transform((body) => body.error),
+  z.object({ message: z.string() }).transform((body) => body.message),
+]);
+
+const socialSignIn = z.object({ url: z.url() });
 
 type Step =
   | { kind: "start" }
@@ -87,8 +94,7 @@ async function readJson<S extends z.ZodType>(res: Response, schema: S) {
   const body = await res.json().catch(() => undefined);
   if (!res.ok) {
     throw new Error(
-      apiError.safeParse(body).data?.error ??
-        `The server answered ${res.status}`,
+      apiError.safeParse(body).data ?? `The server answered ${res.status}`,
     );
   }
   return schema.parse(body);
@@ -97,6 +103,22 @@ async function readJson<S extends z.ZodType>(res: Response, schema: S) {
 const button =
   "flex h-10 w-full items-center justify-center gap-2 rounded-[10px] text-sm font-medium transition";
 const primary = "bg-primary text-primary-foreground hover:opacity-90";
+const secondary = "bg-muted hover:bg-foreground/10";
+
+const continueWithGoogle = async (draft: string) => {
+  const back = `${location.pathname}${location.search}`;
+  const { url } = await fetch("/api/auth/sign-in/social", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      provider: "google",
+      callbackURL: back,
+      errorCallbackURL: back,
+    }),
+  }).then((res) => readJson(res, socialSignIn));
+  if (draft) saveDraft(draft);
+  location.assign(url);
+};
 
 export const SignInDialog: FC = () => {
   const open = useSignIn((s) => s.open);
@@ -108,7 +130,7 @@ export const SignInDialog: FC = () => {
 
   const getCode = () => {
     setStep({ kind: "asking" });
-    fetch("/api/auth/device", { method: "POST" })
+    fetch("/api/auth/chatgpt/start", { method: "POST" })
       .then((res) => readJson(res, deviceCode))
       .then((code) => setStep({ kind: "code", ...code }))
       .catch((err: Error) => setStep({ kind: "failed", message: err.message }));
@@ -133,7 +155,7 @@ export const SignInDialog: FC = () => {
       }
     };
     const poll = () =>
-      fetch("/api/auth/device")
+      fetch("/api/auth/chatgpt/poll")
         .then((res) => readJson(res, devicePoll))
         .then(({ status }) => finish(status))
         .catch((err: Error) => {
@@ -204,23 +226,46 @@ export const SignInDialog: FC = () => {
               {step.kind === "failed" && (
                 <p className="text-muted-foreground text-sm">{step.message}</p>
               )}
-              <button
-                type="button"
-                disabled={step.kind === "asking"}
-                onClick={getCode}
-                className={cn(button, primary, "disabled:opacity-60")}
-              >
-                {step.kind === "start" || step.kind === "asking" ? (
-                  <>
+              {step.kind === "start" || step.kind === "asking" ? (
+                <div className="flex w-full flex-col items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      continueWithGoogle(draft).catch((err: Error) =>
+                        setStep({ kind: "failed", message: err.message }),
+                      )
+                    }
+                    className={cn(button, primary)}
+                  >
+                    <GoogleIcon className="size-4" />
+                    {t("Continue with Google")}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={step.kind === "asking"}
+                    onClick={getCode}
+                    className={cn(button, secondary, "disabled:opacity-60")}
+                  >
                     <OpenAIIcon className="size-4" />
                     {t("Continue with ChatGPT")}
-                  </>
-                ) : step.kind === "expired" ? (
-                  t("Get a new code")
-                ) : (
-                  t("Try again")
-                )}
-              </button>
+                  </button>
+                  <p className="text-muted-foreground text-xs">
+                    {t("Use your ChatGPT plan for GPT models")}
+                  </p>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={
+                    step.kind === "expired" ? getCode : () => setStep(START)
+                  }
+                  className={cn(button, primary)}
+                >
+                  {step.kind === "expired"
+                    ? t("Get a new code")
+                    : t("Try again")}
+                </button>
+              )}
               {draft && (
                 <p className="text-muted-foreground/70 border-border w-full border-t pt-3.5 text-[11.5px] leading-normal">
                   {t("Your question stays in the box while you sign in.")}
@@ -333,16 +378,32 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
     );
   }
 
+  const viaGoogle = status.via === "google";
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label={t("Account menu")}
         className={cn(row, collapsed && "justify-center px-0")}
       >
-        <span className="bg-super text-background flex size-[26px] shrink-0 items-center justify-center rounded-full">
-          <OpenAIIcon className="size-4" />
-        </span>
-        {!collapsed && <span className="flex-1 truncate">ChatGPT</span>}
+        {status.image ? (
+          <img
+            src={status.image}
+            alt=""
+            referrerPolicy="no-referrer"
+            className="size-[26px] shrink-0 rounded-full"
+          />
+        ) : (
+          <span className="ring-border flex size-[26px] shrink-0 items-center justify-center rounded-full bg-black text-white ring-1">
+            <Mark size={16} color="currentColor" />
+          </span>
+        )}
+        {!collapsed && (
+          <span className="flex-1 truncate">
+            {status.label ??
+              t(viaGoogle ? "Google account" : "ChatGPT account")}
+          </span>
+        )}
         {!collapsed && <ChevronUp className="text-muted-foreground size-3.5" />}
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -352,10 +413,11 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
       >
         <DropdownMenuLabel className="flex flex-col gap-0.5 px-2.5 py-2 font-normal">
           <span className="text-sm font-[470]">
-            {status.label ?? t("ChatGPT account")}
+            {status.label ??
+              t(viaGoogle ? "Google account" : "ChatGPT account")}
           </span>
           <span className="text-muted-foreground text-xs">
-            {t("Signed in with ChatGPT")}
+            {t(viaGoogle ? "Signed in with Google" : "Signed in with ChatGPT")}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

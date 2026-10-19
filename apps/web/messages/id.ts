@@ -142,7 +142,9 @@ export default {
     "Masuk untuk bertanya dan menyimpan obrolan",
   "Sign in": "Masuk",
   "Signed in with ChatGPT": "Masuk dengan ChatGPT",
+  "Signed in with Google": "Masuk dengan Google",
   "Your ChatGPT account": "Akun ChatGPT Anda",
+  "Your Google account": "Akun Google Anda",
   "Sign out": "Keluar",
   "Signs you out on this browser": "Mengeluarkan Anda di peramban ini",
   Appearance: "Tampilan",
@@ -198,11 +200,16 @@ export default {
   "No settings found": "Pengaturan tidak ditemukan",
   "No chat models available": "Tidak ada model obrolan",
   "Manage models": "Kelola model",
+  "Longer answers that explain more":
+    "Jawaban lebih panjang dengan penjelasan lebih banyak",
   "Open ChatGPT": "Buka ChatGPT",
   "Waiting for approval": "Menunggu persetujuan",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Pertama kali? Aktifkan login dengan kode perangkat di ChatGPT → Pengaturan → Keamanan. ChatGPT akan menampilkan Codex, itu memang wajar.",
   "Continue with ChatGPT": "Lanjutkan dengan ChatGPT",
+  "Continue with Google": "Lanjutkan dengan Google",
+  "Use your ChatGPT plan for GPT models":
+    "Gunakan paket ChatGPT Anda untuk model GPT",
   "Get a new code": "Dapatkan kode baru",
   "Try again": "Coba lagi",
   "Your question stays in the box while you sign in.":
@@ -211,6 +218,7 @@ export default {
   "Sign In": "Masuk",
   "Account menu": "Menu akun",
   "ChatGPT account": "Akun ChatGPT",
+  "Google account": "Akun Google",
   Incognito: "Penyamaran",
   "All settings": "Semua pengaturan",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +379,6 @@ export default {
   "Download for Mac": "Unduh untuk Mac",
   "Download for Windows": "Unduh untuk Windows",
   "Download for Linux": "Unduh untuk Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Mesin penjawab Islami gratis. Jawaban bersumber dari Al-Qur'an, hadis beserta derajatnya, dan pendapat ulama, serta menyebutkan sumbernya.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +393,4 @@ export default {
     "{collection}, kitab demi kitab, dalam bahasa Arab dan Inggris.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadis dari {collection}, dalam bahasa Arab dan Inggris.",
+} satisfies Messages;

@@ -142,7 +142,9 @@ export default {
     "கேள்வி கேட்கவும் உரையாடல்களைச் சேமிக்கவும் உள்நுழையுங்கள்",
   "Sign in": "உள்நுழை",
   "Signed in with ChatGPT": "ChatGPT மூலம் உள்நுழைந்துள்ளீர்கள்",
+  "Signed in with Google": "Google மூலம் உள்நுழைந்துள்ளீர்கள்",
   "Your ChatGPT account": "உங்கள் ChatGPT கணக்கு",
+  "Your Google account": "உங்கள் Google கணக்கு",
   "Sign out": "வெளியேறு",
   "Signs you out on this browser": "இந்த உலாவியிலிருந்து உங்களை வெளியேற்றும்",
   Appearance: "தோற்றம்",
@@ -198,11 +200,15 @@ export default {
   "No settings found": "அமைப்புகள் எதுவும் கிடைக்கவில்லை",
   "No chat models available": "மாடல்கள் எதுவும் இல்லை",
   "Manage models": "மாடல்களை நிர்வகி",
+  "Longer answers that explain more": "கூடுதலாக விளக்கும் நீண்ட பதில்கள்",
   "Open ChatGPT": "ChatGPT-ஐத் திற",
   "Waiting for approval": "ஒப்புதலுக்காகக் காத்திருக்கிறது",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "முதல் முறையா? ChatGPT → Settings → Security-இல் சாதனக் குறியீடு உள்நுழைவை இயக்குங்கள். ChatGPT-இல் Codex என்று காட்டும், அது இயல்பானதே.",
   "Continue with ChatGPT": "ChatGPT மூலம் தொடர்",
+  "Continue with Google": "Google மூலம் தொடர்",
+  "Use your ChatGPT plan for GPT models":
+    "GPT மாடல்களுக்கு உங்கள் ChatGPT திட்டத்தைப் பயன்படுத்துங்கள்",
   "Get a new code": "புதிய குறியீட்டைப் பெறு",
   "Try again": "மீண்டும் முயல்",
   "Your question stays in the box while you sign in.":
@@ -211,6 +217,7 @@ export default {
   "Sign In": "உள்நுழை",
   "Account menu": "கணக்கு மெனு",
   "ChatGPT account": "ChatGPT கணக்கு",
+  "Google account": "Google கணக்கு",
   Incognito: "மறைநிலை",
   "All settings": "எல்லா அமைப்புகளும்",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Mac-க்குப் பதிவிறக்கு",
   "Download for Windows": "Windows-க்குப் பதிவிறக்கு",
   "Download for Linux": "Linux-க்குப் பதிவிறக்கு",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "இலவச இஸ்லாமிய பதில் இயந்திரம். பதில்கள் குர்ஆன், தரம் குறிக்கப்பட்ட ஹதீஸ்கள், அறிஞர்களின் தீர்ப்புகள் ஆகியவற்றிலிருந்து வருகின்றன, அவற்றின் மூலங்களைக் குறிப்பிடுகின்றன.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}, நூல் வாரியாக, அரபி மற்றும் ஆங்கிலத்தில்.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} இலிருந்து {count} ஹதீஸ்கள், அரபி மற்றும் ஆங்கிலத்தில்.",
+} satisfies Messages;

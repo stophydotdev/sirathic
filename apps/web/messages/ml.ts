@@ -139,7 +139,9 @@ export default {
   "Sign in to ask and keep your chats": "ചോദിക്കാനും ചാറ്റുകൾ സൂക്ഷിക്കാനും സൈൻ ഇൻ ചെയ്യുക",
   "Sign in": "സൈൻ ഇൻ",
   "Signed in with ChatGPT": "ChatGPT ഉപയോഗിച്ച് സൈൻ ഇൻ ചെയ്തു",
+  "Signed in with Google": "Google ഉപയോഗിച്ച് സൈൻ ഇൻ ചെയ്തു",
   "Your ChatGPT account": "നിങ്ങളുടെ ChatGPT അക്കൗണ്ട്",
+  "Your Google account": "നിങ്ങളുടെ Google അക്കൗണ്ട്",
   "Sign out": "സൈൻ ഔട്ട്",
   "Signs you out on this browser": "ഈ ബ്രൗസറിൽ നിന്ന് സൈൻ ഔട്ട് ചെയ്യുന്നു",
   Appearance: "രൂപം",
@@ -195,11 +197,15 @@ export default {
   "No settings found": "ക്രമീകരണങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
   "No chat models available": "മോഡലുകളൊന്നും ലഭ്യമല്ല",
   "Manage models": "മോഡലുകൾ നിയന്ത്രിക്കുക",
+  "Longer answers that explain more": "കൂടുതൽ വിശദീകരിക്കുന്ന നീണ്ട ഉത്തരങ്ങൾ",
   "Open ChatGPT": "ChatGPT തുറക്കുക",
   "Waiting for approval": "അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "ആദ്യമായാണോ? ChatGPT → Settings → Security-ൽ ഡിവൈസ് കോഡ് സൈൻ-ഇൻ ഓണാക്കുക. ChatGPT-ൽ Codex എന്ന് കാണിക്കും, അത് സാധാരണമാണ്.",
   "Continue with ChatGPT": "ChatGPT ഉപയോഗിച്ച് തുടരുക",
+  "Continue with Google": "Google ഉപയോഗിച്ച് തുടരുക",
+  "Use your ChatGPT plan for GPT models":
+    "GPT മോഡലുകൾക്കായി നിങ്ങളുടെ ChatGPT പ്ലാൻ ഉപയോഗിക്കുക",
   "Get a new code": "പുതിയ കോഡ് നേടുക",
   "Try again": "വീണ്ടും ശ്രമിക്കുക",
   "Your question stays in the box while you sign in.":
@@ -208,6 +214,7 @@ export default {
   "Sign In": "സൈൻ ഇൻ",
   "Account menu": "അക്കൗണ്ട് മെനു",
   "ChatGPT account": "ChatGPT അക്കൗണ്ട്",
+  "Google account": "Google അക്കൗണ്ട്",
   Incognito: "ഇൻകോഗ്നിറ്റോ",
   "All settings": "എല്ലാ ക്രമീകരണങ്ങളും",
   "Assalamu alaikum. Sign in to start asking.":
@@ -368,7 +375,6 @@ export default {
   "Download for Mac": "Mac-നായി ഡൗൺലോഡ് ചെയ്യുക",
   "Download for Windows": "Windows-നായി ഡൗൺലോഡ് ചെയ്യുക",
   "Download for Linux": "Linux-നായി ഡൗൺലോഡ് ചെയ്യുക",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "സൗജന്യ ഇസ്‌ലാമിക ഉത്തര എഞ്ചിൻ. ഉത്തരങ്ങൾ ഖുർആൻ, പ്രാമാണികത രേഖപ്പെടുത്തിയ ഹദീസുകൾ, പണ്ഡിതരുടെ വിധികൾ എന്നിവയിൽ നിന്നാണ്, അവയുടെ ഉറവിടങ്ങൾ പറയുന്നു.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -383,3 +389,4 @@ export default {
     "{collection}, ഗ്രന്ഥം തിരിച്ച്, അറബിയിലും ഇംഗ്ലീഷിലും.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} ൽ നിന്ന് {count} ഹദീസുകൾ, അറബിയിലും ഇംഗ്ലീഷിലും.",
+} satisfies Messages;

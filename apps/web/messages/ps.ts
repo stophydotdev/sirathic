@@ -141,7 +141,9 @@ export default {
     "د پوښتنې او خبرو اترو د ساتلو لپاره ننوځئ",
   "Sign in": "ننوتل",
   "Signed in with ChatGPT": "د ChatGPT له لارې ننوتلي یاست",
+  "Signed in with Google": "د Google له لارې ننوتلي یاست",
   "Your ChatGPT account": "ستاسو د ChatGPT حساب",
+  "Your Google account": "ستاسو د Google حساب",
   "Sign out": "وتل",
   "Signs you out on this browser": "له دې براوزر څخه مو باسي",
   Appearance: "بڼه",
@@ -197,11 +199,15 @@ export default {
   "No settings found": "هېڅ امستنه ونه موندل شوه",
   "No chat models available": "هېڅ ماډل شتون نه لري",
   "Manage models": "ماډلونه اداره کړئ",
+  "Longer answers that explain more": "اوږده ځوابونه چې ډېر وضاحت ورکوي",
   "Open ChatGPT": "ChatGPT پرانیزئ",
   "Waiting for approval": "د تایید انتظار",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "لومړی ځل؟ په ChatGPT ← امستنې ← امنیت کې د وسیلې په کوډ ننوتل فعال کړئ. ChatGPT به Codex وښيي، دا عادي خبره ده.",
   "Continue with ChatGPT": "د ChatGPT سره دوام",
+  "Continue with Google": "د Google سره دوام",
+  "Use your ChatGPT plan for GPT models":
+    "د GPT ماډلونو لپاره خپل ChatGPT پلان وکاروئ",
   "Get a new code": "نوی کوډ واخلئ",
   "Try again": "بیا هڅه وکړئ",
   "Your question stays in the box while you sign in.":
@@ -210,6 +216,7 @@ export default {
   "Sign In": "ننوتل",
   "Account menu": "د حساب مینو",
   "ChatGPT account": "د ChatGPT حساب",
+  "Google account": "د Google حساب",
   Incognito: "پټ حالت",
   "All settings": "ټولې امستنې",
   "Assalamu alaikum. Sign in to start asking.":
@@ -370,7 +377,6 @@ export default {
   "Download for Mac": "د Mac لپاره ښکته کول",
   "Download for Windows": "د Windows لپاره ښکته کول",
   "Download for Linux": "د Linux لپاره ښکته کول",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "وړیا اسلامي ځوابونو انجن. ځوابونه له قرآن، د درجې سره حدیثونو او د علماوو له فتواوو راځي او خپلې سرچينې ښيي.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -385,3 +391,4 @@ export default {
     "{collection}، کتاب په کتاب، په عربي او انګلیسي.",
   "{count} hadith from {collection}, in Arabic and English.":
     "له {collection} څخه {count} حدیثونه، په عربي او انګلیسي.",
+} satisfies Messages;

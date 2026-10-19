@@ -140,7 +140,9 @@ export default {
   "Sign in to ask and keep your chats": "ចូលគណនីដើម្បីសួរ និងរក្សាទុកការជជែករបស់អ្នក",
   "Sign in": "ចូលគណនី",
   "Signed in with ChatGPT": "បានចូលតាម ChatGPT",
+  "Signed in with Google": "បានចូលតាម Google",
   "Your ChatGPT account": "គណនី ChatGPT របស់អ្នក",
+  "Your Google account": "គណនី Google របស់អ្នក",
   "Sign out": "ចាកចេញ",
   "Signs you out on this browser": "ចាកចេញពីកម្មវិធីរុករកនេះ",
   Appearance: "រូបរាង",
@@ -193,11 +195,15 @@ export default {
   "No settings found": "រកមិនឃើញការកំណត់",
   "No chat models available": "គ្មានម៉ូដែលអាចប្រើបាន",
   "Manage models": "គ្រប់គ្រងម៉ូដែល",
+  "Longer answers that explain more": "ចម្លើយវែងជាង ដែលពន្យល់ច្រើនជាង",
   "Open ChatGPT": "បើក ChatGPT",
   "Waiting for approval": "កំពុងរង់ចាំការអនុម័ត",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "លើកដំបូងមែនទេ? បើកការចូលដោយលេខកូដឧបករណ៍ក្នុង ChatGPT → ការកំណត់ → សុវត្ថិភាព។ ChatGPT នឹងបង្ហាញពាក្យ Codex នោះជារឿងធម្មតា។",
   "Continue with ChatGPT": "បន្តជាមួយ ChatGPT",
+  "Continue with Google": "បន្តជាមួយ Google",
+  "Use your ChatGPT plan for GPT models":
+    "ប្រើគម្រោង ChatGPT របស់អ្នកសម្រាប់ម៉ូដែល GPT",
   "Get a new code": "យកលេខកូដថ្មី",
   "Try again": "ព្យាយាមម្ដងទៀត",
   "Your question stays in the box while you sign in.":
@@ -206,6 +212,7 @@ export default {
   "Sign In": "ចូលគណនី",
   "Account menu": "ម៉ឺនុយគណនី",
   "ChatGPT account": "គណនី ChatGPT",
+  "Google account": "គណនី Google",
   Incognito: "អនាមិក",
   "All settings": "ការកំណត់ទាំងអស់",
   "Assalamu alaikum. Sign in to start asking.":
@@ -365,7 +372,6 @@ export default {
   "Download for Mac": "ទាញយកសម្រាប់ Mac",
   "Download for Windows": "ទាញយកសម្រាប់ Windows",
   "Download for Linux": "ទាញយកសម្រាប់ Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "ម៉ាស៊ីនឆ្លើយសំណួរអំពីអ៊ីស្លាមដោយឥតគិតថ្លៃ។ ចម្លើយផ្អែកលើគម្ពីរគួរអាន ហាឌីសដែលមានកម្រិតភាពត្រឹមត្រូវ និងមតិរបស់អ្នកប្រាជ្ញ ហើយបញ្ជាក់ប្រភព។",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -380,3 +386,4 @@ export default {
     "{collection} តាមសៀវភៅនីមួយៗ ជាភាសាអារ៉ាប់ និងអង់គ្លេស។",
   "{count} hadith from {collection}, in Arabic and English.":
     "ហាឌីស {count} ពី {collection} ជាភាសាអារ៉ាប់ និងអង់គ្លេស។",
+} satisfies Messages;

@@ -141,7 +141,9 @@ export default {
     "Савол бериш ва суҳбатларни сақлаш учун киринг",
   "Sign in": "Кириш",
   "Signed in with ChatGPT": "ChatGPT орқали кирилган",
+  "Signed in with Google": "Google орқали кирилган",
   "Your ChatGPT account": "ChatGPT ҳисобингиз",
+  "Your Google account": "Google ҳисобингиз",
   "Sign out": "Чиқиш",
   "Signs you out on this browser": "Бу браузерда ҳисобдан чиқаради",
   Appearance: "Кўриниш",
@@ -197,11 +199,15 @@ export default {
   "No settings found": "Созлама топилмади",
   "No chat models available": "Суҳбат модели мавжуд эмас",
   "Manage models": "Моделларни бошқариш",
+  "Longer answers that explain more": "Кўпроқ тушунтирадиган узунроқ жавоблар",
   "Open ChatGPT": "ChatGPT'ни очиш",
   "Waiting for approval": "Тасдиқ кутилмоқда",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Биринчи мартами? ChatGPT → Созламалар → Хавфсизлик бўлимида қурилма коди орқали киришни ёқинг. ChatGPT Codex деб ёзади, бу одатий.",
   "Continue with ChatGPT": "ChatGPT орқали давом этиш",
+  "Continue with Google": "Google орқали давом этиш",
+  "Use your ChatGPT plan for GPT models":
+    "GPT моделлари учун ChatGPT тарифингиздан фойдаланинг",
   "Get a new code": "Янги код олиш",
   "Try again": "Қайта уриниш",
   "Your question stays in the box while you sign in.":
@@ -210,6 +216,7 @@ export default {
   "Sign In": "Кириш",
   "Account menu": "Ҳисоб менюси",
   "ChatGPT account": "ChatGPT ҳисоби",
+  "Google account": "Google ҳисоби",
   Incognito: "Инкогнито",
   "All settings": "Барча созламалар",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Mac учун юклаб олиш",
   "Download for Windows": "Windows учун юклаб олиш",
   "Download for Linux": "Linux учун юклаб олиш",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Бепул исломий жавоблар тизими. Жавоблар Қуръон, саҳиҳлик даражаси кўрсатилган ҳадислар ва уламолар ҳукмларига асосланади ва манбаларини кўрсатади.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}, китобма-китоб, араб ва инглиз тилларида.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} тўпламидан {count} та ҳадис, араб ва инглиз тилларида.",
+} satisfies Messages;

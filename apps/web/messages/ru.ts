@@ -142,7 +142,9 @@ export default {
     "Войдите, чтобы задавать вопросы и сохранять чаты",
   "Sign in": "Войти",
   "Signed in with ChatGPT": "Вход через ChatGPT",
+  "Signed in with Google": "Вход через Google",
   "Your ChatGPT account": "Ваш аккаунт ChatGPT",
+  "Your Google account": "Ваш аккаунт Google",
   "Sign out": "Выйти",
   "Signs you out on this browser": "Выход из аккаунта в этом браузере",
   Appearance: "Оформление",
@@ -199,11 +201,16 @@ export default {
   "No settings found": "Настройки не найдены",
   "No chat models available": "Нет доступных моделей",
   "Manage models": "Управление моделями",
+  "Longer answers that explain more":
+    "Более длинные ответы с подробными объяснениями",
   "Open ChatGPT": "Открыть ChatGPT",
   "Waiting for approval": "Ожидание подтверждения",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Впервые? Включите вход по коду устройства в ChatGPT → Настройки → Безопасность. ChatGPT покажет Codex — так и должно быть.",
   "Continue with ChatGPT": "Продолжить с ChatGPT",
+  "Continue with Google": "Продолжить с Google",
+  "Use your ChatGPT plan for GPT models":
+    "Используйте свой план ChatGPT для моделей GPT",
   "Get a new code": "Получить новый код",
   "Try again": "Попробовать снова",
   "Your question stays in the box while you sign in.":
@@ -212,6 +219,7 @@ export default {
   "Sign In": "Войти",
   "Account menu": "Меню аккаунта",
   "ChatGPT account": "Аккаунт ChatGPT",
+  "Google account": "Аккаунт Google",
   Incognito: "Инкогнито",
   "All settings": "Все настройки",
   "Assalamu alaikum. Sign in to start asking.":
@@ -372,7 +380,6 @@ export default {
   "Download for Mac": "Скачать для Mac",
   "Download for Windows": "Скачать для Windows",
   "Download for Linux": "Скачать для Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Бесплатная исламская система ответов. Ответы опираются на Коран, хадисы с оценкой достоверности и мнения учёных и указывают свои источники.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -387,3 +394,4 @@ export default {
     "{collection}: книга за книгой, на арабском и английском.",
   "{count} hadith from {collection}, in Arabic and English.":
     "Хадисы из сборника {collection} на арабском и английском. Хадисов: {count}.",
+} satisfies Messages;

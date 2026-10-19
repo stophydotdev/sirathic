@@ -139,7 +139,9 @@ export default {
   "Sign in to ask and keep your chats": "ลงชื่อเข้าใช้เพื่อถามคำถามและเก็บแชทไว้",
   "Sign in": "ลงชื่อเข้าใช้",
   "Signed in with ChatGPT": "ลงชื่อเข้าใช้ด้วย ChatGPT แล้ว",
+  "Signed in with Google": "ลงชื่อเข้าใช้ด้วย Google แล้ว",
   "Your ChatGPT account": "บัญชี ChatGPT ของคุณ",
+  "Your Google account": "บัญชี Google ของคุณ",
   "Sign out": "ออกจากระบบ",
   "Signs you out on this browser": "ออกจากระบบในเบราว์เซอร์นี้",
   Appearance: "รูปลักษณ์",
@@ -192,11 +194,14 @@ export default {
   "No settings found": "ไม่พบการตั้งค่า",
   "No chat models available": "ไม่มีโมเดลให้ใช้",
   "Manage models": "จัดการโมเดล",
+  "Longer answers that explain more": "คำตอบที่ยาวขึ้นและอธิบายมากขึ้น",
   "Open ChatGPT": "เปิด ChatGPT",
   "Waiting for approval": "กำลังรอการอนุมัติ",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "ใช้ครั้งแรกหรือไม่ เปิดการลงชื่อเข้าใช้ด้วยรหัสอุปกรณ์ใน ChatGPT → การตั้งค่า → ความปลอดภัย ChatGPT จะแสดงคำว่า Codex ซึ่งเป็นเรื่องปกติ",
   "Continue with ChatGPT": "ดำเนินการต่อด้วย ChatGPT",
+  "Continue with Google": "ดำเนินการต่อด้วย Google",
+  "Use your ChatGPT plan for GPT models": "ใช้แพ็กเกจ ChatGPT ของคุณกับโมเดล GPT",
   "Get a new code": "รับรหัสใหม่",
   "Try again": "ลองอีกครั้ง",
   "Your question stays in the box while you sign in.":
@@ -205,6 +210,7 @@ export default {
   "Sign In": "ลงชื่อเข้าใช้",
   "Account menu": "เมนูบัญชี",
   "ChatGPT account": "บัญชี ChatGPT",
+  "Google account": "บัญชี Google",
   Incognito: "ไม่ระบุตัวตน",
   "All settings": "การตั้งค่าทั้งหมด",
   "Assalamu alaikum. Sign in to start asking.":
@@ -364,7 +370,6 @@ export default {
   "Download for Mac": "ดาวน์โหลดสำหรับ Mac",
   "Download for Windows": "ดาวน์โหลดสำหรับ Windows",
   "Download for Linux": "ดาวน์โหลดสำหรับ Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "เครื่องมือตอบคำถามเกี่ยวกับอิสลามที่ใช้ฟรี คำตอบมาจากอัลกุรอาน หะดีษพร้อมระดับความถูกต้อง และคำวินิจฉัยของนักวิชาการ พร้อมระบุแหล่งที่มา",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -379,3 +384,4 @@ export default {
     "{collection} ทีละเล่ม เป็นภาษาอาหรับและภาษาอังกฤษ",
   "{count} hadith from {collection}, in Arabic and English.":
     "หะดีษ {count} บทจาก {collection} เป็นภาษาอาหรับและภาษาอังกฤษ",
+} satisfies Messages;

@@ -1,5 +1,6 @@
 import { useSessions } from "@/components/sessions";
 import { api } from "@/lib/trpc";
+import type { MessageKey } from "@/messages/en";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -9,6 +10,10 @@ export type Model = Awaited<
 >[number];
 
 type Models = { list: Model[]; error?: string };
+
+export const MODEL_DESCRIPTIONS = new Map<string, MessageKey>([
+  ["sirathic-noor-1-flash", "Longer answers that explain more"],
+]);
 
 const SIGNED_OUT: Status = { signedIn: false };
 const NO_MODELS: Models = { list: [] };
@@ -41,7 +46,7 @@ export const useAccount = create<{
       },
       choose: (slug) => set({ chosen: slug }),
       signOut: async () => {
-        await fetch("/api/auth/logout", { method: "POST" }).catch(
+        await fetch("/api/auth/sign-out", { method: "POST" }).catch(
           () => undefined,
         );
         await Promise.all([get().refresh(), useSessions.getState().refresh()]);

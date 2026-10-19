@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccount } from "@/components/account";
+import { MODEL_DESCRIPTIONS, useAccount } from "@/components/account";
 import { MODE_DETAILS, useChatOptions } from "@/components/chat-options";
 import {
   browserLocale,
@@ -285,8 +285,19 @@ export const AccountSection: FC = () => {
     <>
       <Group>
         <Row
-          label={t("Signed in with ChatGPT")}
-          hint={status.label ?? t("Your ChatGPT account")}
+          label={t(
+            status.via === "google"
+              ? "Signed in with Google"
+              : "Signed in with ChatGPT",
+          )}
+          hint={
+            status.label ??
+            t(
+              status.via === "google"
+                ? "Your Google account"
+                : "Your ChatGPT account",
+            )
+          }
         />
         <Row label={t("Sign out")} hint={t("Signs you out on this browser")}>
           <button
@@ -627,22 +638,36 @@ export const ModelsSection: FC = () => {
 
   return (
     <Group
-      title={status?.signedIn ? t("From your ChatGPT account") : undefined}
+      title={
+        status?.signedIn && status.via === "chatgpt"
+          ? t("From your ChatGPT account")
+          : undefined
+      }
     >
       {models.length === 0 && <Row label={t("Sign in to see your models")} />}
-      {models.map((model) => (
-        <button
-          key={model.slug}
-          type="button"
-          aria-pressed={model.slug === chosen}
-          onClick={() => choose(model.slug)}
-          className="hover:bg-muted/60 flex min-h-[52px] w-full items-center gap-3 px-4 text-start text-sm first:rounded-t-[12px] last:rounded-b-[12px]"
-        >
-          <MakerIcon maker={model.maker} className="size-4 shrink-0" />
-          <span className="flex-1">{model.name}</span>
-          {model.slug === chosen && <CheckIcon className="size-4" />}
-        </button>
-      ))}
+      {models.map((model) => {
+        const description = MODEL_DESCRIPTIONS.get(model.slug);
+        return (
+          <button
+            key={model.slug}
+            type="button"
+            aria-pressed={model.slug === chosen}
+            onClick={() => choose(model.slug)}
+            className="hover:bg-muted/60 flex min-h-[52px] w-full items-center gap-3 px-4 text-start text-sm first:rounded-t-[12px] last:rounded-b-[12px]"
+          >
+            <MakerIcon maker={model.maker} className="size-4 shrink-0" />
+            <span className="flex flex-1 flex-col">
+              {model.name}
+              {description && (
+                <span className="text-muted-foreground text-xs">
+                  {t(description)}
+                </span>
+              )}
+            </span>
+            {model.slug === chosen && <CheckIcon className="size-4" />}
+          </button>
+        );
+      })}
     </Group>
   );
 };

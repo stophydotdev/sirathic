@@ -142,7 +142,9 @@ export default {
     "Đăng nhập để đặt câu hỏi và lưu cuộc trò chuyện",
   "Sign in": "Đăng nhập",
   "Signed in with ChatGPT": "Đã đăng nhập bằng ChatGPT",
+  "Signed in with Google": "Đã đăng nhập bằng Google",
   "Your ChatGPT account": "Tài khoản ChatGPT của bạn",
+  "Your Google account": "Tài khoản Google của bạn",
   "Sign out": "Đăng xuất",
   "Signs you out on this browser": "Đăng xuất khỏi trình duyệt này",
   Appearance: "Giao diện",
@@ -198,11 +200,15 @@ export default {
   "No settings found": "Không tìm thấy cài đặt",
   "No chat models available": "Không có mô hình nào",
   "Manage models": "Quản lý mô hình",
+  "Longer answers that explain more": "Câu trả lời dài hơn, giải thích kỹ hơn",
   "Open ChatGPT": "Mở ChatGPT",
   "Waiting for approval": "Đang chờ phê duyệt",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Lần đầu? Hãy bật đăng nhập bằng mã thiết bị trong ChatGPT → Cài đặt → Bảo mật. ChatGPT sẽ hiện Codex, điều đó là bình thường.",
   "Continue with ChatGPT": "Tiếp tục với ChatGPT",
+  "Continue with Google": "Tiếp tục với Google",
+  "Use your ChatGPT plan for GPT models":
+    "Dùng gói ChatGPT của bạn cho các mô hình GPT",
   "Get a new code": "Lấy mã mới",
   "Try again": "Thử lại",
   "Your question stays in the box while you sign in.":
@@ -211,6 +217,7 @@ export default {
   "Sign In": "Đăng nhập",
   "Account menu": "Menu tài khoản",
   "ChatGPT account": "Tài khoản ChatGPT",
+  "Google account": "Tài khoản Google",
   Incognito: "Ẩn danh",
   "All settings": "Tất cả cài đặt",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Tải xuống cho Mac",
   "Download for Windows": "Tải xuống cho Windows",
   "Download for Linux": "Tải xuống cho Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Công cụ giải đáp về Hồi giáo miễn phí. Câu trả lời dựa trên Qur'an, hadith kèm mức độ xác thực và ý kiến của các học giả, và có dẫn nguồn.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}, từng quyển, bằng tiếng Ả Rập và tiếng Anh.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadith từ {collection}, bằng tiếng Ả Rập và tiếng Anh.",
+} satisfies Messages;

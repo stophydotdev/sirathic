@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccount } from "@/components/account";
+import { MODEL_DESCRIPTIONS, useAccount } from "@/components/account";
 import { type Translate, useT } from "@/components/i18n";
 import { MakerIcon } from "@/components/maker-icon";
 import {
@@ -234,7 +234,7 @@ export const ModelMenuContent: FC<{
       avoidCollisions={side === undefined}
       className="ring-foreground/7 max-h-[min(405px,var(--radix-dropdown-menu-content-available-height))] w-70 rounded-[12px] p-1"
     >
-      {status?.signedIn && (
+      {status?.signedIn && status.via === "chatgpt" && (
         <DropdownMenuLabel className="text-muted-foreground px-2 pt-1.5 pb-1 text-xs font-normal">
           {t("From your ChatGPT account")}
         </DropdownMenuLabel>
@@ -244,17 +244,30 @@ export const ModelMenuContent: FC<{
           {t("No chat models available")}
         </DropdownMenuItem>
       )}
-      {models.map((model) => (
-        <DropdownMenuItem
-          key={model.slug}
-          onSelect={() => choose(model.slug)}
-          className={modelRow}
-        >
-          <MakerIcon maker={model.maker} className="size-4" />
-          <span className="flex-1 truncate">{model.name}</span>
-          {chosen === model.slug && <CheckIcon className="size-4" />}
-        </DropdownMenuItem>
-      ))}
+      {models.map((model) => {
+        const description = MODEL_DESCRIPTIONS.get(model.slug);
+        return (
+          <DropdownMenuItem
+            key={model.slug}
+            onSelect={() => choose(model.slug)}
+            className={cn(modelRow, description && "h-auto items-start")}
+          >
+            <MakerIcon
+              maker={model.maker}
+              className={cn("size-4", description && "mt-0.5")}
+            />
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="truncate">{model.name}</span>
+              {description && (
+                <span className="text-muted-foreground text-xs">
+                  {t(description)}
+                </span>
+              )}
+            </span>
+            {chosen === model.slug && <CheckIcon className="size-4" />}
+          </DropdownMenuItem>
+        );
+      })}
       {onManage && (
         <DropdownMenuItem onSelect={onManage} className={modelRow}>
           <Settings2 className="size-4" />

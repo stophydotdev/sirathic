@@ -142,7 +142,9 @@ export default {
     "Sual vermək və söhbətlərinizi saxlamaq üçün daxil olun",
   "Sign in": "Daxil ol",
   "Signed in with ChatGPT": "ChatGPT ilə daxil olunub",
+  "Signed in with Google": "Google ilə daxil olunub",
   "Your ChatGPT account": "ChatGPT hesabınız",
+  "Your Google account": "Google hesabınız",
   "Sign out": "Çıxış",
   "Signs you out on this browser": "Bu brauzerdə hesabdan çıxırsınız",
   Appearance: "Görünüş",
@@ -199,11 +201,15 @@ export default {
   "No settings found": "Ayar tapılmadı",
   "No chat models available": "Söhbət modeli yoxdur",
   "Manage models": "Modelləri idarə et",
+  "Longer answers that explain more": "Daha çox izah edən daha uzun cavablar",
   "Open ChatGPT": "ChatGPT-ni aç",
   "Waiting for approval": "Təsdiq gözlənilir",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "İlk dəfədir? ChatGPT → Ayarlar → Təhlükəsizlik bölməsində cihaz kodu ilə girişi aktivləşdirin. ChatGPT Codex yazacaq, bu normaldır.",
   "Continue with ChatGPT": "ChatGPT ilə davam et",
+  "Continue with Google": "Google ilə davam et",
+  "Use your ChatGPT plan for GPT models":
+    "GPT modelləri üçün ChatGPT planınızdan istifadə edin",
   "Get a new code": "Yeni kod al",
   "Try again": "Yenidən cəhd et",
   "Your question stays in the box while you sign in.":
@@ -212,6 +218,7 @@ export default {
   "Sign In": "Daxil ol",
   "Account menu": "Hesab menyusu",
   "ChatGPT account": "ChatGPT hesabı",
+  "Google account": "Google hesabı",
   Incognito: "Gizli rejim",
   "All settings": "Bütün ayarlar",
   "Assalamu alaikum. Sign in to start asking.":
@@ -372,7 +379,6 @@ export default {
   "Download for Mac": "Mac üçün yüklə",
   "Download for Windows": "Windows üçün yüklə",
   "Download for Linux": "Linux üçün yüklə",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Pulsuz İslami cavab sistemi. Cavablar Qurana, səhihlik dərəcəsi göstərilmiş hədislərə və alimlərin hökmlərinə əsaslanır və mənbələrini göstərir.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -387,3 +393,4 @@ export default {
     "{collection}, kitab-kitab, ərəbcə və ingiliscə.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} toplusundan {count} hədis, ərəbcə və ingiliscə.",
+} satisfies Messages;

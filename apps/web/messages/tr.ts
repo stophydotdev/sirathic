@@ -141,7 +141,9 @@ export default {
     "Soru sormak ve sohbetlerinizi saklamak için giriş yapın",
   "Sign in": "Giriş yap",
   "Signed in with ChatGPT": "ChatGPT ile giriş yapıldı",
+  "Signed in with Google": "Google ile giriş yapıldı",
   "Your ChatGPT account": "ChatGPT hesabınız",
+  "Your Google account": "Google hesabınız",
   "Sign out": "Çıkış yap",
   "Signs you out on this browser": "Bu tarayıcıda oturumunuzu kapatır",
   Appearance: "Görünüm",
@@ -198,11 +200,15 @@ export default {
   "No settings found": "Ayar bulunamadı",
   "No chat models available": "Kullanılabilir sohbet modeli yok",
   "Manage models": "Modelleri yönet",
+  "Longer answers that explain more": "Daha çok açıklayan daha uzun cevaplar",
   "Open ChatGPT": "ChatGPT'yi aç",
   "Waiting for approval": "Onay bekleniyor",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "İlk kez mi? ChatGPT → Ayarlar → Güvenlik bölümünden cihaz koduyla girişi açın. ChatGPT'de Codex yazacak; bu normal.",
   "Continue with ChatGPT": "ChatGPT ile devam et",
+  "Continue with Google": "Google ile devam et",
+  "Use your ChatGPT plan for GPT models":
+    "GPT modelleri için ChatGPT planınızı kullanın",
   "Get a new code": "Yeni kod al",
   "Try again": "Tekrar dene",
   "Your question stays in the box while you sign in.":
@@ -211,6 +217,7 @@ export default {
   "Sign In": "Giriş yap",
   "Account menu": "Hesap menüsü",
   "ChatGPT account": "ChatGPT hesabı",
+  "Google account": "Google hesabı",
   Incognito: "Gizli mod",
   "All settings": "Tüm ayarlar",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Mac için indir",
   "Download for Windows": "Windows için indir",
   "Download for Linux": "Linux için indir",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Ücretsiz İslami cevap motoru. Cevaplar Kur'an'a, sıhhat derecesiyle hadislere ve âlimlerin hükümlerine dayanır ve kaynaklarını gösterir.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}, kitap kitap, Arapça ve İngilizce.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} kaynağından {count} hadis, Arapça ve İngilizce.",
+} satisfies Messages;

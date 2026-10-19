@@ -142,7 +142,9 @@ export default {
     "بچۆ ژوورەوە بۆ پرسیارکردن و پاراستنی گفتوگۆکانت",
   "Sign in": "چوونەژوورەوە",
   "Signed in with ChatGPT": "بە ChatGPT چوویتە ژوورەوە",
+  "Signed in with Google": "بە Google چوویتە ژوورەوە",
   "Your ChatGPT account": "هەژماری ChatGPTـەکەت",
+  "Your Google account": "هەژماری Googleـەکەت",
   "Sign out": "چوونەدەرەوە",
   "Signs you out on this browser": "لەم وێبگەڕە دەرت دەکات",
   Appearance: "ڕووکار",
@@ -198,11 +200,15 @@ export default {
   "No settings found": "هیچ ڕێکخستنێک نەدۆزرایەوە",
   "No chat models available": "هیچ مۆدێلێک بەردەست نییە",
   "Manage models": "بەڕێوەبردنی مۆدێلەکان",
+  "Longer answers that explain more": "وەڵامی درێژتر کە زیاتر ڕوون دەکاتەوە",
   "Open ChatGPT": "کردنەوەی ChatGPT",
   "Waiting for approval": "چاوەڕێی پەسەندکردن",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "یەکەم جارە؟ لە ChatGPT ← ڕێکخستنەکان ← ئاسایش چوونەژوورەوە بە کۆدی ئامێر چالاک بکە. ChatGPT ناوی Codex پیشان دەدات، ئەوە ئاساییە.",
   "Continue with ChatGPT": "بەردەوامبوون بە ChatGPT",
+  "Continue with Google": "بەردەوامبوون بە Google",
+  "Use your ChatGPT plan for GPT models":
+    "پلانی ChatGPTـەکەت بۆ مۆدێلەکانی GPT بەکاربهێنە",
   "Get a new code": "وەرگرتنی کۆدی نوێ",
   "Try again": "دووبارە هەوڵ بدەرەوە",
   "Your question stays in the box while you sign in.":
@@ -211,6 +217,7 @@ export default {
   "Sign In": "چوونەژوورەوە",
   "Account menu": "لیستی هەژمار",
   "ChatGPT account": "هەژماری ChatGPT",
+  "Google account": "هەژماری Google",
   Incognito: "نهێنی",
   "All settings": "هەموو ڕێکخستنەکان",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "دابەزاندن بۆ Mac",
   "Download for Windows": "دابەزاندن بۆ Windows",
   "Download for Linux": "دابەزاندن بۆ Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "بزوێنەری وەڵامی ئیسلامی بەخۆڕایی. وەڵامەکان لە قورئان، فەرموودەکان لەگەڵ پلەی دروستییان و ڕای زانایانەوە دێن و سەرچاوەکانیان دەڵێن.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}، کتێب بە کتێب، بە عەرەبی و ئینگلیزی.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} فەرموودە لە {collection}، بە عەرەبی و ئینگلیزی.",
+} satisfies Messages;

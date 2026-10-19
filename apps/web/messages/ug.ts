@@ -141,7 +141,9 @@ export default {
     "سوئال سوراش ۋە سۆھبەتلەرنى ساقلاش ئۈچۈن كىرىڭ",
   "Sign in": "كىرىش",
   "Signed in with ChatGPT": "ChatGPT ئارقىلىق كىردىڭىز",
+  "Signed in with Google": "Google ئارقىلىق كىردىڭىز",
   "Your ChatGPT account": "ChatGPT ھېساباتىڭىز",
+  "Your Google account": "Google ھېساباتىڭىز",
   "Sign out": "چىقىش",
   "Signs you out on this browser": "بۇ توركۆرگۈچتىن چىقىرىدۇ",
   Appearance: "كۆرۈنۈش",
@@ -197,11 +199,15 @@ export default {
   "No settings found": "تەڭشەك تېپىلمىدى",
   "No chat models available": "ئىشلەتكىلى بولىدىغان مودېل يوق",
   "Manage models": "مودېللارنى باشقۇرۇش",
+  "Longer answers that explain more": "كۆپرەك چۈشەندۈرىدىغان ئۇزۇنراق جاۋابلار",
   "Open ChatGPT": "ChatGPT نى ئېچىش",
   "Waiting for approval": "تەستىق كۈتۈلۈۋاتىدۇ",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "تۇنجى قېتىممۇ؟ ChatGPT ← تەڭشەكلەر ← بىخەتەرلىك بۆلىكىدە ئۈسكۈنە كودى بىلەن كىرىشنى ئېچىڭ. ChatGPT دا Codex دەپ كۆرۈنىدۇ، بۇ نورمال.",
   "Continue with ChatGPT": "ChatGPT ئارقىلىق داۋاملاشتۇرۇش",
+  "Continue with Google": "Google ئارقىلىق داۋاملاشتۇرۇش",
+  "Use your ChatGPT plan for GPT models":
+    "GPT مودېللىرى ئۈچۈن ChatGPT پىلانىڭىزنى ئىشلىتىڭ",
   "Get a new code": "يېڭى كود ئېلىش",
   "Try again": "قايتا سىناش",
   "Your question stays in the box while you sign in.":
@@ -210,6 +216,7 @@ export default {
   "Sign In": "كىرىش",
   "Account menu": "ھېسابات تىزىملىكى",
   "ChatGPT account": "ChatGPT ھېساباتى",
+  "Google account": "Google ھېساباتى",
   Incognito: "يوشۇرۇن ھالەت",
   "All settings": "بارلىق تەڭشەكلەر",
   "Assalamu alaikum. Sign in to start asking.":
@@ -371,7 +378,6 @@ export default {
   "Download for Mac": "Mac ئۈچۈن چۈشۈرۈش",
   "Download for Windows": "Windows ئۈچۈن چۈشۈرۈش",
   "Download for Linux": "Linux ئۈچۈن چۈشۈرۈش",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "ھەقسىز ئىسلامىي سوئال-جاۋاب سىستېمىسى. جاۋابلار قۇرئان، دەرىجىسى كۆرسىتىلگەن ھەدىسلەر ۋە ئالىملارنىڭ ھۆكۈملىرىگە ئاساسلىنىدۇ ھەمدە مەنبەلىرىنى كۆرسىتىدۇ.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -386,3 +392,4 @@ export default {
     "{collection}، كىتاب-كىتاب بويىچە، ئەرەبچە ۋە ئىنگلىزچە.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} دىن {count} ھەدىس، ئەرەبچە ۋە ئىنگلىزچە.",
+} satisfies Messages;

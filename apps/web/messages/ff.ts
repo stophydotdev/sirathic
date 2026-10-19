@@ -141,7 +141,9 @@ export default {
     "Naatu ngam naamnaade e danndude yeewtereeji maa",
   "Sign in": "Naatu",
   "Signed in with ChatGPT": "A naatii e ChatGPT",
+  "Signed in with Google": "A naatii e Google",
   "Your ChatGPT account": "Konte ChatGPT maa",
+  "Your Google account": "Konte Google maa",
   "Sign out": "Yaltu",
   "Signs you out on this browser": "Ena yaltina ma e wanngorde ndee",
   Appearance: "Jeeygol",
@@ -197,11 +199,15 @@ export default {
   "No settings found": "Alaa teelte yiyaaɗe",
   "No chat models available": "Alaa model heɓoteeɗo",
   "Manage models": "Toppito modelaaji",
+  "Longer answers that explain more": "Jaabawuuji juutɗi ɓurɗi firde",
   "Open ChatGPT": "Uddit ChatGPT",
   "Waiting for approval": "Ena sabbii jaɓgol",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Ko adanol? Huɓɓu naatgol kod kaɓirgal e ChatGPT → Settings → Security. ChatGPT maa wiy Codex, ɗum ko mbaadi mum.",
   "Continue with ChatGPT": "Jokku e ChatGPT",
+  "Continue with Google": "Jokku e Google",
+  "Use your ChatGPT plan for GPT models":
+    "Huutoro plan ChatGPT maa ngam modelaaji GPT",
   "Get a new code": "Heɓ kod kesol",
   "Try again": "Eto kadi",
   "Your question stays in the box while you sign in.":
@@ -210,6 +216,7 @@ export default {
   "Sign In": "Naatu",
   "Account menu": "Doggol konte",
   "ChatGPT account": "Konte ChatGPT",
+  "Google account": "Konte Google",
   Incognito: "Suuɗaa",
   "All settings": "Teelte fof",
   "Assalamu alaikum. Sign in to start asking.":
@@ -370,7 +377,6 @@ export default {
   "Download for Mac": "Aawto ngam Mac",
   "Download for Windows": "Aawto ngam Windows",
   "Download for Linux": "Aawto ngam Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Jaabotorde Lislaam alaa njoɓdi. Jaabooje ɗee ummotoo e Alkur'aana, hadiisaaji e darja mum'en, e fatwaaji jaŋngooɓe ɓee, ɗe ina tinnda ɗo ɗe ummii.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -385,3 +391,4 @@ export default {
     "{collection}, deftere kala, e araabeere e engeleere.",
   "{count} hadith from {collection}, in Arabic and English.":
     "Hadiisaaji {count} iwde e {collection}, e araabeere e engeleere.",
+} satisfies Messages;

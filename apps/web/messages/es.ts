@@ -142,7 +142,9 @@ export default {
     "Inicia sesión para preguntar y guardar tus chats",
   "Sign in": "Iniciar sesión",
   "Signed in with ChatGPT": "Sesión iniciada con ChatGPT",
+  "Signed in with Google": "Sesión iniciada con Google",
   "Your ChatGPT account": "Tu cuenta de ChatGPT",
+  "Your Google account": "Tu cuenta de Google",
   "Sign out": "Cerrar sesión",
   "Signs you out on this browser": "Cierra tu sesión en este navegador",
   Appearance: "Apariencia",
@@ -200,11 +202,15 @@ export default {
   "No settings found": "No se encontraron ajustes",
   "No chat models available": "No hay modelos de chat disponibles",
   "Manage models": "Gestionar modelos",
+  "Longer answers that explain more": "Respuestas más largas que explican más",
   "Open ChatGPT": "Abrir ChatGPT",
   "Waiting for approval": "Esperando la aprobación",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "¿Primera vez? Activa el inicio de sesión con código de dispositivo en ChatGPT → Configuración → Seguridad. ChatGPT mostrará Codex; es lo normal.",
   "Continue with ChatGPT": "Continuar con ChatGPT",
+  "Continue with Google": "Continuar con Google",
+  "Use your ChatGPT plan for GPT models":
+    "Usa tu plan de ChatGPT para los modelos GPT",
   "Get a new code": "Obtener un código nuevo",
   "Try again": "Intentar de nuevo",
   "Your question stays in the box while you sign in.":
@@ -213,6 +219,7 @@ export default {
   "Sign In": "Iniciar sesión",
   "Account menu": "Menú de la cuenta",
   "ChatGPT account": "Cuenta de ChatGPT",
+  "Google account": "Cuenta de Google",
   Incognito: "Incógnito",
   "All settings": "Todos los ajustes",
   "Assalamu alaikum. Sign in to start asking.":
@@ -373,7 +380,6 @@ export default {
   "Download for Mac": "Descargar para Mac",
   "Download for Windows": "Descargar para Windows",
   "Download for Linux": "Descargar para Linux",
-} satisfies Messages;
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.":
     "Motor de respuestas islámico gratuito. Las respuestas vienen del Corán, de hadices con su grado de autenticidad y de dictámenes de los sabios, y citan sus fuentes.",
   "All 114 surahs of the Quran in Arabic, with translation and tafsir.":
@@ -388,3 +394,4 @@ export default {
     "{collection}, libro por libro, en árabe e inglés.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadices de {collection}, en árabe e inglés.",
+} satisfies Messages;
