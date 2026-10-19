@@ -218,6 +218,40 @@ export const fatwas = pgTable(
   ],
 );
 
+export const REDDIT_EMBEDDING_DIMENSIONS = 512;
+
+type RedditComment = {
+  id: string;
+  parent: string;
+  score: number;
+  body: string;
+};
+
+export const redditThreads = pgTable(
+  "reddit_threads",
+  {
+    id: text().primaryKey(),
+    subreddit: text().notNull(),
+    url: text().notNull(),
+    title: text().notNull(),
+    question: text(),
+    score: integer().notNull(),
+    postedAt: timestamp({ withTimezone: true }).notNull(),
+    comments: jsonb().$type<RedditComment[]>().notNull(),
+    search: tsvector().generatedAlwaysAs(
+      sql`to_tsvector('english', title || ' ' || coalesce(question, ''))`,
+    ),
+    embedding: halfvec({ dimensions: REDDIT_EMBEDDING_DIMENSIONS }),
+  },
+  (table) => [
+    index("reddit_threads_search").using("gin", table.search),
+    index("reddit_threads_embedding").using(
+      "hnsw",
+      table.embedding.op("halfvec_cosine_ops"),
+    ),
+  ],
+);
+
 export const tafsirPassages = pgTable(
   "tafsir_passages",
   {
