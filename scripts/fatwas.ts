@@ -16,7 +16,7 @@ const ONLY = process.argv
   ?.slice(8)
   .split(",");
 const CHUNK_CHARS = 6_000;
-const PROXY = z.url().parse(process.env.CRAWL_PROXY_URL);
+const PROXY = z.url().parse(process.env.PROXY_URL);
 const RAW_DIR = `${DATA_DIR}/fatwas`;
 const BATCH_SIZE = 100;
 const ATTEMPTS = 3;
