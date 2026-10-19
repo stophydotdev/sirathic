@@ -70,7 +70,7 @@ const arabicHits = async (
     weights: await rarity(
       [...quoted].map(([token, word]) => ({
         word: token,
-        match: sql`search @@ to_tsquery('simple', ${arabicForms(word).join(" | ")})`,
+        match: sql`${hadiths.search} @@ to_tsquery('simple', ${arabicForms(word).join(" | ")})`,
       })),
     ),
     width: windowFor(arabicTokens(text).length),
@@ -93,7 +93,7 @@ const englishWeights = async (text: string) =>
       ])[0]?.words ?? []
     ).map((word) => ({
       word,
-      match: sql`search @@ to_tsquery('simple', ${word})`,
+      match: sql`${hadiths.search} @@ to_tsquery('simple', ${word})`,
     })),
   );
 
@@ -105,7 +105,7 @@ const englishRareIds = async (weights: Map<string, number>, limit: number) => {
   const score = sql.join(
     [...weights].map(
       ([word, weight]) =>
-        sql`(case when search @@ to_tsquery('simple', ${word}) then ${weight}::float8 else 0 end)`,
+        sql`(case when ${hadiths.search} @@ to_tsquery('simple', ${word}) then ${weight}::float8 else 0 end)`,
     ),
     sql` + `,
   );
@@ -113,7 +113,7 @@ const englishRareIds = async (weights: Map<string, number>, limit: number) => {
     .parse([
       ...(await db.execute(sql`
         select ${hadiths.id} as id from ${hadiths}
-        where search @@ to_tsquery('simple', ${(rare.length > 0 ? rare : [...weights.keys()]).join(" | ")})
+        where ${hadiths.search} @@ to_tsquery('simple', ${(rare.length > 0 ? rare : [...weights.keys()]).join(" | ")})
         order by ${score} desc
         limit ${limit}
       `)),

@@ -1,9 +1,9 @@
 import { db } from "@sirathic/db";
 import { type SQL, sql } from "drizzle-orm";
-import type { PgTable } from "drizzle-orm/pg-core";
 import { z } from "zod";
 import { withoutStopwords } from "./arabic";
 import { embedQuery } from "./embedding";
+import type { Searchable } from "./hybridSearch";
 import { countWhere, tableSize } from "./wordCounts";
 
 const COMMON_SHARE = 0.08;
@@ -34,7 +34,7 @@ export const arabicForms = (word: string) => {
 };
 
 export const arabicKeywordIds = async (
-  table: PgTable,
+  table: Searchable,
   query: string,
   limit: number,
   { filter = sql`true` }: { filter?: SQL } = {},
@@ -57,7 +57,7 @@ export const arabicKeywordIds = async (
           count: await countWhere(
             table,
             terms,
-            sql`search @@ to_tsquery('simple', ${terms})`,
+            sql`${table.search} @@ to_tsquery('simple', ${terms})`,
           ),
         };
       }),
@@ -72,15 +72,15 @@ export const arabicKeywordIds = async (
   const score = sql.join(
     found.map(
       (group) =>
-        sql`(case when search @@ to_tsquery('simple', ${group.terms}) then ${Math.log(total / group.count)}::float8 else 0 end)`,
+        sql`(case when ${table.search} @@ to_tsquery('simple', ${group.terms}) then ${Math.log(total / group.count)}::float8 else 0 end)`,
     ),
     sql` + `,
   );
   const vector = JSON.stringify(await embedQuery(query));
   const rows = await db.execute(sql`
-    select id from ${table}
-    where search @@ to_tsquery('simple', ${required}) and ${filter}
-    order by ${score} desc, embedding <=> ${vector}::halfvec
+    select ${table.id} as id from ${table}
+    where ${table.search} @@ to_tsquery('simple', ${required}) and ${filter}
+    order by ${score} desc, ${table.embedding} <=> ${vector}::halfvec
     limit ${limit}
   `);
   return ranked.parse(rows).map((row) => row.id);

@@ -1,19 +1,28 @@
 import { mkdir } from "node:fs/promises";
 import { db } from "@sirathic/db";
+import { fatwas } from "@sirathic/db/schema";
+import { inArray, sql } from "drizzle-orm";
+import { z } from "zod";
 import { DATA_DIR, FATWA_MIRRORS } from "./catalog";
 
 const APPLY = process.argv.includes("--apply");
 
-const q = db.$client;
 const mirrors = JSON.stringify(FATWA_MIRRORS);
 
-const removable = await q`
+const duplicate = z.object({
+  url: z.string(),
+  kept: z.string(),
+  reason: z.enum(["mirror", "repeat"]),
+});
+
+const removable = z.array(duplicate).parse([
+  ...(await db.execute(sql`
   with pages as (
-    select url, source, split_part(url, '/', 5) as section,
-      regexp_replace(lower(title), '[^a-z0-9؀-ۿ]+', '', 'g') as title_key,
-      left(regexp_replace(lower(answer), '[^a-z0-9؀-ۿ]+', '', 'g'), 300) as answer_key,
-      md5(answer) as answer_hash, length(answer) as size
-    from fatwas where id not like '%#%'
+    select ${fatwas.url} as url, ${fatwas.source} as source, split_part(${fatwas.url}, '/', 5) as section,
+      regexp_replace(lower(${fatwas.title}), '[^a-z0-9؀-ۿ]+', '', 'g') as title_key,
+      left(regexp_replace(lower(${fatwas.answer}), '[^a-z0-9؀-ۿ]+', '', 'g'), 300) as answer_key,
+      md5(${fatwas.answer}) as answer_hash, length(${fatwas.answer}) as size
+    from ${fatwas} where ${fatwas.id} not like '%#%'
   ),
   mirror_copies as (
     select distinct on (url) url, kept, 'mirror' as reason from (
@@ -31,12 +40,13 @@ const removable = await q`
       window same as (partition by answer_hash order by (source = 'islamqa.org'), url)
     ) ranked where rank > 1
   )
-  select * from mirror_copies union select * from repeats where url not in (select url from mirror_copies)`;
+  select * from mirror_copies union select * from repeats where url not in (select url from mirror_copies)`)),
+]);
 
-const pages = new Map(removable.map((row) => [String(row.url), row]));
+const pages = new Map(removable.map((row) => [row.url, row]));
 const counts = new Map<string, number>();
 for (const row of pages.values()) {
-  const key = `${row.reason}: ${new URL(String(row.url)).hostname}/${String(row.url).split("/")[4] ?? ""}`;
+  const key = `${row.reason}: ${new URL(row.url).hostname}/${row.url.split("/")[4] ?? ""}`;
   counts.set(key, (counts.get(key) ?? 0) + 1);
 }
 console.log(`${pages.size} duplicate pages to remove:`);
@@ -49,7 +59,7 @@ for (const row of [...pages.values()].slice(0, 5))
 
 if (APPLY && pages.size > 0) {
   const urls = [...pages.keys()];
-  const rows = await q`select * from fatwas where url = any(${urls}::text[])`;
+  const rows = await db.select().from(fatwas).where(inArray(fatwas.url, urls));
   const dir = `${DATA_DIR}/fatwas-removed`;
   await mkdir(dir, { recursive: true });
   const file = `${dir}/${new Date().toISOString().replaceAll(":", "-")}.jsonl.gz`;
@@ -57,9 +67,12 @@ if (APPLY && pages.size > 0) {
     file,
     Bun.gzipSync(rows.map((row) => JSON.stringify(row)).join("\n")),
   );
-  const deleted = await q`delete from fatwas where url = any(${urls}::text[])`;
+  const deleted = await db
+    .delete(fatwas)
+    .where(inArray(fatwas.url, urls))
+    .returning({ url: fatwas.url });
   console.log(
-    `saved ${rows.length} rows to ${file}, deleted ${deleted.count} rows`,
+    `saved ${rows.length} rows to ${file}, deleted ${deleted.length} rows`,
   );
 }
-await q.end();
+await db.$client.end();

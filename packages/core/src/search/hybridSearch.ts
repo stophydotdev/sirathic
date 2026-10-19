@@ -1,6 +1,6 @@
 import { db } from "@sirathic/db";
 import { type SQL, sql } from "drizzle-orm";
-import type { PgTable } from "drizzle-orm/pg-core";
+import type { AnyPgColumn, PgTable } from "drizzle-orm/pg-core";
 import { z } from "zod";
 import { withoutStopwords } from "./arabic";
 import { embedQuery } from "./embedding";
@@ -11,8 +11,14 @@ const ARABIC_MARKS = /[ً-ٰٟـ]/gu;
 
 const ranked = z.array(z.object({ id: z.string() }));
 
+export type Searchable = PgTable & {
+  id: AnyPgColumn;
+  search: AnyPgColumn;
+  embedding: AnyPgColumn;
+};
+
 export const hybridIds = async (
-  table: PgTable,
+  table: Searchable,
   query: string,
   limit: number,
   {
@@ -37,22 +43,22 @@ export const hybridIds = async (
       select plainto_tsquery('english', ${words}) as every_word
     ),
     query as (
-      select case when ${!anyWord} or exists (select 1 from ${table}, words where search @@ every_word and ${filter})
+      select case when ${!anyWord} or exists (select 1 from ${table}, words where ${table.search} @@ every_word and ${filter})
         then every_word else replace(every_word::text, '&', '|')::tsquery end as tsq
       from words
     ),
     keyword as (
-      select id, row_number() over (order by ts_rank_cd(search, tsq) desc) as rank, embedding <=> ${vector}::halfvec as distance
+      select ${table.id} as id, row_number() over (order by ts_rank_cd(${table.search}, tsq) desc) as rank, ${table.embedding} <=> ${vector}::halfvec as distance
       from ${table}, query
-      where search @@ tsq and ${filter}
-      order by ts_rank_cd(search, tsq) desc
+      where ${table.search} @@ tsq and ${filter}
+      order by ts_rank_cd(${table.search}, tsq) desc
       limit ${POOL}
     ),
     meaning as (
-      select id, row_number() over (order by embedding <=> ${vector}::halfvec) as rank, embedding <=> ${vector}::halfvec as distance
+      select ${table.id} as id, row_number() over (order by ${table.embedding} <=> ${vector}::halfvec) as rank, ${table.embedding} <=> ${vector}::halfvec as distance
       from ${table}
       where ${filter}
-      order by embedding <=> ${vector}::halfvec
+      order by ${table.embedding} <=> ${vector}::halfvec
       limit ${POOL}
     )
     select id
