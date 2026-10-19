@@ -13,5 +13,5 @@
     "types": ["node", "bun"]
   },
   "include": ["apps", "packages", "scripts"],
-  "exclude": ["apps/web"]
+  "exclude": ["apps/web", "apps/mobile"]
 }
