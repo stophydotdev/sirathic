@@ -9,6 +9,14 @@ const CITED_LINK = /\[\d+\]\((https?:\/\/[^)\s]+)\)/gu;
 const textOf = (content: ThreadMessage["content"]) =>
   content.map((part) => (part.type === "text" ? part.text : "")).join("");
 
+export const citedUrlsOf = (content: ThreadMessage["content"]) => [
+  ...new Set(
+    [...textOf(content).matchAll(CITED_LINK)].flatMap((match) =>
+      match[1] ? [match[1]] : [],
+    ),
+  ),
+];
+
 export function sourcesOf(content: ThreadMessage["content"]) {
   const found = new Map<string, Source>();
   for (const part of content) {
@@ -17,11 +25,7 @@ export function sourcesOf(content: ThreadMessage["content"]) {
       if (!found.has(entry.url)) found.set(entry.url, entry);
     }
   }
-  const cited = [
-    ...new Set(
-      [...textOf(content).matchAll(CITED_LINK)].map((match) => match[1]),
-    ),
-  ];
+  const cited = citedUrlsOf(content);
   const rank = (url: string) =>
     cited.includes(url) ? cited.indexOf(url) : cited.length;
   return [...found.values()].toSorted((a, b) => rank(a.url) - rank(b.url));
@@ -42,6 +46,10 @@ export function turnsOf(messages: readonly ThreadMessage[]) {
 }
 
 export const SourcesContext = createContext<ReadonlyMap<string, Source>>(
+  new Map(),
+);
+
+export const CitationNumbers = createContext<ReadonlyMap<string, number>>(
   new Map(),
 );
 

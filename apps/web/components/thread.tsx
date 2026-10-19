@@ -18,7 +18,10 @@ import {
   readableQuery,
   stepsOf,
 } from "@/components/research";
+import { SourceRow } from "@/components/source-row";
 import {
+  CitationNumbers,
+  citedUrlsOf,
   SourcesContext,
   siteName,
   sourcesOf,
@@ -523,10 +526,16 @@ const SourcesPane: FC = () => {
 const Reply: FC = () => {
   const content = useAuiState((s) => s.message.content);
   const sources = sourcesOf(content);
+  const byUrl = new Map(sources.map((s) => [s.url, s]));
+  const cited = citedUrlsOf(content).flatMap((url) => byUrl.get(url) ?? []);
 
   return (
-    <SourcesContext value={new Map(sources.map((s) => [s.url, s]))}>
-      <Answer sources={sources} />
+    <SourcesContext value={byUrl}>
+      <CitationNumbers
+        value={new Map(cited.map((source, index) => [source.url, index + 1]))}
+      >
+        <Answer sources={sources} cited={cited} />
+      </CitationNumbers>
     </SourcesContext>
   );
 };
@@ -551,7 +560,10 @@ const citationOf = (source: Source) => ({
   icon: <Favicon url={source.url} size={16} />,
 });
 
-const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
+const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({
+  sources,
+  cited,
+}) => {
   const aui = useAui();
   const state = useAuiState((s) => answerState(s.message.status?.type));
   const [streamed] = useState(state === "streaming");
@@ -573,6 +585,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
           </AnswerExtras>
         }
       >
+        <SourceRow sources={cited} />
         <MessagePrimitive.GroupedParts groupBy={research} indicator="empty">
           {({ part }) => {
             switch (part.type) {

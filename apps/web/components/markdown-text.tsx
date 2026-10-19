@@ -35,7 +35,11 @@ import {
   rehypeVerses,
 } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
-import { siteName, SourcesContext } from "@/components/sources";
+import {
+  CitationNumbers,
+  siteName,
+  SourcesContext,
+} from "@/components/sources";
 import { InlineVerse } from "@/components/verse-cards";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
@@ -100,7 +104,9 @@ const citedUrls = z.array(z.string()).min(1);
 
 const Citation: FC<{ urls: string[] }> = ({ urls }) => {
   const sources = useContext(SourcesContext);
+  const numbers = useContext(CitationNumbers);
   const [first, ...more] = urls;
+  const numbered = urls.flatMap((url) => numbers.get(url) ?? []);
 
   return (
     <HoverCard.Root openDelay={150} closeDelay={100}>
@@ -111,10 +117,16 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           rel="noreferrer"
           className="bg-muted hover:bg-foreground/10 relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-md px-[0.3rem] py-[0.1875rem] align-middle font-mono text-[10px] leading-[13.75px] font-[380]! no-underline! transition-colors"
         >
-          <Favicon url={first} size={12} />
-          <span className="truncate">{siteName(first)}</span>
-          {more.length > 0 && (
-            <span className="text-muted-foreground">+{more.length}</span>
+          {numbered.length > 0 ? (
+            <span className="tabular-nums">{numbered.join(", ")}</span>
+          ) : (
+            <>
+              <Favicon url={first} size={12} />
+              <span className="truncate">{siteName(first)}</span>
+              {more.length > 0 && (
+                <span className="text-muted-foreground">+{more.length}</span>
+              )}
+            </>
           )}
         </a>
       </HoverCard.Trigger>
