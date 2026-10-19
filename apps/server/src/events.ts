@@ -5,6 +5,9 @@ import type { z } from "zod";
 import type { Client } from "./client";
 import { reasonOf } from "./respond";
 import type { Device, feedback, Mode } from "./shared/messages";
+import type { User } from "./users";
+
+type SignInVia = User["via"];
 
 type AnswerStats = {
   outcome: UIMessageStreamOutcome["status"];
@@ -47,9 +50,9 @@ export type Event =
   | {
       name: "signin";
       props:
-        | ({ step: "started" } & Client)
+        | ({ step: "started"; via: SignInVia } & Client)
         | { step: "expired" }
-        | { step: "completed"; plan: string | null };
+        | { step: "completed"; via: SignInVia; plan: string | null };
     }
   | {
       name: "feedback.given";

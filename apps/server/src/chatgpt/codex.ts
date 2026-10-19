@@ -5,7 +5,7 @@ import {
 import type { streamText } from "ai";
 import { z } from "zod";
 import { StatusError } from "../respond";
-import { accessToken, type User } from "../users";
+import { accessToken, type ChatGPTUser } from "../users";
 import { CODEX_API, codexFetch } from "./device";
 
 export const DEFAULT_MODEL = "gpt-6-luna";
@@ -17,7 +17,15 @@ export type ProviderOptions = NonNullable<
 export type Model = {
   slug: string;
   name: string;
-  maker: "openai" | "anthropic" | "deepseek" | "zhipu" | "qwen" | "xiaomi";
+  maker:
+    | "sirathic"
+    | "openai"
+    | "anthropic"
+    | "google"
+    | "deepseek"
+    | "zhipu"
+    | "qwen"
+    | "xiaomi";
 };
 
 const modelsResponse = z.object({
@@ -30,20 +38,20 @@ const modelsResponse = z.object({
   ),
 });
 
-const codexFor = (user: User) =>
+const codexFor = (user: ChatGPTUser) =>
   codexFetch(async () => ({
     accessToken: await accessToken(user),
     accountId: user.accountId,
   }));
 
-export const chatModel = (user: User, slug = DEFAULT_MODEL) =>
+export const chatModel = (user: ChatGPTUser, slug = DEFAULT_MODEL) =>
   createOpenAI({
     apiKey: "codex",
     baseURL: CODEX_API,
     fetch: codexFor(user),
   }).responses(slug);
 
-export async function models(user: User): Promise<Model[]> {
+export async function models(user: ChatGPTUser): Promise<Model[]> {
   const res = await codexFor(user)("models");
   if (!res.ok) {
     throw new StatusError(

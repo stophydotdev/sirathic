@@ -117,14 +117,20 @@ const [user] = await db
   .select({
     id: users.id,
     email: users.email,
+    image: users.image,
     plan: users.plan,
     accountId: users.accountId,
   })
   .from(users)
   .where(eq(users.email, benchUser));
-if (!user) throw new Error(`nobody has signed in as ${benchUser}`);
+if (!user?.accountId) {
+  throw new Error(`nobody has signed in with ChatGPT as ${benchUser}`);
+}
 const modelName = Bun.env.BENCH_MODEL ?? DEFAULT_MODEL;
-const model = chatModel(user, modelName);
+const model = chatModel(
+  { via: "chatgpt", ...user, accountId: user.accountId },
+  modelName,
+);
 
 const TAFSIR_CHARS = z.coerce
   .number()

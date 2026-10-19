@@ -1,13 +1,15 @@
 import { trpcServer } from "@hono/trpc-server";
 import { env } from "@sirathic/env/server";
 import { validateUIMessages } from "ai";
-import { type Context, Hono } from "hono";
-import { deleteCookie, getCookie, setCookie } from "hono/cookie";
+import { Hono } from "hono";
 import { z } from "zod";
+import { auth, userFor } from "./auth";
 import { chatResponse } from "./chat/response";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./client";
 import { track } from "./events";
+import { geminiModel } from "./gemini";
+import { DEFAULT_NOOR, NOOR_SIDE_MODEL, noorModel } from "./noor";
 import { type ChatMessage, device, mode } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./respond";
 import {
@@ -16,11 +18,6 @@ import {
   DEFAULT_MODEL,
   sideOptions,
 } from "./chatgpt/codex";
-import {
-  DEVICE_PAGE,
-  pollDeviceLogin,
-  startDeviceLogin,
-} from "./chatgpt/device";
 import { appRouter, createContext } from "./router";
 import { getSettings } from "./settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
@@ -30,8 +27,6 @@ import {
   sessionId,
   titleSession,
 } from "./sessions";
-import { SESSION_DAYS, signIn, signOut, userFor } from "./users";
-import { seal, unseal } from "./vault";
 
 const IDLE_TIMEOUT_SECONDS = 255;
 
@@ -53,28 +48,6 @@ const chatBody = z.object({
     .catch(undefined),
 });
 
-const SESSION_COOKIE = "sirathic_session";
-const DEVICE_COOKIE = "sirathic_device";
-
-const deviceLogin = z.object({
-  deviceAuthId: z.string(),
-  userCode: z.string(),
-  intervalMs: z.number(),
-  expiresAt: z.number(),
-});
-
-const secure = (c: Context) =>
-  (c.req.header("x-forwarded-proto") ??
-    new URL(c.req.url).protocol.slice(0, -1)) === "https";
-
-const pendingLogin = async (c: Context) => {
-  const sealed = getCookie(c, DEVICE_COOKIE);
-  if (!sealed) return undefined;
-  return deviceLogin.safeParse(
-    JSON.parse(await unseal(sealed).catch(() => "null")),
-  ).data;
-};
-
 const app = new Hono();
 
 app.use(async (c, next) => {
@@ -89,7 +62,7 @@ app.get("/", (c) => c.text("OK"));
 app.post("/api/chat", (c) =>
   respond(async () => {
     const input = await parseBody(c.req.raw, chatBody);
-    const user = await userFor(getCookie(c, SESSION_COOKIE));
+    const user = await userFor(c.req.raw.headers);
     if (!user) throw new StatusError(401, "not signed in");
     const by = user.id;
     const validated = await validateUIMessages<ChatMessage>({
@@ -99,7 +72,17 @@ app.post("/api/chat", (c) =>
       throw new StatusError(400, err.message);
     });
     const owner = input.incognito ? undefined : by;
-    const modelName = input.model ?? DEFAULT_MODEL;
+    const modelName =
+      input.model ?? (user.via === "chatgpt" ? DEFAULT_MODEL : DEFAULT_NOOR);
+    const chosen =
+      modelName &&
+      (noorModel(modelName) ??
+        geminiModel(modelName) ??
+        (user.via === "chatgpt" ? chatModel(user, modelName) : undefined));
+    const small = user.via === "chatgpt" ? chatModel(user) : NOOR_SIDE_MODEL;
+    if (!modelName || !chosen || !small) {
+      throw new StatusError(403, "sign in with ChatGPT to use this model");
+    }
     const asked = validated.findLast((message) => message.role === "user");
     track(
       {
@@ -131,8 +114,6 @@ app.post("/api/chat", (c) =>
     saved.catch((err: Error) => {
       console.error(`session not saved: ${reasonOf(err)}`);
     });
-    const chosen = chatModel(user, input.model);
-    const small = chatModel(user);
     const title = input.incognito
       ? undefined
       : saved
@@ -169,67 +150,13 @@ app.post("/api/chat", (c) =>
   }),
 );
 
-app.post("/api/auth/device", (c) =>
-  respond(async () => {
-    const login = await startDeviceLogin();
-    track({
-      name: "signin",
-      props: { step: "started", ...clientOf(c.req.raw.headers) },
-    });
-    setCookie(c, DEVICE_COOKIE, await seal(JSON.stringify(login)), {
-      httpOnly: true,
-      secure: secure(c),
-      sameSite: "Lax",
-      path: "/api/auth",
-      expires: new Date(login.expiresAt),
-    });
-    return c.json({
-      userCode: login.userCode,
-      intervalMs: login.intervalMs,
-      expiresAt: login.expiresAt,
-      verificationUrl: DEVICE_PAGE,
-    });
-  }),
-);
-
-app.get("/api/auth/device", (c) =>
-  respond(async () => {
-    const login = await pendingLogin(c);
-    if (!login) return c.json({ status: "expired" as const });
-    const polled = await pollDeviceLogin(login);
-    if (polled.status === "pending") {
-      return c.json({ status: "pending" as const });
-    }
-    deleteCookie(c, DEVICE_COOKIE, { path: "/api/auth" });
-    if (polled.status === "expired") {
-      track({ name: "signin", props: { step: "expired" } });
-      return c.json({ status: "expired" as const });
-    }
-    setCookie(c, SESSION_COOKIE, await signIn(polled.tokens), {
-      httpOnly: true,
-      secure: secure(c),
-      sameSite: "Lax",
-      path: "/",
-      maxAge: SESSION_DAYS * 86_400,
-    });
-    return c.json({ status: "signed-in" as const });
-  }),
-);
-
-app.post("/api/auth/logout", (c) =>
-  respond(async () => {
-    const token = getCookie(c, SESSION_COOKIE);
-    if (token) await signOut(token);
-    deleteCookie(c, SESSION_COOKIE, { path: "/" });
-    return c.json({ signedOut: true });
-  }),
-);
+app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 
 app.use(
   "/trpc/*",
   trpcServer({
     router: appRouter,
-    createContext: (_options, c) => createContext(getCookie(c, SESSION_COOKIE)),
+    createContext: (_options, c) => createContext(c.req.raw.headers),
   }),
 );
 

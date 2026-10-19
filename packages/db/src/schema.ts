@@ -462,9 +462,12 @@ export const settings = pgTable("settings", {
 
 export const users = pgTable("users", {
   id: text().primaryKey(),
-  email: text(),
+  name: text().notNull().default(""),
+  email: text().unique(),
+  emailVerified: boolean().notNull().default(false),
+  image: text(),
   plan: text(),
-  accountId: text().notNull(),
+  accountId: text(),
   tokens: text(),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp({ withTimezone: true })
@@ -477,9 +480,16 @@ export const loginSessions = pgTable(
   "login_sessions",
   {
     id: text().primaryKey(),
+    token: text().notNull().unique(),
     userId: text().notNull(),
     expiresAt: timestamp({ withTimezone: true }).notNull(),
+    ipAddress: text(),
+    userAgent: text(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
   (table) => [
     index("login_sessions_user").on(table.userId),
@@ -489,6 +499,52 @@ export const loginSessions = pgTable(
       foreignColumns: [users.id],
     }).onDelete("cascade"),
   ],
+);
+
+export const accounts = pgTable(
+  "accounts",
+  {
+    id: text().primaryKey(),
+    userId: text().notNull(),
+    providerId: text().notNull(),
+    accountId: text().notNull(),
+    accessToken: text(),
+    refreshToken: text(),
+    idToken: text(),
+    accessTokenExpiresAt: timestamp({ withTimezone: true }),
+    refreshTokenExpiresAt: timestamp({ withTimezone: true }),
+    scope: text(),
+    password: text(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    index("accounts_user").on(table.userId),
+    foreignKey({
+      name: "accounts_user_id_fkey",
+      columns: [table.userId],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+  ],
+);
+
+export const verifications = pgTable(
+  "verifications",
+  {
+    id: text().primaryKey(),
+    identifier: text().notNull(),
+    value: text().notNull(),
+    expiresAt: timestamp({ withTimezone: true }).notNull(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [index("verifications_identifier").on(table.identifier)],
 );
 
 export const events = pgTable(

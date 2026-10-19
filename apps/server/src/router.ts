@@ -4,6 +4,9 @@ import { youtubeSearch } from "@sirathic/core/tools/youtubeSearch";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { DEFAULT_MODEL, models } from "./chatgpt/codex";
+import { GEMINI_MODELS } from "./gemini";
+import { NOOR_MODELS } from "./noor";
+import { userFor } from "./auth";
 import { track } from "./events";
 import {
   hadithBooks,
@@ -35,7 +38,6 @@ import {
 } from "./sessions";
 import { settingsUpdate } from "./shared/settings";
 import { suggestions } from "./suggest";
-import { userFor } from "./users";
 
 const LIBRARY_LIMIT = 500;
 
@@ -48,8 +50,8 @@ const TRPC_CODES = {
   502: "BAD_GATEWAY",
 } as const satisfies Record<StatusError["status"], TRPCError["code"]>;
 
-export const createContext = async (sessionToken: string | undefined) => ({
-  user: await userFor(sessionToken),
+export const createContext = async (headers: Headers) => ({
+  user: await userFor(headers),
 });
 
 const t = initTRPC
@@ -255,15 +257,18 @@ export const appRouter = t.router({
         ? {
             signedIn: true as const,
             label: ctx.user.email,
-            plan: ctx.user.plan,
+            image: ctx.user.image,
+            via: ctx.user.via,
           }
         : { signedIn: false as const },
     ),
     models: procedure.query(async ({ ctx }) => {
       if (!ctx.user) return [];
-      return (await models(ctx.user)).toSorted(
-        (a, b) => isDefault(b) - isDefault(a),
-      );
+      return [
+        ...NOOR_MODELS,
+        ...(ctx.user.via === "chatgpt" ? await models(ctx.user) : []),
+        ...GEMINI_MODELS,
+      ].toSorted((a, b) => isDefault(b) - isDefault(a));
     }),
   }),
 });

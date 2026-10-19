@@ -1,6 +1,6 @@
 import { db } from "@sirathic/db";
 import { loginSessions, users } from "@sirathic/db/schema";
-import { and, eq, gt } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 import {
   type DeviceTokens,
@@ -12,7 +12,6 @@ import { StatusError } from "./respond";
 import { seal, unseal } from "./vault";
 
 export const SESSION_DAYS = 30;
-const DAY_MS = 86_400_000;
 const RENEW_EARLY_MS = 5 * 60_000;
 
 const storedTokens = z.object({
@@ -25,14 +24,13 @@ const storedTokens = z.object({
 export type User = {
   id: string;
   email: string | null;
-  plan: string | null;
-  accountId: string;
-};
+  image: string | null;
+} & (
+  | { via: "chatgpt"; plan: string | null; accountId: string }
+  | { via: "google" }
+);
 
-const digest = async (token: string) =>
-  Buffer.from(
-    await crypto.subtle.digest("SHA-256", new TextEncoder().encode(token)),
-  ).toString("hex");
+export type ChatGPTUser = Extract<User, { via: "chatgpt" }>;
 
 const access = new Map<string, Promise<DeviceTokens>>();
 
@@ -43,72 +41,54 @@ async function saveTokens(userId: string, tokens: DeviceTokens) {
     .where(eq(users.id, userId));
 }
 
-async function endEverywhere(userId: string) {
+async function forgetChatGPT(userId: string) {
   access.delete(userId);
-  await db.delete(loginSessions).where(eq(loginSessions.userId, userId));
-  await db.update(users).set({ tokens: null }).where(eq(users.id, userId));
+  await db
+    .update(users)
+    .set({ tokens: null, accountId: null, plan: null })
+    .where(eq(users.id, userId));
 }
 
 export async function signIn(tokens: DeviceTokens) {
   const identity = await identityOf(tokens);
+  const [owner] = identity.email
+    ? await db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.email, identity.email))
+    : [];
+  const id =
+    owner && (owner.id === identity.subject || identity.emailVerified)
+      ? owner.id
+      : identity.subject;
+  const email = owner && owner.id !== id ? null : (identity.email ?? null);
   const profile = {
-    email: identity.email ?? null,
     plan: identity.plan ?? null,
     accountId: identity.accountId,
     tokens: await seal(JSON.stringify(tokens)),
   };
   await db
     .insert(users)
-    .values({ id: identity.subject, ...profile })
+    .values({ id, email, emailVerified: identity.emailVerified, ...profile })
     .onConflictDoUpdate({ target: users.id, set: profile });
-  access.delete(identity.subject);
+  access.delete(id);
   track(
-    { name: "signin", props: { step: "completed", plan: profile.plan } },
-    identity.subject,
+    {
+      name: "signin",
+      props: { step: "completed", via: "chatgpt", plan: profile.plan },
+    },
+    id,
   );
-  const token = Buffer.from(
-    crypto.getRandomValues(new Uint8Array(32)),
-  ).toString("base64url");
-  await db.insert(loginSessions).values({
-    id: await digest(token),
-    userId: identity.subject,
-    expiresAt: new Date(Date.now() + SESSION_DAYS * DAY_MS),
-  });
-  return token;
+  return id;
 }
 
-export async function userFor(token: string | undefined) {
-  if (!token) return undefined;
-  const [row] = await db
-    .select({
-      id: users.id,
-      email: users.email,
-      plan: users.plan,
-      accountId: users.accountId,
-    })
-    .from(loginSessions)
-    .innerJoin(users, eq(users.id, loginSessions.userId))
-    .where(
-      and(
-        eq(loginSessions.id, await digest(token)),
-        gt(loginSessions.expiresAt, new Date()),
-      ),
-    );
-  return row satisfies User | undefined;
-}
-
-export async function signOut(token: string) {
-  const [ended] = await db
-    .delete(loginSessions)
-    .where(eq(loginSessions.id, await digest(token)))
-    .returning({ userId: loginSessions.userId });
-  if (!ended) return;
+export async function forgetIfSignedOut(userId: string) {
   const [other] = await db
     .select({ id: loginSessions.id })
     .from(loginSessions)
-    .where(eq(loginSessions.userId, ended.userId))
+    .where(eq(loginSessions.userId, userId))
     .limit(1);
-  if (!other) await endEverywhere(ended.userId);
+  if (!other) await forgetChatGPT(userId);
 }
 
 async function storedTokensOf(userId: string) {
@@ -125,7 +105,7 @@ async function storedTokensOf(userId: string) {
 async function renew(userId: string, tokens: DeviceTokens) {
   const result = await refreshDeviceTokens(tokens);
   if (result.status === "ended") {
-    await endEverywhere(userId);
+    await forgetChatGPT(userId);
     throw new StatusError(401, "your ChatGPT sign-in ended, sign in again");
   }
   await saveTokens(userId, result.tokens);
@@ -146,7 +126,7 @@ function load(userId: string) {
   return loading;
 }
 
-export async function accessToken(user: User) {
+export async function accessToken(user: ChatGPTUser) {
   const current = access.get(user.id);
   const tokens = await (current ?? load(user.id));
   if (!current || fresh(tokens)) return tokens.accessToken;

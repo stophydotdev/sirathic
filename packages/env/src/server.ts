@@ -7,11 +7,12 @@ export const env = createEnv({
     REDIS_URL: z.url(),
     OPENAI_API_KEY: z.string(),
     STOPHY_API_KEY: z.string(),
-    TOKEN_KEY: z
-      .base64()
-      .refine((key) => Buffer.from(key, "base64").length === 32, {
-        message: "TOKEN_KEY must be 32 random bytes in base64",
-      }),
+    GEMINI_API_KEY: z.string().optional(),
+    ANTHROPIC_API_KEY: z.string().optional(),
+    GOOGLE_CLIENT_ID: z.string().optional(),
+    GOOGLE_CLIENT_SECRET: z.string().optional(),
+    SITE_URL: z.url().default("https://sirathic.com"),
+    BETTER_AUTH_SECRET: z.string().min(32),
     PORT: z.coerce.number().default(3000),
   },
   runtimeEnv: process.env,

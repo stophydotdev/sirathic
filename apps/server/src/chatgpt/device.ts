@@ -40,6 +40,7 @@ const refreshed = tokenResponse.partial({
 const identityClaims = z.object({
   sub: z.string(),
   email: z.string().optional(),
+  email_verified: z.boolean().catch(false),
   [AUTH_CLAIM]: z.object({
     chatgpt_account_id: z.string(),
     chatgpt_plan_type: z.string().optional(),
@@ -174,6 +175,7 @@ export async function identityOf(tokens: DeviceTokens) {
   return {
     subject: claims.sub,
     email: claims.email,
+    emailVerified: claims.email_verified,
     accountId: claims[AUTH_CLAIM].chatgpt_account_id,
     plan: claims[AUTH_CLAIM].chatgpt_plan_type,
   };
