@@ -3,6 +3,7 @@ import {
   boolean,
   check,
   customType,
+  foreignKey,
   halfvec,
   index,
   integer,
@@ -367,6 +368,20 @@ export const tafsirTexts = pgTable(
   ],
 );
 
+export const tafsirClassical = pgTable(
+  "tafsir_classical",
+  {
+    work: text().notNull(),
+    surah: smallint().notNull(),
+    fromAyah: smallint().notNull(),
+    toAyah: smallint().notNull(),
+    body: text().notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.work, table.surah, table.fromAyah] }),
+  ],
+);
+
 export const recitationTimings = pgTable(
   "recitation_timings",
   {
@@ -428,13 +443,18 @@ export const loginSessions = pgTable(
   "login_sessions",
   {
     id: text().primaryKey(),
-    userId: text()
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+    userId: text().notNull(),
     expiresAt: timestamp({ withTimezone: true }).notNull(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [index("login_sessions_user").on(table.userId)],
+  (table) => [
+    index("login_sessions_user").on(table.userId),
+    foreignKey({
+      name: "login_sessions_user_id_fkey",
+      columns: [table.userId],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+  ],
 );
 
 export const events = pgTable(

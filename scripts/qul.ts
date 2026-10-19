@@ -10,7 +10,6 @@ import {
   wordMeanings,
 } from "@sirathic/db/schema";
 import { $ } from "bun";
-import { sql } from "drizzle-orm";
 import { z } from "zod";
 import {
   DUPLICATE_TRANSLATIONS,
@@ -376,45 +375,8 @@ console.log(
 );
 
 await db.transaction(async (tx) => {
-  await tx.execute(sql`create table if not exists verse_words (
-    surah smallint not null,
-    ayah smallint not null,
-    words text[] not null,
-    constraint verse_words_surah_ayah_pk primary key (surah, ayah)
-  )`);
-  await tx.execute(sql`create table if not exists recitation_timings (
-    recitation smallint not null,
-    surah smallint not null,
-    ayah smallint not null,
-    segments jsonb not null,
-    constraint recitation_timings_recitation_surah_ayah_pk primary key (recitation, surah, ayah)
-  )`);
-  await tx.execute(
-    sql`alter table verse_words add column if not exists transliteration text[]`,
-  );
-  await tx.execute(sql`create table if not exists word_meanings (
-    surah smallint not null,
-    ayah smallint not null,
-    lang text not null,
-    meanings text[] not null,
-    constraint word_meanings_surah_ayah_lang_pk primary key (surah, ayah, lang)
-  )`);
   await tx.delete(verseWords);
   await tx.delete(recitationTimings);
-  await tx.execute(sql`create table if not exists translations (
-    id smallint primary key,
-    name text not null,
-    lang text not null,
-    kind text not null
-  )`);
-  await tx.execute(sql`create table if not exists verse_translations (
-    translation smallint not null,
-    surah smallint not null,
-    ayah smallint not null,
-    text text not null,
-    footnotes text[],
-    constraint verse_translations_translation_surah_ayah_pk primary key (translation, surah, ayah)
-  )`);
   await tx.delete(wordMeanings);
   await tx.delete(verseTranslations);
   await tx.delete(translations);
@@ -499,20 +461,6 @@ const tafsirRows = (
 ).flat();
 
 await db.transaction(async (tx) => {
-  await tx.execute(sql`create table if not exists tafsirs (
-    id smallint primary key,
-    name text not null,
-    lang text not null,
-    author text not null
-  )`);
-  await tx.execute(sql`create table if not exists tafsir_texts (
-    tafsir smallint not null,
-    surah smallint not null,
-    from_ayah smallint not null,
-    to_ayah smallint not null,
-    body text not null,
-    constraint tafsir_texts_tafsir_surah_from_ayah_pk primary key (tafsir, surah, from_ayah)
-  )`);
   await tx.delete(tafsirTexts);
   await tx.delete(tafsirs);
   await tx.insert(tafsirs).values([...QUL_TAFSIRS]);
