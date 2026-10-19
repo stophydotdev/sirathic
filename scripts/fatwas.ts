@@ -32,15 +32,20 @@ type Site = {
   follow?: RegExp;
   page: RegExp;
   skip?: RegExp;
+  discover?: () => Promise<string[]>;
   parallel: number;
   delayMs?: number;
   parse: (markdown: string, html: string, url: string) => Fatwa | undefined;
 };
 
-const get = async (url: string, attempt = 1): Promise<string> => {
+const get = async (
+  url: string,
+  headers: Record<string, string> = {},
+  attempt = 1,
+): Promise<string> => {
   const response = await fetch(url, {
     proxy: PROXY,
-    headers: { "user-agent": BROWSER, "accept-language": "en" },
+    headers: { "user-agent": BROWSER, "accept-language": "en", ...headers },
     signal: AbortSignal.timeout(30_000),
   }).catch((error: Error) => error);
   if (!(response instanceof Error) && response.ok) return response.text();
@@ -48,7 +53,7 @@ const get = async (url: string, attempt = 1): Promise<string> => {
     response instanceof Error ? response.message : `HTTP ${response.status}`;
   if (attempt === ATTEMPTS) throw new Error(`${url}: ${why}`);
   await Bun.sleep(2_000 * attempt);
-  return get(url, attempt + 1);
+  return get(url, headers, attempt + 1);
 };
 
 const rawFile = (url: string) =>
@@ -66,7 +71,7 @@ const pageHtml = async (url: string) => {
   return html;
 };
 
-const LOC = /<loc>\s*([^<\s]+)\s*<\/loc>/gu;
+const LOC = /<loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/loc>/gu;
 
 const sitemapUrls = async (url: string, site: Site): Promise<string[]> => {
   const xml = await get(url);
@@ -177,10 +182,24 @@ const decode = (text: string) =>
     .replaceAll(/&#(\d+);/gu, (_, code: string) =>
       String.fromCodePoint(Number(code)),
     )
+    .replaceAll(/&#x([0-9a-f]+);/giu, (_, code: string) =>
+      String.fromCodePoint(Number.parseInt(code, 16)),
+    )
     .replaceAll("&amp;", "&")
     .replaceAll("&quot;", '"')
     .replaceAll("&lt;", "<")
     .replaceAll("&gt;", ">");
+
+const plainText = (fragment: string) =>
+  decode(
+    fragment
+      .replaceAll(/<\/p>|<br\s*\/?>/giu, "\n\n")
+      .replaceAll(/<[^>]+>/gu, "")
+      .replaceAll("&nbsp;", " "),
+  )
+    .replaceAll(/[ \t]+/gu, " ")
+    .replaceAll(/\s*\n\s*/gu, "\n\n")
+    .trim();
 
 const authorOf = (html: string) => {
   const name =
@@ -210,14 +229,20 @@ const article = (
   markdown: string,
   html: string,
   url: string,
+  {
+    answerMark = ANSWER_MARK,
+    headline,
+  }: Pick<ArticleSite, "answerMark" | "headline"> = {},
 ): Fatwa | undefined => {
-  const title = pageTitle(markdown, html);
+  const title =
+    decode(headline?.exec(html)?.[1]?.trim() ?? "") ||
+    pageTitle(markdown, html);
   const body = markdown
     .replace(/^# .+$/mu, "")
     .replace(/(\n+>[^\n]*)+\s*$/u, "")
     .trim();
   if (!title || body.length < 400) return undefined;
-  const split = ANSWER_MARK.exec(body);
+  const split = answerMark.exec(body);
   const { hostname, pathname } = new URL(url);
   return {
     id: `${hostname.replace(/^www\./u, "")}:${pathname}`,
@@ -240,8 +265,13 @@ type ArticleSite = {
   url: string;
   credit: string;
   sitemaps: string[];
+  listings?: Site["listings"];
+  discover?: Site["discover"];
   page: RegExp;
+  skip?: RegExp;
   follow?: RegExp;
+  answerMark?: RegExp;
+  headline?: RegExp;
   parallel?: number;
   delayMs?: number;
   school?: Fatwa["school"];
@@ -253,8 +283,13 @@ const articleSite = ({
   url,
   credit,
   sitemaps,
+  listings,
+  discover,
   page,
+  skip = NOT_WRITING,
   follow = WRITING_SITEMAP,
+  answerMark,
+  headline,
   parallel = 2,
   delayMs,
   school,
@@ -268,13 +303,15 @@ const articleSite = ({
     credit,
   },
   sitemaps,
+  listings,
+  discover,
   follow,
   page,
-  skip: NOT_WRITING,
+  skip,
   parallel,
   delayMs,
   parse: (markdown, html, pageUrl) => {
-    const found = article(markdown, html, pageUrl);
+    const found = article(markdown, html, pageUrl, { answerMark, headline });
     return (
       found && {
         ...found,
@@ -291,6 +328,88 @@ const ISLAMQA_ANSWER = /^https:\/\/islamqa\.info\/([a-z]{2})\/answers\/(\d+)/u;
 
 const headingLine = (label: string | undefined, end = "\\s*$") =>
   label ? new RegExp(`^## ${RegExp.escape(label.trim())}${end}`, "mu") : /$^/u;
+
+const AMJA_PAGE = 1_000;
+
+const AMJA_FATWAS = z.object({
+  recordsTotal: z.number(),
+  data: z.array(
+    z.object({ data: z.object({ id: z.number(), slug: z.string() }) }),
+  ),
+});
+
+const amjaFatwas = async (lang: "en" | "ar", start = 0): Promise<string[]> => {
+  const query = `draw=1&start=${start}&length=${AMJA_PAGE}&order[0][column]=0&order[0][dir]=asc&columns[0][data]=data&columns[0][name]=id&columns[0][searchable]=true&columns[0][orderable]=true&search[value]=`;
+  const { recordsTotal, data } = AMJA_FATWAS.parse(
+    JSON.parse(
+      await get(`https://www.amjaonline.org/fatwa/${lang}?${query}`, {
+        "x-requested-with": "XMLHttpRequest",
+      }),
+    ),
+  );
+  const urls = data.map(
+    ({ data: { id, slug } }) =>
+      `https://www.amjaonline.org/fatwa/${lang}/${id}/${slug}`,
+  );
+  if (start + AMJA_PAGE >= recordsTotal) return urls;
+  await Bun.sleep(1_000);
+  return [...urls, ...(await amjaFatwas(lang, start + AMJA_PAGE))];
+};
+
+const DARULIFTAA_PAGE = 100;
+
+const DARULIFTAA_QUESTIONS = z.object({
+  count: z.number(),
+  results: z.array(z.object({ detail_url: z.string(), status: z.string() })),
+});
+
+const darulIftaaCategory = async (
+  category: string,
+  offset = 0,
+): Promise<string[]> => {
+  const { count, results } = DARULIFTAA_QUESTIONS.parse(
+    JSON.parse(
+      await get(
+        `https://daruliftaa.us/api/v1/questions/fatwas/${category}/questions/?limit=${DARULIFTAA_PAGE}&offset=${offset}`,
+      ),
+    ),
+  );
+  const urls = results
+    .filter(({ status }) => status === "Complete")
+    .map(({ detail_url }) => `https://daruliftaa.us${detail_url}`);
+  if (offset + DARULIFTAA_PAGE >= count) return urls;
+  return [
+    ...urls,
+    ...(await darulIftaaCategory(category, offset + DARULIFTAA_PAGE)),
+  ];
+};
+
+const darulIftaaFatwas = async () => {
+  const sitemap = await get("https://daruliftaa.us/sitemap.xml");
+  const categories = [
+    ...sitemap.matchAll(/\/fatwas\/category\/([^/]+)\//gu),
+  ].map(([, slug = ""]) => slug);
+  return (
+    await Promise.all(categories.map((slug) => darulIftaaCategory(slug)))
+  ).flat();
+};
+
+const FATWAISLAM_FATWA = "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=";
+
+const fatwaIslamFatwas = async () => {
+  const latest = await get(
+    "https://fatwaislam.com/fis/index.cfm?scn=firstpage_latest",
+  );
+  const newest = Math.max(
+    ...[...latest.matchAll(/scn=fd&(?:amp;)?ID=(\d+)/gu)].map(([, id]) =>
+      Number(id),
+    ),
+  );
+  return Array.from(
+    { length: newest },
+    (_, index) => `${FATWAISLAM_FATWA}${index + 1}`,
+  );
+};
 
 const SITES: Site[] = [
   {
@@ -368,19 +487,22 @@ const SITES: Site[] = [
         .exec(html)?.[1]
         ?.replaceAll(/<[^>]+>/gu, "")
         .trim();
-      const headings = [...markdown.matchAll(/^### .+$/gmu)];
-      const [asked, answered] = headings;
-      if (!title || !asked || !answered) return undefined;
-      const answer = markdown.slice(answered.index + answered[0].length).trim();
-      if (answer.length < 100) return undefined;
+      const [asked, answered] = [...markdown.matchAll(/^### .+$/gmu)];
+      const [question, answer = ""] =
+        asked && answered
+          ? [
+              markdown.slice(asked.index + asked[0].length, answered.index),
+              markdown.slice(answered.index + answered[0].length),
+            ].map((part) => part.trim())
+          : [...html.matchAll(/<div itemprop="text">([\s\S]*?)<\/div>/gu)].map(
+              ([, part = ""]) => plainText(part),
+            );
+      if (!title || answer.length < 100) return undefined;
       return {
         id: `islamweb.net:${lang}:${number}`,
         answeredBy: "Islamweb Fatwa Center",
         title: decode(title),
-        question:
-          markdown
-            .slice(asked.index + asked[0].length, answered.index)
-            .trim() || undefined,
+        question: question || undefined,
         answer,
       };
     },
@@ -507,6 +629,10 @@ const SITES: Site[] = [
     url: "https://www.amjaonline.org",
     credit: "Assembly of Muslim Jurists of America",
     sitemaps: ["https://www.amjaonline.org/post-sitemap.xml"],
+    discover: async () => [
+      ...(await amjaFatwas("en")),
+      ...(await amjaFatwas("ar")),
+    ],
     page: /^https:\/\/www\.amjaonline\.org\/.+/u,
     answeredBy: by("Assembly of Muslim Jurists of America"),
   }),
@@ -682,6 +808,110 @@ const SITES: Site[] = [
     parallel: 4,
     answeredBy: by("Dar al-Ifta al-Misriyyah"),
   }),
+  articleSite({
+    name: "en.tohed.com",
+    url: "https://en.tohed.com",
+    credit: "Tohed",
+    sitemaps: ["https://en.tohed.com/sitemap.php"],
+    page: /^https:\/\/en\.tohed\.com\/threads\/.+/u,
+    answeredBy: by("Tohed"),
+  }),
+  articleSite({
+    name: "fiqh.islamonline.net",
+    url: "https://fiqh.islamonline.net",
+    credit: "IslamOnline Fiqh",
+    sitemaps: ["https://fiqh.islamonline.net/sitemap_index.xml"],
+    follow: /^post-sitemap\d*\.xml$/u,
+    page: /^https:\/\/fiqh\.islamonline\.net\/.+/u,
+    parallel: 4,
+    delayMs: 500,
+    answeredBy: by("IslamOnline"),
+  }),
+  articleSite({
+    name: "al-fatawa.com",
+    url: "https://al-fatawa.com/en",
+    credit:
+      "Al-Fatawa (Ibn Baz, Ibn Uthaymeen, al-Albani, al-Fawzan, the Permanent Committee). English is machine translation",
+    sitemaps: ["https://al-fatawa.com/sitemap.xml"],
+    follow: /^sitemap-en-(?!pages)/u,
+    page: /^https:\/\/al-fatawa\.com\/en\/fatwa\/\d+\/.+/u,
+    parallel: 4,
+  }),
+  articleSite({
+    name: "daruliftaa.us",
+    url: "https://daruliftaa.us",
+    credit: "Darul Iftaa Chicago",
+    sitemaps: [],
+    discover: darulIftaaFatwas,
+    page: /^https:\/\/daruliftaa\.us\/fatwa\/\d+\/$/u,
+    answerMark: /^#+ \**الجواب.*$/mu,
+    school: "hanafi",
+    answeredBy: by("Darul Iftaa Chicago"),
+  }),
+  {
+    ...articleSite({
+      name: "fatwaislam.com",
+      url: "https://fatwaislam.com/fis/",
+      credit: "FatwaIslam",
+      sitemaps: [],
+      discover: fatwaIslamFatwas,
+      page: /^https:\/\/fatwaislam\.com\/fis\/index\.cfm\?scn=fd&ID=\d+$/u,
+      skip: /$^/u,
+      parallel: 1,
+      delayMs: 30_000,
+    }),
+    parse: (_markdown, html, url) => {
+      const grab = (pattern: RegExp) => pattern.exec(html)?.[1] ?? "";
+      const title = plainText(
+        grab(/<font style="font-size:13px;">\s*<b>([\s\S]*?)<\/b>/u),
+      );
+      const question = plainText(grab(/<u>Question:<\/u>([\s\S]*?)<\/td>/u));
+      const answer = plainText(grab(/<u>Answer:<\/u>([\s\S]*?)<\/td>/u));
+      const credit = grab(
+        /<u>Answer:<\/u>[\s\S]*?<\/td>([\s\S]*?)<b>Other subjects of interest/u,
+      );
+      return title && question && answer
+        ? {
+            id: `fatwaislam.com:${new URL(url).searchParams.get("ID")}`,
+            answeredBy:
+              plainText(/<b>([\s\S]*?)<\/b>/u.exec(credit)?.[1] ?? "") ||
+              undefined,
+            title,
+            question,
+            answer: [answer, plainText(credit)].filter(Boolean).join("\n\n"),
+          }
+        : undefined;
+    },
+  },
+  articleSite({
+    name: "muftiwp.gov.my",
+    url: "https://muftiwp.gov.my/en/artikel",
+    credit: "Federal Territory Mufti Office, Malaysia",
+    sitemaps: [],
+    listings: {
+      start: [
+        "https://muftiwp.gov.my/en/artikel/irsyad-al-hadith",
+        "https://muftiwp.gov.my/en/artikel/irsyad-usul-fiqh",
+        "https://muftiwp.gov.my/en/artikel/bayan-li-al-haj",
+      ],
+      follow:
+        /^https:\/\/muftiwp\.gov\.my\/en\/artikel\/(?:irsyad-al-hadith|irsyad-usul-fiqh|bayan-li-al-haj)\?start=\d+$/u,
+    },
+    page: /^https:\/\/muftiwp\.gov\.my\/en\/artikel\/(?:irsyad-al-hadith|irsyad-usul-fiqh|bayan-li-al-haj)\/\d+-[^/?#]*-series-[^/?#]*$/u,
+    headline: /<h2 itemprop="headline"[^>]*>([^<]+)/u,
+    parallel: 1,
+    delayMs: 1_000,
+    school: "shafii",
+    answeredBy: by("Federal Territory Mufti Office"),
+  }),
+  articleSite({
+    name: "britishfatwacouncil.org",
+    url: "https://www.britishfatwacouncil.org",
+    credit: "British Fatwa Council",
+    sitemaps: ["https://www.britishfatwacouncil.org/post-sitemap.xml"],
+    page: /^https:\/\/www\.britishfatwacouncil\.org\/.+/u,
+    answeredBy: by("British Fatwa Council"),
+  }),
 ];
 
 const piecesOf = (paragraph: string): string[] => {
@@ -756,34 +986,56 @@ const crawl = async (site: Site) => {
   await mkdir(`${RAW_DIR}/${new URL(site.source.url).hostname}`, {
     recursive: true,
   });
-  const found = [
-    ...(
-      await Promise.all(site.sitemaps.map((url) => sitemapUrls(url, site)))
-    ).flat(),
-    ...(await listedUrls(site)),
-  ].filter((url) => site.page.test(url) && !site.skip?.test(url));
+  const samples = DRY ? SAMPLES.filter((url) => site.page.test(url)) : [];
+  const found =
+    samples.length > 0
+      ? samples
+      : [
+          ...(
+            await Promise.all(
+              site.sitemaps.map((url) => sitemapUrls(url, site)),
+            )
+          ).flat(),
+          ...(await listedUrls(site)),
+          ...((await site.discover?.()) ?? []),
+        ].filter((url) => site.page.test(url) && !site.skip?.test(url));
   const urls = [...new Set(found)];
   console.log(`${site.source.name}: ${urls.length} pages found`);
   if (DRY) {
-    const mine = SAMPLES.filter((url) => site.page.test(url));
     const picks =
-      mine.length > 0
-        ? mine
-        : [urls[0], urls[Math.floor(urls.length / 2)], urls.at(-1)];
-    const show = async ([url, ...rest]: string[]): Promise<void> => {
+      samples.length > 0
+        ? urls
+        : urls.filter(
+            (_, index) =>
+              index %
+                Math.ceil(
+                  urls.length / (Number.isFinite(LIMIT) ? LIMIT : 3),
+                ) ===
+              0,
+          );
+    const parsed: Row[][] = [];
+    const visit = async ([url, ...rest]: string[]): Promise<void> => {
       if (url === undefined) return;
+      const fetched = !(await rawFile(url).exists());
       const rows = await rowsOf(site, url).catch((error: Error) => error);
-      const [first] = rows instanceof Error ? [] : (rows ?? []);
-      console.log(
-        rows instanceof Error
-          ? `  FAILED ${rows.message}`
-          : first && rows
-            ? `${preview(first)}${rows.length > 1 ? `\n  (${rows.length} passages)` : ""}`
-            : `  NOT PARSED ${url}`,
-      );
-      return show(rest);
+      if (rows instanceof Error) console.log(`  FAILED ${rows.message}`);
+      else if (rows) parsed.push(rows);
+      else console.log(`  NOT PARSED ${url}`);
+      if (fetched && site.delayMs) await Bun.sleep(site.delayMs);
+      return visit(rest);
     };
-    await show(picks.filter((url): url is string => url !== undefined));
+    await visit(picks);
+    for (const rows of parsed.slice(0, samples.length > 0 ? undefined : 3)) {
+      const [first] = rows;
+      if (first) {
+        console.log(
+          `${preview(first)}${rows.length > 1 ? `\n  (${rows.length} passages)` : ""}`,
+        );
+      }
+    }
+    console.log(
+      `${site.source.name}: ${parsed.length} of ${picks.length} sampled pages parsed`,
+    );
     return;
   }
   const stored = new Set(
