@@ -49,3 +49,16 @@ jobs:
             apps/desktop/dist/*.exe
             apps/desktop/dist/*.AppImage
           if-no-files-found: error
+      - name: Upload installers to download.sirathic.com
+        if: startsWith(github.ref, 'refs/tags/desktop-v')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: a92c2838c35f48660fb0fce75470e87e
+        run: |
+          for file in dist/Sirathic-*.dmg dist/Sirathic-*.exe dist/Sirathic-*.AppImage; do
+            [ -e "$file" ] || continue
+            bunx wrangler@4.151.1 r2 object put "sirathic-downloads/$(basename "$file")" \
+              --file "$file" --remote \
+              --content-type application/octet-stream \
+              --cache-control "public, max-age=300"
+          done
