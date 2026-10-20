@@ -11,6 +11,7 @@ export const env = createEnv({
     ANTHROPIC_API_KEY: z.string().optional(),
     GOOGLE_CLIENT_ID: z.string().optional(),
     GOOGLE_CLIENT_SECRET: z.string().optional(),
+    TAMYIZ_DIR: z.string().optional(),
     SITE_URL: z.url().default("https://sirathic.com"),
     BETTER_AUTH_SECRET: z.string().min(32),
     PORT: z.coerce.number().default(3000),

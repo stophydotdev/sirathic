@@ -25,6 +25,7 @@ import { readPdfs } from "./pdf";
 import { reasonOf } from "../respond";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
+import { decide, loggable } from "../tamyiz";
 import { shortenEarlierResults } from "./history";
 import { answerRules, searchPrompt } from "./prompt";
 import { CORE_TOOLS, sirathicTools } from "./tools";
@@ -166,6 +167,10 @@ export function chatResponse({
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
+  const decided = decide(lastQuestion(messages)).catch((err: Error) => {
+    console.warn(`tamyiz skipped: ${reasonOf(err)}`);
+    return null;
+  });
   const calls = new Map<string, { tool: string; at: number }>();
   let failedTools = 0;
   let ended:
@@ -300,25 +305,28 @@ export function chatResponse({
     onError: (error) =>
       error instanceof Error ? error.message : String(error),
     onEnd: ({ messages: answered, outcome }) => {
-      record({
-        name: "answer.completed",
-        props: {
-          mode,
-          model: modelName,
-          outcome: ended?.outcome.status ?? outcome.status,
-          finishReason: ended?.finishReason,
-          httpStatus,
-          totalMs: since(),
-          firstTextMs,
-          toolCalls: calls.size,
-          failedTools,
-          cited: new Set(text.match(/\[\d+\]/g)).size,
-          words: text.split(/\s+/).filter(Boolean).length,
-          inputTokens: usage?.inputTokens,
-          cachedInputTokens: usage?.inputTokenDetails.cacheReadTokens,
-          outputTokens: usage?.outputTokens,
-          reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
-        },
+      const props = {
+        mode,
+        model: modelName,
+        outcome: ended?.outcome.status ?? outcome.status,
+        finishReason: ended?.finishReason,
+        httpStatus,
+        totalMs: since(),
+        firstTextMs,
+        toolCalls: calls.size,
+        failedTools,
+        cited: new Set(text.match(/\[\d+\]/g)).size,
+        words: text.split(/\s+/).filter(Boolean).length,
+        inputTokens: usage?.inputTokens,
+        cachedInputTokens: usage?.inputTokenDetails.cacheReadTokens,
+        outputTokens: usage?.outputTokens,
+        reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
+      };
+      void decided.then((decision) => {
+        record({
+          name: "answer.completed",
+          props: { ...props, tamyiz: decision && loggable(decision) },
+        });
       });
       return save(answered).catch((err: Error) => {
         console.error(`session not saved: ${reasonOf(err)}`);
