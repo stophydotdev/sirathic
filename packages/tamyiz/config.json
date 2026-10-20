@@ -1,0 +1,283 @@
+{
+  "encoder": "jhu-clsp/mmBERT-base",
+  "max_length": 256,
+  "questions": {
+    "scope": {
+      "question": "What is this message to an Islamic app about?",
+      "options": ["islamic", "general", "social"],
+      "criteria": {
+        "islamic": "Islam or Muslim religious life: belief, worship, Quran, hadith, Islamic history, or a ruling or Islamic advice on anything",
+        "general": "a topic with no Islamic angle: coding, cooking, sports, school work, travel, news, general facts",
+        "social": "no question or topic: a greeting, thanks, praise, a test or small talk about the app"
+      },
+      "temperature": 1.2189662456512451,
+      "natural_rates": [
+        0.8706689462635532, 0.05652823165321272, 0.07280282208323414
+      ],
+      "shift": 0.35
+    },
+    "ask": {
+      "question": "What does the user want back?",
+      "options": [
+        "ruling",
+        "explain",
+        "find_text",
+        "calculate",
+        "how_to",
+        "advice",
+        "recommend",
+        "write"
+      ],
+      "criteria": {
+        "ruling": "a ruling: is it allowed, forbidden, required or valid, or what must they do",
+        "explain": "a fact or explanation: who, what, when, why, a meaning, belief or concept",
+        "find_text": "a verse, hadith or du'a quoted, found, or checked for authenticity",
+        "calculate": "work out a number, date, time or direction for them: zakat, inheritance, prayer times, qibla",
+        "how_to": "steps for doing something, like how to pray or make wudu",
+        "advice": "personal advice or comfort about their own life, or venting",
+        "recommend": "a recommendation: a book, teacher, course, app, place or product",
+        "write": "a text written for them: khutbah, reminder, caption, translation"
+      },
+      "temperature": 1.1255327463150024,
+      "natural_rates": [
+        0.5519385778181731, 0.17512975675093878, 0.03917816738022914,
+        0.008419239876581597, 0.03004137865052979, 0.17029826113994595,
+        0.016886316343371045, 0.008108302040230572
+      ],
+      "shift": 0.05
+    },
+    "topic": {
+      "question": "Which area of Islam is the message about?",
+      "options": [
+        "belief",
+        "worship",
+        "family",
+        "money",
+        "daily_life",
+        "health",
+        "character",
+        "texts",
+        "history",
+        "society"
+      ],
+      "criteria": {
+        "belief": "creed: Allah, prophets, angels, jinn, afterlife, fate, doubt",
+        "worship": "purity, prayer, fasting, zakat, hajj, dhikr, funerals",
+        "family": "marriage, divorce, parents, children, inheritance",
+        "money": "work, business, interest, banks, investing, debts",
+        "daily_life": "food, clothes, looks, music, games, everyday halal and haram",
+        "health": "illness, medicine, mental health, medical ethics",
+        "character": "manners, sins, repentance, iman, patience, the heart",
+        "texts": "Quran, hadith and legal theory: tafsir, authenticity, recitation, usul",
+        "history": "the Prophet's life, prophets, companions, Islamic history",
+        "society": "non-Muslims, politics, law, jihad, mosques, dawah"
+      },
+      "temperature": 1.0756915807724,
+      "natural_rates": [
+        0.09941592527786677, 0.37257559701308623, 0.14904995440766938,
+        0.07427853217339872, 0.08738940779259186, 0.023905167952288243,
+        0.06407570791334993, 0.04795820292283806, 0.012889075091800773,
+        0.06846242945511004
+      ],
+      "shift": 0.45
+    },
+    "text": {
+      "question": "Does the message name or ask for a specific kind of religious text?",
+      "options": ["quran", "hadith", "dua", "none"],
+      "criteria": {
+        "quran": "Quran verses or a surah: quoted, named, or asked for",
+        "hadith": "a hadith: quoted, named, asked for, or checked for authenticity",
+        "dua": "a du'a or dhikr to recite",
+        "none": "no specific text is named or asked for"
+      },
+      "temperature": 1.186757206916809,
+      "natural_rates": [
+        0.03832242507750603, 0.036363244919049256, 0.02249827764381674,
+        0.9028160523596279
+      ],
+      "shift": 0.3
+    },
+    "needs_current": {
+      "question": "Does a correct answer depend on current or recent information?",
+      "options": [false, true],
+      "criteria": {
+        "true": "today's date, this year's Ramadan or Eid, moon sighting, news, current prices or nisab value, recent events",
+        "false": "timeless: rulings, texts, history, belief, advice"
+      },
+      "temperature": 1.1754956245422363,
+      "natural_rates": [0.9477680972356675, 0.05223190276433258],
+      "shift": 0.15
+    },
+    "needs_location": {
+      "question": "Does the answer change with where the user is, or with the rules or facts of a place they name?",
+      "options": [false, true],
+      "criteria": {
+        "true": "prayer times, qibla, local moon sighting or Eid, nearby mosques or halal food, local laws or courts, high latitudes",
+        "false": "the answer is the same in every country"
+      },
+      "temperature": 1.1771737337112427,
+      "natural_rates": [0.894651503209098, 0.10534849679090193],
+      "shift": 0.05
+    },
+    "needs_web": {
+      "question": "Does a good answer need facts from outside Islamic texts and fatwas?",
+      "options": [false, true],
+      "criteria": {
+        "true": "facts about a product, ingredient, company, medicine, technology, place, living person, organisation, news, science or later history",
+        "false": "Quran, hadith, tafsir, fiqh books and fatwas are enough, or no facts are needed"
+      },
+      "temperature": 1.0259695053100586,
+      "natural_rates": [0.8375149883486799, 0.1624850116513201],
+      "shift": 0.1
+    },
+    "needs_community": {
+      "question": "Does the user want other people's lived experience?",
+      "options": [false, true],
+      "criteria": {
+        "true": "asks how others handle it, whether anyone went through it, or for people's stories, tips or opinions",
+        "false": "wants an answer, ruling, text or fact, not people's experiences"
+      },
+      "temperature": 1.294991135597229,
+      "natural_rates": [0.9616835118419068, 0.03831648815809323],
+      "shift": 0.15
+    },
+    "madhab_matters": {
+      "question": "Do the schools of Islamic law give different practical rulings here?",
+      "options": [false, true],
+      "criteria": {
+        "true": "Hanafi, Maliki, Shafi'i, Hanbali or Ja'fari rulings differ, so the asker's school changes the answer",
+        "false": "the schools agree, or no fiqh ruling is involved"
+      },
+      "temperature": 1.421156406402588,
+      "natural_rates": [0.910583406625623, 0.08941659337437702],
+      "shift": 0.0
+    },
+    "needs_scholar": {
+      "question": "Is this a personal case that a qualified scholar should judge?",
+      "options": [false, true],
+      "criteria": {
+        "true": "the outcome depends on facts a mufti must hear: is my divorce or marriage valid, our estate dispute, my contract, a medical decision for a relative",
+        "false": "a general question the sources answer for anyone"
+      },
+      "temperature": 1.2853893041610718,
+      "natural_rates": [0.8040789759166848, 0.19592102408331524],
+      "shift": 0.35
+    },
+    "risk": {
+      "question": "Is anyone in this message in danger or crisis?",
+      "options": ["none", "self_harm", "abuse", "emergency", "distress"],
+      "criteria": {
+        "none": "no sign of danger or crisis",
+        "self_harm": "suicide, self-harm, wanting to die, or asking about the ruling on suicide",
+        "abuse": "someone is or was hurt, threatened, controlled or forced by a spouse, parent, relative or leader, including forced marriage",
+        "emergency": "a medical emergency or danger to life happening now, other than self-harm or abuse",
+        "distress": "severe emotional pain: hopelessness, panic, breakdown, crushing guilt or grief, without self-harm or abuse"
+      },
+      "temperature": 1.0321842432022095,
+      "natural_rates": [
+        0.9041341621125527, 0.017917483626048142, 0.03510491844311877,
+        0.002544741562721622, 0.0402986942555588
+      ],
+      "shift": 0.0
+    },
+    "waswasa": {
+      "question": "Does the message show religious OCD (waswasa)?",
+      "options": [false, true],
+      "criteria": {
+        "true": "obsessive doubt about wudu, purity, prayer, intention, divorce words or kufr, repeated acts, or asking for reassurance again and again",
+        "false": "an ordinary question, or a doubt raised once"
+      },
+      "temperature": 1.2034863233566284,
+      "natural_rates": [0.9581011497495944, 0.041898850250405587],
+      "shift": 0.1
+    },
+    "harm": {
+      "question": "Does the message push toward harming or condemning other people?",
+      "options": ["none", "takfir", "violence", "hate"],
+      "criteria": {
+        "none": "no harm to others is intended or asked for",
+        "takfir": "calls, or asks to call, a specific person or Muslim group kafir or apostate",
+        "violence": "wants to hurt, kill, punish, threaten, force or exploit someone, or seeks religious cover for it",
+        "hate": "contempt, slurs or dehumanising talk about a group: a sect, race, religion or gender"
+      },
+      "temperature": 0.9309149980545044,
+      "natural_rates": [
+        0.9550040564997607, 0.020053670612219427, 0.0196376193547045,
+        0.0053046535333153046
+      ],
+      "shift": 0.0
+    },
+    "asker": {
+      "question": "Who seems to be asking?",
+      "options": ["general", "minor", "convert", "non_muslim", "student"],
+      "criteria": {
+        "general": "no clear sign, or an ordinary adult Muslim",
+        "minor": "a child or teenager: an age under 18, school, or living under parents' rules as a minor",
+        "convert": "a convert or revert, or a new Muslim learning the basics",
+        "non_muslim": "not Muslim: curious, critical, ex-Muslim, or thinking of converting",
+        "student": "a student of knowledge: technical terms, named books, isnad, legal theory, scholarly debate"
+      },
+      "temperature": 1.1357194185256958,
+      "natural_rates": [
+        0.8962034664002433, 0.018157334607532254, 0.025346422831327917,
+        0.01717996611789236, 0.04311281004300421
+      ],
+      "shift": 0.15
+    },
+    "follow_up": {
+      "question": "Does this message only make sense with an earlier message in the chat?",
+      "options": [false, true],
+      "criteria": {
+        "true": "\"what about the Hanafis?\", \"and for women?\", \"explain more\", \"is that hadith authentic?\" about something said before",
+        "false": "the message stands on its own"
+      },
+      "temperature": 0.9586607217788696,
+      "natural_rates": [0.968934625217522, 0.031065374782477926],
+      "shift": 0.0
+    },
+    "short_ok": {
+      "question": "Is a short answer of one or two sentences enough?",
+      "options": [false, true],
+      "criteria": {
+        "true": "one fact: a date, number, name, place, a yes/no about a fact, a reference or a hadith grade, greetings and small talk",
+        "false": "everything else, including rulings (a ruling needs its reason), stories ending in one question, multi-part questions and requests for text"
+      },
+      "temperature": 1.3623123168945312,
+      "natural_rates": [0.9197761194029851, 0.08022388059701492],
+      "shift": 0.0
+    },
+    "scholars_differ": {
+      "question": "Do qualified scholars today give different answers here?",
+      "options": [false, true],
+      "criteria": {
+        "true": "contemporary questions where councils and scholars disagree, such as mortgages in the West, crypto, IVF, music or Mawlid",
+        "false": "settled matters, or no ruling involved"
+      },
+      "temperature": 1.0731630325317383,
+      "natural_rates": [0.7901732474685054, 0.2098267525314946],
+      "shift": 0.25
+    }
+  },
+  "routes": {
+    "self_harm": {
+      "question": "risk",
+      "option": "self_harm",
+      "min_probability": 0.132
+    },
+    "distress": {
+      "question": "risk",
+      "option": "distress",
+      "rule": "most likely risk option other than self_harm"
+    }
+  },
+  "shadow_only": [
+    "waswasa",
+    "harm",
+    "needs_current",
+    "needs_location",
+    "needs_web",
+    "needs_community",
+    "madhab_matters",
+    "needs_scholar"
+  ]
+}
