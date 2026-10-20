@@ -29,13 +29,24 @@ const cacheMarks: LanguageModelMiddleware = {
   },
 };
 
+const leanTools: LanguageModelMiddleware = {
+  transformParams: async ({ params }) => ({
+    ...params,
+    tools: params.tools?.map((tool) => {
+      if (tool.type !== "function") return tool;
+      const { $schema: _draft, ...inputSchema } = tool.inputSchema;
+      return { ...tool, inputSchema };
+    }),
+  }),
+};
+
 const NOOR = "sirathic-noor-1-flash";
 
 const haiku =
   anthropic &&
   wrapLanguageModel({
     model: anthropic("claude-haiku-5-5"),
-    middleware: cacheMarks,
+    middleware: [cacheMarks, leanTools],
   });
 
 export const NOOR_MODELS: Model[] = haiku

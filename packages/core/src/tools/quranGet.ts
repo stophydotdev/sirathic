@@ -5,11 +5,13 @@ import { z } from "zod";
 
 const MAX_VERSES = 50;
 
+const LONGEST_SURAH = 286;
+
 export const quranGetInput = z
   .object({
     surah: z.number().int().min(1).max(114),
-    from: z.number().int().min(1).optional(),
-    to: z.number().int().min(1).optional(),
+    from: z.number().int().min(1).max(LONGEST_SURAH).optional(),
+    to: z.number().int().min(1).max(LONGEST_SURAH).optional(),
     context: z.number().int().min(0).max(10).default(0),
   })
   .refine(
