@@ -97,6 +97,7 @@ import { z } from "zod";
 import { reasonOf } from "../respond";
 import type { Source } from "../shared/sources";
 import {
+  bestPieces,
   fiqhBlock,
   hadithBlock,
   pagesBlock,
@@ -429,11 +430,16 @@ const searchFiqh = async (cite: Cite, queries: string[]) => {
   return { sources, results, text: fiqhBlock(results) };
 };
 
-const readPages = async (hits: Hit[]) => {
+const readPages = async (hits: Hit[], queries: readonly string[]) => {
   const read = await Promise.all(
     hits.map((hit) =>
       webFetch({ url: hit.url }).then(
-        (page) => pageText(page.markdown, RESULT_CHARS),
+        (page) =>
+          bestPieces(
+            pageText(page.markdown, Number.POSITIVE_INFINITY),
+            queries,
+            RESULT_CHARS,
+          ),
         () => undefined,
       ),
     ),
@@ -487,24 +493,37 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
     ranked.slice(0, SEARCH_LIMITS.fatwa),
     fatwaSource,
   );
-  const results = cited.map((fatwa) => ({
-    citation: fatwa.citation,
-    title: fatwa.title,
-    site: [siteOf(fatwa.url), fatwa.answeredBy, fatwa.school]
-      .filter(Boolean)
-      .join(", "),
-    date: fatwa.publishedAt?.toISOString().slice(0, 10) ?? null,
-    text: pageText(
+  const results = cited.map((fatwa) => {
+    const head = pageText(
       [
         fatwa.question && `Question: ${clip(fatwa.question, QUESTION_CHARS)}`,
         fatwa.summary && `Summary: ${fatwa.summary}`,
-        fatwa.answer,
       ]
         .filter(Boolean)
         .join("\n\n"),
       FATWA_CHARS,
-    ),
-  }));
+    );
+    const room = FATWA_CHARS - head.length - 2;
+    return {
+      citation: fatwa.citation,
+      title: fatwa.title,
+      site: [siteOf(fatwa.url), fatwa.answeredBy, fatwa.school]
+        .filter(Boolean)
+        .join(", "),
+      date: fatwa.publishedAt?.toISOString().slice(0, 10) ?? null,
+      text: [
+        head,
+        room > 0 &&
+          bestPieces(
+            pageText(fatwa.answer, Number.POSITIVE_INFINITY),
+            [...queries, ...arabic],
+            room,
+          ),
+      ]
+        .filter(Boolean)
+        .join("\n\n"),
+    };
+  });
   return {
     sources: [
       ...sources,
@@ -539,7 +558,7 @@ const searchWeb = async (cite: Cite, queries: string[], limit: number) => {
     description: hit.description ?? "",
   }));
   const read = hits.slice(0, limit);
-  const pages = citedPages(cite, read, await readPages(read));
+  const pages = citedPages(cite, read, await readPages(read, queries));
   return {
     ...pages,
     sources: [...pages.sources, ...hits.slice(limit).map(hitSource)],
@@ -570,7 +589,7 @@ const searchNews = async (cite: Cite, queries: string[]) => {
     title: article.title,
     description: article.description ?? "",
   }));
-  const pages = citedPages(cite, hits, await readPages(hits), dates);
+  const pages = citedPages(cite, hits, await readPages(hits, queries), dates);
   return { ...pages, text: pagesBlock("news", pages.results) };
 };
 

@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import {
+  bestPieces,
   hadithBlock,
   pageText,
   quranBlock,
@@ -75,4 +76,16 @@ test("a page loses its menus, buttons, footnote links and repeated captions", ()
   expect(pageText(page, 1000)).toBe(
     "A fresco of the battle.\nBadr was fought in 624.\n| Location | Badr |",
   );
+});
+
+test("a long text keeps the pieces that carry the query words, in page order", () => {
+  const filler = "Prayer times are fixed for every Muslim. ".repeat(12);
+  const ruling =
+    "The traveller may combine Dhuhr and Asr in the time of either one.";
+  const text = `${filler}\n${ruling}\nAnd Allah knows best.`;
+  expect(bestPieces("Short text.", ["combine"], 100)).toBe("Short text.");
+  const kept = bestPieces(text, ["combine dhuhr asr"], 300);
+  expect(kept).toContain(ruling);
+  expect(kept.length).toBeLessThanOrEqual(301);
+  expect(bestPieces(text, ["zakat"], 50)).toBe(`${text.slice(0, 50)}…`);
 });
