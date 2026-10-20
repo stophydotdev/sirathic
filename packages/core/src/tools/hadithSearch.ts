@@ -14,7 +14,7 @@ export const hadithSearch = async (
   const { query, limit } = hadithSearchInput.parse(input);
   return {
     hadiths: await hadithsByIds(
-      await hybridIds(hadiths, query, limit, { anyWord: false }),
+      await hybridIds(hadiths, query, limit, { rareWords: true }),
     ),
   };
 };
