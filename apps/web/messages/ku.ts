@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "زیادکردنی فایل یان ئامراز",
   "Upload files or images": "بارکردنی فایل یان وێنە",
   Attachment: "هاوپێچ",
-  "Cookie Policy": "سیاسەتی کووکی",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic تەنها ئەوە بەکاردەهێنێت کە بۆ کارکردن پێویستییەتی: ڕێکخستنەکانت و چوونەژوورەوەکەت. ڕیکلام نییە، چاودێری نییە، هیچ شتێک نافرۆشرێت.",
   Chat: "گفتوگۆ",
   "Export this chat": "هەناردەکردنی ئەم گفتوگۆیە",
   "Download Markdown": "دابەزاندن وەک Markdown",
@@ -326,8 +323,6 @@ export default {
     "زیاتر بیر دەکاتەوە و هەنگاو بە هەنگاو دەگەڕێت",
   "Type / for modes": "بۆ دۆخەکان / بنووسە",
   "Type @ for sources": "بۆ سەرچاوەکان @ بنووسە",
-  "Allow all": "ڕێگەدان بە هەموو",
-  Reject: "ڕەتکردنەوە",
   Small: "بچووک",
   Medium: "مامناوەند",
   Large: "گەورە",
@@ -392,4 +387,6 @@ export default {
     "{collection}، کتێب بە کتێب، بە عەرەبی و ئینگلیزی.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} فەرموودە لە {collection}، بە عەرەبی و ئینگلیزی.",
+  Privacy: "تایبەتمەندی",
+  Terms: "مەرجەکان",
 } satisfies Messages;

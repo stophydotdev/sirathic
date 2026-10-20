@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Ɓeydu fiilaaji walla kuutorɗe",
   "Upload files or images": "Yollu fiilaaji walla nate",
   Attachment: "Ko sakkitii",
-  "Cookie Policy": "Laawol cookies",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic huutortaa ko wonaa ko haani ngam gollude: teelte maa e naatgol maa. Alaa jeeyirɗe, alaa rewindagol, alaa ko yeeyetee.",
   Chat: "Yeewtere",
   "Export this chat": "Yaltin yeewtere ndee",
   "Download Markdown": "Aawto no Markdown",
@@ -325,8 +322,6 @@ export default {
     "Ena miijoo ko ɓuri juutde, ena yiyloo tagu-tagu",
   "Type / for modes": "Tappu / ngam mbaadiiji",
   "Type @ for sources": "Tappu @ ngam iwdi",
-  "Allow all": "Yamir fof",
-  Reject: "Salo",
   Small: "Tokooso",
   Medium: "Hakkundeejo",
   Large: "Mawɗo",
@@ -391,4 +386,6 @@ export default {
     "{collection}, deftere kala, e araabeere e engeleere.",
   "{count} hadith from {collection}, in Arabic and English.":
     "Hadiisaaji {count} iwde e {collection}, e araabeere e engeleere.",
+  Privacy: "Suturo",
+  Terms: "Sarɗiiji",
 } satisfies Messages;

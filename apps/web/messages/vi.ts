@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Thêm tệp hoặc công cụ",
   "Upload files or images": "Tải lên tệp hoặc hình ảnh",
   Attachment: "Tệp đính kèm",
-  "Cookie Policy": "Chính sách cookie",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic chỉ dùng những gì cần để hoạt động: cài đặt và thông tin đăng nhập của bạn. Không quảng cáo, không theo dõi, không bán bất cứ thứ gì.",
   Chat: "Cuộc trò chuyện",
   "Export this chat": "Xuất cuộc trò chuyện này",
   "Download Markdown": "Tải dạng Markdown",
@@ -326,8 +323,6 @@ export default {
     "Suy nghĩ lâu hơn và tìm kiếm từng bước",
   "Type / for modes": "Gõ / để chọn chế độ",
   "Type @ for sources": "Gõ @ để chọn nguồn",
-  "Allow all": "Cho phép tất cả",
-  Reject: "Từ chối",
   Small: "Nhỏ",
   Medium: "Vừa",
   Large: "Lớn",
@@ -392,4 +387,6 @@ export default {
     "{collection}, từng quyển, bằng tiếng Ả Rập và tiếng Anh.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadith từ {collection}, bằng tiếng Ả Rập và tiếng Anh.",
+  Privacy: "Quyền riêng tư",
+  Terms: "Điều khoản",
 } satisfies Messages;

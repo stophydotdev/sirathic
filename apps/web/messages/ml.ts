@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "ഫയലുകളോ ടൂളുകളോ ചേർക്കുക",
   "Upload files or images": "ഫയലുകളോ ചിത്രങ്ങളോ അപ്‌ലോഡ് ചെയ്യുക",
   Attachment: "അറ്റാച്ച്‌മെന്റ്",
-  "Cookie Policy": "കുക്കി നയം",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "പ്രവർത്തിക്കാൻ ആവശ്യമുള്ളത് മാത്രമേ Sirathic ഉപയോഗിക്കുന്നുള്ളൂ: നിങ്ങളുടെ ക്രമീകരണങ്ങളും സൈൻ-ഇന്നും. പരസ്യങ്ങളില്ല, ട്രാക്കിംഗില്ല, ഒന്നും വിൽക്കുന്നില്ല.",
   Chat: "ചാറ്റ്",
   "Export this chat": "ഈ ചാറ്റ് എക്‌സ്‌പോർട്ട് ചെയ്യുക",
   "Download Markdown": "Markdown ആയി ഡൗൺലോഡ് ചെയ്യുക",
@@ -323,8 +320,6 @@ export default {
     "കൂടുതൽ സമയം ചിന്തിച്ച് ഘട്ടം ഘട്ടമായി തിരയുന്നു",
   "Type / for modes": "മോഡുകൾക്ക് / ടൈപ്പ് ചെയ്യുക",
   "Type @ for sources": "സ്രോതസ്സുകൾക്ക് @ ടൈപ്പ് ചെയ്യുക",
-  "Allow all": "എല്ലാം അനുവദിക്കുക",
-  Reject: "നിരസിക്കുക",
   Small: "ചെറുത്",
   Medium: "ഇടത്തരം",
   Large: "വലുത്",
@@ -389,4 +384,6 @@ export default {
     "{collection}, ഗ്രന്ഥം തിരിച്ച്, അറബിയിലും ഇംഗ്ലീഷിലും.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} ൽ നിന്ന് {count} ഹദീസുകൾ, അറബിയിലും ഇംഗ്ലീഷിലും.",
+  Privacy: "സ്വകാര്യത",
+  Terms: "നിബന്ധനകൾ",
 } satisfies Messages;

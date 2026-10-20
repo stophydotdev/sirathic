@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "افزودن فایل یا ابزار",
   "Upload files or images": "بارگذاری فایل یا تصویر",
   Attachment: "پیوست",
-  "Cookie Policy": "سیاست کوکی",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic فقط از چیزی استفاده می‌کند که برای کارکردنش لازم است: تنظیمات و ورود شما. بدون تبلیغ، بدون ردیابی، بدون فروش هیچ چیز.",
   Chat: "گفتگو",
   "Export this chat": "خروجی گرفتن از این گفتگو",
   "Download Markdown": "دانلود به‌صورت Markdown",
@@ -324,8 +321,6 @@ export default {
     "بیشتر فکر می‌کند و گام‌به‌گام جستجو می‌کند",
   "Type / for modes": "برای حالت‌ها / بنویسید",
   "Type @ for sources": "برای منابع @ بنویسید",
-  "Allow all": "اجازه به همه",
-  Reject: "رد کردن",
   Small: "کوچک",
   Medium: "متوسط",
   Large: "بزرگ",
@@ -390,4 +385,6 @@ export default {
     "{collection}، کتاب به کتاب، به عربی و انگلیسی.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} حدیث از {collection}، به عربی و انگلیسی.",
+  Privacy: "حریم خصوصی",
+  Terms: "شرایط",
 } satisfies Messages;

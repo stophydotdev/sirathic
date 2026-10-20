@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "添加文件或工具",
   "Upload files or images": "上传文件或图片",
   Attachment: "附件",
-  "Cookie Policy": "Cookie 政策",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic 只使用运行所需的数据：你的设置和登录信息。没有广告，没有跟踪，不出售任何数据。",
   Chat: "对话",
   "Export this chat": "导出此对话",
   "Download Markdown": "下载 Markdown",
@@ -318,8 +315,6 @@ export default {
   "Thinks longer and searches step by step": "思考更久，逐步搜索",
   "Type / for modes": "输入 / 选择模式",
   "Type @ for sources": "输入 @ 选择来源",
-  "Allow all": "全部允许",
-  Reject: "拒绝",
   Small: "小",
   Medium: "中",
   Large: "大",
@@ -383,4 +378,6 @@ export default {
     "{collection}，按卷浏览，阿拉伯文和英文对照。",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} 中的 {count} 段圣训，阿拉伯文和英文对照。",
+  Privacy: "隐私",
+  Terms: "条款",
 } satisfies Messages;

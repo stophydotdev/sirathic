@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Fayl və ya alət əlavə et",
   "Upload files or images": "Fayl və ya şəkil yüklə",
   Attachment: "Əlavə",
-  "Cookie Policy": "Kuki siyasəti",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic yalnız işləmək üçün lazım olanı istifadə edir: ayarlarınızı və girişinizi. Reklam yoxdur, izləmə yoxdur, heç nə satılmır.",
   Chat: "Söhbət",
   "Export this chat": "Bu söhbəti ixrac et",
   "Download Markdown": "Markdown kimi yüklə",
@@ -327,8 +324,6 @@ export default {
     "Daha uzun düşünür və addım-addım axtarır",
   "Type / for modes": "Rejimlər üçün / yazın",
   "Type @ for sources": "Mənbələr üçün @ yazın",
-  "Allow all": "Hamısına icazə ver",
-  Reject: "Rədd et",
   Small: "Kiçik",
   Medium: "Orta",
   Large: "Böyük",
@@ -393,4 +388,6 @@ export default {
     "{collection}, kitab-kitab, ərəbcə və ingiliscə.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} toplusundan {count} hədis, ərəbcə və ingiliscə.",
+  Privacy: "Məxfilik",
+  Terms: "Şərtlər",
 } satisfies Messages;

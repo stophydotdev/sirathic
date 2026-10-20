@@ -84,6 +84,7 @@ import {
   Wrench,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { type FC, memo, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
 import { create } from "zustand";
@@ -361,6 +362,7 @@ const ThreadBody: FC = () => {
 
 const EmptyState: FC = () => {
   const t = useT();
+  const href = useLocalePath();
   return (
     <div className="relative flex h-full flex-col px-6 pb-4 md:justify-center md:pb-[12vh]">
       <span className="absolute top-3 start-11 flex h-8 items-center text-xl font-medium tracking-tight lg:hidden">
@@ -374,6 +376,15 @@ const EmptyState: FC = () => {
           {t("What do you want to know?")}
         </h1>
         <Composer placeholder={t("Ask anything…")} menuSide="bottom" rotate />
+        <p className="text-muted-foreground mt-3 flex justify-center gap-1.5 text-xs">
+          <Link href={href("/privacy")} className="hover:text-foreground">
+            {t("Privacy")}
+          </Link>
+          <span aria-hidden>·</span>
+          <Link href={href("/terms")} className="hover:text-foreground">
+            {t("Terms")}
+          </Link>
+        </p>
       </div>
     </div>
   );

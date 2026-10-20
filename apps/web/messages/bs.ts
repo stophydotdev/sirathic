@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Dodaj datoteke ili alate",
   "Upload files or images": "Otpremi datoteke ili slike",
   Attachment: "Prilog",
-  "Cookie Policy": "Politika kolačića",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic koristi samo ono što mu treba za rad: vaše postavke i vašu prijavu. Bez reklama, bez praćenja, ništa se ne prodaje.",
   Chat: "Razgovor",
   "Export this chat": "Izvezi ovaj razgovor",
   "Download Markdown": "Preuzmi kao Markdown",
@@ -326,8 +323,6 @@ export default {
     "Razmišlja duže i pretražuje korak po korak",
   "Type / for modes": "Upišite / za načine",
   "Type @ for sources": "Upišite @ za izvore",
-  "Allow all": "Dozvoli sve",
-  Reject: "Odbij",
   Small: "Mala",
   Medium: "Srednja",
   Large: "Velika",
@@ -392,4 +387,6 @@ export default {
     "{collection}, knjigu po knjigu, na arapskom i engleskom.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadisa iz zbirke {collection}, na arapskom i engleskom.",
+  Privacy: "Privatnost",
+  Terms: "Uslovi",
 } satisfies Messages;

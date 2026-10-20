@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Dosya veya araç ekle",
   "Upload files or images": "Dosya veya görsel yükle",
   Attachment: "Ek",
-  "Cookie Policy": "Çerez Politikası",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic yalnızca çalışmak için gerekeni kullanır: ayarlarınızı ve oturumunuzu. Reklam yok, takip yok, hiçbir şey satılmaz.",
   Chat: "Sohbet",
   "Export this chat": "Bu sohbeti dışa aktar",
   "Download Markdown": "Markdown olarak indir",
@@ -326,8 +323,6 @@ export default {
     "Daha uzun düşünür ve adım adım arar",
   "Type / for modes": "Modlar için / yazın",
   "Type @ for sources": "Kaynaklar için @ yazın",
-  "Allow all": "Tümüne izin ver",
-  Reject: "Reddet",
   Small: "Küçük",
   Medium: "Orta",
   Large: "Büyük",
@@ -392,4 +387,6 @@ export default {
     "{collection}, kitap kitap, Arapça ve İngilizce.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} kaynağından {count} hadis, Arapça ve İngilizce.",
+  Privacy: "Gizlilik",
+  Terms: "Koşullar",
 } satisfies Messages;

@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "បន្ថែមឯកសារ ឬឧបករណ៍",
   "Upload files or images": "ផ្ទុកឯកសារ ឬរូបភាពឡើង",
   Attachment: "ឯកសារភ្ជាប់",
-  "Cookie Policy": "គោលការណ៍ខូគី",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic ប្រើតែអ្វីដែលចាំបាច់ដើម្បីដំណើរការ៖ ការកំណត់ និងការចូលគណនីរបស់អ្នក។ គ្មានការផ្សាយពាណិជ្ជកម្ម គ្មានការតាមដាន ហើយមិនលក់អ្វីទាំងអស់។",
   Chat: "ការជជែក",
   "Export this chat": "នាំចេញការជជែកនេះ",
   "Download Markdown": "ទាញយកជា Markdown",
@@ -320,8 +317,6 @@ export default {
   "Thinks longer and searches step by step": "គិតយូរជាង និងស្វែងរកម្ដងមួយជំហាន",
   "Type / for modes": "វាយ / ដើម្បីជ្រើសរបៀប",
   "Type @ for sources": "វាយ @ ដើម្បីជ្រើសប្រភព",
-  "Allow all": "អនុញ្ញាតទាំងអស់",
-  Reject: "បដិសេធ",
   Small: "តូច",
   Medium: "មធ្យម",
   Large: "ធំ",
@@ -386,4 +381,6 @@ export default {
     "{collection} តាមសៀវភៅនីមួយៗ ជាភាសាអារ៉ាប់ និងអង់គ្លេស។",
   "{count} hadith from {collection}, in Arabic and English.":
     "ហាឌីស {count} ពី {collection} ជាភាសាអារ៉ាប់ និងអង់គ្លេស។",
+  Privacy: "ឯកជនភាព",
+  Terms: "លក្ខខណ្ឌ",
 } satisfies Messages;

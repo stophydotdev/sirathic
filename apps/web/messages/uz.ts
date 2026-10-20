@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Файл ёки асбоб қўшиш",
   "Upload files or images": "Файл ёки расм юклаш",
   Attachment: "Илова",
-  "Cookie Policy": "Cookie сиёсати",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic фақат ишлаши учун зарур нарсадан фойдаланади: созламаларингиз ва киришингиз. Реклама йўқ, кузатув йўқ, ҳеч нарса сотилмайди.",
   Chat: "Суҳбат",
   "Export this chat": "Бу суҳбатни экспорт қилиш",
   "Download Markdown": "Markdown шаклида юклаб олиш",
@@ -326,8 +323,6 @@ export default {
     "Узоқроқ ўйлайди ва босқичма-босқич қидиради",
   "Type / for modes": "Режимлар учун / ёзинг",
   "Type @ for sources": "Манбалар учун @ ёзинг",
-  "Allow all": "Ҳаммасига рухсат бериш",
-  Reject: "Рад этиш",
   Small: "Кичик",
   Medium: "Ўрта",
   Large: "Катта",
@@ -392,4 +387,6 @@ export default {
     "{collection}, китобма-китоб, араб ва инглиз тилларида.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{collection} тўпламидан {count} та ҳадис, араб ва инглиз тилларида.",
+  Privacy: "Махфийлик",
+  Terms: "Шартлар",
 } satisfies Messages;

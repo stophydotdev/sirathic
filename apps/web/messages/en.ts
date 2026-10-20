@@ -74,8 +74,6 @@ export const MESSAGES = [
   "Add files or tools",
   "Upload files or images",
   "Attachment",
-  "Cookie Policy",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.",
   "Chat",
   "Export this chat",
   "Download Markdown",
@@ -314,8 +312,6 @@ export const MESSAGES = [
   "Thinks longer and searches step by step",
   "Type / for modes",
   "Type @ for sources",
-  "Allow all",
-  "Reject",
   "Small",
   "Medium",
   "Large",
@@ -352,6 +348,8 @@ export const MESSAGES = [
   "Investments",
   "Stock",
   "Owed to you",
+  "Privacy",
+  "Terms",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

@@ -2,7 +2,6 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chat-options";
-import { CookieCard } from "@/components/cookie-card";
 import {
   type Translate,
   useLocale,
@@ -222,7 +221,6 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       <SettingsDialog />
       <SearchDialog open={searching} onOpenChange={setSearching} />
       <SignInDialog />
-      <CookieCard />
       <AskSelection />
     </div>
   );

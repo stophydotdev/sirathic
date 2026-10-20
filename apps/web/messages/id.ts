@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Tambah berkas atau alat",
   "Upload files or images": "Unggah berkas atau gambar",
   Attachment: "Lampiran",
-  "Cookie Policy": "Kebijakan Cookie",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Sirathic hanya menggunakan yang diperlukan agar berfungsi: pengaturan dan login Anda. Tanpa iklan, tanpa pelacakan, tidak ada yang dijual.",
   Chat: "Obrolan",
   "Export this chat": "Ekspor obrolan ini",
   "Download Markdown": "Unduh sebagai Markdown",
@@ -327,8 +324,6 @@ export default {
     "Berpikir lebih lama dan mencari langkah demi langkah",
   "Type / for modes": "Ketik / untuk mode",
   "Type @ for sources": "Ketik @ untuk sumber",
-  "Allow all": "Izinkan semua",
-  Reject: "Tolak",
   Small: "Kecil",
   Medium: "Sedang",
   Large: "Besar",
@@ -393,4 +388,6 @@ export default {
     "{collection}, kitab demi kitab, dalam bahasa Arab dan Inggris.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadis dari {collection}, dalam bahasa Arab dan Inggris.",
+  Privacy: "Privasi",
+  Terms: "Ketentuan",
 } satisfies Messages;

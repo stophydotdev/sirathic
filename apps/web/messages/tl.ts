@@ -63,9 +63,6 @@ export default {
   "Add files or tools": "Magdagdag ng file o tool",
   "Upload files or images": "Mag-upload ng file o larawan",
   Attachment: "Kalakip",
-  "Cookie Policy": "Patakaran sa Cookie",
-  "Sirathic only uses what it needs to work: your settings and your sign-in. No ads, no tracking, nothing sold.":
-    "Ginagamit lang ng Sirathic ang kailangan nito para gumana: ang iyong mga setting at pag-sign in. Walang ads, walang pagsubaybay, walang ibinebenta.",
   Chat: "Chat",
   "Export this chat": "I-export ang chat na ito",
   "Download Markdown": "I-download bilang Markdown",
@@ -330,8 +327,6 @@ export default {
     "Mas matagal mag-isip at naghahanap nang paisa-isang hakbang",
   "Type / for modes": "I-type ang / para sa mode",
   "Type @ for sources": "I-type ang @ para sa sanggunian",
-  "Allow all": "Payagan lahat",
-  Reject: "Tanggihan",
   Small: "Maliit",
   Medium: "Katamtaman",
   Large: "Malaki",
@@ -396,4 +391,6 @@ export default {
     "{collection}, bawat aklat, sa Arabe at Ingles.",
   "{count} hadith from {collection}, in Arabic and English.":
     "{count} hadith mula sa {collection}, sa Arabe at Ingles.",
+  Privacy: "Privacy",
+  Terms: "Mga Tuntunin",
 } satisfies Messages;
