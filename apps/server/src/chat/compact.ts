@@ -5,16 +5,64 @@ export const unvowel = (text: string) => text.replaceAll(VOWEL_MARKS, "");
 const cut = (text: string, chars: number) =>
   text.length > chars ? `${text.slice(0, chars)}…` : text;
 
-const LINK = /!?\[([^\]]*)\]\([^)]*\)/gu;
+const TARGET = String.raw`\((?:[^()\s]|\([^()\s]*\))*(?:\s+"[^"]*")?\)`;
+const IMAGE = new RegExp(String.raw`!\[(?:\\.|[^\]\\])*\]` + TARGET, "gu");
+const LINK = new RegExp(String.raw`\[((?:\\.|[^\]\\])*)\]` + TARGET, "gu");
+const FOOTNOTE = /\\?\[\d{1,3}\\?\]/gu;
+const TAG = /<[^>\n]+>/gu;
+const MARKERS = /^[\s#>*\-•\d.]+/u;
+const LETTER = /\p{L}/u;
+const WORDS = /[\p{L}\p{N}]/u;
+const BUTTONS = new Set([
+  "share",
+  "print",
+  "cite",
+  "copy citation",
+  "feedback",
+  "search",
+  "listen",
+  "download",
+  "embed",
+  "transcript",
+  "enlarge this image",
+  "toggle more options",
+  "see all related content",
+  "advertisement",
+  "skip to content",
+  "menu",
+]);
 
-export const pageText = (markdown: string, chars: number) =>
-  cut(
-    markdown
-      .replaceAll(LINK, "$1")
+const readable = (line: string) =>
+  line
+    .replaceAll(IMAGE, "")
+    .replaceAll(LINK, "$1")
+    .replaceAll(FOOTNOTE, "")
+    .replaceAll(TAG, "")
+    .replaceAll(/`\s*`/gu, "")
+    .replaceAll("****", " ")
+    .replaceAll("**", "")
+    .trimEnd();
+
+export const pageText = (markdown: string, chars: number) => {
+  const seen = new Set<string>();
+  const lines = markdown.split("\n").flatMap((line) => {
+    if (line.trim() === "") return [""];
+    const outsideLinks = line.replaceAll(IMAGE, "").replaceAll(LINK, "");
+    if (!LETTER.test(outsideLinks) && !line.startsWith("|")) return [];
+    const text = readable(line);
+    const key = text.replace(MARKERS, "").trim().toLowerCase();
+    if (!WORDS.test(text) || BUTTONS.has(key) || seen.has(key)) return [];
+    seen.add(key);
+    return [text];
+  });
+  return cut(
+    lines
+      .join("\n")
       .replaceAll(/\n{3,}/gu, "\n\n")
       .trim(),
     chars,
   );
+};
 
 const cited = (citation: number | null, line: string) =>
   citation === null ? line : `[${citation}] ${line}`;

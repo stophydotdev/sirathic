@@ -751,7 +751,7 @@ export function sirathicTools(cite: Cite) {
           );
         }
         const page = await webFetch(input);
-        const markdown = page.markdown.slice(0, PAGE_CHARS);
+        const markdown = pageText(page.markdown, PAGE_CHARS);
         const found = {
           url: page.url,
           title: page.title,

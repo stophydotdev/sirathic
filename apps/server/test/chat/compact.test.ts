@@ -56,7 +56,23 @@ test("a page keeps its text with links reduced to their words, up to the limit",
   const page =
     "# Combining prayers\n\n\n\nThe [Hanafi school](https://example.com/hanafi) allows it only at Arafah. ![map](https://example.com/map.png)";
   expect(pageText(page, 1000)).toBe(
-    "# Combining prayers\n\nThe Hanafi school allows it only at Arafah. map",
+    "# Combining prayers\n\nThe Hanafi school allows it only at Arafah.",
   );
   expect(pageText(page, 18)).toBe("# Combining prayer…");
+});
+
+test("a page loses its menus, buttons, footnote links and repeated captions", () => {
+  const page = [
+    "×",
+    "  - [Zakat](https://example.com/zakat)",
+    "[![Quiz](https://example.com/q.jpg)](https://example.com/quiz)",
+    "Share",
+    "A fresco of the battle.",
+    "Badr was fought in 624.[\\[1\\]](https://en.wikipedia.org/wiki/Badr#cite_note-1)",
+    '| Location | [Badr](https://en.wikipedia.org/wiki/Badr_(city) "Badr (city)") |',
+    "A fresco of the battle.",
+  ].join("\n");
+  expect(pageText(page, 1000)).toBe(
+    "A fresco of the battle.\nBadr was fought in 624.\n| Location | Badr |",
+  );
 });
