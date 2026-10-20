@@ -42,6 +42,7 @@ const answerRow = z.object({
   total: z.number().optional(),
   inputTokens: z.number().optional(),
   outputTokens: z.number().optional(),
+  reasoningTokens: z.number().optional(),
   toolTokens: z.number().optional(),
   words: z.number().optional(),
   cites: z.number().optional(),

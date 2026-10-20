@@ -88,5 +88,14 @@
       "verdict": "overturned",
       "reason": "The cited source [2] is the fawazahmed0 database page for Sahih Muslim 1633. Its text is Ibn 'Abbas's combining hadith (Medina, no fear or rain, 'so that his Ummah not face hardship'), listed as Arabic Number 705.04, Book 6 Hadith 64. Source [25] gives the same hadith as Sahih Muslim 705 d. So in the database the answer cites, 1633 is the combining hadith, and it matches 705d. The answer cites both. The grader's claim that the database uses sunnah.com numbering, where 1633 would be 'Umar's Khaybar waqf hadith, is disproved by the source text itself. There is no mismatch to point out."
     }
+  },
+  {
+    "question": "Is Hajj still a must for a woman without a husband or mahram?",
+    "answer": "bada42736422cc24",
+    "reason": "9c746b9f33f88510",
+    "check": {
+      "verdict": "upheld",
+      "reason": "The reason faults the answer for how it describes the schools' positions. It says that calling it \"the majority view\" that Hajj is not obligatory without a mahram is wrong, because the four schools split two against two. It also says \"some Shafi'i and Maliki opinions\" understates those schools' main view. Both points are about the substance of the ruling, not about whether the source was cited correctly. Source [7] does say \"the majority of scholars are agreed\" that a mahram or husband is a condition. But a source repeating a claim does not make it right, so the source cannot disprove this fault. The source also backs the grader on the Shafi'i point: it gives the Shafi'i school's own position as obligatory with trustworthy women, not as a minority opinion within the school. It never mentions the Maliki school, so nothing in it disproves the Maliki part. The source text does not disprove every fault named, so the verdict stands."
+    }
   }
 ]

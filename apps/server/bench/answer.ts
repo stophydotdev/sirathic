@@ -11,6 +11,7 @@ import {
   type ProviderOptions,
 } from "../src/chatgpt/codex";
 import { answerRules, type Rule } from "../src/chat/prompt";
+import { noorModel } from "../src/noor";
 import { answerAgent } from "../src/chat/response";
 import { CORE_TOOLS, sirathicTools } from "../src/chat/tools";
 import { DEFAULT_SETTINGS } from "../src/shared/settings";
@@ -111,27 +112,35 @@ const effort = z
 const withEffort = (options: ProviderOptions) =>
   effort === undefined
     ? options
-    : { ...options, openai: { ...options.openai, reasoningEffort: effort } };
+    : {
+        ...options,
+        openai: { ...options.openai, reasoningEffort: effort },
+        anthropic: { effort },
+      };
 
-const benchUser = z.email().parse(Bun.env.BENCH_USER);
-const [user] = await db
-  .select({
-    id: users.id,
-    email: users.email,
-    image: users.image,
-    plan: users.plan,
-    accountId: users.accountId,
-  })
-  .from(users)
-  .where(eq(users.email, benchUser));
-if (!user?.accountId) {
-  throw new Error(`nobody has signed in with ChatGPT as ${benchUser}`);
-}
+const chatGPTModel = async (slug: string) => {
+  const benchUser = z.email().parse(Bun.env.BENCH_USER);
+  const [user] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      image: users.image,
+      plan: users.plan,
+      accountId: users.accountId,
+    })
+    .from(users)
+    .where(eq(users.email, benchUser));
+  if (!user?.accountId) {
+    throw new Error(`nobody has signed in with ChatGPT as ${benchUser}`);
+  }
+  return chatModel(
+    { via: "chatgpt", ...user, accountId: user.accountId },
+    slug,
+  );
+};
+
 const modelName = Bun.env.BENCH_MODEL ?? DEFAULT_MODEL;
-const model = chatModel(
-  { via: "chatgpt", ...user, accountId: user.accountId },
-  modelName,
-);
+const model = noorModel(modelName) ?? (await chatGPTModel(modelName));
 
 const TAFSIR_CHARS = z.coerce
   .number()
@@ -199,7 +208,12 @@ const answer = async (kind: RunRow["kind"], question: string) => {
   let text = "";
   let searchSeconds: number | undefined;
   let firstText: number | undefined;
-  let usage = { inputTokens: 0, outputTokens: 0, toolTokens: 0 };
+  let usage = {
+    inputTokens: 0,
+    outputTokens: 0,
+    reasoningTokens: 0,
+    toolTokens: 0,
+  };
   const result = await agent.stream({
     messages: [{ role: "user", content: question }],
     experimental_transform: sources.transform(),
@@ -237,6 +251,8 @@ const answer = async (kind: RunRow["kind"], question: string) => {
       usage = {
         inputTokens: part.totalUsage.inputTokens ?? 0,
         outputTokens: part.totalUsage.outputTokens ?? 0,
+        reasoningTokens:
+          part.totalUsage.outputTokenDetails.reasoningTokens ?? 0,
         toolTokens:
           toolTokens.safeParse(part.totalUsage.raw).data?.attribution
             .request_fields.tools.input_tokens ?? 0,
