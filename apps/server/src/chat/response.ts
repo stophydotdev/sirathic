@@ -25,12 +25,13 @@ import { readPdfs } from "./pdf";
 import { reasonOf } from "../respond";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
-import { decide, loggable } from "../tamyiz";
+import { decide, loggable, type Plan, planFor } from "../tamyiz";
 import { shortenEarlierResults } from "./history";
 import { answerRules, searchPrompt } from "./prompt";
 import { CORE_TOOLS, sirathicTools } from "./tools";
 
 const MAX_STEPS = 10;
+const TAMYIZ_WAIT_MS = 1000;
 const RESEARCH_STEPS = 16;
 
 export function answerAgent({
@@ -42,6 +43,7 @@ export function answerAgent({
   rules,
   mustSearch,
   started,
+  plan,
   shorten,
   answerOptions,
 }: {
@@ -53,12 +55,15 @@ export function answerAgent({
   rules: string;
   mustSearch: boolean;
   started: ReadonlySet<string>;
+  plan: Plan;
   shorten: ReturnType<typeof shortenEarlierResults>;
   answerOptions: ProviderOptions;
 }) {
   const usable = Object.keys(tools).filter(
     (name): name is keyof typeof tools => name in tools,
   );
+  const greeting = plan.kind === "greeting";
+  const offered: ReadonlySet<string> = greeting ? new Set() : started;
   return new ToolLoopAgent({
     model,
     instructions: searchPrompt(new Date(), mode, modelName, settings),
@@ -76,16 +81,18 @@ export function answerAgent({
         ),
       );
       const activeTools = usable.filter(
-        (name) => started.has(name) || loaded.has(name),
+        (name) => offered.has(name) || loaded.has(name),
       );
-      return stepNumber === 0 && mustSearch
+      return stepNumber === 0 && mustSearch && !greeting
         ? { toolChoice: "required", activeTools }
         : {
             activeTools,
             messages: [
               ...initialMessages.map(shorten),
               ...responseMessages,
-              { role: "system", content: rules },
+              ...(greeting
+                ? []
+                : [{ role: "system" as const, content: rules }]),
             ],
           };
     },
@@ -216,15 +223,26 @@ export function chatResponse({
         }
       });
       const settings = await preferences;
+      const plan = planFor(
+        await Promise.race([
+          decided,
+          Bun.sleep(TAMYIZ_WAIT_MS).then(() => null),
+        ]),
+      );
       const agent = answerAgent({
         model: models.model,
         modelName,
         tools,
         mode,
         settings,
-        rules: answerRules(settings, recent),
+        rules: answerRules(
+          settings,
+          recent,
+          plan.kind === "answer" ? plan.leaveOut : new Set(),
+        ),
         mustSearch,
         started,
+        plan,
         shorten,
         answerOptions: options.answer,
       });

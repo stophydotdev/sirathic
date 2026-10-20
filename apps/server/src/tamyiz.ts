@@ -1,6 +1,7 @@
 import { Tokenizer } from "@huggingface/tokenizers";
 import { env } from "@sirathic/env/server";
 import { z } from "zod";
+import { type Rule, RULES } from "./chat/prompt";
 
 const question = z.object({
   options: z.array(z.union([z.string(), z.boolean()])).min(2),
@@ -72,6 +73,37 @@ export const loggable = (decision: Decision) =>
   Object.fromEntries(
     Object.entries(decision).filter(([qid]) => !PERSONAL.has(qid)),
   );
+
+const SURE = 0.9;
+
+const confident = (decision: Decision | null, qid: string) => {
+  const found = decision?.[qid];
+  return found && found.probability >= SURE ? found.answer : undefined;
+};
+
+export type Plan =
+  | { kind: "greeting" }
+  | { kind: "answer"; leaveOut: ReadonlySet<Rule> };
+
+export function planFor(decision: Decision | null): Plan {
+  const answer = (qid: string) => confident(decision, qid);
+  if (answer("scope") === "social") return { kind: "greeting" };
+  const text = answer("text");
+  const ask = answer("ask");
+  const unneeded = {
+    lesson: answer("short_ok") === true,
+    schools: answer("madhab_matters") === false,
+    scholar: answer("needs_scholar") === false,
+    hadithCheck: text !== undefined && text !== "hadith",
+    dua: text !== undefined && text !== "dua",
+    writing: ask !== undefined && ask !== "write",
+    math: ask !== undefined && ask !== "calculate",
+  } satisfies Record<Rule, boolean>;
+  return {
+    kind: "answer",
+    leaveOut: new Set(RULES.filter((rule) => unneeded[rule])),
+  };
+}
 
 export async function decide(text: string): Promise<Decision | null> {
   if (env.TAMYIZ_DIR === undefined) return null;

@@ -184,15 +184,83 @@ If there is a rewrite, translation, or writing before the follow-up question, al
 
 </followup>`;
 
-export const answerRules = (preferences: Settings, question: string) => {
-  const writing = WRITING.test(question);
+export const RULES = [
+  "lesson",
+  "schools",
+  "scholar",
+  "hadithCheck",
+  "dua",
+  "writing",
+  "math",
+] as const;
+
+export type Rule = (typeof RULES)[number];
+
+const GOAL = `- Goal: Teach the concept thoroughly. Assume the user wants to understand why and how, not just what. For a ruling, that means the ruling, the evidence from the Quran and Sunnah behind it, and how to apply it.
+`;
+
+const HEADERS = `### Headers
+
+<headers>
+
+Always begin your final response with content, not a header. Headers are for dividing responses into distinct sections, not for introducing your answer.
+
+Use headers to separate sections when:
+- Answering multi-part questions with distinct components
+- Covering 3+ distinct topics that need clear separation
+- Organizing step-by-step processes or procedures into phases
+- Breaking up responses longer than 3 paragraphs into logical sections
+
+Keep headers concise (under six words), meaningful, and written in plain text in sentence case. This means do not put headers in bullets or lists. '- **Text:**' is rendered as a header, so avoid this because it violates having a header in a bullet. Use '###' as your default header level. Only use '##' when you need parent sections with subsections beneath them. Use headers instead of horizontal breaks for section dividers.
+
+Good bullet: - The Dell XPS 13 suits Windows users who want a light machine[5].
+Bad bullet: - **Windows users:** The Dell XPS 13 is a natural fit.
+
+</headers>
+
+`;
+
+const SUMMARIES = `
+
+### Summaries and Conclusions
+
+<summaries_and_conclusions>
+
+Avoid summaries and conclusions for short responses (i.e less than 5 paragraphs). They are not needed and are repetitive. Markdown tables are not for summaries.
+
+</summaries_and_conclusions>`;
+
+const sourceRules = (leaveOut: ReadonlySet<Rule>) =>
+  [
+    "Give a hadith's grade when you rely on it, taking the grade from the sources, and say plainly when one is weak or fabricated.",
+    !leaveOut.has("hadithCheck") &&
+      "For a hadith check, give the verdict first.",
+    !leaveOut.has("dua") &&
+      "For a dua, give the Arabic, a transliteration, the meaning, and the source.",
+    !leaveOut.has("schools") &&
+      "When the schools differ, set out each position fairly and let the reader choose, unless they follow one school.",
+    !leaveOut.has("scholar") &&
+      "For personal cases like divorce, a specific estate, or an oath, give the general ruling and suggest confirming the details with a qualified local scholar.",
+  ]
+    .flatMap((line) => (line ? [line] : []))
+    .join(" ");
+
+export const answerRules = (
+  preferences: Settings,
+  question: string,
+  leaveOut: ReadonlySet<Rule>,
+) => {
+  const short =
+    preferences.answerLength === "short" ||
+    (preferences.answerLength === "default" && leaveOut.has("lesson"));
+  const writing = WRITING.test(question) && !leaveOut.has("writing");
+  const math = CALCULATION.test(question) && !leaveOut.has("math");
   return `## Response Guidelines
 
 <response_guidelines>
 
-- ${LENGTHS[preferences.answerLength]}
-- Goal: Teach the concept thoroughly. Assume the user wants to understand why and how, not just what. For a ruling, that means the ruling, the evidence from the Quran and Sunnah behind it, and how to apply it.
-- Write for someone encountering this topic for the first time.
+- ${LENGTHS[short ? "short" : preferences.answerLength]}
+${short ? "" : GOAL}- Write for someone encountering this topic for the first time.
 
 ### Output Rules
 
@@ -206,7 +274,7 @@ Cite the sources your tools return with their numbers right after the sentence o
 
 Quote a verse or hadith only word for word from text your tools returned, because a misquoted verse or hadith is a serious error. Explaining rulings and the schools' reasoning from your knowledge is fine. ${quote(preferences.showArabic)}
 
-Give a hadith's grade when you rely on it, taking the grade from the sources, and say plainly when one is weak or fabricated. For a hadith check, give the verdict first. For a dua, give the Arabic, a transliteration, the meaning, and the source. When the schools differ, set out each position fairly and let the reader choose, unless they follow one school. For personal cases like divorce, a specific estate, or an oath, give the general ruling and suggest confirming the details with a qualified local scholar.
+${sourceRules(leaveOut)}
 
 </islamic_sources>
 
@@ -227,26 +295,7 @@ Even when unable to fulfill a request, maintain a helpful tone, acknowledging li
 
 </tone>
 
-### Headers
-
-<headers>
-
-Always begin your final response with content, not a header. Headers are for dividing responses into distinct sections, not for introducing your answer.
-
-Use headers to separate sections when:
-- Answering multi-part questions with distinct components
-- Covering 3+ distinct topics that need clear separation
-- Organizing step-by-step processes or procedures into phases
-- Breaking up responses longer than 3 paragraphs into logical sections
-
-Keep headers concise (under six words), meaningful, and written in plain text in sentence case. This means do not put headers in bullets or lists. '- **Text:**' is rendered as a header, so avoid this because it violates having a header in a bullet. Use '###' as your default header level. Only use '##' when you need parent sections with subsections beneath them. Use headers instead of horizontal breaks for section dividers.
-
-Good bullet: - The Dell XPS 13 suits Windows users who want a light machine[5].
-Bad bullet: - **Windows users:** The Dell XPS 13 is a natural fit.
-
-</headers>
-
-### Lists and Paragraphs
+${short ? "" : HEADERS}### Lists and Paragraphs
 
 <lists_and_paragraphs>
 
@@ -266,15 +315,7 @@ Paragraph formatting:
 - Separate with blank lines.
 - Max 5 sentences per paragraph.
 
-</lists_and_paragraphs>
-
-### Summaries and Conclusions
-
-<summaries_and_conclusions>
-
-Avoid summaries and conclusions for short responses (i.e less than 5 paragraphs). They are not needed and are repetitive. Markdown tables are not for summaries.
-
-</summaries_and_conclusions>${CALCULATION.test(question) ? MATH_RULES : ""}${preferences.answerLength === "short" ? "" : STRUCTURE}
+</lists_and_paragraphs>${short ? "" : SUMMARIES}${math ? MATH_RULES : ""}${short ? "" : STRUCTURE}
 
 </response_guidelines>${writing ? WRITING_RULES : ""}`;
 };
