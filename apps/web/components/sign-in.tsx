@@ -2,8 +2,6 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chat-options";
-import { saveDraft } from "@/components/draft";
-import { GoogleIcon } from "@/components/google-icon";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
 import { OpenAIIcon } from "@/components/openai-icon";
@@ -71,8 +69,6 @@ const apiError = z.union([
   z.object({ message: z.string() }).transform((body) => body.message),
 ]);
 
-const socialSignIn = z.object({ url: z.url() });
-
 type Step =
   | { kind: "start" }
   | { kind: "asking" }
@@ -103,22 +99,6 @@ async function readJson<S extends z.ZodType>(res: Response, schema: S) {
 const button =
   "flex h-10 w-full items-center justify-center gap-2 rounded-[10px] text-sm font-medium transition";
 const primary = "bg-primary text-primary-foreground hover:opacity-90";
-const secondary = "bg-muted hover:bg-foreground/10";
-
-const continueWithGoogle = async (draft: string) => {
-  const back = `${location.pathname}${location.search}`;
-  const { url } = await fetch("/api/auth/sign-in/social", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      provider: "google",
-      callbackURL: back,
-      errorCallbackURL: back,
-    }),
-  }).then((res) => readJson(res, socialSignIn));
-  if (draft) saveDraft(draft);
-  location.assign(url);
-};
 
 export const SignInDialog: FC = () => {
   const open = useSignIn((s) => s.open);
@@ -230,21 +210,9 @@ export const SignInDialog: FC = () => {
                 <div className="flex w-full flex-col items-center gap-2">
                   <button
                     type="button"
-                    onClick={() =>
-                      continueWithGoogle(draft).catch((err: Error) =>
-                        setStep({ kind: "failed", message: err.message }),
-                      )
-                    }
-                    className={cn(button, primary)}
-                  >
-                    <GoogleIcon className="size-4" />
-                    {t("Continue with Google")}
-                  </button>
-                  <button
-                    type="button"
                     disabled={step.kind === "asking"}
                     onClick={getCode}
-                    className={cn(button, secondary, "disabled:opacity-60")}
+                    className={cn(button, primary, "disabled:opacity-60")}
                   >
                     <OpenAIIcon className="size-4" />
                     {t("Continue with ChatGPT")}

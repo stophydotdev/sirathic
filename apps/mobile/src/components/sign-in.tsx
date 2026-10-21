@@ -33,20 +33,6 @@ const refreshSession = () => authClient.$store.notify("$sessionSignal");
 export const SignIn: FC = () => {
   const [step, setStep] = useState<Step>({ kind: "start" });
 
-  const withGoogle = async () => {
-    setStep({ kind: "waiting" });
-    const { error } = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-    });
-    if (error)
-      setStep({
-        kind: "failed",
-        message: error.message ?? "Google sign-in failed",
-      });
-    else refreshSession();
-  };
-
   const withChatGPT = async () => {
     setStep({ kind: "waiting" });
     const { data, error } = await authClient.$fetch("/chatgpt/start", {
@@ -109,16 +95,9 @@ export const SignIn: FC = () => {
           <Pressable
             disabled={step.kind === "waiting"}
             style={[styles.button, styles.primary]}
-            onPress={withGoogle}
-          >
-            <Text style={styles.primaryText}>Continue with Google</Text>
-          </Pressable>
-          <Pressable
-            disabled={step.kind === "waiting"}
-            style={[styles.button, styles.secondary]}
             onPress={withChatGPT}
           >
-            <Text style={styles.secondaryText}>Continue with ChatGPT</Text>
+            <Text style={styles.primaryText}>Continue with ChatGPT</Text>
           </Pressable>
           <Text style={styles.hint}>Use your ChatGPT plan for GPT models</Text>
           {step.kind === "waiting" && (
@@ -147,8 +126,6 @@ const styles = StyleSheet.create({
   },
   primary: { backgroundColor: colors.foreground },
   primaryText: { color: colors.background, fontSize: 15, fontWeight: "600" },
-  secondary: { backgroundColor: colors.subtle },
-  secondaryText: { color: colors.foreground, fontSize: 15, fontWeight: "500" },
   hint: { color: colors.muted, fontSize: 13, textAlign: "center" },
   error: { color: colors.danger, fontSize: 14, textAlign: "center" },
   code: {
