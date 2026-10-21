@@ -1,5 +1,4 @@
 import { imageSearch } from "@sirathic/core/tools/imageSearch";
-import { TEXT_LANGUAGES } from "@sirathic/db/schema";
 import { youtubeSearch } from "@sirathic/core/tools/youtubeSearch";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -8,18 +7,6 @@ import { GEMINI_MODELS } from "./gemini";
 import { NOOR_MODELS } from "./noor";
 import { userFor } from "./auth";
 import { track } from "./events";
-import {
-  hadithBooks,
-  hadithCollections,
-  hadithPage,
-  quranIndex,
-  quranSurah,
-  quranTafsir,
-  quranTafsirText,
-  quranTimings,
-  quranTranslation,
-  quranWords,
-} from "./library";
 import { StatusError } from "./respond";
 import { getSettings, updateSettings } from "./settings";
 import {
@@ -150,96 +137,6 @@ export const appRouter = t.router({
   suggest: procedure
     .input(z.object({ q: z.string() }))
     .query(({ ctx, input }) => suggestions(input.q.trim(), ctx.user?.id)),
-  quran: t.router({
-    index: procedure.query(() => quranIndex()),
-    surah: procedure
-      .input(z.object({ number: z.number().int().min(1).max(114) }))
-      .query(({ ctx, input }) => {
-        track(
-          {
-            name: "library.read",
-            props: { kind: "quran", surah: input.number },
-          },
-          ctx.user?.id,
-        );
-        return quranSurah(input.number);
-      }),
-    tafsir: procedure
-      .input(
-        z.object({
-          surah: z.number().int().min(1).max(114),
-          ayah: z.number().int().min(1).max(286),
-          lang: z.enum(TEXT_LANGUAGES).default("en"),
-        }),
-      )
-      .query(({ input }) => quranTafsir(input.surah, input.ayah, input.lang)),
-    words: procedure
-      .input(
-        z.object({
-          surah: z.number().int().min(1).max(114),
-          lang: z.string().regex(/^[a-z]{2,3}$/u),
-        }),
-      )
-      .query(({ input }) => quranWords(input.surah, input.lang)),
-    tafsirText: procedure
-      .input(
-        z.object({
-          tafsir: z.number().int().positive(),
-          surah: z.number().int().min(1).max(114),
-          ayah: z.number().int().min(1).max(286),
-        }),
-      )
-      .query(({ input }) =>
-        quranTafsirText(input.tafsir, input.surah, input.ayah),
-      ),
-    translation: procedure
-      .input(
-        z.object({
-          translation: z.number().int().positive(),
-          surah: z.number().int().min(1).max(114),
-        }),
-      )
-      .query(({ input }) => quranTranslation(input.translation, input.surah)),
-    timings: procedure
-      .input(
-        z.object({
-          recitation: z.number().int().positive(),
-          surah: z.number().int().min(1).max(114),
-        }),
-      )
-      .query(({ ctx, input }) => {
-        track({ name: "quran.audio", props: input }, ctx.user?.id);
-        return quranTimings(input.recitation, input.surah);
-      }),
-  }),
-  hadith: t.router({
-    collections: procedure.query(() => hadithCollections()),
-    books: procedure
-      .input(z.object({ collection: z.string() }))
-      .query(({ input }) => hadithBooks(input.collection)),
-    page: procedure
-      .input(
-        z.object({
-          collection: z.string(),
-          book: z.number().int().min(0),
-          page: z.number().int().min(0).default(0),
-        }),
-      )
-      .query(({ ctx, input }) => {
-        track(
-          {
-            name: "library.read",
-            props: {
-              kind: "hadith",
-              collection: input.collection,
-              book: input.book,
-            },
-          },
-          ctx.user?.id,
-        );
-        return hadithPage(input.collection, input.book, input.page);
-      }),
-  }),
   media: t.router({
     images: signedIn
       .input(z.object({ q: z.string() }))

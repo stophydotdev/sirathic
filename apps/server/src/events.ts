@@ -58,13 +58,6 @@ export type Event =
       name: "feedback.given";
       props: { value: z.infer<typeof feedback> | null };
     }
-  | {
-      name: "library.read";
-      props:
-        | { kind: "quran"; surah: number }
-        | { kind: "hadith"; collection: string; book: number };
-    }
-  | { name: "quran.audio"; props: { recitation: number; surah: number } }
   | { name: "api.failed"; props: { route: string; code: string } };
 
 export function track({ name, props }: Event, owner?: string) {

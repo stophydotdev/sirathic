@@ -1,10 +1,8 @@
 "use client";
 
 import { type Translate, useT } from "@/components/i18n";
-import { usePlayer } from "@/components/quran/player";
 import { api } from "@/lib/trpc";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
-import { PauseIcon, PlayIcon } from "lucide-react";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
 
@@ -105,7 +103,7 @@ function cardsFrom(part: Part, t: Translate): Card[] {
 
 let arabicSetting: Promise<boolean> | undefined;
 
-export function useShowArabic() {
+function useShowArabic() {
   const [show, setShow] = useState(true);
   useEffect(() => {
     let current = true;
@@ -123,37 +121,6 @@ export function useShowArabic() {
   return show;
 }
 
-const Recite: FC<{ surah: number; ayah: number; name: string }> = ({
-  surah,
-  ayah,
-  name,
-}) => {
-  const current = usePlayer(
-    (s) => s.recitation?.surah === surah && s.ayah === ayah,
-  );
-  const playing = usePlayer((s) => s.playing) && current;
-  const t = useT();
-
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        const player = usePlayer.getState();
-        if (current) player.toggle();
-        else player.play({ surah, name, from: ayah, to: ayah });
-      }}
-      aria-label={playing ? t("Pause recitation") : t("Play recitation")}
-      className="bg-foreground/10 hover:bg-foreground/15 flex size-8 shrink-0 items-center justify-center rounded-full transition-colors print:hidden"
-    >
-      {playing ? (
-        <PauseIcon className="size-3.5 fill-current" />
-      ) : (
-        <PlayIcon className="size-3.5 fill-current" />
-      )}
-    </button>
-  );
-};
-
 export const InlineVerse: FC<{ url: string; fallback?: ReactNode }> = ({
   url,
   fallback,
@@ -170,7 +137,6 @@ export const InlineVerse: FC<{ url: string; fallback?: ReactNode }> = ({
     <figure className="my-3 ps-4">
       <figcaption className="text-muted-foreground flex items-center gap-2 text-xs">
         <span className="min-w-0 flex-1 truncate">{verse.title}</span>
-        <Recite surah={verse.surah} ayah={verse.ayah} name={verse.title} />
       </figcaption>
       {showArabic && (
         <p dir="rtl" lang="ar" className="mt-1 text-xl leading-loose">

@@ -27,9 +27,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
   ChevronDown,
-  BookOpenIcon,
   LibraryIcon,
-  ScrollTextIcon,
   MenuIcon,
   PanelLeftIcon,
   PlusIcon,
@@ -268,8 +266,6 @@ function byDay(sessions: Session[], t: Translate) {
 
 const NAV_LINKS = [
   { path: "/library", label: "Library", Icon: LibraryIcon },
-  { path: "/quran", label: "Quran", Icon: BookOpenIcon },
-  { path: "/hadith", label: "Hadith", Icon: ScrollTextIcon },
 ] as const;
 
 const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
