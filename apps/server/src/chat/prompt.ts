@@ -184,18 +184,6 @@ If there is a rewrite, translation, or writing before the follow-up question, al
 
 </followup>`;
 
-export const RULES = [
-  "lesson",
-  "schools",
-  "scholar",
-  "hadithCheck",
-  "dua",
-  "writing",
-  "math",
-] as const;
-
-export type Rule = (typeof RULES)[number];
-
 const GOAL = `- Goal: Teach the concept thoroughly. Assume the user wants to understand why and how, not just what. For a ruling, that means the ruling, the evidence from the Quran and Sunnah behind it, and how to apply it.
 `;
 
@@ -230,31 +218,10 @@ Avoid summaries and conclusions for short responses (i.e less than 5 paragraphs)
 
 </summaries_and_conclusions>`;
 
-const sourceRules = (leaveOut: ReadonlySet<Rule>) =>
-  [
-    "Give a hadith's grade when you rely on it, taking the grade from the sources, and say plainly when one is weak or fabricated.",
-    !leaveOut.has("hadithCheck") &&
-      "For a hadith check, give the verdict first.",
-    !leaveOut.has("dua") &&
-      "For a dua, give the Arabic, a transliteration, the meaning, and the source.",
-    !leaveOut.has("schools") &&
-      "When the schools differ, set out each position fairly and let the reader choose, unless they follow one school.",
-    !leaveOut.has("scholar") &&
-      "For personal cases like divorce, a specific estate, or an oath, give the general ruling and suggest confirming the details with a qualified local scholar.",
-  ]
-    .flatMap((line) => (line ? [line] : []))
-    .join(" ");
-
-export const answerRules = (
-  preferences: Settings,
-  question: string,
-  leaveOut: ReadonlySet<Rule>,
-) => {
-  const short =
-    preferences.answerLength === "short" ||
-    (preferences.answerLength === "default" && leaveOut.has("lesson"));
-  const writing = WRITING.test(question) && !leaveOut.has("writing");
-  const math = CALCULATION.test(question) && !leaveOut.has("math");
+export const answerRules = (preferences: Settings, question: string) => {
+  const short = preferences.answerLength === "short";
+  const writing = WRITING.test(question);
+  const math = CALCULATION.test(question);
   return `## Response Guidelines
 
 <response_guidelines>
@@ -274,7 +241,7 @@ Cite the sources your tools return with their numbers right after the sentence o
 
 Quote a verse or hadith only word for word from text your tools returned, because a misquoted verse or hadith is a serious error. Explaining rulings and the schools' reasoning from your knowledge is fine. ${quote(preferences.showArabic)}
 
-${sourceRules(leaveOut)}
+Give a hadith's grade when you rely on it, taking the grade from the sources, and say plainly when one is weak or fabricated. For a hadith check, give the verdict first. For a dua, give the Arabic, a transliteration, the meaning, and the source. When the schools differ, set out each position fairly and let the reader choose, unless they follow one school. For personal cases like divorce, a specific estate, or an oath, give the general ruling and suggest confirming the details with a qualified local scholar.
 
 </islamic_sources>
 

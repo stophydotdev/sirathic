@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { DEFAULT_SETTINGS } from "../../src/shared/settings";
-import { answerRules, type Rule } from "../../src/chat/prompt";
+import { answerRules } from "../../src/chat/prompt";
 
 const SITUATIONAL = [
   "<copyright_restrictions>",
@@ -18,49 +18,14 @@ test.each([
     ["<copyright_restrictions>", "<rewrites>", "<followup>"],
   ],
 ])("%s gets the situational rules %p", (question, sections) => {
-  const rules = answerRules(DEFAULT_SETTINGS, question, new Set());
+  const rules = answerRules(DEFAULT_SETTINGS, question);
   expect(SITUATIONAL.filter((tag) => rules.includes(tag))).toEqual(sections);
 });
 
 test("short answers leave out the lesson structure", () => {
   const question = "is a mortgage halal";
-  expect(answerRules(DEFAULT_SETTINGS, question, new Set())).toContain(
-    "<structure>",
-  );
+  expect(answerRules(DEFAULT_SETTINGS, question)).toContain("<structure>");
   expect(
-    answerRules(
-      { ...DEFAULT_SETTINGS, answerLength: "short" },
-      question,
-      new Set(),
-    ),
+    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question),
   ).not.toContain("<structure>");
-  expect(
-    answerRules(DEFAULT_SETTINGS, question, new Set(["lesson"])),
-  ).not.toContain("<structure>");
-  expect(
-    answerRules(
-      { ...DEFAULT_SETTINGS, answerLength: "detailed" },
-      question,
-      new Set(["lesson"]),
-    ),
-  ).toContain("<structure>");
 });
-
-test.each([
-  ["schools", "what is wudu", "When the schools differ"],
-  ["scholar", "what is wudu", "a qualified local scholar"],
-  ["hadithCheck", "what is wudu", "For a hadith check"],
-  ["dua", "what is wudu", "For a dua"],
-  ["writing", "write a khutbah on patience", "<rewrites>"],
-  ["math", "zakat on 85g of gold", "<mathematical_expressions>"],
-] satisfies [Rule, string, string][])(
-  "leaving out %s drops its rule",
-  (rule, question, marker) => {
-    expect(answerRules(DEFAULT_SETTINGS, question, new Set())).toContain(
-      marker,
-    );
-    expect(
-      answerRules(DEFAULT_SETTINGS, question, new Set([rule])),
-    ).not.toContain(marker);
-  },
-);

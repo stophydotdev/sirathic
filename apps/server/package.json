@@ -26,7 +26,6 @@
     "@ai-sdk/openai": "4.0.93",
     "@better-auth/expo": "1.7.11",
     "@hono/trpc-server": "0.4.2",
-    "@huggingface/tokenizers": "0.2.0",
     "@sirathic/core": "workspace:*",
     "@sirathic/db": "workspace:*",
     "@sirathic/env": "workspace:*",
@@ -36,7 +35,6 @@
     "drizzle-orm": "^0.45.4",
     "hono": "^4.9.0",
     "jose": "6.2.12",
-    "onnxruntime-node": "1.30.0",
     "unpdf": "^1.9.0",
     "zod": "^4.4.3"
   }

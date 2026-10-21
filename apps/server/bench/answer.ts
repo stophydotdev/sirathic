@@ -10,12 +10,11 @@ import {
   DEFAULT_MODEL,
   type ProviderOptions,
 } from "../src/chatgpt/codex";
-import { answerRules, type Rule } from "../src/chat/prompt";
+import { answerRules } from "../src/chat/prompt";
 import { noorModel } from "../src/noor";
 import { answerAgent } from "../src/chat/response";
 import { CORE_TOOLS, sirathicTools } from "../src/chat/tools";
 import { DEFAULT_SETTINGS } from "../src/shared/settings";
-import { decide, planFor } from "../src/tamyiz";
 import { readQuestions, readRun, RUNS, type RunRow } from "./runs";
 
 const AT_ONCE = 4;
@@ -91,7 +90,7 @@ const edits = (variant?.split(",") ?? []).flatMap((part) => {
   return found;
 });
 
-const rulesFor = (question: string, leaveOut: ReadonlySet<Rule>) =>
+const rulesFor = (question: string) =>
   edits.reduce(
     (rules, [from, to]) => {
       if (!rules.includes(from)) {
@@ -101,7 +100,7 @@ const rulesFor = (question: string, leaveOut: ReadonlySet<Rule>) =>
       }
       return rules.replace(from, to);
     },
-    answerRules(DEFAULT_SETTINGS, question, leaveOut),
+    answerRules(DEFAULT_SETTINGS, question),
   );
 
 const effort = z
@@ -177,20 +176,15 @@ const answer = async (kind: RunRow["kind"], question: string) => {
   const tools = benchTools(sirathicTools(sources.add));
   const started = performance.now();
   const at = () => Math.round(performance.now() - started) / 1000;
-  const plan = planFor(await decide(question));
   const agent = answerAgent({
     model,
     modelName,
     tools,
     mode: "quick",
     settings: DEFAULT_SETTINGS,
-    rules: rulesFor(
-      question,
-      plan.kind === "answer" ? plan.leaveOut : new Set(),
-    ),
+    rules: rulesFor(question),
     mustSearch: true,
     started: CORE_TOOLS,
-    plan,
     shorten: (message) => message,
     answerOptions: withEffort(
       answerOptions({

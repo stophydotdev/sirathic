@@ -5,7 +5,6 @@ import type { z } from "zod";
 import type { Client } from "./client";
 import { reasonOf } from "./respond";
 import type { Device, feedback, Mode } from "./shared/messages";
-import type { loggable } from "./tamyiz";
 import type { User } from "./users";
 
 type SignInVia = User["via"];
@@ -42,11 +41,7 @@ export type Event =
     }
   | {
       name: "answer.completed";
-      props: AnswerStats & {
-        mode: Mode;
-        model: string;
-        tamyiz: ReturnType<typeof loggable> | null;
-      };
+      props: AnswerStats & { mode: Mode; model: string };
     }
   | {
       name: "tool.completed";
