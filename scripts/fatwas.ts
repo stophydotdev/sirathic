@@ -16,7 +16,6 @@ const ONLY = process.argv
   ?.slice(8)
   .split(",");
 const CHUNK_CHARS = 6_000;
-const PROXY = z.url().parse(process.env.PROXY_URL);
 const RAW_DIR = `${DATA_DIR}/fatwas`;
 const BATCH_SIZE = 100;
 const ATTEMPTS = 3;
@@ -44,7 +43,6 @@ const get = async (
   attempt = 1,
 ): Promise<string> => {
   const response = await fetch(url, {
-    proxy: PROXY,
     headers: { "user-agent": BROWSER, "accept-language": "en", ...headers },
     signal: AbortSignal.timeout(30_000),
   }).catch((error: Error) => error);
