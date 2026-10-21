@@ -95,6 +95,7 @@ import {
 import { tool } from "ai";
 import { z } from "zod";
 import { reasonOf } from "../respond";
+import { told } from "../shared/settings";
 import type { Source } from "../shared/sources";
 import {
   bestPieces,
@@ -113,6 +114,7 @@ const TAFSIR_CHARS = 500;
 const FATWA_CHARS = 1_500;
 
 export type Cite = (url: string) => number;
+export type Remember = (input: z.output<typeof told>) => Promise<object>;
 type Verse = Awaited<ReturnType<typeof quranSearch>>["verses"][number];
 type Hadith = Awaited<ReturnType<typeof hadithSearch>>["hadiths"][number];
 type Fatwa = Awaited<ReturnType<typeof fatwaSearch>>["fatwas"][number];
@@ -679,7 +681,7 @@ const PURPOSES = new Map([
   ["calculator", "maths"],
 ]);
 
-export function sirathicTools(cite: Cite) {
+export function sirathicTools(cite: Cite, remember?: Remember) {
   const tools = {
     search: tool({
       description:
@@ -1011,6 +1013,19 @@ export function sirathicTools(cite: Cite) {
         tools: z.array(z.enum(loadable)).min(1),
       }),
       execute: async (input) => `Loaded ${input.tools.join(", ")}.`,
+    }),
+    remember: tool({
+      description:
+        "Saves preferences and lasting facts the user states about themselves, such as their madhab, answer language, answer length, where they live, their work, or that they are a revert, so later answers use them. Call it once, with everything the user stated and null for the rest. Not for details of a personal case.",
+      inputSchema: told,
+      strict: true,
+      execute: async (input) => {
+        if (!remember) return "Not saved: this chat is incognito.";
+        const saved = await remember(input);
+        return Object.keys(saved).length > 0
+          ? "Saved."
+          : "Nothing new to save.";
+      },
     }),
   };
 }

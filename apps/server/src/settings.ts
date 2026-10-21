@@ -4,9 +4,11 @@ import { eq, sql } from "drizzle-orm";
 import type { z } from "zod";
 import {
   DEFAULT_SETTINGS,
+  rememberedUpdate,
   type Settings,
   settings,
   type settingsUpdate,
+  type told,
 } from "./shared/settings";
 
 const stored = settings
@@ -38,4 +40,11 @@ export async function updateSettings(
     })
     .returning({ values: settingsTable.values });
   return stored.parse(row?.values);
+}
+
+export async function remember(owner: string, input: z.output<typeof told>) {
+  const { memory } = await getSettings(owner);
+  const update = rememberedUpdate(memory, input);
+  if (Object.keys(update).length > 0) await updateSettings(owner, update);
+  return update;
 }

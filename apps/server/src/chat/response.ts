@@ -27,7 +27,7 @@ import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";
 import { answerRules, searchPrompt } from "./prompt";
-import { CORE_TOOLS, sirathicTools } from "./tools";
+import { CORE_TOOLS, type Remember, sirathicTools } from "./tools";
 
 const MAX_STEPS = 10;
 const RESEARCH_STEPS = 16;
@@ -74,10 +74,16 @@ export function answerAgent({
           ),
         ),
       );
-      const activeTools = usable.filter(
-        (name) => started.has(name) || loaded.has(name),
+      const searchFirst = stepNumber === 0 && mustSearch;
+      const remembered = steps.some((step) =>
+        step.toolCalls.some((call) => call.toolName === "remember"),
       );
-      return stepNumber === 0 && mustSearch
+      const activeTools = usable.filter(
+        (name) =>
+          (started.has(name) || loaded.has(name)) &&
+          (name !== "remember" || !(searchFirst || remembered)),
+      );
+      return searchFirst
         ? { toolChoice: "required", activeTools }
         : {
             activeTools,
@@ -152,6 +158,7 @@ export function chatResponse({
   title,
   save,
   record,
+  remember,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   options: { answer: ProviderOptions; side: ProviderOptions };
@@ -163,6 +170,7 @@ export function chatResponse({
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
+  remember: Remember | undefined;
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -177,7 +185,7 @@ export function chatResponse({
   let text = "";
   const sources = citations(messages);
   const shorten = shortenEarlierResults(messages, sources.numberOf);
-  const tools = sirathicTools(sources.add);
+  const tools = sirathicTools(sources.add, remember);
   const recent = messages
     .filter((message) => message.role === "user")
     .slice(-2)
@@ -187,7 +195,11 @@ export function chatResponse({
         .join(" "),
     )
     .join(" ");
-  const started = new Set([...CORE_TOOLS, ...calledTools(messages)]);
+  const started = new Set([
+    ...CORE_TOOLS,
+    ...(remember ? ["remember"] : []),
+    ...calledTools(messages),
+  ]);
   const mustSearch =
     messages.filter((message) => message.role === "user").length === 1;
   const messageId = createIdGenerator({ prefix: "msg", size: 16 });

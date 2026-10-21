@@ -20,7 +20,7 @@ import {
   sideOptions,
 } from "./chatgpt/codex";
 import { appRouter, createContext } from "./router";
-import { getSettings } from "./settings";
+import { getSettings, remember } from "./settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
 import {
   messageSchemas,
@@ -165,6 +165,8 @@ app.post("/api/chat", (c) =>
       title,
       save,
       record: (event) => track(event, owner),
+      remember:
+        owner === undefined ? undefined : (told) => remember(owner, told),
     });
   }),
 );

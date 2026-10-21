@@ -58,7 +58,13 @@ const dateLine = (now: Date) => {
   return `It is currently ${day} (${hijri}). The year began on Jan 1, ${year}. This means ${year - 1} was last year and next year is ${year + 1}.`;
 };
 
-const background = ({ name, madhab, answerLanguage, instructions }: Settings) =>
+const background = ({
+  name,
+  madhab,
+  answerLanguage,
+  instructions,
+  memory,
+}: Settings) =>
   [
     name && `Name: ${name}`,
     madhab !== "none" &&
@@ -67,6 +73,8 @@ const background = ({ name, madhab, answerLanguage, instructions }: Settings) =>
       `Answer language: write every answer in ${LANGUAGES[answerLanguage]}, whatever language the question is in.`,
     instructions &&
       `Instructions from the user: ${instructions}\nFollow them unless they conflict with the guidance on sources, quotes, and citations.`,
+    memory.length > 0 &&
+      `What the user has told you about themselves:\n${memory.map((fact) => `- ${fact}`).join("\n")}`,
   ].flatMap((line) => (line ? [line] : []));
 
 const personalization = (preferences: Settings) => {

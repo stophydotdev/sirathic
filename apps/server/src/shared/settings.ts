@@ -17,6 +17,8 @@ export const ANSWER_LANGUAGES = [
   "tr",
 ] as const;
 export const ANSWER_LENGTHS = ["short", "default", "detailed"] as const;
+export const MEMORY_LIMIT = 20;
+export const MEMORY_CHARS = 200;
 
 export const settings = z.object({
   name: z.string().trim().max(80),
@@ -25,6 +27,32 @@ export const settings = z.object({
   answerLanguage: z.enum(ANSWER_LANGUAGES),
   answerLength: z.enum(ANSWER_LENGTHS),
   showArabic: z.boolean(),
+  memory: z.array(z.string().trim().min(1).max(MEMORY_CHARS)).max(MEMORY_LIMIT),
+});
+
+export const told = z.object({
+  madhab: z
+    .enum(MADHABS)
+    .nullable()
+    .describe("The school the user says they follow, or null"),
+  answerLanguage: z
+    .enum(ANSWER_LANGUAGES)
+    .nullable()
+    .describe("The language the user wants every answer in, or null"),
+  answerLength: z
+    .enum(ANSWER_LENGTHS)
+    .nullable()
+    .describe("How long the user wants answers to be, or null"),
+  showArabic: z
+    .boolean()
+    .nullable()
+    .describe("Whether the user wants Arabic text shown, or null"),
+  fact: z
+    .string()
+    .nullable()
+    .describe(
+      "Lasting facts the user states about themselves that no other field holds, in under 15 words, or null",
+    ),
 });
 
 export const settingsUpdate = settings.partial();
@@ -38,4 +66,28 @@ export const DEFAULT_SETTINGS: Settings = {
   answerLanguage: "auto",
   answerLength: "default",
   showArabic: true,
+  memory: [],
+};
+
+export const rememberedUpdate = (
+  memory: readonly string[],
+  { fact, ...preferences }: z.output<typeof told>,
+): z.output<typeof settingsUpdate> => {
+  const kept = fact?.trim().slice(0, MEMORY_CHARS);
+  return {
+    ...(preferences.madhab !== null && { madhab: preferences.madhab }),
+    ...(preferences.answerLanguage !== null && {
+      answerLanguage: preferences.answerLanguage,
+    }),
+    ...(preferences.answerLength !== null && {
+      answerLength: preferences.answerLength,
+    }),
+    ...(preferences.showArabic !== null && {
+      showArabic: preferences.showArabic,
+    }),
+    ...(kept &&
+      !memory.includes(kept) && {
+        memory: [...memory, kept].slice(-MEMORY_LIMIT),
+      }),
+  };
 };
