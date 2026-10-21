@@ -269,6 +269,7 @@ const NAV_LINKS = [
 ] as const;
 
 const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
+const RECENT_LIMIT = 8;
 
 const LinkButton: FC<RowProps & { href: string }> = ({
   href,
@@ -331,7 +332,7 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
         </p>
       )}
       {open &&
-        byDay(recent, t).map((day) => (
+        byDay(recent.slice(0, RECENT_LIMIT), t).map((day) => (
           <div key={day.label} className="flex flex-col gap-0.5">
             <p className="text-muted-foreground/70 px-2.5 pt-2 pb-0.5 text-xs">
               {day.label}
@@ -341,7 +342,7 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
             ))}
           </div>
         ))}
-      {open && sessions !== undefined && sessions.length > 0 && (
+      {open && recent.length > RECENT_LIMIT && (
         <Link
           href={href("/library")}
           onClick={onDone}
