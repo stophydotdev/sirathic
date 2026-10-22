@@ -21,6 +21,8 @@ const BATCH_SIZE = 100;
 const ATTEMPTS = 3;
 const BROWSER =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
+const SITES_AT_ONCE = 3;
+const SITEMAPS_AT_ONCE = 4;
 const VERSION = new Date().toISOString().slice(0, 10);
 
 type Fatwa = Omit<typeof fatwas.$inferInsert, "source" | "url">;
@@ -54,6 +56,24 @@ const get = async (
   return get(url, headers, attempt + 1);
 };
 
+const inPool = async <T, R>(
+  items: T[],
+  size: number,
+  run: (item: T) => Promise<R>,
+): Promise<R[]> => {
+  const results: R[] = [];
+  const queue = items.entries();
+  const worker = async (): Promise<void> => {
+    const next = queue.next();
+    if (next.done) return;
+    const [index, item] = next.value;
+    results[index] = await run(item);
+    return worker();
+  };
+  await Promise.all(Array.from({ length: size }, worker));
+  return results;
+};
+
 const rawFile = (url: string) =>
   Bun.file(
     `${RAW_DIR}/${new URL(url).hostname}/${Bun.hash(url).toString(16)}.html.gz`,
@@ -83,7 +103,9 @@ const sitemapUrls = async (url: string, site: Site): Promise<string[]> => {
   const { delayMs } = site;
   if (!delayMs) {
     return (
-      await Promise.all(children.map((child) => sitemapUrls(child, site)))
+      await inPool(children, SITEMAPS_AT_ONCE, (child) =>
+        sitemapUrls(child, site),
+      )
     ).flat();
   }
   const inTurn = async ([child, ...rest]: string[]): Promise<string[]> => {
@@ -1091,11 +1113,9 @@ if (!DRY && chosen.length > 0) {
     .values(chosen.map((site) => site.source))
     .onConflictDoUpdate({ target: sources.name, set: { version: VERSION } });
 }
-await Promise.all(
-  chosen.map((site) =>
-    crawl(site).catch((error: Error) =>
-      console.warn(`${site.source.name} stopped: ${error.message}`),
-    ),
+await inPool(chosen, SITES_AT_ONCE, (site) =>
+  crawl(site).catch((error: Error) =>
+    console.warn(`${site.source.name} stopped: ${error.message}`),
   ),
 );
 if (!DRY) await db.$client.end();
