@@ -1,4 +1,8 @@
+import { createWriteStream } from "node:fs";
 import { mkdir } from "node:fs/promises";
+import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
+import { createGzip } from "node:zlib";
 import { db } from "@sirathic/db";
 import { fatwas } from "@sirathic/db/schema";
 import { inArray, sql } from "drizzle-orm";
@@ -6,6 +10,7 @@ import { z } from "zod";
 import { DATA_DIR, FATWA_MIRRORS } from "./catalog";
 
 const APPLY = process.argv.includes("--apply");
+const BATCH_SIZE = 1_000;
 
 const mirrors = JSON.stringify(FATWA_MIRRORS);
 
@@ -57,22 +62,37 @@ for (const [key, count] of [...counts]
 for (const row of [...pages.values()].slice(0, 5))
   console.log(`  e.g. ${row.url}\n       same as ${row.kept}`);
 
+const deleteBatches = async ([batch, ...rest]: string[][]): Promise<number> => {
+  if (batch === undefined) return 0;
+  const gone = await db
+    .delete(fatwas)
+    .where(inArray(fatwas.url, batch))
+    .returning({ url: fatwas.url });
+  return gone.length + (await deleteBatches(rest));
+};
 if (APPLY && pages.size > 0) {
   const urls = [...pages.keys()];
-  const rows = await db.select().from(fatwas).where(inArray(fatwas.url, urls));
+  const batches = Array.from(
+    { length: Math.ceil(urls.length / BATCH_SIZE) },
+    (_, index) => urls.slice(index * BATCH_SIZE, (index + 1) * BATCH_SIZE),
+  );
   const dir = `${DATA_DIR}/fatwas-removed`;
   await mkdir(dir, { recursive: true });
   const file = `${dir}/${new Date().toISOString().replaceAll(":", "-")}.jsonl.gz`;
-  await Bun.write(
-    file,
-    Bun.gzipSync(rows.map((row) => JSON.stringify(row)).join("\n")),
+  let saved = 0;
+  await pipeline(
+    Readable.from(batches).map(async (batch) => {
+      const rows = await db
+        .select()
+        .from(fatwas)
+        .where(inArray(fatwas.url, batch));
+      saved += rows.length;
+      return rows.map((row) => `${JSON.stringify(row)}\n`).join("");
+    }),
+    createGzip(),
+    createWriteStream(file),
   );
-  const deleted = await db
-    .delete(fatwas)
-    .where(inArray(fatwas.url, urls))
-    .returning({ url: fatwas.url });
-  console.log(
-    `saved ${rows.length} rows to ${file}, deleted ${deleted.length} rows`,
-  );
+  const deleted = await deleteBatches(batches);
+  console.log(`saved ${saved} rows to ${file}, deleted ${deleted} rows`);
 }
 await db.$client.end();
