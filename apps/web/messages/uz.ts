@@ -11,13 +11,13 @@ export default {
   "Download all brand assets": "Барча бренд файлларини юклаб олиш",
   Wordmark: "Ёзув логотипи",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
-    "Sirathic ёзув логотипи — бош ҳарфлар билан ёзилган ном ёнидаги розетка. Уни кўп жойларда асосий логотип сифатида ишлатинг. Уни чўзманг, рангини ва шаклини ўзгартирманг.",
+    "Sirathic ёзув логотипи бош ҳарфлар билан ёзилган ном ёнидаги розеткадир. Уни кўп жойларда асосий логотип сифатида ишлатинг. Уни чўзманг, рангини ва шаклини ўзгартирманг.",
   Symbol: "Белги",
   "The rosette is eight circles that each pass through the center, held inside a ring. Use it where the space is square or small, like app icons and profile pictures.":
     "Розетка ҳар бири марказдан ўтадиган саккизта доирадан иборат бўлиб, ҳалқа ичида туради. Жой квадрат ёки кичик бўлса ишлатинг, масалан, илова белгилари ва профиль расмларида.",
   Colors: "Ранглар",
   "Teal is the accent, for links and highlights. Ink and Paper are the page colors of the dark and light themes. On Ink, use the lighter teal so it stays easy to read.":
-    "Феруза ранг ҳаволалар ва ажратиб кўрсатишлар учун урғу ранги. Сиёҳ ва Қоғоз — тўқ ва ёруғ мавзуларнинг саҳифа ранглари. Сиёҳ устида осон ўқилиши учун очроқ ферузадан фойдаланинг.",
+    "Феруза ранг ҳаволалар ва ажратиб кўрсатишлар учун урғу ранги. Сиёҳ ва Қоғоз тўқ ва ёруғ мавзуларнинг саҳифа рангларидир. Сиёҳ устида осон ўқилиши учун очроқ ферузадан фойдаланинг.",
   Copy: "Нусха олиш",
   Copied: "Нусха олинди",
   Hadith: "Ҳадис",

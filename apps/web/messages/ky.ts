@@ -11,13 +11,13 @@ export default {
   "Download all brand assets": "Бардык бренд файлдарын жүктөп алуу",
   Wordmark: "Жазуу логотиби",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
-    "Sirathic жазуу логотиби — баш тамгалар менен жазылган аталыштын жанындагы розетка. Аны көпчүлүк жерде негизги логотип катары колдонуңуз. Аны чойбоңуз, түсүн жана формасын өзгөртпөңүз.",
+    "Sirathic жазуу логотиби баш тамгалар менен жазылган аталыштын жанындагы розетка болуп саналат. Аны көпчүлүк жерде негизги логотип катары колдонуңуз. Аны чойбоңуз, түсүн жана формасын өзгөртпөңүз.",
   Symbol: "Белги",
   "The rosette is eight circles that each pass through the center, held inside a ring. Use it where the space is square or small, like app icons and profile pictures.":
     "Розетка ар бири борбор аркылуу өткөн сегиз тегеректен турат жана шакектин ичинде. Орун чарчы же кичине болгондо колдонуңуз, мисалы, колдонмо белгилеринде жана профиль сүрөттөрүндө.",
   Colors: "Түстөр",
   "Teal is the accent, for links and highlights. Ink and Paper are the page colors of the dark and light themes. On Ink, use the lighter teal so it stays easy to read.":
-    "Көгүш-жашыл шилтемелер жана белгилөөлөр үчүн негизги түс. Сыя жана Кагаз — караңгы жана ачык темалардын барак түстөрү. Сыянын үстүндө оңой окулушу үчүн ачыгыраак көгүш-жашылды колдонуңуз.",
+    "Көгүш-жашыл шилтемелер жана белгилөөлөр үчүн негизги түс. Сыя жана Кагаз караңгы жана ачык темалардын барак түстөрү болуп саналат. Сыянын үстүндө оңой окулушу үчүн ачыгыраак көгүш-жашылды колдонуңуз.",
   Copy: "Көчүрүү",
   Copied: "Көчүрүлдү",
   Hadith: "Хадис",

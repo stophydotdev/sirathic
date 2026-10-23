@@ -11,13 +11,13 @@ export default {
   "Download all brand assets": "Скачать все материалы",
   Wordmark: "Логотип",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
-    "Логотип Sirathic — это розетка рядом с названием, написанным заглавными буквами. Используйте его как основной логотип почти везде. Не растягивайте, не перекрашивайте и не изменяйте его.",
+    "Логотип Sirathic представляет собой розетку рядом с названием, написанным заглавными буквами. Используйте его как основной логотип почти везде. Не растягивайте, не перекрашивайте и не изменяйте его.",
   Symbol: "Знак",
   "The rosette is eight circles that each pass through the center, held inside a ring. Use it where the space is square or small, like app icons and profile pictures.":
-    "Розетка — это восемь окружностей, каждая из которых проходит через центр, внутри кольца. Используйте её, когда место квадратное или маленькое: для значков приложений и аватаров.",
+    "Розетка состоит из восьми окружностей, каждая из которых проходит через центр, внутри кольца. Используйте её, когда место квадратное или маленькое: для значков приложений и аватаров.",
   Colors: "Цвета",
   "Teal is the accent, for links and highlights. Ink and Paper are the page colors of the dark and light themes. On Ink, use the lighter teal so it stays easy to read.":
-    "Бирюзовый — акцентный цвет для ссылок и выделения. «Чернила» и «Бумага» — цвета фона тёмной и светлой темы. На «Чернилах» используйте светлый бирюзовый, чтобы текст легко читался.",
+    "Бирюзовый служит акцентным цветом для ссылок и выделения. «Чернила» и «Бумага» задают фон тёмной и светлой темы. На «Чернилах» используйте светлый бирюзовый, чтобы текст легко читался.",
   Copy: "Копировать",
   Copied: "Скопировано",
   Hadith: "Хадисы",
@@ -132,7 +132,7 @@ export default {
   "Open ChatGPT": "Открыть ChatGPT",
   "Waiting for approval": "Ожидание подтверждения",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
-    "Впервые? Включите вход по коду устройства в ChatGPT → Настройки → Безопасность. ChatGPT покажет Codex — так и должно быть.",
+    "Впервые? Включите вход по коду устройства в ChatGPT → Настройки → Безопасность. ChatGPT покажет Codex. Так и должно быть.",
   "Continue with ChatGPT": "Продолжить с ChatGPT",
   "Continue with Google": "Продолжить с Google",
   "Use your ChatGPT plan for GPT models":
