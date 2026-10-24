@@ -5,10 +5,8 @@ import {
   createUIMessageStream,
   createUIMessageStreamResponse,
   type FinishReason,
-  getToolName,
   type InferUIMessageChunk,
   isStepCount,
-  isToolUIPart,
   type LanguageModel,
   type LanguageModelUsage,
   Output,
@@ -27,7 +25,7 @@ import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";
 import { answerRules, searchPrompt } from "./prompt";
-import { CORE_TOOLS, type Remember, sirathicTools } from "./tools";
+import { type Remember, sirathicTools } from "./tools";
 
 const MAX_STEPS = 10;
 const RESEARCH_STEPS = 16;
@@ -40,7 +38,7 @@ function answerAgent({
   settings,
   rules,
   mustSearch,
-  started,
+  canRemember,
   shorten,
   answerOptions,
 }: {
@@ -51,7 +49,7 @@ function answerAgent({
   settings: Settings;
   rules: string;
   mustSearch: boolean;
-  started: ReadonlySet<string>;
+  canRemember: boolean;
   shorten: ReturnType<typeof shortenEarlierResults>;
   answerOptions: ProviderOptions;
 }) {
@@ -63,21 +61,12 @@ function answerAgent({
     stopWhen: isStepCount(mode === "research" ? RESEARCH_STEPS : MAX_STEPS),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
-      const loaded = new Set(
-        steps.flatMap((step) =>
-          step.toolCalls.flatMap((call) =>
-            !call.dynamic && call.toolName === "moreTools" ? call.input.tools : [],
-          ),
-        ),
-      );
       const searchFirst = stepNumber === 0 && mustSearch;
       const remembered = steps.some((step) =>
         step.toolCalls.some((call) => call.toolName === "remember"),
       );
       const activeTools = usable.filter(
-        (name) =>
-          (started.has(name) || loaded.has(name)) &&
-          (name !== "remember" || !(searchFirst || remembered)),
+        (name) => name !== "remember" || (canRemember && !(searchFirst || remembered)),
       );
       return searchFirst
         ? { toolChoice: "required", activeTools }
@@ -103,16 +92,6 @@ function answerAgent({
 const RELATED_LIMIT = 5;
 const RELATED_PROMPT =
   "Suggest 4 short follow-up questions the user might ask next. Each under 10 words. Don't repeat the question or anything the answer already covers.";
-
-const calledTools = (messages: ChatMessage[]) =>
-  messages.flatMap((message) =>
-    message.parts.flatMap((part) => {
-      if (!isToolUIPart(part)) return [];
-      return part.type === "tool-moreTools" && part.state === "output-available"
-        ? part.input.tools
-        : [getToolName(part)];
-    }),
-  );
 
 const lastQuestion = (messages: ChatMessage[]) =>
   messages
@@ -187,11 +166,6 @@ export function chatResponse({
       message.parts.map((part) => (part.type === "text" ? part.text : "")).join(" "),
     )
     .join(" ");
-  const started = new Set([
-    ...CORE_TOOLS,
-    ...(remember ? ["remember"] : []),
-    ...calledTools(messages),
-  ]);
   const mustSearch = messages.filter((message) => message.role === "user").length === 1;
   const messageId = createIdGenerator({ prefix: "msg", size: 16 });
   const stream = createUIMessageStream<ChatMessage>({
@@ -222,7 +196,7 @@ export function chatResponse({
         settings,
         rules: answerRules(settings, recent),
         mustSearch,
-        started,
+        canRemember: remember !== undefined,
         shorten,
         answerOptions: options.answer,
       });

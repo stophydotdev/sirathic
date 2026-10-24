@@ -46,7 +46,7 @@ const SEARCH_LIMITS = {
 
 const ISLAMIC_SOURCES: ReadonlySet<SearchSource> = new Set(["quran", "hadith", "fatwa", "fiqh"]);
 const WEB_BESIDE_ISLAMIC = 4;
-export const LISTED_PER_QUERY = 10;
+const LISTED_PER_QUERY = 10;
 
 export const searchInput = z.object({
   queries: z

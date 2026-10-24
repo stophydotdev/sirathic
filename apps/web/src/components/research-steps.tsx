@@ -8,20 +8,13 @@ import { cn } from "@/lib/utils";
 import { useAuiState } from "@assistant-ui/react";
 import {
   IconBook,
-  IconCalculator,
-  IconCalendar,
   IconChevronDown,
-  IconCompass,
   IconHeartHandshake,
-  IconMapPin,
-  IconMessage,
   IconScale,
   IconScript,
   IconSearch,
   IconSparkles,
-  IconSun,
   IconTool,
-  IconTrendingUp,
 } from "@tabler/icons-react";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
@@ -105,9 +98,6 @@ export const Research: FC<{
 const quran = <IconBook className="size-4" />;
 const hadith = <IconScript className="size-4" />;
 const fiqh = <IconScale className="size-4" />;
-const calculator = <IconCalculator className="size-4" />;
-const calendar = <IconCalendar className="size-4" />;
-const place = <IconMapPin className="size-4" />;
 
 const TOOL_STEPS = new Map<
   string,
@@ -128,14 +118,6 @@ const TOOL_STEPS = new Map<
       label: (t, d) => t("Searching hadith for {detail}", { detail: d }),
     },
   ],
-  ["hadithGet", { icon: hadith, label: (t) => t("Reading hadith") }],
-  [
-    "hadithCheck",
-    {
-      icon: hadith,
-      label: (t, d) => t("Checking the hadith {detail}", { detail: d }),
-    },
-  ],
   [
     "fiqhSearch",
     {
@@ -143,57 +125,11 @@ const TOOL_STEPS = new Map<
       label: (t, d) => t("Searching fiqh books for {detail}", { detail: d }),
     },
   ],
-  ["fiqhGet", { icon: fiqh, label: (t) => t("Reading fiqh books") }],
   [
     "duaSearch",
     {
       icon: <IconHeartHandshake className="size-4" />,
       label: (t, d) => t("Finding duas for {detail}", { detail: d }),
-    },
-  ],
-  ["namedReference", { icon: quran, label: (t, d) => t("Looking up {detail}", { detail: d }) }],
-  ["namesOfAllah", { icon: quran, label: (t) => t("Looking up the names of Allah") }],
-  [
-    "prayerTimes",
-    {
-      icon: <IconSun className="size-4" />,
-      label: (t) => t("Calculating prayer times"),
-    },
-  ],
-  [
-    "qibla",
-    {
-      icon: <IconCompass className="size-4" />,
-      label: (t) => t("Finding the qibla"),
-    },
-  ],
-  ["hijriDate", { icon: calendar, label: (t) => t("Converting the date") }],
-  ["islamicCalendar", { icon: calendar, label: (t) => t("Checking the Islamic calendar") }],
-  ["geocode", { icon: place, label: (t, d) => t("Finding {detail}", { detail: d }) }],
-  [
-    "redditThread",
-    {
-      icon: <IconMessage className="size-4" />,
-      label: (t) => t("Reading a Reddit thread"),
-    },
-  ],
-  ["zakatCalculator", { icon: calculator, label: (t) => t("Calculating zakat") }],
-  ["zakatAlFitr", { icon: calculator, label: (t) => t("Calculating zakat al-fitr") }],
-  ["fidyaKaffarah", { icon: calculator, label: (t) => t("Calculating fidya and kaffarah") }],
-  ["inheritance", { icon: calculator, label: (t) => t("Calculating inheritance shares") }],
-  ["islamicUnits", { icon: calculator, label: (t) => t("Converting units") }],
-  [
-    "calculator",
-    {
-      icon: calculator,
-      label: (t, d) => t("Calculating {detail}", { detail: d }),
-    },
-  ],
-  [
-    "halalStockScreen",
-    {
-      icon: <IconTrendingUp className="size-4" />,
-      label: (t, d) => t("Screening {detail}", { detail: d }),
     },
   ],
 ]);
