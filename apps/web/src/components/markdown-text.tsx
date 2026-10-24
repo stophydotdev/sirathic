@@ -41,7 +41,7 @@ import {
   SourcesContext,
 } from "@/components/sources";
 import { InlineVerse } from "@/components/verse-cards";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { useCopyToClipboard } from "@/lib/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
 
 const withMathDelimiters = (text: string) =>

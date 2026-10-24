@@ -1,4 +1,4 @@
-import { MESSAGES } from "../apps/web/messages/en";
+import { MESSAGES } from "../apps/web/src/messages/en";
 
 const PLACEHOLDER = /\{\w+\}/gu;
 const placeholders = (text: string) =>
@@ -11,7 +11,7 @@ const locales = process.argv.slice(2);
 const loaded = await Promise.all(
   locales.map(async (locale) => ({
     locale,
-    messages: (await import(`../apps/web/messages/${locale}.ts`)).default,
+    messages: (await import(`../apps/web/src/messages/${locale}.ts`)).default,
   })),
 );
 let problems = 0;
