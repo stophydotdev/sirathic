@@ -8,8 +8,8 @@ export type Session = Awaited<
 
 type Change = Omit<Parameters<typeof api.sessions.update.mutate>[0], "id">;
 
-export const findSessions = (query: string, all = false) =>
-  api.sessions.list.query({ query, all }).catch(() => []);
+export const findSessions = (query: string) =>
+  api.sessions.list.query({ query }).catch(() => []);
 
 export const useSessions = create<{
   sessions: Session[] | undefined;
