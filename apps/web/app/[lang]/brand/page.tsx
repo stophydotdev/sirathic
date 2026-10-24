@@ -5,7 +5,12 @@ import { Logo, Mark } from "@/components/logo";
 import type { MessageKey } from "@/messages/en";
 import { Button } from "@/components/ui/button";
 import { strToU8, zipSync } from "fflate";
-import { ArrowDownIcon, CheckIcon, CopyIcon, DownloadIcon } from "lucide-react";
+import {
+  IconArrowDown,
+  IconCheck,
+  IconCopy,
+  IconDownload,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { type FC, type ReactNode, useRef, useState } from "react";
 
@@ -160,7 +165,7 @@ export default function Brand() {
               <Button key={id} variant="outline" size="lg" asChild>
                 <a href={`#${id}`}>
                   {t(label)}
-                  <ArrowDownIcon />
+                  <IconArrowDown />
                 </a>
               </Button>
             ))}
@@ -183,7 +188,7 @@ export default function Brand() {
               disabled={zipping}
               onClick={downloadAll}
             >
-              <DownloadIcon />
+              <IconDownload />
               {t("Download all brand assets")}
             </Button>
           </div>
@@ -305,7 +310,7 @@ const Asset: FC<{
             className="h-9 rounded-full"
             onClick={() => download("svg")}
           >
-            <DownloadIcon />
+            <IconDownload />
             SVG
           </Button>
         )}
@@ -314,7 +319,7 @@ const Asset: FC<{
           className="h-9 rounded-full"
           onClick={() => download("png")}
         >
-          <DownloadIcon />
+          <IconDownload />
           PNG
         </Button>
       </div>
@@ -339,7 +344,7 @@ const CopyButton: FC<{ label: string; value: () => string | undefined }> = ({
 
   return (
     <Button variant="outline" className="h-9 rounded-full" onClick={copy}>
-      {copied ? <CheckIcon /> : <CopyIcon />}
+      {copied ? <IconCheck /> : <IconCopy />}
       {copied ? t("Copied") : label}
     </Button>
   );

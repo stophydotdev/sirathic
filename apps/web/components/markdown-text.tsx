@@ -25,7 +25,7 @@ import {
   Suspense,
   useContext,
 } from "react";
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { IconCheck, IconCopy } from "@tabler/icons-react";
 import { z } from "zod";
 
 import { TooltipIconButton } from "@/components/tooltip-icon-button";
@@ -93,8 +93,8 @@ const CodeHeader: FC<CodeHeaderProps> = ({ language, code }) => {
         {language}
       </span>
       <TooltipIconButton tooltip={t("Copy")} onClick={onCopy}>
-        {!isCopied && <CopyIcon />}
-        {isCopied && <CheckIcon />}
+        {!isCopied && <IconCopy />}
+        {isCopied && <IconCheck />}
       </TooltipIconButton>
     </div>
   );

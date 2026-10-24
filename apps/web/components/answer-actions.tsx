@@ -28,11 +28,11 @@ import type { Source } from "@sirathic/server/sources";
 import { api } from "@/lib/trpc";
 import { useAui, useAuiState } from "@assistant-ui/react";
 import {
-  DownloadIcon,
-  EllipsisIcon,
-  GitForkIcon,
-  RefreshCwIcon,
-} from "lucide-react";
+  IconDots,
+  IconDownload,
+  IconGitFork,
+  IconRefresh,
+} from "@tabler/icons-react";
 import { type FC, type ReactNode, useState } from "react";
 import { z } from "zod";
 
@@ -128,7 +128,7 @@ export const AnswerExtras: FC<{
         onClick={() => void fork()}
         className={actionButton}
       >
-        <GitForkIcon className="size-3.5" />
+        <IconGitFork className="size-3.5" />
       </button>
       {children}
       <MoreMenu sources={sources} />
@@ -176,16 +176,16 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
         className={actionButton}
         aria-label={t("More actions")}
       >
-        <EllipsisIcon className="size-3.5" />
+        <IconDots className="size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem onSelect={save} disabled={messages.length === 0}>
-          <DownloadIcon className="size-4" />
+          <IconDownload className="size-4" />
           {t("Download")}
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <RefreshCwIcon className="size-4" />
+            <IconRefresh className="size-4" />
             {t("Rewrite")}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="w-60">

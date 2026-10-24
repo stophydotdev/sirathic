@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, Globe2 } from "lucide-react";
+import { IconExternalLink, IconWorld } from "@tabler/icons-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useId } from "react";
 import { EASE_OUT, SPRING_LAYOUT } from "@/lib/ease";
@@ -63,7 +63,7 @@ function CitationFavicon({
           className="size-4 rounded-sm object-contain"
         />
       ) : (
-        <Globe2 className="size-3.5" />
+        <IconWorld className="size-3.5" />
       )}
     </span>
   );
@@ -115,7 +115,7 @@ function CitationRow({
           {index}
         </span>
         {citation.url ? (
-          <ExternalLink className="size-3.5 text-muted-foreground/40 transition-colors group-hover/citation:text-muted-foreground" />
+          <IconExternalLink className="size-3.5 text-muted-foreground/40 transition-colors group-hover/citation:text-muted-foreground" />
         ) : null}
       </span>
     </>

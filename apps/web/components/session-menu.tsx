@@ -10,16 +10,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import {
-  CircleDotIcon,
-  CircleIcon,
-  EllipsisIcon,
-  PencilIcon,
-  PinIcon,
-  PinOffIcon,
-  SearchIcon,
-  Trash2Icon,
-  X,
-} from "lucide-react";
+  IconCircle,
+  IconCircleDot,
+  IconDots,
+  IconPencil,
+  IconPin,
+  IconPinnedOff,
+  IconSearch,
+  IconTrash,
+  IconX,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Dialog } from "radix-ui";
@@ -162,7 +162,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
             className,
           )}
         >
-          <EllipsisIcon className="size-4" />
+          <IconDots className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-44">
           <DropdownMenuItem
@@ -171,14 +171,14 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
             }
           >
             {session.pinned ? (
-              <PinOffIcon className="size-4" />
+              <IconPinnedOff className="size-4" />
             ) : (
-              <PinIcon className="size-4" />
+              <IconPin className="size-4" />
             )}
             {session.pinned ? t("Unpin") : t("Pin")}
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setRenaming(true)}>
-            <PencilIcon className="size-4" />
+            <IconPencil className="size-4" />
             {t("Rename")}
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -187,9 +187,9 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
             }
           >
             {session.unread ? (
-              <CircleIcon className="size-4" />
+              <IconCircle className="size-4" />
             ) : (
-              <CircleDotIcon className="size-4" />
+              <IconCircleDot className="size-4" />
             )}
             {session.unread ? t("Mark as read") : t("Mark as unread")}
           </DropdownMenuItem>
@@ -197,7 +197,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
             variant="destructive"
             onSelect={() => setDeleting(true)}
           >
-            <Trash2Icon className="size-4" />
+            <IconTrash className="size-4" />
             {t("Delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -295,7 +295,7 @@ export const SearchDialog: FC<{
         >
           <Dialog.Title className="sr-only">{t("Search chats")}</Dialog.Title>
           <div className="border-border/50 flex items-center gap-2 border-b px-4">
-            <SearchIcon className="text-muted-foreground size-4" />
+            <IconSearch className="text-muted-foreground size-4" />
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -313,7 +313,7 @@ export const SearchDialog: FC<{
               aria-label={t("Close")}
               className="text-muted-foreground hover:text-foreground"
             >
-              <X className="size-4" />
+              <IconX className="size-4" />
             </Dialog.Close>
           </div>
           <div className="flex max-h-80 flex-col gap-0.5 overflow-y-auto p-2">

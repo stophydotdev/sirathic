@@ -3,13 +3,13 @@
 import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
 import {
-  Check,
-  ChevronDown,
-  Copy,
-  RotateCcw,
-  ThumbsDown,
-  ThumbsUp,
-} from "lucide-react";
+  IconCheck,
+  IconChevronDown,
+  IconCopy,
+  IconRotate,
+  IconThumbDown,
+  IconThumbUp,
+} from "@tabler/icons-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   type ReactNode,
@@ -192,15 +192,15 @@ export function StreamingResponse({
                   onClick={handleCopy}
                 >
                   {copied ? (
-                    <Check className="size-3.5" />
+                    <IconCheck className="size-3.5" />
                   ) : (
-                    <Copy className="size-3.5" />
+                    <IconCopy className="size-3.5" />
                   )}
                 </ResponseAction>
               ) : null}
               {onRetry ? (
                 <ResponseAction label="Retry response" onClick={onRetry}>
-                  <RotateCcw className="size-3.5" />
+                  <IconRotate className="size-3.5" />
                 </ResponseAction>
               ) : null}
               {complete ? (
@@ -210,14 +210,14 @@ export function StreamingResponse({
                     active={currentFeedback === "up"}
                     onClick={() => setFeedback("up")}
                   >
-                    <ThumbsUp className="size-3.5" />
+                    <IconThumbUp className="size-3.5" />
                   </ResponseAction>
                   <ResponseAction
                     label="Not helpful"
                     active={currentFeedback === "down"}
                     onClick={() => setFeedback("down")}
                   >
-                    <ThumbsDown className="size-3.5" />
+                    <IconThumbDown className="size-3.5" />
                   </ResponseAction>
                 </>
               ) : null}
@@ -241,7 +241,7 @@ export function StreamingResponse({
                     transition={reduce ? { duration: 0 } : SPRING_SWAP}
                     className="text-muted-foreground/50 group-hover:text-muted-foreground"
                   >
-                    <ChevronDown className="size-3" />
+                    <IconChevronDown className="size-3" />
                   </motion.span>
                 </button>
               ) : null}

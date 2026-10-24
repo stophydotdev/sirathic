@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronDownIcon } from "lucide-react";
+import { IconChevronDown } from "@tabler/icons-react";
 import type { ComponentProps, FC } from "react";
 
 export const ModelPicker: FC<
@@ -39,7 +39,7 @@ export const ModelPicker: FC<
         <span className="hidden max-w-40 truncate sm:inline">
           {current?.name ?? t("Model")}
         </span>
-        <ChevronDownIcon className="size-3.5" />
+        <IconChevronDown className="size-3.5" />
       </DropdownMenuTrigger>
       <ModelMenuContent side={side} onManage={() => showSettings("models")} />
     </DropdownMenu>

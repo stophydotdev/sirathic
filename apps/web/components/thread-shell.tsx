@@ -26,13 +26,13 @@ import { AskSelection } from "@/components/ask-selection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
-  ChevronDown,
-  LibraryIcon,
-  MenuIcon,
-  PanelLeftIcon,
-  PlusIcon,
-  SearchIcon,
-} from "lucide-react";
+  IconBooks,
+  IconChevronDown,
+  IconLayoutSidebar,
+  IconMenu2,
+  IconPlus,
+  IconSearch,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
@@ -109,7 +109,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               onClick={() => setSearching(true)}
               className="text-muted-foreground hover:text-foreground size-8 rounded-full"
             >
-              <SearchIcon className="size-4" />
+              <IconSearch className="size-4" />
             </TooltipIconButton>
           )}
           <TooltipIconButton
@@ -120,7 +120,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             onClick={() => setCollapsed(!collapsed)}
             className="text-muted-foreground hover:text-foreground mx-1 size-8 rounded-full"
           >
-            <PanelLeftIcon className="size-4" />
+            <IconLayoutSidebar className="size-4" />
           </TooltipIconButton>
         </div>
 
@@ -131,7 +131,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           )}
         >
           <NewButton className={navRow}>
-            <PlusIcon className="size-4.5 shrink-0" />
+            <IconPlus className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("New")}</span>}
             {!collapsed && (
               <kbd className="text-muted-foreground font-sans text-xs pointer-coarse:hidden">
@@ -160,7 +160,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               size="icon"
               className="bg-background/70 size-8"
             >
-              <MenuIcon className="size-4" />
+              <IconMenu2 className="size-4" />
               <span className="sr-only">{t("Open menu")}</span>
             </Button>
           </SheetTrigger>
@@ -177,7 +177,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               className={mobileRow}
               onDone={() => setMobileOpen(false)}
             >
-              <PlusIcon className="size-4 shrink-0" />
+              <IconPlus className="size-4 shrink-0" />
               <span>{t("New")}</span>
             </NewButton>
             {NAV_LINKS.map(({ path, label, Icon }) => (
@@ -202,7 +202,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
                 mobileRow,
               )}
             >
-              <SearchIcon className="size-4 shrink-0" />
+              <IconSearch className="size-4 shrink-0" />
               <span>{t("Search chats")}</span>
             </button>
             <Recents onDone={() => setMobileOpen(false)} />
@@ -265,7 +265,7 @@ function byDay(sessions: Session[], t: Translate) {
 }
 
 const NAV_LINKS = [
-  { path: "/library", label: "Library", Icon: LibraryIcon },
+  { path: "/library", label: "Library", Icon: IconBooks },
 ] as const;
 
 const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
@@ -317,7 +317,7 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
         className="text-muted-foreground hover:text-foreground flex items-center justify-between px-2.5 pt-6 pb-1 text-sm"
       >
         {t("Recents")}
-        <ChevronDown className={cn("size-4", !open && "-rotate-90")} />
+        <IconChevronDown className={cn("size-4", !open && "-rotate-90")} />
       </button>
       {open &&
         sessions === undefined &&

@@ -28,17 +28,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
-  ArrowUpRight,
-  ChevronRight,
-  ChevronUp,
-  CopyIcon,
-  LogOut,
-  MoonIcon,
-  SettingsIcon,
-  UserCircle,
-  VenetianMaskIcon,
-  X,
-} from "lucide-react";
+  IconArrowUpRight,
+  IconChevronRight,
+  IconChevronUp,
+  IconCopy,
+  IconLogout,
+  IconMoon,
+  IconSettings,
+  IconSpy,
+  IconUserCircle,
+  IconX,
+} from "@tabler/icons-react";
 import { Dialog } from "radix-ui";
 import { type FC, useEffect, useRef, useState } from "react";
 import { z } from "zod";
@@ -192,7 +192,7 @@ export const SignInDialog: FC = () => {
             aria-label={t("Close")}
             className="text-muted-foreground hover:text-foreground absolute top-3 end-3 flex size-7 items-center justify-center rounded-full"
           >
-            <X className="size-4" />
+            <IconX className="size-4" />
           </Dialog.Close>
           <Mark size={26} color="currentColor" />
           <Dialog.Title className="text-[17px] font-medium tracking-[-0.01em] text-balance">
@@ -209,7 +209,7 @@ export const SignInDialog: FC = () => {
                 className={cn(button, primary)}
               >
                 {t("Open ChatGPT")}
-                <ArrowUpRight className="size-4" />
+                <IconArrowUpRight className="size-4" />
               </a>
               <span className="text-muted-foreground inline-flex items-center gap-2 text-xs">
                 <span className="bg-super ring-super/20 size-1.5 rounded-full ring-3" />
@@ -321,7 +321,7 @@ const CopyCode: FC<{ code: string }> = ({ code }) => {
       onClick={copy}
       className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-xs"
     >
-      <CopyIcon className="size-3.5" />
+      <IconCopy className="size-3.5" />
       {copied ? t("Copied") : t("Copy code")}
     </button>
   );
@@ -369,10 +369,10 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
         }}
         className={cn(row, collapsed && "justify-center px-0")}
       >
-        <UserCircle className="size-6 shrink-0 stroke-[1.5]" />
+        <IconUserCircle className="size-6 shrink-0 stroke-[1.5]" />
         {!collapsed && <span className="flex-1">{t("Sign In")}</span>}
         {!collapsed && (
-          <ChevronRight className="text-super size-3.5 rtl:rotate-180" />
+          <IconChevronRight className="text-super size-3.5 rtl:rotate-180" />
         )}
       </button>
     );
@@ -404,7 +404,9 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
               t(viaGoogle ? "Google account" : "ChatGPT account")}
           </span>
         )}
-        {!collapsed && <ChevronUp className="text-muted-foreground size-3.5" />}
+        {!collapsed && (
+          <IconChevronUp className="text-muted-foreground size-3.5" />
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent
         side="top"
@@ -426,7 +428,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
           onCheckedChange={setIncognito}
           onSelect={(event) => event.preventDefault()}
         >
-          <VenetianMaskIcon className="size-4" />
+          <IconSpy className="size-4" />
           {t("Incognito")}
           <span className={shortcut}>Ctrl ;</span>
         </DropdownMenuCheckboxItem>
@@ -436,13 +438,13 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
             openSettings(true);
           }}
         >
-          <SettingsIcon className="size-4" />
+          <IconSettings className="size-4" />
           {t("All settings")}
           <span className={shortcut}>Ctrl Shift ,</span>
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <MoonIcon className="size-4" />
+            <IconMoon className="size-4" />
             <span className="flex flex-col">
               {t("Appearance")}
               <span className="text-muted-foreground text-xs">
@@ -472,7 +474,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void signOut()}>
-          <LogOut className="size-4" />
+          <IconLogout className="size-4" />
           {t("Sign out")}
         </DropdownMenuItem>
       </DropdownMenuContent>

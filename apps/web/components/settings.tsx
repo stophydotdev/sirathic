@@ -19,18 +19,17 @@ import {
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
-  CheckIcon,
-  Cpu,
-  Database,
-  Info,
-  type LucideIcon,
-  PenLine,
-  Search,
-  Settings2,
-  SlidersHorizontal,
-  UserCircle,
-  X,
-} from "lucide-react";
+  IconAdjustmentsHorizontal,
+  IconCheck,
+  IconCpu,
+  IconDatabase,
+  IconInfoCircle,
+  IconSearch,
+  IconUserCircle,
+  IconWriting,
+  IconX,
+  type TablerIcon,
+} from "@tabler/icons-react";
 import { Dialog } from "radix-ui";
 import { type FC, useState } from "react";
 import { create } from "zustand";
@@ -50,42 +49,42 @@ const SECTION_DETAILS = {
   account: {
     name: "Account",
     group: "You",
-    icon: UserCircle,
+    icon: IconUserCircle,
     keywords: "sign in sign out chatgpt",
     Body: AccountSection,
   },
   preferences: {
     name: "Preferences",
     group: "You",
-    icon: SlidersHorizontal,
+    icon: IconAdjustmentsHorizontal,
     keywords: "theme dark light system suggestions mode",
     Body: PreferencesSection,
   },
   personalization: {
     name: "Personalization",
     group: "You",
-    icon: PenLine,
+    icon: IconWriting,
     keywords: "name madhab custom instructions language length arabic",
     Body: PersonalizationSection,
   },
   models: {
     name: "Models",
     group: "Answers",
-    icon: Cpu,
+    icon: IconCpu,
     keywords: "model default gpt luna claude haiku deepseek glm qwen mimo",
     Body: ModelsSection,
   },
   data: {
     name: "Data controls",
     group: "Other",
-    icon: Database,
+    icon: IconDatabase,
     keywords: "incognito export download delete chats history",
     Body: DataSection,
   },
   about: {
     name: "About",
     group: "Other",
-    icon: Info,
+    icon: IconInfoCircle,
     keywords: "sources credits quran hadith fiqh stophy",
     Body: AboutSection,
   },
@@ -94,7 +93,7 @@ const SECTION_DETAILS = {
   {
     name: MessageKey;
     group: MessageKey;
-    icon: LucideIcon;
+    icon: TablerIcon;
     keywords: string;
     Body: FC;
   }
@@ -147,7 +146,7 @@ export const SettingsDialog: FC = () => {
             className="border-foreground/8 flex shrink-0 flex-col gap-0.5 border-b p-2.5 md:w-[232px] md:border-e md:border-b-0"
           >
             <label className="border-border text-muted-foreground mb-2 flex h-[38px] items-center gap-2 rounded-[10px] border px-3 md:mb-3.5">
-              <Search className="size-4 shrink-0" />
+              <IconSearch className="size-4 shrink-0" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
@@ -204,7 +203,7 @@ export const SettingsDialog: FC = () => {
                 aria-label={t("Close")}
                 className="border-border text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 items-center justify-center rounded-full border transition-colors"
               >
-                <X className="size-4" />
+                <IconX className="size-4" />
               </Dialog.Close>
             </div>
             <div className="flex-1 overflow-y-auto px-6 pb-8 md:px-[30px]">
@@ -264,13 +263,13 @@ export const ModelMenuContent: FC<{
                 </span>
               )}
             </span>
-            {chosen === model.slug && <CheckIcon className="size-4" />}
+            {chosen === model.slug && <IconCheck className="size-4" />}
           </DropdownMenuItem>
         );
       })}
       {onManage && (
         <DropdownMenuItem onSelect={onManage} className={modelRow}>
-          <Settings2 className="size-4" />
+          <IconAdjustmentsHorizontal className="size-4" />
           {t("Manage models")}
         </DropdownMenuItem>
       )}

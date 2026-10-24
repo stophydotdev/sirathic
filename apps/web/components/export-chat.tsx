@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { type ThreadMessage, useAui } from "@assistant-ui/react";
-import { DownloadIcon, FileTextIcon, PrinterIcon } from "lucide-react";
+import { IconDownload, IconFileText, IconPrinter } from "@tabler/icons-react";
 import type { FC } from "react";
 
 const textOf = (message: ThreadMessage) =>
@@ -51,15 +51,15 @@ export const ExportMenu: FC<{ onPrint: () => void }> = ({ onPrint }) => {
         title={t("Export this chat")}
         className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 items-center justify-center rounded-full transition-colors"
       >
-        <DownloadIcon className="size-4" />
+        <IconDownload className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-52">
         <DropdownMenuItem onSelect={save}>
-          <FileTextIcon className="size-4" />
+          <IconFileText className="size-4" />
           {t("Download Markdown")}
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={onPrint}>
-          <PrinterIcon className="size-4" />
+          <IconPrinter className="size-4" />
           {t("Save as PDF")}
         </DropdownMenuItem>
       </DropdownMenuContent>

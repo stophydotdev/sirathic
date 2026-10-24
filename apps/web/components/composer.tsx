@@ -33,18 +33,18 @@ import {
   useAuiState,
 } from "@assistant-ui/react";
 import {
-  ArrowUp,
-  ArrowUpLeft,
-  ChevronDownIcon,
-  ClockIcon,
-  FileIcon,
-  Paperclip,
-  Plus,
-  Search,
-  Square,
-  TelescopeIcon,
-  XIcon,
-} from "lucide-react";
+  IconArrowUp,
+  IconArrowUpLeft,
+  IconChevronDown,
+  IconClock,
+  IconFile,
+  IconPaperclip,
+  IconPlus,
+  IconSearch,
+  IconSquare,
+  IconTelescope,
+  IconX,
+} from "@tabler/icons-react";
 import Image from "next/image";
 import {
   type FC,
@@ -73,8 +73,8 @@ const primaryButton =
   "bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-foreground/15 disabled:text-background flex size-8 shrink-0 items-center justify-center rounded-full transition-colors pointer-coarse:size-9";
 
 const MODE_ICONS = {
-  quick: <Search className="size-4" />,
-  research: <TelescopeIcon className="size-4" />,
+  quick: <IconSearch className="size-4" />,
+  research: <IconTelescope className="size-4" />,
 } satisfies Record<Mode, ReactNode>;
 
 type Suggestion = Awaited<ReturnType<typeof api.suggest.query>>[number];
@@ -174,9 +174,9 @@ export const Composer: FC<{
           key: suggestion.text,
           label: suggestion.text,
           icon: suggestion.past ? (
-            <ClockIcon className="size-4" />
+            <IconClock className="size-4" />
           ) : (
-            <Search className="size-4" />
+            <IconSearch className="size-4" />
           ),
           choose: () => {
             composer().setText(suggestion.text);
@@ -252,7 +252,7 @@ export const Composer: FC<{
                 aria-label={t("Stop response (Esc)")}
                 title={t("Stop response (Esc)")}
               >
-                <Square className="size-3 fill-current" />
+                <IconSquare className="size-3 fill-current" />
               </ComposerPrimitive.Cancel>
             </AuiIf>
             <AuiIf condition={(s) => !s.thread.isRunning}>
@@ -263,14 +263,14 @@ export const Composer: FC<{
                   className={primaryButton}
                   aria-label={t("Submit")}
                 >
-                  <ArrowUp className="size-4" />
+                  <IconArrowUp className="size-4" />
                 </button>
               ) : (
                 <ComposerPrimitive.Send
                   className={primaryButton}
                   aria-label={t("Submit")}
                 >
-                  <ArrowUp className="size-4" />
+                  <IconArrowUp className="size-4" />
                 </ComposerPrimitive.Send>
               )}
             </AuiIf>
@@ -330,7 +330,7 @@ export const Composer: FC<{
                   }}
                   className="text-super hover:bg-foreground/10 flex size-6 items-center justify-center rounded-md"
                 >
-                  <ArrowUpLeft className="size-3.5 rtl:-scale-x-100" />
+                  <IconArrowUpLeft className="size-3.5 rtl:-scale-x-100" />
                 </button>
               )}
             </div>
@@ -353,11 +353,11 @@ const AddMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
           className={iconButton}
           aria-label={t("Add files or tools")}
         >
-          <Plus className="size-4.5" />
+          <IconPlus className="size-4.5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent side={side} align="start" className="w-60">
           <DropdownMenuItem onSelect={() => upload.current?.click()}>
-            <Paperclip className="size-4" />
+            <IconPaperclip className="size-4" />
             {t("Upload files or images")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -376,7 +376,7 @@ const ModeMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
       <DropdownMenuTrigger className="border-border bg-foreground/5 hover:bg-foreground/10 flex h-8 items-center gap-1.5 rounded-full border pe-2.5 ps-2 text-sm transition-colors">
         {MODE_ICONS[mode]}
         {t(MODE_DETAILS[mode].name)}
-        <ChevronDownIcon className="text-muted-foreground size-3.5" />
+        <IconChevronDown className="text-muted-foreground size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent side={side} align="start" className="w-72">
         <DropdownMenuLabel>{t("Mode")}</DropdownMenuLabel>
@@ -418,7 +418,7 @@ export const AttachmentChip: FC = () => {
             className="object-cover"
           />
         ) : (
-          <FileIcon className="size-4" />
+          <IconFile className="size-4" />
         )}
       </div>
       <p className="min-w-0 truncate text-sm leading-5">
@@ -433,7 +433,7 @@ const AttachmentPreview: FC = () => {
     <AttachmentPrimitive.Root className="group/attachment relative">
       <AttachmentChip />
       <AttachmentPrimitive.Remove className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-1.5 -end-1.5 flex size-5 items-center justify-center rounded-full border opacity-0 transition-opacity group-hover/attachment:opacity-100 pointer-coarse:opacity-100">
-        <XIcon className="size-3" />
+        <IconX className="size-3" />
       </AttachmentPrimitive.Remove>
     </AttachmentPrimitive.Root>
   );
