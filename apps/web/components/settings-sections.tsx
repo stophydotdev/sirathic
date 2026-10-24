@@ -38,11 +38,11 @@ import {
   type Settings,
 } from "@sirathic/server/settings";
 import {
-  AlertCircle,
-  ArrowUpRight,
-  CheckIcon,
-  ChevronDownIcon,
-} from "lucide-react";
+  IconAlertCircle,
+  IconArrowUpRight,
+  IconCheck,
+  IconChevronDown,
+} from "@tabler/icons-react";
 import { Switch } from "radix-ui";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
 
@@ -149,7 +149,7 @@ function Choice<Value extends string>({
         className={cn(control, "w-[220px] justify-between font-normal")}
       >
         {nameOf(value)}
-        <ChevronDownIcon className="text-muted-foreground size-3.5" />
+        <IconChevronDown className="text-muted-foreground size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[220px]">
         <DropdownMenuRadioGroup
@@ -311,7 +311,7 @@ export const AccountSection: FC = () => {
       </Group>
       {modelsError && (
         <p className="text-destructive mt-3 flex items-center gap-1.5 text-xs">
-          <AlertCircle className="size-3.5 shrink-0" />
+          <IconAlertCircle className="size-3.5 shrink-0" />
           {modelsError}
         </p>
       )}
@@ -664,7 +664,7 @@ export const ModelsSection: FC = () => {
                 </span>
               )}
             </span>
-            {model.slug === chosen && <CheckIcon className="size-4" />}
+            {model.slug === chosen && <IconCheck className="size-4" />}
           </button>
         );
       })}
@@ -699,7 +699,7 @@ export const AboutSection: FC = () => {
               className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm"
             >
               {credit.name}
-              <ArrowUpRight className="size-3.5" />
+              <IconArrowUpRight className="size-3.5" />
             </a>
           ) : (
             <span className="text-muted-foreground text-sm">{credit.name}</span>

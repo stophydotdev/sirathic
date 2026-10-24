@@ -4,7 +4,7 @@ import { type Translate, useT } from "@/components/i18n";
 import type { MessageKey } from "@/messages/en";
 import { cn } from "@/lib/utils";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
-import { Navigation2Icon } from "lucide-react";
+import { IconNavigation } from "@tabler/icons-react";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
 
@@ -202,7 +202,7 @@ const QiblaCard: FC<{ data: z.output<typeof qiblaOutput> }> = ({ data }) => {
             <span className="text-muted-foreground absolute top-0.5 text-[10px]">
               N
             </span>
-            <Navigation2Icon
+            <IconNavigation
               className="text-super size-6 fill-current"
               style={{ rotate: `${data.bearingDegrees}deg` }}
             />

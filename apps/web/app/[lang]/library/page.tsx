@@ -4,7 +4,7 @@ import { useT } from "@/components/i18n";
 import { SessionRow } from "@/components/session-menu";
 import { findSessions, type Session, useSessions } from "@/components/sessions";
 import { ThreadShell } from "@/components/thread-shell";
-import { SearchIcon } from "lucide-react";
+import { IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 const SEARCH_DELAY_MS = 150;
@@ -36,7 +36,7 @@ export default function Library() {
         <div className="mx-auto flex h-full w-full max-w-[720px] flex-col px-6 pt-10">
           <h1 className="mb-6 text-2xl tracking-[-0.02em]">{t("Library")}</h1>
           <label className="bg-card mb-4 flex h-11 items-center gap-2 rounded-xl px-3">
-            <SearchIcon className="text-muted-foreground size-4" />
+            <IconSearch className="text-muted-foreground size-4" />
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}

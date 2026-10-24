@@ -6,7 +6,7 @@ import { Dialog as SheetPrimitive } from "radix-ui";
 
 import { useT } from "@/components/i18n";
 import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-react";
+import { IconX } from "@tabler/icons-react";
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
@@ -72,7 +72,7 @@ function SheetContent({
               className="absolute top-3 end-3"
               size="icon-sm"
             >
-              <XIcon />
+              <IconX />
               <span className="sr-only">{t("Close")}</span>
             </Button>
           </SheetPrimitive.Close>

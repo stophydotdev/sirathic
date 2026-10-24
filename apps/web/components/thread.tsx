@@ -50,40 +50,40 @@ import {
   useAuiState,
 } from "@assistant-ui/react";
 import {
-  ArrowDownIcon,
-  BedDoubleIcon,
-  BookOpenIcon,
-  Calculator,
-  CalendarIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CirclePlayIcon,
-  CloudSun,
-  CompassIcon,
-  CopyIcon,
-  CornerDownRightIcon,
-  Globe,
-  HandHeartIcon,
-  ImageIcon,
-  MapPinIcon,
-  MessageSquareTextIcon,
-  PencilIcon,
-  PlaneIcon,
-  PlusIcon,
-  ScaleIcon,
-  ScrollTextIcon,
-  Search,
-  Share2Icon,
-  Sparkles,
-  StarIcon,
-  SunIcon,
-  TrendingUp,
-  VenetianMaskIcon,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
+  IconArrowDown,
+  IconBed,
+  IconBook,
+  IconCalculator,
+  IconCalendar,
+  IconCheck,
+  IconChevronDown,
+  IconChevronLeft,
+  IconChevronRight,
+  IconCompass,
+  IconCopy,
+  IconCornerDownRight,
+  IconHeartHandshake,
+  IconMapPin,
+  IconMessage,
+  IconPencil,
+  IconPhoto,
+  IconPlane,
+  IconPlayerPlay,
+  IconPlus,
+  IconScale,
+  IconScript,
+  IconSearch,
+  IconShare,
+  IconSparkles,
+  IconSpy,
+  IconStar,
+  IconSun,
+  IconTemperatureSun,
+  IconTool,
+  IconTrendingUp,
+  IconWorld,
+  type TablerIcon,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { type FC, memo, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
@@ -93,14 +93,14 @@ const iconButton =
   "text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-40";
 
 const TABS = [
-  { id: "answer", name: "Answer", Icon: Sparkles },
-  { id: "links", name: "Links", Icon: Globe },
-  { id: "images", name: "Images", Icon: ImageIcon },
-  { id: "videos", name: "Videos", Icon: CirclePlayIcon },
+  { id: "answer", name: "Answer", Icon: IconSparkles },
+  { id: "links", name: "Links", Icon: IconWorld },
+  { id: "images", name: "Images", Icon: IconPhoto },
+  { id: "videos", name: "Videos", Icon: IconPlayerPlay },
 ] as const satisfies readonly {
   id: string;
   name: MessageKey;
-  Icon: LucideIcon;
+  Icon: TablerIcon;
 }[];
 
 type Tab = (typeof TABS)[number]["id"];
@@ -218,7 +218,7 @@ const TabBar: FC = () => {
             aria-label={t("New chat")}
             className={cn(iconButton, "lg:hidden")}
           >
-            <PlusIcon className="size-4.5" />
+            <IconPlus className="size-4.5" />
           </a>
           <div role="tablist" className="flex h-full gap-5">
             {TABS.map((item) => (
@@ -294,9 +294,9 @@ const HeaderActions: FC = () => {
         className="bg-foreground/10 hover:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
       >
         {copied ? (
-          <CheckIcon className="size-4" />
+          <IconCheck className="size-4" />
         ) : (
-          <Share2Icon className="size-4" />
+          <IconShare className="size-4" />
         )}
         <span className="hidden sm:inline">
           {copied ? t("Copied") : t("Share")}
@@ -326,7 +326,7 @@ const IncognitoToggle: FC = () => {
         incognito && "bg-super/15 text-super hover:text-super",
       )}
     >
-      <VenetianMaskIcon className="size-4" />
+      <IconSpy className="size-4" />
       {incognito && t("Incognito")}
     </button>
   );
@@ -350,7 +350,7 @@ const ThreadBody: FC = () => {
         <TurnRow>
           <div className="relative">
             <ThreadPrimitive.ScrollToBottom className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible">
-              <ArrowDownIcon className="size-4" />
+              <IconArrowDown className="size-4" />
             </ThreadPrimitive.ScrollToBottom>
             <Composer placeholder={t("Ask a follow-up")} menuSide="top" />
           </div>
@@ -411,13 +411,13 @@ const Question: FC = () => {
               className={cn(iconButton, "size-6 pointer-coarse:size-9")}
               aria-label={t("Edit query")}
             >
-              <PencilIcon className="size-3" />
+              <IconPencil className="size-3" />
             </ActionBarPrimitive.Edit>
             <ActionBarPrimitive.Copy
               className={cn(iconButton, "size-6 pointer-coarse:size-9")}
               aria-label={t("Copy query")}
             >
-              <CopyIcon className="size-3" />
+              <IconCopy className="size-3" />
             </ActionBarPrimitive.Copy>
           </ActionBarPrimitive.Root>
           <div className="flex max-w-[85%] flex-col items-end gap-2">
@@ -479,7 +479,7 @@ const SourcesPane: FC = () => {
         {!open && <FaviconStack urls={urls} />}
         <span className="text-muted-foreground flex items-center gap-1 text-sm tabular-nums">
           {!open && urls.length}
-          <ChevronRightIcon
+          <IconChevronRight
             className={cn(
               "size-4 transition-transform rtl:rotate-180",
               open && "rotate-90 rtl:rotate-90",
@@ -658,7 +658,7 @@ const Related: FC = () => {
           send
           className="hover:bg-muted -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-2xl px-2 py-3 text-start text-base"
         >
-          <CornerDownRightIcon className="text-muted-foreground size-4 shrink-0" />
+          <IconCornerDownRight className="text-muted-foreground size-4 shrink-0" />
           {question}
         </ThreadPrimitive.Suggestion>
       ))}
@@ -726,7 +726,7 @@ const Research: FC<{
           </span>
         )}
         {steps.length > 0 && (
-          <ChevronDownIcon
+          <IconChevronDown
             className={cn(
               "size-3.5 transition-transform",
               !open && "-rotate-90",
@@ -755,12 +755,12 @@ const Research: FC<{
   );
 };
 
-const quran = <BookOpenIcon className="size-4" />;
-const hadith = <ScrollTextIcon className="size-4" />;
-const fiqh = <ScaleIcon className="size-4" />;
-const calculator = <Calculator className="size-4" />;
-const calendar = <CalendarIcon className="size-4" />;
-const place = <MapPinIcon className="size-4" />;
+const quran = <IconBook className="size-4" />;
+const hadith = <IconScript className="size-4" />;
+const fiqh = <IconScale className="size-4" />;
+const calculator = <IconCalculator className="size-4" />;
+const calendar = <IconCalendar className="size-4" />;
+const place = <IconMapPin className="size-4" />;
 
 const TOOL_STEPS = new Map<
   string,
@@ -800,7 +800,7 @@ const TOOL_STEPS = new Map<
   [
     "duaSearch",
     {
-      icon: <HandHeartIcon className="size-4" />,
+      icon: <IconHeartHandshake className="size-4" />,
       label: (t, d) => t("Finding duas for {detail}", { detail: d }),
     },
   ],
@@ -815,14 +815,14 @@ const TOOL_STEPS = new Map<
   [
     "prayerTimes",
     {
-      icon: <SunIcon className="size-4" />,
+      icon: <IconSun className="size-4" />,
       label: (t) => t("Calculating prayer times"),
     },
   ],
   [
     "qibla",
     {
-      icon: <CompassIcon className="size-4" />,
+      icon: <IconCompass className="size-4" />,
       label: (t) => t("Finding the qibla"),
     },
   ],
@@ -845,35 +845,35 @@ const TOOL_STEPS = new Map<
   [
     "mapsReviews",
     {
-      icon: <StarIcon className="size-4" />,
+      icon: <IconStar className="size-4" />,
       label: (t) => t("Reading reviews"),
     },
   ],
   [
     "redditThread",
     {
-      icon: <MessageSquareTextIcon className="size-4" />,
+      icon: <IconMessage className="size-4" />,
       label: (t) => t("Reading a Reddit thread"),
     },
   ],
   [
     "youtubeTranscript",
     {
-      icon: <CirclePlayIcon className="size-4" />,
+      icon: <IconPlayerPlay className="size-4" />,
       label: (t) => t("Reading a video transcript"),
     },
   ],
   [
     "flightSearch",
     {
-      icon: <PlaneIcon className="size-4" />,
+      icon: <IconPlane className="size-4" />,
       label: (t) => t("Searching flights"),
     },
   ],
   [
     "hotelSearch",
     {
-      icon: <BedDoubleIcon className="size-4" />,
+      icon: <IconBed className="size-4" />,
       label: (t, d) => t("Searching hotels in {detail}", { detail: d }),
     },
   ],
@@ -881,7 +881,7 @@ const TOOL_STEPS = new Map<
   [
     "weather",
     {
-      icon: <CloudSun className="size-4" />,
+      icon: <IconTemperatureSun className="size-4" />,
       label: (t) => t("Checking the weather"),
     },
   ],
@@ -916,7 +916,7 @@ const TOOL_STEPS = new Map<
   [
     "halalStockScreen",
     {
-      icon: <TrendingUp className="size-4" />,
+      icon: <IconTrendingUp className="size-4" />,
       label: (t, d) => t("Screening {detail}", { detail: d }),
     },
   ],
@@ -941,21 +941,21 @@ const StepRow: FC<{ step: ResearchStep }> = ({ step }) => {
   const t = useT();
   switch (step.kind) {
     case "think":
-      return line(<Sparkles className="size-4" />, step.text);
+      return line(<IconSparkles className="size-4" />, step.text);
     case "search":
       return line(
-        <Search className="size-4" />,
+        <IconSearch className="size-4" />,
         t("Searching"),
         step.queries.map((query) => (
           <span key={query} className={chip}>
-            <Search className="size-3 shrink-0" />
+            <IconSearch className="size-3 shrink-0" />
             <span className="truncate">{readableQuery(query)}</span>
           </span>
         )),
       );
     case "read":
       return line(
-        <BookOpenIcon className="size-4" />,
+        <IconBook className="size-4" />,
         t("Reading"),
         step.urls.map((url) => (
           <a
@@ -973,7 +973,7 @@ const StepRow: FC<{ step: ResearchStep }> = ({ step }) => {
     case "tool": {
       const tool = TOOL_STEPS.get(step.tool);
       return line(
-        tool?.icon ?? <Wrench className="size-4" />,
+        tool?.icon ?? <IconTool className="size-4" />,
         tool ? tool.label(t, step.detail) : step.tool,
       );
     }
@@ -1090,13 +1090,13 @@ const BranchPicker: FC = () => {
       className="text-muted-foreground inline-flex items-center gap-1 text-xs"
     >
       <BranchPickerPrimitive.Previous className={actionButton}>
-        <ChevronLeftIcon className="size-3.5 rtl:rotate-180" />
+        <IconChevronLeft className="size-3.5 rtl:rotate-180" />
       </BranchPickerPrimitive.Previous>
       <span className="min-w-9 text-center tabular-nums">
         <BranchPickerPrimitive.Number /> / <BranchPickerPrimitive.Count />
       </span>
       <BranchPickerPrimitive.Next className={actionButton}>
-        <ChevronRightIcon className="size-3.5 rtl:rotate-180" />
+        <IconChevronRight className="size-3.5 rtl:rotate-180" />
       </BranchPickerPrimitive.Next>
     </BranchPickerPrimitive.Root>
   );

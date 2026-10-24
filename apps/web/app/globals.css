@@ -136,6 +136,9 @@
   html {
     @apply font-sans;
   }
+  .tabler-icon {
+    stroke-width: 1.75;
+  }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [role="tab"],
