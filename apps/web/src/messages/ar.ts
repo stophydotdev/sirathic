@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "حسابك في ChatGPT",
   "Your Google account": "حسابك في Google",
   "Sign out": "تسجيل الخروج",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "هل نستخدم ملفات تعريف الارتباط من Google Analytics لمعرفة الميزات المفيدة؟ لا نرسل أسئلتك أبدًا.",
+  "No thanks": "لا، شكرًا",
+  Allow: "السماح",
+  Cookies: "ملفات تعريف الارتباط",
   Commands: "الأوامر",
   Results: "النتائج",
   "New incognito chat": "محادثة خفية جديدة",

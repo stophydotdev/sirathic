@@ -11,6 +11,7 @@ import { Logo, Mark } from "@/components/logo";
 import { ThreadImages, ThreadVideos } from "@/components/thread-media";
 import { ThreadShell } from "@/components/thread-shell";
 import { Skeleton } from "@/components/ui/skeleton";
+import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -203,6 +204,7 @@ const HeaderActions: FC = () => {
 
   const share = () => {
     if (!chat?.saved) return;
+    track({ name: "share", params: { method: "link", content_type: "chat" } });
     void navigator.clipboard.writeText(`${window.location.origin}/s/${chat.id}`).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2_000);
@@ -222,6 +224,7 @@ const HeaderActions: FC = () => {
       <IncognitoToggle />
       <ExportMenu
         onPrint={() => {
+          track({ name: "share", params: { method: "pdf", content_type: "chat" } });
           useThreadTab.getState().open("answer");
           setTimeout(() => window.print(), 100);
         }}

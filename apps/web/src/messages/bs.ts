@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "Vaš ChatGPT račun",
   "Your Google account": "Vaš Google račun",
   "Sign out": "Odjavi se",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "Možemo li koristiti Google Analytics kolačiće da vidimo koje funkcije pomažu? Nikada ne šaljemo vaša pitanja.",
+  "No thanks": "Ne, hvala",
+  Allow: "Dozvoli",
+  Cookies: "Kolačići",
   Commands: "Komande",
   Results: "Rezultati",
   "New incognito chat": "Novi anonimni razgovor",

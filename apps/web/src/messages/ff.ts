@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "Konte ChatGPT maa",
   "Your Google account": "Konte Google maa",
   "Sign out": "Yaltu",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "Hol no mbaawi-mi huutoraade kuukiije Google Analytics ngam yiyde golle nafooje? Min neldataa naamne maa.",
+  "No thanks": "Alaa, a jaaraama",
+  Allow: "Yamir",
+  Cookies: "Kuukiije",
   Commands: "Yamirooje",
   Results: "Njeñtudi",
   "New incognito chat": "Haala suuɗiinde hesere",

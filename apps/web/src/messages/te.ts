@@ -67,6 +67,11 @@ export default {
   "Your ChatGPT account": "మీ ChatGPT ఖాతా",
   "Your Google account": "మీ Google ఖాతా",
   "Sign out": "సైన్ అవుట్",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "ఏ ఫీచర్లు ఉపయోగపడుతున్నాయో చూడటానికి మేము Google Analytics కుకీలను ఉపయోగించవచ్చా? మీ ప్రశ్నలను మేము ఎప్పుడూ పంపము.",
+  "No thanks": "వద్దు, ధన్యవాదాలు",
+  Allow: "అనుమతించు",
+  Cookies: "కుకీలు",
   Commands: "ఆదేశాలు",
   Results: "ఫలితాలు",
   "New incognito chat": "కొత్త అజ్ఞాత చాట్",

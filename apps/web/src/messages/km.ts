@@ -67,6 +67,11 @@ export default {
   "Your ChatGPT account": "គណនី ChatGPT របស់អ្នក",
   "Your Google account": "គណនី Google របស់អ្នក",
   "Sign out": "ចាកចេញ",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "តើយើងអាចប្រើខូគី Google Analytics ដើម្បីមើលថាមុខងារណាខ្លះមានប្រយោជន៍បានទេ? យើងមិនដែលផ្ញើសំណួររបស់អ្នកទេ។",
+  "No thanks": "ទេ អរគុណ",
+  Allow: "អនុញ្ញាត",
+  Cookies: "ខូគី",
   Commands: "ពាក្យបញ្ជា",
   Results: "លទ្ធផល",
   "New incognito chat": "ការជជែកអនាមិកថ្មី",

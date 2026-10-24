@@ -67,6 +67,11 @@ export default {
   "Your ChatGPT account": "你的 ChatGPT 账号",
   "Your Google account": "你的 Google 账号",
   "Sign out": "退出登录",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "我们可以使用 Google Analytics Cookie 来了解哪些功能有用吗？我们绝不会发送你的问题。",
+  "No thanks": "不用了",
+  Allow: "允许",
+  Cookies: "Cookie",
   Commands: "命令",
   Results: "结果",
   "New incognito chat": "新的无痕对话",

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CookieNotice } from "@/components/cookie-notice";
 import { I18nProvider } from "@/components/i18n";
 import { hasLocale, isRtl, LOCALES } from "@/components/locales";
 import { themeScript } from "@/components/preferences";
+import { analyticsScript } from "@/lib/analytics";
 import { SITE } from "@/lib/seo";
 import { getDictionary } from "./dictionaries";
 import "../globals.css";
@@ -31,10 +33,12 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: analyticsScript }} />
       </head>
       <body className="min-h-full flex flex-col">
         <I18nProvider locale={lang} messages={messages}>
           {children}
+          <CookieNotice />
         </I18nProvider>
       </body>
     </html>

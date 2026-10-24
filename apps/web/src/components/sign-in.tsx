@@ -2,10 +2,12 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chat-options";
+import { useConsent } from "@/components/cookie-notice";
 import { saveDraft } from "@/components/draft";
 import { GoogleIcon } from "@/components/google-icon";
 import { useLocalePath, useT } from "@/components/i18n";
 import { CONTACT } from "@/components/legal-page";
+import { markSignInStarted } from "@/lib/analytics";
 import { Mark } from "@/components/logo";
 import { OpenAIIcon } from "@/components/openai-icon";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
@@ -31,6 +33,7 @@ import type { MessageKey } from "@/messages/en";
 import {
   IconArrowUpRight,
   IconChevronRight,
+  IconCookie,
   IconCopy,
   IconDeviceDesktop,
   IconDownload,
@@ -124,6 +127,7 @@ const continueWithGoogle = async (draft: string) => {
     }),
   }).then((res) => readJson(res, socialSignIn));
   if (draft) saveDraft(draft);
+  markSignInStarted("google");
   location.assign(url);
 };
 
@@ -137,6 +141,7 @@ export const SignInDialog: FC = () => {
 
   const getCode = () => {
     setStep({ kind: "asking" });
+    markSignInStarted("chatgpt");
     fetch("/api/auth/chatgpt/start", { method: "POST" })
       .then((res) => readJson(res, deviceCode))
       .then((code) => setStep({ kind: "code", ...code }))
@@ -506,6 +511,10 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
                 <IconFileText className="size-4" />
                 {t("Terms")}
               </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => useConsent.getState().reopen()}>
+              <IconCookie className="size-4" />
+              {t("Cookies")}
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>

@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "Tài khoản ChatGPT của bạn",
   "Your Google account": "Tài khoản Google của bạn",
   "Sign out": "Đăng xuất",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "Chúng tôi có thể dùng cookie của Google Analytics để xem tính năng nào hữu ích không? Chúng tôi không bao giờ gửi câu hỏi của bạn.",
+  "No thanks": "Không, cảm ơn",
+  Allow: "Cho phép",
+  Cookies: "Cookie",
   Commands: "Lệnh",
   Results: "Kết quả",
   "New incognito chat": "Cuộc trò chuyện ẩn danh mới",

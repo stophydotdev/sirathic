@@ -6,6 +6,7 @@ import { useChatOptions } from "@/components/chat-options";
 import { usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";
+import { track } from "@/lib/analytics";
 import type { ChatMessage, Device } from "@sirathic/server/messages";
 import { useChat } from "@ai-sdk/react";
 import {
@@ -73,9 +74,12 @@ const transport = new DefaultChatTransport<ChatMessage>({
   body: () => {
     const options = useChatOptions.getState();
     const override = options.takeOverride();
+    const model = override?.model ?? chosenModel();
+    const mode = override?.mode ?? options.mode;
+    track({ name: "ask_question", params: { mode, model: model ?? "default" } });
     return {
-      model: override?.model ?? chosenModel(),
-      mode: override?.mode ?? options.mode,
+      model,
+      mode,
       incognito: options.incognito,
       device: deviceOf(),
       language: document.documentElement.lang,

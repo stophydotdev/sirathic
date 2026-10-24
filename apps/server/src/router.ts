@@ -125,6 +125,7 @@ export const appRouter = t.router({
             label: ctx.user.email,
             image: ctx.user.image,
             via: ctx.user.via,
+            joinedAt: ctx.user.createdAt.toISOString(),
           }
         : { signedIn: false as const },
     ),
