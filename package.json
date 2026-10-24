@@ -13,7 +13,7 @@
     "typecheck": "tsc-rs --noEmit",
     "test": "bun test",
     "lint": "oxlint && biome check && bun run lint:dashes",
-    "lint:dashes": "! git grep -nIP --untracked '\\x{2014}' -- ':!apps/server/bench/*.json' ':!apps/web/AGENTS.md' ':!apps/server/src/chat/prompt.ts'",
+    "lint:dashes": "! git grep -nIP --untracked '\\x{2014}' -- ':!apps/web/AGENTS.md' ':!apps/server/src/chat/prompt.ts'",
     "lint:fix": "oxlint --fix && biome check --write",
     "format": "biome format --write",
     "knip": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local ./node_modules/.bin/knip",
