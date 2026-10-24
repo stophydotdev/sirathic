@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import {
-  IconCircle,
-  IconCircleDot,
   IconDots,
+  IconMail,
+  IconMailOpened,
   IconPencil,
   IconPin,
   IconPinnedOff,
@@ -187,9 +187,9 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
             }
           >
             {session.unread ? (
-              <IconCircle className="size-4" />
+              <IconMailOpened className="size-4" />
             ) : (
-              <IconCircleDot className="size-4" />
+              <IconMail className="size-4" />
             )}
             {session.unread ? t("Mark as read") : t("Mark as unread")}
           </DropdownMenuItem>
@@ -221,8 +221,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
 export const SessionRow: FC<{
   session: Session;
   onOpen?: () => void;
-  trailing?: ReactNode;
-}> = ({ session, onOpen, trailing }) => {
+}> = ({ session, onOpen }) => {
   const pathname = usePathname();
   const href = useLocalePath();
   const current = pathname === href(`/s/${session.id}`);
@@ -238,22 +237,18 @@ export const SessionRow: FC<{
         href={href(`/s/${session.id}`)}
         onClick={onOpen}
         className={cn(
-          "flex min-w-0 flex-1 items-center gap-2 px-2.5 py-1.5 text-sm",
-          current || session.unread
-            ? "text-foreground"
-            : "text-muted-foreground hover:text-foreground",
+          "text-foreground flex min-w-0 flex-1 items-center gap-2 overflow-hidden px-2.5 py-1 text-base whitespace-nowrap [mask-image:linear-gradient(to_right,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))] rtl:[mask-image:linear-gradient(to_left,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))]",
           session.unread && "font-[560]",
         )}
       >
-        <span className="truncate">{session.title}</span>
+        <span>{session.title}</span>
         {session.unread && (
           <span className="bg-super size-1.5 shrink-0 rounded-full" />
         )}
       </Link>
-      {trailing}
       <SessionMenu
         session={session}
-        className="opacity-0 group-focus-within/session:opacity-100 group-hover/session:opacity-100 pointer-coarse:opacity-100"
+        className="hidden group-focus-within/session:flex group-hover/session:flex data-[state=open]:flex pointer-coarse:flex"
       />
     </div>
   );

@@ -72,7 +72,7 @@ const iconButton =
 const primaryButton =
   "bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-foreground/15 disabled:text-background flex size-8 shrink-0 items-center justify-center rounded-full transition-colors";
 
-const MODE_ICONS = {
+export const MODE_ICONS = {
   quick: <IconSearch className="size-4" />,
   research: <IconTelescope className="size-4" />,
 } satisfies Record<Mode, ReactNode>;

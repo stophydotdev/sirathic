@@ -85,7 +85,6 @@ import {
   IconWorld,
   type TablerIcon,
 } from "@tabler/icons-react";
-import Link from "next/link";
 import { type FC, memo, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
 import { create } from "zustand";
@@ -363,7 +362,6 @@ const ThreadBody: FC = () => {
 
 const EmptyState: FC = () => {
   const t = useT();
-  const href = useLocalePath();
   return (
     <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
       <span className="absolute top-3 start-11 flex h-8 items-center lg:hidden">
@@ -380,15 +378,6 @@ const EmptyState: FC = () => {
           </h1>
         </div>
         <Composer placeholder={t("Ask anything…")} menuSide="bottom" rotate />
-        <p className="text-muted-foreground mt-3 flex justify-center gap-1.5 text-xs">
-          <Link href={href("/privacy")} className="hover:text-foreground">
-            {t("Privacy")}
-          </Link>
-          <span aria-hidden>·</span>
-          <Link href={href("/terms")} className="hover:text-foreground">
-            {t("Terms")}
-          </Link>
-        </p>
       </div>
     </div>
   );

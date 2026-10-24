@@ -4,6 +4,8 @@ import { useLocalePath, useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
 import { useChatState } from "@/components/chat";
 import { MODE_DETAILS, useChatOptions } from "@/components/chat-options";
+import { MODE_ICONS } from "@/components/composer";
+import { MakerIcon } from "@/components/maker-icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -200,6 +202,7 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
                   value={name}
                   onSelect={(event) => event.preventDefault()}
                 >
+                  {MODE_ICONS[name]}
                   {t(MODE_DETAILS[name].name)}
                 </DropdownMenuRadioItem>
               ))}
@@ -218,6 +221,10 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
                       value={option.slug}
                       onSelect={(event) => event.preventDefault()}
                     >
+                      <MakerIcon
+                        maker={option.maker}
+                        className="size-4 shrink-0"
+                      />
                       {option.name}
                     </DropdownMenuRadioItem>
                   ))}
