@@ -24,7 +24,6 @@
     "db:load": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/load.ts && bun run db:enrich",
     "db:enrich": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/enrich.ts",
     "db:fiqh": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/fiqh.ts",
-    "db:qul": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/qul.ts",
     "db:embed": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/embed.ts",
     "db:fatwas": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/fatwas.ts",
     "db:dedupe-fatwas": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/dedupe-fatwas.ts",
