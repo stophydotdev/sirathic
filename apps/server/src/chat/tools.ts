@@ -1,8 +1,4 @@
 import { calculator, calculatorInput } from "@sirathic/core/tools/calculator";
-import {
-  currencyConvert,
-  currencyConvertInput,
-} from "@sirathic/core/tools/currencyConvert";
 import { duaSearch, duaSearchInput } from "@sirathic/core/tools/duaSearch";
 import {
   fidyaKaffarah,
@@ -43,21 +39,7 @@ import {
   namesOfAllah,
   namesOfAllahInput,
 } from "@sirathic/core/tools/namesOfAllah";
-import {
-  flightSearch,
-  flightSearchInput,
-} from "@sirathic/core/tools/flightSearch";
-import {
-  hotelSearch,
-  hotelSearchInput,
-} from "@sirathic/core/tools/hotelSearch";
-import {
-  mapsReviews,
-  mapsReviewsInput,
-} from "@sirathic/core/tools/mapsReviews";
-import { mapsSearch, mapsSearchInput } from "@sirathic/core/tools/mapsSearch";
 import { newsSearch } from "@sirathic/core/tools/newsSearch";
-import { placesNear, placesNearInput } from "@sirathic/core/tools/placesNear";
 import {
   prayerTimes,
   prayerTimesInput,
@@ -73,17 +55,8 @@ import {
   redditThreadInput,
 } from "@sirathic/core/tools/redditThread";
 import { quranSearch } from "@sirathic/core/tools/quranSearch";
-import { weather, weatherInput } from "@sirathic/core/tools/weather";
 import { webFetch, webFetchInput } from "@sirathic/core/tools/webFetch";
 import { webSearch } from "@sirathic/core/tools/webSearch";
-import {
-  youtubeSearch,
-  youtubeSearchInput,
-} from "@sirathic/core/tools/youtubeSearch";
-import {
-  youtubeTranscript,
-  youtubeTranscriptInput,
-} from "@sirathic/core/tools/youtubeTranscript";
 import {
   zakatAlFitr,
   zakatAlFitrInput,
@@ -667,17 +640,8 @@ const PURPOSES = new Map([
   ["namesOfAllah", "the 99 names"],
   ["redditSearch", "what people say or have experienced"],
   ["redditThread", "replies to a Reddit post"],
-  ["youtubeSearch", "lectures and videos"],
-  ["youtubeTranscript", "what a video says"],
-  ["mapsSearch", "places by name"],
-  ["placesNear", "places near coordinates"],
-  ["mapsReviews", "place reviews"],
   ["geocode", "a place's coordinates"],
-  ["weather", "weather"],
-  ["hotelSearch", "hotels"],
-  ["flightSearch", "flights"],
   ["halalStockScreen", "whether a stock is halal"],
-  ["currencyConvert", "currency"],
   ["calculator", "maths"],
 ]);
 
@@ -796,36 +760,6 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
         },
       }),
     }),
-    youtubeSearch: tool({
-      description: "Search YouTube for lectures, recitations and how-tos.",
-      inputSchema: youtubeSearchInput,
-      execute: async (input) => {
-        const { videos, ...found } = await youtubeSearch(input);
-        const { cited, sources } = numbered(cite, videos, hitSource);
-        return { ...found, videos: cited, sources };
-      },
-      toModelOutput: ({ output }) => ({
-        type: "json",
-        value: { query: output.query, videos: output.videos },
-      }),
-    }),
-    youtubeTranscript: tool({
-      description: "Read what a YouTube video says, from its transcript.",
-      inputSchema: youtubeTranscriptInput,
-      execute: async (input) => {
-        const found = await youtubeTranscript(input);
-        const source = {
-          url: found.url,
-          title: "YouTube video transcript",
-          snippet: found.text.slice(0, SNIPPET_CHARS),
-        };
-        return { ...found, citation: cite(found.url), sources: [source] };
-      },
-      toModelOutput: ({ output: { sources: _sources, ...found } }) => ({
-        type: "json",
-        value: found,
-      }),
-    }),
     redditSearch: tool({
       description:
         "Search Reddit for what people say or have experienced. Not for rulings.",
@@ -868,47 +802,6 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
         value: thread,
       }),
     }),
-    mapsSearch: tool({
-      description:
-        "Find places by name and area on Google Maps, like halal restaurants or mosques.",
-      inputSchema: mapsSearchInput,
-      execute: async (input) => {
-        const { places, ...found } = await mapsSearch(input);
-        const { cited, sources } = numbered(cite, places, hitSource);
-        return { ...found, places: cited, sources };
-      },
-      toModelOutput: ({ output: { sources: _sources, ...found } }) => ({
-        type: "json",
-        value: found,
-      }),
-    }),
-    mapsReviews: tool({
-      description: "Read a Google Maps place's reviews.",
-      inputSchema: mapsReviewsInput,
-      execute: async (input) => {
-        const found = await mapsReviews(input);
-        return { ...found, citation: cite(found.url) };
-      },
-    }),
-    flightSearch: tool({
-      description:
-        "Search flights between two airports (IATA codes) on a date.",
-      inputSchema: flightSearchInput,
-      execute: flightSearch,
-    }),
-    hotelSearch: tool({
-      description: "Search hotels for a place and dates.",
-      inputSchema: hotelSearchInput,
-      execute: async (input) => {
-        const { hotels, ...found } = await hotelSearch(input);
-        const { cited, sources } = numbered(cite, hotels, hitSource);
-        return { ...found, hotels: cited, sources };
-      },
-      toModelOutput: ({ output: { sources: _sources, ...found } }) => ({
-        type: "json",
-        value: found,
-      }),
-    }),
     prayerTimes: tool({
       description: "Prayer times for a location and date.",
       inputSchema: prayerTimesInput,
@@ -934,24 +827,6 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       description: "Find the latitude, longitude and time zone of a place.",
       inputSchema: geocodeInput,
       execute: geocode,
-    }),
-    placesNear: tool({
-      description: "Mosques, halal food or Islamic schools near coordinates.",
-      inputSchema: placesNearInput,
-      execute: async (input) => {
-        const { places, ...found } = await placesNear(input);
-        const { cited, sources } = numbered(cite, places, hitSource);
-        return { ...found, places: cited, sources };
-      },
-      toModelOutput: ({ output: { sources: _sources, ...found } }) => ({
-        type: "json",
-        value: found,
-      }),
-    }),
-    weather: tool({
-      description: "The current weather and forecast for a location.",
-      inputSchema: weatherInput,
-      execute: weather,
     }),
     zakatCalculator: tool({
       description:
@@ -985,11 +860,6 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
         "Screen a stock for shariah compliance from its business and financial ratios.",
       inputSchema: halalStockScreenInput,
       execute: halalStockScreen,
-    }),
-    currencyConvert: tool({
-      description: "Convert an amount between currencies at today's rate.",
-      inputSchema: currencyConvertInput,
-      execute: currencyConvert,
     }),
     calculator: tool({
       description: "Evaluate math or a unit conversion.",
