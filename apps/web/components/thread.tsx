@@ -12,6 +12,7 @@ import { useChatOptions } from "@/components/chat-options";
 import { AttachmentChip, Composer } from "@/components/composer";
 import { ExportMenu } from "@/components/export-chat";
 import { Favicon, FaviconStack } from "@/components/favicon";
+import { Logo, Mark } from "@/components/logo";
 import { MarkdownText } from "@/components/markdown-text";
 import {
   type ResearchStep,
@@ -364,17 +365,20 @@ const EmptyState: FC = () => {
   const t = useT();
   const href = useLocalePath();
   return (
-    <div className="relative flex h-full flex-col px-6 pb-4 md:justify-center md:pb-[12vh]">
-      <span className="absolute top-3 start-11 flex h-8 items-center text-xl font-medium tracking-tight lg:hidden">
-        sirathic
+    <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
+      <span className="absolute top-3 start-11 flex h-8 items-center lg:hidden">
+        <Logo height={22} />
       </span>
       <div className="absolute top-3 end-4">
         <IncognitoToggle />
       </div>
       <div className="mx-auto flex w-full max-w-[640px] flex-col max-md:flex-1">
-        <h1 className="mb-8 px-4 text-center text-2xl tracking-[-0.02em] max-md:my-auto">
-          {t("What do you want to know?")}
-        </h1>
+        <div className="mb-9 flex flex-col items-center gap-5 max-md:my-auto">
+          <Mark size={26} color="currentColor" />
+          <h1 className="px-4 text-center text-2xl tracking-[-0.02em] md:text-[26px]">
+            {t("What do you want to know?")}
+          </h1>
+        </div>
         <Composer placeholder={t("Ask anything…")} menuSide="bottom" rotate />
         <p className="text-muted-foreground mt-3 flex justify-center gap-1.5 text-xs">
           <Link href={href("/privacy")} className="hover:text-foreground">
