@@ -26,8 +26,6 @@ import {
 import { settingsUpdate } from "./shared/settings";
 import { suggestions } from "./suggest";
 
-const LIBRARY_LIMIT = 500;
-
 const TRPC_CODES = {
   400: "BAD_REQUEST",
   401: "UNAUTHORIZED",
@@ -80,21 +78,8 @@ const isDefault = (model: { slug: string }) =>
 export const appRouter = t.router({
   sessions: t.router({
     list: signedIn
-      .input(
-        z
-          .object({
-            query: z.string().trim().optional(),
-            all: z.boolean().optional(),
-          })
-          .optional(),
-      )
-      .query(({ ctx, input }) =>
-        listSessions(
-          ctx.owner,
-          input?.query,
-          input?.all ? LIBRARY_LIMIT : undefined,
-        ),
-      ),
+      .input(z.object({ query: z.string().trim().optional() }).optional())
+      .query(({ ctx, input }) => listSessions(ctx.owner, input?.query)),
     get: signedIn.input(session).query(async ({ ctx, input }) => {
       const messages = await openSession(input.id, ctx.owner);
       if (!messages) {

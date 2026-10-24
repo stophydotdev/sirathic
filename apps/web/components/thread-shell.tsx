@@ -26,14 +26,12 @@ import { AskSelection } from "@/components/ask-selection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
-  IconBooks,
   IconChevronDown,
   IconLayoutSidebar,
   IconMenu2,
   IconPlus,
   IconSearch,
 } from "@tabler/icons-react";
-import Link from "next/link";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
 export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
@@ -139,12 +137,6 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               </kbd>
             )}
           </NewButton>
-          {NAV_LINKS.map(({ path, label, Icon }) => (
-            <LinkButton key={path} href={href(path)} className={navRow}>
-              <Icon className="size-4.5 shrink-0" />
-              {!collapsed && <span>{t(label)}</span>}
-            </LinkButton>
-          ))}
           {!collapsed && <Recents />}
         </nav>
         <div className="shrink-0 p-2">
@@ -180,17 +172,6 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <IconPlus className="size-4 shrink-0" />
               <span>{t("New")}</span>
             </NewButton>
-            {NAV_LINKS.map(({ path, label, Icon }) => (
-              <LinkButton
-                key={path}
-                href={href(path)}
-                className={mobileRow}
-                onDone={() => setMobileOpen(false)}
-              >
-                <Icon className="size-4 shrink-0" />
-                <span>{t(label)}</span>
-              </LinkButton>
-            ))}
             <button
               type="button"
               onClick={() => {
@@ -264,36 +245,12 @@ function byDay(sessions: Session[], t: Translate) {
   return days;
 }
 
-const NAV_LINKS = [
-  { path: "/library", label: "Library", Icon: IconBooks },
-] as const;
-
 const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
 const RECENT_LIMIT = 8;
-
-const LinkButton: FC<RowProps & { href: string }> = ({
-  href,
-  className,
-  children,
-  onDone,
-}) => {
-  return (
-    <Button
-      variant="ghost"
-      asChild
-      className={cn("hover:bg-muted justify-start font-normal", className)}
-    >
-      <Link href={href} onClick={onDone}>
-        {children}
-      </Link>
-    </Button>
-  );
-};
 
 const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
   const sessions = useSessions((s) => s.sessions);
   const t = useT();
-  const href = useLocalePath();
   const [open, setOpen] = useState(true);
   const pinned = sessions?.filter((session) => session.pinned) ?? [];
   const recent = sessions?.filter((session) => !session.pinned) ?? [];
@@ -342,15 +299,6 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
             ))}
           </div>
         ))}
-      {open && recent.length > RECENT_LIMIT && (
-        <Link
-          href={href("/library")}
-          onClick={onDone}
-          className="text-muted-foreground hover:text-foreground px-2.5 py-1.5 text-sm"
-        >
-          {t("View all")}
-        </Link>
-      )}
     </>
   );
 };
