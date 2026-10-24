@@ -5,7 +5,6 @@ const SEARCHES = new Set([
   "webSearch",
   "searchSources",
   "newsSearch",
-  "youtubeSearch",
   "redditSearch",
 ]);
 

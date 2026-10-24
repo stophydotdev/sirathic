@@ -52,7 +52,6 @@ import {
 } from "@assistant-ui/react";
 import {
   IconArrowDown,
-  IconBed,
   IconBook,
   IconCalculator,
   IconCalendar,
@@ -68,7 +67,6 @@ import {
   IconMessage,
   IconPencil,
   IconPhoto,
-  IconPlane,
   IconPlayerPlay,
   IconPlus,
   IconScale,
@@ -77,9 +75,7 @@ import {
   IconShare,
   IconSparkles,
   IconSpy,
-  IconStar,
   IconSun,
-  IconTemperatureSun,
   IconTool,
   IconTrendingUp,
   IconWorld,
@@ -829,53 +825,10 @@ const TOOL_STEPS = new Map<
     { icon: place, label: (t, d) => t("Finding {detail}", { detail: d }) },
   ],
   [
-    "mapsSearch",
-    {
-      icon: place,
-      label: (t, d) => t("Finding {detail} on Maps", { detail: d }),
-    },
-  ],
-  [
-    "mapsReviews",
-    {
-      icon: <IconStar className="size-4" />,
-      label: (t) => t("Reading reviews"),
-    },
-  ],
-  [
     "redditThread",
     {
       icon: <IconMessage className="size-4" />,
       label: (t) => t("Reading a Reddit thread"),
-    },
-  ],
-  [
-    "youtubeTranscript",
-    {
-      icon: <IconPlayerPlay className="size-4" />,
-      label: (t) => t("Reading a video transcript"),
-    },
-  ],
-  [
-    "flightSearch",
-    {
-      icon: <IconPlane className="size-4" />,
-      label: (t) => t("Searching flights"),
-    },
-  ],
-  [
-    "hotelSearch",
-    {
-      icon: <IconBed className="size-4" />,
-      label: (t, d) => t("Searching hotels in {detail}", { detail: d }),
-    },
-  ],
-  ["placesNear", { icon: place, label: (t) => t("Finding places nearby") }],
-  [
-    "weather",
-    {
-      icon: <IconTemperatureSun className="size-4" />,
-      label: (t) => t("Checking the weather"),
     },
   ],
   [
@@ -895,10 +848,6 @@ const TOOL_STEPS = new Map<
     { icon: calculator, label: (t) => t("Calculating inheritance shares") },
   ],
   ["islamicUnits", { icon: calculator, label: (t) => t("Converting units") }],
-  [
-    "currencyConvert",
-    { icon: calculator, label: (t) => t("Converting currency") },
-  ],
   [
     "calculator",
     {
