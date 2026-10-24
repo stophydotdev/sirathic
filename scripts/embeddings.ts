@@ -1,4 +1,3 @@
-import type { db } from "@sirathic/db";
 import {
   duas,
   EMBEDDING,
@@ -7,13 +6,9 @@ import {
   hadiths,
   REDDIT_EMBEDDING_DIMENSIONS,
   redditThreads,
-  texts,
   verses,
 } from "@sirathic/db/schema";
-import { and, eq, getTableName, isNull, sql } from "drizzle-orm";
-import { HADITH_ENGLISH_SOURCE } from "./catalog";
-
-type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
+import { sql } from "drizzle-orm";
 
 const FULL = EMBEDDING.dimensions;
 
@@ -49,30 +44,3 @@ export const EMBEDDED = {
     dimensions: REDDIT_EMBEDDING_DIMENSIONS,
   },
 } as const;
-
-type Embedded = (typeof EMBEDDED)[keyof typeof EMBEDDED];
-
-export const keepEmbeddings = async (tx: Transaction, { table, text }: Embedded) => {
-  const kept = sql.identifier(`kept_${getTableName(table)}`);
-  await tx.execute(
-    sql`create temp table ${kept} on commit drop as select distinct on (text) ${text} as text, ${table.embedding} as embedding from ${table} where ${table.embedding} is not null`,
-  );
-  return () =>
-    tx.execute(
-      sql`update ${table} set embedding = ${kept}.embedding from ${kept} where ${text} = ${kept}.text`,
-    );
-};
-
-export const fillSearchEnglish = (tx: Transaction) =>
-  tx
-    .update(hadiths)
-    .set({ textEn: sql`${texts.body}` })
-    .from(texts)
-    .where(
-      and(
-        eq(texts.ref, hadiths.id),
-        eq(texts.source, HADITH_ENGLISH_SOURCE),
-        eq(texts.kind, "translation"),
-        isNull(hadiths.textEn),
-      ),
-    );
