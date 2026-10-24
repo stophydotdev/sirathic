@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SERVER: http://localhost:3000
+      DATABASE_URL: postgres://ci@127.0.0.1/ci
+      REDIS_URL: redis://127.0.0.1:6379
+      OPENAI_API_KEY: ci
+      STOPHY_API_KEY: ci
+      BETTER_AUTH_SECRET: ci-only-placeholder-secret-32-chars
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: git diff --exit-code
+      - run: bun run check-slop
+      - run: bun run check-dead
+      - run: bun run test
+      - run: bun run check-types
