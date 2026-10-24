@@ -32,7 +32,7 @@ import { CORE_TOOLS, type Remember, sirathicTools } from "./tools";
 const MAX_STEPS = 10;
 const RESEARCH_STEPS = 16;
 
-export function answerAgent({
+function answerAgent({
   model,
   modelName,
   tools,
