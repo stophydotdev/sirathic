@@ -45,5 +45,17 @@
     "anti-slop/no-unknown-type-aliases": "error",
     "anti-slop/no-unsafe-dictionary-type": "error",
     "anti-slop/no-widen-then-assert": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "apps/server/**/*.ts",
+        "packages/*/src/**/*.ts",
+        "scripts/**/*.ts"
+      ],
+      "rules": {
+        "unicorn/filename-case": ["error", { "case": "camelCase" }]
+      }
+    }
+  ]
 }

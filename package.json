@@ -26,13 +26,13 @@
     "db:fiqh": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/fiqh.ts",
     "db:embed": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/embed.ts",
     "db:fatwas": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/fatwas.ts",
-    "db:dedupe-fatwas": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/dedupe-fatwas.ts",
+    "db:dedupe-fatwas": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/dedupeFatwas.ts",
     "db:crawl": "bun run db:fatwas && bun run db:dedupe-fatwas --apply && bun run db:embed",
     "db:reddit": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/reddit.ts",
-    "db:hadith-english": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/hadith-english.ts",
-    "translate": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/translate-hadiths.ts",
-    "i18n:keys": "bun scripts/i18n-keys.ts",
-    "i18n:check": "bun scripts/i18n-check.ts"
+    "db:hadith-english": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/hadithEnglish.ts",
+    "translate": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/translateHadiths.ts",
+    "i18n:keys": "bun scripts/i18nKeys.ts",
+    "i18n:check": "bun scripts/i18nCheck.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",
