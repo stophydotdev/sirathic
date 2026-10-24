@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "আপোনাৰ ChatGPT একাউণ্ট",
   "Your Google account": "আপোনাৰ Google একাউণ্ট",
   "Sign out": "ছাইন আউট",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "কোনবোৰ সুবিধা উপযোগী জানিবলৈ আমি Google Analytics কুকি ব্যৱহাৰ কৰিব পাৰোনে? আমি আপোনাৰ প্ৰশ্ন কেতিয়াও নপঠাওঁ।",
+  "No thanks": "নালাগে",
+  Allow: "অনুমতি দিয়ক",
+  Cookies: "কুকি",
   Commands: "আদেশসমূহ",
   Results: "ফলাফল",
   "New incognito chat": "নতুন ইনক'গনিট' চেট",

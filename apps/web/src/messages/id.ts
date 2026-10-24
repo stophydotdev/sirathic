@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "Akun ChatGPT Anda",
   "Your Google account": "Akun Google Anda",
   "Sign out": "Keluar",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "Bolehkah kami memakai cookie Google Analytics untuk melihat fitur mana yang membantu? Kami tidak pernah mengirim pertanyaan Anda.",
+  "No thanks": "Tidak, terima kasih",
+  Allow: "Izinkan",
+  Cookies: "Cookie",
   Commands: "Perintah",
   Results: "Hasil",
   "New incognito chat": "Obrolan penyamaran baru",

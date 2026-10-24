@@ -69,6 +69,11 @@ export default {
   "Your ChatGPT account": "ChatGPT ҳисобингиз",
   "Your Google account": "Google ҳисобингиз",
   "Sign out": "Чиқиш",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "Қайси функциялар фойдали эканини кўриш учун Google Analytics cookie файлларидан фойдалансак бўладими? Саволларингизни ҳеч қачон юбормаймиз.",
+  "No thanks": "Йўқ, раҳмат",
+  Allow: "Рухсат бериш",
+  Cookies: "Cookie файллари",
   Commands: "Буйруқлар",
   Results: "Натижалар",
   "New incognito chat": "Янги яширин суҳбат",

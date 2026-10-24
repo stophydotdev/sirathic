@@ -69,6 +69,11 @@ export default {
   "Your ChatGPT account": "Ang iyong ChatGPT account",
   "Your Google account": "Ang iyong Google account",
   "Sign out": "Mag-sign out",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "Puwede ba naming gamitin ang cookies ng Google Analytics para makita kung aling mga feature ang nakakatulong? Hindi namin ipinapadala ang iyong mga tanong.",
+  "No thanks": "Huwag na, salamat",
+  Allow: "Payagan",
+  Cookies: "Cookies",
   Commands: "Mga utos",
   Results: "Mga resulta",
   "New incognito chat": "Bagong incognito na chat",

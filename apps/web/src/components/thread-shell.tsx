@@ -2,6 +2,7 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chat-options";
+import { useConsent } from "@/components/cookie-notice";
 import { useLocale, useLocalePath, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Logo, Mark } from "@/components/logo";
@@ -187,7 +188,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             <Recents onDone={() => setMobileOpen(false)} />
           </nav>
           <div className="mt-auto shrink-0">
-            <SignedOutLegalLinks />
+            <SignedOutLegalLinks onDone={() => setMobileOpen(false)} />
             <div className="border-sidebar-border border-t p-2">
               <AccountRow onDone={() => setMobileOpen(false)} />
             </div>
@@ -221,7 +222,7 @@ const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
   );
 };
 
-const SignedOutLegalLinks: FC = () => {
+const SignedOutLegalLinks: FC<{ onDone?: () => void }> = ({ onDone }) => {
   const t = useT();
   const href = useLocalePath();
   const signedIn = useAccount((s) => s.status?.signedIn);
@@ -235,6 +236,17 @@ const SignedOutLegalLinks: FC = () => {
       <Link href={href("/terms")} className="hover:text-foreground">
         {t("Terms")}
       </Link>
+      <span aria-hidden>·</span>
+      <button
+        type="button"
+        onClick={() => {
+          onDone?.();
+          useConsent.getState().reopen();
+        }}
+        className="hover:text-foreground"
+      >
+        {t("Cookies")}
+      </button>
     </p>
   );
 };

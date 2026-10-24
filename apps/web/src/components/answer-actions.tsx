@@ -28,6 +28,7 @@ import {
 } from "@sirathic/server/messages";
 import type { Source } from "@sirathic/server/sources";
 import { api } from "@/lib/trpc";
+import { track } from "@/lib/analytics";
 import { useAui, useAuiState } from "@assistant-ui/react";
 import { IconDots, IconDownload, IconGitFork, IconRefresh } from "@tabler/icons-react";
 import { type FC, type ReactNode, useState } from "react";
@@ -74,6 +75,7 @@ export function useAnswer() {
         });
       }),
     );
+    track({ name: "answer_feedback", params: { value: next ?? "none" } });
     if (chat.saved) {
       void api.sessions.feedback
         .mutate({ id: chat.id, messageId, value: next })

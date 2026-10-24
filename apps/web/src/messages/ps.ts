@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "ستاسو د ChatGPT حساب",
   "Your Google account": "ستاسو د Google حساب",
   "Sign out": "وتل",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "ایا موږ کولی شو د Google Analytics کوکيز وکاروو ترڅو وګورو کوم ځانګړتیاوې ګټورې دي؟ موږ هیڅکله ستاسو پوښتنې نه لیږو.",
+  "No thanks": "نه، مننه",
+  Allow: "اجازه ورکړئ",
+  Cookies: "کوکيز",
   Commands: "امرونه",
   Results: "پایلې",
   "New incognito chat": "نوې پټه خبرې",

@@ -68,6 +68,11 @@ export default {
   "Your ChatGPT account": "هەژماری ChatGPTـەکەت",
   "Your Google account": "هەژماری Googleـەکەت",
   "Sign out": "چوونەدەرەوە",
+  "Can we use Google Analytics cookies to see which features help? We never send your questions.":
+    "دەتوانین کووکییەکانی Google Analytics بەکاربهێنین بۆ ئەوەی بزانین کام تایبەتمەندییانە سوودبەخشن؟ هەرگیز پرسیارەکانت نانێرین.",
+  "No thanks": "نەخێر، سوپاس",
+  Allow: "ڕێگەدان",
+  Cookies: "کووکییەکان",
   Commands: "فەرمانەکان",
   Results: "ئەنجامەکان",
   "New incognito chat": "گفتوگۆی نهێنی نوێ",
