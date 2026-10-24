@@ -16,7 +16,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAttachmentSrc } from "@/hooks/use-attachment-src";
+import { useAttachmentSrc } from "@/lib/hooks/use-attachment-src";
 import {
   type Mode,
   MODES,

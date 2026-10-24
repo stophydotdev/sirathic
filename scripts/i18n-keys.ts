@@ -18,7 +18,7 @@ const objectBefore = (source: string, end: number) => {
 
 const keys = new Set<string>();
 const files = [
-  ...new Glob("{app,components}/**/*.{ts,tsx}").scanSync({ cwd: WEB }),
+  ...new Glob("src/{app,components}/**/*.{ts,tsx}").scanSync({ cwd: WEB }),
 ].toSorted();
 const sources = await Promise.all(
   files.map((file) => Bun.file(`${WEB}${file}`).text()),
@@ -41,7 +41,7 @@ const LITERAL = /"(?:[^"\\]|\\.)*"/gu;
 
 const write = () =>
   Bun.write(
-    `${WEB}messages/en.ts`,
+    `${WEB}src/messages/en.ts`,
     `export const MESSAGES = [\n${[...keys].map((key) => `  ${JSON.stringify(key)},`).join("\n")}\n] as const;\n\nexport type MessageKey = (typeof MESSAGES)[number];\n`,
   );
 
