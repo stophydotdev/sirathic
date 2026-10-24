@@ -1,0 +1,40 @@
+#!/bin/sh
+# Blocks a commit when a staged file that a person or an agent wrote is over 5,000 tokens, counted
+# as bytes / 4. Binary files, lockfiles, JSON data, translations, generated code and test fixtures
+# are skipped.
+
+limit_tokens=5000
+limit_bytes=$((limit_tokens * 4))
+tab=$(printf '\t')
+
+too_big=$(git -c core.quotePath=false diff --cached --numstat --no-renames --diff-filter=ACM | while IFS="$tab" read -r added _ path; do
+  [ "$added" = "-" ] && continue
+  case "$path" in
+    *.lock | *.lockb | *package-lock.json | *pnpm-lock.yaml | *go.sum) continue ;;
+    *.json | apps/web/src/messages/* | */fixtures/* | *.gen.ts | *.generated.*) continue ;;
+  esac
+  bytes=$(git cat-file -s ":$path")
+  [ "$bytes" -gt "$limit_bytes" ] && printf '  %s  %s tokens (%s bytes)\n' "$path" "$((bytes / 4))" "$bytes"
+done)
+
+[ -z "$too_big" ] && exit 0
+
+cat >&2 <<MESSAGE
+This commit is blocked. These files are over $limit_tokens tokens (bytes / 4).
+
+$too_big
+
+Split each one before you commit:
+  1. Find the parts that change for different reasons, like one endpoint, one page type or one
+     group of helpers.
+  2. Move each part into its own file next to this one, named for what it does, like
+     parseProfile.ts and parseJobs.ts. Export only what other files use.
+  3. Keep the original file small. It imports the parts and keeps what callers already import
+     from it, or it goes away if nothing is left.
+  4. Split a test file by its describe blocks, like search.paging.test.ts and
+     search.filters.test.ts, with shared helpers in one helpers file next to them.
+  5. Do not shrink a file by deleting comments, joining lines or minifying. Split it.
+
+Then stage the new files and commit again.
+MESSAGE
+exit 1

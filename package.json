@@ -11,6 +11,7 @@
     "dev": "bun run --parallel --filter @sirathic/server --filter web dev",
     "start": "bun run --filter @sirathic/server start",
     "test": "bun test",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
     "check": "oxlint && oxfmt --write && bun run check-dashes",
     "check-slop": "oxlint --deny-warnings",
     "check-types": "tsc-rs --noEmit && bun run --filter web check-types",
