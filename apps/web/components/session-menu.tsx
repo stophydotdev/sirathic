@@ -220,6 +220,22 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
   );
 };
 
+const TITLE_SLIDE_PX_PER_SECOND = 40;
+const TITLE_HIDDEN_ON_HOVER_PX = 72;
+
+const paceTitleSlide = (title: HTMLElement | null) => {
+  const link = title?.parentElement;
+  if (!title || !link) return;
+  const distance = Math.max(
+    0,
+    title.offsetWidth - link.clientWidth + TITLE_HIDDEN_ON_HOVER_PX,
+  );
+  title.style.setProperty(
+    "--slide-time",
+    `${distance / TITLE_SLIDE_PX_PER_SECOND}s`,
+  );
+};
+
 export const SessionRow: FC<{
   session: Session;
   onOpen?: () => void;
@@ -239,15 +255,20 @@ export const SessionRow: FC<{
         href={href(`/s/${session.id}`)}
         onClick={onOpen}
         className={cn(
-          "text-foreground flex min-w-0 flex-1 items-center gap-2 overflow-hidden px-2.5 py-1 text-base whitespace-nowrap [mask-image:linear-gradient(to_right,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))] rtl:[mask-image:linear-gradient(to_left,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))]",
+          "text-foreground @container flex min-w-0 flex-1 items-center overflow-hidden px-2.5 py-1 text-base whitespace-nowrap [mask-image:linear-gradient(to_right,transparent,#000_10px,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))] rtl:[mask-image:linear-gradient(to_left,transparent,#000_10px,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))]",
           session.unread && "font-[560]",
         )}
       >
-        <span>{session.title}</span>
-        {session.unread && (
-          <span className="bg-super size-1.5 shrink-0 rounded-full" />
-        )}
+        <span
+          ref={paceTitleSlide}
+          className="[transition:transform_200ms_ease-out] motion-safe:group-hover/session:[transition:transform_var(--slide-time)_linear_400ms] motion-safe:group-hover/session:[transform:translateX(min(0px,calc(100cqw_-_100%_-_24px)))] motion-safe:rtl:group-hover/session:[transform:translateX(max(0px,calc(100%_-_100cqw_+_24px)))]"
+        >
+          {session.title}
+        </span>
       </Link>
+      {session.unread && (
+        <span className="bg-super me-2 size-1.5 shrink-0 rounded-full group-focus-within/session:hidden group-hover/session:hidden group-has-[[data-state=open]]/session:hidden" />
+      )}
       <SessionMenu
         session={session}
         className="hidden group-focus-within/session:flex group-hover/session:flex data-[state=open]:flex pointer-coarse:flex"
