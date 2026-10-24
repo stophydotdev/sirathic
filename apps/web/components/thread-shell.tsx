@@ -2,16 +2,11 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chat-options";
-import {
-  type Translate,
-  useLocale,
-  useLocalePath,
-  useT,
-} from "@/components/i18n";
+import { useLocale, useLocalePath, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
-import { Logo } from "@/components/logo";
+import { Logo, Mark } from "@/components/logo";
 import { SearchDialog, SessionRow } from "@/components/session-menu";
-import { type Session, useSessions } from "@/components/sessions";
+import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
 import { AccountRow, SignInDialog } from "@/components/sign-in";
 import { TooltipIconButton } from "@/components/tooltip-icon-button";
@@ -32,6 +27,7 @@ import {
   IconPlus,
   IconSearch,
 } from "@tabler/icons-react";
+import Link from "next/link";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
 export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
@@ -79,7 +75,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   const navRow = cn(
-    "h-10 gap-3 rounded-lg px-3 text-base has-[>svg]:px-3",
+    "h-10 gap-2.75 rounded-lg px-2.5 text-base has-[>svg]:px-2.5",
     collapsed && "w-10 justify-center px-0 has-[>svg]:px-0",
   );
   const mobileRow = "h-8 gap-2 rounded-md px-2.5 text-sm";
@@ -88,15 +84,18 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
     <div className="relative flex h-full w-full overflow-hidden print:h-auto print:overflow-visible">
       <aside
         className={cn(
-          "bg-sidebar border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 lg:flex print:hidden",
+          "bg-background border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 lg:flex print:hidden",
           collapsed ? "w-14" : "w-60",
         )}
       >
         <div className="flex h-14 shrink-0 items-center justify-between px-2">
           {!collapsed && (
-            <span className="text-foreground flex h-10 flex-1 items-center px-2">
-              <Logo height={22} />
-            </span>
+            <a
+              href={href("/")}
+              className="text-foreground me-auto flex size-10 items-center justify-center"
+            >
+              <Mark size={20} color="currentColor" />
+            </a>
           )}
           {!collapsed && (
             <TooltipIconButton
@@ -116,9 +115,26 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             tooltip={collapsed ? t("Expand sidebar") : t("Collapse sidebar")}
             side={rtl ? "left" : "right"}
             onClick={() => setCollapsed(!collapsed)}
-            className="text-muted-foreground hover:text-foreground mx-1 size-8 rounded-full"
+            className={cn(
+              "group/toggle text-muted-foreground hover:text-foreground mx-1 size-8 rounded-full",
+              collapsed && "text-foreground",
+            )}
           >
-            <IconLayoutSidebar className="size-4" />
+            {collapsed && (
+              <span
+                aria-hidden
+                className="group-hover/toggle:hidden group-focus-visible/toggle:hidden"
+              >
+                <Mark size={20} color="currentColor" />
+              </span>
+            )}
+            <IconLayoutSidebar
+              className={cn(
+                "size-4",
+                collapsed &&
+                  "hidden group-hover/toggle:block group-focus-visible/toggle:block",
+              )}
+            />
           </TooltipIconButton>
         </div>
 
@@ -128,18 +144,19 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             collapsed ? "overflow-hidden" : "overflow-y-auto",
           )}
         >
-          <NewButton className={navRow}>
+          <NewButton className={cn(navRow, "group/new")}>
             <IconPlus className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("New")}</span>}
             {!collapsed && (
-              <kbd className="text-muted-foreground font-sans text-xs pointer-coarse:hidden">
+              <kbd className="text-muted-foreground font-sans text-xs opacity-0 group-hover/new:opacity-100 group-focus-visible/new:opacity-100 pointer-coarse:hidden">
                 ⌃I
               </kbd>
             )}
           </NewButton>
           {!collapsed && <Recents />}
         </nav>
-        <div className="shrink-0 p-2">
+        {!collapsed && <SignedOutLegalLinks />}
+        <div className="border-sidebar-border shrink-0 border-t p-2">
           <AccountRow collapsed={collapsed} />
         </div>
       </aside>
@@ -188,8 +205,11 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             </button>
             <Recents onDone={() => setMobileOpen(false)} />
           </nav>
-          <div className="mt-auto shrink-0 p-2">
-            <AccountRow onDone={() => setMobileOpen(false)} />
+          <div className="mt-auto shrink-0">
+            <SignedOutLegalLinks />
+            <div className="border-sidebar-border border-t p-2">
+              <AccountRow onDone={() => setMobileOpen(false)} />
+            </div>
           </div>
         </SheetContent>
       </Sheet>
@@ -222,28 +242,23 @@ const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
   );
 };
 
-const DAY_MS = 86_400_000;
-
-const dayLabel = (updatedAt: string, today: number, t: Translate) => {
-  const time = new Date(updatedAt).getTime();
-  if (time >= today) return t("Today");
-  if (time >= today - DAY_MS) return t("Yesterday");
-  if (time >= today - 7 * DAY_MS) return t("Previous 7 days");
-  if (time >= today - 30 * DAY_MS) return t("Previous 30 days");
-  return t("Older");
+const SignedOutLegalLinks: FC = () => {
+  const t = useT();
+  const href = useLocalePath();
+  const signedIn = useAccount((s) => s.status?.signedIn);
+  if (signedIn) return null;
+  return (
+    <p className="text-muted-foreground flex shrink-0 gap-1.5 px-4.5 pb-2 text-xs">
+      <Link href={href("/privacy")} className="hover:text-foreground">
+        {t("Privacy")}
+      </Link>
+      <span aria-hidden>·</span>
+      <Link href={href("/terms")} className="hover:text-foreground">
+        {t("Terms")}
+      </Link>
+    </p>
+  );
 };
-
-function byDay(sessions: Session[], t: Translate) {
-  const today = new Date().setHours(0, 0, 0, 0);
-  const days: { label: string; sessions: Session[] }[] = [];
-  for (const session of sessions) {
-    const label = dayLabel(session.updatedAt, today, t);
-    const last = days.at(-1);
-    if (last?.label === label) last.sessions.push(session);
-    else days.push({ label, sessions: [session] });
-  }
-  return days;
-}
 
 const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
 const RECENT_LIMIT = 8;
@@ -289,16 +304,11 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
         </p>
       )}
       {open &&
-        byDay(recent.slice(0, RECENT_LIMIT), t).map((day) => (
-          <div key={day.label} className="flex flex-col gap-0.5">
-            <p className="text-muted-foreground/70 px-2.5 pt-2 pb-0.5 text-xs">
-              {day.label}
-            </p>
-            {day.sessions.map((session) => (
-              <SessionRow key={session.id} session={session} onOpen={onDone} />
-            ))}
-          </div>
-        ))}
+        recent
+          .slice(0, RECENT_LIMIT)
+          .map((session) => (
+            <SessionRow key={session.id} session={session} onOpen={onDone} />
+          ))}
     </>
   );
 };

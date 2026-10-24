@@ -4,7 +4,8 @@ import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chat-options";
 import { saveDraft } from "@/components/draft";
 import { GoogleIcon } from "@/components/google-icon";
-import { useT } from "@/components/i18n";
+import { useLocalePath, useT } from "@/components/i18n";
+import { CONTACT } from "@/components/legal-page";
 import { Mark } from "@/components/logo";
 import { OpenAIIcon } from "@/components/openai-icon";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
@@ -30,17 +31,25 @@ import type { MessageKey } from "@/messages/en";
 import {
   IconArrowUpRight,
   IconChevronRight,
-  IconChevronUp,
   IconCopy,
+  IconDeviceDesktop,
+  IconDownload,
+  IconFileText,
+  IconHelpCircle,
   IconLogout,
+  IconMessageCircle,
   IconMoon,
+  IconSelector,
   IconSettings,
+  IconShieldLock,
   IconSpy,
+  IconSun,
   IconUserCircle,
   IconX,
 } from "@tabler/icons-react";
+import Link from "next/link";
 import { Dialog } from "radix-ui";
-import { type FC, useEffect, useRef, useState } from "react";
+import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { create } from "zustand";
 
@@ -329,6 +338,12 @@ const CopyCode: FC<{ code: string }> = ({ code }) => {
 
 const shortcut = "text-muted-foreground ms-auto ps-3 text-xs";
 
+const THEME_ICONS = {
+  dark: <IconMoon className="size-4" />,
+  light: <IconSun className="size-4" />,
+  system: <IconDeviceDesktop className="size-4" />,
+} satisfies Record<(typeof THEMES)[number], ReactNode>;
+
 const row =
   "hover:bg-foreground/10 bg-muted flex h-11 w-full items-center gap-2.5 rounded-[8px] px-2.5 text-start text-[15px]";
 
@@ -345,6 +360,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
   const theme = usePreferences((s) => s.theme);
   const changePreferences = usePreferences((s) => s.change);
   const t = useT();
+  const href = useLocalePath();
 
   if (status === undefined) {
     return (
@@ -399,13 +415,20 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
           </span>
         )}
         {!collapsed && (
-          <span className="flex-1 truncate">
-            {status.label ??
-              t(viaGoogle ? "Google account" : "ChatGPT account")}
+          <span className="flex min-w-0 flex-1 flex-col">
+            <span className="truncate">
+              {status.label ??
+                t(viaGoogle ? "Google account" : "ChatGPT account")}
+            </span>
+            <span className="text-muted-foreground truncate text-xs">
+              {t(
+                viaGoogle ? "Signed in with Google" : "Signed in with ChatGPT",
+              )}
+            </span>
           </span>
         )}
         {!collapsed && (
-          <IconChevronUp className="text-muted-foreground size-3.5" />
+          <IconSelector className="text-muted-foreground size-3.5" />
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -442,6 +465,12 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
           {t("All settings")}
           <span className={shortcut}>Ctrl Shift ,</span>
         </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={href("/download")} onClick={onDone}>
+            <IconDownload className="size-4" />
+            {t("Download")}
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <IconMoon className="size-4" />
@@ -466,10 +495,37 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
                   value={value}
                   onSelect={(event) => event.preventDefault()}
                 >
+                  {THEME_ICONS[value]}
                   {t(THEME_NAMES[value])}
                 </DropdownMenuRadioItem>
               ))}
             </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <IconHelpCircle className="size-4" />
+            {t("Help")}
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent className="w-40">
+            <DropdownMenuItem asChild>
+              <a href={`mailto:${CONTACT}`}>
+                <IconMessageCircle className="size-4" />
+                {t("Contact")}
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={href("/privacy")} onClick={onDone}>
+                <IconShieldLock className="size-4" />
+                {t("Privacy")}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={href("/terms")} onClick={onDone}>
+                <IconFileText className="size-4" />
+                {t("Terms")}
+              </Link>
+            </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
