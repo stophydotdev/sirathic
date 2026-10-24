@@ -52,7 +52,9 @@ export const useChatOptions = create<{
     load: () =>
       set({
         ...read(),
-        incognito: usePreferences.getState().incognitoByDefault,
+        incognito:
+          new URLSearchParams(globalThis.location?.search).has("incognito") ||
+          usePreferences.getState().incognitoByDefault,
         loaded: true,
       }),
     setMode: (next) => {
