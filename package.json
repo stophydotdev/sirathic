@@ -19,13 +19,10 @@
     "db:crawl": "bun run env scripts/fatwas.ts && bun run env scripts/dedupeFatwas.ts --apply && bun run env scripts/embed.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.135.0",
     "@sirathic/core": "workspace:*",
     "@sirathic/db": "workspace:*",
     "@sirathic/env": "workspace:*",
     "drizzle-orm": "^0.45.4",
-    "hyparquet": "^1.31.4",
-    "hyparquet-compressors": "^1.1.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {
