@@ -22,11 +22,16 @@
   ],
   "jsPlugins": [
     { "name": "anti-slop", "specifier": "./tools/oxlint/anti-slop/index.ts" },
+    { "name": "comments", "specifier": "./tools/oxlint/comments/index.ts" },
     { "name": "sirathic", "specifier": "./tools/oxlint/sirathic/index.ts" }
   ],
   "rules": {
     "typescript/consistent-type-assertions": ["error", { "assertionStyle": "never" }],
-    "sirathic/no-comments": "error",
+    "comments/no-comments": "error",
+    "comments/require-reason": "error",
+    "sirathic/no-test-in-loop": "error",
+    "sirathic/no-test-timeouts-or-skips": "error",
+    "sirathic/no-waits-in-tests": "error",
     "import/no-unassigned-import": ["error", { "allow": ["**/*.css"] }],
     "anti-slop/no-chained-type-assertions": "error",
     "anti-slop/no-conditional-empty-object-spread": "error",
