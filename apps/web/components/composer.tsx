@@ -67,10 +67,10 @@ const MIN_SUGGEST_CHARS = 2;
 const finePointer = globalThis.matchMedia?.("(pointer: fine)").matches ?? false;
 
 const iconButton =
-  "text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-40 pointer-coarse:size-9";
+  "text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-40";
 
 const primaryButton =
-  "bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-foreground/15 disabled:text-background flex size-8 shrink-0 items-center justify-center rounded-full transition-colors pointer-coarse:size-9";
+  "bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-foreground/15 disabled:text-background flex size-8 shrink-0 items-center justify-center rounded-full transition-colors";
 
 const MODE_ICONS = {
   quick: <IconSearch className="size-4" />,
@@ -215,7 +215,7 @@ export const Composer: FC<{
 
   return (
     <div className="relative w-full">
-      <ComposerPrimitive.Root className="bg-card border-foreground/10 flex w-full flex-col rounded-2xl border">
+      <ComposerPrimitive.Root className="bg-card border-foreground/10 flex w-full flex-col rounded-[20px] border pt-3">
         <AuiIf condition={(s) => s.composer.attachments.length > 0}>
           <div className="flex flex-wrap gap-2 px-4 pt-4">
             <ComposerPrimitive.Attachments>
@@ -238,7 +238,7 @@ export const Composer: FC<{
           className="placeholder:text-muted-foreground max-h-60 min-h-[52px] w-full resize-none bg-transparent px-5 pt-4 text-base leading-6 outline-none"
         />
 
-        <div className="flex items-center justify-between gap-2 px-3 pb-3">
+        <div className="flex items-center justify-between gap-2 px-3 pt-2.5 pb-3">
           <div className="flex min-w-0 items-center gap-1.5">
             <AddMenu side={menuSide} />
             <ModeMenu side={menuSide} />
