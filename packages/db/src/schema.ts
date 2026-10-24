@@ -325,111 +325,12 @@ export const texts = pgTable(
   ],
 );
 
-export const verseWords = pgTable(
-  "verse_words",
-  {
-    surah: smallint().notNull(),
-    ayah: smallint().notNull(),
-    words: text().array().notNull(),
-    transliteration: text().array(),
-  },
-  (table) => [primaryKey({ columns: [table.surah, table.ayah] })],
-);
-
-export const WORD_LANGUAGES = [
-  "en",
-  "ur",
-  "hi",
-  "bn",
-  "id",
-  "tr",
-  "fa",
-  "fr",
-  "ta",
-  "inh",
-] as const;
-
-export const wordMeanings = pgTable(
-  "word_meanings",
-  {
-    surah: smallint().notNull(),
-    ayah: smallint().notNull(),
-    lang: text({ enum: WORD_LANGUAGES }).notNull(),
-    meanings: text().array().notNull(),
-  },
-  (table) => [primaryKey({ columns: [table.surah, table.ayah, table.lang] })],
-);
-
 export const translations = pgTable("translations", {
   id: smallint().primaryKey(),
   name: text().notNull(),
   lang: text().notNull(),
   kind: text({ enum: ["translation", "transliteration"] }).notNull(),
 });
-
-export const verseTranslations = pgTable(
-  "verse_translations",
-  {
-    translation: smallint().notNull(),
-    surah: smallint().notNull(),
-    ayah: smallint().notNull(),
-    text: text().notNull(),
-    footnotes: text().array(),
-  },
-  (table) => [
-    primaryKey({ columns: [table.translation, table.surah, table.ayah] }),
-  ],
-);
-
-export const tafsirs = pgTable("tafsirs", {
-  id: smallint().primaryKey(),
-  name: text().notNull(),
-  lang: text().notNull(),
-  author: text().notNull(),
-});
-
-export const tafsirTexts = pgTable(
-  "tafsir_texts",
-  {
-    tafsir: smallint().notNull(),
-    surah: smallint().notNull(),
-    fromAyah: smallint().notNull(),
-    toAyah: smallint().notNull(),
-    body: text().notNull(),
-  },
-  (table) => [
-    primaryKey({ columns: [table.tafsir, table.surah, table.fromAyah] }),
-  ],
-);
-
-export const tafsirClassical = pgTable(
-  "tafsir_classical",
-  {
-    work: text().notNull(),
-    surah: smallint().notNull(),
-    fromAyah: smallint().notNull(),
-    toAyah: smallint().notNull(),
-    body: text().notNull(),
-  },
-  (table) => [
-    primaryKey({ columns: [table.work, table.surah, table.fromAyah] }),
-  ],
-);
-
-export const recitationTimings = pgTable(
-  "recitation_timings",
-  {
-    recitation: smallint().notNull(),
-    surah: smallint().notNull(),
-    ayah: smallint().notNull(),
-    segments: jsonb()
-      .$type<[word: number, start: number, end: number][]>()
-      .notNull(),
-  },
-  (table) => [
-    primaryKey({ columns: [table.recitation, table.surah, table.ayah] }),
-  ],
-);
 
 export const chatSessions = pgTable(
   "chat_sessions",
