@@ -4,9 +4,7 @@ import { LOCALES } from "@/components/locales";
 import { alternatesOf } from "@/lib/seo";
 import { translator } from "./dictionaries";
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/[lang]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { locale, t } = await translator((await params).lang);
   return {
     description: t(

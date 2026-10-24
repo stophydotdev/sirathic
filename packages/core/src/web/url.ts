@@ -1,5 +1,4 @@
-const TRACKING_PARAM =
-  /^(utm_\w+|fbclid|gclid|msclkid|mc_cid|mc_eid|ref_src|traffic_source)$/u;
+const TRACKING_PARAM = /^(utm_\w+|fbclid|gclid|msclkid|mc_cid|mc_eid|ref_src|traffic_source)$/u;
 
 export const cleanUrl = (raw: string) => {
   const url = new URL(raw);
@@ -10,8 +9,6 @@ export const cleanUrl = (raw: string) => {
   return url.href;
 };
 
-export const hostOf = (url: string) =>
-  new URL(url).hostname.toLowerCase().replace(/^www\./u, "");
+export const hostOf = (url: string) => new URL(url).hostname.toLowerCase().replace(/^www\./u, "");
 
-export const isOnSite = (host: string, site: string) =>
-  host === site || host.endsWith(`.${site}`);
+export const isOnSite = (host: string, site: string) => host === site || host.endsWith(`.${site}`);

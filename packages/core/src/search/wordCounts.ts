@@ -19,9 +19,7 @@ export const countWhere = (table: PgTable, key: string, match: SQL) =>
     `${getTableName(table)}:${key}`,
     async () =>
       counted.parse(
-        await db.execute(
-          sql`select count(*)::int as count from ${table} where ${match}`,
-        ),
+        await db.execute(sql`select count(*)::int as count from ${table} where ${match}`),
       )[0]?.count ?? 0,
   );
 

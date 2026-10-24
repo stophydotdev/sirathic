@@ -12,9 +12,7 @@ const CACHED = { anthropic: { cacheControl: { type: "ephemeral" } } };
 
 const cacheMarks: LanguageModelMiddleware = {
   transformParams: async ({ params }) => {
-    const beforeRules = params.prompt.findLastIndex(
-      (message) => message.role !== "system",
-    );
+    const beforeRules = params.prompt.findLastIndex((message) => message.role !== "system");
     return {
       ...params,
       prompt: params.prompt.map((message, index) =>

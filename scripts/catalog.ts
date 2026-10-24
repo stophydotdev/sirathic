@@ -52,8 +52,7 @@ const MOKHTASAR = "Al-Mukhtasar in Interpreting the Noble Quran";
 const TAFSIR_CENTER = "Tafsir Center for Quranic Studies, QuranEnc.com";
 
 export const mokhtasarCredit = (language: string) => {
-  if (language === "english")
-    return `The Abridged Explanation of the Quran, ${TAFSIR_CENTER}`;
+  if (language === "english") return `The Abridged Explanation of the Quran, ${TAFSIR_CENTER}`;
   if (language === "arabic") return `${MOKHTASAR}, ${TAFSIR_CENTER}`;
   return `${language.charAt(0).toUpperCase()}${language.slice(1)} Translation of ${MOKHTASAR}, ${TAFSIR_CENTER}`;
 };

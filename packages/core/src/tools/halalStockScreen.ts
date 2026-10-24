@@ -1,11 +1,7 @@
 import YahooFinance from "yahoo-finance2";
 import { z } from "zod";
 import { cacheFor } from "../cache";
-import {
-  screenFinancials,
-  screenSchema,
-  verdictFor,
-} from "../finance/halalRatios";
+import { screenFinancials, screenSchema, verdictFor } from "../finance/halalRatios";
 
 const SOURCE =
   "Yahoo Finance via yahoo-finance2 (unofficial API: no SLA, not licensed for redistribution, figures can be wrong or stale)";
@@ -43,11 +39,7 @@ const screenResult = z.object({
     industry: z.string().nullable(),
     note: z.string(),
   }),
-  verdict: z.enum([
-    "pass_pending_business_review",
-    "fail",
-    "insufficient_data",
-  ]),
+  verdict: z.enum(["pass_pending_business_review", "fail", "insufficient_data"]),
   verdictReason: z.string(),
   notes: z.string().array(),
   source: z.string(),
@@ -87,11 +79,7 @@ const loadScreen = async (ticker: string) => {
   }
   const latest = sheets
     .flatMap((row) =>
-      "TYPE" in row &&
-      row.TYPE === "BALANCE_SHEET" &&
-      row.totalAssets !== undefined
-        ? [row]
-        : [],
+      "TYPE" in row && row.TYPE === "BALANCE_SHEET" && row.totalAssets !== undefined ? [row] : [],
     )
     .toSorted((a, b) => b.date.getTime() - a.date.getTime())[0];
   if (latest === undefined) {
@@ -126,9 +114,7 @@ const loadScreen = async (ticker: string) => {
   } satisfies z.infer<typeof screenResult>;
 };
 
-export const halalStockScreen = async (
-  input: z.input<typeof halalStockScreenInput>,
-) => {
+export const halalStockScreen = async (input: z.input<typeof halalStockScreenInput>) => {
   const { ticker } = halalStockScreenInput.parse(input);
   return screenCache(ticker, () => loadScreen(ticker));
 };

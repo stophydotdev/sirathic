@@ -8,9 +8,7 @@ const AT_THE_KAABA_KM = 0.5;
 
 export const qiblaInput = z.object({
   latitude: latitudeSchema.describe("Latitude of the user in decimal degrees"),
-  longitude: longitudeSchema.describe(
-    "Longitude of the user in decimal degrees",
-  ),
+  longitude: longitudeSchema.describe("Longitude of the user in decimal degrees"),
 });
 
 const COMPASS_POINTS = [
@@ -42,9 +40,7 @@ const distanceToKaabaKm = (latitude: number, longitude: number) => {
   const dLon = radians(KAABA.longitude - longitude);
   const a =
     Math.sin(dLat / 2) ** 2 +
-    Math.cos(radians(latitude)) *
-      Math.cos(radians(KAABA.latitude)) *
-      Math.sin(dLon / 2) ** 2;
+    Math.cos(radians(latitude)) * Math.cos(radians(KAABA.latitude)) * Math.sin(dLon / 2) ** 2;
   return 2 * EARTH_RADIUS_KM * Math.asin(Math.sqrt(a));
 };
 
@@ -63,9 +59,7 @@ export const qibla = (input: z.input<typeof qiblaInput>) => {
     basis: `Initial great-circle bearing from the location to the Kaaba (${KAABA.latitude}, ${KAABA.longitude}), in degrees clockwise from true north.`,
     caveats: [
       "The bearing is from true north. A magnetic compass points to magnetic north, so correct for local magnetic declination or use a phone compass that does.",
-      ...(atTheKaaba
-        ? ["The location is at the Kaaba, so the bearing has no meaning."]
-        : []),
+      ...(atTheKaaba ? ["The location is at the Kaaba, so the bearing has no meaning."] : []),
     ],
   };
 };

@@ -2,11 +2,7 @@ import { db } from "@sirathic/db";
 import { loginSessions, users } from "@sirathic/db/schema";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import {
-  type DeviceTokens,
-  identityOf,
-  refreshDeviceTokens,
-} from "./chatgpt/device";
+import { type DeviceTokens, identityOf, refreshDeviceTokens } from "./chatgpt/device";
 import { track } from "./events";
 import { StatusError } from "./respond";
 import { seal, unseal } from "./vault";
@@ -25,10 +21,7 @@ export type User = {
   id: string;
   email: string | null;
   image: string | null;
-} & (
-  | { via: "chatgpt"; plan: string | null; accountId: string }
-  | { via: "google" }
-);
+} & ({ via: "chatgpt"; plan: string | null; accountId: string } | { via: "google" });
 
 export type ChatGPTUser = Extract<User, { via: "chatgpt" }>;
 
@@ -52,10 +45,7 @@ async function forgetChatGPT(userId: string) {
 export async function signIn(tokens: DeviceTokens) {
   const identity = await identityOf(tokens);
   const [owner] = identity.email
-    ? await db
-        .select({ id: users.id })
-        .from(users)
-        .where(eq(users.email, identity.email))
+    ? await db.select({ id: users.id }).from(users).where(eq(users.email, identity.email))
     : [];
   const id =
     owner && (owner.id === identity.subject || identity.emailVerified)
@@ -92,10 +82,7 @@ export async function forgetIfSignedOut(userId: string) {
 }
 
 async function storedTokensOf(userId: string) {
-  const [row] = await db
-    .select({ tokens: users.tokens })
-    .from(users)
-    .where(eq(users.id, userId));
+  const [row] = await db.select({ tokens: users.tokens }).from(users).where(eq(users.id, userId));
   if (!row?.tokens) {
     throw new StatusError(401, "your ChatGPT sign-in ended, sign in again");
   }
@@ -112,8 +99,7 @@ async function renew(userId: string, tokens: DeviceTokens) {
   return result.tokens;
 }
 
-const fresh = (tokens: DeviceTokens) =>
-  tokens.expiresAt - RENEW_EARLY_MS > Date.now();
+const fresh = (tokens: DeviceTokens) => tokens.expiresAt - RENEW_EARLY_MS > Date.now();
 
 function load(userId: string) {
   const loading = storedTokensOf(userId).then((stored) =>

@@ -10,9 +10,7 @@ export const redditThreadInput = z.object({
   postUrl: z.url().describe("A Reddit post link, usually from redditSearch"),
 });
 
-export const redditThread = async (
-  input: z.input<typeof redditThreadInput>,
-) => {
+export const redditThread = async (input: z.input<typeof redditThreadInput>) => {
   const { postUrl } = redditThreadInput.parse(input);
   const { data } = await stophy.reddit.post({ postUrl });
   const comments = data.results.flatMap((comment) =>

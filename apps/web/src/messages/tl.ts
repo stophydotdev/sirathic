@@ -62,8 +62,7 @@ export default {
   "Same as my question": "Kapareho ng tanong ko",
   "Same as my browser": "Kapareho ng browser ko",
   "Not signed in": "Hindi naka-sign in",
-  "Sign in to ask and keep your chats":
-    "Mag-sign in para magtanong at itago ang iyong mga chat",
+  "Sign in to ask and keep your chats": "Mag-sign in para magtanong at itago ang iyong mga chat",
   "Sign in": "Mag-sign in",
   "Signed in with ChatGPT": "Naka-sign in gamit ang ChatGPT",
   "Signed in with Google": "Naka-sign in gamit ang Google",
@@ -79,18 +78,14 @@ export default {
   "Signs you out on this browser": "Ina-sign out ka sa browser na ito",
   Appearance: "Itsura",
   Language: "Wika",
-  "The language of Sirathic's menus and buttons":
-    "Ang wika ng mga menu at button ng Sirathic",
+  "The language of Sirathic's menus and buttons": "Ang wika ng mga menu at button ng Sirathic",
   Theme: "Tema",
-  "How Sirathic looks on this device":
-    "Ang itsura ng Sirathic sa device na ito",
+  "How Sirathic looks on this device": "Ang itsura ng Sirathic sa device na ito",
   Asking: "Pagtatanong",
   "Default mode": "Default na mode",
   "Suggestions while typing": "Mga mungkahi habang nagta-type",
-  "Show suggested questions under the box":
-    "Ipakita ang mga mungkahing tanong sa ilalim ng kahon",
-  "Sign in to personalize answers.":
-    "Mag-sign in para i-personalize ang mga sagot.",
+  "Show suggested questions under the box": "Ipakita ang mga mungkahing tanong sa ilalim ng kahon",
+  "Sign in to personalize answers.": "Mag-sign in para i-personalize ang mga sagot.",
   "What should Sirathic call you?": "Ano ang itatawag sa iyo ng Sirathic?",
   "Your name": "Ang iyong pangalan",
   Madhab: "Madhhab",
@@ -109,8 +104,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Nagsisimula ang bagong chat sa incognito at hindi sine-save",
   "Export my chats": "I-export ang aking mga chat",
-  "Download every saved chat as a file":
-    "I-download ang lahat ng naka-save na chat bilang file",
+  "Download every saved chat as a file": "I-download ang lahat ng naka-save na chat bilang file",
   Export: "I-export",
   "Delete all chats": "Burahin lahat ng chat",
   "Delete every saved chat? This can't be undone.":
@@ -132,16 +126,14 @@ export default {
   "No settings found": "Walang nahanap na setting",
   "No chat models available": "Walang available na modelo",
   "Manage models": "Pamahalaan ang mga modelo",
-  "Longer answers that explain more":
-    "Mas mahabang sagot na mas maraming paliwanag",
+  "Longer answers that explain more": "Mas mahabang sagot na mas maraming paliwanag",
   "Open ChatGPT": "Buksan ang ChatGPT",
   "Waiting for approval": "Naghihintay ng pag-apruba",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Unang beses? I-on ang pag-sign in gamit ang device code sa ChatGPT → Settings → Security. Makikita mo ang Codex sa ChatGPT, normal iyon.",
   "Continue with ChatGPT": "Magpatuloy gamit ang ChatGPT",
   "Continue with Google": "Magpatuloy gamit ang Google",
-  "Use your ChatGPT plan for GPT models":
-    "Gamitin ang iyong ChatGPT plan para sa mga GPT model",
+  "Use your ChatGPT plan for GPT models": "Gamitin ang iyong ChatGPT plan para sa mga GPT model",
   "Get a new code": "Kumuha ng bagong code",
   "Try again": "Subukan ulit",
   "Your question stays in the box while you sign in.":
@@ -189,8 +181,7 @@ export default {
   "Searching hadith for {detail}": "Naghahanap sa hadith: {detail}",
   "Reading hadith": "Binabasa ang hadith",
   "Checking the hadith {detail}": "Sinusuri ang hadith {detail}",
-  "Searching fiqh books for {detail}":
-    "Naghahanap sa mga aklat ng fiqh: {detail}",
+  "Searching fiqh books for {detail}": "Naghahanap sa mga aklat ng fiqh: {detail}",
   "Reading fiqh books": "Binabasa ang mga aklat ng fiqh",
   "Finding duas for {detail}": "Naghahanap ng dua para sa {detail}",
   "Looking up {detail}": "Hinahanap ang {detail}",
@@ -244,8 +235,7 @@ export default {
     "Mas matagal mag-isip at naghahanap nang paisa-isang hakbang",
   "Type / for modes": "I-type ang / para sa mode",
   "Type @ for sources": "I-type ang @ para sa sanggunian",
-  'Delete "{title}"? This can\'t be undone.':
-    "Burahin ang “{title}”? Hindi na ito maibabalik.",
+  'Delete "{title}"? This can\'t be undone.': "Burahin ang “{title}”? Hindi na ito maibabalik.",
   "Qur'an text": "Teksto ng Qur'an",
   "Verse links": "Mga link ng ayah",
   "Hadith explanations": "Mga paliwanag sa hadith",

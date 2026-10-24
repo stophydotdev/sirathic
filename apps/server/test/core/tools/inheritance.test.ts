@@ -5,16 +5,11 @@ type Input = Parameters<typeof inheritance>[0];
 
 const sharesOf = (heirs: Input["heirs"]) =>
   Object.fromEntries(
-    inheritance({ estate: 1_000_000, heirs }).heirs.map((line) => [
-      line.heir,
-      line.fraction,
-    ]),
+    inheritance({ estate: 1_000_000, heirs }).heirs.map((line) => [line.heir, line.fraction]),
   );
 
 const topics = (heirs: Input["heirs"]) =>
-  inheritance({ estate: 1000, heirs }).schoolDifferences.map(
-    (entry) => entry.topic,
-  );
+  inheritance({ estate: 1000, heirs }).schoolDifferences.map((entry) => entry.topic);
 
 test("textbook cases give the textbook shares", () => {
   expect(sharesOf({ husband: 1, daughter: 1, father: 1 })).toEqual({
@@ -89,9 +84,7 @@ test("a son excludes siblings and the heirs he outranks", () => {
 });
 
 test("a son's daughter takes the sixth that completes two thirds, and two daughters shut her out", () => {
-  expect(
-    sharesOf({ daughter: 1, sons_daughter: 1, father: 1, mother: 1 }),
-  ).toEqual({
+  expect(sharesOf({ daughter: 1, sons_daughter: 1, father: 1, mother: 1 })).toEqual({
     daughter: "1/2",
     sons_daughter: "1/6",
     father: "1/6",
@@ -111,9 +104,7 @@ test("a sister with a daughter takes the residue and shuts out paternal brothers
     heirs: { daughter: 1, full_sister: 1, paternal_brother: 1 },
   });
   expect(result.heirs.map((line) => line.fraction)).toEqual(["1/2", "1/2"]);
-  expect(result.excluded.map((line) => line.heir)).toEqual([
-    "paternal_brother",
-  ]);
+  expect(result.excluded.map((line) => line.heir)).toEqual(["paternal_brother"]);
 });
 
 test("the grandfather takes the best of sharing as a brother or a third", () => {
@@ -125,9 +116,7 @@ test("the grandfather takes the best of sharing as a brother or a third", () => 
     paternal_grandfather: "1/3",
     full_brother: "2/3",
   });
-  expect(
-    sharesOf({ paternal_grandfather: 1, full_sister: 1, paternal_brother: 1 }),
-  ).toEqual({
+  expect(sharesOf({ paternal_grandfather: 1, full_sister: 1, paternal_brother: 1 })).toEqual({
     paternal_grandfather: "2/5",
     full_sister: "1/2",
     paternal_brother: "1/10",
@@ -135,9 +124,7 @@ test("the grandfather takes the best of sharing as a brother or a third", () => 
 });
 
 test("the grandfather keeps a sixth when sharing would give him less", () => {
-  expect(
-    sharesOf({ daughter: 2, paternal_grandfather: 1, full_brother: 2 }),
-  ).toEqual({
+  expect(sharesOf({ daughter: 2, paternal_grandfather: 1, full_brother: 2 })).toEqual({
     daughter: "2/3",
     paternal_grandfather: "1/6",
     full_brother: "1/6",
@@ -161,9 +148,7 @@ test("al-Akdariyyah pools the grandfather's and sister's shares", () => {
 });
 
 test("al-Mushtarakah leaves the full brothers with nothing", () => {
-  expect(
-    sharesOf({ husband: 1, mother: 1, maternal_brother: 2, full_brother: 1 }),
-  ).toEqual({
+  expect(sharesOf({ husband: 1, mother: 1, maternal_brother: 2, full_brother: 1 })).toEqual({
     husband: "1/2",
     mother: "1/6",
     maternal_brother: "1/3",
@@ -172,9 +157,7 @@ test("al-Mushtarakah leaves the full brothers with nothing", () => {
 });
 
 test("where schools differ the result says so", () => {
-  expect(topics({ mother: 1, daughter: 1 })).toEqual([
-    "Radd (return of the surplus)",
-  ]);
+  expect(topics({ mother: 1, daughter: 1 })).toEqual(["Radd (return of the surplus)"]);
   expect(topics({ paternal_grandfather: 1, full_brother: 1 })).toEqual([
     "Grandfather with full or paternal siblings",
   ]);
@@ -196,13 +179,11 @@ test("debts come first and a bequest is capped at a third of what is left", () =
     bequestCapped: true,
     distributable: 60_000,
   });
-  expect(result.heirs.map((line) => line.amount)).toEqual([
-    15_000, 30_000, 15_000,
-  ]);
+  expect(result.heirs.map((line) => line.amount)).toEqual([15_000, 30_000, 15_000]);
 });
 
 test("a husband and a wife together are rejected", () => {
-  expect(() =>
-    inheritance({ estate: 1000, heirs: { husband: 1, wife: 1 } }),
-  ).toThrow("cannot both survive");
+  expect(() => inheritance({ estate: 1000, heirs: { husband: 1, wife: 1 } })).toThrow(
+    "cannot both survive",
+  );
 });

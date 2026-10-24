@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  type ChatMessage,
-  chatData,
-  messageMetadata,
-} from "@sirathic/server/messages";
+import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
 import { validateUIMessages } from "ai";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -40,9 +36,5 @@ export default function SessionPage() {
     };
   }, [id]);
 
-  return messages ? (
-    <Chat key={id} id={id} initialMessages={messages} />
-  ) : (
-    <ThreadSkeleton />
-  );
+  return messages ? <Chat key={id} id={id} initialMessages={messages} /> : <ThreadSkeleton />;
 }

@@ -31,19 +31,15 @@ const rows = Object.entries(translated).map(([ref, body]) => ({
   lang: "en" as const,
   body,
 }));
-const chunks = Array.from(
-  { length: Math.ceil(rows.length / CHUNK_SIZE) },
-  (_, index) => rows.slice(index * CHUNK_SIZE, (index + 1) * CHUNK_SIZE),
+const chunks = Array.from({ length: Math.ceil(rows.length / CHUNK_SIZE) }, (_, index) =>
+  rows.slice(index * CHUNK_SIZE, (index + 1) * CHUNK_SIZE),
 );
 
 const checked = await Promise.all(
   chunks.map(async (chunk) => {
     const refs = chunk.map((row) => row.ref);
     const [found, licensed] = await Promise.all([
-      db
-        .select({ id: hadiths.id })
-        .from(hadiths)
-        .where(inArray(hadiths.id, refs)),
+      db.select({ id: hadiths.id }).from(hadiths).where(inArray(hadiths.id, refs)),
       db
         .select({ ref: texts.ref })
         .from(texts)

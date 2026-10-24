@@ -35,10 +35,7 @@ type Hadith = {
   grade: string | null;
 };
 
-const query = async <Schema extends z.ZodType>(
-  params: Record<string, string>,
-  schema: Schema,
-) => {
+const query = async <Schema extends z.ZodType>(params: Record<string, string>, schema: Schema) => {
   const response = await fetch(API, {
     method: "POST",
     headers: { "User-Agent": USER_AGENT },
@@ -71,9 +68,7 @@ const subpages = async (book: string, from?: string): Promise<string[]> => {
     : titles.concat(await subpages(book, page.continue.apcontinue));
 };
 
-const wikitexts = async (
-  titles: string[],
-): Promise<{ title: string; wikitext: string }[]> => {
+const wikitexts = async (titles: string[]): Promise<{ title: string; wikitext: string }[]> => {
   if (titles.length === 0) return [];
   const { query: result } = await query(
     {
@@ -86,9 +81,7 @@ const wikitexts = async (
     contents,
   );
   const pages = result.pages.flatMap(({ title, revisions: [revision] }) =>
-    revision === undefined
-      ? []
-      : [{ title, wikitext: revision.slots.main.content }],
+    revision === undefined ? [] : [{ title, wikitext: revision.slots.main.content }],
   );
   return pages.concat(await wikitexts(titles.slice(TITLES_PER_REQUEST)));
 };
@@ -96,20 +89,13 @@ const wikitexts = async (
 const encodeSegment = (segment: string) =>
   encodeURIComponent(segment).replaceAll(
     /[!'()*]/gu,
-    (character) =>
-      `%${character.codePointAt(0)?.toString(16).toUpperCase() ?? ""}`,
+    (character) => `%${character.codePointAt(0)?.toString(16).toUpperCase() ?? ""}`,
   );
 
 const pageUrl = (title: string) =>
   `https://ar.wikisource.org/wiki/${title.replaceAll(" ", "_").split("/").map(encodeSegment).join("/")}`;
 
-const entriesOf = ({
-  title,
-  wikitext,
-}: {
-  title: string;
-  wikitext: string;
-}) => {
+const entriesOf = ({ title, wikitext }: { title: string; wikitext: string }) => {
   const entries: Entry[] = [];
   let current: Entry | undefined;
   for (const line of wikitext.split("\n")) {
@@ -119,10 +105,7 @@ const entriesOf = ({
       const [whole, heading, inline] = start;
       current = {
         number: Number(heading ?? inline),
-        url:
-          heading === undefined
-            ? pageUrl(title)
-            : `${pageUrl(title)}#${heading}`,
+        url: heading === undefined ? pageUrl(title) : `${pageUrl(title)}#${heading}`,
         raw: heading === undefined ? trimmed.slice(whole.length) : "",
       };
       entries.push(current);
@@ -147,12 +130,10 @@ const cleaned = (raw: string) =>
     .trim();
 
 const gradeOf = (raw: string) =>
-  [...raw.matchAll(/<ref[^>]*>(.*?)<\/ref>/gsu)]
-    .map(([, grade = ""]) => grade.trim())
-    .join(" ") || null;
+  [...raw.matchAll(/<ref[^>]*>(.*?)<\/ref>/gsu)].map(([, grade = ""]) => grade.trim()).join(" ") ||
+  null;
 
-const medianNumber = (entries: Entry[]) =>
-  entries[Math.floor(entries.length / 2)]?.number ?? 0;
+const medianNumber = (entries: Entry[]) => entries[Math.floor(entries.length / 2)]?.number ?? 0;
 
 const numbered = (entries: (Entry & { chapter: number })[]) => {
   const used = new Set(entries.map((entry) => entry.number));
@@ -169,16 +150,11 @@ const numbered = (entries: (Entry & { chapter: number })[]) => {
     };
     if (previous === undefined || hadith.number > previous.number) {
       hadiths.push(hadith);
-    } else if (
-      !used.has(previous.number + 1) &&
-      next?.number === previous.number + 2
-    ) {
+    } else if (!used.has(previous.number + 1) && next?.number === previous.number + 2) {
       used.add(previous.number + 1);
       hadiths.push({ ...hadith, number: previous.number + 1 });
     } else if (hadith.number !== previous.number) {
-      throw new Error(
-        `Hadith ${hadith.number} at ${hadith.url} comes after ${previous.number}`,
-      );
+      throw new Error(`Hadith ${hadith.number} at ${hadith.url} comes after ${previous.number}`);
     } else if (hadith.text !== previous.text) {
       previous.text += `\n${hadith.text}`;
     }

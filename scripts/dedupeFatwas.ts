@@ -50,9 +50,7 @@ for (const row of pages.values()) {
   counts.set(key, (counts.get(key) ?? 0) + 1);
 }
 console.log(`${pages.size} duplicate pages to remove:`);
-for (const [key, count] of [...counts]
-  .toSorted((a, b) => b[1] - a[1])
-  .slice(0, 15))
+for (const [key, count] of [...counts].toSorted((a, b) => b[1] - a[1]).slice(0, 15))
   console.log(`  ${key}: ${count}`);
 for (const row of [...pages.values()].slice(0, 5))
   console.log(`  e.g. ${row.url}\n       same as ${row.kept}`);
@@ -63,16 +61,11 @@ if (APPLY && pages.size > 0) {
   const dir = `${DATA_DIR}/fatwas-removed`;
   await mkdir(dir, { recursive: true });
   const file = `${dir}/${new Date().toISOString().replaceAll(":", "-")}.jsonl.gz`;
-  await Bun.write(
-    file,
-    Bun.gzipSync(rows.map((row) => JSON.stringify(row)).join("\n")),
-  );
+  await Bun.write(file, Bun.gzipSync(rows.map((row) => JSON.stringify(row)).join("\n")));
   const deleted = await db
     .delete(fatwas)
     .where(inArray(fatwas.url, urls))
     .returning({ url: fatwas.url });
-  console.log(
-    `saved ${rows.length} rows to ${file}, deleted ${deleted.length} rows`,
-  );
+  console.log(`saved ${rows.length} rows to ${file}, deleted ${deleted.length} rows`);
 }
 await db.$client.end();

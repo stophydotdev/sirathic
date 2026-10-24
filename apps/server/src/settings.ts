@@ -24,10 +24,7 @@ export async function getSettings(owner: string) {
   return stored.parse(row?.values);
 }
 
-export async function updateSettings(
-  owner: string,
-  update: z.output<typeof settingsUpdate>,
-) {
+export async function updateSettings(owner: string, update: z.output<typeof settingsUpdate>) {
   const [row] = await db
     .insert(settingsTable)
     .values({ owner, values: update })

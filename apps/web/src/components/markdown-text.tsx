@@ -29,27 +29,16 @@ import { IconCheck, IconCopy } from "@tabler/icons-react";
 import { z } from "zod";
 
 import { TooltipIconButton } from "@/components/tooltip-icon-button";
-import {
-  hidePendingCitation,
-  rehypeCitations,
-  rehypeVerses,
-} from "@/components/citations";
+import { hidePendingCitation, rehypeCitations, rehypeVerses } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
-import {
-  CitationNumbers,
-  siteName,
-  SourcesContext,
-} from "@/components/sources";
+import { CitationNumbers, siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verse-cards";
 import { useCopyToClipboard } from "@/lib/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
 
 const withMathDelimiters = (text: string) =>
   text
-    .replaceAll(
-      /\\\[([\s\S]*?)\\\]/gu,
-      (_, math: string) => `\n$$\n${math}\n$$\n`,
-    )
+    .replaceAll(/\\\[([\s\S]*?)\\\]/gu, (_, math: string) => `\n$$\n${math}\n$$\n`)
     .replaceAll(/\\\(([\s\S]*?)\\\)/gu, (_, math: string) => `$$${math}$$`);
 
 const MarkdownTextImpl: FC = () => (
@@ -123,9 +112,7 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
             <>
               <Favicon url={first} size={12} />
               <span className="truncate">{siteName(first)}</span>
-              {more.length > 0 && (
-                <span className="text-muted-foreground">+{more.length}</span>
-              )}
+              {more.length > 0 && <span className="text-muted-foreground">+{more.length}</span>}
             </>
           )}
         </a>
@@ -147,12 +134,8 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
             >
               <Favicon url={url} size={16} className="mt-0.5" />
               <span className="flex min-w-0 flex-col">
-                <span className="text-muted-foreground line-clamp-1 text-xs">
-                  {siteName(url)}
-                </span>
-                <span className="line-clamp-2">
-                  {sources.get(url)?.title ?? url}
-                </span>
+                <span className="text-muted-foreground line-clamp-1 text-xs">{siteName(url)}</span>
+                <span className="line-clamp-2">{sources.get(url)?.title ?? url}</span>
               </span>
             </a>
           ))}
@@ -162,11 +145,7 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
   );
 };
 
-const Anchor: FC<ComponentProps<"a"> & { node?: Element }> = ({
-  node,
-  className,
-  ...props
-}) => {
+const Anchor: FC<ComponentProps<"a"> & { node?: Element }> = ({ node, className, ...props }) => {
   const urls = citedUrls.safeParse(node?.properties.dataUrls).data;
   if (urls) return <Citation urls={urls} />;
   return (
@@ -183,46 +162,29 @@ const memoized = memoizeMarkdownComponents({
   h1: ({ className, ...props }) => (
     <h1
       dir="auto"
-      className={cn(
-        "aui-md-h1 mt-4 mb-2 text-base font-[580] first:mt-0",
-        className,
-      )}
+      className={cn("aui-md-h1 mt-4 mb-2 text-base font-[580] first:mt-0", className)}
       {...props}
     />
   ),
   h2: ({ className, ...props }) => (
     <h2
       dir="auto"
-      className={cn(
-        "aui-md-h2 mt-4 mb-2 text-base font-[580] first:mt-0",
-        className,
-      )}
+      className={cn("aui-md-h2 mt-4 mb-2 text-base font-[580] first:mt-0", className)}
       {...props}
     />
   ),
   h3: ({ className, ...props }) => (
     <h3
       dir="auto"
-      className={cn(
-        "aui-md-h3 mt-4 mb-2 text-sm font-[580] first:mt-0",
-        className,
-      )}
+      className={cn("aui-md-h3 mt-4 mb-2 text-sm font-[580] first:mt-0", className)}
       {...props}
     />
   ),
   h4: ({ className, ...props }) => (
-    <h4
-      dir="auto"
-      className={cn("aui-md-h4 mt-3 mb-1 text-sm font-[580]", className)}
-      {...props}
-    />
+    <h4 dir="auto" className={cn("aui-md-h4 mt-3 mb-1 text-sm font-[580]", className)} {...props} />
   ),
   p: ({ className, ...props }) => (
-    <p
-      dir="auto"
-      className={cn("aui-md-p mb-2 last:mb-0", className)}
-      {...props}
-    />
+    <p dir="auto" className={cn("aui-md-p mb-2 last:mb-0", className)} {...props} />
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
@@ -253,25 +215,15 @@ const memoized = memoizeMarkdownComponents({
     />
   ),
   li: ({ className, ...props }) => (
-    <li
-      dir="auto"
-      className={cn("aui-md-li mb-1 [&>p]:mb-1", className)}
-      {...props}
-    />
+    <li dir="auto" className={cn("aui-md-li mb-1 [&>p]:mb-1", className)} {...props} />
   ),
   hr: ({ className, ...props }) => (
-    <hr
-      className={cn("aui-md-hr border-border/50 my-4", className)}
-      {...props}
-    />
+    <hr className={cn("aui-md-hr border-border/50 my-4", className)} {...props} />
   ),
   table: ({ className, ...props }) => (
     <div className="aui-md-table-wrapper border-border/50 my-3 overflow-x-auto rounded-lg border">
       <table
-        className={cn(
-          "aui-md-table w-full border-collapse text-sm leading-5",
-          className,
-        )}
+        className={cn("aui-md-table w-full border-collapse text-sm leading-5", className)}
         {...props}
       />
     </div>
@@ -327,10 +279,7 @@ const memoized = memoizeMarkdownComponents({
 
 const verseUrl = z.string();
 
-const Figure: FC<{ node?: Element; children?: ReactNode }> = ({
-  node,
-  children,
-}) => {
+const Figure: FC<{ node?: Element; children?: ReactNode }> = ({ node, children }) => {
   const url = verseUrl.safeParse(node?.properties.dataVerse).data;
   return url ? <InlineVerse url={url} fallback={children} /> : null;
 };

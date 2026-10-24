@@ -62,8 +62,7 @@ export default {
   "Same as my question": "Суроомдун тили",
   "Same as my browser": "Браузеримдин тили",
   "Not signed in": "Кирген жоксуз",
-  "Sign in to ask and keep your chats":
-    "Суроо берүү жана маектерди сактоо үчүн кириңиз",
+  "Sign in to ask and keep your chats": "Суроо берүү жана маектерди сактоо үчүн кириңиз",
   "Sign in": "Кирүү",
   "Signed in with ChatGPT": "ChatGPT аркылуу кирдиңиз",
   "Signed in with Google": "Google аркылуу кирдиңиз",
@@ -79,15 +78,13 @@ export default {
   "Signs you out on this browser": "Бул браузерде аккаунттан чыгарат",
   Appearance: "Көрүнүш",
   Language: "Тил",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic менюларынын жана баскычтарынын тили",
+  "The language of Sirathic's menus and buttons": "Sirathic менюларынын жана баскычтарынын тили",
   Theme: "Тема",
   "How Sirathic looks on this device": "Sirathic бул түзмөктө кандай көрүнөт",
   Asking: "Суроо берүү",
   "Default mode": "Негизги режим",
   "Suggestions while typing": "Жазып жатканда сунуштар",
-  "Show suggested questions under the box":
-    "Талаанын астында сунушталган суроолорду көрсөтүү",
+  "Show suggested questions under the box": "Талаанын астында сунушталган суроолорду көрсөтүү",
   "Sign in to personalize answers.": "Жоопторду ыңгайлаштыруу үчүн кириңиз.",
   "What should Sirathic call you?": "Sirathic сизге кантип кайрылсын?",
   "Your name": "Атыңыз",
@@ -107,8 +104,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Жаңы маектер инкогнито режиминде башталат жана сакталбайт",
   "Export my chats": "Маектеримди экспорттоо",
-  "Download every saved chat as a file":
-    "Бардык сакталган маектерди файл катары жүктөп алуу",
+  "Download every saved chat as a file": "Бардык сакталган маектерди файл катары жүктөп алуу",
   Export: "Экспорттоо",
   "Delete all chats": "Бардык маектерди өчүрүү",
   "Delete every saved chat? This can't be undone.":
@@ -137,12 +133,10 @@ export default {
     "Биринчи жолубу? ChatGPT → Жөндөөлөр → Коопсуздук бөлүмүндө түзмөк коду аркылуу кирүүнү күйгүзүңүз. ChatGPT Codex деп жазат, бул кадимки нерсе.",
   "Continue with ChatGPT": "ChatGPT аркылуу улантуу",
   "Continue with Google": "Google аркылуу улантуу",
-  "Use your ChatGPT plan for GPT models":
-    "GPT моделдери үчүн ChatGPT планыңызды колдонуңуз",
+  "Use your ChatGPT plan for GPT models": "GPT моделдери үчүн ChatGPT планыңызды колдонуңуз",
   "Get a new code": "Жаңы код алуу",
   "Try again": "Кайра аракет кылуу",
-  "Your question stays in the box while you sign in.":
-    "Кирип жатканда сурооңуз талаада калат.",
+  "Your question stays in the box while you sign in.": "Кирип жатканда сурооңуз талаада калат.",
   "Copy code": "Кодду көчүрүү",
   "Sign In": "Кирүү",
   "Account menu": "Аккаунт менюсу",
@@ -170,8 +164,7 @@ export default {
   "New chat": "Жаңы маек",
   "Copy a link to this chat": "Бул маектин шилтемесин көчүрүү",
   Share: "Бөлүшүү",
-  "Incognito is on: new messages aren't saved":
-    "Инкогнито күйүк: жаңы билдирүүлөр сакталбайт",
+  "Incognito is on: new messages aren't saved": "Инкогнито күйүк: жаңы билдирүүлөр сакталбайт",
   "Use incognito: new messages aren't saved to your history":
     "Инкогнито: жаңы билдирүүлөр тарыхыңызга сакталбайт",
   "Ask a follow-up": "Кошумча суроо бериңиз",
@@ -233,15 +226,12 @@ export default {
   Helpful: "Пайдалуу",
   "Not helpful": "Пайдасыз",
   Quick: "Ыкчам",
-  "Searches everything first, then answers fast":
-    "Адегенде баарынан издейт, анан тез жооп берет",
+  "Searches everything first, then answers fast": "Адегенде баарынан издейт, анан тез жооп берет",
   Research: "Изилдөө",
-  "Thinks longer and searches step by step":
-    "Узагыраак ойлонот жана кадам-кадам менен издейт",
+  "Thinks longer and searches step by step": "Узагыраак ойлонот жана кадам-кадам менен издейт",
   "Type / for modes": "Режимдер үчүн / жазыңыз",
   "Type @ for sources": "Булактар үчүн @ жазыңыз",
-  'Delete "{title}"? This can\'t be undone.':
-    "«{title}» өчүрүлсүнбү? Муну кайтаруу мүмкүн эмес.",
+  'Delete "{title}"? This can\'t be undone.': "«{title}» өчүрүлсүнбү? Муну кайтаруу мүмкүн эмес.",
   "Qur'an text": "Куран тексти",
   "Verse links": "Аят шилтемелери",
   "Hadith explanations": "Хадис түшүндүрмөлөрү",

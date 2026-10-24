@@ -20,18 +20,12 @@ const NOT_LETTERS = /[^\p{L}]/gu;
 
 const quoteLexemes = z.array(z.object({ words: z.array(z.string()) }));
 const candidateIds = z.array(z.object({ id: z.string() }));
-const lexemeHits = z.array(
-  z.object({ id: z.string(), word: z.string(), position: z.number() }),
-);
+const lexemeHits = z.array(z.object({ id: z.string(), word: z.string(), position: z.number() }));
 
 type Hit = { word: string; position: number };
 
 export const hadithCheckInput = z.object({
-  text: z
-    .string()
-    .trim()
-    .min(1)
-    .describe("The saying to check, quoted in Arabic or English"),
+  text: z.string().trim().min(1).describe("The saying to check, quoted in Arabic or English"),
 });
 
 const windowFor = (tokenCount: number) => tokenCount * 2 + 2;
@@ -39,22 +33,14 @@ const windowFor = (tokenCount: number) => tokenCount * 2 + 2;
 const rarity = async (terms: { word: string; match: SQL }[]) => {
   const [total, found] = await Promise.all([
     tableSize(hadiths),
-    Promise.all(
-      terms.map(({ word, match }) => countWhere(hadiths, word, match)),
-    ),
+    Promise.all(terms.map(({ word, match }) => countWhere(hadiths, word, match))),
   ]);
   return new Map(
-    terms.map(({ word }, index) => [
-      word,
-      Math.log((total + 1) / ((found[index] ?? 0) + 1)),
-    ]),
+    terms.map(({ word }, index) => [word, Math.log((total + 1) / ((found[index] ?? 0) + 1))]),
   );
 };
 
-const arabicHits = async (
-  text: string,
-  candidates: Awaited<ReturnType<typeof hadithsByIds>>,
-) => {
+const arabicHits = async (text: string, candidates: Awaited<ReturnType<typeof hadithsByIds>>) => {
   const quoted = new Map(
     text
       .replaceAll(ARABIC_MARKS, "")
@@ -75,10 +61,8 @@ const arabicHits = async (
     ),
     width: windowFor(arabicTokens(text).length),
     hitsOf: (id: string) =>
-      arabicTokens(
-        candidates.find((candidate) => candidate.id === id)?.textAr ?? "",
-      ).flatMap((word, position) =>
-        quoted.has(word) ? [{ word, position }] : [],
+      arabicTokens(candidates.find((candidate) => candidate.id === id)?.textAr ?? "").flatMap(
+        (word, position) => (quoted.has(word) ? [{ word, position }] : []),
       ),
   };
 };
@@ -99,9 +83,7 @@ const englishWeights = async (text: string) =>
 
 const englishRareIds = async (weights: Map<string, number>, limit: number) => {
   if (weights.size === 0) return [];
-  const rare = [...weights.keys()].filter(
-    (word) => (weights.get(word) ?? 0) > RARE_WEIGHT,
-  );
+  const rare = [...weights.keys()].filter((word) => (weights.get(word) ?? 0) > RARE_WEIGHT);
   const score = sql.join(
     [...weights].map(
       ([word, weight]) =>
@@ -121,11 +103,7 @@ const englishRareIds = async (weights: Map<string, number>, limit: number) => {
     .map((row) => row.id);
 };
 
-const englishHits = async (
-  ids: string[],
-  text: string,
-  weights: Map<string, number>,
-) => {
+const englishHits = async (ids: string[], text: string, weights: Map<string, number>) => {
   const rows = await db.execute(sql`
       select ${hadiths.id} as id, entry.lexeme as word, position
       from ${hadiths}
@@ -143,11 +121,7 @@ const englishHits = async (
   };
 };
 
-const nearbyShare = (
-  weights: Map<string, number>,
-  hits: Hit[],
-  width: number,
-) => {
+const nearbyShare = (weights: Map<string, number>, hits: Hit[], width: number) => {
   const weightOf = (words: Iterable<string>) =>
     [...words].reduce((sum, word) => sum + (weights.get(word) ?? 0), 0);
   const total = weightOf(weights.keys());
@@ -192,9 +166,7 @@ export const hadithCheck = async (input: z.input<typeof hadithCheckInput>) => {
     weights: quoteWeights,
     width,
     hitsOf,
-  } = weights
-    ? await englishHits(ids, text, weights)
-    : await arabicHits(text, candidates);
+  } = weights ? await englishHits(ids, text, weights) : await arabicHits(text, candidates);
   const matches = candidates
     .map((candidate) =>
       Object.assign(candidate, {
@@ -205,8 +177,7 @@ export const hadithCheck = async (input: z.input<typeof hadithCheckInput>) => {
     .slice(0, SHOWN);
   const best = matches[0]?.wordMatch ?? 0;
   return {
-    verdict:
-      best >= FOUND_AT ? "found" : best >= SIMILAR_AT ? "similar" : "not_found",
+    verdict: best >= FOUND_AT ? "found" : best >= SIMILAR_AT ? "similar" : "not_found",
     matches,
   };
 };

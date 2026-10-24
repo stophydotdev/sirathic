@@ -11,19 +11,8 @@ import {
   IconThumbUp,
 } from "@tabler/icons-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import {
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
-import {
-  type CitationItem,
-  CitationList,
-  CitationStack,
-} from "@/components/agents/citations";
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
+import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
 import { AgentDisclosure } from "@/components/agents/agent-disclosure";
 import { EASE_OUT, SPRING_PRESS, SPRING_SWAP } from "@/lib/ease";
 import { cn } from "@/lib/utils";
@@ -72,9 +61,7 @@ function ResponseAction({
       type="button"
       aria-label={t(label)}
       title={t(label)}
-      aria-pressed={
-        label === "Helpful" || label === "Not helpful" ? active : undefined
-      }
+      aria-pressed={label === "Helpful" || label === "Not helpful" ? active : undefined}
       onClick={onClick}
       whileTap={reduce ? undefined : { scale: 0.9 }}
       transition={SPRING_PRESS}
@@ -115,8 +102,7 @@ export function StreamingResponse({
   const [copied, setCopied] = useState(false);
   const [internalFeedback, setInternalFeedback] =
     useState<StreamingResponseFeedback>(defaultFeedback);
-  const [internalSourcesOpen, setInternalSourcesOpen] =
-    useState(defaultSourcesOpen);
+  const [internalSourcesOpen, setInternalSourcesOpen] = useState(defaultSourcesOpen);
   const copyTimer = useRef<number | undefined>(undefined);
   const currentFeedback = feedback ?? internalFeedback;
   const currentSourcesOpen = sourcesOpen ?? internalSourcesOpen;
@@ -127,8 +113,7 @@ export function StreamingResponse({
   const shouldShowActions =
     showActions && !streaming && (canCopy || onRetry || complete || hasSources);
   const sourcesContentId = `${baseId}-sources`;
-  const resolvedSourcePrefix =
-    sourceIdPrefix ?? `response-source-${baseId.replace(/:/g, "")}`;
+  const resolvedSourcePrefix = sourceIdPrefix ?? `response-source-${baseId.replace(/:/g, "")}`;
 
   useEffect(
     () => () => {
@@ -161,11 +146,7 @@ export function StreamingResponse({
   );
 
   return (
-    <div
-      data-state={status}
-      aria-busy={streaming}
-      className={cn("w-full", className)}
-    >
+    <div data-state={status} aria-busy={streaming} className={cn("w-full", className)}>
       <div
         aria-live={announce ? "polite" : "off"}
         className={cn(
@@ -187,15 +168,8 @@ export function StreamingResponse({
           >
             <div className={cn("flex items-center gap-0.5", actionsClassName)}>
               {canCopy ? (
-                <ResponseAction
-                  label={copied ? "Copied" : "Copy response"}
-                  onClick={handleCopy}
-                >
-                  {copied ? (
-                    <IconCheck className="size-3.5" />
-                  ) : (
-                    <IconCopy className="size-3.5" />
-                  )}
+                <ResponseAction label={copied ? "Copied" : "Copy response"} onClick={handleCopy}>
+                  {copied ? <IconCheck className="size-3.5" /> : <IconCopy className="size-3.5" />}
                 </ResponseAction>
               ) : null}
               {onRetry ? (

@@ -16,18 +16,13 @@ export function sourcesOf(message: ChatMessage) {
       if (!found.has(entry.url)) found.set(entry.url, entry);
     }
   }
-  const cited = [
-    ...new Set([...textOf(message).matchAll(CITED_LINK)].map((m) => m[1])),
-  ];
-  const rank = (url: string) =>
-    cited.includes(url) ? cited.indexOf(url) : cited.length;
+  const cited = [...new Set([...textOf(message).matchAll(CITED_LINK)].map((m) => m[1]))];
+  const rank = (url: string) => (cited.includes(url) ? cited.indexOf(url) : cited.length);
   return [...found.values()].toSorted((a, b) => rank(a.url) - rank(b.url));
 }
 
 export const relatedOf = (message: ChatMessage) =>
-  message.parts.flatMap((part) =>
-    part.type === "data-related" ? part.data.questions : [],
-  );
+  message.parts.flatMap((part) => (part.type === "data-related" ? part.data.questions : []));
 
 export function siteName(url: string) {
   const host = URL.parse(url)?.hostname.replace(/^www\./, "");

@@ -1,11 +1,6 @@
 import { z } from "zod";
 import { NISAB_GOLD_GRAMS, NISAB_SILVER_GRAMS, UNITS } from "./islamicUnits";
-import {
-  metalPrices,
-  PRICE_SOURCE,
-  RATE_SOURCE,
-  usdRates,
-} from "../finance/metalPrices";
+import { metalPrices, PRICE_SOURCE, RATE_SOURCE, usdRates } from "../finance/metalPrices";
 import { round } from "../zoned";
 
 const RATE = 0.025;
@@ -18,30 +13,20 @@ export const zakatCalculatorInput = z.object({
     .length(3)
     .transform((code) => code.toUpperCase())
     .default("USD")
-    .describe(
-      "ISO currency code of every money amount, for example USD, GBP, EUR",
-    ),
+    .describe("ISO currency code of every money amount, for example USD, GBP, EUR"),
   cash: amount.describe("Cash in hand and bank balances"),
   goldGrams: amount.describe(
     "Grams of pure (24 carat) gold owned. Worn jewellery is counted here only if the user's school requires zakat on it.",
   ),
-  goldValue: amount.describe(
-    "Value of gold owned when given as money rather than grams",
-  ),
+  goldValue: amount.describe("Value of gold owned when given as money rather than grams"),
   silverGrams: amount.describe("Grams of pure silver owned"),
-  silverValue: amount.describe(
-    "Value of silver owned when given as money rather than grams",
-  ),
+  silverValue: amount.describe("Value of silver owned when given as money rather than grams"),
   investments: amount.describe(
     "Market value of shares, funds and other investments held for profit",
   ),
   businessStock: amount.describe("Resale value of trade goods and stock"),
-  receivables: amount.describe(
-    "Money owed to the user that they expect to collect",
-  ),
-  shortTermDebts: amount.describe(
-    "Debts and bills due now or within the year that the user owes",
-  ),
+  receivables: amount.describe("Money owed to the user that they expect to collect"),
+  shortTermDebts: amount.describe("Debts and bills due now or within the year that the user owes"),
   nisabBasis: z
     .enum(["silver", "gold"])
     .default("silver")
@@ -52,9 +37,7 @@ export const zakatCalculatorInput = z.object({
     .number()
     .positive()
     .optional()
-    .describe(
-      "Price of 1 g of pure gold in the given currency. Leave out to use the live price.",
-    ),
+    .describe("Price of 1 g of pure gold in the given currency. Leave out to use the live price."),
   silverPricePerGram: z
     .number()
     .positive()
@@ -125,11 +108,8 @@ const metalPrice = (
 
 const priceBookFor = async (input: ZakatInput) => {
   const { currency, goldPricePerGram, silverPricePerGram } = input;
-  const needsLive =
-    goldPricePerGram === undefined || silverPricePerGram === undefined;
-  const live = needsLive
-    ? await livePrices(currency).catch(() => undefined)
-    : undefined;
+  const needsLive = goldPricePerGram === undefined || silverPricePerGram === undefined;
+  const live = needsLive ? await livePrices(currency).catch(() => undefined) : undefined;
   const gold = metalPrice("gold", goldPricePerGram, live);
   const silver = metalPrice("silver", silverPricePerGram, live);
   if (gold === undefined || silver === undefined) return undefined;
@@ -143,8 +123,7 @@ const priceBookFor = async (input: ZakatInput) => {
 
 const calculateZakat = (input: ZakatInput, prices: PriceBook) => {
   const goldValue = input.goldGrams * prices.gold.perGram + input.goldValue;
-  const silverValue =
-    input.silverGrams * prices.silver.perGram + input.silverValue;
+  const silverValue = input.silverGrams * prices.silver.perGram + input.silverValue;
   const totalAssets =
     input.cash +
     goldValue +
@@ -206,17 +185,13 @@ const calculateZakat = (input: ZakatInput, prices: PriceBook) => {
       "Some Hanafi references in South Asia use 87.48 g of gold and 612.36 g of silver as the nisab.",
       "Schools differ on zakat for jewellery worn by women: Hanafis require it, the majority do not. Agricultural produce, livestock and mining follow separate rules this calculator does not cover.",
       ...(prices.stale
-        ? [
-            "The price service was unreachable, so the last known prices were used.",
-          ]
+        ? ["The price service was unreachable, so the last known prices were used."]
         : []),
     ],
   };
 };
 
-export const zakatCalculator = async (
-  input: z.input<typeof zakatCalculatorInput>,
-) => {
+export const zakatCalculator = async (input: z.input<typeof zakatCalculatorInput>) => {
   const parsed = zakatCalculatorInput.parse(input);
   const prices = await priceBookFor(parsed);
   if (prices === undefined) {

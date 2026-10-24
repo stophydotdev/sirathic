@@ -7,8 +7,7 @@ const noCommentsRule = defineRule({
       description: "Disallow comments; names and types carry the meaning.",
     },
     messages: {
-      comment:
-        "Remove this comment. Rename or restructure the code so it explains itself.",
+      comment: "Remove this comment. Rename or restructure the code so it explains itself.",
     },
   },
   createOnce(context) {

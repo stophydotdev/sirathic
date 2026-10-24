@@ -30,9 +30,7 @@ const NewChatButton = () => {
 
 export default function Layout() {
   return (
-    <GestureHandlerRootView
-      style={{ flex: 1, backgroundColor: colors.background }}
-    >
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar style="light" />
       <Drawer
         drawerContent={(props) => <DrawerPanel {...props} />}

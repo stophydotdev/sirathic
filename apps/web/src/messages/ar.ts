@@ -6,8 +6,7 @@ export default {
   "Logos, colors and guidelines for Sirathic.":
     "الشعارات والألوان وإرشادات الاستخدام الخاصة بـ Sirathic.",
   "Brand assets": "ملفات الهوية",
-  "Download our logos and follow the guidelines below.":
-    "حمّل شعاراتنا واتبع الإرشادات أدناه.",
+  "Download our logos and follow the guidelines below.": "حمّل شعاراتنا واتبع الإرشادات أدناه.",
   "Download all brand assets": "تحميل كل ملفات الهوية",
   Wordmark: "الشعار النصي",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
@@ -101,8 +100,7 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "اقتباس الآيات والأحاديث بالعربية بجانب الترجمة",
   "Incognito by default": "التصفح الخفي افتراضيًا",
-  "New chats start in incognito and aren't saved":
-    "تبدأ المحادثات الجديدة في الوضع الخفي ولا تُحفظ",
+  "New chats start in incognito and aren't saved": "تبدأ المحادثات الجديدة في الوضع الخفي ولا تُحفظ",
   "Export my chats": "تصدير محادثاتي",
   "Download every saved chat as a file": "تحميل كل المحادثات المحفوظة في ملف",
   Export: "تصدير",
@@ -133,12 +131,10 @@ export default {
     "أول مرة؟ فعّل تسجيل الدخول برمز الجهاز في ChatGPT ← الإعدادات ← الأمان. سيذكر ChatGPT اسم Codex، وهذا متوقع.",
   "Continue with ChatGPT": "المتابعة عبر ChatGPT",
   "Continue with Google": "المتابعة عبر Google",
-  "Use your ChatGPT plan for GPT models":
-    "استخدم اشتراكك في ChatGPT لنماذج GPT",
+  "Use your ChatGPT plan for GPT models": "استخدم اشتراكك في ChatGPT لنماذج GPT",
   "Get a new code": "احصل على رمز جديد",
   "Try again": "حاول مرة أخرى",
-  "Your question stays in the box while you sign in.":
-    "يبقى سؤالك في المربع أثناء تسجيل الدخول.",
+  "Your question stays in the box while you sign in.": "يبقى سؤالك في المربع أثناء تسجيل الدخول.",
   "Copy code": "نسخ الرمز",
   "Sign In": "تسجيل الدخول",
   "Account menu": "قائمة الحساب",
@@ -146,16 +142,14 @@ export default {
   "Google account": "حساب Google",
   Incognito: "التصفح الخفي",
   "All settings": "كل الإعدادات",
-  "Assalamu alaikum. Sign in to start asking.":
-    "السلام عليكم. سجّل الدخول لتبدأ بالسؤال.",
+  "Assalamu alaikum. Sign in to start asking.": "السلام عليكم. سجّل الدخول لتبدأ بالسؤال.",
   "Enter this code on ChatGPT": "أدخل هذا الرمز في ChatGPT",
   "Code expired": "انتهت صلاحية الرمز",
   "Sign-in didn't work": "لم ينجح تسجيل الدخول",
   "{count} views": "{count} مشاهدة",
   "Results for:": "نتائج:",
   "Searching…": "جارٍ البحث…",
-  "The search failed. Try this tab again later.":
-    "فشل البحث. حاول فتح هذا التبويب مرة أخرى لاحقًا.",
+  "The search failed. Try this tab again later.": "فشل البحث. حاول فتح هذا التبويب مرة أخرى لاحقًا.",
   "Expand sidebar": "توسيع الشريط الجانبي",
   "Collapse sidebar": "طي الشريط الجانبي",
   New: "جديد",
@@ -166,8 +160,7 @@ export default {
   "New chat": "محادثة جديدة",
   "Copy a link to this chat": "نسخ رابط هذه المحادثة",
   Share: "مشاركة",
-  "Incognito is on: new messages aren't saved":
-    "الوضع الخفي مفعّل: الرسائل الجديدة لا تُحفظ",
+  "Incognito is on: new messages aren't saved": "الوضع الخفي مفعّل: الرسائل الجديدة لا تُحفظ",
   "Use incognito: new messages aren't saved to your history":
     "استخدم الوضع الخفي: لا تُحفظ الرسائل الجديدة في سجلك",
   "Ask a follow-up": "اطرح سؤالًا متابعًا",
@@ -229,14 +222,12 @@ export default {
   Helpful: "مفيدة",
   "Not helpful": "غير مفيدة",
   Quick: "سريع",
-  "Searches everything first, then answers fast":
-    "يبحث في كل شيء أولًا ثم يجيب بسرعة",
+  "Searches everything first, then answers fast": "يبحث في كل شيء أولًا ثم يجيب بسرعة",
   Research: "بحث معمّق",
   "Thinks longer and searches step by step": "يفكر لمدة أطول ويبحث خطوة بخطوة",
   "Type / for modes": "اكتب / لاختيار الوضع",
   "Type @ for sources": "اكتب @ لاختيار المصادر",
-  'Delete "{title}"? This can\'t be undone.':
-    "هل تريد حذف «{title}»؟ لا يمكن التراجع عن ذلك.",
+  'Delete "{title}"? This can\'t be undone.': "هل تريد حذف «{title}»؟ لا يمكن التراجع عن ذلك.",
   "Qur'an text": "نص القرآن",
   "Verse links": "روابط الآيات",
   "Hadith explanations": "شروح الأحاديث",

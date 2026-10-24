@@ -11,12 +11,7 @@ import { SettingsDialog, useSettings } from "@/components/settings";
 import { AccountRow, SignInDialog } from "@/components/sign-in";
 import { TooltipIconButton } from "@/components/tooltip-icon-button";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AskSelection } from "@/components/ask-selection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -131,8 +126,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             <IconLayoutSidebar
               className={cn(
                 "size-4",
-                collapsed &&
-                  "hidden group-hover/toggle:block group-focus-visible/toggle:block",
+                collapsed && "hidden group-hover/toggle:block group-focus-visible/toggle:block",
               )}
             />
           </TooltipIconButton>
@@ -164,28 +158,18 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <div className="absolute top-3 start-2 z-30 lg:hidden print:hidden">
           <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="bg-background/70 size-8"
-            >
+            <Button variant="ghost" size="icon" className="bg-background/70 size-8">
               <IconMenu2 className="size-4" />
               <span className="sr-only">{t("Open menu")}</span>
             </Button>
           </SheetTrigger>
         </div>
-        <SheetContent
-          side={rtl ? "right" : "left"}
-          className="bg-sidebar flex flex-col gap-0 p-0"
-        >
+        <SheetContent side={rtl ? "right" : "left"} className="bg-sidebar flex flex-col gap-0 p-0">
           <SheetTitle className="flex h-14 shrink-0 items-center px-4">
             <Logo height={22} />
           </SheetTitle>
           <nav className="flex flex-col gap-0.5 overflow-y-auto px-2">
-            <NewButton
-              className={mobileRow}
-              onDone={() => setMobileOpen(false)}
-            >
+            <NewButton className={mobileRow} onDone={() => setMobileOpen(false)}>
               <IconPlus className="size-4 shrink-0" />
               <span>{t("New")}</span>
             </NewButton>
@@ -195,10 +179,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
                 setMobileOpen(false);
                 setSearching(true);
               }}
-              className={cn(
-                "hover:bg-muted flex items-center rounded-md text-start",
-                mobileRow,
-              )}
+              className={cn("hover:bg-muted flex items-center rounded-md text-start", mobileRow)}
             >
               <IconSearch className="size-4 shrink-0" />
               <span>{t("Search chats")}</span>
@@ -214,9 +195,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
         </SheetContent>
       </Sheet>
 
-      <div className="min-w-0 flex-1 overflow-hidden print:overflow-visible">
-        {children}
-      </div>
+      <div className="min-w-0 flex-1 overflow-hidden print:overflow-visible">{children}</div>
       <SettingsDialog />
       <SearchDialog open={searching} onOpenChange={setSearching} />
       <SignInDialog />
@@ -274,9 +253,7 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
     <>
       {pinned.length > 0 && (
         <>
-          <p className="text-muted-foreground px-2.5 pt-6 pb-1 text-sm">
-            {t("Pinned")}
-          </p>
+          <p className="text-muted-foreground px-2.5 pt-6 pb-1 text-sm">{t("Pinned")}</p>
           {pinned.map((session) => (
             <SessionRow key={session.id} session={session} onOpen={onDone} />
           ))}
@@ -299,16 +276,12 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
           </div>
         ))}
       {open && sessions !== undefined && recent.length === 0 && (
-        <p className="text-muted-foreground/70 px-2.5 py-1.5 text-sm">
-          {t("No chats yet")}
-        </p>
+        <p className="text-muted-foreground/70 px-2.5 py-1.5 text-sm">{t("No chats yet")}</p>
       )}
       {open &&
         recent
           .slice(0, RECENT_LIMIT)
-          .map((session) => (
-            <SessionRow key={session.id} session={session} onOpen={onDone} />
-          ))}
+          .map((session) => <SessionRow key={session.id} session={session} onOpen={onDone} />)}
     </>
   );
 };

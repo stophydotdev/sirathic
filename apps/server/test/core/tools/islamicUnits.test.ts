@@ -23,9 +23,7 @@ test("a sa' is four mudd and weighs about 3 kg", () => {
 
 test("the result states the values it assumed and flags estimates", () => {
   const result = islamicUnits({ value: 1, from: "sa", to: "gram" });
-  expect(
-    result.assumptions.map((entry) => [entry.unit, entry.gramsPerUnit]),
-  ).toEqual([
+  expect(result.assumptions.map((entry) => [entry.unit, entry.gramsPerUnit])).toEqual([
     ["sa", 3000],
     ["gram", 1],
   ]);

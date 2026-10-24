@@ -85,11 +85,7 @@ const NAMES = [
   ["الْعَفُوُّ", "Al-Afuww", "The Pardoner"],
   ["الرَّءُوفُ", "Ar-Ra'uf", "The Most Kind"],
   ["مَالِكُ الْمُلْكِ", "Malik al-Mulk", "Owner of All Sovereignty"],
-  [
-    "ذُو الْجَلاَلِ وَالإِكْرَامِ",
-    "Dhul-Jalali wal-Ikram",
-    "Possessor of Majesty and Honour",
-  ],
+  ["ذُو الْجَلاَلِ وَالإِكْرَامِ", "Dhul-Jalali wal-Ikram", "Possessor of Majesty and Honour"],
   ["الْمُقْسِطُ", "Al-Muqsit", "The Equitable"],
   ["الْجَامِعُ", "Al-Jami", "The Gatherer"],
   ["الْغَنِيُّ", "Al-Ghani", "The Self-Sufficient"],
@@ -112,9 +108,7 @@ export const namesOfAllahInput = z.object({
     .trim()
     .min(1)
     .optional()
-    .describe(
-      "A name or meaning to look up, in Arabic or English. Leave it out for the full list",
-    ),
+    .describe("A name or meaning to look up, in Arabic or English. Leave it out for the full list"),
 });
 
 const folded = (text: string) =>

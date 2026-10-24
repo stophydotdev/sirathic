@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Rutto e Sirathic",
   Brand: "Maaɓɓe",
-  "Logos, colors and guidelines for Sirathic.":
-    "Logooji, noorooji e laawi kuutoragol Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Logooji, noorooji e laawi kuutoragol Sirathic.",
   "Brand assets": "Fiilaaji maaɓɓe",
   "Download our logos and follow the guidelines below.":
     "Aawto logooji amen, rewaa laawi ɗi ngoni les ɗoo.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Ɗemngal naamnal am",
   "Same as my browser": "Ɗemngal wanngorde am",
   "Not signed in": "A naataaki",
-  "Sign in to ask and keep your chats":
-    "Naatu ngam naamnaade e danndude yeewtereeji maa",
+  "Sign in to ask and keep your chats": "Naatu ngam naamnaade e danndude yeewtereeji maa",
   "Sign in": "Naatu",
   "Signed in with ChatGPT": "A naatii e ChatGPT",
   "Signed in with Google": "A naatii e Google",
@@ -79,16 +77,14 @@ export default {
   "Signs you out on this browser": "Ena yaltina ma e wanngorde ndee",
   Appearance: "Jeeygol",
   Language: "Ɗemngal",
-  "The language of Sirathic's menus and buttons":
-    "Ɗemngal doggolɗe e butoŋji Sirathic",
+  "The language of Sirathic's menus and buttons": "Ɗemngal doggolɗe e butoŋji Sirathic",
   Theme: "Mbaydi",
   "How Sirathic looks on this device": "No Sirathic jeeyirta e kaɓirgal ngal",
   Asking: "Naamnugol",
   "Default mode": "Mbaadi woowaandi",
   "Suggestions while typing": "Basiye nde mbinndata",
   "Show suggested questions under the box": "Hollu naamne basiyaaɗe les kese",
-  "Sign in to personalize answers.":
-    "Naatu ngam ñemmbinde jaabawuuje e no njiɗ-ɗaa.",
+  "Sign in to personalize answers.": "Naatu ngam ñemmbinde jaabawuuje e no njiɗ-ɗaa.",
   "What should Sirathic call you?": "Sirathic noddira ma no honɗum?",
   "Your name": "Innde maa",
   Madhab: "Mazhab",
@@ -107,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Yeewtereeji kese ena puɗɗa e suuɗaa, ɗe danndetaake",
   "Export my chats": "Yaltin yeewtereeji am",
-  "Download every saved chat as a file":
-    "Aawto yeewtereeji danndaaɗi fof no fiilde wootere",
+  "Download every saved chat as a file": "Aawto yeewtereeji danndaaɗi fof no fiilde wootere",
   Export: "Yaltin",
   "Delete all chats": "Momtu yeewtereeji fof",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +132,7 @@ export default {
     "Ko adanol? Huɓɓu naatgol kod kaɓirgal e ChatGPT → Settings → Security. ChatGPT maa wiy Codex, ɗum ko mbaadi mum.",
   "Continue with ChatGPT": "Jokku e ChatGPT",
   "Continue with Google": "Jokku e Google",
-  "Use your ChatGPT plan for GPT models":
-    "Huutoro plan ChatGPT maa ngam modelaaji GPT",
+  "Use your ChatGPT plan for GPT models": "Huutoro plan ChatGPT maa ngam modelaaji GPT",
   "Get a new code": "Heɓ kod kesol",
   "Try again": "Eto kadi",
   "Your question stays in the box while you sign in.":
@@ -150,8 +144,7 @@ export default {
   "Google account": "Konte Google",
   Incognito: "Suuɗaa",
   "All settings": "Teelte fof",
-  "Assalamu alaikum. Sign in to start asking.":
-    "Assalaamu alaykum. Naatu ngam fuɗɗaade naamnaade.",
+  "Assalamu alaikum. Sign in to start asking.": "Assalaamu alaykum. Naatu ngam fuɗɗaade naamnaade.",
   "Enter this code on ChatGPT": "Naatnu kod oo e ChatGPT",
   "Code expired": "Kod oo gasii",
   "Sign-in didn't work": "Naatgol ronkii",
@@ -170,8 +163,7 @@ export default {
   "New chat": "Yeewtere hesere",
   "Copy a link to this chat": "Natto jokkorde yeewtere ndee",
   Share: "Lollin",
-  "Incognito is on: new messages aren't saved":
-    "Suuɗaa ena huɓɓii: mesaasaaji kese danndetaake",
+  "Incognito is on: new messages aren't saved": "Suuɗaa ena huɓɓii: mesaasaaji kese danndetaake",
   "Use incognito: new messages aren't saved to your history":
     "Huutoro suuɗaa: mesaasaaji kese danndetaake e taariindi maa",
   "Ask a follow-up": "Naamno naamnal ɗiɗaɓal",
@@ -233,15 +225,12 @@ export default {
   Helpful: "Nafii",
   "Not helpful": "Nafaani",
   Quick: "Yaawɗo",
-  "Searches everything first, then answers fast":
-    "Ena yiyloo kala nokku adan, refti jaaboo law",
+  "Searches everything first, then answers fast": "Ena yiyloo kala nokku adan, refti jaaboo law",
   Research: "Ɗaɓɓitagol",
-  "Thinks longer and searches step by step":
-    "Ena miijoo ko ɓuri juutde, ena yiyloo tagu-tagu",
+  "Thinks longer and searches step by step": "Ena miijoo ko ɓuri juutde, ena yiyloo tagu-tagu",
   "Type / for modes": "Tappu / ngam mbaadiiji",
   "Type @ for sources": "Tappu @ ngam iwdi",
-  'Delete "{title}"? This can\'t be undone.':
-    "Momtu “{title}”? Ɗum waawaa artireede.",
+  'Delete "{title}"? This can\'t be undone.': "Momtu “{title}”? Ɗum waawaa artireede.",
   "Qur'an text": "Binndol Alkur'aana",
   "Verse links": "Jokkorɗe aaye",
   "Hadith explanations": "Firooji hadiisaaji",

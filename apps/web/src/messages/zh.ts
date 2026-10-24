@@ -3,11 +3,9 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "返回 Sirathic",
   Brand: "品牌",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathic 的标志、颜色和使用规范。",
+  "Logos, colors and guidelines for Sirathic.": "Sirathic 的标志、颜色和使用规范。",
   "Brand assets": "品牌素材",
-  "Download our logos and follow the guidelines below.":
-    "下载我们的标志，并遵循以下规范。",
+  "Download our logos and follow the guidelines below.": "下载我们的标志，并遵循以下规范。",
   "Download all brand assets": "下载全部品牌素材",
   Wordmark: "文字标志",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
@@ -98,17 +96,14 @@ export default {
   "Answer language": "回答语言",
   "Answer length": "回答长度",
   "Show Arabic text": "显示阿拉伯原文",
-  "Quote verses and hadith in Arabic next to the translation":
-    "在译文旁附上经文和圣训的阿拉伯原文",
+  "Quote verses and hadith in Arabic next to the translation": "在译文旁附上经文和圣训的阿拉伯原文",
   "Incognito by default": "默认无痕模式",
-  "New chats start in incognito and aren't saved":
-    "新对话以无痕模式开始，不会保存",
+  "New chats start in incognito and aren't saved": "新对话以无痕模式开始，不会保存",
   "Export my chats": "导出我的对话",
   "Download every saved chat as a file": "将所有已保存的对话下载为文件",
   Export: "导出",
   "Delete all chats": "删除所有对话",
-  "Delete every saved chat? This can't be undone.":
-    "删除所有已保存的对话？此操作无法撤销。",
+  "Delete every saved chat? This can't be undone.": "删除所有已保存的对话？此操作无法撤销。",
   "Removes every saved chat": "删除所有已保存的对话",
   "Delete all": "全部删除",
   "From your ChatGPT account": "来自你的 ChatGPT 账号",
@@ -133,12 +128,10 @@ export default {
     "第一次使用？请在 ChatGPT → 设置 → 安全 中开启设备码登录。ChatGPT 会显示 Codex，这是正常的。",
   "Continue with ChatGPT": "使用 ChatGPT 继续",
   "Continue with Google": "使用 Google 继续",
-  "Use your ChatGPT plan for GPT models":
-    "使用你的 ChatGPT 套餐来使用 GPT 模型",
+  "Use your ChatGPT plan for GPT models": "使用你的 ChatGPT 套餐来使用 GPT 模型",
   "Get a new code": "获取新代码",
   "Try again": "重试",
-  "Your question stays in the box while you sign in.":
-    "登录期间你的问题会保留在输入框中。",
+  "Your question stays in the box while you sign in.": "登录期间你的问题会保留在输入框中。",
   "Copy code": "复制代码",
   "Sign In": "登录",
   "Account menu": "账号菜单",
@@ -146,16 +139,14 @@ export default {
   "Google account": "Google 账号",
   Incognito: "无痕模式",
   "All settings": "全部设置",
-  "Assalamu alaikum. Sign in to start asking.":
-    "愿你平安（色兰）。登录后即可开始提问。",
+  "Assalamu alaikum. Sign in to start asking.": "愿你平安（色兰）。登录后即可开始提问。",
   "Enter this code on ChatGPT": "在 ChatGPT 中输入此代码",
   "Code expired": "代码已过期",
   "Sign-in didn't work": "登录未成功",
   "{count} views": "{count} 次观看",
   "Results for:": "搜索结果：",
   "Searching…": "搜索中…",
-  "The search failed. Try this tab again later.":
-    "搜索失败，请稍后再打开此标签。",
+  "The search failed. Try this tab again later.": "搜索失败，请稍后再打开此标签。",
   "Expand sidebar": "展开侧边栏",
   "Collapse sidebar": "收起侧边栏",
   New: "新建",
@@ -166,8 +157,7 @@ export default {
   "New chat": "新对话",
   "Copy a link to this chat": "复制此对话的链接",
   Share: "分享",
-  "Incognito is on: new messages aren't saved":
-    "无痕模式已开启：新消息不会保存",
+  "Incognito is on: new messages aren't saved": "无痕模式已开启：新消息不会保存",
   "Use incognito: new messages aren't saved to your history":
     "使用无痕模式：新消息不会保存到历史记录",
   "Ask a follow-up": "继续提问",

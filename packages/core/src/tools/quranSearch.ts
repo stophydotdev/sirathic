@@ -17,9 +17,6 @@ export const quranSearch = async (input: z.input<typeof quranSearchInput>) => {
     anyWord: false,
     maxDistance: ARABIC.test(query) ? undefined : ENGLISH_MAX_DISTANCE,
   });
-  const [found, tafsirEn] = await Promise.all([
-    versesByIds(ids),
-    tafsirEnFor(ids),
-  ]);
+  const [found, tafsirEn] = await Promise.all([versesByIds(ids), tafsirEnFor(ids)]);
   return { verses: found, tafsirEn };
 };

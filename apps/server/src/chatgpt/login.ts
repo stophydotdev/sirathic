@@ -1,11 +1,5 @@
 import { z } from "zod";
-import {
-  codexFetch,
-  DEVICE_PAGE,
-  identityOf,
-  pollDeviceLogin,
-  startDeviceLogin,
-} from "./device";
+import { codexFetch, DEVICE_PAGE, identityOf, pollDeviceLogin, startDeviceLogin } from "./device";
 
 const models = z.object({ models: z.array(z.object({ slug: z.string() })) });
 const delta = z.object({
@@ -55,9 +49,7 @@ const response = await codex("responses", {
       {
         type: "message",
         role: "user",
-        content: [
-          { type: "input_text", text: "Reply with one short line of salam." },
-        ],
+        content: [{ type: "input_text", text: "Reply with one short line of salam." }],
       },
     ],
     store: false,
@@ -67,9 +59,7 @@ const response = await codex("responses", {
   }),
 });
 if (!response.ok || !response.body) {
-  console.log(
-    `The model call failed (${response.status}): ${await response.text()}`,
-  );
+  console.log(`The model call failed (${response.status}): ${await response.text()}`);
   process.exit(1);
 }
 let text = "";

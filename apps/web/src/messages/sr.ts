@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Назад на Sirathic",
   Brand: "Идентитет",
-  "Logos, colors and guidelines for Sirathic.":
-    "Логотипи, боје и правила употребе за Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Логотипи, боје и правила употребе за Sirathic.",
   "Brand assets": "Материјали бренда",
   "Download our logos and follow the guidelines below.":
     "Преузмите наше логотипе и пратите правила испод.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Као моје питање",
   "Same as my browser": "Као мој прегледач",
   "Not signed in": "Нисте пријављени",
-  "Sign in to ask and keep your chats":
-    "Пријавите се да бисте питали и чували разговоре",
+  "Sign in to ask and keep your chats": "Пријавите се да бисте питали и чували разговоре",
   "Sign in": "Пријави се",
   "Signed in with ChatGPT": "Пријављени преко ChatGPT-а",
   "Signed in with Google": "Пријављени преко Google-а",
@@ -79,15 +77,13 @@ export default {
   "Signs you out on this browser": "Одјављује вас у овом прегледачу",
   Appearance: "Изглед",
   Language: "Језик",
-  "The language of Sirathic's menus and buttons":
-    "Језик Sirathic менија и дугмади",
+  "The language of Sirathic's menus and buttons": "Језик Sirathic менија и дугмади",
   Theme: "Тема",
   "How Sirathic looks on this device": "Како Sirathic изгледа на овом уређају",
   Asking: "Питања",
   "Default mode": "Подразумевани режим",
   "Suggestions while typing": "Предлози током куцања",
-  "Show suggested questions under the box":
-    "Прикажи предложена питања испод поља",
+  "Show suggested questions under the box": "Прикажи предложена питања испод поља",
   "Sign in to personalize answers.": "Пријавите се да прилагодите одговоре.",
   "What should Sirathic call you?": "Како да вас Sirathic ословљава?",
   "Your name": "Ваше име",
@@ -104,11 +100,9 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "Наводи ајете и хадисе на арапском поред превода",
   "Incognito by default": "Анонимно као подразумевано",
-  "New chats start in incognito and aren't saved":
-    "Нови разговори почињу анонимно и не чувају се",
+  "New chats start in incognito and aren't saved": "Нови разговори почињу анонимно и не чувају се",
   "Export my chats": "Извези моје разговоре",
-  "Download every saved chat as a file":
-    "Преузми све сачуване разговоре као датотеку",
+  "Download every saved chat as a file": "Преузми све сачуване разговоре као датотеку",
   Export: "Извези",
   "Delete all chats": "Избриши све разговоре",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +131,7 @@ export default {
     "Први пут? Укључите пријаву кодом уређаја у ChatGPT → Подешавања → Безбедност. ChatGPT ће приказати Codex, то је очекивано.",
   "Continue with ChatGPT": "Настави преко ChatGPT-а",
   "Continue with Google": "Настави преко Google-а",
-  "Use your ChatGPT plan for GPT models":
-    "Користите свој ChatGPT план за GPT моделе",
+  "Use your ChatGPT plan for GPT models": "Користите свој ChatGPT план за GPT моделе",
   "Get a new code": "Добиј нови код",
   "Try again": "Покушај поново",
   "Your question stays in the box while you sign in.":
@@ -233,15 +226,12 @@ export default {
   Helpful: "Корисно",
   "Not helpful": "Није корисно",
   Quick: "Брзо",
-  "Searches everything first, then answers fast":
-    "Прво претражи све, затим брзо одговори",
+  "Searches everything first, then answers fast": "Прво претражи све, затим брзо одговори",
   Research: "Истраживање",
-  "Thinks longer and searches step by step":
-    "Размишља дуже и претражује корак по корак",
+  "Thinks longer and searches step by step": "Размишља дуже и претражује корак по корак",
   "Type / for modes": "Укуцајте / за режиме",
   "Type @ for sources": "Укуцајте @ за изворе",
-  'Delete "{title}"? This can\'t be undone.':
-    "Избрисати „{title}”? Ово не може да се поништи.",
+  'Delete "{title}"? This can\'t be undone.': "Избрисати „{title}”? Ово не може да се поништи.",
   "Qur'an text": "Текст Курана",
   "Verse links": "Линкови ајета",
   "Hadith explanations": "Објашњења хадиса",

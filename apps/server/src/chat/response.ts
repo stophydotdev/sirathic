@@ -55,9 +55,7 @@ function answerAgent({
   shorten: ReturnType<typeof shortenEarlierResults>;
   answerOptions: ProviderOptions;
 }) {
-  const usable = Object.keys(tools).filter(
-    (name): name is keyof typeof tools => name in tools,
-  );
+  const usable = Object.keys(tools).filter((name): name is keyof typeof tools => name in tools);
   return new ToolLoopAgent({
     model,
     instructions: searchPrompt(new Date(), mode, modelName, settings),
@@ -68,9 +66,7 @@ function answerAgent({
       const loaded = new Set(
         steps.flatMap((step) =>
           step.toolCalls.flatMap((call) =>
-            !call.dynamic && call.toolName === "moreTools"
-              ? call.input.tools
-              : [],
+            !call.dynamic && call.toolName === "moreTools" ? call.input.tools : [],
           ),
         ),
       );
@@ -176,9 +172,7 @@ export function chatResponse({
   const since = () => Math.round(performance.now() - startedAt);
   const calls = new Map<string, { tool: string; at: number }>();
   let failedTools = 0;
-  let ended:
-    | { outcome: UIMessageStreamOutcome; finishReason?: FinishReason }
-    | undefined;
+  let ended: { outcome: UIMessageStreamOutcome; finishReason?: FinishReason } | undefined;
   let firstTextMs: number | undefined;
   let httpStatus: number | undefined;
   let usage: LanguageModelUsage | undefined;
@@ -190,9 +184,7 @@ export function chatResponse({
     .filter((message) => message.role === "user")
     .slice(-2)
     .map((message) =>
-      message.parts
-        .map((part) => (part.type === "text" ? part.text : ""))
-        .join(" "),
+      message.parts.map((part) => (part.type === "text" ? part.text : "")).join(" "),
     )
     .join(" ");
   const started = new Set([
@@ -200,8 +192,7 @@ export function chatResponse({
     ...(remember ? ["remember"] : []),
     ...calledTools(messages),
   ]);
-  const mustSearch =
-    messages.filter((message) => message.role === "user").length === 1;
+  const mustSearch = messages.filter((message) => message.role === "user").length === 1;
   const messageId = createIdGenerator({ prefix: "msg", size: 16 });
   const stream = createUIMessageStream<ChatMessage>({
     originalMessages: messages,
@@ -240,10 +231,7 @@ export function chatResponse({
         uiMessages: await readPdfs(messages),
         originalMessages: messages,
         abortSignal,
-        experimental_transform: [
-          sources.transform(),
-          smoothStream({ chunking: "word" }),
-        ],
+        experimental_transform: [sources.transform(), smoothStream({ chunking: "word" })],
         onEnd: ({ outcome, finishReason }) => {
           ended = { outcome, finishReason };
         },
@@ -275,10 +263,7 @@ export function chatResponse({
             at: performance.now(),
           });
         }
-        if (
-          chunk.type === "tool-output-available" ||
-          chunk.type === "tool-output-error"
-        ) {
+        if (chunk.type === "tool-output-available" || chunk.type === "tool-output-error") {
           const call = calls.get(chunk.toolCallId);
           const ok = chunk.type === "tool-output-available";
           if (!ok) failedTools += 1;
@@ -309,8 +294,7 @@ export function chatResponse({
       streaming = false;
       if (finish) writer.write(finish);
     },
-    onError: (error) =>
-      error instanceof Error ? error.message : String(error),
+    onError: (error) => (error instanceof Error ? error.message : String(error)),
     onEnd: ({ messages: answered, outcome }) => {
       record({
         name: "answer.completed",

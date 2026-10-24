@@ -79,18 +79,15 @@ export default {
   "Signs you out on this browser": "Vous déconnecte sur ce navigateur",
   Appearance: "Apparence",
   Language: "Langue",
-  "The language of Sirathic's menus and buttons":
-    "La langue des menus et des boutons de Sirathic",
+  "The language of Sirathic's menus and buttons": "La langue des menus et des boutons de Sirathic",
   Theme: "Thème",
-  "How Sirathic looks on this device":
-    "L'apparence de Sirathic sur cet appareil",
+  "How Sirathic looks on this device": "L'apparence de Sirathic sur cet appareil",
   Asking: "Questions",
   "Default mode": "Mode par défaut",
   "Suggestions while typing": "Suggestions pendant la saisie",
   "Show suggested questions under the box":
     "Afficher des questions suggérées sous la zone de saisie",
-  "Sign in to personalize answers.":
-    "Connectez-vous pour personnaliser les réponses.",
+  "Sign in to personalize answers.": "Connectez-vous pour personnaliser les réponses.",
   "What should Sirathic call you?": "Comment Sirathic doit-il vous appeler ?",
   "Your name": "Votre nom",
   Madhab: "Madhhab",
@@ -132,16 +129,14 @@ export default {
   "No settings found": "Aucun réglage trouvé",
   "No chat models available": "Aucun modèle de discussion disponible",
   "Manage models": "Gérer les modèles",
-  "Longer answers that explain more":
-    "Des réponses plus longues qui expliquent davantage",
+  "Longer answers that explain more": "Des réponses plus longues qui expliquent davantage",
   "Open ChatGPT": "Ouvrir ChatGPT",
   "Waiting for approval": "En attente de validation",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Première fois ? Activez la connexion par code d'appareil dans ChatGPT → Paramètres → Sécurité. ChatGPT affichera Codex, c'est normal.",
   "Continue with ChatGPT": "Continuer avec ChatGPT",
   "Continue with Google": "Continuer avec Google",
-  "Use your ChatGPT plan for GPT models":
-    "Utilisez votre abonnement ChatGPT pour les modèles GPT",
+  "Use your ChatGPT plan for GPT models": "Utilisez votre abonnement ChatGPT pour les modèles GPT",
   "Get a new code": "Obtenir un nouveau code",
   "Try again": "Réessayer",
   "Your question stays in the box while you sign in.":
@@ -189,8 +184,7 @@ export default {
   "Searching hadith for {detail}": "Recherche dans les hadiths : {detail}",
   "Reading hadith": "Lecture des hadiths",
   "Checking the hadith {detail}": "Vérification du hadith {detail}",
-  "Searching fiqh books for {detail}":
-    "Recherche dans les livres de fiqh : {detail}",
+  "Searching fiqh books for {detail}": "Recherche dans les livres de fiqh : {detail}",
   "Reading fiqh books": "Lecture des livres de fiqh",
   "Finding duas for {detail}": "Recherche de douas : {detail}",
   "Looking up {detail}": "Recherche de {detail}",
@@ -237,11 +231,9 @@ export default {
   Helpful: "Utile",
   "Not helpful": "Pas utile",
   Quick: "Rapide",
-  "Searches everything first, then answers fast":
-    "Cherche partout d'abord, puis répond vite",
+  "Searches everything first, then answers fast": "Cherche partout d'abord, puis répond vite",
   Research: "Approfondi",
-  "Thinks longer and searches step by step":
-    "Réfléchit plus longtemps et cherche étape par étape",
+  "Thinks longer and searches step by step": "Réfléchit plus longtemps et cherche étape par étape",
   "Type / for modes": "Tapez / pour les modes",
   "Type @ for sources": "Tapez @ pour les sources",
   'Delete "{title}"? This can\'t be undone.':

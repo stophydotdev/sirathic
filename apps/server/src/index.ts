@@ -13,21 +13,11 @@ import { geminiModel } from "./gemini";
 import { DEFAULT_NOOR, NOOR_SIDE_MODEL, noorModel } from "./noor";
 import { type ChatMessage, device, mode } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./respond";
-import {
-  answerOptions,
-  chatModel,
-  DEFAULT_MODEL,
-  sideOptions,
-} from "./chatgpt/codex";
+import { answerOptions, chatModel, DEFAULT_MODEL, sideOptions } from "./chatgpt/codex";
 import { appRouter, createContext } from "./router";
 import { getSettings, remember } from "./settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
-import {
-  messageSchemas,
-  saveSession,
-  sessionId,
-  titleSession,
-} from "./sessions";
+import { messageSchemas, saveSession, sessionId, titleSession } from "./sessions";
 
 const IDLE_TIMEOUT_SECONDS = 255;
 const NOOR_DAILY_ANSWERS = 30;
@@ -39,10 +29,7 @@ const chatBody = z.object({
   model: z.string().min(1).optional(),
   mode: mode.default("quick"),
   incognito: z.boolean().default(false),
-  trigger: z
-    .enum(["submit-message", "regenerate-message"])
-    .optional()
-    .catch(undefined),
+  trigger: z.enum(["submit-message", "regenerate-message"]).optional().catch(undefined),
   device: device.optional().catch(undefined),
   language: z
     .string()
@@ -75,8 +62,7 @@ app.post("/api/chat", (c) =>
       throw new StatusError(400, err.message);
     });
     const owner = input.incognito ? undefined : by;
-    const modelName =
-      input.model ?? (user.via === "chatgpt" ? DEFAULT_MODEL : DEFAULT_NOOR);
+    const modelName = input.model ?? (user.via === "chatgpt" ? DEFAULT_MODEL : DEFAULT_NOOR);
     const chosen =
       modelName &&
       (noorModel(modelName) ??
@@ -88,13 +74,12 @@ app.post("/api/chat", (c) =>
     }
     if (noorModel(modelName)) {
       const day = new Date().toISOString().slice(0, 10);
-      const used = await countUp(
-        `noor-answers:${by}:${day}`,
-        NOOR_COUNT_KEEP_SECONDS,
-      ).catch((err: Error) => {
-        console.error(`noor answers not counted: ${reasonOf(err)}`);
-        return 0;
-      });
+      const used = await countUp(`noor-answers:${by}:${day}`, NOOR_COUNT_KEEP_SECONDS).catch(
+        (err: Error) => {
+          console.error(`noor answers not counted: ${reasonOf(err)}`);
+          return 0;
+        },
+      );
       if (used > NOOR_DAILY_ANSWERS) {
         throw new StatusError(
           429,
@@ -112,8 +97,7 @@ app.post("/api/chat", (c) =>
           turn: validated.filter((message) => message.role === "user").length,
           regenerate: input.trigger === "regenerate-message",
           incognito: input.incognito,
-          files:
-            asked?.parts.filter((part) => part.type === "file").length ?? 0,
+          files: asked?.parts.filter((part) => part.type === "file").length ?? 0,
           device: input.device,
           language: input.language,
           ...clientOf(c.req.raw.headers),
@@ -124,9 +108,7 @@ app.post("/api/chat", (c) =>
     let saving = Promise.resolve();
     const save = (messages: typeof validated) => {
       if (input.incognito) return saving;
-      saving = saving
-        .catch(() => undefined)
-        .then(() => saveSession(input.id, by, messages));
+      saving = saving.catch(() => undefined).then(() => saveSession(input.id, by, messages));
       return saving;
     };
     const saved = save(validated);
@@ -137,9 +119,7 @@ app.post("/api/chat", (c) =>
       ? undefined
       : saved
           .then(() =>
-            titleSession(input.id, by, validated, () =>
-              chatTitle(small, validated, sideOptions),
-            ),
+            titleSession(input.id, by, validated, () => chatTitle(small, validated, sideOptions)),
           )
           .catch((err: Error) => {
             console.error(`title not set: ${reasonOf(err)}`);
@@ -165,8 +145,7 @@ app.post("/api/chat", (c) =>
       title,
       save,
       record: (event) => track(event, owner),
-      remember:
-        owner === undefined ? undefined : (told) => remember(owner, told),
+      remember: owner === undefined ? undefined : (told) => remember(owner, told),
     });
   }),
 );

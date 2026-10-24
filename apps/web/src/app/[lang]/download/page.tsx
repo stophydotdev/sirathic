@@ -1,11 +1,7 @@
 import { headers } from "next/headers";
 import { Download, type System } from "./download";
 
-const systemOf = (
-  platform: string,
-  userAgent: string,
-  mobile: boolean,
-): System => {
+const systemOf = (platform: string, userAgent: string, mobile: boolean): System => {
   if (mobile || /Android|iPhone|iPad|iPod/u.test(userAgent)) return "phone";
   if (/CrOS/u.test(userAgent) || /chrome os/iu.test(platform)) return "unknown";
   if (/mac/iu.test(platform) || /Macintosh/u.test(userAgent)) return "mac";

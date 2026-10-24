@@ -12,8 +12,7 @@ import { PlatformLogo } from "./logos";
 export type System = "mac" | "windows" | "linux" | "phone" | "unknown";
 type Desktop = Extract<System, "mac" | "windows" | "linux">;
 
-const RELEASES =
-  "https://github.com/stophydotdev/sirathic/releases/latest/download";
+const RELEASES = "https://github.com/stophydotdev/sirathic/releases/latest/download";
 const FILES = {
   macArm: `${RELEASES}/Sirathic-mac-arm64.dmg`,
   macIntel: `${RELEASES}/Sirathic-mac-x64.dmg`,
@@ -53,8 +52,7 @@ const useShownSystem = (system: System): System => {
 };
 
 const pill = "h-10 rounded-full px-5";
-const link =
-  "decoration-border hover:text-foreground underline underline-offset-4";
+const link = "decoration-border hover:text-foreground underline underline-offset-4";
 
 const Primary: FC<{ system: Desktop; href: string }> = ({ system, href }) => {
   const t = useT();
@@ -68,9 +66,7 @@ const Primary: FC<{ system: Desktop; href: string }> = ({ system, href }) => {
   );
 };
 
-const Choices: FC<{ links: readonly (readonly [string, string])[] }> = ({
-  links,
-}) => (
+const Choices: FC<{ links: readonly (readonly [string, string])[] }> = ({ links }) => (
   <p className="text-muted-foreground flex gap-3.5 text-sm">
     {links.map(([label, href]) => (
       <a key={label} href={href} className={link}>
@@ -90,14 +86,10 @@ const AlsoOn: FC<{ others: readonly [Desktop, Desktop] }> = ({ others }) => {
   return (
     <p className="text-muted-foreground text-sm">
       {sentence.split(/(\{first\}|\{second\})/u).map((part, index) => {
-        const system =
-          part === "{first}" ? first : part === "{second}" ? second : undefined;
+        const system = part === "{first}" ? first : part === "{second}" ? second : undefined;
         return system ? (
           <a key={system} href={FILE_OF[system]} className={link}>
-            <PlatformLogo
-              system={system}
-              className="me-1 inline size-3.5 align-[-2px]"
-            />
+            <PlatformLogo system={system} className="me-1 inline size-3.5 align-[-2px]" />
             {NAMES[system]}
           </a>
         ) : (
@@ -136,10 +128,7 @@ const Actions: FC<{ system: System; arm: boolean }> = ({ system, arm }) => {
     case "linux":
       return (
         <>
-          <Primary
-            system="linux"
-            href={arm ? FILES.linuxArm : FILES.linuxX64}
-          />
+          <Primary system="linux" href={arm ? FILES.linuxArm : FILES.linuxX64} />
           <Choices
             links={[
               ["x64", FILES.linuxX64],
@@ -185,10 +174,7 @@ const Actions: FC<{ system: System; arm: boolean }> = ({ system, arm }) => {
   }
 };
 
-export const Download: FC<{ system: System; arm: boolean }> = ({
-  system,
-  arm,
-}) => {
+export const Download: FC<{ system: System; arm: boolean }> = ({ system, arm }) => {
   const t = useT();
   const href = useLocalePath();
   const shown = useShownSystem(system);
@@ -199,10 +185,7 @@ export const Download: FC<{ system: System; arm: boolean }> = ({
         <Link href={href("/")} className="text-foreground">
           <Logo height={20} />
         </Link>
-        <Link
-          href={href("/")}
-          className="text-muted-foreground hover:text-foreground text-sm"
-        >
+        <Link href={href("/")} className="text-muted-foreground hover:text-foreground text-sm">
           {t("Back to Sirathic")}
         </Link>
       </header>
@@ -212,9 +195,7 @@ export const Download: FC<{ system: System; arm: boolean }> = ({
         <h1 className="text-4xl font-medium tracking-tight text-balance md:text-5xl">
           {t(TITLES[shown])}
         </h1>
-        <p className="text-muted-foreground mb-2.5 text-lg">
-          {t("Islamic answering engine.")}
-        </p>
+        <p className="text-muted-foreground mb-2.5 text-lg">{t("Islamic answering engine.")}</p>
         <Actions system={shown} arm={arm} />
       </section>
 

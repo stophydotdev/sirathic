@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Назад в Sirathic",
   Brand: "Фирменный стиль",
-  "Logos, colors and guidelines for Sirathic.":
-    "Логотипы, цвета и правила использования Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Логотипы, цвета и правила использования Sirathic.",
   "Brand assets": "Фирменные материалы",
   "Download our logos and follow the guidelines below.":
     "Скачайте наши логотипы и следуйте правилам ниже.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Как в моём вопросе",
   "Same as my browser": "Как в моём браузере",
   "Not signed in": "Вход не выполнен",
-  "Sign in to ask and keep your chats":
-    "Войдите, чтобы задавать вопросы и сохранять чаты",
+  "Sign in to ask and keep your chats": "Войдите, чтобы задавать вопросы и сохранять чаты",
   "Sign in": "Войти",
   "Signed in with ChatGPT": "Вход через ChatGPT",
   "Signed in with Google": "Вход через Google",
@@ -81,15 +79,12 @@ export default {
   Language: "Язык",
   "The language of Sirathic's menus and buttons": "Язык меню и кнопок Sirathic",
   Theme: "Тема",
-  "How Sirathic looks on this device":
-    "Как Sirathic выглядит на этом устройстве",
+  "How Sirathic looks on this device": "Как Sirathic выглядит на этом устройстве",
   Asking: "Вопросы",
   "Default mode": "Режим по умолчанию",
   "Suggestions while typing": "Подсказки при вводе",
-  "Show suggested questions under the box":
-    "Показывать предлагаемые вопросы под полем ввода",
-  "Sign in to personalize answers.":
-    "Войдите, чтобы настроить ответы под себя.",
+  "Show suggested questions under the box": "Показывать предлагаемые вопросы под полем ввода",
+  "Sign in to personalize answers.": "Войдите, чтобы настроить ответы под себя.",
   "What should Sirathic call you?": "Как Sirathic к вам обращаться?",
   "Your name": "Ваше имя",
   Madhab: "Мазхаб",
@@ -108,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Новые чаты открываются в режиме инкогнито и не сохраняются",
   "Export my chats": "Экспортировать мои чаты",
-  "Download every saved chat as a file":
-    "Скачать все сохранённые чаты одним файлом",
+  "Download every saved chat as a file": "Скачать все сохранённые чаты одним файлом",
   Export: "Экспорт",
   "Delete all chats": "Удалить все чаты",
   "Delete every saved chat? This can't be undone.":
@@ -131,16 +125,14 @@ export default {
   "No settings found": "Настройки не найдены",
   "No chat models available": "Нет доступных моделей",
   "Manage models": "Управление моделями",
-  "Longer answers that explain more":
-    "Более длинные ответы с подробными объяснениями",
+  "Longer answers that explain more": "Более длинные ответы с подробными объяснениями",
   "Open ChatGPT": "Открыть ChatGPT",
   "Waiting for approval": "Ожидание подтверждения",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Впервые? Включите вход по коду устройства в ChatGPT → Настройки → Безопасность. ChatGPT покажет Codex. Так и должно быть.",
   "Continue with ChatGPT": "Продолжить с ChatGPT",
   "Continue with Google": "Продолжить с Google",
-  "Use your ChatGPT plan for GPT models":
-    "Используйте свой план ChatGPT для моделей GPT",
+  "Use your ChatGPT plan for GPT models": "Используйте свой план ChatGPT для моделей GPT",
   "Get a new code": "Получить новый код",
   "Try again": "Попробовать снова",
   "Your question stays in the box while you sign in.":
@@ -152,16 +144,14 @@ export default {
   "Google account": "Аккаунт Google",
   Incognito: "Инкогнито",
   "All settings": "Все настройки",
-  "Assalamu alaikum. Sign in to start asking.":
-    "Ассаляму алейкум. Войдите, чтобы задать вопрос.",
+  "Assalamu alaikum. Sign in to start asking.": "Ассаляму алейкум. Войдите, чтобы задать вопрос.",
   "Enter this code on ChatGPT": "Введите этот код в ChatGPT",
   "Code expired": "Срок действия кода истёк",
   "Sign-in didn't work": "Не удалось войти",
   "{count} views": "Просмотров: {count}",
   "Results for:": "Результаты по запросу:",
   "Searching…": "Поиск…",
-  "The search failed. Try this tab again later.":
-    "Поиск не удался. Откройте эту вкладку позже.",
+  "The search failed. Try this tab again later.": "Поиск не удался. Откройте эту вкладку позже.",
   "Expand sidebar": "Развернуть боковую панель",
   "Collapse sidebar": "Свернуть боковую панель",
   New: "Новый",
@@ -172,8 +162,7 @@ export default {
   "New chat": "Новый чат",
   "Copy a link to this chat": "Скопировать ссылку на этот чат",
   Share: "Поделиться",
-  "Incognito is on: new messages aren't saved":
-    "Инкогнито включён: новые сообщения не сохраняются",
+  "Incognito is on: new messages aren't saved": "Инкогнито включён: новые сообщения не сохраняются",
   "Use incognito: new messages aren't saved to your history":
     "Режим инкогнито: новые сообщения не попадут в историю",
   "Ask a follow-up": "Задать уточняющий вопрос",
@@ -235,15 +224,12 @@ export default {
   Helpful: "Полезно",
   "Not helpful": "Бесполезно",
   Quick: "Быстрый",
-  "Searches everything first, then answers fast":
-    "Сначала ищет везде, затем быстро отвечает",
+  "Searches everything first, then answers fast": "Сначала ищет везде, затем быстро отвечает",
   Research: "Исследование",
-  "Thinks longer and searches step by step":
-    "Думает дольше и ищет шаг за шагом",
+  "Thinks longer and searches step by step": "Думает дольше и ищет шаг за шагом",
   "Type / for modes": "Введите / для выбора режима",
   "Type @ for sources": "Введите @ для выбора источников",
-  'Delete "{title}"? This can\'t be undone.':
-    "Удалить «{title}»? Это нельзя отменить.",
+  'Delete "{title}"? This can\'t be undone.': "Удалить «{title}»? Это нельзя отменить.",
   "Qur'an text": "Текст Корана",
   "Verse links": "Ссылки на аяты",
   "Hadith explanations": "Пояснения к хадисам",

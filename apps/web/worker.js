@@ -8,8 +8,7 @@ export default {
     if (!API_PATHS.test(url.pathname)) return openNext.fetch(request, env, ctx);
     const headers = new Headers(request.headers);
     headers.delete("host");
-    if (request.cf?.country)
-      headers.set("x-sirathic-country", request.cf.country);
+    if (request.cf?.country) headers.set("x-sirathic-country", request.cf.country);
     return fetch(new URL(`${url.pathname}${url.search}`, env.API_ORIGIN), {
       method: request.method,
       headers,

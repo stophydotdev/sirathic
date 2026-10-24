@@ -14,9 +14,7 @@ export const geocodeInput = z.object({
     .trim()
     .min(2)
     .max(100)
-    .describe(
-      'Place name, optionally with a country: "London" or "Dhaka, Bangladesh"',
-    ),
+    .describe('Place name, optionally with a country: "London" or "Dhaka, Bangladesh"'),
 });
 
 const candidate = z.object({
@@ -53,18 +51,16 @@ const openMeteoPlace = z
     timezone: z.string(),
     population: z.number().optional(),
   })
-  .transform(
-    (raw): z.infer<typeof candidate> => ({
-      name: raw.name,
-      admin1: raw.admin1 ?? null,
-      country: raw.country,
-      countryCode: raw.country_code,
-      latitude: raw.latitude,
-      longitude: raw.longitude,
-      timezone: raw.timezone,
-      population: raw.population ?? null,
-    }),
-  );
+  .transform((raw): z.infer<typeof candidate> => ({
+    name: raw.name,
+    admin1: raw.admin1 ?? null,
+    country: raw.country,
+    countryCode: raw.country_code,
+    latitude: raw.latitude,
+    longitude: raw.longitude,
+    timezone: raw.timezone,
+    population: raw.population ?? null,
+  }));
 
 const geocodeCache = cacheFor({
   namespace: "geocode:v1",
@@ -73,10 +69,7 @@ const geocodeCache = cacheFor({
   keepMs: 90 * DAY_MS,
 });
 
-const matchesHint = (
-  { country, countryCode, admin1 }: z.infer<typeof candidate>,
-  hint: string,
-) =>
+const matchesHint = ({ country, countryCode, admin1 }: z.infer<typeof candidate>, hint: string) =>
   [country, countryCode, admin1 ?? ""].some((field) => {
     const value = field.toLowerCase();
     return value === hint || (hint.length > 3 && value.includes(hint));
@@ -95,14 +88,9 @@ const search = async (place: string) => {
     return parsed.success ? [parsed.data] : [];
   });
   const hinted = hint === "" ? all : all.filter((c) => matchesHint(c, hint));
-  const candidates = (hinted.length > 0 ? hinted : all).slice(
-    0,
-    MAX_CANDIDATES,
-  );
+  const candidates = (hinted.length > 0 ? hinted : all).slice(0, MAX_CANDIDATES);
   const best = candidates[0] ?? null;
-  const sameName = candidates.filter(
-    (c) => c.name.toLowerCase() === best?.name.toLowerCase(),
-  );
+  const sameName = candidates.filter((c) => c.name.toLowerCase() === best?.name.toLowerCase());
   return {
     query: place,
     best,
@@ -114,7 +102,5 @@ const search = async (place: string) => {
 
 export const geocode = async (input: z.input<typeof geocodeInput>) => {
   const { place } = geocodeInput.parse(input);
-  return geocodeCache(place.toLowerCase().replaceAll(/\s+/gu, " "), () =>
-    search(place),
-  );
+  return geocodeCache(place.toLowerCase().replaceAll(/\s+/gu, " "), () => search(place));
 };

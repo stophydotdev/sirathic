@@ -34,14 +34,7 @@ import { Dialog } from "radix-ui";
 import { type FC, useState } from "react";
 import { create } from "zustand";
 
-const SECTIONS = [
-  "account",
-  "preferences",
-  "personalization",
-  "models",
-  "data",
-  "about",
-] as const;
+const SECTIONS = ["account", "preferences", "personalization", "models", "data", "about"] as const;
 
 type Section = (typeof SECTIONS)[number];
 
@@ -107,8 +100,7 @@ export const useSettings = create<{
 }>()((set) => ({
   open: false,
   section: "account",
-  show: (section) =>
-    set((current) => ({ open: true, section: section ?? current.section })),
+  show: (section) => set((current) => ({ open: true, section: section ?? current.section })),
   setOpen: (open) => set({ open }),
 }));
 
@@ -116,9 +108,7 @@ const modelRow = "h-9 gap-2 rounded-[8px] p-2 text-sm font-[360]";
 
 const matches = (section: Section, query: string, t: Translate) => {
   const { name, keywords } = SECTION_DETAILS[section];
-  return `${t(name)} ${name} ${keywords}`
-    .toLowerCase()
-    .includes(query.toLowerCase());
+  return `${t(name)} ${name} ${keywords}`.toLowerCase().includes(query.toLowerCase());
 };
 
 export const SettingsDialog: FC = () => {
@@ -196,9 +186,7 @@ export const SettingsDialog: FC = () => {
 
           <div className="flex min-h-0 flex-1 flex-col">
             <div className="flex shrink-0 items-center justify-between px-6 pt-6 pb-3 md:px-[30px]">
-              <Dialog.Title className="text-[19px] font-[470]">
-                {t(name)}
-              </Dialog.Title>
+              <Dialog.Title className="text-[19px] font-[470]">{t(name)}</Dialog.Title>
               <Dialog.Close
                 aria-label={t("Close")}
                 className="border-border text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 items-center justify-center rounded-full border transition-colors"
@@ -251,16 +239,11 @@ export const ModelMenuContent: FC<{
             onSelect={() => choose(model.slug)}
             className={cn(modelRow, description && "h-auto items-start")}
           >
-            <MakerIcon
-              maker={model.maker}
-              className={cn("size-4", description && "mt-0.5")}
-            />
+            <MakerIcon maker={model.maker} className={cn("size-4", description && "mt-0.5")} />
             <span className="flex min-w-0 flex-1 flex-col">
               <span className="truncate">{model.name}</span>
               {description && (
-                <span className="text-muted-foreground text-xs">
-                  {t(description)}
-                </span>
+                <span className="text-muted-foreground text-xs">{t(description)}</span>
               )}
             </span>
             {chosen === model.slug && <IconCheck className="size-4" />}

@@ -39,9 +39,7 @@ export const I18nProvider: FC<{
 
   return (
     <I18nContext value={value}>
-      <Direction.Provider dir={isRtl(locale) ? "rtl" : "ltr"}>
-        {children}
-      </Direction.Provider>
+      <Direction.Provider dir={isRtl(locale) ? "rtl" : "ltr"}>{children}</Direction.Provider>
     </I18nContext>
   );
 };
@@ -61,13 +59,9 @@ export type Translate = ReturnType<typeof useT>;
 
 export function useLocalePath() {
   const locale = useLocale();
-  return useCallback(
-    (path: string) => `/${locale}${path === "/" ? "" : path}`,
-    [locale],
-  );
+  return useCallback((path: string) => `/${locale}${path === "/" ? "" : path}`, [locale]);
 }
 
 export const browserLocale = (): Locale =>
-  (globalThis.navigator?.languages ?? [])
-    .map((tag) => tag.split("-")[0] ?? "")
-    .find(hasLocale) ?? "en";
+  (globalThis.navigator?.languages ?? []).map((tag) => tag.split("-")[0] ?? "").find(hasLocale) ??
+  "en";

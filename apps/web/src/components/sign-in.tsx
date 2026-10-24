@@ -102,9 +102,7 @@ const TITLES = {
 async function readJson<S extends z.ZodType>(res: Response, schema: S) {
   const body = await res.json().catch(() => undefined);
   if (!res.ok) {
-    throw new Error(
-      apiError.safeParse(body).data ?? `The server answered ${res.status}`,
-    );
+    throw new Error(apiError.safeParse(body).data ?? `The server answered ${res.status}`);
   }
   return schema.parse(body);
 }
@@ -155,10 +153,7 @@ export const SignInDialog: FC = () => {
       } else if (status === "expired") {
         setStep({ kind: "expired" });
       } else {
-        await Promise.all([
-          useAccount.getState().refresh(),
-          useSessions.getState().refresh(),
-        ]);
+        await Promise.all([useAccount.getState().refresh(), useSessions.getState().refresh()]);
         setOpen(false);
         setStep(START);
       }
@@ -265,14 +260,10 @@ export const SignInDialog: FC = () => {
               ) : (
                 <button
                   type="button"
-                  onClick={
-                    step.kind === "expired" ? getCode : () => setStep(START)
-                  }
+                  onClick={step.kind === "expired" ? getCode : () => setStep(START)}
                   className={cn(button, primary)}
                 >
-                  {step.kind === "expired"
-                    ? t("Get a new code")
-                    : t("Try again")}
+                  {step.kind === "expired" ? t("Get a new code") : t("Try again")}
                 </button>
               )}
               {draft && (
@@ -387,9 +378,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
       >
         <IconUserCircle className="size-6 shrink-0 stroke-[1.5]" />
         {!collapsed && <span className="flex-1">{t("Sign In")}</span>}
-        {!collapsed && (
-          <IconChevronRight className="text-super size-3.5 rtl:rotate-180" />
-        )}
+        {!collapsed && <IconChevronRight className="text-super size-3.5 rtl:rotate-180" />}
       </button>
     );
   }
@@ -417,19 +406,14 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
         {!collapsed && (
           <span className="flex min-w-0 flex-1 flex-col">
             <span className="truncate">
-              {status.label ??
-                t(viaGoogle ? "Google account" : "ChatGPT account")}
+              {status.label ?? t(viaGoogle ? "Google account" : "ChatGPT account")}
             </span>
             <span className="text-muted-foreground truncate text-xs">
-              {t(
-                viaGoogle ? "Signed in with Google" : "Signed in with ChatGPT",
-              )}
+              {t(viaGoogle ? "Signed in with Google" : "Signed in with ChatGPT")}
             </span>
           </span>
         )}
-        {!collapsed && (
-          <IconSelector className="text-muted-foreground size-3.5" />
-        )}
+        {!collapsed && <IconSelector className="text-muted-foreground size-3.5" />}
       </DropdownMenuTrigger>
       <DropdownMenuContent
         side="top"
@@ -438,8 +422,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
       >
         <DropdownMenuLabel className="flex flex-col gap-0.5 px-2.5 py-2 font-normal">
           <span className="text-sm font-[470]">
-            {status.label ??
-              t(viaGoogle ? "Google account" : "ChatGPT account")}
+            {status.label ?? t(viaGoogle ? "Google account" : "ChatGPT account")}
           </span>
           <span className="text-muted-foreground text-xs">
             {t(viaGoogle ? "Signed in with Google" : "Signed in with ChatGPT")}
@@ -476,9 +459,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
             <IconMoon className="size-4" />
             <span className="flex flex-col">
               {t("Appearance")}
-              <span className="text-muted-foreground text-xs">
-                {t(THEME_NAMES[theme])}
-              </span>
+              <span className="text-muted-foreground text-xs">{t(THEME_NAMES[theme])}</span>
             </span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="w-40">

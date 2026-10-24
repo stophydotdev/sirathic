@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathic पर वापस जाएँ",
   Brand: "ब्रांड",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathic के लोगो, रंग और इस्तेमाल के दिशानिर्देश।",
+  "Logos, colors and guidelines for Sirathic.": "Sirathic के लोगो, रंग और इस्तेमाल के दिशानिर्देश।",
   "Brand assets": "ब्रांड फ़ाइलें",
   "Download our logos and follow the guidelines below.":
     "हमारे लोगो डाउनलोड करें और नीचे दिए दिशानिर्देशों का पालन करें।",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "मेरे सवाल की भाषा",
   "Same as my browser": "मेरे ब्राउज़र की भाषा",
   "Not signed in": "साइन इन नहीं किया",
-  "Sign in to ask and keep your chats":
-    "सवाल पूछने और अपनी चैट सहेजने के लिए साइन इन करें",
+  "Sign in to ask and keep your chats": "सवाल पूछने और अपनी चैट सहेजने के लिए साइन इन करें",
   "Sign in": "साइन इन करें",
   "Signed in with ChatGPT": "ChatGPT से साइन इन किया",
   "Signed in with Google": "Google से साइन इन किया",
@@ -79,16 +77,14 @@ export default {
   "Signs you out on this browser": "इस ब्राउज़र से साइन आउट करता है",
   Appearance: "रूप",
   Language: "भाषा",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic के मेन्यू और बटन की भाषा",
+  "The language of Sirathic's menus and buttons": "Sirathic के मेन्यू और बटन की भाषा",
   Theme: "थीम",
   "How Sirathic looks on this device": "इस डिवाइस पर Sirathic कैसा दिखता है",
   Asking: "सवाल पूछना",
   "Default mode": "डिफ़ॉल्ट मोड",
   "Suggestions while typing": "टाइप करते समय सुझाव",
   "Show suggested questions under the box": "बॉक्स के नीचे सुझाए गए सवाल दिखाएँ",
-  "Sign in to personalize answers.":
-    "जवाबों को अपने अनुसार बनाने के लिए साइन इन करें।",
+  "Sign in to personalize answers.": "जवाबों को अपने अनुसार बनाने के लिए साइन इन करें।",
   "What should Sirathic call you?": "Sirathic आपको किस नाम से बुलाए?",
   "Your name": "आपका नाम",
   Madhab: "मसलक",
@@ -104,11 +100,9 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "आयतें और हदीसें अनुवाद के साथ अरबी में भी दिखाएँ",
   "Incognito by default": "डिफ़ॉल्ट रूप से इनकॉग्निटो",
-  "New chats start in incognito and aren't saved":
-    "नई चैट इनकॉग्निटो में शुरू होती हैं और सहेजी नहीं जातीं",
+  "New chats start in incognito and aren't saved": "नई चैट इनकॉग्निटो में शुरू होती हैं और सहेजी नहीं जातीं",
   "Export my chats": "मेरी चैट एक्सपोर्ट करें",
-  "Download every saved chat as a file":
-    "सभी सहेजी गई चैट को एक फ़ाइल के रूप में डाउनलोड करें",
+  "Download every saved chat as a file": "सभी सहेजी गई चैट को एक फ़ाइल के रूप में डाउनलोड करें",
   Export: "एक्सपोर्ट करें",
   "Delete all chats": "सभी चैट मिटाएँ",
   "Delete every saved chat? This can't be undone.":
@@ -137,12 +131,10 @@ export default {
     "पहली बार? ChatGPT → Settings → Security में डिवाइस कोड से साइन-इन चालू करें। ChatGPT में Codex लिखा दिखेगा, यह सामान्य है।",
   "Continue with ChatGPT": "ChatGPT के साथ जारी रखें",
   "Continue with Google": "Google के साथ जारी रखें",
-  "Use your ChatGPT plan for GPT models":
-    "GPT मॉडल के लिए अपने ChatGPT प्लान का उपयोग करें",
+  "Use your ChatGPT plan for GPT models": "GPT मॉडल के लिए अपने ChatGPT प्लान का उपयोग करें",
   "Get a new code": "नया कोड लें",
   "Try again": "फिर कोशिश करें",
-  "Your question stays in the box while you sign in.":
-    "साइन इन करते समय आपका सवाल बॉक्स में ही रहेगा।",
+  "Your question stays in the box while you sign in.": "साइन इन करते समय आपका सवाल बॉक्स में ही रहेगा।",
   "Copy code": "कोड कॉपी करें",
   "Sign In": "साइन इन करें",
   "Account menu": "खाता मेन्यू",
@@ -150,16 +142,14 @@ export default {
   "Google account": "Google खाता",
   Incognito: "इनकॉग्निटो",
   "All settings": "सभी सेटिंग्स",
-  "Assalamu alaikum. Sign in to start asking.":
-    "अस्सलामु अलैकुम। सवाल पूछना शुरू करने के लिए साइन इन करें।",
+  "Assalamu alaikum. Sign in to start asking.": "अस्सलामु अलैकुम। सवाल पूछना शुरू करने के लिए साइन इन करें।",
   "Enter this code on ChatGPT": "यह कोड ChatGPT पर डालें",
   "Code expired": "कोड की समय-सीमा ख़त्म हो गई",
   "Sign-in didn't work": "साइन इन नहीं हो सका",
   "{count} views": "{count} बार देखा गया",
   "Results for:": "नतीजे:",
   "Searching…": "खोज रहे हैं…",
-  "The search failed. Try this tab again later.":
-    "खोज नाकाम रही। बाद में यह टैब फिर से खोलें।",
+  "The search failed. Try this tab again later.": "खोज नाकाम रही। बाद में यह टैब फिर से खोलें।",
   "Expand sidebar": "साइडबार फैलाएँ",
   "Collapse sidebar": "साइडबार समेटें",
   New: "नया",
@@ -170,8 +160,7 @@ export default {
   "New chat": "नई चैट",
   "Copy a link to this chat": "इस चैट का लिंक कॉपी करें",
   Share: "शेयर करें",
-  "Incognito is on: new messages aren't saved":
-    "इनकॉग्निटो चालू है: नए संदेश सहेजे नहीं जाते",
+  "Incognito is on: new messages aren't saved": "इनकॉग्निटो चालू है: नए संदेश सहेजे नहीं जाते",
   "Use incognito: new messages aren't saved to your history":
     "इनकॉग्निटो इस्तेमाल करें: नए संदेश आपके इतिहास में सहेजे नहीं जाते",
   "Ask a follow-up": "आगे का सवाल पूछें",
@@ -233,15 +222,12 @@ export default {
   Helpful: "मददगार",
   "Not helpful": "मददगार नहीं",
   Quick: "तेज़",
-  "Searches everything first, then answers fast":
-    "पहले हर जगह खोजता है, फिर तेज़ी से जवाब देता है",
+  "Searches everything first, then answers fast": "पहले हर जगह खोजता है, फिर तेज़ी से जवाब देता है",
   Research: "शोध",
-  "Thinks longer and searches step by step":
-    "ज़्यादा देर सोचता है और क़दम-दर-क़दम खोजता है",
+  "Thinks longer and searches step by step": "ज़्यादा देर सोचता है और क़दम-दर-क़दम खोजता है",
   "Type / for modes": "मोड के लिए / टाइप करें",
   "Type @ for sources": "स्रोतों के लिए @ टाइप करें",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}” मिटाएँ? इसे वापस नहीं लाया जा सकता।",
+  'Delete "{title}"? This can\'t be undone.': "“{title}” मिटाएँ? इसे वापस नहीं लाया जा सकता।",
   "Qur'an text": "क़ुरआन का पाठ",
   "Verse links": "आयतों के लिंक",
   "Hadith explanations": "हदीसों की व्याख्या",

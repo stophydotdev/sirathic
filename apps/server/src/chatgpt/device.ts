@@ -73,14 +73,9 @@ const postJson = (path: string, fields: Record<string, string>) =>
   post(path, JSON.stringify(fields), "application/json");
 
 const postForm = (path: string, fields: Record<string, string>) =>
-  post(
-    path,
-    new URLSearchParams(fields).toString(),
-    "application/x-www-form-urlencoded",
-  );
+  post(path, new URLSearchParams(fields).toString(), "application/x-www-form-urlencoded");
 
-const expiresAt = (accessToken: string) =>
-  (decodeJwt(accessToken).exp ?? 0) * 1000;
+const expiresAt = (accessToken: string) => (decodeJwt(accessToken).exp ?? 0) * 1000;
 
 const tokensOf = (raw: z.output<typeof tokenResponse>): DeviceTokens => ({
   idToken: raw.id_token,
@@ -108,9 +103,7 @@ export async function startDeviceLogin(): Promise<DeviceLogin> {
 export async function pollDeviceLogin(
   login: DeviceLogin,
 ): Promise<
-  | { status: "pending" }
-  | { status: "expired" }
-  | { status: "signed-in"; tokens: DeviceTokens }
+  { status: "pending" } | { status: "expired" } | { status: "signed-in"; tokens: DeviceTokens }
 > {
   if (Date.now() > login.expiresAt) return { status: "expired" };
   const response = await postJson("/api/accounts/deviceauth/token", {
@@ -187,10 +180,7 @@ export const codexFetch = (
   Object.assign(
     async (input: string | URL | Request, init?: RequestInit) => {
       const { accessToken, accountId } = await credentials();
-      const url = new URL(
-        input instanceof Request ? input.url : input.toString(),
-        `${CODEX_API}/`,
-      );
+      const url = new URL(input instanceof Request ? input.url : input.toString(), `${CODEX_API}/`);
       url.searchParams.set("client_version", CODEX_VERSION);
       const headers = new Headers(init?.headers);
       headers.set("authorization", `Bearer ${accessToken}`);

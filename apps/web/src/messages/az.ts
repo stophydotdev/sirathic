@@ -62,8 +62,7 @@ export default {
   "Same as my question": "Sualımın dili",
   "Same as my browser": "Brauzerimin dili",
   "Not signed in": "Giriş edilməyib",
-  "Sign in to ask and keep your chats":
-    "Sual vermək və söhbətlərinizi saxlamaq üçün daxil olun",
+  "Sign in to ask and keep your chats": "Sual vermək və söhbətlərinizi saxlamaq üçün daxil olun",
   "Sign in": "Daxil ol",
   "Signed in with ChatGPT": "ChatGPT ilə daxil olunub",
   "Signed in with Google": "Google ilə daxil olunub",
@@ -79,17 +78,14 @@ export default {
   "Signs you out on this browser": "Bu brauzerdə hesabdan çıxırsınız",
   Appearance: "Görünüş",
   Language: "Dil",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic menyularının və düymələrinin dili",
+  "The language of Sirathic's menus and buttons": "Sirathic menyularının və düymələrinin dili",
   Theme: "Mövzu",
   "How Sirathic looks on this device": "Sirathic-in bu cihazda görünüşü",
   Asking: "Sual vermə",
   "Default mode": "Standart rejim",
   "Suggestions while typing": "Yazarkən təkliflər",
-  "Show suggested questions under the box":
-    "Xananın altında təklif olunan sualları göstər",
-  "Sign in to personalize answers.":
-    "Cavabları fərdiləşdirmək üçün daxil olun.",
+  "Show suggested questions under the box": "Xananın altında təklif olunan sualları göstər",
+  "Sign in to personalize answers.": "Cavabları fərdiləşdirmək üçün daxil olun.",
   "What should Sirathic call you?": "Sirathic sizə necə müraciət etsin?",
   "Your name": "Adınız",
   Madhab: "Məzhəb",
@@ -108,8 +104,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Yeni söhbətlər gizli rejimdə başlayır və saxlanmır",
   "Export my chats": "Söhbətlərimi ixrac et",
-  "Download every saved chat as a file":
-    "Saxlanmış bütün söhbətləri fayl kimi yüklə",
+  "Download every saved chat as a file": "Saxlanmış bütün söhbətləri fayl kimi yüklə",
   Export: "İxrac et",
   "Delete all chats": "Bütün söhbətləri sil",
   "Delete every saved chat? This can't be undone.":
@@ -138,12 +133,10 @@ export default {
     "İlk dəfədir? ChatGPT → Ayarlar → Təhlükəsizlik bölməsində cihaz kodu ilə girişi aktivləşdirin. ChatGPT Codex yazacaq, bu normaldır.",
   "Continue with ChatGPT": "ChatGPT ilə davam et",
   "Continue with Google": "Google ilə davam et",
-  "Use your ChatGPT plan for GPT models":
-    "GPT modelləri üçün ChatGPT planınızdan istifadə edin",
+  "Use your ChatGPT plan for GPT models": "GPT modelləri üçün ChatGPT planınızdan istifadə edin",
   "Get a new code": "Yeni kod al",
   "Try again": "Yenidən cəhd et",
-  "Your question stays in the box while you sign in.":
-    "Daxil olarkən sualınız xanada qalır.",
+  "Your question stays in the box while you sign in.": "Daxil olarkən sualınız xanada qalır.",
   "Copy code": "Kodu kopyala",
   "Sign In": "Daxil ol",
   "Account menu": "Hesab menyusu",
@@ -171,8 +164,7 @@ export default {
   "New chat": "Yeni söhbət",
   "Copy a link to this chat": "Bu söhbətin linkini kopyala",
   Share: "Paylaş",
-  "Incognito is on: new messages aren't saved":
-    "Gizli rejim aktivdir: yeni mesajlar saxlanmır",
+  "Incognito is on: new messages aren't saved": "Gizli rejim aktivdir: yeni mesajlar saxlanmır",
   "Use incognito: new messages aren't saved to your history":
     "Gizli rejim: yeni mesajlar tarixçənizdə saxlanmır",
   "Ask a follow-up": "Əlavə sual verin",
@@ -237,12 +229,10 @@ export default {
   "Searches everything first, then answers fast":
     "Əvvəlcə hər yerdə axtarır, sonra tez cavab verir",
   Research: "Araşdırma",
-  "Thinks longer and searches step by step":
-    "Daha uzun düşünür və addım-addım axtarır",
+  "Thinks longer and searches step by step": "Daha uzun düşünür və addım-addım axtarır",
   "Type / for modes": "Rejimlər üçün / yazın",
   "Type @ for sources": "Mənbələr üçün @ yazın",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}” silinsin? Bunu geri qaytarmaq olmaz.",
+  'Delete "{title}"? This can\'t be undone.': "“{title}” silinsin? Bunu geri qaytarmaq olmaz.",
   "Qur'an text": "Quran mətni",
   "Verse links": "Ayə linkləri",
   "Hadith explanations": "Hədis şərhləri",

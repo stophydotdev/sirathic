@@ -6,14 +6,12 @@ const linked = async (urls: string[], deltas: string[]) => {
   for (const url of urls) add(url);
   const parts = new ReadableStream({
     start(controller) {
-      for (const text of deltas)
-        controller.enqueue({ type: "text-delta" as const, id: "1", text });
+      for (const text of deltas) controller.enqueue({ type: "text-delta" as const, id: "1", text });
       controller.close();
     },
   }).pipeThrough(transform()({ tools: {}, stopStream: () => {} }));
   let text = "";
-  for await (const part of parts)
-    if (part.type === "text-delta") text += part.text;
+  for await (const part of parts) if (part.type === "text-delta") text += part.text;
   return text;
 };
 
@@ -23,17 +21,12 @@ test("a Quran citation moves to the retrieved verse its paragraph names", async 
   const cases = [
     {
       urls: [quran("2:219"), quran("5:90")],
-      deltas: [
-        "“…so avoid it that you may be successful.” (Qur’an 5:90)",
-        "[1]",
-      ],
+      deltas: ["“…so avoid it that you may be successful.” (Qur’an 5:90)", "[1]"],
       expected: `“…so avoid it that you may be successful.” (Qur’an 5:90)[2](${quran("5:90")})`,
     },
     {
       urls: [quran("2:228"), quran("2:229")],
-      deltas: [
-        "“It is not lawful for you to take anything…” (Qur’an 2:229)[1]",
-      ],
+      deltas: ["“It is not lawful for you to take anything…” (Qur’an 2:229)[1]"],
       expected: `“It is not lawful for you to take anything…” (Qur’an 2:229)[2](${quran("2:229")})`,
     },
     {
@@ -45,18 +38,13 @@ test("a Quran citation moves to the retrieved verse its paragraph names", async 
       expected: `Earlier point.[3](${quran("34:31")})\n\nQur’an 49:14 addresses Bedouins who said, “We have believed.” It should not be generalized.[4](${quran("49:14")})`,
     },
   ];
-  expect(
-    await Promise.all(cases.map(({ urls, deltas }) => linked(urls, deltas))),
-  ).toEqual(cases.map(({ expected }) => expected));
+  expect(await Promise.all(cases.map(({ urls, deltas }) => linked(urls, deltas)))).toEqual(
+    cases.map(({ expected }) => expected),
+  );
 });
 
 test("a citation stays when it fits, or when the named verse wasn't retrieved", async () => {
-  const urls = [
-    quran("2:228"),
-    quran("39:6"),
-    "https://sunnah.com/bukhari:5590",
-    quran("2:229"),
-  ];
+  const urls = [quran("2:228"), quran("39:6"), "https://sunnah.com/bukhari:5590", quran("2:229")];
   const cases = [
     {
       text: "(Qur’an 2:228-229)[4]",
@@ -65,17 +53,16 @@ test("a citation stays when it fits, or when the named verse wasn't retrieved", 
     { text: "(Qur’an 4:1)[2]", expected: `(Qur’an 4:1)[2](${quran("39:6")})` },
     {
       text: "Qur’an 2:228 and Bukhari 5590.[3]",
-      expected:
-        "Qur’an 2:228 and Bukhari 5590.[3](https://sunnah.com/bukhari:5590)",
+      expected: "Qur’an 2:228 and Bukhari 5590.[3](https://sunnah.com/bukhari:5590)",
     },
     {
       text: "Qur’an 39:6 says this.\n\nA new point.[1]",
       expected: `Qur’an 39:6 says this.\n\nA new point.[1](${quran("2:228")})`,
     },
   ];
-  expect(
-    await Promise.all(cases.map(({ text }) => linked(urls, [text]))),
-  ).toEqual(cases.map(({ expected }) => expected));
+  expect(await Promise.all(cases.map(({ text }) => linked(urls, [text])))).toEqual(
+    cases.map(({ expected }) => expected),
+  );
 });
 
 test("a citation after one that used the named verse keeps its own verse", async () => {
@@ -91,7 +78,7 @@ test("a citation after one that used the named verse keeps its own verse", async
       expected: `Fasting was prescribed (2:183) [1](${quran("2:183")}), and the month is Ramadan [2](${quran("2:185")}).`,
     },
   ];
-  expect(
-    await Promise.all(cases.map(({ urls, text }) => linked(urls, [text]))),
-  ).toEqual(cases.map(({ expected }) => expected));
+  expect(await Promise.all(cases.map(({ urls, text }) => linked(urls, [text])))).toEqual(
+    cases.map(({ expected }) => expected),
+  );
 });

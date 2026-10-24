@@ -6,9 +6,7 @@ export const youtubeSearchInput = z.object({
   limit: z.number().int().min(1).max(15).default(8),
 });
 
-export const youtubeSearch = async (
-  input: z.input<typeof youtubeSearchInput>,
-) => {
+export const youtubeSearch = async (input: z.input<typeof youtubeSearchInput>) => {
   const { query, limit } = youtubeSearchInput.parse(input);
   const { data } = await stophy.youtube.search({ query, type: "videos" });
   const videos = data.results.flatMap((video) =>

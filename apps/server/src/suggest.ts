@@ -9,10 +9,9 @@ const TIMEOUT_MS = 1_500;
 const duckDuckGo = z.tuple([z.string(), z.array(z.string())]);
 
 const webSuggestions = (query: string) =>
-  fetch(
-    `https://duckduckgo.com/ac/?${new URLSearchParams({ q: query, type: "list" })}`,
-    { signal: AbortSignal.timeout(TIMEOUT_MS) },
-  )
+  fetch(`https://duckduckgo.com/ac/?${new URLSearchParams({ q: query, type: "list" })}`, {
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+  })
     .then((res) => res.json())
     .then((body) => duckDuckGo.parse(body)[1])
     .catch(() => []);
@@ -20,11 +19,7 @@ const webSuggestions = (query: string) =>
 export async function suggestions(query: string, by: string | undefined) {
   if (query.length < MIN_CHARS) return [];
   const [past, web] = await Promise.all([
-    by
-      ? listSessions(by, query, PAST_LIMIT).then((rows) =>
-          rows.map((row) => row.title),
-        )
-      : [],
+    by ? listSessions(by, query, PAST_LIMIT).then((rows) => rows.map((row) => row.title)) : [],
     webSuggestions(query),
   ]);
   const seen = new Set<string>();

@@ -1,8 +1,7 @@
 import { expect, test } from "bun:test";
 import { namesOfAllah } from "@sirathic/core/tools/namesOfAllah";
 
-const numbersFor = (query: string) =>
-  namesOfAllah({ query }).names.map((name) => name.number);
+const numbersFor = (query: string) => namesOfAllah({ query }).names.map((name) => name.number);
 
 test("the full list has 99 names in the order of the narration", () => {
   const { names } = namesOfAllah({});

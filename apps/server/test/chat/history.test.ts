@@ -50,9 +50,7 @@ const sentOutputs = async (toolCallId: string) => {
     .map(shorten)
     .flatMap((message) => (message.role === "tool" ? message.content : []))
     .flatMap((part) =>
-      part.type === "tool-result" && part.toolCallId === toolCallId
-        ? [part.output]
-        : [],
+      part.type === "tool-result" && part.toolCallId === toolCallId ? [part.output] : [],
     );
 };
 

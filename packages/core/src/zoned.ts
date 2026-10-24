@@ -2,10 +2,7 @@ import { z } from "zod";
 
 const isTimeZone = (timeZone: string) => {
   try {
-    return (
-      new Intl.DateTimeFormat("en", { timeZone }).resolvedOptions().timeZone !==
-      ""
-    );
+    return new Intl.DateTimeFormat("en", { timeZone }).resolvedOptions().timeZone !== "";
   } catch {
     return false;
   }
@@ -42,9 +39,7 @@ export const weekdayOf = (isoDate: string) =>
   );
 
 export const addDays = (isoDate: string, days: number) =>
-  new Date(Date.parse(`${isoDate}T12:00:00Z`) + days * 86_400_000)
-    .toISOString()
-    .slice(0, 10);
+  new Date(Date.parse(`${isoDate}T12:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
 
 export const round = (value: number, places: number) => {
   const scale = 10 ** places;

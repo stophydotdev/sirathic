@@ -16,9 +16,7 @@ type Picked = {
 };
 
 const referenceOf = (node: Node) =>
-  (node instanceof Element ? node : node.parentElement)?.closest(
-    "[data-ask-ref]",
-  );
+  (node instanceof Element ? node : node.parentElement)?.closest("[data-ask-ref]");
 
 const pickedText = (): Picked | undefined => {
   const selection = document.getSelection();
@@ -35,10 +33,7 @@ const pickedText = (): Picked | undefined => {
     text: text.slice(0, MAX_CHARS),
     reference: start.getAttribute("data-ask-ref") ?? "",
     top: below ? box.bottom + 8 : box.top - TOOLBAR_HEIGHT,
-    left: Math.min(
-      Math.max(box.left + box.width / 2, EDGE),
-      window.innerWidth - EDGE,
-    ),
+    left: Math.min(Math.max(box.left + box.width / 2, EDGE), window.innerWidth - EDGE),
   };
 };
 

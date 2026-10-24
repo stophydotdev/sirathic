@@ -11,7 +11,5 @@ test("the qibla bearing from London and New York is the known one", () => {
 });
 
 test("standing at the Kaaba is reported instead of a meaningless bearing", () => {
-  expect(qibla({ latitude: 21.4225, longitude: 39.8262 }).atTheKaaba).toBe(
-    true,
-  );
+  expect(qibla({ latitude: 21.4225, longitude: 39.8262 }).atTheKaaba).toBe(true);
 });

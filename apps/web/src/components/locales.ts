@@ -39,18 +39,11 @@ export type Messages = Record<MessageKey, string>;
 
 export const LOCALE_COOKIE = "sirathicLocale";
 
-const RTL_LOCALES: ReadonlySet<Locale> = new Set([
-  "ar",
-  "fa",
-  "ku",
-  "ps",
-  "ug",
-]);
+const RTL_LOCALES: ReadonlySet<Locale> = new Set(["ar", "fa", "ku", "ps", "ug"]);
 
-type Placeholders<Text extends string> =
-  Text extends `${string}{${infer Name}}${infer Rest}`
-    ? Name | Placeholders<Rest>
-    : never;
+type Placeholders<Text extends string> = Text extends `${string}{${infer Name}}${infer Rest}`
+  ? Name | Placeholders<Rest>
+  : never;
 
 export type PlainKey = {
   [Key in MessageKey]: [Placeholders<Key>] extends [never] ? Key : never;

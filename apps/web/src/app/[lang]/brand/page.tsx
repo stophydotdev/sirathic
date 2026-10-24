@@ -5,12 +5,7 @@ import { Logo, Mark } from "@/components/logo";
 import type { MessageKey } from "@/messages/en";
 import { Button } from "@/components/ui/button";
 import { strToU8, zipSync } from "fflate";
-import {
-  IconArrowDown,
-  IconCheck,
-  IconCopy,
-  IconDownload,
-} from "@tabler/icons-react";
+import { IconArrowDown, IconCheck, IconCopy, IconDownload } from "@tabler/icons-react";
 import Link from "next/link";
 import { type FC, type ReactNode, useRef, useState } from "react";
 
@@ -77,8 +72,7 @@ const JUMPS = [
   { id: "colors", label: "Colors" },
 ] satisfies readonly { id: string; label: MessageKey }[];
 
-const markup = (svg: SVGSVGElement) =>
-  new XMLSerializer().serializeToString(svg);
+const markup = (svg: SVGSVGElement) => new XMLSerializer().serializeToString(svg);
 
 const toPng = async (svg: SVGSVGElement) => {
   const { width, height } = svg.viewBox.baseVal;
@@ -106,9 +100,7 @@ const save = (blob: Blob, name: string) => {
   setTimeout(() => URL.revokeObjectURL(url));
 };
 
-const zipEntries = async (
-  tile: HTMLElement,
-): Promise<[string, Uint8Array][]> => {
+const zipEntries = async (tile: HTMLElement): Promise<[string, Uint8Array][]> => {
   const svg = tile.querySelector("svg");
   if (!svg) return [];
   const png = await toPng(svg);
@@ -144,10 +136,7 @@ export default function Brand() {
         <Link href={href("/")} className="text-foreground">
           <Logo height={20} />
         </Link>
-        <Link
-          href={href("/")}
-          className="text-muted-foreground hover:text-foreground text-sm"
-        >
+        <Link href={href("/")} className="text-muted-foreground hover:text-foreground text-sm">
           {t("Back to Sirathic")}
         </Link>
       </header>
@@ -175,19 +164,12 @@ export default function Brand() {
         <div ref={assets}>
           <div className="flex flex-wrap items-start justify-between gap-4 px-5 pt-10 md:px-10">
             <div>
-              <h2 className="text-3xl font-medium tracking-tight">
-                {t("Brand assets")}
-              </h2>
+              <h2 className="text-3xl font-medium tracking-tight">{t("Brand assets")}</h2>
               <p className="text-muted-foreground mt-1.5">
                 {t("Download our logos and follow the guidelines below.")}
               </p>
             </div>
-            <Button
-              variant="outline"
-              size="lg"
-              disabled={zipping}
-              onClick={downloadAll}
-            >
+            <Button variant="outline" size="lg" disabled={zipping} onClick={downloadAll}>
               <IconDownload />
               {t("Download all brand assets")}
             </Button>
@@ -232,9 +214,7 @@ export default function Brand() {
                 className="border-border flex aspect-[1.4] flex-col justify-center gap-1.5 rounded-2xl border px-4 sm:px-6"
                 style={{ background: color.hex, color: color.ink }}
               >
-                <span className="text-base font-medium sm:text-lg">
-                  {t(color.name)}
-                </span>
+                <span className="text-base font-medium sm:text-lg">{t(color.name)}</span>
                 <span className="text-xs leading-relaxed tabular-nums opacity-80 sm:text-sm">
                   {color.hex}
                   <br />
@@ -252,19 +232,10 @@ export default function Brand() {
   );
 }
 
-const Guide: FC<{ id: string; title: string; children: ReactNode }> = ({
-  id,
-  title,
-  children,
-}) => (
-  <div
-    id={id}
-    className="border-border/60 scroll-mt-4 border-b px-5 py-9 md:ps-[25%]"
-  >
+const Guide: FC<{ id: string; title: string; children: ReactNode }> = ({ id, title, children }) => (
+  <div id={id} className="border-border/60 scroll-mt-4 border-b px-5 py-9 md:ps-[25%]">
     <h3 className="mb-3 text-xl font-medium">{title}</h3>
-    <p className="text-foreground/85 max-w-[52ch] leading-relaxed">
-      {children}
-    </p>
+    <p className="text-foreground/85 max-w-[52ch] leading-relaxed">{children}</p>
   </div>
 );
 
@@ -285,9 +256,7 @@ const Asset: FC<{
     const node = svg();
     if (!node) return;
     save(
-      format === "svg"
-        ? new Blob([markup(node)], { type: "image/svg+xml" })
-        : await toPng(node),
+      format === "svg" ? new Blob([markup(node)], { type: "image/svg+xml" }) : await toPng(node),
       `${file}.${format}`,
     );
   };
@@ -305,20 +274,12 @@ const Asset: FC<{
       <div className="grid auto-cols-fr grid-flow-col gap-2">
         <CopyButton label="SVG" value={text} />
         {downloadSvg && (
-          <Button
-            variant="outline"
-            className="h-9 rounded-full"
-            onClick={() => download("svg")}
-          >
+          <Button variant="outline" className="h-9 rounded-full" onClick={() => download("svg")}>
             <IconDownload />
             SVG
           </Button>
         )}
-        <Button
-          variant="outline"
-          className="h-9 rounded-full"
-          onClick={() => download("png")}
-        >
+        <Button variant="outline" className="h-9 rounded-full" onClick={() => download("png")}>
           <IconDownload />
           PNG
         </Button>
@@ -327,10 +288,7 @@ const Asset: FC<{
   );
 };
 
-const CopyButton: FC<{ label: string; value: () => string | undefined }> = ({
-  label,
-  value,
-}) => {
+const CopyButton: FC<{ label: string; value: () => string | undefined }> = ({ label, value }) => {
   const [copied, setCopied] = useState(false);
   const t = useT();
 

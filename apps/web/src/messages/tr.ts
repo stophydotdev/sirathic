@@ -62,8 +62,7 @@ export default {
   "Same as my question": "Sorumla aynı",
   "Same as my browser": "Tarayıcımla aynı",
   "Not signed in": "Giriş yapılmadı",
-  "Sign in to ask and keep your chats":
-    "Soru sormak ve sohbetlerinizi saklamak için giriş yapın",
+  "Sign in to ask and keep your chats": "Soru sormak ve sohbetlerinizi saklamak için giriş yapın",
   "Sign in": "Giriş yap",
   "Signed in with ChatGPT": "ChatGPT ile giriş yapıldı",
   "Signed in with Google": "Google ile giriş yapıldı",
@@ -79,17 +78,14 @@ export default {
   "Signs you out on this browser": "Bu tarayıcıda oturumunuzu kapatır",
   Appearance: "Görünüm",
   Language: "Dil",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic menülerinin ve düğmelerinin dili",
+  "The language of Sirathic's menus and buttons": "Sirathic menülerinin ve düğmelerinin dili",
   Theme: "Tema",
   "How Sirathic looks on this device": "Sirathic'in bu cihazdaki görünümü",
   Asking: "Soru sorma",
   "Default mode": "Varsayılan mod",
   "Suggestions while typing": "Yazarken öneriler",
-  "Show suggested questions under the box":
-    "Kutunun altında önerilen soruları göster",
-  "Sign in to personalize answers.":
-    "Yanıtları kişiselleştirmek için giriş yapın.",
+  "Show suggested questions under the box": "Kutunun altında önerilen soruları göster",
+  "Sign in to personalize answers.": "Yanıtları kişiselleştirmek için giriş yapın.",
   "What should Sirathic call you?": "Sirathic size nasıl hitap etsin?",
   "Your name": "Adınız",
   Madhab: "Mezhep",
@@ -108,8 +104,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Yeni sohbetler gizli modda başlar ve kaydedilmez",
   "Export my chats": "Sohbetlerimi dışa aktar",
-  "Download every saved chat as a file":
-    "Kayıtlı tüm sohbetleri bir dosya olarak indir",
+  "Download every saved chat as a file": "Kayıtlı tüm sohbetleri bir dosya olarak indir",
   Export: "Dışa aktar",
   "Delete all chats": "Tüm sohbetleri sil",
   "Delete every saved chat? This can't be undone.":
@@ -138,12 +133,10 @@ export default {
     "İlk kez mi? ChatGPT → Ayarlar → Güvenlik bölümünden cihaz koduyla girişi açın. ChatGPT'de Codex yazacak; bu normal.",
   "Continue with ChatGPT": "ChatGPT ile devam et",
   "Continue with Google": "Google ile devam et",
-  "Use your ChatGPT plan for GPT models":
-    "GPT modelleri için ChatGPT planınızı kullanın",
+  "Use your ChatGPT plan for GPT models": "GPT modelleri için ChatGPT planınızı kullanın",
   "Get a new code": "Yeni kod al",
   "Try again": "Tekrar dene",
-  "Your question stays in the box while you sign in.":
-    "Giriş yaparken sorunuz kutuda kalır.",
+  "Your question stays in the box while you sign in.": "Giriş yaparken sorunuz kutuda kalır.",
   "Copy code": "Kodu kopyala",
   "Sign In": "Giriş yap",
   "Account menu": "Hesap menüsü",
@@ -171,8 +164,7 @@ export default {
   "New chat": "Yeni sohbet",
   "Copy a link to this chat": "Bu sohbetin bağlantısını kopyala",
   Share: "Paylaş",
-  "Incognito is on: new messages aren't saved":
-    "Gizli mod açık: yeni mesajlar kaydedilmiyor",
+  "Incognito is on: new messages aren't saved": "Gizli mod açık: yeni mesajlar kaydedilmiyor",
   "Use incognito: new messages aren't saved to your history":
     "Gizli modu kullan: yeni mesajlar geçmişinize kaydedilmez",
   "Ask a follow-up": "Devam sorusu sorun",
@@ -234,15 +226,12 @@ export default {
   Helpful: "Faydalı",
   "Not helpful": "Faydalı değil",
   Quick: "Hızlı",
-  "Searches everything first, then answers fast":
-    "Önce her yeri arar, sonra hızlıca yanıtlar",
+  "Searches everything first, then answers fast": "Önce her yeri arar, sonra hızlıca yanıtlar",
   Research: "Araştırma",
-  "Thinks longer and searches step by step":
-    "Daha uzun düşünür ve adım adım arar",
+  "Thinks longer and searches step by step": "Daha uzun düşünür ve adım adım arar",
   "Type / for modes": "Modlar için / yazın",
   "Type @ for sources": "Kaynaklar için @ yazın",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}” silinsin mi? Bu işlem geri alınamaz.",
+  'Delete "{title}"? This can\'t be undone.': "“{title}” silinsin mi? Bu işlem geri alınamaz.",
   "Qur'an text": "Kur'an metni",
   "Verse links": "Ayet bağlantıları",
   "Hadith explanations": "Hadis şerhleri",

@@ -7,9 +7,7 @@ import { authClient } from "@/lib/auth";
 import { useChatState } from "@/lib/chat-state";
 import { colors } from "@/theme";
 
-export const DrawerPanel: FC<DrawerContentComponentProps> = ({
-  navigation,
-}) => {
+export const DrawerPanel: FC<DrawerContentComponentProps> = ({ navigation }) => {
   const { data } = authClient.useSession();
   const newChat = useChatState((s) => s.newChat);
 
@@ -32,10 +30,7 @@ export const DrawerPanel: FC<DrawerContentComponentProps> = ({
           <Text style={styles.email} numberOfLines={1}>
             {data.user.email}
           </Text>
-          <Pressable
-            style={styles.row}
-            onPress={() => void authClient.signOut()}
-          >
+          <Pressable style={styles.row} onPress={() => void authClient.signOut()}>
             <LogOut size={18} color={colors.muted} />
             <Text style={styles.muted}>Sign out</Text>
           </Pressable>

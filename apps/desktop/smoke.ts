@@ -4,9 +4,7 @@ const PORT = 9339;
 const Targets = z.array(z.object({ type: z.string(), url: z.string() }));
 
 const pageUrl = async () => {
-  const response = await fetch(`http://127.0.0.1:${PORT}/json/list`).catch(
-    () => undefined,
-  );
+  const response = await fetch(`http://127.0.0.1:${PORT}/json/list`).catch(() => undefined);
   if (!response?.ok) return undefined;
   const targets = Targets.parse(await response.json());
   return targets.find((target) => target.type === "page")?.url;
@@ -22,11 +20,7 @@ const waitForPage = async (
   return waitForPage(matches, deadline);
 };
 
-const expectPage = async (
-  app: string,
-  flags: string[],
-  matches: (url: string) => boolean,
-) => {
+const expectPage = async (app: string, flags: string[], matches: (url: string) => boolean) => {
   const child = Bun.spawn([app, `--remote-debugging-port=${PORT}`, ...flags]);
   const url = await waitForPage(matches, Date.now() + 60_000);
   child.kill();

@@ -1,11 +1,5 @@
 import { expect, test } from "bun:test";
-import {
-  bestPieces,
-  hadithBlock,
-  pageText,
-  quranBlock,
-  unvowel,
-} from "../../src/chat/compact";
+import { bestPieces, hadithBlock, pageText, quranBlock, unvowel } from "../../src/chat/compact";
 
 test("unvowel drops vowel marks but keeps letters, hamzas and digits", () => {
   expect(unvowel("إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ ٣")).toBe("إنما الأعمال بالنيات ٣");
@@ -34,9 +28,7 @@ test("every verse keeps its Arabic, and hadith Arabic is unvowelled", () => {
       grade: "Sahih",
     },
   ]);
-  expect(hadith).toBe(
-    "## hadith\n[3] Sahih al-Bukhari 1 (Sahih)\nإنما الأعمال بالنيات",
-  );
+  expect(hadith).toBe("## hadith\n[3] Sahih al-Bukhari 1 (Sahih)\nإنما الأعمال بالنيات");
 });
 
 test("a long hadith reaches the model whole, with the collector's verdict", () => {
@@ -80,8 +72,7 @@ test("a page loses its menus, buttons, footnote links and repeated captions", ()
 
 test("a long text keeps the pieces that carry the query words, in page order", () => {
   const filler = "Prayer times are fixed for every Muslim. ".repeat(12);
-  const ruling =
-    "The traveller may combine Dhuhr and Asr in the time of either one.";
+  const ruling = "The traveller may combine Dhuhr and Asr in the time of either one.";
   const text = `${filler}\n${ruling}\nAnd Allah knows best.`;
   expect(bestPieces("Short text.", ["combine"], 100)).toBe("Short text.");
   const kept = bestPieces(text, ["combine dhuhr asr"], 300);

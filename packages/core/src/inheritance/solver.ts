@@ -53,10 +53,7 @@ const SIBLINGS_WITH_GRANDFATHER: readonly HeirKey[] = [
   "paternal_brother",
   "paternal_sister",
 ];
-const MATERNAL_SIBLINGS: readonly HeirKey[] = [
-  "maternal_brother",
-  "maternal_sister",
-];
+const MATERNAL_SIBLINGS: readonly HeirKey[] = ["maternal_brother", "maternal_sister"];
 const AKDARIYYAH_HEIRS = new Set<HeirKey>([
   "husband",
   "mother",
@@ -82,19 +79,10 @@ const split = (
   source: string,
 ) => {
   const live = weights.filter(([heir]) => context.live(heir));
-  const sum = live.reduce(
-    (acc, [heir, weight]) => acc + weight * context.n(heir),
-    0,
-  );
+  const sum = live.reduce((acc, [heir, weight]) => acc + weight * context.n(heir), 0);
   if (!isPositive(share) || sum === 0) return [];
   return live.map(([heir, weight]) =>
-    part(
-      heir,
-      kind,
-      times(share, fraction(weight * context.n(heir), sum)),
-      reason,
-      source,
-    ),
+    part(heir, kind, times(share, fraction(weight * context.n(heir), sum)), reason, source),
   );
 };
 
@@ -103,9 +91,7 @@ const fardParts = (context: Context, groups: readonly FardGroup[]) => {
   for (const group of groups) {
     const taken = total(parts.map((entry) => entry.fraction));
     const members = group.members.filter(context.live);
-    const rule = group.rules.find((candidate) =>
-      candidate.when(context, taken),
-    );
+    const rule = group.rules.find((candidate) => candidate.when(context, taken));
     if (members.length > 0 && rule?.share) {
       parts.push(
         ...split(
@@ -126,15 +112,12 @@ const grandfatherWithSiblings = (context: Context, others: Fraction) => {
   const remainder = minus(ONE, others);
   const n = context.n;
   const units =
-    2 * (n("full_brother") + n("paternal_brother")) +
-    n("full_sister") +
-    n("paternal_sister");
+    2 * (n("full_brother") + n("paternal_brother")) + n("full_sister") + n("paternal_sister");
   const options = [
     {
       kind: "muqasama" as const,
       value: times(remainder, fraction(2, 2 + units)),
-      reason:
-        "shares with the siblings as if he were a brother, which is best for him here",
+      reason: "shares with the siblings as if he were a brother, which is best for him here",
     },
     {
       kind: "muqasama" as const,
@@ -150,19 +133,12 @@ const grandfatherWithSiblings = (context: Context, others: Fraction) => {
   const best = options.reduce((chosen, option) =>
     compare(option.value, chosen.value) > 0 ? option : chosen,
   );
-  const portion = isPositive(minus(remainder, best.value))
-    ? minus(remainder, best.value)
-    : ZERO;
+  const portion = isPositive(minus(remainder, best.value)) ? minus(remainder, best.value) : ZERO;
   const hasFull = n("full_brother") + n("full_sister") > 0;
   const uncapped = n("full_brother") > 0 || context.femaleDescendant;
   const sisterFard = n("full_sister") === 1 ? fraction(1, 2) : fraction(2, 3);
-  const fullShare = hasFull
-    ? uncapped
-      ? portion
-      : smaller(portion, sisterFard)
-    : ZERO;
-  const reason =
-    "Takes what remains with the grandfather, who shares as a brother would";
+  const fullShare = hasFull ? (uncapped ? portion : smaller(portion, sisterFard)) : ZERO;
+  const reason = "Takes what remains with the grandfather, who shares as a brother would";
   return [
     ...split(
       context,
@@ -197,22 +173,13 @@ const grandfatherWithSiblings = (context: Context, others: Fraction) => {
   ];
 };
 
-const asabaParts = (
-  context: Context,
-  remainder: Fraction,
-  skip: readonly HeirKey[],
-) => {
+const asabaParts = (context: Context, remainder: Fraction, skip: readonly HeirKey[]) => {
   const chosen = ASABA_CLASSES.filter(
-    (candidate) =>
-      ![...candidate.males, ...candidate.females].some((heir) =>
-        skip.includes(heir),
-      ),
+    (candidate) => ![...candidate.males, ...candidate.females].some((heir) => skip.includes(heir)),
   ).find(
     (candidate) =>
       candidate.males.some(context.live) ||
-      (candidate.femalesAlone &&
-        context.femaleDescendant &&
-        candidate.females.some(context.live)),
+      (candidate.femalesAlone && context.femaleDescendant && candidate.females.some(context.live)),
   );
   if (chosen === undefined) return [];
   return split(
@@ -244,9 +211,7 @@ const raddParts = (parts: readonly Part[], surplus: Fraction) => {
 };
 
 const akdariyyahParts = (context: Context) => {
-  const sister = context.live("full_sister")
-    ? "full_sister"
-    : "paternal_sister";
+  const sister = context.live("full_sister") ? "full_sister" : "paternal_sister";
   const reason =
     "Al-Akdariyyah: the sister is given a half, then she and the grandfather pool their shares and split them two to one";
   return [
@@ -257,20 +222,8 @@ const akdariyyahParts = (context: Context) => {
       "A half, reduced by 'awl to a third (3 of 9)",
       SOURCES.spouses,
     ),
-    part(
-      "mother",
-      "fard",
-      fraction(2, 9),
-      "A third, reduced by 'awl to 2 of 9",
-      SOURCES.children,
-    ),
-    part(
-      "paternal_grandfather",
-      "muqasama",
-      fraction(8, 27),
-      reason,
-      SOURCES.grandfather,
-    ),
+    part("mother", "fard", fraction(2, 9), "A third, reduced by 'awl to 2 of 9", SOURCES.children),
+    part("paternal_grandfather", "muqasama", fraction(8, 27), reason, SOURCES.grandfather),
     part(sister, "muqasama", fraction(4, 27), reason, SOURCES.siblings),
   ];
 };
@@ -282,8 +235,7 @@ export const solve = (heirs: Heirs): Solution => {
   const facts = factsOf(heirs);
   const exclusions = new Map(
     heirKeys.flatMap((heir) => {
-      const reason =
-        facts.n(heir) > 0 ? exclusionReason(heir, facts) : undefined;
+      const reason = facts.n(heir) > 0 ? exclusionReason(heir, facts) : undefined;
       return reason === undefined ? [] : [[heir, reason] as const];
     }),
   );
@@ -293,15 +245,11 @@ export const solve = (heirs: Heirs): Solution => {
   };
   const excluded = [...exclusions].map(([heir, reason]) => ({ heir, reason }));
   const rules = new Set<RuleId>();
-  const steps = excluded.map(
-    ({ heir, reason }) => `${HEIR_LABELS[heir]}: ${reason}`,
-  );
+  const steps = excluded.map(({ heir, reason }) => `${HEIR_LABELS[heir]}: ${reason}`);
 
   const siblingsPresent = SIBLINGS_WITH_GRANDFATHER.filter(context.live);
   const akdariyyah =
-    heirKeys.every(
-      (heir) => AKDARIYYAH_HEIRS.has(heir) || facts.n(heir) === 0,
-    ) &&
+    heirKeys.every((heir) => AKDARIYYAH_HEIRS.has(heir) || facts.n(heir) === 0) &&
     facts.n("husband") === 1 &&
     facts.n("mother") === 1 &&
     facts.n("paternal_grandfather") === 1 &&
@@ -320,16 +268,13 @@ export const solve = (heirs: Heirs): Solution => {
     };
   }
 
-  const shared =
-    context.live("paternal_grandfather") && siblingsPresent.length > 0;
+  const shared = context.live("paternal_grandfather") && siblingsPresent.length > 0;
   const skip: readonly HeirKey[] = shared
     ? ["paternal_grandfather", ...SIBLINGS_WITH_GRANDFATHER]
     : [];
   const fixedParts = fardParts(
     context,
-    FARD_GROUPS.filter(
-      (group) => !group.members.some((heir) => skip.includes(heir)),
-    ),
+    FARD_GROUPS.filter((group) => !group.members.some((heir) => skip.includes(heir))),
   );
   if (shared) rules.add("grandfather_with_siblings");
   if (facts.n("mother") > 0 && !facts.descendant && facts.siblings >= 2) {
@@ -342,10 +287,7 @@ export const solve = (heirs: Heirs): Solution => {
   const withShared = shared
     ? [
         ...fixedParts,
-        ...grandfatherWithSiblings(
-          context,
-          total(fixedParts.map((entry) => entry.fraction)),
-        ),
+        ...grandfatherWithSiblings(context, total(fixedParts.map((entry) => entry.fraction))),
       ]
     : fixedParts;
   steps.push(...withShared.map(describe));
@@ -377,9 +319,7 @@ export const solve = (heirs: Heirs): Solution => {
     );
     if (context.live("full_brother") && maternal >= 2) {
       rules.add("mushtaraka");
-      steps.push(
-        "Nothing remains for the full brothers after the fixed shares (al-Mushtarakah).",
-      );
+      steps.push("Nothing remains for the full brothers after the fixed shares (al-Mushtarakah).");
     }
     return {
       parts: withShared,

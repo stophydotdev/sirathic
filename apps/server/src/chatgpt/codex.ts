@@ -1,7 +1,4 @@
-import {
-  createOpenAI,
-  type OpenAILanguageModelResponsesOptions,
-} from "@ai-sdk/openai";
+import { createOpenAI, type OpenAILanguageModelResponsesOptions } from "@ai-sdk/openai";
 import type { streamText } from "ai";
 import { z } from "zod";
 import { StatusError } from "../respond";
@@ -10,22 +7,12 @@ import { CODEX_API, codexFetch } from "./device";
 
 export const DEFAULT_MODEL = "gpt-6-luna";
 
-export type ProviderOptions = NonNullable<
-  Parameters<typeof streamText>[0]["providerOptions"]
->;
+export type ProviderOptions = NonNullable<Parameters<typeof streamText>[0]["providerOptions"]>;
 
 export type Model = {
   slug: string;
   name: string;
-  maker:
-    | "sirathic"
-    | "openai"
-    | "anthropic"
-    | "google"
-    | "deepseek"
-    | "zhipu"
-    | "qwen"
-    | "xiaomi";
+  maker: "sirathic" | "openai" | "anthropic" | "google" | "deepseek" | "zhipu" | "qwen" | "xiaomi";
 };
 
 const modelsResponse = z.object({
@@ -69,10 +56,7 @@ export async function models(user: ChatGPTUser): Promise<Model[]> {
     }));
 }
 
-export const answerOptions = (turn: {
-  research: boolean;
-  sessionId: string;
-}): ProviderOptions => ({
+export const answerOptions = (turn: { research: boolean; sessionId: string }): ProviderOptions => ({
   openai: {
     store: false,
     include: ["reasoning.encrypted_content"],

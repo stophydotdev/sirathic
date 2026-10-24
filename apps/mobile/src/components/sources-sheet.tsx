@@ -1,14 +1,7 @@
 import type { Source } from "@sirathic/server/sources";
 import * as WebBrowser from "expo-web-browser";
 import type { FC } from "react";
-import {
-  FlatList,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { siteName } from "@/lib/sources";
 import { colors } from "@/theme";
 
@@ -34,13 +27,8 @@ export const SourcesSheet: FC<{
         data={sources}
         keyExtractor={(item) => item.url}
         renderItem={({ item, index }) => (
-          <Pressable
-            style={styles.row}
-            onPress={() => WebBrowser.openBrowserAsync(item.url)}
-          >
-            <Text
-              style={styles.site}
-            >{`${index + 1}. ${siteName(item.url)}`}</Text>
+          <Pressable style={styles.row} onPress={() => WebBrowser.openBrowserAsync(item.url)}>
+            <Text style={styles.site}>{`${index + 1}. ${siteName(item.url)}`}</Text>
             <Text style={styles.sourceTitle} numberOfLines={2}>
               {item.title}
             </Text>

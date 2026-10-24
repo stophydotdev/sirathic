@@ -14,12 +14,9 @@ export const quranGetInput = z
     to: z.number().int().min(1).max(LONGEST_SURAH).optional(),
     context: z.number().int().min(0).max(10).default(0),
   })
-  .refine(
-    ({ from, to }) => to === undefined || (from !== undefined && to >= from),
-    {
-      message: "to needs from, and must not be before it",
-    },
-  );
+  .refine(({ from, to }) => to === undefined || (from !== undefined && to >= from), {
+    message: "to needs from, and must not be before it",
+  });
 
 const verseColumns = {
   id: verses.id,
@@ -37,13 +34,7 @@ const selectVerses = () =>
     .select(verseColumns)
     .from(verses)
     .innerJoin(surahs, eq(verses.surah, surahs.number))
-    .leftJoin(
-      texts,
-      and(
-        eq(texts.ref, verses.id),
-        eq(texts.source, "quranenc-arabic_moyassar"),
-      ),
-    );
+    .leftJoin(texts, and(eq(texts.ref, verses.id), eq(texts.source, "quranenc-arabic_moyassar")));
 
 export const tafsirEnFor = async (verseIds: string[]) => {
   if (verseIds.length === 0) return [];
@@ -62,18 +53,10 @@ export const tafsirEnFor = async (verseIds: string[]) => {
         between(verses.ayah, tafsirPassages.fromAyah, tafsirPassages.toAyah),
       ),
     )
-    .where(
-      and(
-        eq(tafsirPassages.source, "cps-tazkirul_quran"),
-        inArray(verses.id, verseIds),
-      ),
-    )
+    .where(and(eq(tafsirPassages.source, "cps-tazkirul_quran"), inArray(verses.id, verseIds)))
     .orderBy(asc(tafsirPassages.surah), asc(tafsirPassages.fromAyah));
   return rows.map(({ surah, fromAyah, toAyah, text }) => ({
-    verses:
-      fromAyah === toAyah
-        ? `${surah}:${fromAyah}`
-        : `${surah}:${fromAyah}-${toAyah}`,
+    verses: fromAyah === toAyah ? `${surah}:${fromAyah}` : `${surah}:${fromAyah}-${toAyah}`,
     text,
   }));
 };
@@ -101,10 +84,7 @@ export const quranGet = async (input: z.input<typeof quranGetInput>) => {
     tafsirEn: await tafsirEnFor(shown.map((row) => row.id)),
     verses: shown.map((row) =>
       Object.assign(row, {
-        isContext:
-          from !== undefined &&
-          to !== undefined &&
-          (row.ayah < from || row.ayah > to),
+        isContext: from !== undefined && to !== undefined && (row.ayah < from || row.ayah > to),
       }),
     ),
   };

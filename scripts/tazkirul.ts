@@ -12,8 +12,7 @@ const COLUMN_WIDTH = 300;
 const SAME_LINE = 4;
 const PARAGRAPH_GAP = 21;
 const INDEX_HEADING = "I N D E X";
-const BISMILLAH =
-  /^(In the name of God,?|the Most Gracious, the Most Merciful)$/u;
+const BISMILLAH = /^(In the name of God,?|the Most Gracious, the Most Merciful)$/u;
 const ENTITIES = new Map([
   ["amp", "&"],
   ["lt", "<"],
@@ -88,8 +87,7 @@ const textOf = (items: Item[]) =>
 
 const isNote = (item: Item) => item.size <= NOTE_SIZE;
 
-const isVerseNumber = (item: Item) =>
-  isNote(item) && /^\d+$/u.test(item.text.trim());
+const isVerseNumber = (item: Item) => isNote(item) && /^\d+$/u.test(item.text.trim());
 
 const letterOf = (item: Item) =>
   isNote(item) ? /^([a-z])\1*$/u.exec(item.text.trim())?.[1] : undefined;
@@ -102,8 +100,7 @@ const widen = (verses: Verses, notes: Note[]) => {
 const joinHyphens = (passages: Passage[]) => {
   const words = new Set(
     passages.flatMap(
-      ({ commentary }) =>
-        commentary.toLowerCase().match(/[a-z]+(?:-[a-z]+)*/gu) ?? [],
+      ({ commentary }) => commentary.toLowerCase().match(/[a-z]+(?:-[a-z]+)*/gu) ?? [],
     ),
   );
   return passages.map((passage) =>
@@ -111,8 +108,7 @@ const joinHyphens = (passages: Passage[]) => {
       commentary: passage.commentary.replaceAll(
         /([A-Za-z]+)- ([a-z]+)/gu,
         (_, head: string, tail: string) =>
-          words.has(`${head}${tail}`.toLowerCase()) &&
-          !words.has(`${head}-${tail}`.toLowerCase())
+          words.has(`${head}${tail}`.toLowerCase()) && !words.has(`${head}-${tail}`.toLowerCase())
             ? `${head}${tail}`
             : `${head}-${tail}`,
       ),
@@ -122,9 +118,10 @@ const joinHyphens = (passages: Passage[]) => {
 
 const tazkirulPassages = (xml: string) => {
   const sizes = new Map(
-    [...xml.matchAll(/<fontspec id="(\d+)" size="(\d+)"/gu)].map(
-      ([, id = "", size]) => [id, Number(size)],
-    ),
+    [...xml.matchAll(/<fontspec id="(\d+)" size="(\d+)"/gu)].map(([, id = "", size]) => [
+      id,
+      Number(size),
+    ]),
   );
   const passages: Passage[] = [];
   const problems: string[] = [];
@@ -132,16 +129,10 @@ const tazkirulPassages = (xml: string) => {
   let surah = 0;
   let lastVerse = 0;
   let from: number | undefined;
-  let open:
-    | { passage: Passage; page: number; top: number | undefined }
-    | undefined;
+  let open: { passage: Passage; page: number; top: number | undefined } | undefined;
   const start = (verses: Verses, commentary: string) => {
     const last = passages.at(-1);
-    if (
-      last?.surah === verses.surah &&
-      last.from === verses.from &&
-      last.to === verses.to
-    ) {
+    if (last?.surah === verses.surah && last.from === verses.from && last.to === verses.to) {
       last.commentary += `\n\n${commentary}`;
       return last;
     }
@@ -220,11 +211,8 @@ const tazkirulPassages = (xml: string) => {
             from ??= lastVerse;
           } else if (note !== undefined) {
             const verses = { surah, from: from ?? lastVerse, to: lastVerse };
-            const repeated = pending.find(
-              (other) => other.page === page && other.letter === note,
-            );
-            if (repeated === undefined)
-              pending.push({ page, letter: note, verses });
+            const repeated = pending.find((other) => other.page === page && other.letter === note);
+            if (repeated === undefined) pending.push({ page, letter: note, verses });
             else widen(repeated.verses, [{ page, letter: note, verses }]);
             from = undefined;
           } else if (lastVerse > 0) {
@@ -234,13 +222,10 @@ const tazkirulPassages = (xml: string) => {
         continue;
       }
       if (open === undefined) {
-        problems.push(
-          `page ${page + 1}: commentary text with no note: ${text.slice(0, 60)}`,
-        );
+        problems.push(`page ${page + 1}: commentary text with no note: ${text.slice(0, 60)}`);
         continue;
       }
-      const breaks =
-        open.top !== undefined && first.top - open.top > PARAGRAPH_GAP;
+      const breaks = open.top !== undefined && first.top - open.top > PARAGRAPH_GAP;
       open.passage.commentary += `${breaks ? "\n\n" : " "}${text}`;
       open.top = first.top;
     }
@@ -251,8 +236,7 @@ const tazkirulPassages = (xml: string) => {
 
 export const tazkirulQuran = async () => {
   const response = await fetch(TAZKIRUL_PDF);
-  if (!response.ok)
-    throw new Error(`${TAZKIRUL_PDF} answered HTTP ${response.status}`);
+  if (!response.ok) throw new Error(`${TAZKIRUL_PDF} answered HTTP ${response.status}`);
   const folder = await mkdtemp(join(tmpdir(), "tazkirul-"));
   try {
     const pdf = join(folder, "book.pdf");

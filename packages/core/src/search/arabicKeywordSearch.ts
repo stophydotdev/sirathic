@@ -66,9 +66,7 @@ export const arabicKeywordIds = async (
   const found = groups.filter((group) => group.count > 0);
   if (found.length === 0) return [];
   const rare = found.filter((group) => group.count < total * COMMON_SHARE);
-  const required = (rare.length > 0 ? rare : found)
-    .map((group) => `(${group.terms})`)
-    .join(" | ");
+  const required = (rare.length > 0 ? rare : found).map((group) => `(${group.terms})`).join(" | ");
   const score = sql.join(
     found.map(
       (group) =>

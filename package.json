@@ -2,20 +2,20 @@
   "name": "sirathic",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
+  "type": "module",
   "scripts": {
     "dev": "bun run --parallel --filter @sirathic/server --filter web dev",
     "start": "bun run --filter @sirathic/server start",
     "typecheck": "tsc-rs --noEmit",
     "test": "bun test",
-    "lint": "oxlint && biome check && bun run lint:dashes",
+    "lint": "oxlint && oxfmt --check && bun run lint:dashes",
     "lint:dashes": "! git grep -nIP --untracked '\\x{2014}' -- ':!apps/web/AGENTS.md' ':!apps/server/src/chat/prompt.ts'",
-    "lint:fix": "oxlint --fix && biome check --write",
-    "format": "biome format --write",
+    "lint:fix": "oxlint --fix && oxfmt",
+    "format": "oxfmt",
     "knip": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local ./node_modules/.bin/knip",
     "search": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/search.ts",
     "fetch": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local scripts/fetch.ts",
@@ -45,12 +45,12 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.4",
     "@oxlint/plugins": "1.88.0",
     "@types/bun": "^1.4.3",
     "@types/node": "^20",
     "drizzle-kit": "^0.31.11",
     "knip": "6.41.0",
+    "oxfmt": "0.63.0",
     "oxlint": "1.88.0",
     "tsc-rs": "0.7.0",
     "typescript": "7"

@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathicলৈ উভতি যাওক",
   Brand: "ব্ৰেণ্ড",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathicৰ ল'গ', ৰং আৰু ব্যৱহাৰৰ নিৰ্দেশনা।",
+  "Logos, colors and guidelines for Sirathic.": "Sirathicৰ ল'গ', ৰং আৰু ব্যৱহাৰৰ নিৰ্দেশনা।",
   "Brand assets": "ব্ৰেণ্ড ফাইল",
   "Download our logos and follow the guidelines below.":
     "আমাৰ ল'গ'বোৰ ডাউনল'ড কৰক আৰু তলৰ নিৰ্দেশনা মানি চলক।",
@@ -101,15 +100,12 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "অনুবাদৰ কাষত আয়াত আৰু হাদীছ আৰবীত উদ্ধৃত কৰক",
   "Incognito by default": "ডিফল্টভাৱে ইনকগনিট'",
-  "New chats start in incognito and aren't saved":
-    "নতুন চেট ইনকগনিট'ত আৰম্ভ হয় আৰু ছেভ নহয়",
+  "New chats start in incognito and aren't saved": "নতুন চেট ইনকগনিট'ত আৰম্ভ হয় আৰু ছেভ নহয়",
   "Export my chats": "মোৰ চেট এক্সপ'ৰ্ট কৰক",
-  "Download every saved chat as a file":
-    "ছেভ কৰা সকলো চেট এটা ফাইল হিচাপে ডাউনল'ড কৰক",
+  "Download every saved chat as a file": "ছেভ কৰা সকলো চেট এটা ফাইল হিচাপে ডাউনল'ড কৰক",
   Export: "এক্সপ'ৰ্ট",
   "Delete all chats": "সকলো চেট মচক",
-  "Delete every saved chat? This can't be undone.":
-    "ছেভ কৰা সকলো চেট মচিবনে? ইয়াক ঘূৰাই আনিব নোৱাৰি।",
+  "Delete every saved chat? This can't be undone.": "ছেভ কৰা সকলো চেট মচিবনে? ইয়াক ঘূৰাই আনিব নোৱাৰি।",
   "Removes every saved chat": "ছেভ কৰা সকলো চেট আঁতৰায়",
   "Delete all": "সকলো মচক",
   "From your ChatGPT account": "আপোনাৰ ChatGPT একাউণ্টৰ পৰা",
@@ -134,12 +130,10 @@ export default {
     "প্ৰথমবাৰ? ChatGPT → Settings → Securityত ডিভাইচ ক'ডেৰে ছাইন-ইন অন কৰক। ChatGPTত Codex লিখা দেখিব, সেয়া স্বাভাৱিক।",
   "Continue with ChatGPT": "ChatGPTৰে আগবাঢ়ক",
   "Continue with Google": "Googleৰে আগবাঢ়ক",
-  "Use your ChatGPT plan for GPT models":
-    "GPT মডেলৰ বাবে আপোনাৰ ChatGPT প্লেন ব্যৱহাৰ কৰক",
+  "Use your ChatGPT plan for GPT models": "GPT মডেলৰ বাবে আপোনাৰ ChatGPT প্লেন ব্যৱহাৰ কৰক",
   "Get a new code": "নতুন ক'ড লওক",
   "Try again": "আকৌ চেষ্টা কৰক",
-  "Your question stays in the box while you sign in.":
-    "ছাইন ইন কৰোঁতে আপোনাৰ প্ৰশ্ন বাকচতে থাকিব।",
+  "Your question stays in the box while you sign in.": "ছাইন ইন কৰোঁতে আপোনাৰ প্ৰশ্ন বাকচতে থাকিব।",
   "Copy code": "ক'ড কপি কৰক",
   "Sign In": "ছাইন ইন",
   "Account menu": "একাউণ্ট মেনু",
@@ -147,16 +141,14 @@ export default {
   "Google account": "Google একাউণ্ট",
   Incognito: "ইনকগনিট'",
   "All settings": "সকলো ছেটিংছ",
-  "Assalamu alaikum. Sign in to start asking.":
-    "আচ্ছালামু আলাইকুম। প্ৰশ্ন সুধিবলৈ ছাইন ইন কৰক।",
+  "Assalamu alaikum. Sign in to start asking.": "আচ্ছালামু আলাইকুম। প্ৰশ্ন সুধিবলৈ ছাইন ইন কৰক।",
   "Enter this code on ChatGPT": "এই ক'ডটো ChatGPTত দিয়ক",
   "Code expired": "ক'ডৰ ম্যাদ উকলিল",
   "Sign-in didn't work": "ছাইন ইন নহ'ল",
   "{count} views": "{count} বাৰ চোৱা হৈছে",
   "Results for:": "ফলাফল:",
   "Searching…": "বিচাৰি আছে…",
-  "The search failed. Try this tab again later.":
-    "বিচৰা বিফল হ'ল। পিছত এই টেবটো আকৌ চেষ্টা কৰক।",
+  "The search failed. Try this tab again later.": "বিচৰা বিফল হ'ল। পিছত এই টেবটো আকৌ চেষ্টা কৰক।",
   "Expand sidebar": "চাইডবাৰ বহল কৰক",
   "Collapse sidebar": "চাইডবাৰ সংকুচিত কৰক",
   New: "নতুন",
@@ -167,8 +159,7 @@ export default {
   "New chat": "নতুন চেট",
   "Copy a link to this chat": "এই চেটৰ লিংক কপি কৰক",
   Share: "শ্বেয়াৰ",
-  "Incognito is on: new messages aren't saved":
-    "ইনকগনিট' অন আছে: নতুন বাৰ্তা ছেভ নহয়",
+  "Incognito is on: new messages aren't saved": "ইনকগনিট' অন আছে: নতুন বাৰ্তা ছেভ নহয়",
   "Use incognito: new messages aren't saved to your history":
     "ইনকগনিট' ব্যৱহাৰ কৰক: নতুন বাৰ্তা আপোনাৰ ইতিহাসত ছেভ নহয়",
   "Ask a follow-up": "পিছৰ প্ৰশ্ন সোধক",
@@ -230,14 +221,12 @@ export default {
   Helpful: "সহায়ক",
   "Not helpful": "সহায়ক নহয়",
   Quick: "দ্ৰুত",
-  "Searches everything first, then answers fast":
-    "প্ৰথমে সকলোতে বিচাৰে, তাৰ পিছত সোনকালে উত্তৰ দিয়ে",
+  "Searches everything first, then answers fast": "প্ৰথমে সকলোতে বিচাৰে, তাৰ পিছত সোনকালে উত্তৰ দিয়ে",
   Research: "গৱেষণা",
   "Thinks longer and searches step by step": "অধিক সময় ভাবে আৰু খোজে খোজে বিচাৰে",
   "Type / for modes": "ম'ডৰ বাবে / টাইপ কৰক",
   "Type @ for sources": "উৎসৰ বাবে @ টাইপ কৰক",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}” মচিবনে? ইয়াক ঘূৰাই আনিব নোৱাৰি।",
+  'Delete "{title}"? This can\'t be undone.': "“{title}” মচিবনে? ইয়াক ঘূৰাই আনিব নোৱাৰি।",
   "Qur'an text": "কোৰআনৰ পাঠ",
   "Verse links": "আয়াতৰ লিংক",
   "Hadith explanations": "হাদীছৰ ব্যাখ্যা",

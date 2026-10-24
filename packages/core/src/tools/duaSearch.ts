@@ -44,10 +44,7 @@ export const duaSearch = async (input: z.input<typeof duaSearchInput>) => {
     .leftJoin(hadiths, eq(hadiths.id, duas.hadithId))
     .where(inArray(duas.id, ids));
   const byId = new Map(
-    rows.map(({ hadith, ...dua }) => [
-      dua.id,
-      { ...dua, hadithId: hadith && citableId(hadith) },
-    ]),
+    rows.map(({ hadith, ...dua }) => [dua.id, { ...dua, hadithId: hadith && citableId(hadith) }]),
   );
   return { duas: ids.flatMap((id) => byId.get(id) ?? []) };
 };

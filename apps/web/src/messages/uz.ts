@@ -62,8 +62,7 @@ export default {
   "Same as my question": "Саволим тили",
   "Same as my browser": "Браузерим тили",
   "Not signed in": "Кирилмаган",
-  "Sign in to ask and keep your chats":
-    "Савол бериш ва суҳбатларни сақлаш учун киринг",
+  "Sign in to ask and keep your chats": "Савол бериш ва суҳбатларни сақлаш учун киринг",
   "Sign in": "Кириш",
   "Signed in with ChatGPT": "ChatGPT орқали кирилган",
   "Signed in with Google": "Google орқали кирилган",
@@ -79,15 +78,13 @@ export default {
   "Signs you out on this browser": "Бу браузерда ҳисобдан чиқаради",
   Appearance: "Кўриниш",
   Language: "Тил",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic менюлари ва тугмаларининг тили",
+  "The language of Sirathic's menus and buttons": "Sirathic менюлари ва тугмаларининг тили",
   Theme: "Мавзу",
   "How Sirathic looks on this device": "Sirathic бу қурилмада қандай кўриниши",
   Asking: "Савол бериш",
   "Default mode": "Асосий режим",
   "Suggestions while typing": "Ёзаётганда таклифлар",
-  "Show suggested questions under the box":
-    "Майдон остида таклиф этилган саволларни кўрсатиш",
+  "Show suggested questions under the box": "Майдон остида таклиф этилган саволларни кўрсатиш",
   "Sign in to personalize answers.": "Жавобларни мослаштириш учун киринг.",
   "What should Sirathic call you?": "Sirathic сизга қандай мурожаат қилсин?",
   "Your name": "Исмингиз",
@@ -107,8 +104,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Янги суҳбатлар инкогнито режимида бошланади ва сақланмайди",
   "Export my chats": "Суҳбатларимни экспорт қилиш",
-  "Download every saved chat as a file":
-    "Барча сақланган суҳбатларни файл сифатида юклаб олиш",
+  "Download every saved chat as a file": "Барча сақланган суҳбатларни файл сифатида юклаб олиш",
   Export: "Экспорт",
   "Delete all chats": "Барча суҳбатларни ўчириш",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +133,7 @@ export default {
     "Биринчи мартами? ChatGPT → Созламалар → Хавфсизлик бўлимида қурилма коди орқали киришни ёқинг. ChatGPT Codex деб ёзади, бу одатий.",
   "Continue with ChatGPT": "ChatGPT орқали давом этиш",
   "Continue with Google": "Google орқали давом этиш",
-  "Use your ChatGPT plan for GPT models":
-    "GPT моделлари учун ChatGPT тарифингиздан фойдаланинг",
+  "Use your ChatGPT plan for GPT models": "GPT моделлари учун ChatGPT тарифингиздан фойдаланинг",
   "Get a new code": "Янги код олиш",
   "Try again": "Қайта уриниш",
   "Your question stays in the box while you sign in.":
@@ -170,8 +165,7 @@ export default {
   "New chat": "Янги суҳбат",
   "Copy a link to this chat": "Бу суҳбат ҳаволасидан нусха олиш",
   Share: "Улашиш",
-  "Incognito is on: new messages aren't saved":
-    "Инкогнито ёқилган: янги хабарлар сақланмайди",
+  "Incognito is on: new messages aren't saved": "Инкогнито ёқилган: янги хабарлар сақланмайди",
   "Use incognito: new messages aren't saved to your history":
     "Инкогнито: янги хабарлар тарихингизга сақланмайди",
   "Ask a follow-up": "Қўшимча савол беринг",
@@ -186,8 +180,7 @@ export default {
   "Searching hadith for {detail}": "Ҳадислардан қидирилмоқда: {detail}",
   "Reading hadith": "Ҳадислар ўқилмоқда",
   "Checking the hadith {detail}": "Ҳадис текширилмоқда: {detail}",
-  "Searching fiqh books for {detail}":
-    "Фиқҳ китобларидан қидирилмоқда: {detail}",
+  "Searching fiqh books for {detail}": "Фиқҳ китобларидан қидирилмоқда: {detail}",
   "Reading fiqh books": "Фиқҳ китоблари ўқилмоқда",
   "Finding duas for {detail}": "Дуолар қидирилмоқда: {detail}",
   "Looking up {detail}": "Қидирилмоқда: {detail}",
@@ -237,12 +230,10 @@ export default {
   "Searches everything first, then answers fast":
     "Аввал ҳамма жойдан қидиради, кейин тез жавоб беради",
   Research: "Тадқиқот",
-  "Thinks longer and searches step by step":
-    "Узоқроқ ўйлайди ва босқичма-босқич қидиради",
+  "Thinks longer and searches step by step": "Узоқроқ ўйлайди ва босқичма-босқич қидиради",
   "Type / for modes": "Режимлар учун / ёзинг",
   "Type @ for sources": "Манбалар учун @ ёзинг",
-  'Delete "{title}"? This can\'t be undone.':
-    "«{title}» ўчирилсинми? Буни қайтариб бўлмайди.",
+  'Delete "{title}"? This can\'t be undone.': "«{title}» ўчирилсинми? Буни қайтариб бўлмайди.",
   "Qur'an text": "Қуръон матни",
   "Verse links": "Оят ҳаволалари",
   "Hadith explanations": "Ҳадис шарҳлари",

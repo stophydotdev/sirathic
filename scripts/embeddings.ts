@@ -52,10 +52,7 @@ export const EMBEDDED = {
 
 type Embedded = (typeof EMBEDDED)[keyof typeof EMBEDDED];
 
-export const keepEmbeddings = async (
-  tx: Transaction,
-  { table, text }: Embedded,
-) => {
+export const keepEmbeddings = async (tx: Transaction, { table, text }: Embedded) => {
   const kept = sql.identifier(`kept_${getTableName(table)}`);
   await tx.execute(
     sql`create temp table ${kept} on commit drop as select distinct on (text) ${text} as text, ${table.embedding} as embedding from ${table} where ${table.embedding} is not null`,

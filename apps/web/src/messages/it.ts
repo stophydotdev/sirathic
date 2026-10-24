@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Torna a Sirathic",
   Brand: "Identità",
-  "Logos, colors and guidelines for Sirathic.":
-    "Loghi, colori e regole d'uso di Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Loghi, colori e regole d'uso di Sirathic.",
   "Brand assets": "Risorse del marchio",
   "Download our logos and follow the guidelines below.":
     "Scarica i nostri loghi e segui le regole qui sotto.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Come la mia domanda",
   "Same as my browser": "Come il mio browser",
   "Not signed in": "Accesso non effettuato",
-  "Sign in to ask and keep your chats":
-    "Accedi per fare domande e conservare le tue chat",
+  "Sign in to ask and keep your chats": "Accedi per fare domande e conservare le tue chat",
   "Sign in": "Accedi",
   "Signed in with ChatGPT": "Accesso effettuato con ChatGPT",
   "Signed in with Google": "Accesso effettuato con Google",
@@ -79,16 +77,13 @@ export default {
   "Signs you out on this browser": "Ti disconnette da questo browser",
   Appearance: "Aspetto",
   Language: "Lingua",
-  "The language of Sirathic's menus and buttons":
-    "La lingua dei menu e dei pulsanti di Sirathic",
+  "The language of Sirathic's menus and buttons": "La lingua dei menu e dei pulsanti di Sirathic",
   Theme: "Tema",
-  "How Sirathic looks on this device":
-    "L'aspetto di Sirathic su questo dispositivo",
+  "How Sirathic looks on this device": "L'aspetto di Sirathic su questo dispositivo",
   Asking: "Domande",
   "Default mode": "Modalità predefinita",
   "Suggestions while typing": "Suggerimenti durante la digitazione",
-  "Show suggested questions under the box":
-    "Mostra domande suggerite sotto la casella",
+  "Show suggested questions under the box": "Mostra domande suggerite sotto la casella",
   "Sign in to personalize answers.": "Accedi per personalizzare le risposte.",
   "What should Sirathic call you?": "Come deve chiamarti Sirathic?",
   "Your name": "Il tuo nome",
@@ -108,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Le nuove chat partono in incognito e non vengono salvate",
   "Export my chats": "Esporta le mie chat",
-  "Download every saved chat as a file":
-    "Scarica tutte le chat salvate in un file",
+  "Download every saved chat as a file": "Scarica tutte le chat salvate in un file",
   Export: "Esporta",
   "Delete all chats": "Elimina tutte le chat",
   "Delete every saved chat? This can't be undone.":
@@ -138,8 +132,7 @@ export default {
     "Prima volta? Attiva l'accesso con codice dispositivo in ChatGPT → Impostazioni → Sicurezza. ChatGPT mostrerà Codex: è normale.",
   "Continue with ChatGPT": "Continua con ChatGPT",
   "Continue with Google": "Continua con Google",
-  "Use your ChatGPT plan for GPT models":
-    "Usa il tuo piano ChatGPT per i modelli GPT",
+  "Use your ChatGPT plan for GPT models": "Usa il tuo piano ChatGPT per i modelli GPT",
   "Get a new code": "Ottieni un nuovo codice",
   "Try again": "Riprova",
   "Your question stays in the box while you sign in.":
@@ -234,15 +227,12 @@ export default {
   Helpful: "Utile",
   "Not helpful": "Non utile",
   Quick: "Rapida",
-  "Searches everything first, then answers fast":
-    "Cerca ovunque prima, poi risponde in fretta",
+  "Searches everything first, then answers fast": "Cerca ovunque prima, poi risponde in fretta",
   Research: "Approfondita",
-  "Thinks longer and searches step by step":
-    "Riflette più a lungo e cerca passo dopo passo",
+  "Thinks longer and searches step by step": "Riflette più a lungo e cerca passo dopo passo",
   "Type / for modes": "Digita / per le modalità",
   "Type @ for sources": "Digita @ per le fonti",
-  'Delete "{title}"? This can\'t be undone.':
-    "Eliminare «{title}»? L'azione è irreversibile.",
+  'Delete "{title}"? This can\'t be undone.': "Eliminare «{title}»? L'azione è irreversibile.",
   "Qur'an text": "Testo del Corano",
   "Verse links": "Link ai versetti",
   "Hadith explanations": "Spiegazioni degli hadith",

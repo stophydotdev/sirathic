@@ -2,14 +2,7 @@ import { useChat } from "@ai-sdk/react";
 import type { ChatMessage } from "@sirathic/server/messages";
 import { DefaultChatTransport } from "ai";
 import { type ComponentRef, type FC, useEffect, useRef } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { z } from "zod";
 import { API_URL, sessionHeaders } from "@/lib/auth";
 import { useChatState } from "@/lib/chat-state";
@@ -70,9 +63,7 @@ export const Chat: FC<{ id: string }> = ({ id }) => {
         <ScrollView
           ref={scroll}
           contentContainerStyle={styles.thread}
-          onContentSizeChange={() =>
-            scroll.current?.scrollToEnd({ animated: true })
-          }
+          onContentSizeChange={() => scroll.current?.scrollToEnd({ animated: true })}
         >
           {messages.map((message, index) =>
             message.role === "user" ? (

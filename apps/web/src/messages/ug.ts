@@ -62,8 +62,7 @@ export default {
   "Same as my question": "سوئالىمنىڭ تىلى",
   "Same as my browser": "توركۆرگۈچۈمنىڭ تىلى",
   "Not signed in": "كىرمىگەن",
-  "Sign in to ask and keep your chats":
-    "سوئال سوراش ۋە سۆھبەتلەرنى ساقلاش ئۈچۈن كىرىڭ",
+  "Sign in to ask and keep your chats": "سوئال سوراش ۋە سۆھبەتلەرنى ساقلاش ئۈچۈن كىرىڭ",
   "Sign in": "كىرىش",
   "Signed in with ChatGPT": "ChatGPT ئارقىلىق كىردىڭىز",
   "Signed in with Google": "Google ئارقىلىق كىردىڭىز",
@@ -79,15 +78,13 @@ export default {
   "Signs you out on this browser": "بۇ توركۆرگۈچتىن چىقىرىدۇ",
   Appearance: "كۆرۈنۈش",
   Language: "تىل",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic تىزىملىك ۋە كۇنۇپكىلىرىنىڭ تىلى",
+  "The language of Sirathic's menus and buttons": "Sirathic تىزىملىك ۋە كۇنۇپكىلىرىنىڭ تىلى",
   Theme: "ئۇسلۇب",
   "How Sirathic looks on this device": "Sirathic نىڭ بۇ ئۈسكۈنىدىكى كۆرۈنۈشى",
   Asking: "سوئال سوراش",
   "Default mode": "كۆڭۈلدىكى ھالەت",
   "Suggestions while typing": "يېزىۋاتقاندا تەۋسىيەلەر",
-  "Show suggested questions under the box":
-    "رامكىنىڭ ئاستىدا تەۋسىيە سوئاللارنى كۆرسىتىش",
+  "Show suggested questions under the box": "رامكىنىڭ ئاستىدا تەۋسىيە سوئاللارنى كۆرسىتىش",
   "Sign in to personalize answers.": "جاۋابلارنى خاسلاشتۇرۇش ئۈچۈن كىرىڭ.",
   "What should Sirathic call you?": "Sirathic سىزنى نېمە دەپ ئاتىسۇن؟",
   "Your name": "ئىسمىڭىز",
@@ -107,8 +104,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "يېڭى سۆھبەتلەر يوشۇرۇن ھالەتتە باشلىنىدۇ ۋە ساقلانمايدۇ",
   "Export my chats": "سۆھبەتلىرىمنى چىقىرىش",
-  "Download every saved chat as a file":
-    "ساقلانغان بارلىق سۆھبەتلەرنى ھۆججەت قىلىپ چۈشۈرۈش",
+  "Download every saved chat as a file": "ساقلانغان بارلىق سۆھبەتلەرنى ھۆججەت قىلىپ چۈشۈرۈش",
   Export: "چىقىرىش",
   "Delete all chats": "بارلىق سۆھبەتلەرنى ئۆچۈرۈش",
   "Delete every saved chat? This can't be undone.":
@@ -137,12 +133,10 @@ export default {
     "تۇنجى قېتىممۇ؟ ChatGPT ← تەڭشەكلەر ← بىخەتەرلىك بۆلىكىدە ئۈسكۈنە كودى بىلەن كىرىشنى ئېچىڭ. ChatGPT دا Codex دەپ كۆرۈنىدۇ، بۇ نورمال.",
   "Continue with ChatGPT": "ChatGPT ئارقىلىق داۋاملاشتۇرۇش",
   "Continue with Google": "Google ئارقىلىق داۋاملاشتۇرۇش",
-  "Use your ChatGPT plan for GPT models":
-    "GPT مودېللىرى ئۈچۈن ChatGPT پىلانىڭىزنى ئىشلىتىڭ",
+  "Use your ChatGPT plan for GPT models": "GPT مودېللىرى ئۈچۈن ChatGPT پىلانىڭىزنى ئىشلىتىڭ",
   "Get a new code": "يېڭى كود ئېلىش",
   "Try again": "قايتا سىناش",
-  "Your question stays in the box while you sign in.":
-    "كىرىۋاتقاندا سوئالىڭىز رامكىدا قالىدۇ.",
+  "Your question stays in the box while you sign in.": "كىرىۋاتقاندا سوئالىڭىز رامكىدا قالىدۇ.",
   "Copy code": "كودنى كۆچۈرۈش",
   "Sign In": "كىرىش",
   "Account menu": "ھېسابات تىزىملىكى",
@@ -170,8 +164,7 @@ export default {
   "New chat": "يېڭى سۆھبەت",
   "Copy a link to this chat": "بۇ سۆھبەتنىڭ ئۇلانمىسىنى كۆچۈرۈش",
   Share: "ھەمبەھىرلەش",
-  "Incognito is on: new messages aren't saved":
-    "يوشۇرۇن ھالەت ئوچۇق: يېڭى ئۇچۇرلار ساقلانمايدۇ",
+  "Incognito is on: new messages aren't saved": "يوشۇرۇن ھالەت ئوچۇق: يېڭى ئۇچۇرلار ساقلانمايدۇ",
   "Use incognito: new messages aren't saved to your history":
     "يوشۇرۇن ھالەت: يېڭى ئۇچۇرلار تارىخىڭىزغا ساقلانمايدۇ",
   "Ask a follow-up": "قوشۇمچە سوئال سوراڭ",
@@ -186,8 +179,7 @@ export default {
   "Searching hadith for {detail}": "ھەدىسلەردىن ئىزدەۋاتىدۇ: {detail}",
   "Reading hadith": "ھەدىس ئوقۇۋاتىدۇ",
   "Checking the hadith {detail}": "ھەدىسنى تەكشۈرۈۋاتىدۇ: {detail}",
-  "Searching fiqh books for {detail}":
-    "فىقھ كىتابلىرىدىن ئىزدەۋاتىدۇ: {detail}",
+  "Searching fiqh books for {detail}": "فىقھ كىتابلىرىدىن ئىزدەۋاتىدۇ: {detail}",
   "Reading fiqh books": "فىقھ كىتابلىرىنى ئوقۇۋاتىدۇ",
   "Finding duas for {detail}": "دۇئا ئىزدەۋاتىدۇ: {detail}",
   "Looking up {detail}": "ئىزدەۋاتىدۇ: {detail}",
@@ -237,8 +229,7 @@ export default {
   "Searches everything first, then answers fast":
     "ئالدى بىلەن ھەممە يەردىن ئىزدەيدۇ، ئاندىن تېز جاۋاب بېرىدۇ",
   Research: "تەتقىقات",
-  "Thinks longer and searches step by step":
-    "ئۇزۇنراق ئويلايدۇ ۋە قەدەممۇ قەدەم ئىزدەيدۇ",
+  "Thinks longer and searches step by step": "ئۇزۇنراق ئويلايدۇ ۋە قەدەممۇ قەدەم ئىزدەيدۇ",
   "Type / for modes": "ھالەت ئۈچۈن / يېزىڭ",
   "Type @ for sources": "مەنبە ئۈچۈن @ يېزىڭ",
   'Delete "{title}"? This can\'t be undone.':

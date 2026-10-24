@@ -1,7 +1,4 @@
-import {
-  TextDecoderStream,
-  TextEncoderStream,
-} from "@stardazed/streams-text-encoding";
+import { TextDecoderStream, TextEncoderStream } from "@stardazed/streams-text-encoding";
 import structuredClone from "@ungap/structured-clone";
 import { fetch } from "expo/fetch";
 

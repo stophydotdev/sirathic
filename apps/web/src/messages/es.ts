@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Volver a Sirathic",
   Brand: "Identidad",
-  "Logos, colors and guidelines for Sirathic.":
-    "Logotipos, colores y normas de uso de Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Logotipos, colores y normas de uso de Sirathic.",
   "Brand assets": "Recursos de marca",
   "Download our logos and follow the guidelines below.":
     "Descarga nuestros logotipos y sigue las normas de abajo.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Igual que mi pregunta",
   "Same as my browser": "Igual que mi navegador",
   "Not signed in": "Sin iniciar sesión",
-  "Sign in to ask and keep your chats":
-    "Inicia sesión para preguntar y guardar tus chats",
+  "Sign in to ask and keep your chats": "Inicia sesión para preguntar y guardar tus chats",
   "Sign in": "Iniciar sesión",
   "Signed in with ChatGPT": "Sesión iniciada con ChatGPT",
   "Signed in with Google": "Sesión iniciada con Google",
@@ -79,18 +77,14 @@ export default {
   "Signs you out on this browser": "Cierra tu sesión en este navegador",
   Appearance: "Apariencia",
   Language: "Idioma",
-  "The language of Sirathic's menus and buttons":
-    "El idioma de los menús y botones de Sirathic",
+  "The language of Sirathic's menus and buttons": "El idioma de los menús y botones de Sirathic",
   Theme: "Tema",
-  "How Sirathic looks on this device":
-    "Cómo se ve Sirathic en este dispositivo",
+  "How Sirathic looks on this device": "Cómo se ve Sirathic en este dispositivo",
   Asking: "Preguntas",
   "Default mode": "Modo predeterminado",
   "Suggestions while typing": "Sugerencias al escribir",
-  "Show suggested questions under the box":
-    "Mostrar preguntas sugeridas bajo el cuadro",
-  "Sign in to personalize answers.":
-    "Inicia sesión para personalizar las respuestas.",
+  "Show suggested questions under the box": "Mostrar preguntas sugeridas bajo el cuadro",
+  "Sign in to personalize answers.": "Inicia sesión para personalizar las respuestas.",
   "What should Sirathic call you?": "¿Cómo debe llamarte Sirathic?",
   "Your name": "Tu nombre",
   Madhab: "Escuela (madhab)",
@@ -109,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Los chats nuevos empiezan en incógnito y no se guardan",
   "Export my chats": "Exportar mis chats",
-  "Download every saved chat as a file":
-    "Descargar todos los chats guardados en un archivo",
+  "Download every saved chat as a file": "Descargar todos los chats guardados en un archivo",
   Export: "Exportar",
   "Delete all chats": "Eliminar todos los chats",
   "Delete every saved chat? This can't be undone.":
@@ -139,8 +132,7 @@ export default {
     "¿Primera vez? Activa el inicio de sesión con código de dispositivo en ChatGPT → Configuración → Seguridad. ChatGPT mostrará Codex; es lo normal.",
   "Continue with ChatGPT": "Continuar con ChatGPT",
   "Continue with Google": "Continuar con Google",
-  "Use your ChatGPT plan for GPT models":
-    "Usa tu plan de ChatGPT para los modelos GPT",
+  "Use your ChatGPT plan for GPT models": "Usa tu plan de ChatGPT para los modelos GPT",
   "Get a new code": "Obtener un código nuevo",
   "Try again": "Intentar de nuevo",
   "Your question stays in the box while you sign in.":
@@ -235,15 +227,12 @@ export default {
   Helpful: "Útil",
   "Not helpful": "No útil",
   Quick: "Rápido",
-  "Searches everything first, then answers fast":
-    "Busca en todo primero y responde rápido",
+  "Searches everything first, then answers fast": "Busca en todo primero y responde rápido",
   Research: "A fondo",
-  "Thinks longer and searches step by step":
-    "Piensa más tiempo y busca paso a paso",
+  "Thinks longer and searches step by step": "Piensa más tiempo y busca paso a paso",
   "Type / for modes": "Escribe / para ver los modos",
   "Type @ for sources": "Escribe @ para ver las fuentes",
-  'Delete "{title}"? This can\'t be undone.':
-    "¿Eliminar «{title}»? No se puede deshacer.",
+  'Delete "{title}"? This can\'t be undone.': "¿Eliminar «{title}»? No se puede deshacer.",
   "Qur'an text": "Texto del Corán",
   "Verse links": "Enlaces de aleyas",
   "Hadith explanations": "Explicaciones de hadices",

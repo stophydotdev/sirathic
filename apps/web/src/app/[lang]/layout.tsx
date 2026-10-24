@@ -17,10 +17,7 @@ export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: LayoutProps<"/[lang]">) {
+export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const messages = await getDictionary(lang);

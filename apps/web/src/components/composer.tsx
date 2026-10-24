@@ -17,11 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAttachmentSrc } from "@/lib/hooks/use-attachment-src";
-import {
-  type Mode,
-  MODES,
-  mode as modeSchema,
-} from "@sirathic/server/messages";
+import { type Mode, MODES, mode as modeSchema } from "@sirathic/server/messages";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
@@ -46,14 +42,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import {
-  type FC,
-  type KeyboardEvent,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type FC, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
 const ROTATING = [
   "Ask anything…",
@@ -148,10 +137,7 @@ export const Composer: FC<{
 
   const command = /^\/[^\s]*$/u.test(text) ? text : undefined;
   const autosuggest = usePreferences((s) => s.autosuggest);
-  const suggestions = useSuggestions(
-    text,
-    autosuggest && focused && command === undefined,
-  );
+  const suggestions = useSuggestions(text, autosuggest && focused && command === undefined);
   const composer = () => aui.thread().composer();
 
   const choices: Choice[] = command?.startsWith("/")
@@ -187,9 +173,7 @@ export const Composer: FC<{
         }))
       : [];
   const selecting = command !== undefined || picked;
-  const highlighted = selecting
-    ? Math.min(active, Math.max(choices.length - 1, 0))
-    : -1;
+  const highlighted = selecting ? Math.min(active, Math.max(choices.length - 1, 0)) : -1;
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (signedOut && event.key === "Enter" && !event.shiftKey && !selecting) {
@@ -266,10 +250,7 @@ export const Composer: FC<{
                   <IconArrowUp className="size-4" />
                 </button>
               ) : (
-                <ComposerPrimitive.Send
-                  className={primaryButton}
-                  aria-label={t("Submit")}
-                >
+                <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
                   <IconArrowUp className="size-4" />
                 </ComposerPrimitive.Send>
               )}
@@ -315,9 +296,7 @@ export const Composer: FC<{
               <span className="flex min-w-0 flex-1 flex-col">
                 <span className="truncate">{choice.label}</span>
                 {choice.hint && (
-                  <span className="text-muted-foreground truncate text-xs">
-                    {choice.hint}
-                  </span>
+                  <span className="text-muted-foreground truncate text-xs">{choice.hint}</span>
                 )}
               </span>
               {choice.fill && (
@@ -349,10 +328,7 @@ const AddMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
     <>
       <ComposerPrimitive.AddAttachment ref={upload} className="hidden" />
       <DropdownMenu>
-        <DropdownMenuTrigger
-          className={iconButton}
-          aria-label={t("Add files or tools")}
-        >
+        <DropdownMenuTrigger className={iconButton} aria-label={t("Add files or tools")}>
           <IconPlus className="size-4.5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent side={side} align="start" className="w-60">

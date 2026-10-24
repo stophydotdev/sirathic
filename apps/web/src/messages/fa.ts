@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "بازگشت به Sirathic",
   Brand: "هویت برند",
-  "Logos, colors and guidelines for Sirathic.":
-    "لوگوها، رنگ‌ها و راهنمای استفاده از Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "لوگوها، رنگ‌ها و راهنمای استفاده از Sirathic.",
   "Brand assets": "فایل‌های برند",
   "Download our logos and follow the guidelines below.":
     "لوگوهای ما را دانلود کنید و راهنمای زیر را رعایت کنید.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "مانند زبان پرسشم",
   "Same as my browser": "مانند زبان مرورگرم",
   "Not signed in": "وارد نشده‌اید",
-  "Sign in to ask and keep your chats":
-    "برای پرسیدن و نگه‌داشتن گفتگوها وارد شوید",
+  "Sign in to ask and keep your chats": "برای پرسیدن و نگه‌داشتن گفتگوها وارد شوید",
   "Sign in": "ورود",
   "Signed in with ChatGPT": "با ChatGPT وارد شده‌اید",
   "Signed in with Google": "با Google وارد شده‌اید",
@@ -79,8 +77,7 @@ export default {
   "Signs you out on this browser": "شما را از این مرورگر خارج می‌کند",
   Appearance: "ظاهر",
   Language: "زبان",
-  "The language of Sirathic's menus and buttons":
-    "زبان منوها و دکمه‌های Sirathic",
+  "The language of Sirathic's menus and buttons": "زبان منوها و دکمه‌های Sirathic",
   Theme: "پوسته",
   "How Sirathic looks on this device": "ظاهر Sirathic در این دستگاه",
   Asking: "پرسیدن",
@@ -106,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "گفتگوهای تازه در حالت ناشناس آغاز می‌شوند و ذخیره نمی‌شوند",
   "Export my chats": "خروجی گرفتن از گفتگوهایم",
-  "Download every saved chat as a file":
-    "دانلود همه گفتگوهای ذخیره‌شده در یک فایل",
+  "Download every saved chat as a file": "دانلود همه گفتگوهای ذخیره‌شده در یک فایل",
   Export: "خروجی",
   "Delete all chats": "حذف همه گفتگوها",
   "Delete every saved chat? This can't be undone.":
@@ -136,12 +132,10 @@ export default {
     "بار اول است؟ ورود با کد دستگاه را در ChatGPT ← تنظیمات ← امنیت روشن کنید. ChatGPT نام Codex را نشان می‌دهد و این طبیعی است.",
   "Continue with ChatGPT": "ادامه با ChatGPT",
   "Continue with Google": "ادامه با Google",
-  "Use your ChatGPT plan for GPT models":
-    "از اشتراک ChatGPT خود برای مدل‌های GPT استفاده کنید",
+  "Use your ChatGPT plan for GPT models": "از اشتراک ChatGPT خود برای مدل‌های GPT استفاده کنید",
   "Get a new code": "گرفتن کد تازه",
   "Try again": "دوباره امتحان کنید",
-  "Your question stays in the box while you sign in.":
-    "هنگام ورود، پرسش شما در کادر می‌ماند.",
+  "Your question stays in the box while you sign in.": "هنگام ورود، پرسش شما در کادر می‌ماند.",
   "Copy code": "کپی کد",
   "Sign In": "ورود",
   "Account menu": "منوی حساب",
@@ -149,8 +143,7 @@ export default {
   "Google account": "حساب Google",
   Incognito: "ناشناس",
   "All settings": "همه تنظیمات",
-  "Assalamu alaikum. Sign in to start asking.":
-    "السلام علیکم. برای شروع پرسیدن وارد شوید.",
+  "Assalamu alaikum. Sign in to start asking.": "السلام علیکم. برای شروع پرسیدن وارد شوید.",
   "Enter this code on ChatGPT": "این کد را در ChatGPT وارد کنید",
   "Code expired": "کد منقضی شد",
   "Sign-in didn't work": "ورود انجام نشد",
@@ -169,8 +162,7 @@ export default {
   "New chat": "گفتگوی تازه",
   "Copy a link to this chat": "کپی پیوند این گفتگو",
   Share: "اشتراک‌گذاری",
-  "Incognito is on: new messages aren't saved":
-    "حالت ناشناس روشن است: پیام‌های تازه ذخیره نمی‌شوند",
+  "Incognito is on: new messages aren't saved": "حالت ناشناس روشن است: پیام‌های تازه ذخیره نمی‌شوند",
   "Use incognito: new messages aren't saved to your history":
     "حالت ناشناس: پیام‌های تازه در تاریخچه شما ذخیره نمی‌شوند",
   "Ask a follow-up": "پرسش بعدی را بپرسید",
@@ -232,15 +224,12 @@ export default {
   Helpful: "مفید",
   "Not helpful": "مفید نبود",
   Quick: "سریع",
-  "Searches everything first, then answers fast":
-    "اول همه‌جا را جستجو می‌کند، بعد سریع پاسخ می‌دهد",
+  "Searches everything first, then answers fast": "اول همه‌جا را جستجو می‌کند، بعد سریع پاسخ می‌دهد",
   Research: "پژوهش",
-  "Thinks longer and searches step by step":
-    "بیشتر فکر می‌کند و گام‌به‌گام جستجو می‌کند",
+  "Thinks longer and searches step by step": "بیشتر فکر می‌کند و گام‌به‌گام جستجو می‌کند",
   "Type / for modes": "برای حالت‌ها / بنویسید",
   "Type @ for sources": "برای منابع @ بنویسید",
-  'Delete "{title}"? This can\'t be undone.':
-    "«{title}» حذف شود؟ این کار بازگشت‌پذیر نیست.",
+  'Delete "{title}"? This can\'t be undone.': "«{title}» حذف شود؟ این کار بازگشت‌پذیر نیست.",
   "Qur'an text": "متن قرآن",
   "Verse links": "پیوند آیات",
   "Hadith explanations": "شرح احادیث",

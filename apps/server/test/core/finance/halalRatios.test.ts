@@ -1,8 +1,5 @@
 import { expect, test } from "bun:test";
-import {
-  screenFinancials,
-  verdictFor,
-} from "../../../../../packages/core/src/finance/halalRatios";
+import { screenFinancials, verdictFor } from "../../../../../packages/core/src/finance/halalRatios";
 
 const financials: Parameters<typeof screenFinancials>[0] = {
   marketCap: 1000,
@@ -26,11 +23,9 @@ test("a missing figure is unknown, never a pass", () => {
 
 test("passing ratios still leave the business screen pending", () => {
   const screens = screenFinancials(financials);
-  expect(verdictFor(screens, false).verdict).toBe(
-    "pass_pending_business_review",
-  );
+  expect(verdictFor(screens, false).verdict).toBe("pass_pending_business_review");
   expect(verdictFor(screens, true).verdict).toBe("fail");
-  expect(
-    verdictFor(screenFinancials({ ...financials, cash: null }), false).verdict,
-  ).toBe("insufficient_data");
+  expect(verdictFor(screenFinancials({ ...financials, cash: null }), false).verdict).toBe(
+    "insufficient_data",
+  );
 });

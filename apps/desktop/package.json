@@ -1,11 +1,10 @@
 {
   "name": "desktop",
-  "productName": "Sirathic",
   "version": "0.1.0",
+  "private": true,
   "description": "Sirathic for Mac, Windows and Linux",
   "homepage": "https://sirathic.com",
   "author": "Hussein Hakizimana",
-  "private": true,
   "type": "module",
   "main": "main.ts",
   "scripts": {
@@ -16,5 +15,6 @@
     "electron": "44.9.0",
     "electron-builder": "26.15.3",
     "zod": "^4.4.3"
-  }
+  },
+  "productName": "Sirathic"
 }

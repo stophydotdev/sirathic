@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathic-ലേക്ക് മടങ്ങുക",
   Brand: "ബ്രാൻഡ്",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathic-ന്റെ ലോഗോകളും നിറങ്ങളും ഉപയോഗ നിർദേശങ്ങളും.",
+  "Logos, colors and guidelines for Sirathic.": "Sirathic-ന്റെ ലോഗോകളും നിറങ്ങളും ഉപയോഗ നിർദേശങ്ങളും.",
   "Brand assets": "ബ്രാൻഡ് ഫയലുകൾ",
   "Download our logos and follow the guidelines below.":
     "ഞങ്ങളുടെ ലോഗോകൾ ഡൗൺലോഡ് ചെയ്ത് താഴെയുള്ള നിർദേശങ്ങൾ പാലിക്കുക.",
@@ -78,15 +77,13 @@ export default {
   "Signs you out on this browser": "ഈ ബ്രൗസറിൽ നിന്ന് സൈൻ ഔട്ട് ചെയ്യുന്നു",
   Appearance: "രൂപം",
   Language: "ഭാഷ",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic-ന്റെ മെനുകളുടെയും ബട്ടണുകളുടെയും ഭാഷ",
+  "The language of Sirathic's menus and buttons": "Sirathic-ന്റെ മെനുകളുടെയും ബട്ടണുകളുടെയും ഭാഷ",
   Theme: "തീം",
   "How Sirathic looks on this device": "ഈ ഉപകരണത്തിൽ Sirathic എങ്ങനെ കാണപ്പെടുന്നു",
   Asking: "ചോദിക്കൽ",
   "Default mode": "ഡിഫോൾട്ട് മോഡ്",
   "Suggestions while typing": "ടൈപ്പ് ചെയ്യുമ്പോൾ നിർദേശങ്ങൾ",
-  "Show suggested questions under the box":
-    "ബോക്സിന് താഴെ നിർദേശിച്ച ചോദ്യങ്ങൾ കാണിക്കുക",
+  "Show suggested questions under the box": "ബോക്സിന് താഴെ നിർദേശിച്ച ചോദ്യങ്ങൾ കാണിക്കുക",
   "Sign in to personalize answers.": "മറുപടികൾ നിങ്ങൾക്കനുസരിച്ചാക്കാൻ സൈൻ ഇൻ ചെയ്യുക.",
   "What should Sirathic call you?": "Sirathic നിങ്ങളെ എന്ത് വിളിക്കണം?",
   "Your name": "നിങ്ങളുടെ പേര്",
@@ -106,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "പുതിയ ചാറ്റുകൾ ഇൻകോഗ്നിറ്റോയിൽ തുടങ്ങും, സേവ് ചെയ്യപ്പെടില്ല",
   "Export my chats": "എന്റെ ചാറ്റുകൾ എക്‌സ്‌പോർട്ട് ചെയ്യുക",
-  "Download every saved chat as a file":
-    "സേവ് ചെയ്ത എല്ലാ ചാറ്റുകളും ഒരു ഫയലായി ഡൗൺലോഡ് ചെയ്യുക",
+  "Download every saved chat as a file": "സേവ് ചെയ്ത എല്ലാ ചാറ്റുകളും ഒരു ഫയലായി ഡൗൺലോഡ് ചെയ്യുക",
   Export: "എക്‌സ്‌പോർട്ട്",
   "Delete all chats": "എല്ലാ ചാറ്റുകളും ഇല്ലാതാക്കുക",
   "Delete every saved chat? This can't be undone.":
@@ -136,8 +132,7 @@ export default {
     "ആദ്യമായാണോ? ChatGPT → Settings → Security-ൽ ഡിവൈസ് കോഡ് സൈൻ-ഇൻ ഓണാക്കുക. ChatGPT-ൽ Codex എന്ന് കാണിക്കും, അത് സാധാരണമാണ്.",
   "Continue with ChatGPT": "ChatGPT ഉപയോഗിച്ച് തുടരുക",
   "Continue with Google": "Google ഉപയോഗിച്ച് തുടരുക",
-  "Use your ChatGPT plan for GPT models":
-    "GPT മോഡലുകൾക്കായി നിങ്ങളുടെ ChatGPT പ്ലാൻ ഉപയോഗിക്കുക",
+  "Use your ChatGPT plan for GPT models": "GPT മോഡലുകൾക്കായി നിങ്ങളുടെ ChatGPT പ്ലാൻ ഉപയോഗിക്കുക",
   "Get a new code": "പുതിയ കോഡ് നേടുക",
   "Try again": "വീണ്ടും ശ്രമിക്കുക",
   "Your question stays in the box while you sign in.":
@@ -149,16 +144,14 @@ export default {
   "Google account": "Google അക്കൗണ്ട്",
   Incognito: "ഇൻകോഗ്നിറ്റോ",
   "All settings": "എല്ലാ ക്രമീകരണങ്ങളും",
-  "Assalamu alaikum. Sign in to start asking.":
-    "അസ്സലാമു അലൈക്കും. ചോദിച്ചുതുടങ്ങാൻ സൈൻ ഇൻ ചെയ്യുക.",
+  "Assalamu alaikum. Sign in to start asking.": "അസ്സലാമു അലൈക്കും. ചോദിച്ചുതുടങ്ങാൻ സൈൻ ഇൻ ചെയ്യുക.",
   "Enter this code on ChatGPT": "ഈ കോഡ് ChatGPT-ൽ നൽകുക",
   "Code expired": "കോഡിന്റെ കാലാവധി കഴിഞ്ഞു",
   "Sign-in didn't work": "സൈൻ ഇൻ നടന്നില്ല",
   "{count} views": "{count} കാഴ്ചകൾ",
   "Results for:": "ഫലങ്ങൾ:",
   "Searching…": "തിരയുന്നു…",
-  "The search failed. Try this tab again later.":
-    "തിരയൽ പരാജയപ്പെട്ടു. പിന്നീട് ഈ ടാബ് വീണ്ടും ശ്രമിക്കുക.",
+  "The search failed. Try this tab again later.": "തിരയൽ പരാജയപ്പെട്ടു. പിന്നീട് ഈ ടാബ് വീണ്ടും ശ്രമിക്കുക.",
   "Expand sidebar": "സൈഡ്‌ബാർ വികസിപ്പിക്കുക",
   "Collapse sidebar": "സൈഡ്‌ബാർ ചുരുക്കുക",
   New: "പുതിയത്",
@@ -169,8 +162,7 @@ export default {
   "New chat": "പുതിയ ചാറ്റ്",
   "Copy a link to this chat": "ഈ ചാറ്റിന്റെ ലിങ്ക് പകർത്തുക",
   Share: "പങ്കിടുക",
-  "Incognito is on: new messages aren't saved":
-    "ഇൻകോഗ്നിറ്റോ ഓണാണ്: പുതിയ സന്ദേശങ്ങൾ സേവ് ചെയ്യപ്പെടില്ല",
+  "Incognito is on: new messages aren't saved": "ഇൻകോഗ്നിറ്റോ ഓണാണ്: പുതിയ സന്ദേശങ്ങൾ സേവ് ചെയ്യപ്പെടില്ല",
   "Use incognito: new messages aren't saved to your history":
     "ഇൻകോഗ്നിറ്റോ ഉപയോഗിക്കുക: പുതിയ സന്ദേശങ്ങൾ ചരിത്രത്തിൽ സേവ് ചെയ്യപ്പെടില്ല",
   "Ask a follow-up": "തുടർചോദ്യം ചോദിക്കുക",
@@ -232,15 +224,12 @@ export default {
   Helpful: "ഉപകാരപ്പെട്ടു",
   "Not helpful": "ഉപകാരപ്പെട്ടില്ല",
   Quick: "വേഗം",
-  "Searches everything first, then answers fast":
-    "ആദ്യം എല്ലായിടത്തും തിരഞ്ഞ് പിന്നെ വേഗത്തിൽ മറുപടി നൽകുന്നു",
+  "Searches everything first, then answers fast": "ആദ്യം എല്ലായിടത്തും തിരഞ്ഞ് പിന്നെ വേഗത്തിൽ മറുപടി നൽകുന്നു",
   Research: "ഗവേഷണം",
-  "Thinks longer and searches step by step":
-    "കൂടുതൽ സമയം ചിന്തിച്ച് ഘട്ടം ഘട്ടമായി തിരയുന്നു",
+  "Thinks longer and searches step by step": "കൂടുതൽ സമയം ചിന്തിച്ച് ഘട്ടം ഘട്ടമായി തിരയുന്നു",
   "Type / for modes": "മോഡുകൾക്ക് / ടൈപ്പ് ചെയ്യുക",
   "Type @ for sources": "സ്രോതസ്സുകൾക്ക് @ ടൈപ്പ് ചെയ്യുക",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}” ഇല്ലാതാക്കണോ? ഇത് തിരിച്ചെടുക്കാനാവില്ല.",
+  'Delete "{title}"? This can\'t be undone.': "“{title}” ഇല്ലാതാക്കണോ? ഇത് തിരിച്ചെടുക്കാനാവില്ല.",
   "Qur'an text": "ഖുർആൻ വാചകം",
   "Verse links": "ആയത്ത് ലിങ്കുകൾ",
   "Hadith explanations": "ഹദീസ് വിശദീകരണങ്ങൾ",

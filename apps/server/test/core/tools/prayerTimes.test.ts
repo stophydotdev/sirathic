@@ -64,9 +64,6 @@ test("the next prayer is the first one still ahead, and after Isha it is tomorro
 
 test("a date other than today has no next prayer", () => {
   expect(
-    prayerTimes(
-      { ...makkah, date: "2026-10-20" },
-      new Date("2026-10-15T09:00:00Z"),
-    ).next,
+    prayerTimes({ ...makkah, date: "2026-10-20" }, new Date("2026-10-15T09:00:00Z")).next,
   ).toBeNull();
 });

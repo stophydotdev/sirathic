@@ -17,12 +17,8 @@ const objectBefore = (source: string, end: number) => {
 };
 
 const keys = new Set<string>();
-const files = [
-  ...new Glob("src/{app,components}/**/*.{ts,tsx}").scanSync({ cwd: WEB }),
-].toSorted();
-const sources = await Promise.all(
-  files.map((file) => Bun.file(`${WEB}${file}`).text()),
-);
+const files = [...new Glob("src/{app,components}/**/*.{ts,tsx}").scanSync({ cwd: WEB })].toSorted();
+const sources = await Promise.all(files.map((file) => Bun.file(`${WEB}${file}`).text()));
 for (const source of sources) {
   for (const [, literal = ""] of source.matchAll(CALL)) {
     keys.add(JSON.parse(literal));
@@ -50,8 +46,7 @@ const settle = async (): Promise<void> => {
   const checked = Bun.spawnSync(["bun", "run", "typecheck"], { cwd: WEB });
   const before = keys.size;
   for (const [, union = ""] of checked.stdout.toString().matchAll(MISSING)) {
-    for (const [literal] of union.matchAll(LITERAL))
-      keys.add(JSON.parse(literal));
+    for (const [literal] of union.matchAll(LITERAL)) keys.add(JSON.parse(literal));
   }
   if (keys.size !== before) await settle();
 };

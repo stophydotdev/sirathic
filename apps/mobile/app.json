@@ -22,12 +22,7 @@
       },
       "predictiveBackGestureEnabled": false
     },
-    "plugins": [
-      "expo-router",
-      "expo-status-bar",
-      "expo-secure-store",
-      "expo-web-browser"
-    ],
+    "plugins": ["expo-router", "expo-status-bar", "expo-secure-store", "expo-web-browser"],
     "experiments": {
       "typedRoutes": true
     },

@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathic ته بېرته تګ",
   Brand: "برانډ",
-  "Logos, colors and guidelines for Sirathic.":
-    "د Sirathic لوګوګانې، رنګونه او د کارونې لارښوونې.",
+  "Logos, colors and guidelines for Sirathic.": "د Sirathic لوګوګانې، رنګونه او د کارونې لارښوونې.",
   "Brand assets": "د برانډ فایلونه",
   "Download our logos and follow the guidelines below.":
     "زموږ لوګوګانې ښکته کړئ او لاندې لارښوونې مراعات کړئ.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "زما د پوښتنې ژبه",
   "Same as my browser": "زما د براوزر ژبه",
   "Not signed in": "نه یاست ننوتلي",
-  "Sign in to ask and keep your chats":
-    "د پوښتنې او خبرو اترو د ساتلو لپاره ننوځئ",
+  "Sign in to ask and keep your chats": "د پوښتنې او خبرو اترو د ساتلو لپاره ننوځئ",
   "Sign in": "ننوتل",
   "Signed in with ChatGPT": "د ChatGPT له لارې ننوتلي یاست",
   "Signed in with Google": "د Google له لارې ننوتلي یاست",
@@ -79,15 +77,13 @@ export default {
   "Signs you out on this browser": "له دې براوزر څخه مو باسي",
   Appearance: "بڼه",
   Language: "ژبه",
-  "The language of Sirathic's menus and buttons":
-    "د Sirathic د مینو او تڼیو ژبه",
+  "The language of Sirathic's menus and buttons": "د Sirathic د مینو او تڼیو ژبه",
   Theme: "بڼه",
   "How Sirathic looks on this device": "په دې وسیله کې د Sirathic بڼه",
   Asking: "پوښتنه کول",
   "Default mode": "اصلي حالت",
   "Suggestions while typing": "د لیکلو پر مهال وړاندیزونه",
-  "Show suggested questions under the box":
-    "د بکس لاندې وړاندیز شوې پوښتنې وښایاست",
+  "Show suggested questions under the box": "د بکس لاندې وړاندیز شوې پوښتنې وښایاست",
   "Sign in to personalize answers.": "د ځوابونو د شخصي کولو لپاره ننوځئ.",
   "What should Sirathic call you?": "Sirathic تاسو ته څه ووايي؟",
   "Your name": "ستاسو نوم",
@@ -107,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "نوې خبرې اترې په پټ حالت کې پیلېږي او نه خوندي کېږي",
   "Export my chats": "زما خبرې اترې صادرول",
-  "Download every saved chat as a file":
-    "ټولې خوندي شوې خبرې اترې د فایل په توګه ښکته کړئ",
+  "Download every saved chat as a file": "ټولې خوندي شوې خبرې اترې د فایل په توګه ښکته کړئ",
   Export: "صادرول",
   "Delete all chats": "ټولې خبرې اترې ړنګول",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +132,7 @@ export default {
     "لومړی ځل؟ په ChatGPT ← امستنې ← امنیت کې د وسیلې په کوډ ننوتل فعال کړئ. ChatGPT به Codex وښيي، دا عادي خبره ده.",
   "Continue with ChatGPT": "د ChatGPT سره دوام",
   "Continue with Google": "د Google سره دوام",
-  "Use your ChatGPT plan for GPT models":
-    "د GPT ماډلونو لپاره خپل ChatGPT پلان وکاروئ",
+  "Use your ChatGPT plan for GPT models": "د GPT ماډلونو لپاره خپل ChatGPT پلان وکاروئ",
   "Get a new code": "نوی کوډ واخلئ",
   "Try again": "بیا هڅه وکړئ",
   "Your question stays in the box while you sign in.":
@@ -150,16 +144,14 @@ export default {
   "Google account": "د Google حساب",
   Incognito: "پټ حالت",
   "All settings": "ټولې امستنې",
-  "Assalamu alaikum. Sign in to start asking.":
-    "السلام علیکم. د پوښتنې د پیل لپاره ننوځئ.",
+  "Assalamu alaikum. Sign in to start asking.": "السلام علیکم. د پوښتنې د پیل لپاره ننوځئ.",
   "Enter this code on ChatGPT": "دا کوډ په ChatGPT کې ولیکئ",
   "Code expired": "کوډ ختم شو",
   "Sign-in didn't work": "ننوتل بریالي نه شول",
   "{count} views": "{count} کتنې",
   "Results for:": "پایلې د:",
   "Searching…": "لټون کېږي…",
-  "The search failed. Try this tab again later.":
-    "لټون ناکام شو. وروسته دا ټب بیا پرانیزئ.",
+  "The search failed. Try this tab again later.": "لټون ناکام شو. وروسته دا ټب بیا پرانیزئ.",
   "Expand sidebar": "اړخیز پټه پراخه کړئ",
   "Collapse sidebar": "اړخیز پټه راټوله کړئ",
   New: "نوی",
@@ -170,8 +162,7 @@ export default {
   "New chat": "نوې خبرې اترې",
   "Copy a link to this chat": "د دې خبرو اترو لینک کاپي کړئ",
   Share: "شریکول",
-  "Incognito is on: new messages aren't saved":
-    "پټ حالت فعال دی: نوي پیغامونه نه خوندي کېږي",
+  "Incognito is on: new messages aren't saved": "پټ حالت فعال دی: نوي پیغامونه نه خوندي کېږي",
   "Use incognito: new messages aren't saved to your history":
     "پټ حالت: نوي پیغامونه ستاسو په تاریخچه کې نه خوندي کېږي",
   "Ask a follow-up": "بله پوښتنه وکړئ",
@@ -233,15 +224,12 @@ export default {
   Helpful: "ګټور",
   "Not helpful": "ګټور نه و",
   Quick: "چټک",
-  "Searches everything first, then answers fast":
-    "لومړی هر ځای لټوي، بیا په چټکۍ ځواب ورکوي",
+  "Searches everything first, then answers fast": "لومړی هر ځای لټوي، بیا په چټکۍ ځواب ورکوي",
   Research: "څېړنه",
-  "Thinks longer and searches step by step":
-    "ډېر فکر کوي او ګام په ګام لټون کوي",
+  "Thinks longer and searches step by step": "ډېر فکر کوي او ګام په ګام لټون کوي",
   "Type / for modes": "د حالتونو لپاره / ولیکئ",
   "Type @ for sources": "د سرچینو لپاره @ ولیکئ",
-  'Delete "{title}"? This can\'t be undone.':
-    "«{title}» ړنګ شي؟ دا بېرته نه راګرځي.",
+  'Delete "{title}"? This can\'t be undone.': "«{title}» ړنګ شي؟ دا بېرته نه راګرځي.",
   "Qur'an text": "د قرآن متن",
   "Verse links": "د آیتونو لینکونه",
   "Hadith explanations": "د احادیثو شرحې",

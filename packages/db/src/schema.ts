@@ -57,10 +57,7 @@ export const verses = pgTable(
   },
   (table) => [
     index("verses_search").using("gin", table.search),
-    index("verses_embedding").using(
-      "hnsw",
-      table.embedding.op("halfvec_cosine_ops"),
-    ),
+    index("verses_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
   ],
 );
 
@@ -86,15 +83,9 @@ export const hadiths = pgTable(
     embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
   },
   (table) => [
-    check(
-      "hadiths_has_text",
-      sql`${table.textAr} is not null or ${table.textEn} is not null`,
-    ),
+    check("hadiths_has_text", sql`${table.textAr} is not null or ${table.textEn} is not null`),
     index("hadiths_search").using("gin", table.search),
-    index("hadiths_embedding").using(
-      "hnsw",
-      table.embedding.op("halfvec_cosine_ops"),
-    ),
+    index("hadiths_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
   ],
 );
 
@@ -138,17 +129,12 @@ export const fiqhPassages = pgTable(
     heading: text(),
     textAr: text().notNull(),
     textArClean: text().notNull(),
-    search: tsvector().generatedAlwaysAs(
-      sql`to_tsvector('simple', text_ar_clean)`,
-    ),
+    search: tsvector().generatedAlwaysAs(sql`to_tsvector('simple', text_ar_clean)`),
     embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
   },
   (table) => [
     index("fiqh_passages_search").using("gin", table.search),
-    index("fiqh_passages_embedding").using(
-      "hnsw",
-      table.embedding.op("halfvec_cosine_ops"),
-    ),
+    index("fiqh_passages_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
   ],
 );
 
@@ -172,10 +158,7 @@ export const duas = pgTable(
   },
   (table) => [
     index("duas_search").using("gin", table.search),
-    index("duas_embedding").using(
-      "hnsw",
-      table.embedding.op("halfvec_cosine_ops"),
-    ),
+    index("duas_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
   ],
 );
 
@@ -211,10 +194,7 @@ export const fatwas = pgTable(
   },
   (table) => [
     index("fatwas_search").using("gin", table.search),
-    index("fatwas_embedding").using(
-      "hnsw",
-      table.embedding.op("halfvec_cosine_ops"),
-    ),
+    index("fatwas_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
   ],
 );
 
@@ -245,10 +225,7 @@ export const redditThreads = pgTable(
   },
   (table) => [
     index("reddit_threads_search").using("gin", table.search),
-    index("reddit_threads_embedding").using(
-      "hnsw",
-      table.embedding.op("halfvec_cosine_ops"),
-    ),
+    index("reddit_threads_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
   ],
 );
 
@@ -347,9 +324,7 @@ export const chatSessions = pgTable(
       .defaultNow()
       .$onUpdate(() => new Date()),
   },
-  (table) => [
-    index("chat_sessions_owner_updated").on(table.owner, table.updatedAt),
-  ],
+  (table) => [index("chat_sessions_owner_updated").on(table.owner, table.updatedAt)],
 );
 
 export const settings = pgTable("settings", {

@@ -6,9 +6,7 @@ const PDF_CHARS = 60_000;
 async function pdfText(url: string) {
   if (!url.startsWith("data:")) return "This PDF could not be read.";
   try {
-    const bytes = new Uint8Array(
-      Buffer.from(url.slice(url.indexOf(",") + 1), "base64"),
-    );
+    const bytes = new Uint8Array(Buffer.from(url.slice(url.indexOf(",") + 1), "base64"));
     const extracted = await extractText(await getDocumentProxy(bytes), {
       mergePages: true,
     });

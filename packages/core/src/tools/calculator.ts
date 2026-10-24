@@ -1,11 +1,4 @@
-import {
-  evaluate,
-  format,
-  isFunctionNode,
-  isUnit,
-  parse,
-  typeOf,
-} from "mathjs";
+import { evaluate, format, isFunctionNode, isUnit, parse, typeOf } from "mathjs";
 import { z } from "zod";
 
 const MAX_LENGTH = 200;
@@ -67,9 +60,7 @@ export const calculatorInput = z.object({
     .trim()
     .min(1)
     .max(MAX_LENGTH)
-    .describe(
-      'Math or unit conversion: "15% of 2400", "5 km to miles", "sqrt(144) + 2^3"',
-    ),
+    .describe('Math or unit conversion: "15% of 2400", "5 km to miles", "sqrt(144) + 2^3"'),
 });
 
 const isUnsafe = (expression: string) =>
@@ -84,9 +75,7 @@ export const calculator = (input: z.input<typeof calculatorInput>) => {
   const interpreted = expression.replaceAll(PERCENT_OF, "($1/100)*");
   try {
     if (isUnsafe(interpreted)) {
-      throw new Error(
-        "Expression uses syntax or functions that are not allowed",
-      );
+      throw new Error("Expression uses syntax or functions that are not allowed");
     }
     const result: unknown = evaluate(interpreted, {});
     if (typeOf(result) === "function") {

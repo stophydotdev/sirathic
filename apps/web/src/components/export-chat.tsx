@@ -26,9 +26,7 @@ function chatMarkdown(messages: readonly ThreadMessage[]) {
       const sources = sourcesOf(message.content)
         .map((source, i) => `${i + 1}. [${source.title}](${source.url})`)
         .join("\n");
-      return sources
-        ? `${textOf(message)}\n\n**Sources**\n\n${sources}`
-        : textOf(message);
+      return sources ? `${textOf(message)}\n\n**Sources**\n\n${sources}` : textOf(message);
     })
     .join("\n\n");
 }

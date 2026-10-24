@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Kembali ke Sirathic",
   Brand: "Identitas",
-  "Logos, colors and guidelines for Sirathic.":
-    "Logo, warna, dan panduan penggunaan Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Logo, warna, dan panduan penggunaan Sirathic.",
   "Brand assets": "Aset merek",
   "Download our logos and follow the guidelines below.":
     "Unduh logo kami dan ikuti panduan di bawah.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Sama dengan pertanyaan saya",
   "Same as my browser": "Sama dengan peramban saya",
   "Not signed in": "Belum masuk",
-  "Sign in to ask and keep your chats":
-    "Masuk untuk bertanya dan menyimpan obrolan",
+  "Sign in to ask and keep your chats": "Masuk untuk bertanya dan menyimpan obrolan",
   "Sign in": "Masuk",
   "Signed in with ChatGPT": "Masuk dengan ChatGPT",
   "Signed in with Google": "Masuk dengan Google",
@@ -79,15 +77,13 @@ export default {
   "Signs you out on this browser": "Mengeluarkan Anda di peramban ini",
   Appearance: "Tampilan",
   Language: "Bahasa",
-  "The language of Sirathic's menus and buttons":
-    "Bahasa menu dan tombol Sirathic",
+  "The language of Sirathic's menus and buttons": "Bahasa menu dan tombol Sirathic",
   Theme: "Tema",
   "How Sirathic looks on this device": "Tampilan Sirathic di perangkat ini",
   Asking: "Bertanya",
   "Default mode": "Mode bawaan",
   "Suggestions while typing": "Saran saat mengetik",
-  "Show suggested questions under the box":
-    "Tampilkan saran pertanyaan di bawah kotak",
+  "Show suggested questions under the box": "Tampilkan saran pertanyaan di bawah kotak",
   "Sign in to personalize answers.": "Masuk untuk menyesuaikan jawaban.",
   "What should Sirathic call you?": "Sirathic sebaiknya memanggil Anda siapa?",
   "Your name": "Nama Anda",
@@ -107,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Obrolan baru dimulai dalam mode penyamaran dan tidak disimpan",
   "Export my chats": "Ekspor obrolan saya",
-  "Download every saved chat as a file":
-    "Unduh semua obrolan tersimpan sebagai berkas",
+  "Download every saved chat as a file": "Unduh semua obrolan tersimpan sebagai berkas",
   Export: "Ekspor",
   "Delete all chats": "Hapus semua obrolan",
   "Delete every saved chat? This can't be undone.":
@@ -130,16 +125,14 @@ export default {
   "No settings found": "Pengaturan tidak ditemukan",
   "No chat models available": "Tidak ada model obrolan",
   "Manage models": "Kelola model",
-  "Longer answers that explain more":
-    "Jawaban lebih panjang dengan penjelasan lebih banyak",
+  "Longer answers that explain more": "Jawaban lebih panjang dengan penjelasan lebih banyak",
   "Open ChatGPT": "Buka ChatGPT",
   "Waiting for approval": "Menunggu persetujuan",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
     "Pertama kali? Aktifkan login dengan kode perangkat di ChatGPT → Pengaturan → Keamanan. ChatGPT akan menampilkan Codex, itu memang wajar.",
   "Continue with ChatGPT": "Lanjutkan dengan ChatGPT",
   "Continue with Google": "Lanjutkan dengan Google",
-  "Use your ChatGPT plan for GPT models":
-    "Gunakan paket ChatGPT Anda untuk model GPT",
+  "Use your ChatGPT plan for GPT models": "Gunakan paket ChatGPT Anda untuk model GPT",
   "Get a new code": "Dapatkan kode baru",
   "Try again": "Coba lagi",
   "Your question stays in the box while you sign in.":
@@ -151,16 +144,14 @@ export default {
   "Google account": "Akun Google",
   Incognito: "Penyamaran",
   "All settings": "Semua pengaturan",
-  "Assalamu alaikum. Sign in to start asking.":
-    "Assalamu'alaikum. Masuk untuk mulai bertanya.",
+  "Assalamu alaikum. Sign in to start asking.": "Assalamu'alaikum. Masuk untuk mulai bertanya.",
   "Enter this code on ChatGPT": "Masukkan kode ini di ChatGPT",
   "Code expired": "Kode kedaluwarsa",
   "Sign-in didn't work": "Gagal masuk",
   "{count} views": "{count} kali ditonton",
   "Results for:": "Hasil untuk:",
   "Searching…": "Mencari…",
-  "The search failed. Try this tab again later.":
-    "Pencarian gagal. Coba buka tab ini lagi nanti.",
+  "The search failed. Try this tab again later.": "Pencarian gagal. Coba buka tab ini lagi nanti.",
   "Expand sidebar": "Lebarkan bilah sisi",
   "Collapse sidebar": "Ciutkan bilah sisi",
   New: "Baru",
@@ -171,8 +162,7 @@ export default {
   "New chat": "Obrolan baru",
   "Copy a link to this chat": "Salin tautan ke obrolan ini",
   Share: "Bagikan",
-  "Incognito is on: new messages aren't saved":
-    "Mode penyamaran aktif: pesan baru tidak disimpan",
+  "Incognito is on: new messages aren't saved": "Mode penyamaran aktif: pesan baru tidak disimpan",
   "Use incognito: new messages aren't saved to your history":
     "Gunakan penyamaran: pesan baru tidak disimpan ke riwayat",
   "Ask a follow-up": "Ajukan pertanyaan lanjutan",
@@ -237,8 +227,7 @@ export default {
   "Searches everything first, then answers fast":
     "Mencari di semua sumber dulu, lalu menjawab cepat",
   Research: "Riset",
-  "Thinks longer and searches step by step":
-    "Berpikir lebih lama dan mencari langkah demi langkah",
+  "Thinks longer and searches step by step": "Berpikir lebih lama dan mencari langkah demi langkah",
   "Type / for modes": "Ketik / untuk mode",
   "Type @ for sources": "Ketik @ untuk sumber",
   'Delete "{title}"? This can\'t be undone.':

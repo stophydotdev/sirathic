@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathic වෙත ආපසු",
   Brand: "සන්නාමය",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathic හි ලාංඡන, වර්ණ සහ භාවිත මාර්ගෝපදේශ.",
+  "Logos, colors and guidelines for Sirathic.": "Sirathic හි ලාංඡන, වර්ණ සහ භාවිත මාර්ගෝපදේශ.",
   "Brand assets": "සන්නාම ගොනු",
   "Download our logos and follow the guidelines below.":
     "අපගේ ලාංඡන බාගත කර පහත මාර්ගෝපදේශ අනුගමනය කරන්න.",
@@ -78,8 +77,7 @@ export default {
   "Signs you out on this browser": "මෙම බ්‍රවුසරයෙන් ඔබව නික්මවයි",
   Appearance: "පෙනුම",
   Language: "භාෂාව",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic හි මෙනු සහ බොත්තම්වල භාෂාව",
+  "The language of Sirathic's menus and buttons": "Sirathic හි මෙනු සහ බොත්තම්වල භාෂාව",
   Theme: "තේමාව",
   "How Sirathic looks on this device": "මෙම උපාංගයේ Sirathic පෙනෙන ආකාරය",
   Asking: "ප්‍රශ්න ඇසීම",
@@ -102,14 +100,12 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "පරිවර්තනය අසල ආයත් සහ හදීස් අරාබියෙන් උපුටා දක්වන්න",
   "Incognito by default": "පෙරනිමියෙන් අප්‍රකට",
-  "New chats start in incognito and aren't saved":
-    "නව කතාබස් අප්‍රකට ප්‍රකාරයෙන් ආරම්භ වන අතර සුරැකෙන්නේ නැත",
+  "New chats start in incognito and aren't saved": "නව කතාබස් අප්‍රකට ප්‍රකාරයෙන් ආරම්භ වන අතර සුරැකෙන්නේ නැත",
   "Export my chats": "මගේ කතාබස් අපනයනය කරන්න",
   "Download every saved chat as a file": "සුරැකි සියලු කතාබස් එක් ගොනුවක් ලෙස බාගන්න",
   Export: "අපනයනය",
   "Delete all chats": "සියලු කතාබස් මකන්න",
-  "Delete every saved chat? This can't be undone.":
-    "සුරැකි සියලු කතාබස් මකන්නද? මෙය ආපසු හැරවිය නොහැක.",
+  "Delete every saved chat? This can't be undone.": "සුරැකි සියලු කතාබස් මකන්නද? මෙය ආපසු හැරවිය නොහැක.",
   "Removes every saved chat": "සුරැකි සියලු කතාබස් ඉවත් කරයි",
   "Delete all": "සියල්ල මකන්න",
   "From your ChatGPT account": "ඔබේ ChatGPT ගිණුමෙන්",
@@ -134,12 +130,10 @@ export default {
     "පළමු වතාවද? ChatGPT → Settings → Security හි උපාංග කේත පිවිසුම සක්‍රිය කරන්න. ChatGPT හි Codex ලෙස පෙන්වයි, එය සාමාන්‍යයි.",
   "Continue with ChatGPT": "ChatGPT සමඟ ඉදිරියට යන්න",
   "Continue with Google": "Google සමඟ ඉදිරියට යන්න",
-  "Use your ChatGPT plan for GPT models":
-    "GPT මාදිලි සඳහා ඔබේ ChatGPT සැලැස්ම භාවිතා කරන්න",
+  "Use your ChatGPT plan for GPT models": "GPT මාදිලි සඳහා ඔබේ ChatGPT සැලැස්ම භාවිතා කරන්න",
   "Get a new code": "නව කේතයක් ගන්න",
   "Try again": "නැවත උත්සාහ කරන්න",
-  "Your question stays in the box while you sign in.":
-    "ඔබ පිවිසෙන අතරතුර ඔබේ ප්‍රශ්නය කොටුවේම තිබේ.",
+  "Your question stays in the box while you sign in.": "ඔබ පිවිසෙන අතරතුර ඔබේ ප්‍රශ්නය කොටුවේම තිබේ.",
   "Copy code": "කේතය පිටපත් කරන්න",
   "Sign In": "පිවිසෙන්න",
   "Account menu": "ගිණුම් මෙනුව",
@@ -147,16 +141,14 @@ export default {
   "Google account": "Google ගිණුම",
   Incognito: "අප්‍රකට",
   "All settings": "සියලු සැකසුම්",
-  "Assalamu alaikum. Sign in to start asking.":
-    "අස්සලාමු අලෛකුම්. ප්‍රශ්න ඇසීම ආරම්භ කිරීමට පිවිසෙන්න.",
+  "Assalamu alaikum. Sign in to start asking.": "අස්සලාමු අලෛකුම්. ප්‍රශ්න ඇසීම ආරම්භ කිරීමට පිවිසෙන්න.",
   "Enter this code on ChatGPT": "මෙම කේතය ChatGPT හි ඇතුළත් කරන්න",
   "Code expired": "කේතය කල් ඉකුත් විය",
   "Sign-in didn't work": "පිවිසීම සාර්ථක නොවීය",
   "{count} views": "බැලීම් {count}",
   "Results for:": "ප්‍රතිඵල:",
   "Searching…": "සොයමින්…",
-  "The search failed. Try this tab again later.":
-    "සෙවීම අසාර්ථක විය. පසුව මෙම ටැබය නැවත උත්සාහ කරන්න.",
+  "The search failed. Try this tab again later.": "සෙවීම අසාර්ථක විය. පසුව මෙම ටැබය නැවත උත්සාහ කරන්න.",
   "Expand sidebar": "පැති තීරුව පුළුල් කරන්න",
   "Collapse sidebar": "පැති තීරුව හකුළන්න",
   New: "නව",
@@ -167,8 +159,7 @@ export default {
   "New chat": "නව කතාබස",
   "Copy a link to this chat": "මෙම කතාබසේ සබැඳිය පිටපත් කරන්න",
   Share: "බෙදාගන්න",
-  "Incognito is on: new messages aren't saved":
-    "අප්‍රකට සක්‍රියයි: නව පණිවිඩ සුරැකෙන්නේ නැත",
+  "Incognito is on: new messages aren't saved": "අප්‍රකට සක්‍රියයි: නව පණිවිඩ සුරැකෙන්නේ නැත",
   "Use incognito: new messages aren't saved to your history":
     "අප්‍රකට භාවිත කරන්න: නව පණිවිඩ ඔබේ ඉතිහාසයේ සුරැකෙන්නේ නැත",
   "Ask a follow-up": "ඊළඟ ප්‍රශ්නය අසන්න",
@@ -230,14 +221,12 @@ export default {
   Helpful: "ප්‍රයෝජනවත්",
   "Not helpful": "ප්‍රයෝජනවත් නැත",
   Quick: "ඉක්මන්",
-  "Searches everything first, then answers fast":
-    "මුලින්ම සෑම තැනකම සොයා, පසුව ඉක්මනින් පිළිතුරු දෙයි",
+  "Searches everything first, then answers fast": "මුලින්ම සෑම තැනකම සොයා, පසුව ඉක්මනින් පිළිතුරු දෙයි",
   Research: "පර්යේෂණය",
   "Thinks longer and searches step by step": "වැඩි වේලාවක් සිතා, පියවරෙන් පියවර සොයයි",
   "Type / for modes": "ප්‍රකාර සඳහා / ටයිප් කරන්න",
   "Type @ for sources": "මූලාශ්‍ර සඳහා @ ටයිප් කරන්න",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}” මකන්නද? මෙය ආපසු හැරවිය නොහැක.",
+  'Delete "{title}"? This can\'t be undone.': "“{title}” මකන්නද? මෙය ආපසු හැරවිය නොහැක.",
   "Qur'an text": "කුර්ආන් පෙළ",
   "Verse links": "ආයත් සබැඳි",
   "Hadith explanations": "හදීස් විවරණ",

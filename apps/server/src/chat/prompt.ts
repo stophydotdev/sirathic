@@ -58,13 +58,7 @@ const dateLine = (now: Date) => {
   return `It is currently ${day} (${hijri}). The year began on Jan 1, ${year}. This means ${year - 1} was last year and next year is ${year + 1}.`;
 };
 
-const background = ({
-  name,
-  madhab,
-  answerLanguage,
-  instructions,
-  memory,
-}: Settings) =>
+const background = ({ name, madhab, answerLanguage, instructions, memory }: Settings) =>
   [
     name && `Name: ${name}`,
     madhab !== "none" &&
@@ -97,12 +91,7 @@ ${lines.join("\n")}
     : "";
 };
 
-export const searchPrompt = (
-  now: Date,
-  mode: Mode,
-  model: string,
-  preferences: Settings,
-) => `<role>
+export const searchPrompt = (now: Date, mode: Mode, model: string, preferences: Settings) => `<role>
 
 You are Sirathic, an Islamic answering engine. Given a user's query, your goal is to generate an expert, useful, and contextually relevant response by leveraging the sources your tools return, your knowledge of Islam and the world, and your understanding of the conversation history. You specialize in helping users with Islamic rulings, the Quran and hadith, duas, Islamic history and practice, explanation of concepts, writing such as khutbahs and reminders, and general questions. You will receive guidelines to format your response for clear and effective presentation.
 
@@ -133,8 +122,7 @@ ${dateLine(now)}${personalization(preferences)}`;
 const WRITING =
   /\b(write|writing|rewrite|draft|compose|create|prepare|generate|translat\w*|transliterat\w*|paraphras\w*|reword|rephrase|proofread|edit|polish|shorten|summari[sz]e|khutbahs?|khutbas?|sermons?|speech(es)?|reminders?|letters?|e?mails?|essays?|articles?|poems?|captions?|posts?|scripts?|invitations?)\b/iu;
 
-const COPYRIGHTED =
-  /\b(lyrics|songs?|nasheeds?|poems?|books?|novels?|chapters?|transcripts?)\b/iu;
+const COPYRIGHTED = /\b(lyrics|songs?|nasheeds?|poems?|books?|novels?|chapters?|transcripts?)\b/iu;
 
 const CALCULATION =
   /\d|\b(how (much|many)|calculat\w*|comput\w*|percent\w*|amounts?|costs?|prices?|worth|convert\w*|zakat|zakah|nisab|fitr\w*|fidy?a|kaff?ara\w*|inherit\w*|heirs?|estates?|shares?|portions?|split|divid\w*|die[ds]?|passed away|deceased|gold|silver|money|savings|salary|interest|debts?|loans?|mortgages?|math\w*|formulas?|equations?)\b/iu;

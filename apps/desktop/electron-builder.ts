@@ -22,8 +22,7 @@ export default {
     ],
     category: "Education",
     executableName: "sirathic",
-    maintainer:
-      "Hussein Hakizimana <189969103+hakiiizimana@users.noreply.github.com>",
+    maintainer: "Hussein Hakizimana <189969103+hakiiizimana@users.noreply.github.com>",
     artifactName: "Sirathic-linux-${arch}.${ext}",
   },
   deb: { packageName: "sirathic" },

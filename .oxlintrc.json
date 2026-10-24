@@ -25,10 +25,7 @@
     { "name": "sirathic", "specifier": "./tools/oxlint/sirathic/index.ts" }
   ],
   "rules": {
-    "typescript/consistent-type-assertions": [
-      "error",
-      { "assertionStyle": "never" }
-    ],
+    "typescript/consistent-type-assertions": ["error", { "assertionStyle": "never" }],
     "sirathic/no-comments": "error",
     "import/no-unassigned-import": ["error", { "allow": ["**/*.css"] }],
     "anti-slop/no-chained-type-assertions": "error",
@@ -48,11 +45,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "apps/server/**/*.ts",
-        "packages/*/src/**/*.ts",
-        "scripts/**/*.ts"
-      ],
+      "files": ["apps/server/**/*.ts", "packages/*/src/**/*.ts", "scripts/**/*.ts"],
       "rules": {
         "unicorn/filename-case": ["error", { "case": "camelCase" }]
       }

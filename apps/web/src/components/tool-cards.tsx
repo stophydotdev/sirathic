@@ -122,12 +122,7 @@ const Row: FC<{ label: ReactNode; value: ReactNode; strong?: boolean }> = ({
   value,
   strong = false,
 }) => (
-  <div
-    className={cn(
-      "flex items-baseline justify-between gap-3 py-1",
-      strong && "font-[560]",
-    )}
-  >
+  <div className={cn("flex items-baseline justify-between gap-3 py-1", strong && "font-[560]")}>
     <span className={cn(!strong && "text-muted-foreground")}>{label}</span>
     <span className="tabular-nums">{value}</span>
   </div>
@@ -143,9 +138,7 @@ function useNow() {
   return now;
 }
 
-const PrayerTimesCard: FC<{ data: z.output<typeof prayerTimesOutput> }> = ({
-  data,
-}) => {
+const PrayerTimesCard: FC<{ data: z.output<typeof prayerTimesOutput> }> = ({ data }) => {
   const now = useNow();
   const t = useT();
   const next = PRAYERS.find(
@@ -161,8 +154,7 @@ const PrayerTimesCard: FC<{ data: z.output<typeof prayerTimesOutput> }> = ({
     day: "numeric",
     month: "short",
   });
-  const school =
-    data.basis.asr.school === "hanafi" ? t("Hanafi") : t("Shafi'i");
+  const school = data.basis.asr.school === "hanafi" ? t("Hanafi") : t("Shafi'i");
 
   return (
     <Card
@@ -199,9 +191,7 @@ const QiblaCard: FC<{ data: z.output<typeof qiblaOutput> }> = ({ data }) => {
       ) : (
         <div className="flex items-center gap-4">
           <div className="border-foreground/15 relative flex size-16 shrink-0 items-center justify-center rounded-full border">
-            <span className="text-muted-foreground absolute top-0.5 text-[10px]">
-              N
-            </span>
+            <span className="text-muted-foreground absolute top-0.5 text-[10px]">N</span>
             <IconNavigation
               className="text-super size-6 fill-current"
               style={{ rotate: `${data.bearingDegrees}deg` }}
@@ -232,10 +222,7 @@ const ZakatCard: FC<{ data: z.output<typeof zakatOutput> }> = ({ data }) => {
 
   return (
     <Card title={t("Zakat")} footer={assets.join(" · ")}>
-      <Row
-        label={t("Zakatable wealth")}
-        value={money(data.netZakatableWealth, data.currency)}
-      />
+      <Row label={t("Zakatable wealth")} value={money(data.netZakatableWealth, data.currency)} />
       <Row
         label={t("Nisab ({basis}, {grams} g)", {
           basis: data.selectedBasis,
@@ -252,9 +239,7 @@ const ZakatCard: FC<{ data: z.output<typeof zakatOutput> }> = ({ data }) => {
   );
 };
 
-const InheritanceCard: FC<{ data: z.output<typeof inheritanceOutput> }> = ({
-  data,
-}) => {
+const InheritanceCard: FC<{ data: z.output<typeof inheritanceOutput> }> = ({ data }) => {
   const { currency } = data.estate;
   const t = useT();
 

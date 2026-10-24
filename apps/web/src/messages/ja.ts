@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathic に戻る",
   Brand: "ブランド",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathic のロゴ、カラー、使用ガイドライン。",
+  "Logos, colors and guidelines for Sirathic.": "Sirathic のロゴ、カラー、使用ガイドライン。",
   "Brand assets": "ブランド素材",
   "Download our logos and follow the guidelines below.":
     "ロゴをダウンロードし、以下のガイドラインに従ってください。",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "質問と同じ言語",
   "Same as my browser": "ブラウザと同じ言語",
   "Not signed in": "ログインしていません",
-  "Sign in to ask and keep your chats":
-    "ログインすると質問でき、チャットも保存されます",
+  "Sign in to ask and keep your chats": "ログインすると質問でき、チャットも保存されます",
   "Sign in": "ログイン",
   "Signed in with ChatGPT": "ChatGPT でログイン中",
   "Signed in with Google": "Google でログイン中",
@@ -79,16 +77,14 @@ export default {
   "Signs you out on this browser": "このブラウザからログアウトします",
   Appearance: "表示",
   Language: "言語",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic のメニューやボタンの言語",
+  "The language of Sirathic's menus and buttons": "Sirathic のメニューやボタンの言語",
   Theme: "テーマ",
   "How Sirathic looks on this device": "このデバイスでの Sirathic の見た目",
   Asking: "質問",
   "Default mode": "既定のモード",
   "Suggestions while typing": "入力中の候補",
   "Show suggested questions under the box": "入力欄の下に質問の候補を表示する",
-  "Sign in to personalize answers.":
-    "ログインすると回答をカスタマイズできます。",
+  "Sign in to personalize answers.": "ログインすると回答をカスタマイズできます。",
   "What should Sirathic call you?": "Sirathic はあなたを何と呼べばよいですか？",
   "Your name": "お名前",
   Madhab: "法学派",
@@ -107,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "新しいチャットはシークレットモードで始まり、保存されません",
   "Export my chats": "チャットを書き出す",
-  "Download every saved chat as a file":
-    "保存されたすべてのチャットをファイルでダウンロード",
+  "Download every saved chat as a file": "保存されたすべてのチャットをファイルでダウンロード",
   Export: "書き出す",
   "Delete all chats": "すべてのチャットを削除",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +132,7 @@ export default {
     "初めてですか？ChatGPT →「設定」→「セキュリティ」でデバイスコードによるログインをオンにしてください。ChatGPT には Codex と表示されますが、問題ありません。",
   "Continue with ChatGPT": "ChatGPT で続ける",
   "Continue with Google": "Google で続ける",
-  "Use your ChatGPT plan for GPT models":
-    "GPT モデルにはあなたの ChatGPT プランを使います",
+  "Use your ChatGPT plan for GPT models": "GPT モデルにはあなたの ChatGPT プランを使います",
   "Get a new code": "新しいコードを取得",
   "Try again": "もう一度試す",
   "Your question stays in the box while you sign in.":
@@ -233,14 +227,12 @@ export default {
   Helpful: "役に立った",
   "Not helpful": "役に立たなかった",
   Quick: "クイック",
-  "Searches everything first, then answers fast":
-    "まずすべてを検索してから、すばやく回答します",
+  "Searches everything first, then answers fast": "まずすべてを検索してから、すばやく回答します",
   Research: "リサーチ",
   "Thinks longer and searches step by step": "じっくり考え、段階的に検索します",
   "Type / for modes": "/ でモードを選択",
   "Type @ for sources": "@ で出典を選択",
-  'Delete "{title}"? This can\'t be undone.':
-    "「{title}」を削除しますか？元に戻せません。",
+  'Delete "{title}"? This can\'t be undone.': "「{title}」を削除しますか？元に戻せません。",
   "Qur'an text": "クルアーンの本文",
   "Verse links": "節へのリンク",
   "Hadith explanations": "ハディースの解説",

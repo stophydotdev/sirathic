@@ -7,12 +7,7 @@ import {
   toText,
   total,
 } from "../inheritance/fraction";
-import {
-  DIFFERENCES,
-  HEIR_LABELS,
-  heirKeys,
-  heirsSchema,
-} from "../inheritance/rules";
+import { DIFFERENCES, HEIR_LABELS, heirKeys, heirsSchema } from "../inheritance/rules";
 import { solve } from "../inheritance/solver";
 import { round } from "../zoned";
 
@@ -20,10 +15,7 @@ const BEQUEST_CAP = 1 / 3;
 
 export const inheritanceInput = z
   .object({
-    estate: z
-      .number()
-      .positive()
-      .describe("Total value of everything the deceased left"),
+    estate: z.number().positive().describe("Total value of everything the deceased left"),
     debts: z
       .number()
       .min(0)
@@ -67,8 +59,7 @@ export const inheritanceInput = z
   });
 
 export const inheritance = (input: z.input<typeof inheritanceInput>) => {
-  const { estate, debts, bequest, currency, heirs } =
-    inheritanceInput.parse(input);
+  const { estate, debts, bequest, currency, heirs } = inheritanceInput.parse(input);
   const afterDebts = Math.max(estate - debts, 0);
   const bequestApplied = Math.min(bequest, afterDebts * BEQUEST_CAP);
   const distributable = afterDebts - bequestApplied;

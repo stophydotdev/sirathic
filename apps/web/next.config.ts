@@ -6,10 +6,7 @@ const PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
 if (!SERVER) throw new Error("env NEXT_PUBLIC_SERVER is not set");
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: [
-    "127.0.0.1",
-    ...(PUBLIC_URL ? [new URL(PUBLIC_URL).hostname] : []),
-  ],
+  allowedDevOrigins: ["127.0.0.1", ...(PUBLIC_URL ? [new URL(PUBLIC_URL).hostname] : [])],
   devIndicators: false,
   transpilePackages: ["@sirathic/server"],
   headers: async () => [
@@ -19,9 +16,10 @@ const nextConfig: NextConfig = {
     },
   ],
   rewrites: async () =>
-    ["/trpc/:path*", "/api/chat", "/api/auth/:path*", "/auth/:path*"].map(
-      (source) => ({ source, destination: `${SERVER}${source}` }),
-    ),
+    ["/trpc/:path*", "/api/chat", "/api/auth/:path*", "/auth/:path*"].map((source) => ({
+      source,
+      destination: `${SERVER}${source}`,
+    })),
 };
 
 export default nextConfig;

@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Quay lại Sirathic",
   Brand: "Thương hiệu",
-  "Logos, colors and guidelines for Sirathic.":
-    "Logo, màu sắc và hướng dẫn sử dụng của Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Logo, màu sắc và hướng dẫn sử dụng của Sirathic.",
   "Brand assets": "Tài nguyên thương hiệu",
   "Download our logos and follow the guidelines below.":
     "Tải logo của chúng tôi và làm theo hướng dẫn bên dưới.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Giống câu hỏi của tôi",
   "Same as my browser": "Giống trình duyệt của tôi",
   "Not signed in": "Chưa đăng nhập",
-  "Sign in to ask and keep your chats":
-    "Đăng nhập để đặt câu hỏi và lưu cuộc trò chuyện",
+  "Sign in to ask and keep your chats": "Đăng nhập để đặt câu hỏi và lưu cuộc trò chuyện",
   "Sign in": "Đăng nhập",
   "Signed in with ChatGPT": "Đã đăng nhập bằng ChatGPT",
   "Signed in with Google": "Đã đăng nhập bằng Google",
@@ -79,15 +77,13 @@ export default {
   "Signs you out on this browser": "Đăng xuất khỏi trình duyệt này",
   Appearance: "Giao diện",
   Language: "Ngôn ngữ",
-  "The language of Sirathic's menus and buttons":
-    "Ngôn ngữ của menu và nút trong Sirathic",
+  "The language of Sirathic's menus and buttons": "Ngôn ngữ của menu và nút trong Sirathic",
   Theme: "Chủ đề",
   "How Sirathic looks on this device": "Giao diện Sirathic trên thiết bị này",
   Asking: "Đặt câu hỏi",
   "Default mode": "Chế độ mặc định",
   "Suggestions while typing": "Gợi ý khi gõ",
-  "Show suggested questions under the box":
-    "Hiện câu hỏi gợi ý bên dưới ô nhập",
+  "Show suggested questions under the box": "Hiện câu hỏi gợi ý bên dưới ô nhập",
   "Sign in to personalize answers.": "Đăng nhập để cá nhân hóa câu trả lời.",
   "What should Sirathic call you?": "Sirathic nên gọi bạn là gì?",
   "Your name": "Tên của bạn",
@@ -107,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "Cuộc trò chuyện mới bắt đầu ở chế độ ẩn danh và không được lưu",
   "Export my chats": "Xuất các cuộc trò chuyện",
-  "Download every saved chat as a file":
-    "Tải tất cả cuộc trò chuyện đã lưu thành một tệp",
+  "Download every saved chat as a file": "Tải tất cả cuộc trò chuyện đã lưu thành một tệp",
   Export: "Xuất",
   "Delete all chats": "Xóa tất cả cuộc trò chuyện",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +132,7 @@ export default {
     "Lần đầu? Hãy bật đăng nhập bằng mã thiết bị trong ChatGPT → Cài đặt → Bảo mật. ChatGPT sẽ hiện Codex, điều đó là bình thường.",
   "Continue with ChatGPT": "Tiếp tục với ChatGPT",
   "Continue with Google": "Tiếp tục với Google",
-  "Use your ChatGPT plan for GPT models":
-    "Dùng gói ChatGPT của bạn cho các mô hình GPT",
+  "Use your ChatGPT plan for GPT models": "Dùng gói ChatGPT của bạn cho các mô hình GPT",
   "Get a new code": "Lấy mã mới",
   "Try again": "Thử lại",
   "Your question stays in the box while you sign in.":
@@ -158,8 +152,7 @@ export default {
   "{count} views": "{count} lượt xem",
   "Results for:": "Kết quả cho:",
   "Searching…": "Đang tìm…",
-  "The search failed. Try this tab again later.":
-    "Tìm kiếm thất bại. Hãy thử lại thẻ này sau.",
+  "The search failed. Try this tab again later.": "Tìm kiếm thất bại. Hãy thử lại thẻ này sau.",
   "Expand sidebar": "Mở rộng thanh bên",
   "Collapse sidebar": "Thu gọn thanh bên",
   New: "Mới",
@@ -170,8 +163,7 @@ export default {
   "New chat": "Cuộc trò chuyện mới",
   "Copy a link to this chat": "Sao chép liên kết đến cuộc trò chuyện này",
   Share: "Chia sẻ",
-  "Incognito is on: new messages aren't saved":
-    "Đang bật ẩn danh: tin nhắn mới không được lưu",
+  "Incognito is on: new messages aren't saved": "Đang bật ẩn danh: tin nhắn mới không được lưu",
   "Use incognito: new messages aren't saved to your history":
     "Dùng ẩn danh: tin nhắn mới không được lưu vào lịch sử",
   "Ask a follow-up": "Hỏi tiếp",
@@ -233,15 +225,12 @@ export default {
   Helpful: "Hữu ích",
   "Not helpful": "Không hữu ích",
   Quick: "Nhanh",
-  "Searches everything first, then answers fast":
-    "Tìm ở mọi nguồn trước, rồi trả lời nhanh",
+  "Searches everything first, then answers fast": "Tìm ở mọi nguồn trước, rồi trả lời nhanh",
   Research: "Nghiên cứu",
-  "Thinks longer and searches step by step":
-    "Suy nghĩ lâu hơn và tìm kiếm từng bước",
+  "Thinks longer and searches step by step": "Suy nghĩ lâu hơn và tìm kiếm từng bước",
   "Type / for modes": "Gõ / để chọn chế độ",
   "Type @ for sources": "Gõ @ để chọn nguồn",
-  'Delete "{title}"? This can\'t be undone.':
-    "Xóa “{title}”? Thao tác này không thể hoàn tác.",
+  'Delete "{title}"? This can\'t be undone.': "Xóa “{title}”? Thao tác này không thể hoàn tác.",
   "Qur'an text": "Văn bản Qur'an",
   "Verse links": "Liên kết câu kinh",
   "Hadith explanations": "Giải thích hadith",
