@@ -6,6 +6,12 @@
     },
     "apps/web": {
       "entry": ["open-next.config.ts"]
+    },
+    ".": {
+      "entry": ["scripts/*.ts"]
+    },
+    "apps/server": {
+      "entry": ["src/chatgpt/login.ts"]
     }
   }
 }

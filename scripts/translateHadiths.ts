@@ -197,7 +197,7 @@ if (flag === "--sample") await checkSample(z.coerce.number().int().positive().pa
 else if (flag === "--redo") await redoChatter();
 else if (flag !== undefined)
   throw new Error(
-    "Usage: bun run translate --sample <count> to check quality on hadiths that also have sunnah.com English, bun run translate to send all of them as Message Batches of 5,000 (rerunning resumes the saved batches), or bun run translate --redo to translate again the saved ones that carry notes or a reply",
+    "Usage: bun run env scripts/translateHadiths.ts --sample <count> to check quality on hadiths that also have sunnah.com English, bun run env scripts/translateHadiths.ts to send all of them as Message Batches of 5,000 (rerunning resumes the saved batches), or bun run env scripts/translateHadiths.ts --redo to translate again the saved ones that carry notes or a reply",
   );
 else await translateAll();
 await db.$client.end();

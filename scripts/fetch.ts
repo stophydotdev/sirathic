@@ -3,7 +3,7 @@ import { webFetch } from "@sirathic/core/tools/webFetch";
 const url = process.argv[2];
 
 if (!url) {
-  console.error('usage: bun run fetch "<url>"');
+  console.error('usage: bun run env scripts/fetch.ts "<url>"');
   process.exit(1);
 }
 

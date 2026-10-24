@@ -4,7 +4,7 @@ const query = process.argv[2];
 const limit = process.argv[3] ? Number(process.argv[3]) : undefined;
 
 if (!query) {
-  console.error('usage: bun run search "<query>" [limit]');
+  console.error('usage: bun run env scripts/search.ts "<query>" [limit]');
   process.exit(1);
 }
 

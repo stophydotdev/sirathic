@@ -11,10 +11,7 @@
     "./sources": "./src/shared/sources.ts"
   },
   "scripts": {
-    "dev": "bun --hot --env-file=.env --env-file=.env.local src/index.ts",
-    "compile": "bun build --compile --minify --sourcemap ./src/index.ts --outfile server",
-    "start": "bun --env-file=.env --env-file=.env.local src/index.ts",
-    "chatgpt-login": "bun src/chatgpt/login.ts"
+    "dev": "bun --hot --env-file=.env --env-file=.env.local src/index.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "4.0.80",
