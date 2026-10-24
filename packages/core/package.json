@@ -13,13 +13,10 @@
     "@mozilla/readability": "^0.6.0",
     "@sirathic/db": "workspace:*",
     "@sirathic/env": "workspace:*",
-    "adhan": "^4.4.6",
     "drizzle-orm": "^0.45.4",
     "linkedom": "^0.18.13",
-    "mathjs": "^15.2.0",
     "stophy": "3.0.0",
     "turndown": "^7.2.4",
-    "yahoo-finance2": "^4.0.3",
     "zod": "^4.4.3"
   },
   "devDependencies": {

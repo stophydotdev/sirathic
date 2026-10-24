@@ -1,7 +1,7 @@
 import type { ThreadMessage } from "@assistant-ui/react";
 import { z } from "zod";
 
-const SEARCHES = new Set(["webSearch", "searchSources", "newsSearch", "redditSearch"]);
+const SEARCHES = new Set(["webSearch", "searchSources", "newsSearch"]);
 
 const toolInput = z
   .object({

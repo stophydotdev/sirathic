@@ -1,13 +1,8 @@
 import { db } from "@sirathic/db";
 import { fiqhPassages, fiqhWorks } from "@sirathic/db/schema";
 import { eq, inArray } from "drizzle-orm";
-import { z } from "zod";
 
-export const fiqhGetInput = z.object({
-  ids: z.array(z.string().trim().min(1)).min(1).max(20),
-});
-
-export const SHAMELA_BOOKS = new Map([
+const SHAMELA_BOOKS = new Map([
   ["shamela.5841", 21739],
   ["shamela.4404", 11820],
   ["shamela.5775", 21613],
@@ -51,11 +46,4 @@ export const passagesByIds = async (ids: string[]) => {
     ]),
   );
   return ids.flatMap((id) => byId.get(id) ?? []);
-};
-
-export const fiqhGet = async (input: z.input<typeof fiqhGetInput>) => {
-  const { ids } = fiqhGetInput.parse(input);
-  const found = await passagesByIds(ids);
-  const foundIds = new Set(found.map((passage) => passage.id));
-  return { passages: found, missing: ids.filter((id) => !foundIds.has(id)) };
 };

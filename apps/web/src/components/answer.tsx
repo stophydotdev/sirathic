@@ -16,7 +16,6 @@ import {
 } from "@/components/sources";
 import { useSignIn } from "@/components/sign-in";
 import { useT } from "@/components/i18n";
-import { ToolCards } from "@/components/tool-cards";
 import type { Source } from "@sirathic/server/sources";
 import { cn } from "@/lib/utils";
 import {
@@ -93,14 +92,11 @@ const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) 
             switch (part.type) {
               case "group-research":
                 return (
-                  <>
-                    <Research
-                      running={part.status.type === "running"}
-                      indices={part.indices}
-                      startedAt={startedAt}
-                    />
-                    <ToolCards indices={part.indices} />
-                  </>
+                  <Research
+                    running={part.status.type === "running"}
+                    indices={part.indices}
+                    startedAt={startedAt}
+                  />
                 );
               case "indicator":
                 return <Research running indices={[]} startedAt={startedAt} />;

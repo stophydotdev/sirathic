@@ -4,7 +4,7 @@ import type { hadithSearch } from "@sirathic/core/tools/hadithSearch";
 import type { quranSearch } from "@sirathic/core/tools/quranSearch";
 import type { Source } from "../shared/sources";
 
-export const SNIPPET_CHARS = 300;
+const SNIPPET_CHARS = 300;
 
 export type Cite = (url: string) => number;
 export type Verse = Awaited<ReturnType<typeof quranSearch>>["verses"][number];
