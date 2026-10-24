@@ -64,20 +64,10 @@ function cardsFrom(part: Part, t: Translate): Card[] {
   if (part.type !== "tool-call") return [];
   switch (part.toolName) {
     case "search":
-      return (
-        searchOutput.safeParse(part.result).data?.results.quran ?? []
-      ).flatMap((hit) => {
+      return (searchOutput.safeParse(part.result).data?.results.quran ?? []).flatMap((hit) => {
         const [, surah, ayah] = ayahOf.exec(hit.ref) ?? [];
         return surah && ayah
-          ? [
-              quranCard(
-                Number(surah),
-                Number(ayah),
-                hit.ref,
-                hit.arabic,
-                hit.english,
-              ),
-            ]
+          ? [quranCard(Number(surah), Number(ayah), hit.ref, hit.arabic, hit.english)]
           : [];
       });
     case "quranGet":
@@ -121,10 +111,7 @@ function useShowArabic() {
   return show;
 }
 
-export const InlineVerse: FC<{ url: string; fallback?: ReactNode }> = ({
-  url,
-  fallback,
-}) => {
+export const InlineVerse: FC<{ url: string; fallback?: ReactNode }> = ({ url, fallback }) => {
   const parts = useAuiState((s) => s.message.parts);
   const showArabic = useShowArabic();
   const t = useT();
@@ -144,9 +131,7 @@ export const InlineVerse: FC<{ url: string; fallback?: ReactNode }> = ({
         </p>
       )}
       {verse.english && (
-        <p className="text-muted-foreground mt-1 text-sm leading-6">
-          {verse.english}
-        </p>
+        <p className="text-muted-foreground mt-1 text-sm leading-6">{verse.english}</p>
       )}
     </figure>
   );

@@ -35,12 +35,8 @@ export async function respond<Result>(run: () => Promise<Result>) {
   }
 }
 
-export async function parseBody<S extends z.ZodType>(
-  request: Request,
-  schema: S,
-) {
+export async function parseBody<S extends z.ZodType>(request: Request, schema: S) {
   const parsed = schema.safeParse(await request.json().catch(() => undefined));
-  if (!parsed.success)
-    throw new StatusError(400, z.prettifyError(parsed.error));
+  if (!parsed.success) throw new StatusError(400, z.prettifyError(parsed.error));
   return parsed.data;
 }

@@ -1,9 +1,4 @@
-import type {
-  StreamTextTransform,
-  TextStreamPart,
-  ToolSet,
-  UIMessage,
-} from "ai";
+import type { StreamTextTransform, TextStreamPart, ToolSet, UIMessage } from "ai";
 
 const LINKED = /\[(\d+)\]\(([^)\s]+)\)/g;
 const CITATION = /( ?)\[(\d+)\](?:\(([^)\s]+)\))?/g;
@@ -27,13 +22,10 @@ const sinceLastCitation = (text: string) => {
 
 function holdFrom(text: string) {
   const native = text.lastIndexOf("\ue200");
-  const nativeOpen =
-    native !== -1 && !text.includes("\ue201", native) ? native : text.length;
+  const nativeOpen = native !== -1 && !text.includes("\ue201", native) ? native : text.length;
   const bracket = text.lastIndexOf("[");
   const bracketOpen =
-    bracket !== -1 && UNFINISHED.test(text.slice(bracket))
-      ? bracket
-      : text.length;
+    bracket !== -1 && UNFINISHED.test(text.slice(bracket)) ? bracket : text.length;
   return Math.min(nativeOpen, bracketOpen);
 }
 
@@ -65,20 +57,17 @@ export function citations(history: UIMessage[]) {
     const cited = QURAN_URL.exec(byNumber.get(number) ?? "");
     if (!cited) return number;
     const [surah, ayah] = [Number(cited[1]), Number(cited[2])];
-    const named = [
-      ...sinceLastCitation(paragraphOf(before)).matchAll(VERSE_KEY),
-    ].map(([, namedSurah, from, to]) => ({
-      surah: Number(namedSurah),
-      from: Number(from),
-      to: Number(to ?? from),
-    }));
+    const named = [...sinceLastCitation(paragraphOf(before)).matchAll(VERSE_KEY)].map(
+      ([, namedSurah, from, to]) => ({
+        surah: Number(namedSurah),
+        from: Number(from),
+        to: Number(to ?? from),
+      }),
+    );
     const last = named.at(-1);
     if (
       last === undefined ||
-      named.some(
-        (verse) =>
-          verse.surah === surah && verse.from <= ayah && ayah <= verse.to,
-      )
+      named.some((verse) => verse.surah === surah && verse.from <= ayah && ayah <= verse.to)
     )
       return number;
     return byUrl.get(`https://quran.com/${last.surah}/${last.from}`) ?? number;
@@ -88,28 +77,18 @@ export function citations(history: UIMessage[]) {
     text
       .replace(NATIVE, (_, space: string, payload: string) => {
         const number = byUrl.get(payload.trim());
-        return number === undefined
-          ? ""
-          : `${space}[${number}](${payload.trim()})`;
+        return number === undefined ? "" : `${space}[${number}](${payload.trim()})`;
       })
       .replace(PRIVATE_USE, "")
       .replace(
         CITATION,
-        (
-          _,
-          space: string,
-          raw: string,
-          url: string | undefined,
-          offset: number,
-          whole: string,
-        ) => {
+        (_, space: string, raw: string, url: string | undefined, offset: number, whole: string) => {
           const written = url === undefined ? Number(raw) : byUrl.get(url);
           const number =
             written === undefined
               ? undefined
               : verseCited(written, before + whole.slice(0, offset));
-          const target =
-            number === undefined ? undefined : byNumber.get(number);
+          const target = number === undefined ? undefined : byNumber.get(number);
           return target === undefined ? "" : `${space}[${number}](${target})`;
         },
       );
@@ -124,11 +103,8 @@ export function citations(history: UIMessage[]) {
         paragraph = paragraphOf(paragraph + text);
         return result;
       };
-      const flush = (
-        controller: TransformStreamDefaultController<TextStreamPart<TOOLS>>,
-      ) => {
-        if (pending)
-          controller.enqueue({ type: "text-delta", id, text: linked(pending) });
+      const flush = (controller: TransformStreamDefaultController<TextStreamPart<TOOLS>>) => {
+        if (pending) controller.enqueue({ type: "text-delta", id, text: linked(pending) });
         pending = "";
       };
       return new TransformStream<TextStreamPart<TOOLS>, TextStreamPart<TOOLS>>({

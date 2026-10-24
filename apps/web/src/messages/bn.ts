@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathic-এ ফিরে যান",
   Brand: "ব্র্যান্ড",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathic-এর লোগো, রং ও ব্যবহারের নির্দেশিকা।",
+  "Logos, colors and guidelines for Sirathic.": "Sirathic-এর লোগো, রং ও ব্যবহারের নির্দেশিকা।",
   "Brand assets": "ব্র্যান্ড ফাইল",
   "Download our logos and follow the guidelines below.":
     "আমাদের লোগো ডাউনলোড করুন এবং নিচের নির্দেশিকা মেনে চলুন।",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "আমার প্রশ্নের ভাষা",
   "Same as my browser": "আমার ব্রাউজারের ভাষা",
   "Not signed in": "সাইন ইন করা নেই",
-  "Sign in to ask and keep your chats":
-    "প্রশ্ন করতে ও চ্যাট সংরক্ষণ করতে সাইন ইন করুন",
+  "Sign in to ask and keep your chats": "প্রশ্ন করতে ও চ্যাট সংরক্ষণ করতে সাইন ইন করুন",
   "Sign in": "সাইন ইন",
   "Signed in with ChatGPT": "ChatGPT দিয়ে সাইন ইন করা আছে",
   "Signed in with Google": "Google দিয়ে সাইন ইন করা আছে",
@@ -102,15 +100,12 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "অনুবাদের পাশে আয়াত ও হাদিস আরবিতে উদ্ধৃত করুন",
   "Incognito by default": "ডিফল্টভাবে ইনকগনিটো",
-  "New chats start in incognito and aren't saved":
-    "নতুন চ্যাট ইনকগনিটোতে শুরু হয় এবং সংরক্ষিত হয় না",
+  "New chats start in incognito and aren't saved": "নতুন চ্যাট ইনকগনিটোতে শুরু হয় এবং সংরক্ষিত হয় না",
   "Export my chats": "আমার চ্যাট এক্সপোর্ট করুন",
-  "Download every saved chat as a file":
-    "সংরক্ষিত সব চ্যাট একটি ফাইল হিসেবে ডাউনলোড করুন",
+  "Download every saved chat as a file": "সংরক্ষিত সব চ্যাট একটি ফাইল হিসেবে ডাউনলোড করুন",
   Export: "এক্সপোর্ট",
   "Delete all chats": "সব চ্যাট মুছুন",
-  "Delete every saved chat? This can't be undone.":
-    "সংরক্ষিত সব চ্যাট মুছবেন? এটি ফেরানো যাবে না।",
+  "Delete every saved chat? This can't be undone.": "সংরক্ষিত সব চ্যাট মুছবেন? এটি ফেরানো যাবে না।",
   "Removes every saved chat": "সংরক্ষিত সব চ্যাট মুছে দেয়",
   "Delete all": "সব মুছুন",
   "From your ChatGPT account": "আপনার ChatGPT অ্যাকাউন্ট থেকে",
@@ -135,12 +130,10 @@ export default {
     "প্রথমবার? ChatGPT → Settings → Security-তে ডিভাইস কোড দিয়ে সাইন-ইন চালু করুন। ChatGPT-তে Codex লেখা দেখাবে, এটাই স্বাভাবিক।",
   "Continue with ChatGPT": "ChatGPT দিয়ে চালিয়ে যান",
   "Continue with Google": "Google দিয়ে চালিয়ে যান",
-  "Use your ChatGPT plan for GPT models":
-    "GPT মডেলের জন্য আপনার ChatGPT প্ল্যান ব্যবহার করুন",
+  "Use your ChatGPT plan for GPT models": "GPT মডেলের জন্য আপনার ChatGPT প্ল্যান ব্যবহার করুন",
   "Get a new code": "নতুন কোড নিন",
   "Try again": "আবার চেষ্টা করুন",
-  "Your question stays in the box while you sign in.":
-    "সাইন ইন করার সময় আপনার প্রশ্ন বক্সেই থাকবে।",
+  "Your question stays in the box while you sign in.": "সাইন ইন করার সময় আপনার প্রশ্ন বক্সেই থাকবে।",
   "Copy code": "কোড কপি করুন",
   "Sign In": "সাইন ইন",
   "Account menu": "অ্যাকাউন্ট মেনু",
@@ -148,16 +141,14 @@ export default {
   "Google account": "Google অ্যাকাউন্ট",
   Incognito: "ইনকগনিটো",
   "All settings": "সব সেটিংস",
-  "Assalamu alaikum. Sign in to start asking.":
-    "আসসালামু আলাইকুম। প্রশ্ন শুরু করতে সাইন ইন করুন।",
+  "Assalamu alaikum. Sign in to start asking.": "আসসালামু আলাইকুম। প্রশ্ন শুরু করতে সাইন ইন করুন।",
   "Enter this code on ChatGPT": "এই কোডটি ChatGPT-তে লিখুন",
   "Code expired": "কোডের মেয়াদ শেষ",
   "Sign-in didn't work": "সাইন ইন হয়নি",
   "{count} views": "{count} বার দেখা হয়েছে",
   "Results for:": "ফলাফল:",
   "Searching…": "খোঁজা হচ্ছে…",
-  "The search failed. Try this tab again later.":
-    "খোঁজা ব্যর্থ হয়েছে। পরে এই ট্যাবটি আবার খুলুন।",
+  "The search failed. Try this tab again later.": "খোঁজা ব্যর্থ হয়েছে। পরে এই ট্যাবটি আবার খুলুন।",
   "Expand sidebar": "সাইডবার বড় করুন",
   "Collapse sidebar": "সাইডবার ছোট করুন",
   New: "নতুন",
@@ -168,8 +159,7 @@ export default {
   "New chat": "নতুন চ্যাট",
   "Copy a link to this chat": "এই চ্যাটের লিংক কপি করুন",
   Share: "শেয়ার",
-  "Incognito is on: new messages aren't saved":
-    "ইনকগনিটো চালু: নতুন বার্তা সংরক্ষিত হয় না",
+  "Incognito is on: new messages aren't saved": "ইনকগনিটো চালু: নতুন বার্তা সংরক্ষিত হয় না",
   "Use incognito: new messages aren't saved to your history":
     "ইনকগনিটো ব্যবহার করুন: নতুন বার্তা আপনার ইতিহাসে সংরক্ষিত হয় না",
   "Ask a follow-up": "পরের প্রশ্ন করুন",
@@ -231,14 +221,12 @@ export default {
   Helpful: "সহায়ক",
   "Not helpful": "সহায়ক নয়",
   Quick: "দ্রুত",
-  "Searches everything first, then answers fast":
-    "আগে সব জায়গায় খোঁজে, তারপর দ্রুত উত্তর দেয়",
+  "Searches everything first, then answers fast": "আগে সব জায়গায় খোঁজে, তারপর দ্রুত উত্তর দেয়",
   Research: "গবেষণা",
   "Thinks longer and searches step by step": "বেশি সময় ভাবে এবং ধাপে ধাপে খোঁজে",
   "Type / for modes": "মোডের জন্য / লিখুন",
   "Type @ for sources": "উৎসের জন্য @ লিখুন",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}” মুছবেন? এটি ফেরানো যাবে না।",
+  'Delete "{title}"? This can\'t be undone.': "“{title}” মুছবেন? এটি ফেরানো যাবে না।",
   "Qur'an text": "কুরআনের পাঠ",
   "Verse links": "আয়াতের লিংক",
   "Hadith explanations": "হাদিসের ব্যাখ্যা",

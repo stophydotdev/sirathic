@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "گەڕانەوە بۆ Sirathic",
   Brand: "براند",
-  "Logos, colors and guidelines for Sirathic.":
-    "لۆگۆ، ڕەنگ و ڕێنماییەکانی بەکارهێنانی Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "لۆگۆ، ڕەنگ و ڕێنماییەکانی بەکارهێنانی Sirathic.",
   "Brand assets": "فایلەکانی براند",
   "Download our logos and follow the guidelines below.":
     "لۆگۆکانمان دابەزێنە و ڕێنماییەکانی خوارەوە پەیڕەو بکە.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "وەک زمانی پرسیارەکەم",
   "Same as my browser": "وەک زمانی وێبگەڕەکەم",
   "Not signed in": "نەچوویتە ژوورەوە",
-  "Sign in to ask and keep your chats":
-    "بچۆ ژوورەوە بۆ پرسیارکردن و پاراستنی گفتوگۆکانت",
+  "Sign in to ask and keep your chats": "بچۆ ژوورەوە بۆ پرسیارکردن و پاراستنی گفتوگۆکانت",
   "Sign in": "چوونەژوورەوە",
   "Signed in with ChatGPT": "بە ChatGPT چوویتە ژوورەوە",
   "Signed in with Google": "بە Google چوویتە ژوورەوە",
@@ -79,15 +77,13 @@ export default {
   "Signs you out on this browser": "لەم وێبگەڕە دەرت دەکات",
   Appearance: "ڕووکار",
   Language: "زمان",
-  "The language of Sirathic's menus and buttons":
-    "زمانی لیست و دوگمەکانی Sirathic",
+  "The language of Sirathic's menus and buttons": "زمانی لیست و دوگمەکانی Sirathic",
   Theme: "ڕووکار",
   "How Sirathic looks on this device": "شێوەی Sirathic لەسەر ئەم ئامێرە",
   Asking: "پرسیارکردن",
   "Default mode": "دۆخی بنەڕەت",
   "Suggestions while typing": "پێشنیار لە کاتی نووسیندا",
-  "Show suggested questions under the box":
-    "پیشاندانی پرسیاری پێشنیارکراو لە ژێر خانەکە",
+  "Show suggested questions under the box": "پیشاندانی پرسیاری پێشنیارکراو لە ژێر خانەکە",
   "Sign in to personalize answers.": "بچۆ ژوورەوە بۆ تایبەتکردنی وەڵامەکان.",
   "What should Sirathic call you?": "Sirathic بە چی بانگت بکات؟",
   "Your name": "ناوت",
@@ -107,8 +103,7 @@ export default {
   "New chats start in incognito and aren't saved":
     "گفتوگۆی نوێ بە دۆخی نهێنی دەست پێدەکات و پاشەکەوت ناکرێت",
   "Export my chats": "هەناردەکردنی گفتوگۆکانم",
-  "Download every saved chat as a file":
-    "دابەزاندنی هەموو گفتوگۆ پاشەکەوتکراوەکان وەک فایل",
+  "Download every saved chat as a file": "دابەزاندنی هەموو گفتوگۆ پاشەکەوتکراوەکان وەک فایل",
   Export: "هەناردەکردن",
   "Delete all chats": "سڕینەوەی هەموو گفتوگۆکان",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +132,7 @@ export default {
     "یەکەم جارە؟ لە ChatGPT ← ڕێکخستنەکان ← ئاسایش چوونەژوورەوە بە کۆدی ئامێر چالاک بکە. ChatGPT ناوی Codex پیشان دەدات، ئەوە ئاساییە.",
   "Continue with ChatGPT": "بەردەوامبوون بە ChatGPT",
   "Continue with Google": "بەردەوامبوون بە Google",
-  "Use your ChatGPT plan for GPT models":
-    "پلانی ChatGPTـەکەت بۆ مۆدێلەکانی GPT بەکاربهێنە",
+  "Use your ChatGPT plan for GPT models": "پلانی ChatGPTـەکەت بۆ مۆدێلەکانی GPT بەکاربهێنە",
   "Get a new code": "وەرگرتنی کۆدی نوێ",
   "Try again": "دووبارە هەوڵ بدەرەوە",
   "Your question stays in the box while you sign in.":
@@ -150,8 +144,7 @@ export default {
   "Google account": "هەژماری Google",
   Incognito: "نهێنی",
   "All settings": "هەموو ڕێکخستنەکان",
-  "Assalamu alaikum. Sign in to start asking.":
-    "السلام علیکم. بچۆ ژوورەوە بۆ دەستپێکردنی پرسیار.",
+  "Assalamu alaikum. Sign in to start asking.": "السلام علیکم. بچۆ ژوورەوە بۆ دەستپێکردنی پرسیار.",
   "Enter this code on ChatGPT": "ئەم کۆدە لە ChatGPT بنووسە",
   "Code expired": "کۆدەکە بەسەرچوو",
   "Sign-in didn't work": "چوونەژوورەوە سەرکەوتوو نەبوو",
@@ -170,8 +163,7 @@ export default {
   "New chat": "گفتوگۆی نوێ",
   "Copy a link to this chat": "لەبەرگرتنەوەی بەستەری ئەم گفتوگۆیە",
   Share: "هاوبەشکردن",
-  "Incognito is on: new messages aren't saved":
-    "دۆخی نهێنی چالاکە: نامە نوێیەکان پاشەکەوت ناکرێن",
+  "Incognito is on: new messages aren't saved": "دۆخی نهێنی چالاکە: نامە نوێیەکان پاشەکەوت ناکرێن",
   "Use incognito: new messages aren't saved to your history":
     "دۆخی نهێنی: نامە نوێیەکان لە مێژووەکەتدا پاشەکەوت ناکرێن",
   "Ask a follow-up": "پرسیارێکی تر بکە",
@@ -236,12 +228,10 @@ export default {
   "Searches everything first, then answers fast":
     "سەرەتا لە هەموو شوێنێک دەگەڕێت، پاشان بە خێرایی وەڵام دەداتەوە",
   Research: "لێکۆڵینەوە",
-  "Thinks longer and searches step by step":
-    "زیاتر بیر دەکاتەوە و هەنگاو بە هەنگاو دەگەڕێت",
+  "Thinks longer and searches step by step": "زیاتر بیر دەکاتەوە و هەنگاو بە هەنگاو دەگەڕێت",
   "Type / for modes": "بۆ دۆخەکان / بنووسە",
   "Type @ for sources": "بۆ سەرچاوەکان @ بنووسە",
-  'Delete "{title}"? This can\'t be undone.':
-    "«{title}» بسڕدرێتەوە؟ ناگەڕێتەوە.",
+  'Delete "{title}"? This can\'t be undone.': "«{title}» بسڕدرێتەوە؟ ناگەڕێتەوە.",
   "Qur'an text": "دەقی قورئان",
   "Verse links": "بەستەری ئایەتەکان",
   "Hadith explanations": "شیکردنەوەی فەرموودەکان",

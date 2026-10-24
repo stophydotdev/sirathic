@@ -49,9 +49,7 @@ export function shortenEarlierResults(
           content: message.content.map((part) => {
             if (part.type !== "tool-result") return part;
             const note = notes.get(part.toolCallId);
-            return note === undefined
-              ? part
-              : { ...part, output: { type: "text", value: note } };
+            return note === undefined ? part : { ...part, output: { type: "text", value: note } };
           }),
         }
       : message;

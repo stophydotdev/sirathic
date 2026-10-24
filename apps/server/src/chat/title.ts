@@ -56,9 +56,7 @@ export async function chatTitle(
   const output = await streamText({
     model,
     instructions: TITLE_PROMPT,
-    prompt: asked
-      .map((text) => `USER:\n${text.slice(0, MESSAGE_CHARS)}`)
-      .join("\n\n"),
+    prompt: asked.map((text) => `USER:\n${text.slice(0, MESSAGE_CHARS)}`).join("\n\n"),
     output: Output.object({ schema: titled }),
     providerOptions,
   }).output;

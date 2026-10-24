@@ -15,17 +15,13 @@ export const fraction = (n: number | bigint, d: number | bigint = 1) => {
 export const ZERO = fraction(0);
 export const ONE = fraction(1);
 
-const plus = (a: Fraction, b: Fraction) =>
-  fraction(a.n * b.d + b.n * a.d, a.d * b.d);
+const plus = (a: Fraction, b: Fraction) => fraction(a.n * b.d + b.n * a.d, a.d * b.d);
 
-export const minus = (a: Fraction, b: Fraction) =>
-  fraction(a.n * b.d - b.n * a.d, a.d * b.d);
+export const minus = (a: Fraction, b: Fraction) => fraction(a.n * b.d - b.n * a.d, a.d * b.d);
 
-export const times = (a: Fraction, b: Fraction) =>
-  fraction(a.n * b.n, a.d * b.d);
+export const times = (a: Fraction, b: Fraction) => fraction(a.n * b.n, a.d * b.d);
 
-export const over = (a: Fraction, b: Fraction) =>
-  fraction(a.n * b.d, a.d * b.n);
+export const over = (a: Fraction, b: Fraction) => fraction(a.n * b.d, a.d * b.n);
 
 export const compare = (a: Fraction, b: Fraction) => {
   const gap = a.n * b.d - b.n * a.d;
@@ -35,15 +31,13 @@ export const compare = (a: Fraction, b: Fraction) => {
 
 export const isPositive = (a: Fraction) => a.n > 0n;
 
-export const smaller = (a: Fraction, b: Fraction) =>
-  compare(a, b) < 0 ? a : b;
+export const smaller = (a: Fraction, b: Fraction) => (compare(a, b) < 0 ? a : b);
 
 export const total = (list: readonly Fraction[]) => list.reduce(plus, ZERO);
 
 export const toNumber = (a: Fraction) => Number(a.n) / Number(a.d);
 
-export const toText = (a: Fraction) =>
-  a.d === 1n ? `${a.n}` : `${a.n}/${a.d}`;
+export const toText = (a: Fraction) => (a.d === 1n ? `${a.n}` : `${a.n}/${a.d}`);
 
 const lcm = (a: bigint, b: bigint) => (a * b) / gcd(a, b);
 

@@ -28,14 +28,11 @@ const openWindow = () => {
     event.preventDefault();
     openInBrowser(url);
   });
-  window.webContents.on(
-    "did-fail-load",
-    (_event, code, _description, url, isMainFrame) => {
-      if (!isMainFrame || code === ERR_ABORTED) return;
-      if (code === ERR_NETWORK_CHANGED) void window.loadURL(url);
-      else void window.loadFile(SPLASH, { query: { retry: url } });
-    },
-  );
+  window.webContents.on("did-fail-load", (_event, code, _description, url, isMainFrame) => {
+    if (!isMainFrame || code === ERR_ABORTED) return;
+    if (code === ERR_NETWORK_CHANGED) void window.loadURL(url);
+    else void window.loadFile(SPLASH, { query: { retry: url } });
+  });
   void window.loadFile(SPLASH).then(() => {
     void window.loadURL(SITE.href);
   });

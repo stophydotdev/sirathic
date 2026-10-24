@@ -1,10 +1,5 @@
 import { db } from "@sirathic/db";
-import {
-  accounts,
-  loginSessions,
-  users,
-  verifications,
-} from "@sirathic/db/schema";
+import { accounts, loginSessions, users, verifications } from "@sirathic/db/schema";
 import { env } from "@sirathic/env/server";
 import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";

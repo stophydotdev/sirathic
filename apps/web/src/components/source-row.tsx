@@ -24,10 +24,7 @@ export const SourceRow: FC<{ sources: Source[] }> = ({ sources }) => {
             <Favicon url={source.url} size={12} />
             <span className="truncate">{source.title}</span>
           </span>
-          <span
-            dir="auto"
-            className="text-muted-foreground line-clamp-2 text-xs leading-snug"
-          >
+          <span dir="auto" className="text-muted-foreground line-clamp-2 text-xs leading-snug">
             {source.snippet}
           </span>
         </a>

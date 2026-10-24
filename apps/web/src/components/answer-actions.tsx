@@ -29,12 +29,7 @@ import {
 import type { Source } from "@sirathic/server/sources";
 import { api } from "@/lib/trpc";
 import { useAui, useAuiState } from "@assistant-ui/react";
-import {
-  IconDots,
-  IconDownload,
-  IconGitFork,
-  IconRefresh,
-} from "@tabler/icons-react";
+import { IconDots, IconDownload, IconGitFork, IconRefresh } from "@tabler/icons-react";
 import { type FC, type ReactNode, useState } from "react";
 import { z } from "zod";
 
@@ -46,14 +41,10 @@ const storedFeedback = z.object({ feedback: feedbackSchema.optional() });
 type Feedback = z.infer<typeof feedbackSchema>;
 
 const textOf = (message: ChatMessage | undefined) =>
-  message?.parts
-    .map((part) => (part.type === "text" ? part.text : ""))
-    .join("") ?? "";
+  message?.parts.map((part) => (part.type === "text" ? part.text : "")).join("") ?? "";
 
 export function download(name: string, markdown: string) {
-  const url = URL.createObjectURL(
-    new Blob([markdown], { type: "text/markdown" }),
-  );
+  const url = URL.createObjectURL(new Blob([markdown], { type: "text/markdown" }));
   const link = document.createElement("a");
   link.href = url;
   link.download = `${
@@ -70,9 +61,7 @@ export function useAnswer() {
   const chat = useChatState();
   const messageId = useAuiState((s) => s.message.id);
   const feedback =
-    useAuiState(
-      (s) => storedFeedback.safeParse(s.message.metadata.custom).data?.feedback,
-    ) ?? null;
+    useAuiState((s) => storedFeedback.safeParse(s.message.metadata.custom).data?.feedback) ?? null;
 
   const rate = (next: Feedback | null) => {
     if (!chat) return;
@@ -174,10 +163,7 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        className={actionButton}
-        aria-label={t("More actions")}
-      >
+      <DropdownMenuTrigger className={actionButton} aria-label={t("More actions")}>
         <IconDots className="size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
@@ -211,20 +197,14 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>{t("Model")}</DropdownMenuLabel>
-                <DropdownMenuRadioGroup
-                  value={model ?? ""}
-                  onValueChange={setModel}
-                >
+                <DropdownMenuRadioGroup value={model ?? ""} onValueChange={setModel}>
                   {models.map((option) => (
                     <DropdownMenuRadioItem
                       key={option.slug}
                       value={option.slug}
                       onSelect={(event) => event.preventDefault()}
                     >
-                      <MakerIcon
-                        maker={option.maker}
-                        className="size-4 shrink-0"
-                      />
+                      <MakerIcon maker={option.maker} className="size-4 shrink-0" />
                       {option.name}
                     </DropdownMenuRadioItem>
                   ))}

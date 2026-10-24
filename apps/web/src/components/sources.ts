@@ -11,9 +11,7 @@ const textOf = (content: ThreadMessage["content"]) =>
 
 export const citedUrlsOf = (content: ThreadMessage["content"]) => [
   ...new Set(
-    [...textOf(content).matchAll(CITED_LINK)].flatMap((match) =>
-      match[1] ? [match[1]] : [],
-    ),
+    [...textOf(content).matchAll(CITED_LINK)].flatMap((match) => (match[1] ? [match[1]] : [])),
   ),
 ];
 
@@ -26,8 +24,7 @@ export function sourcesOf(content: ThreadMessage["content"]) {
     }
   }
   const cited = citedUrlsOf(content);
-  const rank = (url: string) =>
-    cited.includes(url) ? cited.indexOf(url) : cited.length;
+  const rank = (url: string) => (cited.includes(url) ? cited.indexOf(url) : cited.length);
   return [...found.values()].toSorted((a, b) => rank(a.url) - rank(b.url));
 }
 
@@ -45,13 +42,9 @@ export function turnsOf(messages: readonly ThreadMessage[]) {
   });
 }
 
-export const SourcesContext = createContext<ReadonlyMap<string, Source>>(
-  new Map(),
-);
+export const SourcesContext = createContext<ReadonlyMap<string, Source>>(new Map());
 
-export const CitationNumbers = createContext<ReadonlyMap<string, number>>(
-  new Map(),
-);
+export const CitationNumbers = createContext<ReadonlyMap<string, number>>(new Map());
 
 export function siteName(url: string) {
   const host = URL.parse(url)?.hostname.replace(/^www\./, "");

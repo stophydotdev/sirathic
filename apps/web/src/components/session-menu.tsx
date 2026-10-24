@@ -25,13 +25,7 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
-import {
-  type FC,
-  type FormEvent,
-  type ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "react";
 
 const panel =
   "bg-background ring-foreground/7 fixed top-1/2 left-1/2 z-[60] flex w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-[20px] shadow-lg ring-1 outline-none ring-inset";
@@ -118,8 +112,7 @@ const DeleteDialog: FC<{
   const confirm = () => {
     void remove(session.id);
     onOpenChange(false);
-    if (pathname === href(`/s/${session.id}`))
-      window.location.assign(href("/"));
+    if (pathname === href(`/s/${session.id}`)) window.location.assign(href("/"));
   };
 
   return (
@@ -145,10 +138,7 @@ const DeleteDialog: FC<{
   );
 };
 
-const SessionMenu: FC<{ session: Session; className?: string }> = ({
-  session,
-  className,
-}) => {
+const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, className }) => {
   const change = useSessions((s) => s.change);
   const [renaming, setRenaming] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -167,27 +157,15 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
           <IconDots className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-44">
-          <DropdownMenuItem
-            onSelect={() =>
-              void change(session.id, { pinned: !session.pinned })
-            }
-          >
-            {session.pinned ? (
-              <IconPinnedOff className="size-4" />
-            ) : (
-              <IconPin className="size-4" />
-            )}
+          <DropdownMenuItem onSelect={() => void change(session.id, { pinned: !session.pinned })}>
+            {session.pinned ? <IconPinnedOff className="size-4" /> : <IconPin className="size-4" />}
             {session.pinned ? t("Unpin") : t("Pin")}
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setRenaming(true)}>
             <IconPencil className="size-4" />
             {t("Rename")}
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={() =>
-              void change(session.id, { unread: !session.unread })
-            }
-          >
+          <DropdownMenuItem onSelect={() => void change(session.id, { unread: !session.unread })}>
             {session.unread ? (
               <IconMailOpened className="size-4" />
             ) : (
@@ -195,27 +173,14 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({
             )}
             {session.unread ? t("Mark as read") : t("Mark as unread")}
           </DropdownMenuItem>
-          <DropdownMenuItem
-            variant="destructive"
-            onSelect={() => setDeleting(true)}
-          >
+          <DropdownMenuItem variant="destructive" onSelect={() => setDeleting(true)}>
             <IconTrash className="size-4" />
             {t("Delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {renaming && (
-        <RenameDialog
-          session={session}
-          open={renaming}
-          onOpenChange={setRenaming}
-        />
-      )}
-      <DeleteDialog
-        session={session}
-        open={deleting}
-        onOpenChange={setDeleting}
-      />
+      {renaming && <RenameDialog session={session} open={renaming} onOpenChange={setRenaming} />}
+      <DeleteDialog session={session} open={deleting} onOpenChange={setDeleting} />
     </>
   );
 };
@@ -226,14 +191,8 @@ const TITLE_HIDDEN_ON_HOVER_PX = 72;
 const paceTitleSlide = (title: HTMLElement | null) => {
   const link = title?.parentElement;
   if (!title || !link) return;
-  const distance = Math.max(
-    0,
-    title.offsetWidth - link.clientWidth + TITLE_HIDDEN_ON_HOVER_PX,
-  );
-  title.style.setProperty(
-    "--slide-time",
-    `${distance / TITLE_SLIDE_PX_PER_SECOND}s`,
-  );
+  const distance = Math.max(0, title.offsetWidth - link.clientWidth + TITLE_HIDDEN_ON_HOVER_PX);
+  title.style.setProperty("--slide-time", `${distance / TITLE_SLIDE_PX_PER_SECOND}s`);
 };
 
 export const SessionRow: FC<{
@@ -377,9 +336,7 @@ export const SearchDialog: FC<{
     >
       {command.icon}
       <span className="truncate">{command.label}</span>
-      {command.hint && (
-        <span className="text-muted-foreground truncate">{command.hint}</span>
-      )}
+      {command.hint && <span className="text-muted-foreground truncate">{command.hint}</span>}
     </button>
   );
 
@@ -390,10 +347,7 @@ export const SearchDialog: FC<{
         <Dialog.Content
           aria-describedby={undefined}
           onCloseAutoFocus={(event) => event.preventDefault()}
-          className={cn(
-            panel,
-            "top-[20%] max-w-[620px] translate-y-0 rounded-[16px]",
-          )}
+          className={cn(panel, "top-[20%] max-w-[620px] translate-y-0 rounded-[16px]")}
         >
           <Dialog.Title className="sr-only">{t("Search chats")}</Dialog.Title>
           <div className="border-border/50 flex h-14 items-center gap-3 border-b px-5">
@@ -410,9 +364,7 @@ export const SearchDialog: FC<{
                 if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                   event.preventDefault();
                   const step = event.key === "ArrowDown" ? 1 : -1;
-                  setActive(
-                    (selected + step + options.length) % options.length,
-                  );
+                  setActive((selected + step + options.length) % options.length);
                 } else if (event.key === "Enter") {
                   options[selected]?.run();
                 }
@@ -420,21 +372,14 @@ export const SearchDialog: FC<{
               className="placeholder:text-muted-foreground flex-1 bg-transparent text-base outline-none"
             />
           </div>
-          <div
-            role="listbox"
-            className="flex max-h-[min(60vh,420px)] flex-col overflow-y-auto p-3"
-          >
+          <div role="listbox" className="flex max-h-[min(60vh,420px)] flex-col overflow-y-auto p-3">
             <p className={heading}>{t("Commands")}</p>
             {commands.map(option)}
             <p className={cn(heading, "pt-3")}>{t("Results")}</p>
             {results.length === 0 ? (
-              <p className="text-muted-foreground px-2 py-2 text-sm">
-                {t("No chats found")}
-              </p>
+              <p className="text-muted-foreground px-2 py-2 text-sm">{t("No chats found")}</p>
             ) : (
-              results.map((result, index) =>
-                option(result, commands.length + index),
-              )
+              results.map((result, index) => option(result, commands.length + index))
             )}
           </div>
         </Dialog.Content>

@@ -12,19 +12,13 @@ test("Muwatta Malik links to the hadith's own page on sunnah.com", () => {
 });
 
 test("the six books keep their sunnah.com links", () => {
-  expect(hadithLink("muslim:1907a", null)).toBe(
-    "https://sunnah.com/muslim:1907a",
-  );
+  expect(hadithLink("muslim:1907a", null)).toBe("https://sunnah.com/muslim:1907a");
 });
 
 test("an extra chain numbered like 402.2 links to its hadith's page", () => {
-  expect(hadithLink("bukhari:402.2", null)).toBe(
-    "https://sunnah.com/bukhari:402",
-  );
+  expect(hadithLink("bukhari:402.2", null)).toBe("https://sunnah.com/bukhari:402");
 });
 
 test("Riyad as-Salihin links to sunnah.com in its standard numbering", () => {
-  expect(hadithLink("riyadussalihin:1", null)).toBe(
-    "https://sunnah.com/riyadussalihin:1",
-  );
+  expect(hadithLink("riyadussalihin:1", null)).toBe("https://sunnah.com/riyadussalihin:1");
 });

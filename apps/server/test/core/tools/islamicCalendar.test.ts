@@ -2,9 +2,7 @@ import { expect, test } from "bun:test";
 import { islamicCalendar } from "@sirathic/core/tools/islamicCalendar";
 
 const datesOf = (input: Parameters<typeof islamicCalendar>[0]) =>
-  islamicCalendar(input).events.map(
-    (event) => `${event.id} ${event.gregorian.date}`,
-  );
+  islamicCalendar(input).events.map((event) => `${event.id} ${event.gregorian.date}`);
 
 test("a Gregorian year lists the events that fall inside it, in date order", () => {
   expect(datesOf({ year: 2027 })).toEqual([
@@ -18,11 +16,10 @@ test("a Gregorian year lists the events that fall inside it, in date order", () 
 });
 
 test("a year can hold the Islamic New Year twice", () => {
-  expect(
-    datesOf({ year: 2008 }).filter((line) =>
-      line.startsWith("islamic_new_year"),
-    ),
-  ).toEqual(["islamic_new_year 2008-01-10", "islamic_new_year 2008-12-29"]);
+  expect(datesOf({ year: 2008 }).filter((line) => line.startsWith("islamic_new_year"))).toEqual([
+    "islamic_new_year 2008-01-10",
+    "islamic_new_year 2008-12-29",
+  ]);
 });
 
 test("a Hijri year lists its own events", () => {

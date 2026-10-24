@@ -1,10 +1,5 @@
 import { z } from "zod";
-import {
-  describeHijri,
-  HIJRI_CAVEATS,
-  toGregorian,
-  toHijri,
-} from "./hijriDate";
+import { describeHijri, HIJRI_CAVEATS, toGregorian, toHijri } from "./hijriDate";
 import { weekdayOf } from "../zoned";
 
 const EVENTS = [
@@ -67,9 +62,7 @@ const eventsOfHijriYear = (hijriYear: number) =>
         ];
   });
 
-export const islamicCalendar = (
-  input: z.input<typeof islamicCalendarInput>,
-) => {
+export const islamicCalendar = (input: z.input<typeof islamicCalendarInput>) => {
   const { year, calendar } = islamicCalendarInput.parse(input);
   const candidates =
     calendar === "hijri"
@@ -80,9 +73,7 @@ export const islamicCalendar = (
   return {
     year,
     calendar,
-    events: candidates.toSorted((a, b) =>
-      a.gregorian.date.localeCompare(b.gregorian.date),
-    ),
+    events: candidates.toSorted((a, b) => a.gregorian.date.localeCompare(b.gregorian.date)),
     basis:
       "Estimated from the Umm al-Qura calendar (Intl islamic-umalqura). Eid al-Fitr is 1 Shawwal, Day of Arafah is 9 Dhul Hijjah and Eid al-Adha is 10 Dhul Hijjah.",
     caveats: [

@@ -1,7 +1,15 @@
 {
   "name": "mobile",
   "version": "1.0.0",
+  "private": true,
   "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@ai-sdk/react": "4.0.145",
     "@better-auth/expo": "1.7.11",
@@ -39,13 +47,5 @@
     "@types/react": "~19.3.0",
     "@types/ungap__structured-clone": "^1.2.0",
     "typescript": "~6.0.3"
-  },
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "typecheck": "tsc --noEmit"
-  },
-  "private": true
+  }
 }

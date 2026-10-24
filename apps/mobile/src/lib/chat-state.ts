@@ -3,9 +3,7 @@ import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
 import { api } from "./api";
 
-export type Model = Awaited<
-  ReturnType<typeof api.account.models.query>
->[number];
+export type Model = Awaited<ReturnType<typeof api.account.models.query>>[number];
 
 export const useChatState = create<{
   chatId: string;
@@ -28,9 +26,7 @@ export const useChatState = create<{
     const models = await api.account.models.query().catch(() => []);
     set((state) => ({
       models,
-      model: models.some((m) => m.slug === state.model)
-        ? state.model
-        : models[0]?.slug,
+      model: models.some((m) => m.slug === state.model) ? state.model : models[0]?.slug,
     }));
   },
 }));

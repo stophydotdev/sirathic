@@ -1,12 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { db } from "@sirathic/db";
-import {
-  duas,
-  hadithGrades,
-  hadiths,
-  sources,
-  texts,
-} from "@sirathic/db/schema";
+import { duas, hadithGrades, hadiths, sources, texts } from "@sirathic/db/schema";
 import { and, eq, inArray, isNotNull, sql } from "drizzle-orm";
 import { z } from "zod";
 import { DATA_DIR, HADITH_ENGLISH_SOURCE } from "./catalog";
@@ -38,13 +32,9 @@ const corrections = z.object({
   }),
   replacedBooks: z.array(z.string()),
   added: z.array(hadithRow),
-  arabic: z.array(
-    z.object({ id: z.string(), textAr: z.string(), textArClean: z.string() }),
-  ),
+  arabic: z.array(z.object({ id: z.string(), textAr: z.string(), textArClean: z.string() })),
   arnautNumbers: z.array(z.object({ id: z.string(), number: z.string() })),
-  grades: z.array(
-    z.object({ hadithId: z.string(), grader: z.string(), grade: z.string() }),
-  ),
+  grades: z.array(z.object({ hadithId: z.string(), grader: z.string(), grade: z.string() })),
   licensedEnglish: z.array(
     z.object({
       ref: z.string(),
@@ -53,16 +43,12 @@ const corrections = z.object({
     }),
   ),
   searchEnglish: z.array(z.string()),
-  duaLinks: z.array(
-    z.object({ id: z.string(), hadithId: z.string().nullable() }),
-  ),
+  duaLinks: z.array(z.object({ id: z.string(), hadithId: z.string().nullable() })),
 });
 type Corrections = z.infer<typeof corrections>;
 
 const ids = (list: string[]) =>
-  sql.raw(
-    `(${list.map((id) => `'${id.replaceAll("'", "''")}'`).join(",") || "''"})`,
-  );
+  sql.raw(`(${list.map((id) => `'${id.replaceAll("'", "''")}'`).join(",") || "''"})`);
 
 const chunks = <Row>(rows: Row[]) =>
   Array.from({ length: Math.ceil(rows.length / CHUNK_SIZE) }, (_, index) =>
@@ -70,10 +56,7 @@ const chunks = <Row>(rows: Row[]) =>
   );
 
 const exportCorrections = async () => {
-  const [source] = await db
-    .select()
-    .from(sources)
-    .where(eq(sources.name, ADDED_SOURCE));
+  const [source] = await db.select().from(sources).where(eq(sources.name, ADDED_SOURCE));
   if (!source) throw new Error(`no ${ADDED_SOURCE} source row to export`);
   const listed = await Bun.file(`${DIR}/lists.json`)
     .json()
@@ -136,20 +119,12 @@ const exportCorrections = async () => {
         .where(and(eq(hadiths.book, "ahmad"), isNotNull(hadiths.arabicNumber)))
     ).flatMap((r) => (r.number ? [{ id: r.id, number: r.number }] : [])),
     grades: [
-      ...(await db
-        .select()
-        .from(hadithGrades)
-        .where(eq(hadithGrades.grader, ARNAUT))),
+      ...(await db.select().from(hadithGrades).where(eq(hadithGrades.grader, ARNAUT))),
       ...(
         await db
           .select()
           .from(hadithGrades)
-          .where(
-            inArray(hadithGrades.hadithId, [
-              ...gradeIds,
-              ...added.map((r) => r.id),
-            ]),
-          )
+          .where(inArray(hadithGrades.hadithId, [...gradeIds, ...added.map((r) => r.id)]))
       ).filter((g) => g.grader !== ARNAUT),
     ],
     licensedEnglish: (
@@ -157,13 +132,9 @@ const exportCorrections = async () => {
         .select({ ref: texts.ref, kind: texts.kind, body: texts.body })
         .from(texts)
         .where(eq(texts.source, "hadeethenc-en"))
-    ).flatMap((r) =>
-      r.kind === "tafsir" ? [] : [{ ref: r.ref, kind: r.kind, body: r.body }],
-    ),
+    ).flatMap((r) => (r.kind === "tafsir" ? [] : [{ ref: r.ref, kind: r.kind, body: r.body }])),
     searchEnglish,
-    duaLinks: await db
-      .select({ id: duas.id, hadithId: duas.hadithId })
-      .from(duas),
+    duaLinks: await db.select({ id: duas.id, hadithId: duas.hadithId }).from(duas),
   };
   await mkdir(DIR, { recursive: true });
   await Bun.write(FILE, JSON.stringify(data));
@@ -186,36 +157,22 @@ const applyCorrections = async (dryRun: boolean) => {
         .select({ id: hadiths.id })
         .from(hadiths)
         .where(
-          and(
-            inArray(hadiths.book, data.replacedBooks),
-            sql`${hadiths.source} <> ${ADDED_SOURCE}`,
-          ),
+          and(inArray(hadiths.book, data.replacedBooks), sql`${hadiths.source} <> ${ADDED_SOURCE}`),
         )
     ).map((r) => r.id);
     await Promise.all(
       chunks(stale).map(async (chunk) => {
-        await tx
-          .delete(hadithGrades)
-          .where(inArray(hadithGrades.hadithId, chunk));
-        await tx
-          .update(duas)
-          .set({ hadithId: null })
-          .where(inArray(duas.hadithId, chunk));
+        await tx.delete(hadithGrades).where(inArray(hadithGrades.hadithId, chunk));
+        await tx.update(duas).set({ hadithId: null }).where(inArray(duas.hadithId, chunk));
         count(
           "old rows of replaced books removed",
-          await tx
-            .delete(hadiths)
-            .where(inArray(hadiths.id, chunk))
-            .returning({ id: hadiths.id }),
+          await tx.delete(hadiths).where(inArray(hadiths.id, chunk)).returning({ id: hadiths.id }),
         );
       }),
     );
     const present = new Set(
       (
-        await tx
-          .select({ id: hadiths.id })
-          .from(hadiths)
-          .where(eq(hadiths.source, ADDED_SOURCE))
+        await tx.select({ id: hadiths.id }).from(hadiths).where(eq(hadiths.source, ADDED_SOURCE))
       ).map((r) => r.id),
     );
     await Promise.all(
@@ -241,10 +198,7 @@ const applyCorrections = async (dryRun: boolean) => {
               embedding: null,
             })
             .where(
-              and(
-                eq(hadiths.id, fix.id),
-                sql`${hadiths.textAr} is distinct from ${fix.textAr}`,
-              ),
+              and(eq(hadiths.id, fix.id), sql`${hadiths.textAr} is distinct from ${fix.textAr}`),
             )
             .returning({ id: hadiths.id }),
         ),
@@ -270,9 +224,7 @@ const applyCorrections = async (dryRun: boolean) => {
         )
       ).map((g) => `${g.hadith_id}|${g.grader}|${g.grade}`),
     );
-    const wanted = data.grades.filter(
-      (g) => !existing.has(`${g.hadithId}|${g.grader}|${g.grade}`),
-    );
+    const wanted = data.grades.filter((g) => !existing.has(`${g.hadithId}|${g.grader}|${g.grade}`));
     await Promise.all(
       chunks(wanted).map(async (chunk) => {
         await tx.execute(
@@ -283,10 +235,7 @@ const applyCorrections = async (dryRun: boolean) => {
         );
         count(
           "grades written",
-          await tx
-            .insert(hadithGrades)
-            .values(chunk)
-            .returning({ id: hadithGrades.hadithId }),
+          await tx.insert(hadithGrades).values(chunk).returning({ id: hadithGrades.hadithId }),
         );
       }),
     );
@@ -298,13 +247,8 @@ const applyCorrections = async (dryRun: boolean) => {
           .where(eq(texts.source, "hadeethenc-en"))
       ).map((t) => `${t.ref}|${t.kind}|${t.body}`),
     );
-    const target = data.licensedEnglish.map(
-      (t) => `${t.ref}|${t.kind}|${t.body}`,
-    );
-    if (
-      licensed.size !== target.length ||
-      target.some((t) => !licensed.has(t))
-    ) {
+    const target = data.licensedEnglish.map((t) => `${t.ref}|${t.kind}|${t.body}`);
+    if (licensed.size !== target.length || target.some((t) => !licensed.has(t))) {
       await tx.delete(texts).where(eq(texts.source, "hadeethenc-en"));
       await Promise.all(
         chunks(data.licensedEnglish).map(async (chunk) =>
@@ -348,10 +292,7 @@ const applyCorrections = async (dryRun: boolean) => {
             .update(duas)
             .set({ hadithId: link.hadithId })
             .where(
-              and(
-                eq(duas.id, link.id),
-                sql`${duas.hadithId} is distinct from ${link.hadithId}`,
-              ),
+              and(eq(duas.id, link.id), sql`${duas.hadithId} is distinct from ${link.hadithId}`),
             )
             .returning({ id: duas.id }),
         ),

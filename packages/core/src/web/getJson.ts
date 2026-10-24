@@ -23,9 +23,7 @@ export const getJson = async <Schema extends z.ZodType>(
         : AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]),
   });
   if (!response.ok) {
-    throw new Error(
-      `${new URL(url).hostname} returned HTTP ${response.status}`,
-    );
+    throw new Error(`${new URL(url).hostname} returned HTTP ${response.status}`);
   }
   return schema.parse(await response.json());
 };

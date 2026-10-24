@@ -3,11 +3,9 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "ត្រឡប់ទៅ Sirathic",
   Brand: "ម៉ាក",
-  "Logos, colors and guidelines for Sirathic.":
-    "ឡូហ្គោ ពណ៌ និងគោលការណ៍ប្រើប្រាស់របស់ Sirathic។",
+  "Logos, colors and guidelines for Sirathic.": "ឡូហ្គោ ពណ៌ និងគោលការណ៍ប្រើប្រាស់របស់ Sirathic។",
   "Brand assets": "ឯកសារម៉ាក",
-  "Download our logos and follow the guidelines below.":
-    "ទាញយកឡូហ្គោរបស់យើង ហើយធ្វើតាមគោលការណ៍ខាងក្រោម។",
+  "Download our logos and follow the guidelines below.": "ទាញយកឡូហ្គោរបស់យើង ហើយធ្វើតាមគោលការណ៍ខាងក្រោម។",
   "Download all brand assets": "ទាញយកឯកសារម៉ាកទាំងអស់",
   Wordmark: "ឡូហ្គោអក្សរ",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
@@ -101,8 +99,7 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "ដកស្រង់អាយ៉ាត់ និងហាឌីសជាភាសាអារ៉ាប់ក្បែរការបកប្រែ",
   "Incognito by default": "របៀបអនាមិកជាលំនាំដើម",
-  "New chats start in incognito and aren't saved":
-    "ការជជែកថ្មីចាប់ផ្ដើមក្នុងរបៀបអនាមិក ហើយមិនត្រូវបានរក្សាទុក",
+  "New chats start in incognito and aren't saved": "ការជជែកថ្មីចាប់ផ្ដើមក្នុងរបៀបអនាមិក ហើយមិនត្រូវបានរក្សាទុក",
   "Export my chats": "នាំចេញការជជែករបស់ខ្ញុំ",
   "Download every saved chat as a file": "ទាញយកការជជែកដែលបានរក្សាទុកទាំងអស់ជាឯកសារ",
   Export: "នាំចេញ",
@@ -133,12 +130,10 @@ export default {
     "លើកដំបូងមែនទេ? បើកការចូលដោយលេខកូដឧបករណ៍ក្នុង ChatGPT → ការកំណត់ → សុវត្ថិភាព។ ChatGPT នឹងបង្ហាញពាក្យ Codex នោះជារឿងធម្មតា។",
   "Continue with ChatGPT": "បន្តជាមួយ ChatGPT",
   "Continue with Google": "បន្តជាមួយ Google",
-  "Use your ChatGPT plan for GPT models":
-    "ប្រើគម្រោង ChatGPT របស់អ្នកសម្រាប់ម៉ូដែល GPT",
+  "Use your ChatGPT plan for GPT models": "ប្រើគម្រោង ChatGPT របស់អ្នកសម្រាប់ម៉ូដែល GPT",
   "Get a new code": "យកលេខកូដថ្មី",
   "Try again": "ព្យាយាមម្ដងទៀត",
-  "Your question stays in the box while you sign in.":
-    "សំណួររបស់អ្នកនៅតែក្នុងប្រអប់ពេលអ្នកចូលគណនី។",
+  "Your question stays in the box while you sign in.": "សំណួររបស់អ្នកនៅតែក្នុងប្រអប់ពេលអ្នកចូលគណនី។",
   "Copy code": "ចម្លងលេខកូដ",
   "Sign In": "ចូលគណនី",
   "Account menu": "ម៉ឺនុយគណនី",
@@ -146,16 +141,14 @@ export default {
   "Google account": "គណនី Google",
   Incognito: "អនាមិក",
   "All settings": "ការកំណត់ទាំងអស់",
-  "Assalamu alaikum. Sign in to start asking.":
-    "អាស្សាឡាមូអាឡៃគុំ។ ចូលគណនីដើម្បីចាប់ផ្ដើមសួរ។",
+  "Assalamu alaikum. Sign in to start asking.": "អាស្សាឡាមូអាឡៃគុំ។ ចូលគណនីដើម្បីចាប់ផ្ដើមសួរ។",
   "Enter this code on ChatGPT": "បញ្ចូលលេខកូដនេះនៅលើ ChatGPT",
   "Code expired": "លេខកូដផុតកំណត់ហើយ",
   "Sign-in didn't work": "ការចូលគណនីមិនបានសម្រេច",
   "{count} views": "ការមើល {count}",
   "Results for:": "លទ្ធផលសម្រាប់៖",
   "Searching…": "កំពុងស្វែងរក…",
-  "The search failed. Try this tab again later.":
-    "ការស្វែងរកបរាជ័យ។ សូមសាកផ្ទាំងនេះម្ដងទៀតពេលក្រោយ។",
+  "The search failed. Try this tab again later.": "ការស្វែងរកបរាជ័យ។ សូមសាកផ្ទាំងនេះម្ដងទៀតពេលក្រោយ។",
   "Expand sidebar": "ពង្រីករបារចំហៀង",
   "Collapse sidebar": "បង្រួមរបារចំហៀង",
   New: "ថ្មី",
@@ -166,8 +159,7 @@ export default {
   "New chat": "ការជជែកថ្មី",
   "Copy a link to this chat": "ចម្លងតំណទៅការជជែកនេះ",
   Share: "ចែករំលែក",
-  "Incognito is on: new messages aren't saved":
-    "របៀបអនាមិកកំពុងបើក៖ សារថ្មីមិនត្រូវបានរក្សាទុកទេ",
+  "Incognito is on: new messages aren't saved": "របៀបអនាមិកកំពុងបើក៖ សារថ្មីមិនត្រូវបានរក្សាទុកទេ",
   "Use incognito: new messages aren't saved to your history":
     "ប្រើរបៀបអនាមិក៖ សារថ្មីមិនត្រូវបានរក្សាទុកក្នុងប្រវត្តិទេ",
   "Ask a follow-up": "សួរបន្ថែម",
@@ -229,14 +221,12 @@ export default {
   Helpful: "មានប្រយោជន៍",
   "Not helpful": "គ្មានប្រយោជន៍",
   Quick: "រហ័ស",
-  "Searches everything first, then answers fast":
-    "ស្វែងរកគ្រប់ប្រភពជាមុន ហើយឆ្លើយយ៉ាងរហ័ស",
+  "Searches everything first, then answers fast": "ស្វែងរកគ្រប់ប្រភពជាមុន ហើយឆ្លើយយ៉ាងរហ័ស",
   Research: "ស្រាវជ្រាវ",
   "Thinks longer and searches step by step": "គិតយូរជាង និងស្វែងរកម្ដងមួយជំហាន",
   "Type / for modes": "វាយ / ដើម្បីជ្រើសរបៀប",
   "Type @ for sources": "វាយ @ ដើម្បីជ្រើសប្រភព",
-  'Delete "{title}"? This can\'t be undone.':
-    "លុប «{title}» ឬ? មិនអាចត្រឡប់វិញបានទេ។",
+  'Delete "{title}"? This can\'t be undone.': "លុប «{title}» ឬ? មិនអាចត្រឡប់វិញបានទេ។",
   "Qur'an text": "អត្ថបទគម្ពីរគួរអាន",
   "Verse links": "តំណអាយ៉ាត់",
   "Hadith explanations": "ការពន្យល់ហាឌីស",

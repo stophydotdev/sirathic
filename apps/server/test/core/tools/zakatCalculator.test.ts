@@ -30,9 +30,7 @@ test("cash between the silver and gold nisab is due on silver and not on gold", 
 
 test("the chosen nisab basis decides the headline amount", async () => {
   expect((await dueOn({ cash: 10_000, nisabBasis: "gold" })).zakatDue).toBe(0);
-  expect((await dueOn({ cash: 20_000, nisabBasis: "gold" })).zakatDue).toBe(
-    500,
-  );
+  expect((await dueOn({ cash: 20_000, nisabBasis: "gold" })).zakatDue).toBe(500);
 });
 
 test("every kind of asset counts, and short-term debts come off", async () => {

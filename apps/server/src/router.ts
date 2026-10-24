@@ -39,9 +39,7 @@ export const createContext = async (headers: Headers) => ({
   user: await userFor(headers),
 });
 
-const t = initTRPC
-  .context<Awaited<ReturnType<typeof createContext>>>()
-  .create();
+const t = initTRPC.context<Awaited<ReturnType<typeof createContext>>>().create();
 
 const procedure = t.procedure.use(async ({ ctx, next, path }) => {
   const result = await next();
@@ -52,10 +50,7 @@ const procedure = t.procedure.use(async ({ ctx, next, path }) => {
     });
   }
   if (!result.ok && result.error.code === "INTERNAL_SERVER_ERROR") {
-    track(
-      { name: "api.failed", props: { route: path, code: result.error.code } },
-      ctx.user?.id,
-    );
+    track({ name: "api.failed", props: { route: path, code: result.error.code } }, ctx.user?.id);
   }
   return result;
 });
@@ -72,8 +67,7 @@ const signedIn = procedure.use(({ ctx, next }) => {
 
 const session = z.object({ id: sessionId });
 
-const isDefault = (model: { slug: string }) =>
-  Number(model.slug === DEFAULT_MODEL);
+const isDefault = (model: { slug: string }) => Number(model.slug === DEFAULT_MODEL);
 
 export const appRouter = t.router({
   sessions: t.router({
@@ -89,9 +83,7 @@ export const appRouter = t.router({
     }),
     update: signedIn
       .input(sessionUpdate.safeExtend({ id: sessionId }))
-      .mutation(({ ctx, input: { id, ...update } }) =>
-        updateSession(id, ctx.owner, update),
-      ),
+      .mutation(({ ctx, input: { id, ...update } }) => updateSession(id, ctx.owner, update)),
     remove: signedIn
       .input(session)
       .mutation(({ ctx, input }) => deleteSession(input.id, ctx.owner)),
@@ -101,17 +93,12 @@ export const appRouter = t.router({
       .input(feedbackInput.safeExtend({ id: sessionId }))
       .mutation(async ({ ctx, input: { id, ...feedback } }) => {
         const saved = await setFeedback(id, ctx.owner, feedback);
-        track(
-          { name: "feedback.given", props: { value: feedback.value } },
-          ctx.owner,
-        );
+        track({ name: "feedback.given", props: { value: feedback.value } }, ctx.owner);
         return saved;
       }),
     fork: signedIn
       .input(forkInput.safeExtend({ id: sessionId }))
-      .mutation(({ ctx, input: { id, ...fork } }) =>
-        forkSession(id, ctx.owner, fork),
-      ),
+      .mutation(({ ctx, input: { id, ...fork } }) => forkSession(id, ctx.owner, fork)),
   }),
   settings: t.router({
     get: signedIn.query(({ ctx }) => getSettings(ctx.owner)),
@@ -128,10 +115,7 @@ export const appRouter = t.router({
       .query(({ input }) => imageSearch({ query: input.q })),
     videos: signedIn
       .input(z.object({ q: z.string() }))
-      .query(
-        async ({ input }) =>
-          (await youtubeSearch({ query: input.q, limit: 10 })).videos,
-      ),
+      .query(async ({ input }) => (await youtubeSearch({ query: input.q, limit: 10 })).videos),
   }),
   account: t.router({
     status: procedure.query(({ ctx }) =>

@@ -1,83 +1,37 @@
 import { calculator, calculatorInput } from "@sirathic/core/tools/calculator";
 import { duaSearch, duaSearchInput } from "@sirathic/core/tools/duaSearch";
-import {
-  fidyaKaffarah,
-  fidyaKaffarahInput,
-} from "@sirathic/core/tools/fidyaKaffarah";
+import { fidyaKaffarah, fidyaKaffarahInput } from "@sirathic/core/tools/fidyaKaffarah";
 import { fiqhGet, fiqhGetInput } from "@sirathic/core/tools/fiqhGet";
 import { fatwaSearch } from "@sirathic/core/tools/fatwaSearch";
 import { fiqhSearch } from "@sirathic/core/tools/fiqhSearch";
 import { geocode, geocodeInput } from "@sirathic/core/tools/geocode";
-import {
-  hadithCheck,
-  hadithCheckInput,
-} from "@sirathic/core/tools/hadithCheck";
+import { hadithCheck, hadithCheckInput } from "@sirathic/core/tools/hadithCheck";
 import { hadithGet, hadithGetInput } from "@sirathic/core/tools/hadithGet";
 import { hadithSearch } from "@sirathic/core/tools/hadithSearch";
-import {
-  halalStockScreen,
-  halalStockScreenInput,
-} from "@sirathic/core/tools/halalStockScreen";
+import { halalStockScreen, halalStockScreenInput } from "@sirathic/core/tools/halalStockScreen";
 import { hijriDate, hijriDateInput } from "@sirathic/core/tools/hijriDate";
-import {
-  inheritance,
-  inheritanceInput,
-} from "@sirathic/core/tools/inheritance";
-import {
-  islamicCalendar,
-  islamicCalendarInput,
-} from "@sirathic/core/tools/islamicCalendar";
-import {
-  islamicUnits,
-  islamicUnitsInput,
-} from "@sirathic/core/tools/islamicUnits";
-import {
-  namedReference,
-  namedReferenceInput,
-} from "@sirathic/core/tools/namedReference";
-import {
-  namesOfAllah,
-  namesOfAllahInput,
-} from "@sirathic/core/tools/namesOfAllah";
+import { inheritance, inheritanceInput } from "@sirathic/core/tools/inheritance";
+import { islamicCalendar, islamicCalendarInput } from "@sirathic/core/tools/islamicCalendar";
+import { islamicUnits, islamicUnitsInput } from "@sirathic/core/tools/islamicUnits";
+import { namedReference, namedReferenceInput } from "@sirathic/core/tools/namedReference";
+import { namesOfAllah, namesOfAllahInput } from "@sirathic/core/tools/namesOfAllah";
 import { newsSearch } from "@sirathic/core/tools/newsSearch";
-import {
-  prayerTimes,
-  prayerTimesInput,
-} from "@sirathic/core/tools/prayerTimes";
+import { prayerTimes, prayerTimesInput } from "@sirathic/core/tools/prayerTimes";
 import { qibla, qiblaInput } from "@sirathic/core/tools/qibla";
 import { quranGet, quranGetInput } from "@sirathic/core/tools/quranGet";
-import {
-  redditSearch,
-  redditSearchInput,
-} from "@sirathic/core/tools/redditSearch";
-import {
-  redditThread,
-  redditThreadInput,
-} from "@sirathic/core/tools/redditThread";
+import { redditSearch, redditSearchInput } from "@sirathic/core/tools/redditSearch";
+import { redditThread, redditThreadInput } from "@sirathic/core/tools/redditThread";
 import { quranSearch } from "@sirathic/core/tools/quranSearch";
 import { webFetch, webFetchInput } from "@sirathic/core/tools/webFetch";
 import { webSearch } from "@sirathic/core/tools/webSearch";
-import {
-  zakatAlFitr,
-  zakatAlFitrInput,
-} from "@sirathic/core/tools/zakatAlFitr";
-import {
-  zakatCalculator,
-  zakatCalculatorInput,
-} from "@sirathic/core/tools/zakatCalculator";
+import { zakatAlFitr, zakatAlFitrInput } from "@sirathic/core/tools/zakatAlFitr";
+import { zakatCalculator, zakatCalculatorInput } from "@sirathic/core/tools/zakatCalculator";
 import { tool } from "ai";
 import { z } from "zod";
 import { reasonOf } from "../respond";
 import { told } from "../shared/settings";
 import type { Source } from "../shared/sources";
-import {
-  bestPieces,
-  fiqhBlock,
-  hadithBlock,
-  pagesBlock,
-  pageText,
-  quranBlock,
-} from "./compact";
+import { bestPieces, fiqhBlock, hadithBlock, pagesBlock, pageText, quranBlock } from "./compact";
 
 const SNIPPET_CHARS = 300;
 const PAGE_CHARS = 8_000;
@@ -126,8 +80,7 @@ const hadithTitle = (hadith: Hadith) => {
   return hadith.chapter ? `${name}: ${hadith.chapter}` : name;
 };
 
-const MACHINE_TRANSLATION =
-  "Machine translation from the Arabic. Check it before you quote it.";
+const MACHINE_TRANSLATION = "Machine translation from the Arabic. Check it before you quote it.";
 
 const hadithSource = (hadith: Hadith): Source | undefined =>
   hadith.link === null
@@ -135,15 +88,10 @@ const hadithSource = (hadith: Hadith): Source | undefined =>
     : {
         url: hadith.link,
         title: hadithTitle(hadith),
-        snippet: (hadith.english ?? hadith.textAr ?? "").slice(
-          0,
-          SNIPPET_CHARS,
-        ),
+        snippet: (hadith.english ?? hadith.textAr ?? "").slice(0, SNIPPET_CHARS),
         credit:
           hadith.english !== null && hadith.licensedEnglish === null
-            ? [hadith.credit, MACHINE_TRANSLATION]
-                .filter((line) => line !== null)
-                .join(". ")
+            ? [hadith.credit, MACHINE_TRANSLATION].filter((line) => line !== null).join(". ")
             : (hadith.credit ?? undefined),
       };
 
@@ -170,11 +118,7 @@ const hitSource = (hit: Hit): Source => ({
   snippet: plainText(hit.description),
 });
 
-function numbered<Item>(
-  cite: Cite,
-  items: Item[],
-  sourceOf: (item: Item) => Source | undefined,
-) {
+function numbered<Item>(cite: Cite, items: Item[], sourceOf: (item: Item) => Source | undefined) {
   const sources: Source[] = [];
   const cited = items.map((item) => {
     const found = sourceOf(item);
@@ -185,14 +129,7 @@ function numbered<Item>(
   return { cited, sources };
 }
 
-const SEARCH_SOURCES = [
-  "quran",
-  "hadith",
-  "fatwa",
-  "fiqh",
-  "web",
-  "news",
-] as const;
+const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news"] as const;
 
 type SearchSource = (typeof SEARCH_SOURCES)[number];
 
@@ -205,12 +142,7 @@ const SEARCH_LIMITS = {
   news: 8,
 } satisfies Record<SearchSource, number>;
 
-const ISLAMIC_SOURCES: ReadonlySet<SearchSource> = new Set([
-  "quran",
-  "hadith",
-  "fatwa",
-  "fiqh",
-]);
+const ISLAMIC_SOURCES: ReadonlySet<SearchSource> = new Set(["quran", "hadith", "fatwa", "fiqh"]);
 const WEB_BESIDE_ISLAMIC = 4;
 const LISTED_PER_QUERY = 10;
 
@@ -238,8 +170,7 @@ const searchInput = z.object({
 type TafsirGroup = Awaited<ReturnType<typeof quranSearch>>["tafsirEn"][number];
 type Searched = { results: unknown[]; sources: Source[]; text: string };
 
-const textBlocked = (url: string) =>
-  /(^|\.)sunnah\.com$/u.test(URL.parse(url)?.hostname ?? "");
+const textBlocked = (url: string) => /(^|\.)sunnah\.com$/u.test(URL.parse(url)?.hostname ?? "");
 
 const clip = (text: string | null | undefined, chars: number) => {
   const plain = text?.replaceAll(/\s+/gu, " ").trim();
@@ -247,14 +178,9 @@ const clip = (text: string | null | undefined, chars: number) => {
   return plain.length > chars ? `${plain.slice(0, chars)}…` : plain;
 };
 
-const siteOf = (url: string) =>
-  URL.parse(url)?.hostname.replace(/^www\./u, "") ?? url;
+const siteOf = (url: string) => URL.parse(url)?.hostname.replace(/^www\./u, "") ?? url;
 
-function interleave<Item>(
-  lists: Item[][],
-  keyOf: (item: Item) => string,
-  limit: number,
-) {
+function interleave<Item>(lists: Item[][], keyOf: (item: Item) => string, limit: number) {
   const seen = new Set<string>();
   const merged: Item[] = [];
   const longest = Math.max(0, ...lists.map((list) => list.length));
@@ -284,12 +210,7 @@ const tafsirFor = (groups: TafsirGroup[], verse: Verse) =>
 
 const gradeOf = (hadith: Hadith) => {
   if (hadith.grades.length > 0) {
-    return clip(
-      hadith.grades
-        .map(({ grader, grade }) => `${grade} (${grader})`)
-        .join("; "),
-      140,
-    );
+    return clip(hadith.grades.map(({ grader, grade }) => `${grade} (${grader})`).join("; "), 140);
   }
   return hadith.book === "bukhari" || hadith.book === "muslim"
     ? `Sahih (${COLLECTIONS.get(hadith.book)})`
@@ -306,11 +227,7 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
     Number.POSITIVE_INFINITY,
   );
   const tafsir = found.flatMap((result) => result.tafsirEn);
-  const { cited, sources } = numbered(
-    cite,
-    ranked.slice(0, SEARCH_LIMITS.quran),
-    verseSource,
-  );
+  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.quran), verseSource);
   const results = cited.map((verse) => ({
     citation: verse.citation,
     ref: `Quran ${verse.surah}:${verse.ayah} (${verse.surahName})`,
@@ -319,10 +236,7 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
     tafsir: clip(tafsirFor(tafsir, verse), TAFSIR_CHARS),
   }));
   return {
-    sources: [
-      ...sources,
-      ...ranked.slice(SEARCH_LIMITS.quran).map(verseSource),
-    ],
+    sources: [...sources, ...ranked.slice(SEARCH_LIMITS.quran).map(verseSource)],
     results,
     text: quranBlock(results),
   };
@@ -337,11 +251,7 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
     (hadith) => hadith.id,
     Number.POSITIVE_INFINITY,
   );
-  const { cited, sources } = numbered(
-    cite,
-    ranked.slice(0, SEARCH_LIMITS.hadith),
-    hadithSource,
-  );
+  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.hadith), hadithSource);
   const results = cited.map((hadith) => ({
     citation: hadith.citation,
     ref: hadithTitle(hadith),
@@ -352,9 +262,7 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
   return {
     sources: [
       ...sources,
-      ...ranked
-        .slice(SEARCH_LIMITS.hadith)
-        .flatMap((hadith) => hadithSource(hadith) ?? []),
+      ...ranked.slice(SEARCH_LIMITS.hadith).flatMap((hadith) => hadithSource(hadith) ?? []),
     ],
     results,
     text: hadithBlock(
@@ -381,11 +289,9 @@ const searchFiqh = async (cite: Cite, queries: string[]) => {
   const bySchool = await Promise.all(
     FIQH_SCHOOLS.map(async ([school, limit]) =>
       interleave(
-        (
-          await Promise.all(
-            queries.map((query) => fiqhSearch({ query, school, limit })),
-          )
-        ).map((result) => result.passages),
+        (await Promise.all(queries.map((query) => fiqhSearch({ query, school, limit })))).map(
+          (result) => result.passages,
+        ),
         (passage) => passage.id,
         limit,
       ),
@@ -410,11 +316,7 @@ const readPages = async (hits: Hit[], queries: readonly string[]) => {
     hits.map((hit) =>
       webFetch({ url: hit.url }).then(
         (page) =>
-          bestPieces(
-            pageText(page.markdown, Number.POSITIVE_INFINITY),
-            queries,
-            RESULT_CHARS,
-          ),
+          bestPieces(pageText(page.markdown, Number.POSITIVE_INFINITY), queries, RESULT_CHARS),
         () => undefined,
       ),
     ),
@@ -454,20 +356,14 @@ const fatwaSource = (fatwa: Fatwa): Source => ({
 
 const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
   const found = await Promise.all(
-    [...queries, ...arabic].map((query) =>
-      fatwaSearch({ query, limit: LISTED_PER_QUERY }),
-    ),
+    [...queries, ...arabic].map((query) => fatwaSearch({ query, limit: LISTED_PER_QUERY })),
   );
   const ranked = interleave(
     found.map((result) => result.fatwas),
     (fatwa) => fatwa.url,
     Number.POSITIVE_INFINITY,
   );
-  const { cited, sources } = numbered(
-    cite,
-    ranked.slice(0, SEARCH_LIMITS.fatwa),
-    fatwaSource,
-  );
+  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.fatwa), fatwaSource);
   const results = cited.map((fatwa) => {
     const head = pageText(
       [
@@ -482,9 +378,7 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
     return {
       citation: fatwa.citation,
       title: fatwa.title,
-      site: [siteOf(fatwa.url), fatwa.answeredBy, fatwa.school]
-        .filter(Boolean)
-        .join(", "),
+      site: [siteOf(fatwa.url), fatwa.answeredBy, fatwa.school].filter(Boolean).join(", "),
       date: fatwa.publishedAt?.toISOString().slice(0, 10) ?? null,
       text: [
         head,
@@ -500,10 +394,7 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
     };
   });
   return {
-    sources: [
-      ...sources,
-      ...ranked.slice(SEARCH_LIMITS.fatwa).map(fatwaSource),
-    ],
+    sources: [...sources, ...ranked.slice(SEARCH_LIMITS.fatwa).map(fatwaSource)],
     results,
     text: pagesBlock("fatwa", results),
   };
@@ -511,9 +402,7 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
 
 const unlessAllFail = async <Value>(runs: Promise<Value>[]) => {
   const settled = await Promise.allSettled(runs);
-  const done = settled.flatMap((run) =>
-    run.status === "fulfilled" ? [run.value] : [],
-  );
+  const done = settled.flatMap((run) => (run.status === "fulfilled" ? [run.value] : []));
   const failed = settled.find((run) => run.status === "rejected");
   if (done.length === 0 && failed) throw failed.reason;
   return done;
@@ -544,9 +433,7 @@ const searchWeb = async (cite: Cite, queries: string[], limit: number) => {
 const searchNews = async (cite: Cite, queries: string[]) => {
   const found = await unlessAllFail(
     queries.map((query) =>
-      newsSearch({ query, limit: SEARCH_LIMITS.news }).then(
-        (result) => result.articles,
-      ),
+      newsSearch({ query, limit: SEARCH_LIMITS.news }).then((result) => result.articles),
     ),
   );
   const articles = interleave(
@@ -596,13 +483,9 @@ const searchAll = async (
       return { name, found };
     }),
   );
-  const failed = done
-    .filter(({ found }) => found.failed)
-    .map(({ name }) => name);
+  const failed = done.filter(({ found }) => found.failed).map(({ name }) => name);
   return {
-    results: Object.fromEntries(
-      done.map(({ name, found }) => [name, found.results]),
-    ),
+    results: Object.fromEntries(done.map(({ name, found }) => [name, found.results])),
     sources: done.flatMap(({ found }) => found.sources),
     text: [
       ...done.map(({ found }) => found.text),
@@ -684,8 +567,7 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       }),
     }),
     hadithCheck: tool({
-      description:
-        "Check whether a saying the user quotes is a known hadith, and its grade.",
+      description: "Check whether a saying the user quotes is a known hadith, and its grade.",
       inputSchema: hadithCheckInput,
       execute: async (input) => {
         const { matches, ...checked } = await hadithCheck(input);
@@ -716,8 +598,7 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       execute: duaSearch,
     }),
     namedReference: tool({
-      description:
-        "Find the reference of a verse or hadith the user names, like Ayat al-Kursi.",
+      description: "Find the reference of a verse or hadith the user names, like Ayat al-Kursi.",
       inputSchema: namedReferenceInput,
       execute: async (input) => namedReference(input),
     }),
@@ -761,19 +642,14 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       }),
     }),
     redditSearch: tool({
-      description:
-        "Search Reddit for what people say or have experienced. Not for rulings.",
+      description: "Search Reddit for what people say or have experienced. Not for rulings.",
       inputSchema: redditSearchInput,
       execute: async (input) => {
         const { posts, ...found } = await redditSearch({
           ...input,
           limit: LISTED_PER_QUERY,
         });
-        const { cited, sources } = numbered(
-          cite,
-          posts.slice(0, input.limit),
-          hitSource,
-        );
+        const { cited, sources } = numbered(cite, posts.slice(0, input.limit), hitSource);
         return {
           ...found,
           posts: cited,
@@ -813,8 +689,7 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       execute: async (input) => qibla(input),
     }),
     hijriDate: tool({
-      description:
-        "Convert between Gregorian and Hijri dates, or get today's Hijri date.",
+      description: "Convert between Gregorian and Hijri dates, or get today's Hijri date.",
       inputSchema: hijriDateInput,
       execute: async (input) => hijriDate(input),
     }),
@@ -829,8 +704,7 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       execute: geocode,
     }),
     zakatCalculator: tool({
-      description:
-        "Calculate zakat on wealth, using live gold and silver prices unless given.",
+      description: "Calculate zakat on wealth, using live gold and silver prices unless given.",
       inputSchema: zakatCalculatorInput,
       execute: zakatCalculator,
     }),
@@ -856,8 +730,7 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       execute: async (input) => islamicUnits(input),
     }),
     halalStockScreen: tool({
-      description:
-        "Screen a stock for shariah compliance from its business and financial ratios.",
+      description: "Screen a stock for shariah compliance from its business and financial ratios.",
       inputSchema: halalStockScreenInput,
       execute: halalStockScreen,
     }),
@@ -892,9 +765,7 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       execute: async (input) => {
         if (!remember) return "Not saved: this chat is incognito.";
         const saved = await remember(input);
-        return Object.keys(saved).length > 0
-          ? "Saved."
-          : "Nothing new to save.";
+        return Object.keys(saved).length > 0 ? "Saved." : "Nothing new to save.";
       },
     }),
   };

@@ -2,11 +2,7 @@
 
 import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streaming-response";
-import {
-  actionButton,
-  AnswerExtras,
-  useAnswer,
-} from "@/components/answer-actions";
+import { actionButton, AnswerExtras, useAnswer } from "@/components/answer-actions";
 import { useChatState } from "@/components/chat";
 import { useChatOptions } from "@/components/chat-options";
 import { AttachmentChip, Composer } from "@/components/composer";
@@ -14,11 +10,7 @@ import { ExportMenu } from "@/components/export-chat";
 import { Favicon, FaviconStack } from "@/components/favicon";
 import { Logo, Mark } from "@/components/logo";
 import { MarkdownText } from "@/components/markdown-text";
-import {
-  type ResearchStep,
-  readableQuery,
-  stepsOf,
-} from "@/components/research";
+import { type ResearchStep, readableQuery, stepsOf } from "@/components/research";
 import { SourceRow } from "@/components/source-row";
 import {
   CitationNumbers,
@@ -101,12 +93,10 @@ const TABS = [
 
 type Tab = (typeof TABS)[number]["id"];
 
-const useThreadTab = create<{ tab: Tab; open: (tab: Tab) => void }>()(
-  (set) => ({
-    tab: "answer",
-    open: (tab) => set({ tab }),
-  }),
-);
+const useThreadTab = create<{ tab: Tab; open: (tab: Tab) => void }>()((set) => ({
+  tab: "answer",
+  open: (tab) => set({ tab }),
+}));
 
 const ThreadImpl: FC = () => {
   const threadId = useAuiState((s) => s.threads.mainThreadId);
@@ -180,10 +170,7 @@ export const ThreadSkeleton: FC = () => (
   </main>
 );
 
-const TurnRow: FC<{ children: ReactNode; aside?: ReactNode }> = ({
-  children,
-  aside,
-}) => {
+const TurnRow: FC<{ children: ReactNode; aside?: ReactNode }> = ({ children, aside }) => {
   return (
     <div className="mx-auto grid w-full max-w-[720px] xl:max-w-none xl:grid-cols-[minmax(0,720px)_320px] xl:justify-between xl:ps-[35px]">
       <div className="min-w-0">{children}</div>
@@ -209,11 +196,7 @@ const TabBar: FC = () => {
       </div>
       <TurnRow>
         <div className="flex h-14 items-center gap-4">
-          <a
-            href={href("/")}
-            aria-label={t("New chat")}
-            className={cn(iconButton, "lg:hidden")}
-          >
+          <a href={href("/")} aria-label={t("New chat")} className={cn(iconButton, "lg:hidden")}>
             <IconPlus className="size-4.5" />
           </a>
           <div role="tablist" className="flex h-full gap-5">
@@ -248,21 +231,17 @@ const HeaderActions: FC = () => {
   const chat = useChatState();
   const t = useT();
   const createdAt = useAuiState((s) => {
-    const last = s.thread.messages.findLast(
-      (message) => message.role === "assistant",
-    );
+    const last = s.thread.messages.findLast((message) => message.role === "assistant");
     return timeOf.safeParse(last?.metadata.custom).data?.createdAt;
   });
   const [copied, setCopied] = useState(false);
 
   const share = () => {
     if (!chat?.saved) return;
-    void navigator.clipboard
-      .writeText(`${window.location.origin}/s/${chat.id}`)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2_000);
-      });
+    void navigator.clipboard.writeText(`${window.location.origin}/s/${chat.id}`).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2_000);
+    });
   };
 
   return (
@@ -289,14 +268,8 @@ const HeaderActions: FC = () => {
         title={t("Copy a link to this chat")}
         className="bg-foreground/10 hover:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
       >
-        {copied ? (
-          <IconCheck className="size-4" />
-        ) : (
-          <IconShare className="size-4" />
-        )}
-        <span className="hidden sm:inline">
-          {copied ? t("Copied") : t("Share")}
-        </span>
+        {copied ? <IconCheck className="size-4" /> : <IconShare className="size-4" />}
+        <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
       </button>
     </div>
   );
@@ -450,9 +423,7 @@ const SourcesPane: FC = () => {
   const [chosen, setChosen] = useState<boolean>();
   const open = chosen ?? true;
   const turns = turnsOf(messages).filter((turn) => turn.sources.length > 0);
-  const urls = [
-    ...new Set(turns.flatMap((turn) => turn.sources.map((s) => s.url))),
-  ];
+  const urls = [...new Set(turns.flatMap((turn) => turn.sources.map((s) => s.url)))];
   if (urls.length === 0) return null;
 
   return (
@@ -462,9 +433,7 @@ const SourcesPane: FC = () => {
         onClick={() => setChosen(!open)}
         className="flex w-full items-center gap-2 py-3 pe-2 ps-3"
       >
-        <span className="text-muted-foreground flex-1 text-start text-sm">
-          {t("Sources")}
-        </span>
+        <span className="text-muted-foreground flex-1 text-start text-sm">{t("Sources")}</span>
         {!open && <FaviconStack urls={urls} />}
         <span className="text-muted-foreground flex items-center gap-1 text-sm tabular-nums">
           {!open && urls.length}
@@ -500,17 +469,12 @@ const SourcesPane: FC = () => {
                     </span>
                     <span className="line-clamp-2">{source.title}</span>
                     {source.snippet && (
-                      <span
-                        dir="auto"
-                        className="text-muted-foreground line-clamp-4"
-                      >
+                      <span dir="auto" className="text-muted-foreground line-clamp-4">
                         {source.snippet}
                       </span>
                     )}
                     {source.credit && (
-                      <span className="text-muted-foreground text-xs">
-                        {source.credit}
-                      </span>
+                      <span className="text-muted-foreground text-xs">{source.credit}</span>
                     )}
                   </span>
                 </a>
@@ -531,9 +495,7 @@ const Reply: FC = () => {
 
   return (
     <SourcesContext value={byUrl}>
-      <CitationNumbers
-        value={new Map(cited.map((source, index) => [source.url, index + 1]))}
-      >
+      <CitationNumbers value={new Map(cited.map((source, index) => [source.url, index + 1]))}>
         <Answer sources={sources} cited={cited} />
       </CitationNumbers>
     </SourcesContext>
@@ -546,11 +508,7 @@ const research = groupPartByType({
 });
 
 const answerState = (status: MessageStatus["type"] | undefined) =>
-  status === "running"
-    ? "streaming"
-    : status === "incomplete"
-      ? "error"
-      : "complete";
+  status === "running" ? "streaming" : status === "incomplete" ? "error" : "complete";
 
 const citationOf = (source: Source) => ({
   id: source.url,
@@ -560,10 +518,7 @@ const citationOf = (source: Source) => ({
   icon: <Favicon url={source.url} size={16} />,
 });
 
-const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({
-  sources,
-  cited,
-}) => {
+const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) => {
   const aui = useAui();
   const state = useAuiState((s) => answerState(s.message.status?.type));
   const [streamed] = useState(state === "streaming");
@@ -630,9 +585,7 @@ const relatedData = z.object({ questions: z.array(z.string()).min(1) });
 
 const Related: FC = () => {
   const raw = useAuiState((s) => {
-    const part = s.message.parts.find(
-      (p) => p.type === "data" && p.name === "related",
-    );
+    const part = s.message.parts.find((p) => p.type === "data" && p.name === "related");
     return part?.type === "data" ? part.data : undefined;
   });
   const questions = relatedData.safeParse(raw).data?.questions;
@@ -682,17 +635,12 @@ const Research: FC<{
   const t = useT();
   const [open, setOpen] = useState(false);
   const elapsed = useElapsed(startedAt, working);
-  const steps = stepsOf(
-    indices.map((i) => parts[i]).filter((part) => part !== undefined),
-  );
+  const steps = stepsOf(indices.map((i) => parts[i]).filter((part) => part !== undefined));
   const researched = live
     ? Math.max(1, Math.round(elapsed))
     : timing?.firstTokenTime === undefined
       ? undefined
-      : Math.max(
-          1,
-          Math.round((timing.firstTokenTime - timing.streamStartTime) / 1000),
-        );
+      : Math.max(1, Math.round((timing.firstTokenTime - timing.streamStartTime) / 1000));
   const seconds = working
     ? Math.floor(elapsed) > 0
       ? Math.floor(elapsed)
@@ -710,17 +658,10 @@ const Research: FC<{
       >
         {working ? t("Researching") : t("Researched")}
         {seconds !== undefined && (
-          <span className="text-muted-foreground/70 tabular-nums">
-            {seconds}s
-          </span>
+          <span className="text-muted-foreground/70 tabular-nums">{seconds}s</span>
         )}
         {steps.length > 0 && (
-          <IconChevronDown
-            className={cn(
-              "size-3.5 transition-transform",
-              !open && "-rotate-90",
-            )}
-          />
+          <IconChevronDown className={cn("size-3.5 transition-transform", !open && "-rotate-90")} />
         )}
       </button>
       {open ? (
@@ -793,14 +734,8 @@ const TOOL_STEPS = new Map<
       label: (t, d) => t("Finding duas for {detail}", { detail: d }),
     },
   ],
-  [
-    "namedReference",
-    { icon: quran, label: (t, d) => t("Looking up {detail}", { detail: d }) },
-  ],
-  [
-    "namesOfAllah",
-    { icon: quran, label: (t) => t("Looking up the names of Allah") },
-  ],
+  ["namedReference", { icon: quran, label: (t, d) => t("Looking up {detail}", { detail: d }) }],
+  ["namesOfAllah", { icon: quran, label: (t) => t("Looking up the names of Allah") }],
   [
     "prayerTimes",
     {
@@ -816,14 +751,8 @@ const TOOL_STEPS = new Map<
     },
   ],
   ["hijriDate", { icon: calendar, label: (t) => t("Converting the date") }],
-  [
-    "islamicCalendar",
-    { icon: calendar, label: (t) => t("Checking the Islamic calendar") },
-  ],
-  [
-    "geocode",
-    { icon: place, label: (t, d) => t("Finding {detail}", { detail: d }) },
-  ],
+  ["islamicCalendar", { icon: calendar, label: (t) => t("Checking the Islamic calendar") }],
+  ["geocode", { icon: place, label: (t, d) => t("Finding {detail}", { detail: d }) }],
   [
     "redditThread",
     {
@@ -831,22 +760,10 @@ const TOOL_STEPS = new Map<
       label: (t) => t("Reading a Reddit thread"),
     },
   ],
-  [
-    "zakatCalculator",
-    { icon: calculator, label: (t) => t("Calculating zakat") },
-  ],
-  [
-    "zakatAlFitr",
-    { icon: calculator, label: (t) => t("Calculating zakat al-fitr") },
-  ],
-  [
-    "fidyaKaffarah",
-    { icon: calculator, label: (t) => t("Calculating fidya and kaffarah") },
-  ],
-  [
-    "inheritance",
-    { icon: calculator, label: (t) => t("Calculating inheritance shares") },
-  ],
+  ["zakatCalculator", { icon: calculator, label: (t) => t("Calculating zakat") }],
+  ["zakatAlFitr", { icon: calculator, label: (t) => t("Calculating zakat al-fitr") }],
+  ["fidyaKaffarah", { icon: calculator, label: (t) => t("Calculating fidya and kaffarah") }],
+  ["inheritance", { icon: calculator, label: (t) => t("Calculating inheritance shares") }],
   ["islamicUnits", { icon: calculator, label: (t) => t("Converting units") }],
   [
     "calculator",
@@ -938,8 +855,7 @@ const jsonText = z.string().transform((text, ctx) => {
 
 const ReplyError: FC = () => {
   const error = useAuiState((s) =>
-    s.message.status?.type === "incomplete" &&
-    s.message.status.reason === "error"
+    s.message.status?.type === "incomplete" && s.message.status.reason === "error"
       ? s.message.status.error
       : undefined,
   );
@@ -976,13 +892,10 @@ const ThreadLinks: FC = () => {
       {turns.map((turn) => (
         <section key={turn.id} className="flex flex-col gap-2">
           <p className="text-muted-foreground px-2 text-sm">
-            {t("Search results for:")}{" "}
-            <span className="text-foreground">{turn.question}</span>
+            {t("Search results for:")} <span className="text-foreground">{turn.question}</span>
           </p>
           {turn.sources.length === 0 && (
-            <p className="text-muted-foreground px-2 text-sm">
-              {t("No links")}
-            </p>
+            <p className="text-muted-foreground px-2 text-sm">{t("No links")}</p>
           )}
           {turn.sources.map((source) => (
             <a
@@ -996,26 +909,19 @@ const ThreadLinks: FC = () => {
                 <Favicon url={source.url} size={28} />
                 <span className="flex min-w-0 flex-col">
                   <span className="text-sm">{siteName(source.url)}</span>
-                  <span className="text-muted-foreground truncate text-xs">
-                    {source.url}
-                  </span>
+                  <span className="text-muted-foreground truncate text-xs">{source.url}</span>
                 </span>
               </span>
               <span className="text-super mt-2 line-clamp-1 text-sm font-[470] group-hover/link:underline">
                 {source.title}
               </span>
               {source.snippet && (
-                <span
-                  dir="auto"
-                  className="text-muted-foreground line-clamp-2 text-sm"
-                >
+                <span dir="auto" className="text-muted-foreground line-clamp-2 text-sm">
                   {source.snippet}
                 </span>
               )}
               {source.credit && (
-                <span className="text-muted-foreground mt-1 text-xs">
-                  {source.credit}
-                </span>
+                <span className="text-muted-foreground mt-1 text-xs">{source.credit}</span>
               )}
             </a>
           ))}

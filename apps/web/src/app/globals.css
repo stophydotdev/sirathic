@@ -10,8 +10,7 @@
   --color-foreground: var(--foreground);
   --color-super: var(--super);
   --font-sans:
-    "Amiri Quran", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif;
+    "Amiri Quran", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -127,8 +126,7 @@
   * {
     @apply border-border outline-ring/50;
     scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklab, var(--foreground) 15%, transparent)
-      transparent;
+    scrollbar-color: color-mix(in oklab, var(--foreground) 15%, transparent) transparent;
   }
   body {
     @apply bg-background text-foreground;
@@ -155,8 +153,7 @@
   font-display: swap;
   size-adjust: 125%;
   src: url("/fonts/amiri-quran-arabic.woff2") format("woff2");
-  unicode-range:
-    U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 
 @media screen {
@@ -181,19 +178,13 @@
 
 @media (width < 48rem) {
   [data-radix-popper-content-wrapper]:has(
-    > :is(
-        [data-slot="dropdown-menu-content"],
-        [data-slot="dropdown-menu-sub-content"]
-      )
+    > :is([data-slot="dropdown-menu-content"], [data-slot="dropdown-menu-sub-content"])
   ) {
     inset: auto 0 0 !important;
     transform: none !important;
     min-width: 0 !important;
   }
-  :is(
-    [data-slot="dropdown-menu-content"],
-    [data-slot="dropdown-menu-sub-content"]
-  ) {
+  :is([data-slot="dropdown-menu-content"], [data-slot="dropdown-menu-sub-content"]) {
     width: 100%;
     max-height: 70dvh;
     border-radius: 1rem 1rem 0 0;

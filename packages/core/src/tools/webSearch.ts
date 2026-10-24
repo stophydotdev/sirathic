@@ -24,9 +24,7 @@ const sitesIn = (query: string) =>
 const matchesSites = (url: string, sites: ReturnType<typeof sitesIn>) =>
   sites.length === 0 ||
   sites.some(
-    (site) =>
-      isOnSite(hostOf(url), site.host) &&
-      new URL(url).pathname.startsWith(site.path),
+    (site) => isOnSite(hostOf(url), site.host) && new URL(url).pathname.startsWith(site.path),
   );
 
 const stophyResults = z.object({
@@ -55,9 +53,7 @@ const search = async (query: string) => {
     const excluded = EXCLUDED_SITES.some((site) => isOnSite(hostOf(url), site));
     if (excluded || seen.has(url) || !matchesSites(url, sites)) return [];
     seen.add(url);
-    return [
-      { url, title: result.title, description: result.description ?? "" },
-    ];
+    return [{ url, title: result.title, description: result.description ?? "" }];
   });
   if (results.length === 0) throw new Error("Web search found no results");
   return results;

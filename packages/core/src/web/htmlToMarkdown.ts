@@ -30,10 +30,9 @@ const NOISE_WORDS = [
   "permalink",
   "structured-data",
 ];
-const NOISE = NOISE_WORDS.flatMap((word) => [
-  `[class*="${word}" i]`,
-  `[id*="${word}" i]`,
-]).join(", ");
+const NOISE = NOISE_WORDS.flatMap((word) => [`[class*="${word}" i]`, `[id*="${word}" i]`]).join(
+  ", ",
+);
 const MAIN_AREAS = [
   "main",
   "[role=main]",
@@ -61,11 +60,9 @@ const MAX_WORD_CHARS = 30;
 const CELL = "\u0001";
 const ROW = "\u0002";
 
-const squeezed = (text: string | null | undefined) =>
-  (text ?? "").replaceAll(/\s+/gu, " ").trim();
+const squeezed = (text: string | null | undefined) => (text ?? "").replaceAll(/\s+/gu, " ").trim();
 
-const textLength = (element: PageElement | null) =>
-  squeezed(element?.textContent).length;
+const textLength = (element: PageElement | null) => squeezed(element?.textContent).length;
 
 const linkDensity = (element: PageElement) => {
   const total = textLength(element);
@@ -78,9 +75,7 @@ const linkDensity = (element: PageElement) => {
 };
 
 const titleOf = (document: PageDocument) => {
-  const meta = document
-    .querySelector('meta[property="og:title"]')
-    ?.getAttribute("content");
+  const meta = document.querySelector('meta[property="og:title"]')?.getAttribute("content");
   return (
     squeezed(document.querySelector("title")?.textContent) ||
     squeezed(meta) ||
@@ -95,14 +90,13 @@ const mainAreaOf = (document: PageDocument) => {
   if (
     articles.length === 1 &&
     only !== undefined &&
-    textLength(only) >=
-      MAIN_SHARE * textLength(main ?? document.documentElement)
+    textLength(only) >= MAIN_SHARE * textLength(main ?? document.documentElement)
   ) {
     return only;
   }
-  return MAIN_AREAS.flatMap(
-    (selector) => document.querySelector(selector) ?? [],
-  ).find((area) => textLength(area) >= MIN_MAIN_CHARS);
+  return MAIN_AREAS.flatMap((selector) => document.querySelector(selector) ?? []).find(
+    (area) => textLength(area) >= MIN_MAIN_CHARS,
+  );
 };
 
 const removeNoise = (root: PageElement, selector: string) => {
@@ -156,12 +150,9 @@ const isShortBlock = (element: PageElement) =>
 const joinWordBlocks = (root: PageElement) => {
   for (const parent of root.querySelectorAll("div")) {
     const blocks = [...parent.children];
-    if (blocks.length < MIN_WORD_BLOCKS || !blocks.every(isShortBlock))
-      continue;
+    if (blocks.length < MIN_WORD_BLOCKS || !blocks.every(isShortBlock)) continue;
     const line = parent.ownerDocument.createElement("p");
-    line.textContent = blocks
-      .map((block) => squeezed(block.textContent))
-      .join(" ");
+    line.textContent = blocks.map((block) => squeezed(block.textContent)).join(" ");
     parent.replaceChildren(line);
   }
 };
@@ -176,9 +167,7 @@ const fixLinks = (root: PageElement, base: string) => {
   for (const anchor of root.querySelectorAll("a")) {
     const url = absolute(anchor.getAttribute("href") ?? "", base);
     const samePage =
-      url !== null &&
-      url.hash !== "" &&
-      url.href.split("#")[0] === base.split("#")[0];
+      url !== null && url.hash !== "" && url.href.split("#")[0] === base.split("#")[0];
     if (url === null || samePage) {
       anchor.replaceWith(...anchor.childNodes);
     } else if (squeezed(anchor.textContent) === "") {
@@ -191,25 +180,20 @@ const fixLinks = (root: PageElement, base: string) => {
 
 const siteNoiseFor = (base: string) => {
   const host = new URL(base).hostname.replace(/^www\./u, "");
-  return SITE_NOISE.find(
-    ([site]) => host === site || host.endsWith(`.${site}`),
-  )?.[1];
+  return SITE_NOISE.find(([site]) => host === site || host.endsWith(`.${site}`))?.[1];
 };
 
 const selectedArea = (document: PageDocument) => {
   const area = mainAreaOf(document);
   if (area !== undefined) return area;
   const content = new Readability(document).parse()?.content;
-  if (content === undefined || content === null)
-    return document.documentElement;
-  return parseHTML(`<html><body>${content}</body></html>`).document
-    .documentElement;
+  if (content === undefined || content === null) return document.documentElement;
+  return parseHTML(`<html><body>${content}</body></html>`).document.documentElement;
 };
 
 const cleanedArea = (document: PageDocument, base: string) => {
   const siteNoise = siteNoiseFor(base);
-  const dropped =
-    siteNoise === undefined ? DROPPED : `${DROPPED}, ${siteNoise}`;
+  const dropped = siteNoise === undefined ? DROPPED : `${DROPPED}, ${siteNoise}`;
   for (const element of document.querySelectorAll(dropped)) element.remove();
   const root = selectedArea(document);
   removeNoise(root, CHROME);

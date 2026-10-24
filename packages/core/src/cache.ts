@@ -6,10 +6,7 @@ const redis = new RedisClient(env.REDIS_URL, {
   connectionTimeout: 1_000,
   enableOfflineQueue: false,
 });
-const connected = Promise.race([
-  redis.connect().catch(() => undefined),
-  Bun.sleep(1_000),
-]);
+const connected = Promise.race([redis.connect().catch(() => undefined), Bun.sleep(1_000)]);
 
 export const countUp = async (key: string, keepSeconds: number) => {
   await connected;
@@ -25,12 +22,7 @@ type CacheOptions<Value> = {
   keepMs: number;
 };
 
-export const cacheFor = <Value>({
-  namespace,
-  schema,
-  freshMs,
-  keepMs,
-}: CacheOptions<Value>) => {
+export const cacheFor = <Value>({ namespace, schema, freshMs, keepMs }: CacheOptions<Value>) => {
   const entry = z.object({ value: schema, freshUntil: z.number() });
   const inFlight = new Map<string, Promise<Value>>();
 

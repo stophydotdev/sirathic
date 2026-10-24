@@ -11,10 +11,7 @@ import { type FC, type ReactNode, useEffect, useState } from "react";
 type Images = Awaited<ReturnType<typeof api.media.images.query>>;
 type Videos = Awaited<ReturnType<typeof api.media.videos.query>>;
 
-type Load<T> =
-  | { status: "loading" }
-  | { status: "failed" }
-  | { status: "done"; value: T };
+type Load<T> = { status: "loading" } | { status: "failed" } | { status: "done"; value: T };
 
 const imagesByQuestion = new Map<string, Promise<Images>>();
 const videosByQuestion = new Map<string, Promise<Videos>>();
@@ -63,9 +60,7 @@ const duration = (seconds: number) => {
 
 const views = (count: number, t: Translate) =>
   t("{count} views", {
-    count: new Intl.NumberFormat(undefined, { notation: "compact" }).format(
-      count,
-    ),
+    count: new Intl.NumberFormat(undefined, { notation: "compact" }).format(count),
   });
 
 const Turn: FC<{
@@ -123,9 +118,7 @@ const TurnImages: FC<{ question: string }> = ({ question }) => {
                   className="object-cover"
                 />
               </span>
-              <span className="text-muted-foreground truncate px-0.5 text-xs">
-                {image.source}
-              </span>
+              <span className="text-muted-foreground truncate px-0.5 text-xs">{image.source}</span>
             </a>
           ))}
         </div>
@@ -166,14 +159,9 @@ const TurnVideos: FC<{ question: string }> = ({ question }) => {
                 )}
               </span>
               <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="line-clamp-2 text-sm font-[470]">
-                  {video.title}
-                </span>
+                <span className="line-clamp-2 text-sm font-[470]">{video.title}</span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {[
-                    video.channel,
-                    video.views === null ? null : views(video.views, t),
-                  ]
+                  {[video.channel, video.views === null ? null : views(video.views, t)]
                     .filter(Boolean)
                     .join(" · ")}
                 </span>

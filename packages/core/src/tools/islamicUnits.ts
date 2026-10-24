@@ -142,9 +142,7 @@ export const islamicUnits = (input: z.input<typeof islamicUnitsInput>) => {
     caveats: [
       "Sources differ on these values, so the assumptions above are stated rather than hidden.",
       ...(assumptions.some((entry) => entry.approximate)
-        ? [
-            "At least one unit here is an approximation. Treat the result as an estimate.",
-          ]
+        ? ["At least one unit here is an approximation. Treat the result as an estimate."]
         : []),
     ],
   };

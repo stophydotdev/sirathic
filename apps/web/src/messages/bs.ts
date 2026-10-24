@@ -3,8 +3,7 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Nazad na Sirathic",
   Brand: "Identitet",
-  "Logos, colors and guidelines for Sirathic.":
-    "Logotipi, boje i pravila upotrebe za Sirathic.",
+  "Logos, colors and guidelines for Sirathic.": "Logotipi, boje i pravila upotrebe za Sirathic.",
   "Brand assets": "Materijali brenda",
   "Download our logos and follow the guidelines below.":
     "Preuzmite naše logotipe i slijedite pravila ispod.",
@@ -62,8 +61,7 @@ export default {
   "Same as my question": "Kao moje pitanje",
   "Same as my browser": "Kao moj preglednik",
   "Not signed in": "Niste prijavljeni",
-  "Sign in to ask and keep your chats":
-    "Prijavite se da biste pitali i čuvali razgovore",
+  "Sign in to ask and keep your chats": "Prijavite se da biste pitali i čuvali razgovore",
   "Sign in": "Prijavi se",
   "Signed in with ChatGPT": "Prijavljeni putem ChatGPT-a",
   "Signed in with Google": "Prijavljeni putem Google-a",
@@ -79,15 +77,13 @@ export default {
   "Signs you out on this browser": "Odjavljuje vas u ovom pregledniku",
   Appearance: "Izgled",
   Language: "Jezik",
-  "The language of Sirathic's menus and buttons":
-    "Jezik Sirathic menija i dugmadi",
+  "The language of Sirathic's menus and buttons": "Jezik Sirathic menija i dugmadi",
   Theme: "Tema",
   "How Sirathic looks on this device": "Kako Sirathic izgleda na ovom uređaju",
   Asking: "Pitanja",
   "Default mode": "Zadani način",
   "Suggestions while typing": "Prijedlozi tokom kucanja",
-  "Show suggested questions under the box":
-    "Prikaži predložena pitanja ispod polja",
+  "Show suggested questions under the box": "Prikaži predložena pitanja ispod polja",
   "Sign in to personalize answers.": "Prijavite se da prilagodite odgovore.",
   "What should Sirathic call you?": "Kako da vas Sirathic oslovljava?",
   "Your name": "Vaše ime",
@@ -104,11 +100,9 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "Navodi ajete i hadise na arapskom pored prijevoda",
   "Incognito by default": "Anonimno po zadanim postavkama",
-  "New chats start in incognito and aren't saved":
-    "Novi razgovori počinju anonimno i ne čuvaju se",
+  "New chats start in incognito and aren't saved": "Novi razgovori počinju anonimno i ne čuvaju se",
   "Export my chats": "Izvezi moje razgovore",
-  "Download every saved chat as a file":
-    "Preuzmi sve sačuvane razgovore kao datoteku",
+  "Download every saved chat as a file": "Preuzmi sve sačuvane razgovore kao datoteku",
   Export: "Izvezi",
   "Delete all chats": "Izbriši sve razgovore",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +131,7 @@ export default {
     "Prvi put? Uključite prijavu kodom uređaja u ChatGPT → Postavke → Sigurnost. ChatGPT će prikazati Codex, to je očekivano.",
   "Continue with ChatGPT": "Nastavi putem ChatGPT-a",
   "Continue with Google": "Nastavi putem Google-a",
-  "Use your ChatGPT plan for GPT models":
-    "Koristite svoj ChatGPT plan za GPT modele",
+  "Use your ChatGPT plan for GPT models": "Koristite svoj ChatGPT plan za GPT modele",
   "Get a new code": "Dobij novi kod",
   "Try again": "Pokušaj ponovo",
   "Your question stays in the box while you sign in.":
@@ -150,8 +143,7 @@ export default {
   "Google account": "Google račun",
   Incognito: "Anonimno",
   "All settings": "Sve postavke",
-  "Assalamu alaikum. Sign in to start asking.":
-    "Esselamu alejkum. Prijavite se da počnete pitati.",
+  "Assalamu alaikum. Sign in to start asking.": "Esselamu alejkum. Prijavite se da počnete pitati.",
   "Enter this code on ChatGPT": "Unesite ovaj kod na ChatGPT",
   "Code expired": "Kod je istekao",
   "Sign-in didn't work": "Prijava nije uspjela",
@@ -233,15 +225,12 @@ export default {
   Helpful: "Korisno",
   "Not helpful": "Nije korisno",
   Quick: "Brzo",
-  "Searches everything first, then answers fast":
-    "Prvo pretraži sve, zatim brzo odgovori",
+  "Searches everything first, then answers fast": "Prvo pretraži sve, zatim brzo odgovori",
   Research: "Istraživanje",
-  "Thinks longer and searches step by step":
-    "Razmišlja duže i pretražuje korak po korak",
+  "Thinks longer and searches step by step": "Razmišlja duže i pretražuje korak po korak",
   "Type / for modes": "Upišite / za načine",
   "Type @ for sources": "Upišite @ za izvore",
-  'Delete "{title}"? This can\'t be undone.':
-    "Izbrisati „{title}”? Ovo se ne može poništiti.",
+  'Delete "{title}"? This can\'t be undone.': "Izbrisati „{title}”? Ovo se ne može poništiti.",
   "Qur'an text": "Tekst Kur'ana",
   "Verse links": "Linkovi ajeta",
   "Hadith explanations": "Objašnjenja hadisa",

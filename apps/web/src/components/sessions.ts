@@ -2,14 +2,11 @@ import { api } from "@/lib/trpc";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Session = Awaited<
-  ReturnType<typeof api.sessions.list.query>
->[number];
+export type Session = Awaited<ReturnType<typeof api.sessions.list.query>>[number];
 
 type Change = Omit<Parameters<typeof api.sessions.update.mutate>[0], "id">;
 
-export const findSessions = (query: string) =>
-  api.sessions.list.query({ query }).catch(() => []);
+export const findSessions = (query: string) => api.sessions.list.query({ query }).catch(() => []);
 
 export const useSessions = create<{
   sessions: Session[] | undefined;
@@ -29,9 +26,7 @@ export const useSessions = create<{
             session.id === id ? Object.assign({}, session, change) : session,
           ),
         });
-        await api.sessions.update
-          .mutate(Object.assign({ id }, change))
-          .catch(() => undefined);
+        await api.sessions.update.mutate(Object.assign({ id }, change)).catch(() => undefined);
         await get().refresh();
       },
       remove: async (id) => {

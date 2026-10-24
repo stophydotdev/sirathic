@@ -8,11 +8,7 @@ export const languagesOf = (path: string, locales: readonly Locale[]) =>
     ["x-default", `${SITE}/en${path}`],
   ]);
 
-export const alternatesOf = (
-  lang: Locale,
-  path: string,
-  indexedLocales: readonly Locale[],
-) =>
+export const alternatesOf = (lang: Locale, path: string, indexedLocales: readonly Locale[]) =>
   indexedLocales.includes(lang)
     ? {
         canonical: `${SITE}/${lang}${path}`,

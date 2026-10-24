@@ -62,8 +62,7 @@ export default {
   "Same as my question": "என் கேள்வியின் மொழியிலேயே",
   "Same as my browser": "என் உலாவியின் மொழியிலேயே",
   "Not signed in": "உள்நுழையவில்லை",
-  "Sign in to ask and keep your chats":
-    "கேள்வி கேட்கவும் உரையாடல்களைச் சேமிக்கவும் உள்நுழையுங்கள்",
+  "Sign in to ask and keep your chats": "கேள்வி கேட்கவும் உரையாடல்களைச் சேமிக்கவும் உள்நுழையுங்கள்",
   "Sign in": "உள்நுழை",
   "Signed in with ChatGPT": "ChatGPT மூலம் உள்நுழைந்துள்ளீர்கள்",
   "Signed in with Google": "Google மூலம் உள்நுழைந்துள்ளீர்கள்",
@@ -79,15 +78,13 @@ export default {
   "Signs you out on this browser": "இந்த உலாவியிலிருந்து உங்களை வெளியேற்றும்",
   Appearance: "தோற்றம்",
   Language: "மொழி",
-  "The language of Sirathic's menus and buttons":
-    "Sirathic-இன் மெனுக்கள், பொத்தான்களின் மொழி",
+  "The language of Sirathic's menus and buttons": "Sirathic-இன் மெனுக்கள், பொத்தான்களின் மொழி",
   Theme: "தீம்",
   "How Sirathic looks on this device": "இந்தச் சாதனத்தில் Sirathic எப்படித் தோன்றும்",
   Asking: "கேள்வி கேட்டல்",
   "Default mode": "இயல்புநிலை முறை",
   "Suggestions while typing": "தட்டச்சு செய்யும்போது பரிந்துரைகள்",
-  "Show suggested questions under the box":
-    "பெட்டியின் கீழே பரிந்துரைக்கப்பட்ட கேள்விகளைக் காட்டு",
+  "Show suggested questions under the box": "பெட்டியின் கீழே பரிந்துரைக்கப்பட்ட கேள்விகளைக் காட்டு",
   "Sign in to personalize answers.": "பதில்களை உங்களுக்கேற்ப மாற்ற உள்நுழையுங்கள்.",
   "What should Sirathic call you?": "Sirathic உங்களை எப்படி அழைக்க வேண்டும்?",
   "Your name": "உங்கள் பெயர்",
@@ -104,11 +101,9 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "மொழிபெயர்ப்புக்கு அருகில் வசனங்களையும் ஹதீஸ்களையும் அரபியில் மேற்கோள் காட்டு",
   "Incognito by default": "இயல்பாக மறைநிலை",
-  "New chats start in incognito and aren't saved":
-    "புதிய உரையாடல்கள் மறைநிலையில் தொடங்கும், சேமிக்கப்படாது",
+  "New chats start in incognito and aren't saved": "புதிய உரையாடல்கள் மறைநிலையில் தொடங்கும், சேமிக்கப்படாது",
   "Export my chats": "என் உரையாடல்களை ஏற்றுமதி செய்",
-  "Download every saved chat as a file":
-    "சேமித்த எல்லா உரையாடல்களையும் ஒரு கோப்பாகப் பதிவிறக்கு",
+  "Download every saved chat as a file": "சேமித்த எல்லா உரையாடல்களையும் ஒரு கோப்பாகப் பதிவிறக்கு",
   Export: "ஏற்றுமதி",
   "Delete all chats": "எல்லா உரையாடல்களையும் நீக்கு",
   "Delete every saved chat? This can't be undone.":
@@ -137,8 +132,7 @@ export default {
     "முதல் முறையா? ChatGPT → Settings → Security-இல் சாதனக் குறியீடு உள்நுழைவை இயக்குங்கள். ChatGPT-இல் Codex என்று காட்டும், அது இயல்பானதே.",
   "Continue with ChatGPT": "ChatGPT மூலம் தொடர்",
   "Continue with Google": "Google மூலம் தொடர்",
-  "Use your ChatGPT plan for GPT models":
-    "GPT மாடல்களுக்கு உங்கள் ChatGPT திட்டத்தைப் பயன்படுத்துங்கள்",
+  "Use your ChatGPT plan for GPT models": "GPT மாடல்களுக்கு உங்கள் ChatGPT திட்டத்தைப் பயன்படுத்துங்கள்",
   "Get a new code": "புதிய குறியீட்டைப் பெறு",
   "Try again": "மீண்டும் முயல்",
   "Your question stays in the box while you sign in.":
@@ -150,8 +144,7 @@ export default {
   "Google account": "Google கணக்கு",
   Incognito: "மறைநிலை",
   "All settings": "எல்லா அமைப்புகளும்",
-  "Assalamu alaikum. Sign in to start asking.":
-    "அஸ்ஸலாமு அலைக்கும். கேள்வி கேட்கத் தொடங்க உள்நுழையுங்கள்.",
+  "Assalamu alaikum. Sign in to start asking.": "அஸ்ஸலாமு அலைக்கும். கேள்வி கேட்கத் தொடங்க உள்நுழையுங்கள்.",
   "Enter this code on ChatGPT": "இந்தக் குறியீட்டை ChatGPT-இல் உள்ளிடுங்கள்",
   "Code expired": "குறியீடு காலாவதியானது",
   "Sign-in didn't work": "உள்நுழைவு வேலை செய்யவில்லை",
@@ -170,8 +163,7 @@ export default {
   "New chat": "புதிய உரையாடல்",
   "Copy a link to this chat": "இந்த உரையாடலின் இணைப்பை நகலெடு",
   Share: "பகிர்",
-  "Incognito is on: new messages aren't saved":
-    "மறைநிலை இயக்கத்தில் உள்ளது: புதிய செய்திகள் சேமிக்கப்படாது",
+  "Incognito is on: new messages aren't saved": "மறைநிலை இயக்கத்தில் உள்ளது: புதிய செய்திகள் சேமிக்கப்படாது",
   "Use incognito: new messages aren't saved to your history":
     "மறைநிலையைப் பயன்படுத்து: புதிய செய்திகள் உங்கள் வரலாற்றில் சேமிக்கப்படாது",
   "Ask a follow-up": "தொடர் கேள்வி கேள்",
@@ -236,12 +228,10 @@ export default {
   "Searches everything first, then answers fast":
     "முதலில் எல்லா இடத்திலும் தேடி, பிறகு விரைவாகப் பதிலளிக்கும்",
   Research: "ஆய்வு",
-  "Thinks longer and searches step by step":
-    "நீண்ட நேரம் சிந்தித்து, படிப்படியாகத் தேடும்",
+  "Thinks longer and searches step by step": "நீண்ட நேரம் சிந்தித்து, படிப்படியாகத் தேடும்",
   "Type / for modes": "முறைகளுக்கு / தட்டச்சு செய்யுங்கள்",
   "Type @ for sources": "ஆதாரங்களுக்கு @ தட்டச்சு செய்யுங்கள்",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}”-ஐ நீக்கவா? இதைத் திரும்பப் பெற முடியாது.",
+  'Delete "{title}"? This can\'t be undone.': "“{title}”-ஐ நீக்கவா? இதைத் திரும்பப் பெற முடியாது.",
   "Qur'an text": "குர்ஆன் உரை",
   "Verse links": "வசன இணைப்புகள்",
   "Hadith explanations": "ஹதீஸ் விளக்கங்கள்",

@@ -49,15 +49,13 @@ const EXPIATIONS = {
   },
   oath_kaffarah: {
     title: "Kaffarah for a broken oath",
-    appliesTo:
-      "Someone who swore an oath by Allah on a matter in the future and then broke it.",
+    appliesTo: "Someone who swore an oath by Allah on a matter in the future and then broke it.",
     optionsOrder:
       "Choose any one of feeding, clothing or freeing a slave. Fast three days only if none of the three is possible.",
     options: (count) => [
       {
         type: "feed",
-        description:
-          "Feed ten poor people from the average food of the household.",
+        description: "Feed ten poor people from the average food of the household.",
         people: 10 * count,
       },
       {
@@ -71,8 +69,7 @@ const EXPIATIONS = {
       },
       {
         type: "fast",
-        description:
-          "Fast three days, only if unable to do any of the three above.",
+        description: "Fast three days, only if unable to do any of the three above.",
         days: 3 * count,
       },
     ],
@@ -95,8 +92,7 @@ const EXPIATIONS = {
       },
       {
         type: "fast",
-        description:
-          "Fast 60 days in a row. A break without a valid excuse restarts the count.",
+        description: "Fast 60 days in a row. A break without a valid excuse restarts the count.",
         days: 60 * count,
       },
       {

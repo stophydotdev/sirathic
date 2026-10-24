@@ -8,9 +8,7 @@ const MONTH_MS = 30 * 24 * 60 * 60_000;
 
 const embeddingResponse = z.object({
   data: z
-    .array(
-      z.object({ embedding: z.array(z.number()).length(EMBEDDING.dimensions) }),
-    )
+    .array(z.object({ embedding: z.array(z.number()).length(EMBEDDING.dimensions) }))
     .length(1),
 });
 
@@ -32,9 +30,7 @@ const fetchEmbedding = async (text: string) => {
     signal: AbortSignal.timeout(TIMEOUT_MS),
   });
   if (!response.ok) {
-    throw new Error(
-      `OpenAI answered HTTP ${response.status}: ${await response.text()}`,
-    );
+    throw new Error(`OpenAI answered HTTP ${response.status}: ${await response.text()}`);
   }
   const [item] = embeddingResponse.parse(await response.json()).data;
   return item.embedding;
@@ -42,7 +38,5 @@ const fetchEmbedding = async (text: string) => {
 
 export const embedQuery = (query: string) => {
   const text = query.trim().replaceAll(/\s+/gu, " ");
-  return queryCache(`${EMBEDDING.model}:${text.toLowerCase()}`, () =>
-    fetchEmbedding(text),
-  );
+  return queryCache(`${EMBEDDING.model}:${text.toLowerCase()}`, () => fetchEmbedding(text));
 };

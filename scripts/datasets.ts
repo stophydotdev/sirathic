@@ -46,9 +46,7 @@ const hadeethEncHadith = z.looseObject({ id: z.string() });
 const hadeethEncCategories = z.array(z.looseObject({ id: z.string() }));
 const hadeethEncFile = z.array(hadeethEncHadith);
 const wikisourceFile = z.object({ hadiths: z.array(z.unknown()) });
-const tazkirulFile = z.array(
-  z.object({ surah: z.number(), from: z.number(), to: z.number() }),
-);
+const tazkirulFile = z.array(z.object({ surah: z.number(), from: z.number(), to: z.number() }));
 
 type Dataset = {
   path: string;
@@ -66,21 +64,14 @@ const coveredVerses = (body: string) =>
     tazkirulFile
       .parse(JSON.parse(body))
       .flatMap(({ surah, from, to }) =>
-        Array.from(
-          { length: to - from + 1 },
-          (_, index) => `${surah}:${from + index}`,
-        ),
+        Array.from({ length: to - from + 1 }, (_, index) => `${surah}:${from + index}`),
       ),
   ).size;
 
-const editionHadiths = (body: string) =>
-  edition.parse(JSON.parse(body)).hadiths.length;
+const editionHadiths = (body: string) => edition.parse(JSON.parse(body)).hadiths.length;
 
 const infoHadiths = (body: string) =>
-  Object.values(info.parse(JSON.parse(body))).reduce(
-    (sum, book) => sum + book.hadiths.length,
-    0,
-  );
+  Object.values(info.parse(JSON.parse(body))).reduce((sum, book) => sum + book.hadiths.length, 0);
 
 const tanzilText = (type: string) =>
   `https://tanzil.net/pub/download/index.php?quranType=${type}&outType=txt-2&agree=true`;
@@ -94,10 +85,8 @@ const download = async (url: string) => {
   return response.text();
 };
 
-const downloadJson = async <Schema extends z.ZodType>(
-  url: string,
-  schema: Schema,
-) => schema.parse(JSON.parse(await download(url)));
+const downloadJson = async <Schema extends z.ZodType>(url: string, schema: Schema) =>
+  schema.parse(JSON.parse(await download(url)));
 
 const politely = async <Item, Result>(
   items: Item[],
@@ -113,27 +102,18 @@ const quranEnc = async (key: string) => {
     downloadJson(`${QURANENC}/translations/list`, quranEncList),
     politely(
       Array.from({ length: QURAN_SURAHS }, (_, index) => index + 1),
-      (sura) =>
-        downloadJson(
-          `${QURANENC}/translation/sura/${key}/${sura}`,
-          quranEncSura,
-        ),
+      (sura) => downloadJson(`${QURANENC}/translation/sura/${key}/${sura}`, quranEncSura),
     ),
   ]);
   return JSON.stringify({
     key,
-    version:
-      list.translations.find((translation) => translation.key === key)
-        ?.version ?? null,
+    version: list.translations.find((translation) => translation.key === key)?.version ?? null,
     verses: suras.flatMap((sura) => sura.result),
   });
 };
 
 const hadeethEnc = async () => {
-  const roots = await downloadJson(
-    `${HADEETHENC}/categories/roots/?language=en`,
-    hadeethEncRoots,
-  );
+  const roots = await downloadJson(`${HADEETHENC}/categories/roots/?language=en`, hadeethEncRoots);
   const page = (category: string, number: number) =>
     downloadJson(
       `${HADEETHENC}/hadeeths/list/?language=en&category_id=${category}&page=${number}&per_page=500`,
@@ -149,10 +129,7 @@ const hadeethEnc = async () => {
   });
   const ids = [...new Set(listed.flat())];
   const hadiths = await politely(ids, (id) =>
-    downloadJson(
-      `${HADEETHENC}/hadeeths/one/?language=en&id=${id}`,
-      hadeethEncHadith,
-    ),
+    downloadJson(`${HADEETHENC}/hadeeths/one/?language=en&id=${id}`, hadeethEncHadith),
   );
   return JSON.stringify(hadiths);
 };
@@ -213,8 +190,7 @@ const DATASETS: Dataset[] = [
   ...Object.entries(WIKISOURCE_BOOKS).map(([book, { title, hadiths }]) => ({
     path: `wikisource/${book}.json`,
     body: () => wikisourceBook(title),
-    count: (body: string) =>
-      wikisourceFile.parse(JSON.parse(body)).hadiths.length,
+    count: (body: string) => wikisourceFile.parse(JSON.parse(body)).hadiths.length,
     expected: hadiths,
   })),
   ...Object.entries(HADITHS_PER_BOOK).flatMap(([book, expected]) =>
@@ -247,9 +223,7 @@ const outcomes = await Promise.all(
 for (const { path, count, expected, onDisk } of outcomes) {
   const status = count === expected ? "ok" : "MISMATCH";
   const source = onDisk ? "already on disk" : "downloaded";
-  console.log(
-    `${status.padEnd(9)}${path.padEnd(34)}${`${count}/${expected}`.padEnd(13)}${source}`,
-  );
+  console.log(`${status.padEnd(9)}${path.padEnd(34)}${`${count}/${expected}`.padEnd(13)}${source}`);
 }
 
 const mismatches = outcomes.filter(({ count, expected }) => count !== expected);

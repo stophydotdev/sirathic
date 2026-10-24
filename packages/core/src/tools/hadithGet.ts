@@ -7,14 +7,8 @@ import { hadithLink } from "./hadithLinks";
 const LICENSED = "hadeethenc-en";
 const MACHINE_TRANSLATED = "sirathic-en";
 
-export const citableId = (hadith: {
-  id: string;
-  book: string;
-  arabicNumber: string | null;
-}) =>
-  hadith.book === "ahmad" && hadith.arabicNumber
-    ? `ahmad:${hadith.arabicNumber}`
-    : hadith.id;
+export const citableId = (hadith: { id: string; book: string; arabicNumber: string | null }) =>
+  hadith.book === "ahmad" && hadith.arabicNumber ? `ahmad:${hadith.arabicNumber}` : hadith.id;
 
 export const hadithGetInput = z.object({
   ids: z.array(z.string().trim().min(1)).min(1).max(20),
@@ -52,12 +46,7 @@ export const hadithsByIds = async (ids: string[]) => {
         body: texts.body,
       })
       .from(texts)
-      .where(
-        and(
-          inArray(texts.ref, ids),
-          inArray(texts.source, [LICENSED, MACHINE_TRANSLATED]),
-        ),
-      ),
+      .where(and(inArray(texts.ref, ids), inArray(texts.source, [LICENSED, MACHINE_TRANSLATED]))),
   ]);
   const byId = new Map(rows.map((row) => [row.id, row]));
   return ids.flatMap((id) => {
@@ -65,10 +54,8 @@ export const hadithsByIds = async (ids: string[]) => {
     if (row === undefined) return [];
     const { url, ...hadith } = row;
     const bodyOf = (source: string, kind: (typeof english)[number]["kind"]) =>
-      english.find(
-        (text) =>
-          text.ref === id && text.source === source && text.kind === kind,
-      )?.body ?? null;
+      english.find((text) => text.ref === id && text.source === source && text.kind === kind)
+        ?.body ?? null;
     const licensedEnglish = bodyOf(LICENSED, "translation");
     return [
       {
@@ -94,9 +81,7 @@ const byArnautNumber = async (ids: string[]) => {
   const rows = await db
     .select({ id: hadiths.id, arabicNumber: hadiths.arabicNumber })
     .from(hadiths)
-    .where(
-      and(eq(hadiths.book, "ahmad"), inArray(hadiths.arabicNumber, numbers)),
-    );
+    .where(and(eq(hadiths.book, "ahmad"), inArray(hadiths.arabicNumber, numbers)));
   return new Map(rows.map((row) => [`ahmad:${row.arabicNumber}`, row.id]));
 };
 
@@ -107,13 +92,9 @@ export const hadithGet = async (input: z.input<typeof hadithGetInput>) => {
   const exact = await hadithsByIds(ids);
   const exactIds = new Set(exact.map((hadith) => hadith.id));
   const firstVariants = await hadithsByIds(
-    ids
-      .filter((id) => !exactIds.has(id) && /\d$/u.test(id))
-      .map((id) => `${id}a`),
+    ids.filter((id) => !exactIds.has(id) && /\d$/u.test(id)).map((id) => `${id}a`),
   );
-  const byId = new Map(
-    [...exact, ...firstVariants].map((hadith) => [hadith.id, hadith]),
-  );
+  const byId = new Map([...exact, ...firstVariants].map((hadith) => [hadith.id, hadith]));
   return {
     hadiths: ids
       .flatMap((id) => byId.get(id) ?? byId.get(`${id}a`) ?? [])

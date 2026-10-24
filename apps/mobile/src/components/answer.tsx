@@ -3,13 +3,7 @@ import * as Clipboard from "expo-clipboard";
 import * as WebBrowser from "expo-web-browser";
 import { Copy, Library } from "lucide-react-native";
 import { type FC, type ReactNode, useMemo, useState } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  type TextStyle,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, type TextStyle, View } from "react-native";
 import { Renderer, useMarkdown } from "react-native-marked";
 import { z } from "zod";
 import { relatedOf, siteName, sourcesOf, textOf } from "@/lib/sources";
@@ -27,11 +21,7 @@ class AnswerRenderer extends Renderer {
         {` ${siteName(href)} `}
       </Text>
     ) : (
-      <Text
-        key={this.getKey()}
-        onPress={open}
-        style={[styles, citationStyles.link]}
-      >
+      <Text key={this.getKey()} onPress={open} style={[styles, citationStyles.link]}>
         {children}
       </Text>
     );
@@ -50,9 +40,7 @@ const theme = {
 };
 
 const pendingLabel = (message: ChatMessage) =>
-  message.parts.some((part) => part.type.startsWith("tool-"))
-    ? "Reading sources…"
-    : "Searching…";
+  message.parts.some((part) => part.type.startsWith("tool-")) ? "Reading sources…" : "Searching…";
 
 export const Answer: FC<{
   message: ChatMessage;
@@ -67,28 +55,16 @@ export const Answer: FC<{
 
   return (
     <View style={styles.answer}>
-      {text ? (
-        elements
-      ) : (
-        <Text style={styles.pending}>{pendingLabel(message)}</Text>
-      )}
+      {text ? elements : <Text style={styles.pending}>{pendingLabel(message)}</Text>}
       {!streaming && text !== "" && (
         <View style={styles.actions}>
           {sources.length > 0 && (
-            <Pressable
-              style={styles.action}
-              onPress={() => setShowSources(true)}
-            >
+            <Pressable style={styles.action} onPress={() => setShowSources(true)}>
               <Library size={15} color={colors.muted} />
-              <Text
-                style={styles.actionText}
-              >{`${sources.length} sources`}</Text>
+              <Text style={styles.actionText}>{`${sources.length} sources`}</Text>
             </Pressable>
           )}
-          <Pressable
-            style={styles.action}
-            onPress={() => Clipboard.setStringAsync(text)}
-          >
+          <Pressable style={styles.action} onPress={() => Clipboard.setStringAsync(text)}>
             <Copy size={15} color={colors.muted} />
             <Text style={styles.actionText}>Copy</Text>
           </Pressable>
@@ -96,19 +72,11 @@ export const Answer: FC<{
       )}
       {!streaming &&
         related.map((question) => (
-          <Pressable
-            key={question}
-            style={styles.related}
-            onPress={() => onAsk(question)}
-          >
+          <Pressable key={question} style={styles.related} onPress={() => onAsk(question)}>
             <Text style={styles.relatedText}>{question}</Text>
           </Pressable>
         ))}
-      <SourcesSheet
-        sources={sources}
-        open={showSources}
-        onClose={() => setShowSources(false)}
-      />
+      <SourcesSheet sources={sources} open={showSources} onClose={() => setShowSources(false)} />
     </View>
   );
 };

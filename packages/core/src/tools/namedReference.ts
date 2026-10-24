@@ -32,13 +32,7 @@ const ENTRIES = [
     quran: { surah: 2, from: 255 },
   },
   {
-    names: [
-      "surah al baqarah",
-      "surah baqarah",
-      "surah al baqara",
-      "surah baqara",
-      "سورة البقرة",
-    ],
+    names: ["surah al baqarah", "surah baqarah", "surah al baqara", "surah baqara", "سورة البقرة"],
     quran: { surah: 2 },
   },
   {
@@ -53,13 +47,7 @@ const ENTRIES = [
     quran: { surah: 2, from: 285, to: 286 },
   },
   {
-    names: [
-      "light verse",
-      "verse of light",
-      "ayat an nur",
-      "ayat al nur",
-      "آية النور",
-    ],
+    names: ["light verse", "verse of light", "ayat an nur", "ayat al nur", "آية النور"],
     quran: { surah: 24, from: 35 },
   },
   {
@@ -99,10 +87,7 @@ const ENTRIES = [
     quran: { surah: 21, from: 87 },
   },
   {
-    names: [
-      "last three verses of al hashr",
-      "last three verses of surah al hashr",
-    ],
+    names: ["last three verses of al hashr", "last three verses of surah al hashr"],
     quran: { surah: 59, from: 22, to: 24 },
   },
   {
@@ -126,13 +111,7 @@ const ENTRIES = [
     quran: { surah: 36 },
   },
   {
-    names: [
-      "surah al kahf",
-      "surah kahf",
-      "al kahf",
-      "sura of the cave",
-      "سورة الكهف",
-    ],
+    names: ["surah al kahf", "surah kahf", "al kahf", "sura of the cave", "سورة الكهف"],
     quran: { surah: 18 },
   },
   {
@@ -193,12 +172,7 @@ const ENTRIES = [
   { names: ["surah quraysh", "surah quraish"], quran: { surah: 106 } },
   { names: ["surah al maun", "surah maun"], quran: { surah: 107 } },
   {
-    names: [
-      "surah al kawthar",
-      "surah kawthar",
-      "surah kauthar",
-      "سورة الكوثر",
-    ],
+    names: ["surah al kawthar", "surah kawthar", "surah kauthar", "سورة الكوثر"],
     quran: { surah: 108 },
   },
   { names: ["surah al kafirun", "surah kafirun"], quran: { surah: 109 } },
@@ -208,12 +182,7 @@ const ENTRIES = [
     quran: { surah: 111 },
   },
   {
-    names: [
-      "surah al ikhlas",
-      "surah ikhlas",
-      "qul huwa allahu ahad",
-      "سورة الإخلاص",
-    ],
+    names: ["surah al ikhlas", "surah ikhlas", "qul huwa allahu ahad", "سورة الإخلاص"],
     quran: { surah: 112 },
   },
   { names: ["surah al falaq", "surah falaq"], quran: { surah: 113 } },
@@ -291,9 +260,7 @@ export const namedReference = (input: z.input<typeof namedReferenceInput>) => {
       .filter(
         ({ alias }) =>
           !found.some(
-            (other) =>
-              other.alias !== alias &&
-              ` ${other.alias} `.includes(` ${alias} `),
+            (other) => other.alias !== alias && ` ${other.alias} `.includes(` ${alias} `),
           ),
       )
       .map(({ entry }) => entry),

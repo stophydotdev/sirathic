@@ -2,19 +2,8 @@
 
 import { MODEL_DESCRIPTIONS, useAccount } from "@/components/account";
 import { MODE_DETAILS, useChatOptions } from "@/components/chat-options";
-import {
-  browserLocale,
-  type Translate,
-  useLocale,
-  useLocalePath,
-  useT,
-} from "@/components/i18n";
-import {
-  LOCALE_COOKIE,
-  LOCALES,
-  type Locale,
-  type PlainKey,
-} from "@/components/locales";
+import { browserLocale, type Translate, useLocale, useLocalePath, useT } from "@/components/i18n";
+import { LOCALE_COOKIE, LOCALES, type Locale, type PlainKey } from "@/components/locales";
 import { MakerIcon } from "@/components/maker-icon";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
 import { useSettings } from "@/components/settings";
@@ -37,22 +26,14 @@ import {
   MADHABS,
   type Settings,
 } from "@sirathic/server/settings";
-import {
-  IconAlertCircle,
-  IconArrowUpRight,
-  IconCheck,
-  IconChevronDown,
-} from "@tabler/icons-react";
+import { IconAlertCircle, IconArrowUpRight, IconCheck, IconChevronDown } from "@tabler/icons-react";
 import { Switch } from "radix-ui";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
 
 const control =
   "border-border hover:bg-muted flex h-[34px] shrink-0 items-center justify-center gap-1.5 rounded-[8px] border px-3 text-sm font-[470] transition-colors";
 
-const Group: FC<{ title?: string; children: ReactNode }> = ({
-  title,
-  children,
-}) => (
+const Group: FC<{ title?: string; children: ReactNode }> = ({ title, children }) => (
   <section className="mt-4 flex flex-col gap-2 first:mt-0">
     {title && <h2 className="text-muted-foreground text-[13px]">{title}</h2>}
     <div className="bg-card border-foreground/6 divide-foreground/6 divide-y rounded-[12px] border">
@@ -186,9 +167,8 @@ const answerLanguageName =
     code === "auto" ? t("Same as my question") : languageName(code, locale);
 
 const chosenLocale = (): "auto" | Locale =>
-  LOCALES.find((code) =>
-    document.cookie.split("; ").includes(`${LOCALE_COOKIE}=${code}`),
-  ) ?? "auto";
+  LOCALES.find((code) => document.cookie.split("; ").includes(`${LOCALE_COOKIE}=${code}`)) ??
+  "auto";
 
 const switchLocale = (next: "auto" | Locale) => {
   document.cookie =
@@ -197,9 +177,7 @@ const switchLocale = (next: "auto" | Locale) => {
       : `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
   const target = next === "auto" ? browserLocale() : next;
   const { pathname, search, hash } = window.location;
-  window.location.assign(
-    `${pathname.replace(/^\/[^/]+/u, `/${target}`)}${search}${hash}`,
-  );
+  window.location.assign(`${pathname.replace(/^\/[^/]+/u, `/${target}`)}${search}${hash}`);
 };
 
 const LOCALE_NAMES = {
@@ -259,20 +237,14 @@ export const AccountSection: FC = () => {
   if (status?.signedIn !== true) {
     return (
       <Group>
-        <Row
-          label={t("Not signed in")}
-          hint={t("Sign in to ask and keep your chats")}
-        >
+        <Row label={t("Not signed in")} hint={t("Sign in to ask and keep your chats")}>
           <button
             type="button"
             onClick={() => {
               setOpen(false);
               ask();
             }}
-            className={cn(
-              control,
-              "bg-primary text-primary-foreground border-0 hover:opacity-90",
-            )}
+            className={cn(control, "bg-primary text-primary-foreground border-0 hover:opacity-90")}
           >
             {t("Sign in")}
           </button>
@@ -285,26 +257,14 @@ export const AccountSection: FC = () => {
     <>
       <Group>
         <Row
-          label={t(
-            status.via === "google"
-              ? "Signed in with Google"
-              : "Signed in with ChatGPT",
-          )}
+          label={t(status.via === "google" ? "Signed in with Google" : "Signed in with ChatGPT")}
           hint={
             status.label ??
-            t(
-              status.via === "google"
-                ? "Your Google account"
-                : "Your ChatGPT account",
-            )
+            t(status.via === "google" ? "Your Google account" : "Your ChatGPT account")
           }
         />
         <Row label={t("Sign out")} hint={t("Signs you out on this browser")}>
-          <button
-            type="button"
-            onClick={() => void signOut()}
-            className={control}
-          >
+          <button type="button" onClick={() => void signOut()} className={control}>
             {t("Sign out")}
           </button>
         </Row>
@@ -331,10 +291,7 @@ export const PreferencesSection: FC = () => {
   return (
     <>
       <Group title={t("Appearance")}>
-        <Row
-          label={t("Language")}
-          hint={t("The language of Sirathic's menus and buttons")}
-        >
+        <Row label={t("Language")} hint={t("The language of Sirathic's menus and buttons")}>
           <Choice
             label={t("Language")}
             value={language}
@@ -412,11 +369,7 @@ export const PersonalizationSection: FC = () => {
   }, []);
 
   if (failed) {
-    return (
-      <p className="text-muted-foreground text-sm">
-        {t("Sign in to personalize answers.")}
-      </p>
-    );
+    return <p className="text-muted-foreground text-sm">{t("Sign in to personalize answers.")}</p>;
   }
   if (!saved) return null;
 
@@ -449,9 +402,7 @@ export const PersonalizationSection: FC = () => {
         </Row>
         <Row
           label={t("Madhab")}
-          hint={t(
-            "Fiqh answers lead with this school and still show the others",
-          )}
+          hint={t("Fiqh answers lead with this school and still show the others")}
         >
           <Choice
             label={t("Madhab")}
@@ -522,9 +473,7 @@ export const PersonalizationSection: FC = () => {
 };
 
 function download(fileName: string, text: string) {
-  const url = URL.createObjectURL(
-    new Blob([text], { type: "application/json" }),
-  );
+  const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
   const link = document.createElement("a");
   link.href = url;
   link.download = fileName;
@@ -573,10 +522,7 @@ export const DataSection: FC = () => {
           onChange={(on) => change({ incognitoByDefault: on })}
         />
       </Row>
-      <Row
-        label={t("Export my chats")}
-        hint={t("Download every saved chat as a file")}
-      >
+      <Row label={t("Export my chats")} hint={t("Download every saved chat as a file")}>
         <button
           type="button"
           disabled={busy}
@@ -596,11 +542,7 @@ export const DataSection: FC = () => {
       >
         {confirming ? (
           <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setConfirming(false)}
-              className={control}
-            >
+            <button type="button" onClick={() => setConfirming(false)} className={control}>
               {t("Cancel")}
             </button>
             <button
@@ -639,9 +581,7 @@ export const ModelsSection: FC = () => {
   return (
     <Group
       title={
-        status?.signedIn && status.via === "chatgpt"
-          ? t("From your ChatGPT account")
-          : undefined
+        status?.signedIn && status.via === "chatgpt" ? t("From your ChatGPT account") : undefined
       }
     >
       {models.length === 0 && <Row label={t("Sign in to see your models")} />}
@@ -659,9 +599,7 @@ export const ModelsSection: FC = () => {
             <span className="flex flex-1 flex-col">
               {model.name}
               {description && (
-                <span className="text-muted-foreground text-xs">
-                  {t(description)}
-                </span>
+                <span className="text-muted-foreground text-xs">{t(description)}</span>
               )}
             </span>
             {model.slug === chosen && <IconCheck className="size-4" />}

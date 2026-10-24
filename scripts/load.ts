@@ -132,19 +132,14 @@ const hadeethEncCategories = z.array(
 const read = (path: string) => readFile(`${DATA_DIR}/${path}`, "utf8");
 
 const readQuranEnc = async (key: string) => {
-  const file = quranEncFile.parse(
-    JSON.parse(await read(`quranenc/${key}.json`)),
-  );
+  const file = quranEncFile.parse(JSON.parse(await read(`quranenc/${key}.json`)));
   return {
     version: file.version ?? "unversioned",
-    verses: new Map(
-      file.verses.map((verse) => [`${verse.sura}:${verse.aya}`, verse]),
-    ),
+    verses: new Map(file.verses.map((verse) => [`${verse.sura}:${verse.aya}`, verse])),
   };
 };
 
-const readEdition = async (path: string) =>
-  edition.parse(JSON.parse(await read(path)));
+const readEdition = async (path: string) => edition.parse(JSON.parse(await read(path)));
 
 const verseTexts = async (path: string) =>
   new Map(
@@ -161,14 +156,10 @@ const required = <Value>(values: Map<string, Value>, key: string) => {
 };
 
 const tagsOf = (xml: string, tag: string) =>
-  [...xml.matchAll(new RegExp(`<${tag} ([^>]*)/>`, "gu"))].map(
-    ([, attributes = ""]) =>
-      Object.fromEntries(
-        [...attributes.matchAll(/(\w+)="([^"]*)"/gu)].map(([, name, value]) => [
-          name,
-          value,
-        ]),
-      ),
+  [...xml.matchAll(new RegExp(`<${tag} ([^>]*)/>`, "gu"))].map(([, attributes = ""]) =>
+    Object.fromEntries(
+      [...attributes.matchAll(/(\w+)="([^"]*)"/gu)].map(([, name, value]) => [name, value]),
+    ),
   );
 
 const sectionOf = (starts: number[], position: number) =>
@@ -176,10 +167,7 @@ const sectionOf = (starts: number[], position: number) =>
 
 const textOrNull = (text: string) => text.trim() || null;
 
-const citationOf = (
-  book: string,
-  hadith: z.infer<typeof edition>["hadiths"][number],
-) => {
+const citationOf = (book: string, hadith: z.infer<typeof edition>["hadiths"][number]) => {
   if (book !== "muslim") {
     return {
       id: `${book}:${hadith.hadithnumber}`,
@@ -188,8 +176,7 @@ const citationOf = (
   }
   if (hadith.arabicnumber === undefined) return null;
   const [whole, variant] = String(hadith.arabicnumber).split(".");
-  const letter =
-    variant === undefined ? "" : String.fromCodePoint(96 + Number(variant));
+  const letter = variant === undefined ? "" : String.fromCodePoint(96 + Number(variant));
   return {
     id: `muslim:${whole}${letter}`,
     number: Number(hadith.arabicnumber),
@@ -197,9 +184,7 @@ const citationOf = (
 };
 
 const quotedOrAll = (text: string) => {
-  const quoted = [...text.matchAll(/«([^»]*)»/gu)].map(
-    ([, words = ""]) => words,
-  );
+  const quoted = [...text.matchAll(/«([^»]*)»/gu)].map(([, words = ""]) => words);
   return quoted.length > 0 ? quoted.join(" ") : text;
 };
 
@@ -243,9 +228,7 @@ const surahRows = surahList.map((surah) => ({
 }));
 
 const withoutBasmala = (surah: number, ayah: number, text: string) =>
-  ayah === 1 && surah !== 1 && surah !== 9
-    ? text.split(" ").slice(4).join(" ")
-    : text;
+  ayah === 1 && surah !== 1 && surah !== 9 ? text.split(" ").slice(4).join(" ") : text;
 
 const verseRows = surahList.flatMap((surah) =>
   Array.from({ length: surah.ayas }, (_, index) => {
@@ -290,21 +273,18 @@ const abridgedRows = mokhtasars.flatMap(({ lang, source, file }) =>
 const commentaries = tazkirulFile
   .parse(JSON.parse(await read("cps/tazkirul_quran.json")))
   .toSorted((a, b) => a.surah - b.surah || a.from - b.from);
-const commentaryRows = commentaries.map(
-  ({ surah, from, to, commentary }, index) => {
-    const next = commentaries[index + 1];
-    const end =
-      next?.surah === surah ? next.from - 1 : surahList[surah - 1].ayas;
-    return {
-      source: "cps-tazkirul_quran",
-      surah,
-      fromAyah: from,
-      toAyah: Math.max(to, end),
-      lang: "en" as const,
-      body: commentary,
-    };
-  },
-);
+const commentaryRows = commentaries.map(({ surah, from, to, commentary }, index) => {
+  const next = commentaries[index + 1];
+  const end = next?.surah === surah ? next.from - 1 : surahList[surah - 1].ayas;
+  return {
+    source: "cps-tazkirul_quran",
+    surah,
+    fromAyah: from,
+    toAyah: Math.max(to, end),
+    lang: "en" as const,
+    body: commentary,
+  };
+});
 
 const bookEntries = await Promise.all(
   Object.keys(HADITHS_PER_BOOK).map(async (book) => {
@@ -328,14 +308,9 @@ const bookEntries = await Promise.all(
             id,
             book,
             number,
-            arabicNumber:
-              hadith.arabicnumber === undefined
-                ? null
-                : String(hadith.arabicnumber),
+            arabicNumber: hadith.arabicnumber === undefined ? null : String(hadith.arabicnumber),
             chapter,
-            chapterEn: textOrNull(
-              englishEdition.metadata.sections[chapter] ?? "",
-            ),
+            chapterEn: textOrNull(englishEdition.metadata.sections[chapter] ?? ""),
             textAr,
             textArClean: textAr?.replace(ARABIC_MARKS, "") ?? null,
             textEn,
@@ -355,9 +330,7 @@ const bookEntries = await Promise.all(
 
 const wikisourceEntries = await Promise.all(
   Object.keys(WIKISOURCE_BOOKS).map(async (book) => {
-    const file = wikisourceFile.parse(
-      JSON.parse(await read(`wikisource/${book}.json`)),
-    );
+    const file = wikisourceFile.parse(JSON.parse(await read(`wikisource/${book}.json`)));
     return {
       fetchedAt: file.fetchedAt,
       entries: file.hadiths.map((hadith) => {
@@ -392,19 +365,14 @@ const wikisourceEntries = await Promise.all(
   }),
 );
 
-const allEntries = [
-  ...bookEntries.flat(),
-  ...wikisourceEntries.flatMap(({ entries }) => entries),
-];
+const allEntries = [...bookEntries.flat(), ...wikisourceEntries.flatMap(({ entries }) => entries)];
 const hadithRows = allEntries.map((entry) => entry.row);
 const gradeRows = allEntries.flatMap((entry) => entry.grades);
 
 const hadithWords = bookEntries
   .flat()
   .flatMap(({ row }) =>
-    row.textAr === null
-      ? []
-      : [{ id: row.id, book: row.book, words: arabicWords(row.textAr) }],
+    row.textAr === null ? [] : [{ id: row.id, book: row.book, words: arabicWords(row.textAr) }],
   );
 const frequency = new Map<string, number>();
 const postings = new Map<string, string[]>();
@@ -417,19 +385,16 @@ for (const { id, book, words } of hadithWords) {
     else ids.push(id);
   }
 }
-const weight = (word: string) =>
-  Math.log(hadithWords.length / (1 + (frequency.get(word) ?? 0)));
+const weight = (word: string) => Math.log(hadithWords.length / (1 + (frequency.get(word) ?? 0)));
 
-const hadeethEnc = hadeethEncFile.parse(
-  JSON.parse(await read("hadeethenc/en.json")),
-);
+const hadeethEnc = hadeethEncFile.parse(JSON.parse(await read("hadeethenc/en.json")));
 const matches = hadeethEnc.flatMap((hadeeth) => {
   const words = [...arabicWords(quotedOrAll(hadeeth.hadeeth_ar))];
   const total = words.reduce((sum, word) => sum + weight(word), 0);
   const books = new Set(
-    ATTRIBUTED_BOOKS.filter(([name]) =>
-      hadeeth.attribution_ar.includes(name),
-    ).flatMap(([, names]) => names),
+    ATTRIBUTED_BOOKS.filter(([name]) => hadeeth.attribution_ar.includes(name)).flatMap(
+      ([, names]) => names,
+    ),
   );
   return [...books].flatMap((book) => {
     const scores = new Map<string, number>();
@@ -442,18 +407,14 @@ const matches = hadeethEnc.flatMap((hadeeth) => {
       (best, entry) => (entry[1] > best[1] ? entry : best),
       ["", 0],
     );
-    return score >= MATCH_THRESHOLD * total
-      ? [{ ref, score: score / total, hadeeth }]
-      : [];
+    return score >= MATCH_THRESHOLD * total ? [{ ref, score: score / total, hadeeth }] : [];
   });
 });
 const bestMatches = [
   ...matches
     .reduce(
       (byRef, match) =>
-        match.score > (byRef.get(match.ref)?.score ?? 0)
-          ? byRef.set(match.ref, match)
-          : byRef,
+        match.score > (byRef.get(match.ref)?.score ?? 0) ? byRef.set(match.ref, match) : byRef,
       new Map<string, (typeof matches)[number]>(),
     )
     .values(),
@@ -476,23 +437,15 @@ const hadeethEncRows = bestMatches.flatMap(({ ref, hadeeth }) => [
 ]);
 const textRows = [...tafsirRows, ...abridgedRows, ...hadeethEncRows];
 
-const categories = hadeethEncCategories.parse(
-  JSON.parse(await read("hadeethenc/categories.json")),
-);
-const parentOf = new Map(
-  categories.map((category) => [category.id, category.parent_id]),
-);
-const titleOf = new Map(
-  categories.map((category) => [category.id, category.title]),
-);
+const categories = hadeethEncCategories.parse(JSON.parse(await read("hadeethenc/categories.json")));
+const parentOf = new Map(categories.map((category) => [category.id, category.parent_id]));
+const titleOf = new Map(categories.map((category) => [category.id, category.title]));
 const isDuaCategory = (id: string | null | undefined): boolean =>
   id !== null &&
   id !== undefined &&
   (DUA_CATEGORY_ROOTS.has(id) || isDuaCategory(parentOf.get(id)));
 const hadithOf = new Map(
-  matches
-    .toSorted((a, b) => a.score - b.score)
-    .map((match) => [match.hadeeth, match.ref]),
+  matches.toSorted((a, b) => a.score - b.score).map((match) => [match.hadeeth, match.ref]),
 );
 const duaRows = hadeethEnc.flatMap((hadeeth) => {
   const occasions = hadeeth.categories.filter(isDuaCategory);
@@ -593,28 +546,14 @@ await db.transaction(async (tx) => {
   await tx.delete(hadiths);
   await tx.delete(verses);
   await tx.delete(surahs);
-  await tx
-    .delete(sources)
-    .where(notInArray(sources.name, [FIQH_SOURCE, HADITH_ENGLISH_SOURCE]));
+  await tx.delete(sources).where(notInArray(sources.name, [FIQH_SOURCE, HADITH_ENGLISH_SOURCE]));
   await tx.insert(sources).values(sourceRows);
   await tx.insert(surahs).values(surahRows);
-  await Promise.all(
-    chunks(verseRows).map((rows) => tx.insert(verses).values(rows)),
-  );
-  await Promise.all(
-    chunks(hadithRows).map((rows) => tx.insert(hadiths).values(rows)),
-  );
-  await Promise.all(
-    chunks(gradeRows).map((rows) => tx.insert(hadithGrades).values(rows)),
-  );
-  await Promise.all(
-    chunks(textRows).map((rows) => tx.insert(texts).values(rows)),
-  );
-  await Promise.all(
-    chunks(commentaryRows).map((rows) =>
-      tx.insert(tafsirPassages).values(rows),
-    ),
-  );
+  await Promise.all(chunks(verseRows).map((rows) => tx.insert(verses).values(rows)));
+  await Promise.all(chunks(hadithRows).map((rows) => tx.insert(hadiths).values(rows)));
+  await Promise.all(chunks(gradeRows).map((rows) => tx.insert(hadithGrades).values(rows)));
+  await Promise.all(chunks(textRows).map((rows) => tx.insert(texts).values(rows)));
+  await Promise.all(chunks(commentaryRows).map((rows) => tx.insert(tafsirPassages).values(rows)));
   await tx.insert(duas).values(duaRows);
   await fillSearchEnglish(tx);
   await restoreVerses();

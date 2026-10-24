@@ -5,13 +5,7 @@ import { arabicKeywordIds } from "../search/arabicKeywordSearch";
 import { hybridIds } from "../search/hybridSearch";
 import { passagesByIds } from "./fiqhGet";
 
-const SCHOOLS = [
-  "hanafi",
-  "maliki",
-  "shafii",
-  "hanbali",
-  "comparative",
-] as const;
+const SCHOOLS = ["hanafi", "maliki", "shafii", "hanbali", "comparative"] as const;
 
 export const fiqhSearchInput = z.object({
   query: z.string().trim().min(1),
@@ -23,8 +17,7 @@ const ARABIC = /[؀-ۿ]/u;
 
 export const fiqhSearch = async (input: z.input<typeof fiqhSearchInput>) => {
   const { query, school, limit } = fiqhSearchInput.parse(input);
-  const filter =
-    school === undefined ? sql`true` : sql`${fiqhPassages.school} = ${school}`;
+  const filter = school === undefined ? sql`true` : sql`${fiqhPassages.school} = ${school}`;
   const keywordIds = ARABIC.test(query)
     ? await arabicKeywordIds(fiqhPassages, query, limit, { filter })
     : [];

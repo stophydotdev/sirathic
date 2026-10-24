@@ -15,9 +15,7 @@ export const redditSearchInput = z.object({
   limit: z.number().int().min(1).max(10).default(6),
 });
 
-export const redditSearch = async (
-  input: z.input<typeof redditSearchInput>,
-) => {
+export const redditSearch = async (input: z.input<typeof redditSearchInput>) => {
   const { query, subreddit, time, limit } = redditSearchInput.parse(input);
   const { data } = await stophy.reddit.search({ query, subreddit, time });
   const posts = data.results.flatMap((post) =>

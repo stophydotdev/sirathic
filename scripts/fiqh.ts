@@ -66,9 +66,7 @@ const download = async (remote: string) => {
     `https://huggingface.co/datasets/${FIQH_DATASET}/resolve/${FIQH_REVISION}/${remote}`,
   );
   if (!response.ok) {
-    throw new Error(
-      `Hugging Face answered HTTP ${response.status} for ${remote}`,
-    );
+    throw new Error(`Hugging Face answered HTTP ${response.status} for ${remote}`);
   }
   await Bun.write(`${path}.part`, response);
   await rename(`${path}.part`, path);
@@ -86,14 +84,7 @@ const works = workRows
     await parquetReadObjects({
       file: await asyncBufferFromFile(worksPath),
       compressors,
-      columns: [
-        "work_id",
-        "title_ar",
-        "title_lat",
-        "author_ar",
-        "death_year_ah",
-        "source",
-      ],
+      columns: ["work_id", "title_ar", "title_lat", "author_ar", "death_year_ah", "source"],
     }),
   )
   .flatMap((work) => {
@@ -128,9 +119,7 @@ const readPassages = async (work: (typeof works)[number]) => {
   );
   return rows.map((row) => {
     const at = row.citation.indexOf(work.title_ar);
-    const tail = CITATION_TAIL.exec(
-      row.citation.slice(at + work.title_ar.length),
-    );
+    const tail = CITATION_TAIL.exec(row.citation.slice(at + work.title_ar.length));
     if (at < 0 || tail === null) {
       throw new Error(`Cannot read ${row.passage_id}: ${row.citation}`);
     }
@@ -173,9 +162,7 @@ await db.transaction(async (tx) => {
       source: work.source,
     })),
   );
-  await Promise.all(
-    chunks(passages).map((rows) => tx.insert(fiqhPassages).values(rows)),
-  );
+  await Promise.all(chunks(passages).map((rows) => tx.insert(fiqhPassages).values(rows)));
   await tx.insert(sources).values(SOURCE);
   await restorePassages();
 });

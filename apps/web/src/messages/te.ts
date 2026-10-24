@@ -3,11 +3,9 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "Sirathicకి తిరిగి వెళ్ళండి",
   Brand: "బ్రాండ్",
-  "Logos, colors and guidelines for Sirathic.":
-    "Sirathic లోగోలు, రంగులు మరియు వాడుక మార్గదర్శకాలు.",
+  "Logos, colors and guidelines for Sirathic.": "Sirathic లోగోలు, రంగులు మరియు వాడుక మార్గదర్శకాలు.",
   "Brand assets": "బ్రాండ్ ఫైళ్ళు",
-  "Download our logos and follow the guidelines below.":
-    "మా లోగోలను డౌన్‌లోడ్ చేసి, కింది మార్గదర్శకాలను పాటించండి.",
+  "Download our logos and follow the guidelines below.": "మా లోగోలను డౌన్‌లోడ్ చేసి, కింది మార్గదర్శకాలను పాటించండి.",
   "Download all brand assets": "అన్ని బ్రాండ్ ఫైళ్ళను డౌన్‌లోడ్ చేయండి",
   Wordmark: "పద లోగో",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
@@ -62,8 +60,7 @@ export default {
   "Same as my question": "నా ప్రశ్న భాషలోనే",
   "Same as my browser": "నా బ్రౌజర్ భాషలోనే",
   "Not signed in": "సైన్ ఇన్ చేయలేదు",
-  "Sign in to ask and keep your chats":
-    "ప్రశ్నలు అడగడానికి, మీ చాట్‌లను దాచుకోవడానికి సైన్ ఇన్ చేయండి",
+  "Sign in to ask and keep your chats": "ప్రశ్నలు అడగడానికి, మీ చాట్‌లను దాచుకోవడానికి సైన్ ఇన్ చేయండి",
   "Sign in": "సైన్ ఇన్",
   "Signed in with ChatGPT": "ChatGPTతో సైన్ ఇన్ అయ్యారు",
   "Signed in with Google": "Googleతో సైన్ ఇన్ అయ్యారు",
@@ -102,14 +99,12 @@ export default {
   "Quote verses and hadith in Arabic next to the translation":
     "అనువాదం పక్కన ఆయతులు, హదీసులను అరబిక్‌లో ఉటంకించండి",
   "Incognito by default": "డిఫాల్ట్‌గా ఇన్‌కాగ్నిటో",
-  "New chats start in incognito and aren't saved":
-    "కొత్త చాట్‌లు ఇన్‌కాగ్నిటోలో మొదలవుతాయి, సేవ్ కావు",
+  "New chats start in incognito and aren't saved": "కొత్త చాట్‌లు ఇన్‌కాగ్నిటోలో మొదలవుతాయి, సేవ్ కావు",
   "Export my chats": "నా చాట్‌లను ఎగుమతి చేయండి",
   "Download every saved chat as a file": "సేవ్ చేసిన అన్ని చాట్‌లను ఒక ఫైల్‌గా డౌన్‌లోడ్ చేయండి",
   Export: "ఎగుమతి",
   "Delete all chats": "అన్ని చాట్‌లను తొలగించండి",
-  "Delete every saved chat? This can't be undone.":
-    "సేవ్ చేసిన అన్ని చాట్‌లను తొలగించాలా? దీన్ని రద్దు చేయలేరు.",
+  "Delete every saved chat? This can't be undone.": "సేవ్ చేసిన అన్ని చాట్‌లను తొలగించాలా? దీన్ని రద్దు చేయలేరు.",
   "Removes every saved chat": "సేవ్ చేసిన అన్ని చాట్‌లను తొలగిస్తుంది",
   "Delete all": "అన్నీ తొలగించండి",
   "From your ChatGPT account": "మీ ChatGPT ఖాతా నుండి",
@@ -134,12 +129,10 @@ export default {
     "మొదటిసారా? ChatGPT → Settings → Securityలో డివైస్ కోడ్ సైన్-ఇన్ ఆన్ చేయండి. ChatGPTలో Codex అని కనిపిస్తుంది, అది మామూలే.",
   "Continue with ChatGPT": "ChatGPTతో కొనసాగండి",
   "Continue with Google": "Googleతో కొనసాగండి",
-  "Use your ChatGPT plan for GPT models":
-    "GPT మోడల్‌ల కోసం మీ ChatGPT ప్లాన్‌ను ఉపయోగించండి",
+  "Use your ChatGPT plan for GPT models": "GPT మోడల్‌ల కోసం మీ ChatGPT ప్లాన్‌ను ఉపయోగించండి",
   "Get a new code": "కొత్త కోడ్ పొందండి",
   "Try again": "మళ్ళీ ప్రయత్నించండి",
-  "Your question stays in the box while you sign in.":
-    "మీరు సైన్ ఇన్ చేస్తున్నప్పుడు మీ ప్రశ్న బాక్స్‌లోనే ఉంటుంది.",
+  "Your question stays in the box while you sign in.": "మీరు సైన్ ఇన్ చేస్తున్నప్పుడు మీ ప్రశ్న బాక్స్‌లోనే ఉంటుంది.",
   "Copy code": "కోడ్ కాపీ చేయండి",
   "Sign In": "సైన్ ఇన్",
   "Account menu": "ఖాతా మెనూ",
@@ -147,16 +140,14 @@ export default {
   "Google account": "Google ఖాతా",
   Incognito: "ఇన్‌కాగ్నిటో",
   "All settings": "అన్ని సెట్టింగ్‌లు",
-  "Assalamu alaikum. Sign in to start asking.":
-    "అస్సలాము అలైకుమ్. ప్రశ్నలు అడగడం మొదలుపెట్టడానికి సైన్ ఇన్ చేయండి.",
+  "Assalamu alaikum. Sign in to start asking.": "అస్సలాము అలైకుమ్. ప్రశ్నలు అడగడం మొదలుపెట్టడానికి సైన్ ఇన్ చేయండి.",
   "Enter this code on ChatGPT": "ఈ కోడ్‌ను ChatGPTలో నమోదు చేయండి",
   "Code expired": "కోడ్ గడువు ముగిసింది",
   "Sign-in didn't work": "సైన్ ఇన్ కాలేదు",
   "{count} views": "{count} వీక్షణలు",
   "Results for:": "ఫలితాలు:",
   "Searching…": "వెతుకుతోంది…",
-  "The search failed. Try this tab again later.":
-    "వెతకడం విఫలమైంది. తర్వాత ఈ ట్యాబ్‌ను మళ్ళీ ప్రయత్నించండి.",
+  "The search failed. Try this tab again later.": "వెతకడం విఫలమైంది. తర్వాత ఈ ట్యాబ్‌ను మళ్ళీ ప్రయత్నించండి.",
   "Expand sidebar": "సైడ్‌బార్ విస్తరించండి",
   "Collapse sidebar": "సైడ్‌బార్ కుదించండి",
   New: "కొత్తది",
@@ -167,8 +158,7 @@ export default {
   "New chat": "కొత్త చాట్",
   "Copy a link to this chat": "ఈ చాట్ లింక్ కాపీ చేయండి",
   Share: "షేర్",
-  "Incognito is on: new messages aren't saved":
-    "ఇన్‌కాగ్నిటో ఆన్‌లో ఉంది: కొత్త సందేశాలు సేవ్ కావు",
+  "Incognito is on: new messages aren't saved": "ఇన్‌కాగ్నిటో ఆన్‌లో ఉంది: కొత్త సందేశాలు సేవ్ కావు",
   "Use incognito: new messages aren't saved to your history":
     "ఇన్‌కాగ్నిటో వాడండి: కొత్త సందేశాలు మీ చరిత్రలో సేవ్ కావు",
   "Ask a follow-up": "తదుపరి ప్రశ్న అడగండి",
@@ -230,15 +220,12 @@ export default {
   Helpful: "ఉపయోగపడింది",
   "Not helpful": "ఉపయోగపడలేదు",
   Quick: "త్వరిత",
-  "Searches everything first, then answers fast":
-    "ముందుగా అన్నిచోట్లా వెతికి, తర్వాత త్వరగా జవాబిస్తుంది",
+  "Searches everything first, then answers fast": "ముందుగా అన్నిచోట్లా వెతికి, తర్వాత త్వరగా జవాబిస్తుంది",
   Research: "పరిశోధన",
-  "Thinks longer and searches step by step":
-    "ఎక్కువసేపు ఆలోచించి, అంచెలంచెలుగా వెతుకుతుంది",
+  "Thinks longer and searches step by step": "ఎక్కువసేపు ఆలోచించి, అంచెలంచెలుగా వెతుకుతుంది",
   "Type / for modes": "మోడ్‌ల కోసం / టైప్ చేయండి",
   "Type @ for sources": "మూలాల కోసం @ టైప్ చేయండి",
-  'Delete "{title}"? This can\'t be undone.':
-    "“{title}”ను తొలగించాలా? దీన్ని రద్దు చేయలేరు.",
+  'Delete "{title}"? This can\'t be undone.': "“{title}”ను తొలగించాలా? దీన్ని రద్దు చేయలేరు.",
   "Qur'an text": "ఖురాన్ పాఠ్యం",
   "Verse links": "ఆయతుల లింకులు",
   "Hadith explanations": "హదీసుల వివరణలు",

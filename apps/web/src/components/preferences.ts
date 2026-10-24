@@ -24,8 +24,7 @@ const DEFAULTS: Preferences = saved.parse({});
 
 export const themeScript = `try{var p=JSON.parse(localStorage.getItem("${STORAGE_KEY}")||"{}"),t=p.theme||"dark";document.documentElement.classList.toggle("dark",t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches))}catch(e){}`;
 
-const systemDark = () =>
-  globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ?? true;
+const systemDark = () => globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ?? true;
 
 function applyTheme(theme: Preferences["theme"]) {
   const dark = theme === "dark" || (theme === "system" && systemDark());

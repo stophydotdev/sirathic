@@ -29,10 +29,12 @@ const SEARCH_RADIUS_DAYS = 8;
 
 export type HijriDate = { year: number; month: number; day: number };
 
-const hijriFormat = new Intl.DateTimeFormat(
-  "en-u-ca-islamic-umalqura-nu-latn",
-  { timeZone: "UTC", year: "numeric", month: "numeric", day: "numeric" },
-);
+const hijriFormat = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", {
+  timeZone: "UTC",
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+});
 
 export const toHijri = (isoDate: string) => {
   const parts = hijriFormat.formatToParts(new Date(`${isoDate}T12:00:00Z`));
@@ -46,13 +48,8 @@ const sameHijri = (a: HijriDate, b: HijriDate) =>
 
 export const toGregorian = (target: HijriDate) => {
   const meanDays =
-    (target.year - 1) * MEAN_YEAR_DAYS +
-    (target.month - 1) * MEAN_MONTH_DAYS +
-    target.day -
-    1;
-  const center = new Date(EPOCH_MS + meanDays * DAY_MS)
-    .toISOString()
-    .slice(0, 10);
+    (target.year - 1) * MEAN_YEAR_DAYS + (target.month - 1) * MEAN_MONTH_DAYS + target.day - 1;
+  const center = new Date(EPOCH_MS + meanDays * DAY_MS).toISOString().slice(0, 10);
   return Array.from({ length: SEARCH_RADIUS_DAYS * 2 + 1 }, (_, step) =>
     addDays(center, step - SEARCH_RADIUS_DAYS),
   ).find((candidate) => sameHijri(toHijri(candidate), target));
@@ -85,20 +82,13 @@ export const hijriDateInput = z
     date: z.iso
       .date()
       .refine(
-        (value) =>
-          value >= FIRST_GREGORIAN_DATE && value <= LAST_GREGORIAN_DATE,
+        (value) => value >= FIRST_GREGORIAN_DATE && value <= LAST_GREGORIAN_DATE,
         `Date must be between ${FIRST_GREGORIAN_DATE} and ${LAST_GREGORIAN_DATE}`,
       )
       .optional()
-      .describe(
-        "Gregorian date YYYY-MM-DD to convert to Hijri. Leave out for today.",
-      ),
-    hijri: hijriInput
-      .optional()
-      .describe("A Hijri date to convert to Gregorian instead"),
-    timezone: timeZoneSchema
-      .default("UTC")
-      .describe("IANA time zone used to find today's date"),
+      .describe("Gregorian date YYYY-MM-DD to convert to Hijri. Leave out for today."),
+    hijri: hijriInput.optional().describe("A Hijri date to convert to Gregorian instead"),
+    timezone: timeZoneSchema.default("UTC").describe("IANA time zone used to find today's date"),
   })
   .refine(
     (value) => value.date === undefined || value.hijri === undefined,
@@ -115,18 +105,12 @@ const gregorianOf = (hijri: HijriDate) => {
   return gregorian;
 };
 
-export const hijriDate = (
-  input: z.input<typeof hijriDateInput>,
-  now = new Date(),
-) => {
+export const hijriDate = (input: z.input<typeof hijriDateInput>, now = new Date()) => {
   const { date, hijri, timezone } = hijriDateInput.parse(input);
   const gregorian =
-    hijri === undefined
-      ? (date ?? zonedParts(now, timezone).date)
-      : gregorianOf(hijri);
+    hijri === undefined ? (date ?? zonedParts(now, timezone).date) : gregorianOf(hijri);
   return {
-    direction:
-      hijri === undefined ? "gregorian_to_hijri" : "hijri_to_gregorian",
+    direction: hijri === undefined ? "gregorian_to_hijri" : "hijri_to_gregorian",
     gregorian: { date: gregorian, weekday: weekdayOf(gregorian) },
     hijri: describeHijri(hijri ?? toHijri(gregorian)),
     calendar: "Umm al-Qura (computed, via the Intl islamic-umalqura calendar)",

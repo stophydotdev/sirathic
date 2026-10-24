@@ -39,12 +39,7 @@ const ratioScreen = (
     };
   }
   const exactPercent = (amount / marketCap) * 100;
-  const status =
-    limitPercent === null
-      ? "info"
-      : exactPercent < limitPercent
-        ? "pass"
-        : "fail";
+  const status = limitPercent === null ? "info" : exactPercent < limitPercent ? "pass" : "fail";
   return {
     id,
     label,
@@ -55,19 +50,8 @@ const ratioScreen = (
   };
 };
 
-export const screenFinancials = ({
-  marketCap,
-  totalDebt,
-  cash,
-  receivables,
-}: Financials) => [
-  ratioScreen(
-    "debt",
-    "Total debt / market cap",
-    totalDebt,
-    marketCap,
-    DEBT_LIMIT_PERCENT,
-  ),
+export const screenFinancials = ({ marketCap, totalDebt, cash, receivables }: Financials) => [
+  ratioScreen("debt", "Total debt / market cap", totalDebt, marketCap, DEBT_LIMIT_PERCENT),
   ratioScreen(
     "cash",
     "Cash and short-term investments / market cap",
@@ -75,19 +59,10 @@ export const screenFinancials = ({
     marketCap,
     CASH_LIMIT_PERCENT,
   ),
-  ratioScreen(
-    "receivables",
-    "Receivables / market cap",
-    receivables,
-    marketCap,
-    null,
-  ),
+  ratioScreen("receivables", "Receivables / market cap", receivables, marketCap, null),
 ];
 
-export const verdictFor = (
-  screens: ReturnType<typeof screenFinancials>,
-  flagged: boolean,
-) => {
+export const verdictFor = (screens: ReturnType<typeof screenFinancials>, flagged: boolean) => {
   if (screens.some(({ status }) => status === "fail")) {
     return {
       verdict: "fail",
@@ -108,7 +83,6 @@ export const verdictFor = (
   }
   return {
     verdict: "pass_pending_business_review",
-    reason:
-      "Both financial ratios are under 30%. The business-activity screen is still unchecked.",
+    reason: "Both financial ratios are under 30%. The business-activity screen is still unchecked.",
   } as const;
 };

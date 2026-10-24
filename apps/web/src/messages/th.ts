@@ -3,11 +3,9 @@ import type { Messages } from "@/components/locales";
 export default {
   "Back to Sirathic": "กลับไปที่ Sirathic",
   Brand: "แบรนด์",
-  "Logos, colors and guidelines for Sirathic.":
-    "โลโก้ สี และแนวทางการใช้งานของ Sirathic",
+  "Logos, colors and guidelines for Sirathic.": "โลโก้ สี และแนวทางการใช้งานของ Sirathic",
   "Brand assets": "ไฟล์แบรนด์",
-  "Download our logos and follow the guidelines below.":
-    "ดาวน์โหลดโลโก้ของเราและทำตามแนวทางด้านล่าง",
+  "Download our logos and follow the guidelines below.": "ดาวน์โหลดโลโก้ของเราและทำตามแนวทางด้านล่าง",
   "Download all brand assets": "ดาวน์โหลดไฟล์แบรนด์ทั้งหมด",
   Wordmark: "โลโก้ตัวอักษร",
   "The Sirathic wordmark is the rosette next to the name in capitals. Use it as the main logo in most places. Don't stretch, recolor or change it.":
@@ -98,17 +96,14 @@ export default {
   "Answer language": "ภาษาของคำตอบ",
   "Answer length": "ความยาวของคำตอบ",
   "Show Arabic text": "แสดงข้อความภาษาอาหรับ",
-  "Quote verses and hadith in Arabic next to the translation":
-    "ยกอายะฮ์และหะดีษเป็นภาษาอาหรับข้างคำแปล",
+  "Quote verses and hadith in Arabic next to the translation": "ยกอายะฮ์และหะดีษเป็นภาษาอาหรับข้างคำแปล",
   "Incognito by default": "โหมดไม่ระบุตัวตนเป็นค่าเริ่มต้น",
-  "New chats start in incognito and aren't saved":
-    "แชทใหม่เริ่มในโหมดไม่ระบุตัวตนและไม่ถูกบันทึก",
+  "New chats start in incognito and aren't saved": "แชทใหม่เริ่มในโหมดไม่ระบุตัวตนและไม่ถูกบันทึก",
   "Export my chats": "ส่งออกแชทของฉัน",
   "Download every saved chat as a file": "ดาวน์โหลดแชทที่บันทึกไว้ทั้งหมดเป็นไฟล์",
   Export: "ส่งออก",
   "Delete all chats": "ลบแชททั้งหมด",
-  "Delete every saved chat? This can't be undone.":
-    "ลบแชทที่บันทึกไว้ทั้งหมดหรือไม่ การดำเนินการนี้ย้อนกลับไม่ได้",
+  "Delete every saved chat? This can't be undone.": "ลบแชทที่บันทึกไว้ทั้งหมดหรือไม่ การดำเนินการนี้ย้อนกลับไม่ได้",
   "Removes every saved chat": "ลบแชทที่บันทึกไว้ทั้งหมด",
   "Delete all": "ลบทั้งหมด",
   "From your ChatGPT account": "จากบัญชี ChatGPT ของคุณ",
@@ -136,8 +131,7 @@ export default {
   "Use your ChatGPT plan for GPT models": "ใช้แพ็กเกจ ChatGPT ของคุณกับโมเดล GPT",
   "Get a new code": "รับรหัสใหม่",
   "Try again": "ลองอีกครั้ง",
-  "Your question stays in the box while you sign in.":
-    "คำถามของคุณยังอยู่ในช่องระหว่างลงชื่อเข้าใช้",
+  "Your question stays in the box while you sign in.": "คำถามของคุณยังอยู่ในช่องระหว่างลงชื่อเข้าใช้",
   "Copy code": "คัดลอกรหัส",
   "Sign In": "ลงชื่อเข้าใช้",
   "Account menu": "เมนูบัญชี",
@@ -145,16 +139,14 @@ export default {
   "Google account": "บัญชี Google",
   Incognito: "ไม่ระบุตัวตน",
   "All settings": "การตั้งค่าทั้งหมด",
-  "Assalamu alaikum. Sign in to start asking.":
-    "อัสสะลามุอะลัยกุม ลงชื่อเข้าใช้เพื่อเริ่มถามคำถาม",
+  "Assalamu alaikum. Sign in to start asking.": "อัสสะลามุอะลัยกุม ลงชื่อเข้าใช้เพื่อเริ่มถามคำถาม",
   "Enter this code on ChatGPT": "ใส่รหัสนี้ใน ChatGPT",
   "Code expired": "รหัสหมดอายุแล้ว",
   "Sign-in didn't work": "ลงชื่อเข้าใช้ไม่สำเร็จ",
   "{count} views": "ดู {count} ครั้ง",
   "Results for:": "ผลลัพธ์สำหรับ:",
   "Searching…": "กำลังค้นหา…",
-  "The search failed. Try this tab again later.":
-    "การค้นหาล้มเหลว โปรดลองแท็บนี้ใหม่ภายหลัง",
+  "The search failed. Try this tab again later.": "การค้นหาล้มเหลว โปรดลองแท็บนี้ใหม่ภายหลัง",
   "Expand sidebar": "ขยายแถบด้านข้าง",
   "Collapse sidebar": "ย่อแถบด้านข้าง",
   New: "ใหม่",
@@ -165,8 +157,7 @@ export default {
   "New chat": "แชทใหม่",
   "Copy a link to this chat": "คัดลอกลิงก์ของแชทนี้",
   Share: "แชร์",
-  "Incognito is on: new messages aren't saved":
-    "เปิดโหมดไม่ระบุตัวตนอยู่: ข้อความใหม่จะไม่ถูกบันทึก",
+  "Incognito is on: new messages aren't saved": "เปิดโหมดไม่ระบุตัวตนอยู่: ข้อความใหม่จะไม่ถูกบันทึก",
   "Use incognito: new messages aren't saved to your history":
     "ใช้โหมดไม่ระบุตัวตน: ข้อความใหม่จะไม่ถูกบันทึกในประวัติ",
   "Ask a follow-up": "ถามต่อ",
@@ -228,14 +219,12 @@ export default {
   Helpful: "มีประโยชน์",
   "Not helpful": "ไม่มีประโยชน์",
   Quick: "ด่วน",
-  "Searches everything first, then answers fast":
-    "ค้นหาทุกแหล่งก่อน แล้วตอบอย่างรวดเร็ว",
+  "Searches everything first, then answers fast": "ค้นหาทุกแหล่งก่อน แล้วตอบอย่างรวดเร็ว",
   Research: "ค้นคว้า",
   "Thinks longer and searches step by step": "คิดนานขึ้นและค้นหาทีละขั้น",
   "Type / for modes": "พิมพ์ / เพื่อเลือกโหมด",
   "Type @ for sources": "พิมพ์ @ เพื่อเลือกแหล่งที่มา",
-  'Delete "{title}"? This can\'t be undone.':
-    "ลบ “{title}” หรือไม่ การดำเนินการนี้ย้อนกลับไม่ได้",
+  'Delete "{title}"? This can\'t be undone.': "ลบ “{title}” หรือไม่ การดำเนินการนี้ย้อนกลับไม่ได้",
   "Qur'an text": "ตัวบทอัลกุรอาน",
   "Verse links": "ลิงก์อายะฮ์",
   "Hadith explanations": "คำอธิบายหะดีษ",

@@ -23,9 +23,7 @@ export const SHAMELA_BOOKS = new Map([
 
 const pageUrl = (workId: string, volume: number, page: number) => {
   const book = SHAMELA_BOOKS.get(workId);
-  return book === undefined
-    ? null
-    : `https://shamela.ws/book/${book}#${volume}:${page}`;
+  return book === undefined ? null : `https://shamela.ws/book/${book}#${volume}:${page}`;
 };
 
 export const passagesByIds = async (ids: string[]) => {

@@ -5,9 +5,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type Status = Awaited<ReturnType<typeof api.account.status.query>>;
-export type Model = Awaited<
-  ReturnType<typeof api.account.models.query>
->[number];
+export type Model = Awaited<ReturnType<typeof api.account.models.query>>[number];
 
 type Models = { list: Model[]; error?: string };
 
@@ -46,9 +44,7 @@ export const useAccount = create<{
       },
       choose: (slug) => set({ chosen: slug }),
       signOut: async () => {
-        await fetch("/api/auth/sign-out", { method: "POST" }).catch(
-          () => undefined,
-        );
+        await fetch("/api/auth/sign-out", { method: "POST" }).catch(() => undefined);
         await Promise.all([get().refresh(), useSessions.getState().refresh()]);
       },
     }),

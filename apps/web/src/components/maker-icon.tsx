@@ -6,13 +6,7 @@ import type { FC, SVGProps } from "react";
 const pathIcon =
   (d: string, fillRule: "nonzero" | "evenodd" = "evenodd") =>
   (props: SVGProps<SVGSVGElement>) => (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      fillRule={fillRule}
-      aria-hidden
-      {...props}
-    >
+    <svg viewBox="0 0 24 24" fill="currentColor" fillRule={fillRule} aria-hidden {...props}>
       <path d={d} />
     </svg>
   );

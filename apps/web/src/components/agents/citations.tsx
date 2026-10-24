@@ -69,11 +69,7 @@ function CitationFavicon({
   );
 }
 
-export function CitationStack({
-  citations,
-  limit = 3,
-  className,
-}: CitationStackProps) {
+export function CitationStack({ citations, limit = 3, className }: CitationStackProps) {
   return (
     <span aria-hidden="true" className={cn("flex -space-x-1.5", className)}>
       {citations.slice(0, limit).map((citation) => (
@@ -125,13 +121,7 @@ function CitationRow({
   const id = citationTargetId(idPrefix, citation.id);
 
   return citation.url ? (
-    <a
-      id={id}
-      href={citation.url}
-      target="_blank"
-      rel="noreferrer noopener"
-      className={className}
-    >
+    <a id={id} href={citation.url} target="_blank" rel="noreferrer noopener" className={className}>
       {content}
     </a>
   ) : (
@@ -141,15 +131,10 @@ function CitationRow({
   );
 }
 
-export function CitationList({
-  citations,
-  idPrefix,
-  className,
-}: CitationListProps) {
+export function CitationList({ citations, idPrefix, className }: CitationListProps) {
   const reduce = useReducedMotion() ?? false;
   const baseId = useId();
-  const resolvedPrefix =
-    idPrefix ?? `citation-list-${baseId.replace(/:/g, "")}`;
+  const resolvedPrefix = idPrefix ?? `citation-list-${baseId.replace(/:/g, "")}`;
 
   return (
     <div className={cn("grid gap-0.5", className)}>
@@ -171,11 +156,7 @@ export function CitationList({
                   }
             }
           >
-            <CitationRow
-              citation={citation}
-              index={index + 1}
-              idPrefix={resolvedPrefix}
-            />
+            <CitationRow citation={citation} index={index + 1} idPrefix={resolvedPrefix} />
           </motion.div>
         ))}
       </AnimatePresence>

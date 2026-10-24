@@ -1,12 +1,7 @@
 import type { ThreadMessage } from "@assistant-ui/react";
 import { z } from "zod";
 
-const SEARCHES = new Set([
-  "webSearch",
-  "searchSources",
-  "newsSearch",
-  "redditSearch",
-]);
+const SEARCHES = new Set(["webSearch", "searchSources", "newsSearch", "redditSearch"]);
 
 const toolInput = z
   .object({
@@ -70,8 +65,7 @@ export function stepsOf(parts: readonly ThreadMessage["content"][number][]) {
   return steps;
 }
 
-const operator =
-  /(^|\s)-?(site|inurl|intitle|intext|filetype|before|after|source):\S*/gi;
+const operator = /(^|\s)-?(site|inurl|intitle|intext|filetype|before|after|source):\S*/gi;
 
 export function readableQuery(query: string) {
   const plain = query

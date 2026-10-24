@@ -1,21 +1,7 @@
 import { z } from "zod";
 
-export const MADHABS = [
-  "none",
-  "hanafi",
-  "maliki",
-  "shafii",
-  "hanbali",
-] as const;
-export const ANSWER_LANGUAGES = [
-  "auto",
-  "en",
-  "ar",
-  "fr",
-  "ur",
-  "id",
-  "tr",
-] as const;
+export const MADHABS = ["none", "hanafi", "maliki", "shafii", "hanbali"] as const;
+export const ANSWER_LANGUAGES = ["auto", "en", "ar", "fr", "ur", "id", "tr"] as const;
 export const ANSWER_LENGTHS = ["short", "default", "detailed"] as const;
 export const MEMORY_LIMIT = 20;
 export const MEMORY_CHARS = 200;
@@ -31,10 +17,7 @@ export const settings = z.object({
 });
 
 export const told = z.object({
-  madhab: z
-    .enum(MADHABS)
-    .nullable()
-    .describe("The school the user says they follow, or null"),
+  madhab: z.enum(MADHABS).nullable().describe("The school the user says they follow, or null"),
   answerLanguage: z
     .enum(ANSWER_LANGUAGES)
     .nullable()
@@ -43,10 +26,7 @@ export const told = z.object({
     .enum(ANSWER_LENGTHS)
     .nullable()
     .describe("How long the user wants answers to be, or null"),
-  showArabic: z
-    .boolean()
-    .nullable()
-    .describe("Whether the user wants Arabic text shown, or null"),
+  showArabic: z.boolean().nullable().describe("Whether the user wants Arabic text shown, or null"),
   fact: z
     .string()
     .nullable()

@@ -3,12 +3,7 @@ import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
 import { type AnyColumn, and, desc, eq, ilike, sql } from "drizzle-orm";
 import { z } from "zod";
-import {
-  type ChatMessage,
-  chatData,
-  feedback,
-  messageMetadata,
-} from "./shared/messages";
+import { type ChatMessage, chatData, feedback, messageMetadata } from "./shared/messages";
 import { StatusError } from "./respond";
 
 const TITLE_CHARS = 80;
@@ -54,8 +49,7 @@ export const messageSchemas = {
   metadataSchema: messageMetadata,
 };
 
-const owned = (id: string, by: string) =>
-  and(eq(chatSessions.id, id), eq(chatSessions.owner, by));
+const owned = (id: string, by: string) => and(eq(chatSessions.id, id), eq(chatSessions.owner, by));
 
 export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
   db
@@ -104,11 +98,7 @@ export async function openSession(id: string, by: string) {
   });
 }
 
-export async function saveSession(
-  id: string,
-  by: string,
-  messages: ChatMessage[],
-) {
+export async function saveSession(id: string, by: string, messages: ChatMessage[]) {
   const [saved] = await db
     .insert(chatSessions)
     .values({ id, owner: by, title: titleOf(messages), messages })
@@ -190,10 +180,7 @@ export async function setFeedback(
   if (!target) throw new StatusError(404, "no such message");
   const { feedback: _old, ...rest } = target.metadata ?? {};
   target.metadata = value ? { ...rest, feedback: value } : rest;
-  await db
-    .update(chatSessions)
-    .set({ messages, updatedAt: keepUpdatedAt })
-    .where(owned(id, by));
+  await db.update(chatSessions).set({ messages, updatedAt: keepUpdatedAt }).where(owned(id, by));
   return { feedback: value };
 }
 

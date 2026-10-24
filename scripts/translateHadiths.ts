@@ -64,9 +64,7 @@ const untranslated = async ({ sample }: { sample?: number }) => {
     )
     .orderBy(sample === undefined ? hadiths.id : sql`random()`);
   const rows = await (sample === undefined ? query : query.limit(sample));
-  return rows.flatMap(({ arabic, ...row }) =>
-    arabic ? [{ ...row, arabic }] : [],
-  );
+  return rows.flatMap(({ arabic, ...row }) => (arabic ? [{ ...row, arabic }] : []));
 };
 
 type Row = Awaited<ReturnType<typeof untranslated>>[number];
@@ -87,17 +85,12 @@ const checkSample = async (size: number) => {
     return work();
   };
   await Promise.all(Array.from({ length: PARALLEL_REQUESTS }, work));
-  await Bun.write(
-    `${DIR}/sample.json`,
-    JSON.stringify({ usage, results }, null, 1),
-  );
+  await Bun.write(`${DIR}/sample.json`, JSON.stringify({ usage, results }, null, 1));
   console.log(`tokens in ${usage.input}, out ${usage.output}`);
 };
 
 const BATCH_SIZE = 5_000;
-const savedBatches = z.array(
-  z.object({ id: z.string(), ids: z.array(z.string()) }),
-);
+const savedBatches = z.array(z.object({ id: z.string(), ids: z.array(z.string()) }));
 type SavedBatches = z.infer<typeof savedBatches>;
 
 const submitBatches = async (batches: SavedBatches, rows: Row[]) => {
@@ -116,14 +109,10 @@ const submitBatches = async (batches: SavedBatches, rows: Row[]) => {
 };
 
 const allEnded = async (batches: SavedBatches): Promise<void> => {
-  const states = await Promise.all(
-    batches.map(({ id }) => client.messages.batches.retrieve(id)),
-  );
+  const states = await Promise.all(batches.map(({ id }) => client.messages.batches.retrieve(id)));
   const total = (key: keyof Anthropic.Messages.MessageBatchRequestCounts) =>
     states.reduce((sum, state) => sum + state.request_counts[key], 0);
-  const ended = states.filter(
-    (state) => state.processing_status === "ended",
-  ).length;
+  const ended = states.filter((state) => state.processing_status === "ended").length;
   console.log(
     `${ended}/${states.length} batches ended: ${total("succeeded")} succeeded, ${total("processing")} processing, ${total("errored")} errored`,
   );
@@ -147,34 +136,24 @@ const translateAll = async () => {
   const usage = { input: 0, output: 0 };
   await Promise.all(
     batches.map(async ({ id, ids }) => {
-      for await (const {
-        custom_id,
-        result,
-      } of await client.messages.batches.results(id)) {
+      for await (const { custom_id, result } of await client.messages.batches.results(id)) {
         const hadithId = ids[Number(custom_id.slice(1))];
-        if (!hadithId)
-          throw new Error(`batch ${id} returned unknown request ${custom_id}`);
+        if (!hadithId) throw new Error(`batch ${id} returned unknown request ${custom_id}`);
         if (result.type !== "succeeded") {
-          failed[hadithId] =
-            result.type === "errored" ? result.error.error.type : result.type;
+          failed[hadithId] = result.type === "errored" ? result.error.error.type : result.type;
           continue;
         }
         usage.input += result.message.usage.input_tokens;
         usage.output += result.message.usage.output_tokens;
         const outcome = translation(result.message);
-        if (outcome.kind === "translated")
-          translated[hadithId] = outcome.english;
+        if (outcome.kind === "translated") translated[hadithId] = outcome.english;
         else failed[hadithId] = outcome.reason;
       }
     }),
   );
   await Bun.write(
     RESULTS,
-    JSON.stringify(
-      { batches: batches.map(({ id }) => id), usage, translated, failed },
-      null,
-      1,
-    ),
+    JSON.stringify({ batches: batches.map(({ id }) => id), usage, translated, failed }, null, 1),
   );
   console.log(
     `translated ${Object.keys(translated).length}, failed ${Object.keys(failed).length}, tokens in ${usage.input}, out ${usage.output}`,
@@ -200,11 +179,8 @@ const redoChatter = async () => {
   const work = async (): Promise<void> => {
     const row = queue.shift();
     if (row === undefined) return;
-    const outcome = translation(
-      await client.messages.create(request(row.arabic)),
-    );
-    if (outcome.kind === "translated")
-      saved.translated[row.id] = outcome.english;
+    const outcome = translation(await client.messages.create(request(row.arabic)));
+    if (outcome.kind === "translated") saved.translated[row.id] = outcome.english;
     else saved.failed[row.id] = outcome.reason;
     return work();
   };
@@ -217,8 +193,7 @@ const redoChatter = async () => {
 
 await mkdir(DIR, { recursive: true });
 const [flag, size] = process.argv.slice(2);
-if (flag === "--sample")
-  await checkSample(z.coerce.number().int().positive().parse(size));
+if (flag === "--sample") await checkSample(z.coerce.number().int().positive().parse(size));
 else if (flag === "--redo") await redoChatter();
 else if (flag !== undefined)
   throw new Error(

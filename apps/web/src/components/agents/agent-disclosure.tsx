@@ -5,8 +5,7 @@ import type { CSSProperties } from "react";
 import { EASE_OUT } from "@/lib/ease";
 import { cn } from "@/lib/utils";
 
-export interface AgentDisclosureProps
-  extends Omit<HTMLMotionProps<"div">, "animate" | "initial"> {
+export interface AgentDisclosureProps extends Omit<HTMLMotionProps<"div">, "animate" | "initial"> {
   open: boolean;
   openHeight?: CSSProperties["height"];
 }

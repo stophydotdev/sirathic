@@ -8,13 +8,9 @@ export const hadithSearchInput = z.object({
   limit: z.number().int().min(1).max(20).default(8),
 });
 
-export const hadithSearch = async (
-  input: z.input<typeof hadithSearchInput>,
-) => {
+export const hadithSearch = async (input: z.input<typeof hadithSearchInput>) => {
   const { query, limit } = hadithSearchInput.parse(input);
   return {
-    hadiths: await hadithsByIds(
-      await hybridIds(hadiths, query, limit, { rareWords: true }),
-    ),
+    hadiths: await hadithsByIds(await hybridIds(hadiths, query, limit, { rareWords: true })),
   };
 };

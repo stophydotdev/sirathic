@@ -46,9 +46,7 @@ export const Composer: FC<{
   const [text, setText] = useState("");
   const mode = useChatState((s) => s.mode);
   const setMode = useChatState((s) => s.setMode);
-  const modelName = useChatState(
-    (s) => s.models.find((model) => model.slug === s.model)?.name,
-  );
+  const modelName = useChatState((s) => s.models.find((model) => model.slug === s.model)?.name);
   const ready = text.trim() !== "";
 
   const send = () => {
@@ -73,9 +71,7 @@ export const Composer: FC<{
           style={styles.pill}
           onPress={() => setMode(mode === "quick" ? "research" : "quick")}
         >
-          <Text style={styles.pillText}>
-            {mode === "quick" ? "Quick" : "Research"}
-          </Text>
+          <Text style={styles.pillText}>{mode === "quick" ? "Quick" : "Research"}</Text>
         </Pressable>
         <View style={styles.spacer} />
         {modelName && (
@@ -89,11 +85,7 @@ export const Composer: FC<{
           onPress={busy ? onStop : send}
         >
           {busy ? (
-            <Square
-              size={14}
-              color={colors.background}
-              fill={colors.background}
-            />
+            <Square size={14} color={colors.background} fill={colors.background} />
           ) : (
             <ArrowUp size={18} color={colors.background} />
           )}

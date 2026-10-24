@@ -10,9 +10,7 @@ export const zakatAlFitrInput = z.object({
     .int()
     .min(1)
     .max(1000)
-    .describe(
-      "Number of people the payer must pay for: themselves and every dependant",
-    ),
+    .describe("Number of people the payer must pay for: themselves and every dependant"),
   pricePerKg: z
     .number()
     .positive()
@@ -30,14 +28,11 @@ export const zakatAlFitrInput = z.object({
     .min(1.5)
     .max(4)
     .optional()
-    .describe(
-      "Weight of one sa' in kg if the user follows a specific figure. Defaults to 3 kg.",
-    ),
+    .describe("Weight of one sa' in kg if the user follows a specific figure. Defaults to 3 kg."),
 });
 
 export const zakatAlFitr = (input: z.input<typeof zakatAlFitrInput>) => {
-  const { people, pricePerKg, currency, saWeightKg } =
-    zakatAlFitrInput.parse(input);
+  const { people, pricePerKg, currency, saWeightKg } = zakatAlFitrInput.parse(input);
   const sa = saWeightKg ?? UNITS.sa.grams / 1000;
   const cost = (kgPerPerson: number) =>
     pricePerKg === undefined

@@ -53,12 +53,7 @@ const post = z.object({
 const MEDIA_LINK =
   /^https?:\/\/(?:[a-z0-9-]+\.)*(?:redd\.it|imgur\.com|gfycat\.com|youtube\.com|youtu\.be|tiktok\.com|instagram\.com|streamable\.com)\/|^https?:\/\/(?:www\.)?reddit\.com\/gallery\//iu;
 
-const isPhotoOrVideo = ({
-  url,
-  is_video,
-  is_gallery,
-  post_hint,
-}: z.infer<typeof post>) =>
+const isPhotoOrVideo = ({ url, is_video, is_gallery, post_hint }: z.infer<typeof post>) =>
   Boolean(is_video || is_gallery) ||
   post_hint === "image" ||
   post_hint?.includes("video") ||
@@ -76,8 +71,7 @@ const comment = z.object({
 
 const GONE = new Set(["", "[removed]", "[deleted]"]);
 
-const textOf = (value: string | null | undefined) =>
-  value?.replaceAll("\u0000", "").trim() ?? "";
+const textOf = (value: string | null | undefined) => value?.replaceAll("\u0000", "").trim() ?? "";
 
 type Thread = typeof redditThreads.$inferInsert;
 
@@ -117,8 +111,7 @@ const splitIntoBuckets = async (subreddit: string) => {
     if (!found.success) continue;
     const { id, selftext, removed_by_category, stickied } = found.data;
     const text = selftext?.trim() ?? "";
-    if (removed_by_category || text === "[removed]" || text === "[deleted]")
-      continue;
+    if (removed_by_category || text === "[removed]" || text === "[deleted]") continue;
     if (stickied || (text === "" && isPhotoOrVideo(found.data))) continue;
     writers[bucketOf(id)]?.posts.write(`${line}\n`);
   }
@@ -131,21 +124,15 @@ const splitIntoBuckets = async (subreddit: string) => {
     const { link_id, body, author, distinguished } = found.data;
     if (GONE.has(body?.trim() ?? "")) continue;
     if (author === "AutoModerator" || distinguished === "moderator") continue;
-    writers[bucketOf(link_id.replace(/^t3_/u, ""))]?.comments.write(
-      `${line}\n`,
-    );
+    writers[bucketOf(link_id.replace(/^t3_/u, ""))]?.comments.write(`${line}\n`);
   }
-  await Promise.all(
-    writers.flatMap(({ posts, comments }) => [posts.end(), comments.end()]),
-  );
+  await Promise.all(writers.flatMap(({ posts, comments }) => [posts.end(), comments.end()]));
 };
 
 const threadsIn = async function* (subreddit: string, bucket: number) {
   const threads = new Map<string, Thread>();
   for await (const line of lines(`${BUILD}/${bucket}.posts`)) {
-    const { id, title, selftext, score, created_utc } = post.parse(
-      JSON.parse(line),
-    );
+    const { id, title, selftext, score, created_utc } = post.parse(JSON.parse(line));
     threads.set(id, {
       id,
       subreddit,
@@ -159,9 +146,7 @@ const threadsIn = async function* (subreddit: string, bucket: number) {
   }
   const seen = new Set<string>();
   for await (const line of lines(`${BUILD}/${bucket}.comments`)) {
-    const { id, link_id, parent_id, body, score } = comment.parse(
-      JSON.parse(line),
-    );
+    const { id, link_id, parent_id, body, score } = comment.parse(JSON.parse(line));
     const thread = threads.get(link_id.replace(/^t3_/u, ""));
     if (!thread || seen.has(id)) continue;
     seen.add(id);
@@ -217,16 +202,13 @@ const save = (threads: Thread[]) =>
     });
 
 if (import.meta.main) {
-  const chosen = SUBREDDITS.filter(
-    (name) => ONLY === undefined || ONLY.includes(name),
-  );
+  const chosen = SUBREDDITS.filter((name) => ONLY === undefined || ONLY.includes(name));
   const outPath = `${DATA_DIR}/reddit/threads.ndjson`;
   if (!LOAD) await rm(outPath, { force: true });
   const out = LOAD ? undefined : Bun.file(outPath).writer();
   const counts = new Map<string, { threads: number; comments: number }>();
   for await (const batch of batchesOf(threadsOfAll(chosen), BATCH_SIZE)) {
-    if (out)
-      for (const thread of batch) out.write(`${JSON.stringify(thread)}\n`);
+    if (out) for (const thread of batch) out.write(`${JSON.stringify(thread)}\n`);
     else await save(batch);
     for (const thread of batch) {
       const count = counts.get(thread.subreddit) ?? { threads: 0, comments: 0 };

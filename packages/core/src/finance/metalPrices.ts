@@ -41,11 +41,9 @@ const remembered = <Value>(load: () => Promise<Value>) => {
 };
 
 const perGram = async (symbol: "XAU" | "XAG") => {
-  const { price, updatedAt } = await getJson(
-    `${GOLD_API}/${symbol}`,
-    spotPrice,
-    { timeoutMs: TIMEOUT_MS },
-  );
+  const { price, updatedAt } = await getJson(`${GOLD_API}/${symbol}`, spotPrice, {
+    timeoutMs: TIMEOUT_MS,
+  });
   return {
     usdPerOunce: price,
     usdPerGram: price / GRAMS_PER_TROY_OUNCE,
@@ -59,11 +57,9 @@ const loadMetals = async () => {
 };
 
 const loadRates = async () => {
-  const { rates, time_last_update_utc } = await getJson(
-    EXCHANGE_API,
-    exchangeRates,
-    { timeoutMs: TIMEOUT_MS },
-  );
+  const { rates, time_last_update_utc } = await getJson(EXCHANGE_API, exchangeRates, {
+    timeoutMs: TIMEOUT_MS,
+  });
   return { rates, updatedAt: time_last_update_utc };
 };
 

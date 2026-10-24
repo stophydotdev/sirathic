@@ -13,10 +13,7 @@ test.each([
   ["what is tawakkul", []],
   ["zakat on gold nisab", ["<mathematical_expressions>"]],
   ["lyrics of tala al badru", ["<copyright_restrictions>"]],
-  [
-    "write a khutbah on patience",
-    ["<copyright_restrictions>", "<rewrites>", "<followup>"],
-  ],
+  ["write a khutbah on patience", ["<copyright_restrictions>", "<rewrites>", "<followup>"]],
 ])("%s gets the situational rules %p", (question, sections) => {
   const rules = answerRules(DEFAULT_SETTINGS, question);
   expect(SITUATIONAL.filter((tag) => rules.includes(tag))).toEqual(sections);
@@ -25,9 +22,9 @@ test.each([
 test("short answers leave out the lesson structure", () => {
   const question = "is a mortgage halal";
   expect(answerRules(DEFAULT_SETTINGS, question)).toContain("<structure>");
-  expect(
-    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question),
-  ).not.toContain("<structure>");
+  expect(answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question)).not.toContain(
+    "<structure>",
+  );
 });
 
 test("the prompt lists what the user told Sirathic about themselves", () => {

@@ -10,9 +10,7 @@ const PARALLEL_REQUESTS = 4;
 const PAGE_SIZE = BATCH_SIZE * PARALLEL_REQUESTS * 4;
 
 const embeddingResponse = z.object({
-  data: z.array(
-    z.object({ index: z.number(), embedding: z.array(z.number()) }),
-  ),
+  data: z.array(z.object({ index: z.number(), embedding: z.array(z.number()) })),
   usage: z.object({ total_tokens: z.number() }),
 });
 
@@ -48,9 +46,7 @@ const embed = async (
   const vectors = texts.map((_, index) => {
     const vector = byIndex.get(index);
     if (vector?.length !== dimensions)
-      throw new Error(
-        `No ${dimensions}-dimension embedding for input ${index}`,
-      );
+      throw new Error(`No ${dimensions}-dimension embedding for input ${index}`);
     return vector;
   });
   return {
@@ -66,10 +62,7 @@ const chunks = (rows: Row[]) =>
 
 const missing = await Promise.all(
   Object.values(EMBEDDED).map(async ({ table }) => {
-    const [found] = await db
-      .select({ rows: count() })
-      .from(table)
-      .where(isNull(table.embedding));
+    const [found] = await db.select({ rows: count() }).from(table).where(isNull(table.embedding));
     return found?.rows ?? 0;
   }),
 );
@@ -83,9 +76,7 @@ const store = async ({ table, dimensions }: Embedded, rows: Row[]) => {
     dimensions,
   );
   const values = sql.join(
-    rows.map(
-      (row, index) => sql`(${row.id}, ${JSON.stringify(vectors[index])})`,
-    ),
+    rows.map((row, index) => sql`(${row.id}, ${JSON.stringify(vectors[index])})`),
     sql`, `,
   );
   await db.execute(

@@ -86,14 +86,8 @@ const METHOD_NOTES = new Map<MethodId, string>([
     "moonsighting_committee",
     "Adds 5 minutes to Dhuhr and 3 minutes to Maghrib as safety margins and adjusts Fajr and Isha by season. Often recommended for the UK and North America.",
   ],
-  [
-    "dubai",
-    "Adds 3 minutes to Dhuhr, Asr and Maghrib and takes 3 off sunrise, as the UAE does.",
-  ],
-  [
-    "turkey",
-    "An approximation of the Diyanet timetable, less accurate outside Turkey.",
-  ],
+  ["dubai", "Adds 3 minutes to Dhuhr, Asr and Maghrib and takes 3 off sunrise, as the UAE does."],
+  ["turkey", "An approximation of the Diyanet timetable, less accurate outside Turkey."],
 ]);
 
 const PRAYERS = ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const;
@@ -104,13 +98,8 @@ const HIGH_LATITUDE_DEGREES = 48;
 export const prayerTimesInput = z.object({
   latitude: latitudeSchema.describe("Latitude in decimal degrees"),
   longitude: longitudeSchema.describe("Longitude in decimal degrees"),
-  timezone: timeZoneSchema.describe(
-    "IANA time zone of the location, for example Europe/London",
-  ),
-  date: z.iso
-    .date()
-    .optional()
-    .describe("Local date YYYY-MM-DD. Leave out for today."),
+  timezone: timeZoneSchema.describe("IANA time zone of the location, for example Europe/London"),
+  date: z.iso.date().optional().describe("Local date YYYY-MM-DD. Leave out for today."),
   method: z
     .enum(methodIds)
     .default("muslim_world_league")
@@ -126,19 +115,14 @@ const localDate = (isoDate: string) => {
   return new Date(year, month - 1, day);
 };
 
-export const prayerTimes = (
-  input: z.input<typeof prayerTimesInput>,
-  now = new Date(),
-) => {
+export const prayerTimes = (input: z.input<typeof prayerTimesInput>, now = new Date()) => {
   const parsed = prayerTimesInput.parse(input);
   const { latitude, longitude, timezone, method, asrSchool } = parsed;
   const date = parsed.date ?? zonedParts(now, timezone).date;
   const coordinates = new Coordinates(latitude, longitude);
   const ramadan = toHijri(date).month === RAMADAN;
   const extraIsha =
-    method === "umm_al_qura" && ramadan
-      ? UMM_AL_QURA_RAMADAN_ISHA_EXTRA_MINUTES
-      : 0;
+    method === "umm_al_qura" && ramadan ? UMM_AL_QURA_RAMADAN_ISHA_EXTRA_MINUTES : 0;
 
   const parameters = CalculationMethod[METHODS[method].adhan]();
   parameters.madhab = asrSchool === "hanafi" ? Madhab.Hanafi : Madhab.Shafi;
@@ -146,8 +130,7 @@ export const prayerTimes = (
   parameters.polarCircleResolution = PolarCircleResolution.AqrabYaum;
   parameters.adjustments.isha = extraIsha;
 
-  const timesOn = (isoDate: string) =>
-    new PrayerTimes(coordinates, localDate(isoDate), parameters);
+  const timesOn = (isoDate: string) => new PrayerTimes(coordinates, localDate(isoDate), parameters);
 
   const entry = (instant: Date) =>
     Number.isNaN(instant.getTime())
@@ -177,8 +160,7 @@ export const prayerTimes = (
   };
 
   const next =
-    date === zonedParts(now, timezone).date &&
-    !Number.isNaN(today.fajr.getTime())
+    date === zonedParts(now, timezone).date && !Number.isNaN(today.fajr.getTime())
       ? upcoming()
       : null;
 
@@ -196,9 +178,7 @@ export const prayerTimes = (
             prayer: next.prayer,
             date: next.date,
             ...entry(next.at),
-            minutesUntil: Math.ceil(
-              (next.at.getTime() - now.getTime()) / 60_000,
-            ),
+            minutesUntil: Math.ceil((next.at.getTime() - now.getTime()) / 60_000),
           },
     basis: {
       method: {
@@ -206,12 +186,9 @@ export const prayerTimes = (
         name: METHODS[method].name,
         note: METHOD_NOTES.get(method) ?? null,
         fajrAngleDegrees: parameters.fajrAngle,
-        ishaAngleDegrees:
-          parameters.ishaInterval > 0 ? null : parameters.ishaAngle,
+        ishaAngleDegrees: parameters.ishaInterval > 0 ? null : parameters.ishaAngle,
         ishaMinutesAfterMaghrib:
-          parameters.ishaInterval > 0
-            ? parameters.ishaInterval + extraIsha
-            : null,
+          parameters.ishaInterval > 0 ? parameters.ishaInterval + extraIsha : null,
       },
       asr: {
         school: asrSchool,

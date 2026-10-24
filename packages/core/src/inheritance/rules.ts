@@ -10,10 +10,7 @@ export const heirsSchema = z.object({
   son: count(30, "Sons of the deceased"),
   daughter: count(30, "Daughters of the deceased"),
   sons_son: count(30, "Sons of a son of the deceased (grandsons)"),
-  sons_daughter: count(
-    30,
-    "Daughters of a son of the deceased (granddaughters)",
-  ),
+  sons_daughter: count(30, "Daughters of a son of the deceased (granddaughters)"),
   father: count(1, "Father: 0 or 1"),
   mother: count(1, "Mother: 0 or 1"),
   paternal_grandfather: count(1, "Father's father: 0 or 1"),
@@ -28,10 +25,7 @@ export const heirsSchema = z.object({
   full_nephew: count(30, "Sons of a full brother"),
   paternal_nephew: count(30, "Sons of a paternal (same father only) brother"),
   full_uncle: count(30, "Full brothers of the father"),
-  paternal_uncle: count(
-    30,
-    "Brothers of the father with the same grandfather only",
-  ),
+  paternal_uncle: count(30, "Brothers of the father with the same grandfather only"),
 });
 
 export type Heirs = z.infer<typeof heirsSchema>;
@@ -98,8 +92,7 @@ type Blocker = {
   note?: string;
 };
 
-const blockedBy = (...heirs: HeirKey[]): Blocker[] =>
-  heirs.map((by) => ({ by }));
+const blockedBy = (...heirs: HeirKey[]): Blocker[] => heirs.map((by) => ({ by }));
 
 const withDaughters = (by: HeirKey): Blocker => ({
   by,
@@ -107,10 +100,7 @@ const withDaughters = (by: HeirKey): Blocker => ({
   note: "she takes the residue with the daughters, in the brother's place",
 });
 
-const sistersWithDaughters = [
-  withDaughters("full_sister"),
-  withDaughters("paternal_sister"),
-];
+const sistersWithDaughters = [withDaughters("full_sister"), withDaughters("paternal_sister")];
 
 const fartherAgnates = blockedBy(
   "son",
@@ -183,11 +173,7 @@ const BLOCKERS = {
     "paternal_grandfather",
   ),
   full_nephew: [...fartherAgnates, ...sistersWithDaughters],
-  paternal_nephew: [
-    ...fartherAgnates,
-    ...blockedBy("full_nephew"),
-    ...sistersWithDaughters,
-  ],
+  paternal_nephew: [...fartherAgnates, ...blockedBy("full_nephew"), ...sistersWithDaughters],
   full_uncle: [
     ...fartherAgnates,
     ...blockedBy("full_nephew", "paternal_nephew"),
@@ -200,13 +186,9 @@ const BLOCKERS = {
   ],
 } satisfies Record<HeirKey, Blocker[]>;
 
-export const exclusionReason = (
-  heir: HeirKey,
-  facts: Facts,
-): string | undefined => {
+export const exclusionReason = (heir: HeirKey, facts: Facts): string | undefined => {
   const blocker = BLOCKERS[heir].find(
-    (candidate) =>
-      facts.n(candidate.by) > 0 && (candidate.when?.(facts) ?? true),
+    (candidate) => facts.n(candidate.by) > 0 && (candidate.when?.(facts) ?? true),
   );
   if (blocker === undefined) return undefined;
   const base = `Excluded by the ${HEIR_LABELS[blocker.by].toLowerCase()}`;
@@ -223,8 +205,7 @@ export const SOURCES = {
     "Judgement of Ibn Mas'ud, confirmed by the Prophet's ruling (Bukhari): the son's daughter takes the sixth that completes two thirds",
   residue:
     "Hadith of Ibn 'Abbas (Bukhari, Muslim): give the fixed shares to their people, and what remains goes to the nearest male relative",
-  grandfather:
-    "Consensus that the grandfather takes the father's place when there is no father",
+  grandfather: "Consensus that the grandfather takes the father's place when there is no father",
 } as const;
 
 export const isUmariyyah = (context: Context) =>
@@ -342,8 +323,7 @@ export const FARD_GROUPS: readonly FardGroup[] = [
     source: SOURCES.siblings,
     rules: [
       {
-        when: (context) =>
-          context.n("maternal_brother") + context.n("maternal_sister") >= 2,
+        when: (context) => context.n("maternal_brother") + context.n("maternal_sister") >= 2,
         share: fixed(1, 3),
         why: "a third shared equally (males and females alike) because there are two or more",
       },

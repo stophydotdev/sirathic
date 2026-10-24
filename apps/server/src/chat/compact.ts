@@ -81,9 +81,7 @@ const termsOf = (text: string) =>
 const piecesOf = (text: string) =>
   text
     .split("\n")
-    .flatMap((line) =>
-      line.length <= PIECE_CHARS ? [line] : line.split(SENTENCE_END),
-    )
+    .flatMap((line) => (line.length <= PIECE_CHARS ? [line] : line.split(SENTENCE_END)))
     .reduce<string[]>((pieces, part) => {
       const last = pieces.at(-1);
       if (last !== undefined && last.length + part.length < PIECE_CHARS) {
@@ -95,35 +93,23 @@ const piecesOf = (text: string) =>
     }, []);
 
 const bm25 = (pieces: string[][], query: ReadonlySet<string>) => {
-  const average =
-    pieces.reduce((sum, terms) => sum + terms.length, 0) / pieces.length;
+  const average = pieces.reduce((sum, terms) => sum + terms.length, 0) / pieces.length;
   const containing = new Map(
-    [...query].map((term) => [
-      term,
-      pieces.filter((terms) => terms.includes(term)).length,
-    ]),
+    [...query].map((term) => [term, pieces.filter((terms) => terms.includes(term)).length]),
   );
   return pieces.map((terms) =>
     [...query].reduce((score, term) => {
       const frequency = terms.filter((word) => word === term).length;
       const found = containing.get(term) ?? 0;
       if (frequency === 0) return score;
-      const rarity = Math.log(
-        1 + (pieces.length - found + 0.5) / (found + 0.5),
-      );
+      const rarity = Math.log(1 + (pieces.length - found + 0.5) / (found + 0.5));
       const length = 1 - B + (B * terms.length) / average;
-      return (
-        score + (rarity * frequency * (K1 + 1)) / (frequency + K1 * length)
-      );
+      return score + (rarity * frequency * (K1 + 1)) / (frequency + K1 * length);
     }, 0),
   );
 };
 
-export const bestPieces = (
-  text: string,
-  queries: readonly string[],
-  chars: number,
-) => {
+export const bestPieces = (text: string, queries: readonly string[], chars: number) => {
   if (text.length <= chars) return text;
   const pieces = piecesOf(text);
   const scores = bm25(pieces.map(termsOf), new Set(queries.flatMap(termsOf)));
@@ -142,9 +128,7 @@ export const bestPieces = (
   if (kept.size === 0) return cut(text, chars);
   return pieces
     .flatMap((piece, index) =>
-      kept.has(index)
-        ? [index > 0 && !kept.has(index - 1) ? `…${piece}` : piece]
-        : [],
+      kept.has(index) ? [index > 0 && !kept.has(index - 1) ? `…${piece}` : piece] : [],
     )
     .join("\n");
 };
@@ -191,10 +175,7 @@ export const hadithBlock = (hadiths: Hadith[]) =>
     "hadith",
     hadiths.map((hadith) =>
       [
-        cited(
-          hadith.citation,
-          hadith.grade ? `${hadith.ref} (${hadith.grade})` : hadith.ref,
-        ),
+        cited(hadith.citation, hadith.grade ? `${hadith.ref} (${hadith.grade})` : hadith.ref),
         hadith.english,
         hadith.arabic && unvowel(hadith.arabic),
       ]

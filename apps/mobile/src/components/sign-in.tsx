@@ -1,13 +1,7 @@
 import * as Clipboard from "expo-clipboard";
 import * as WebBrowser from "expo-web-browser";
 import { type FC, useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { z } from "zod";
 import { authClient } from "@/lib/auth";
 import { colors } from "@/theme";
@@ -69,8 +63,7 @@ export const SignIn: FC = () => {
       const status = devicePoll.safeParse(data).data?.status;
       if (stopped) return;
       if (status === "signed-in") refreshSession();
-      else if (status === "expired")
-        setStep({ kind: "failed", message: "Code expired" });
+      else if (status === "expired") setStep({ kind: "failed", message: "Code expired" });
       else timer = setTimeout(poll, step.intervalMs);
     };
     let timer = setTimeout(poll, step.intervalMs);
@@ -82,9 +75,7 @@ export const SignIn: FC = () => {
 
   return (
     <View style={styles.page}>
-      <Text style={styles.title}>
-        Assalamu alaikum. Sign in to start asking.
-      </Text>
+      <Text style={styles.title}>Assalamu alaikum. Sign in to start asking.</Text>
       {step.kind === "code" ? (
         <View style={styles.stack}>
           <Text selectable style={styles.code}>
@@ -103,9 +94,7 @@ export const SignIn: FC = () => {
         </View>
       ) : (
         <View style={styles.stack}>
-          {step.kind === "failed" && (
-            <Text style={styles.error}>{step.message}</Text>
-          )}
+          {step.kind === "failed" && <Text style={styles.error}>{step.message}</Text>}
           <Pressable
             disabled={step.kind === "waiting"}
             style={[styles.button, styles.primary]}
@@ -121,9 +110,7 @@ export const SignIn: FC = () => {
             <Text style={styles.secondaryText}>Continue with Google</Text>
           </Pressable>
           <Text style={styles.hint}>Use your ChatGPT plan for GPT models</Text>
-          {step.kind === "waiting" && (
-            <ActivityIndicator color={colors.muted} />
-          )}
+          {step.kind === "waiting" && <ActivityIndicator color={colors.muted} />}
         </View>
       )}
     </View>

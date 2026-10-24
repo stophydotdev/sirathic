@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuiState } from "@assistant-ui/react";
 
 const useFileSrc = (file: File | undefined) => {
-  const [entry, setEntry] = useState<{ file: File; url: string } | undefined>(
-    undefined,
-  );
+  const [entry, setEntry] = useState<{ file: File; url: string } | undefined>(undefined);
 
   useEffect(() => {
     if (!file) {
@@ -26,9 +24,7 @@ const useFileSrc = (file: File | undefined) => {
 };
 
 export const useAttachmentSrc = () => {
-  const file = useAuiState((s) =>
-    s.attachment.type === "image" ? s.attachment.file : undefined,
-  );
+  const file = useAuiState((s) => (s.attachment.type === "image" ? s.attachment.file : undefined));
   const src = useAuiState((s) =>
     s.attachment.type === "image" && !s.attachment.file
       ? s.attachment.content?.find((c) => c.type === "image")?.image

@@ -8,9 +8,7 @@ import { DATA_DIR, FATWA_MIRRORS } from "./catalog";
 
 const DRY = process.argv.includes("--dry");
 const SAMPLES = process.argv.filter((arg) => arg.startsWith("https://"));
-const LIMIT = Number(
-  process.argv.find((arg) => arg.startsWith("--limit="))?.slice(8) ?? Infinity,
-);
+const LIMIT = Number(process.argv.find((arg) => arg.startsWith("--limit="))?.slice(8) ?? Infinity);
 const ONLY = process.argv
   .find((arg) => arg.startsWith("--sites="))
   ?.slice(8)
@@ -47,17 +45,14 @@ const get = async (
     signal: AbortSignal.timeout(30_000),
   }).catch((error: Error) => error);
   if (!(response instanceof Error) && response.ok) return response.text();
-  const why =
-    response instanceof Error ? response.message : `HTTP ${response.status}`;
+  const why = response instanceof Error ? response.message : `HTTP ${response.status}`;
   if (attempt === ATTEMPTS) throw new Error(`${url}: ${why}`);
   await Bun.sleep(2_000 * attempt);
   return get(url, headers, attempt + 1);
 };
 
 const rawFile = (url: string) =>
-  Bun.file(
-    `${RAW_DIR}/${new URL(url).hostname}/${Bun.hash(url).toString(16)}.html.gz`,
-  );
+  Bun.file(`${RAW_DIR}/${new URL(url).hostname}/${Bun.hash(url).toString(16)}.html.gz`);
 
 const pageHtml = async (url: string) => {
   const file = rawFile(url);
@@ -73,18 +68,12 @@ const LOC = /<loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/loc>/gu;
 
 const sitemapUrls = async (url: string, site: Site): Promise<string[]> => {
   const xml = await get(url);
-  const locs = [...xml.matchAll(LOC)].map(([, loc = ""]) =>
-    loc.replaceAll("&amp;", "&"),
-  );
+  const locs = [...xml.matchAll(LOC)].map(([, loc = ""]) => loc.replaceAll("&amp;", "&"));
   if (!xml.includes("<sitemapindex")) return locs;
-  const children = locs.filter(
-    (loc) => site.follow?.test(loc.split("/").at(-1) ?? loc) ?? true,
-  );
+  const children = locs.filter((loc) => site.follow?.test(loc.split("/").at(-1) ?? loc) ?? true);
   const { delayMs } = site;
   if (!delayMs) {
-    return (
-      await Promise.all(children.map((child) => sitemapUrls(child, site)))
-    ).flat();
+    return (await Promise.all(children.map((child) => sitemapUrls(child, site)))).flat();
   }
   const inTurn = async ([child, ...rest]: string[]): Promise<string[]> => {
     if (child === undefined) return [];
@@ -162,9 +151,7 @@ const publishedOf = (html: string) => {
 const SCHOOLS = ["hanafi", "maliki", "shafii", "hanbali"] as const;
 
 const schoolOf = (url: string) =>
-  SCHOOLS.find(
-    (school) => url.includes(`/${school}/`) || url.includes(`/${school}-fiqh/`),
-  );
+  SCHOOLS.find((school) => url.includes(`/${school}/`) || url.includes(`/${school}-fiqh/`));
 
 const WRITING_SITEMAP =
   /^(?!.*(category|post_tag|author|users|attachment|product|format|media|image|video|event|location|series|speaker|course|landing|portfolio|elementor|wpforms|give_|page-sitemap|posts-page|taxonomies|personnel|timeline|gallery|mega_menu|watch|team|topic|podcast|collections|pages|agentic|metform|wpdmpro|misc)).+$/iu;
@@ -177,9 +164,7 @@ const decode = (text: string) =>
     .replaceAll(/\\u([0-9a-f]{4})/giu, (_, code: string) =>
       String.fromCodePoint(Number.parseInt(code, 16)),
     )
-    .replaceAll(/&#(\d+);/gu, (_, code: string) =>
-      String.fromCodePoint(Number(code)),
-    )
+    .replaceAll(/&#(\d+);/gu, (_, code: string) => String.fromCodePoint(Number(code)))
     .replaceAll(/&#x([0-9a-f]+);/giu, (_, code: string) =>
       String.fromCodePoint(Number.parseInt(code, 16)),
     )
@@ -215,9 +200,7 @@ const firstPart = (title: string | undefined) =>
 
 const pageTitle = (markdown: string, html: string) =>
   titleOf(markdown) ??
-  firstPart(
-    /<meta[^>]+property="og:title"[^>]+content="([^"]+)"/u.exec(html)?.[1],
-  ) ??
+  firstPart(/<meta[^>]+property="og:title"[^>]+content="([^"]+)"/u.exec(html)?.[1]) ??
   firstPart(/<title[^>]*>([^<]+)<\/title>/iu.exec(html)?.[1]) ??
   /^## (.+)$/mu.exec(markdown)?.[1]?.trim();
 
@@ -227,14 +210,9 @@ const article = (
   markdown: string,
   html: string,
   url: string,
-  {
-    answerMark = ANSWER_MARK,
-    headline,
-  }: Pick<ArticleSite, "answerMark" | "headline"> = {},
+  { answerMark = ANSWER_MARK, headline }: Pick<ArticleSite, "answerMark" | "headline"> = {},
 ): Fatwa | undefined => {
-  const title =
-    decode(headline?.exec(html)?.[1]?.trim() ?? "") ||
-    pageTitle(markdown, html);
+  const title = decode(headline?.exec(html)?.[1]?.trim() ?? "") || pageTitle(markdown, html);
   const body = markdown
     .replace(/^# .+$/mu, "")
     .replace(/(\n+>[^\n]*)+\s*$/u, "")
@@ -331,9 +309,7 @@ const AMJA_PAGE = 1_000;
 
 const AMJA_FATWAS = z.object({
   recordsTotal: z.number(),
-  data: z.array(
-    z.object({ data: z.object({ id: z.number(), slug: z.string() }) }),
-  ),
+  data: z.array(z.object({ data: z.object({ id: z.number(), slug: z.string() }) })),
 });
 
 const amjaFatwas = async (lang: "en" | "ar", start = 0): Promise<string[]> => {
@@ -346,8 +322,7 @@ const amjaFatwas = async (lang: "en" | "ar", start = 0): Promise<string[]> => {
     ),
   );
   const urls = data.map(
-    ({ data: { id, slug } }) =>
-      `https://www.amjaonline.org/fatwa/${lang}/${id}/${slug}`,
+    ({ data: { id, slug } }) => `https://www.amjaonline.org/fatwa/${lang}/${id}/${slug}`,
   );
   if (start + AMJA_PAGE >= recordsTotal) return urls;
   await Bun.sleep(1_000);
@@ -361,10 +336,7 @@ const DARULIFTAA_QUESTIONS = z.object({
   results: z.array(z.object({ detail_url: z.string(), status: z.string() })),
 });
 
-const darulIftaaCategory = async (
-  category: string,
-  offset = 0,
-): Promise<string[]> => {
+const darulIftaaCategory = async (category: string, offset = 0): Promise<string[]> => {
   const { count, results } = DARULIFTAA_QUESTIONS.parse(
     JSON.parse(
       await get(
@@ -376,37 +348,25 @@ const darulIftaaCategory = async (
     .filter(({ status }) => status === "Complete")
     .map(({ detail_url }) => `https://daruliftaa.us${detail_url}`);
   if (offset + DARULIFTAA_PAGE >= count) return urls;
-  return [
-    ...urls,
-    ...(await darulIftaaCategory(category, offset + DARULIFTAA_PAGE)),
-  ];
+  return [...urls, ...(await darulIftaaCategory(category, offset + DARULIFTAA_PAGE))];
 };
 
 const darulIftaaFatwas = async () => {
   const sitemap = await get("https://daruliftaa.us/sitemap.xml");
-  const categories = [
-    ...sitemap.matchAll(/\/fatwas\/category\/([^/]+)\//gu),
-  ].map(([, slug = ""]) => slug);
-  return (
-    await Promise.all(categories.map((slug) => darulIftaaCategory(slug)))
-  ).flat();
+  const categories = [...sitemap.matchAll(/\/fatwas\/category\/([^/]+)\//gu)].map(
+    ([, slug = ""]) => slug,
+  );
+  return (await Promise.all(categories.map((slug) => darulIftaaCategory(slug)))).flat();
 };
 
 const FATWAISLAM_FATWA = "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=";
 
 const fatwaIslamFatwas = async () => {
-  const latest = await get(
-    "https://fatwaislam.com/fis/index.cfm?scn=firstpage_latest",
-  );
+  const latest = await get("https://fatwaislam.com/fis/index.cfm?scn=firstpage_latest");
   const newest = Math.max(
-    ...[...latest.matchAll(/scn=fd&(?:amp;)?ID=(\d+)/gu)].map(([, id]) =>
-      Number(id),
-    ),
+    ...[...latest.matchAll(/scn=fd&(?:amp;)?ID=(\d+)/gu)].map(([, id]) => Number(id)),
   );
-  return Array.from(
-    { length: newest },
-    (_, index) => `${FATWAISLAM_FATWA}${index + 1}`,
-  );
+  return Array.from({ length: newest }, (_, index) => `${FATWAISLAM_FATWA}${index + 1}`);
 };
 
 const SITES: Site[] = [
@@ -426,38 +386,19 @@ const SITES: Site[] = [
       const [, lang, number] = ISLAMQA_ANSWER.exec(url) ?? [];
       const title = titleOf(markdown);
       const answerLabel = /<h2[^>]*>([^<]+)<hr/u.exec(html)?.[1];
-      const summaryLabel =
-        /<h2 class="[^"]*tw-text-secondary[^"]*">([^<]+)<\/h2>/u.exec(
-          html,
-        )?.[1];
-      const sourceLabel =
-        /<h2>([^<]+?)(?:<!-- -->)?:\s*<\/h2><p data-sut="fatwa-source"/u.exec(
-          html,
-        )?.[1];
-      const answer = between(
-        markdown,
-        headingLine(answerLabel),
-        headingLine(sourceLabel, ":"),
-      );
+      const summaryLabel = /<h2 class="[^"]*tw-text-secondary[^"]*">([^<]+)<\/h2>/u.exec(html)?.[1];
+      const sourceLabel = /<h2>([^<]+?)(?:<!-- -->)?:\s*<\/h2><p data-sut="fatwa-source"/u.exec(
+        html,
+      )?.[1];
+      const answer = between(markdown, headingLine(answerLabel), headingLine(sourceLabel, ":"));
       if (!title || !answer || !number) return undefined;
       return {
-        id:
-          lang === "en"
-            ? `islamqa.info:${number}`
-            : `islamqa.info:${lang}:${number}`,
+        id: lang === "en" ? `islamqa.info:${number}` : `islamqa.info:${lang}:${number}`,
         school: "hanbali",
         answeredBy: "IslamQA",
         title,
-        question: between(
-          markdown,
-          new RegExp(`^## .+ ${number}\\s*$`, "mu"),
-          /^## /mu,
-        ),
-        summary: between(
-          markdown,
-          headingLine(summaryLabel),
-          /^(Similar Topics|## )/mu,
-        ),
+        question: between(markdown, new RegExp(`^## .+ ${number}\\s*$`, "mu"), /^## /mu),
+        summary: between(markdown, headingLine(summaryLabel), /^(Similar Topics|## )/mu),
         answer,
         publishedAt: publishedOf(html),
       };
@@ -474,8 +415,7 @@ const SITES: Site[] = [
     sitemaps: [],
     listings: {
       start: ["https://www.islamweb.net/en/fatawa/"],
-      follow:
-        /^https:\/\/www\.islamweb\.net\/en\/fatawa\/\d+\/[^?]*(\?pageno=\d+&tab=1)?$/u,
+      follow: /^https:\/\/www\.islamweb\.net\/en\/fatawa\/\d+\/[^?]*(\?pageno=\d+&tab=1)?$/u,
     },
     page: /^https:\/\/www\.islamweb\.net\/(ar|en)\/fatwa\/\d+\//u,
     parallel: 8,
@@ -492,8 +432,8 @@ const SITES: Site[] = [
               markdown.slice(asked.index + asked[0].length, answered.index),
               markdown.slice(answered.index + answered[0].length),
             ].map((part) => part.trim())
-          : [...html.matchAll(/<div itemprop="text">([\s\S]*?)<\/div>/gu)].map(
-              ([, part = ""]) => plainText(part),
+          : [...html.matchAll(/<div itemprop="text">([\s\S]*?)<\/div>/gu)].map(([, part = ""]) =>
+              plainText(part),
             );
       if (!title || answer.length < 100) return undefined;
       return {
@@ -524,10 +464,7 @@ const SITES: Site[] = [
     parse: (markdown, html, url) => {
       const title = titleOf(markdown);
       const scholar = /Answered by\s*\n+\s*(.+)/u.exec(markdown)?.[1]?.trim();
-      const from =
-        /<meta[^>]+property="article:section"[^>]+content="([^"]+)"/u.exec(
-          html,
-        )?.[1];
+      const from = /<meta[^>]+property="article:section"[^>]+content="([^"]+)"/u.exec(html)?.[1];
       const body = between(
         markdown,
         /^From\b.*$/mu,
@@ -567,9 +504,7 @@ const SITES: Site[] = [
         /^## (.+?) (?:is asked|addresses|answers|explains|discusses|clarifies|advises|responds)\b/mu.exec(
           markdown,
         ) ??
-        /^\[[A-Z][a-z]+ \d{1,2}, \d{4}\] \[([^\]]+)\]/mu.exec(
-          markdown,
-        ))?.[1]?.trim(),
+        /^\[[A-Z][a-z]+ \d{1,2}, \d{4}\] \[([^\]]+)\]/mu.exec(markdown))?.[1]?.trim(),
   }),
   articleSite({
     name: "iifa-aifi.org",
@@ -627,10 +562,7 @@ const SITES: Site[] = [
     url: "https://www.amjaonline.org",
     credit: "Assembly of Muslim Jurists of America",
     sitemaps: ["https://www.amjaonline.org/post-sitemap.xml"],
-    discover: async () => [
-      ...(await amjaFatwas("en")),
-      ...(await amjaFatwas("ar")),
-    ],
+    discover: async () => [...(await amjaFatwas("en")), ...(await amjaFatwas("ar"))],
     page: /^https:\/\/www\.amjaonline\.org\/.+/u,
     answeredBy: by("Assembly of Muslim Jurists of America"),
   }),
@@ -860,20 +792,14 @@ const SITES: Site[] = [
     }),
     parse: (_markdown, html, url) => {
       const grab = (pattern: RegExp) => pattern.exec(html)?.[1] ?? "";
-      const title = plainText(
-        grab(/<font style="font-size:13px;">\s*<b>([\s\S]*?)<\/b>/u),
-      );
+      const title = plainText(grab(/<font style="font-size:13px;">\s*<b>([\s\S]*?)<\/b>/u));
       const question = plainText(grab(/<u>Question:<\/u>([\s\S]*?)<\/td>/u));
       const answer = plainText(grab(/<u>Answer:<\/u>([\s\S]*?)<\/td>/u));
-      const credit = grab(
-        /<u>Answer:<\/u>[\s\S]*?<\/td>([\s\S]*?)<b>Other subjects of interest/u,
-      );
+      const credit = grab(/<u>Answer:<\/u>[\s\S]*?<\/td>([\s\S]*?)<b>Other subjects of interest/u);
       return title && question && answer
         ? {
             id: `fatwaislam.com:${new URL(url).searchParams.get("ID")}`,
-            answeredBy:
-              plainText(/<b>([\s\S]*?)<\/b>/u.exec(credit)?.[1] ?? "") ||
-              undefined,
+            answeredBy: plainText(/<b>([\s\S]*?)<\/b>/u.exec(credit)?.[1] ?? "") || undefined,
             title,
             question,
             answer: [answer, plainText(credit)].filter(Boolean).join("\n\n"),
@@ -933,13 +859,7 @@ const chunksOf = (text: string) => {
   return parts;
 };
 
-const passageRow = (
-  fatwa: Fatwa,
-  source: string,
-  url: string,
-  answer: string,
-  index: number,
-) => ({
+const passageRow = (fatwa: Fatwa, source: string, url: string, answer: string, index: number) => ({
   ...fatwa,
   id: index === 0 ? fatwa.id : `${fatwa.id}#${index + 1}`,
   question: index === 0 ? fatwa.question : undefined,
@@ -951,11 +871,7 @@ const passageRow = (
 
 const rowsOf = async (site: Site, url: string) => {
   const html = await pageHtml(url);
-  const fatwa = site.parse(
-    clean(htmlToMarkdown(html, url).markdown),
-    html,
-    url,
-  );
+  const fatwa = site.parse(clean(htmlToMarkdown(html, url).markdown), html, url);
   return fatwa
     ? chunksOf(fatwa.answer).map((answer, index) =>
         passageRow(fatwa, site.source.name, url, answer, index),
@@ -966,9 +882,7 @@ const rowsOf = async (site: Site, url: string) => {
 type Row = NonNullable<Awaited<ReturnType<typeof rowsOf>>>[number];
 
 const sizeOf = (text: string | null | undefined) =>
-  text
-    ? `${text.length} chars (~${Math.round(text.length / 4)} tokens)`
-    : "none";
+  text ? `${text.length} chars (~${Math.round(text.length / 4)} tokens)` : "none";
 
 const preview = (fatwa: Row) => {
   return [
@@ -989,11 +903,7 @@ const crawl = async (site: Site) => {
     samples.length > 0
       ? samples
       : [
-          ...(
-            await Promise.all(
-              site.sitemaps.map((url) => sitemapUrls(url, site)),
-            )
-          ).flat(),
+          ...(await Promise.all(site.sitemaps.map((url) => sitemapUrls(url, site)))).flat(),
           ...(await listedUrls(site)),
           ...((await site.discover?.()) ?? []),
         ].filter((url) => site.page.test(url) && !site.skip?.test(url));
@@ -1005,11 +915,7 @@ const crawl = async (site: Site) => {
         ? urls
         : urls.filter(
             (_, index) =>
-              index %
-                Math.ceil(
-                  urls.length / (Number.isFinite(LIMIT) ? LIMIT : 3),
-                ) ===
-              0,
+              index % Math.ceil(urls.length / (Number.isFinite(LIMIT) ? LIMIT : 3)) === 0,
           );
     const parsed: Row[][] = [];
     const visit = async ([url, ...rest]: string[]): Promise<void> => {
@@ -1026,22 +932,15 @@ const crawl = async (site: Site) => {
     for (const rows of parsed.slice(0, samples.length > 0 ? undefined : 3)) {
       const [first] = rows;
       if (first) {
-        console.log(
-          `${preview(first)}${rows.length > 1 ? `\n  (${rows.length} passages)` : ""}`,
-        );
+        console.log(`${preview(first)}${rows.length > 1 ? `\n  (${rows.length} passages)` : ""}`);
       }
     }
-    console.log(
-      `${site.source.name}: ${parsed.length} of ${picks.length} sampled pages parsed`,
-    );
+    console.log(`${site.source.name}: ${parsed.length} of ${picks.length} sampled pages parsed`);
     return;
   }
   const stored = new Set(
     (
-      await db
-        .select({ url: fatwas.url })
-        .from(fatwas)
-        .where(eq(fatwas.source, site.source.name))
+      await db.select({ url: fatwas.url }).from(fatwas).where(eq(fatwas.source, site.source.name))
     ).map((row) => row.url),
   );
   const queue = urls.filter((url) => !stored.has(url));
@@ -1052,8 +951,7 @@ const crawl = async (site: Site) => {
   const flush = async () => {
     const rows = batch;
     batch = [];
-    if (rows.length > 0)
-      await db.insert(fatwas).values(rows).onConflictDoNothing();
+    if (rows.length > 0) await db.insert(fatwas).values(rows).onConflictDoNothing();
     saved += rows.length;
     console.log(
       `${site.source.name}: ${saved} saved, ${skipped} not parsed, ${failed} failed, ${queue.length} left`,

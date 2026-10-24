@@ -14,13 +14,7 @@ export const Rosette: FC<{ color: string }> = ({ color }) => {
       </clipPath>
       <g clipPath={`url(#${clip})`} fill="none" stroke={color}>
         {PETALS.map((angle) => (
-          <circle
-            key={angle}
-            cx="18"
-            cy="12"
-            r="6"
-            transform={`rotate(${angle} 12 12)`}
-          />
+          <circle key={angle} cx="18" cy="12" r="6" transform={`rotate(${angle} 12 12)`} />
         ))}
         <circle cx="12" cy="12" r="10.9" />
       </g>
