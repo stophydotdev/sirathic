@@ -9,7 +9,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdownMenu";
 import { IconChevronDown } from "@tabler/icons-react";
 import { Switch } from "radix-ui";
 import { type FC, type ReactNode } from "react";

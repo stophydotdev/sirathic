@@ -4,7 +4,7 @@ import { IconExternalLink, IconWorld } from "@tabler/icons-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useId } from "react";
 import { EASE_OUT, SPRING_LAYOUT } from "@/lib/ease";
-import { useFavicon } from "@/lib/hooks/use-favicon";
+import { useFavicon } from "@/lib/hooks/useFavicon";
 import { cn } from "@/lib/utils";
 
 export interface CitationItem {

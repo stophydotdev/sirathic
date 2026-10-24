@@ -1,19 +1,19 @@
 "use client";
 
 import { useAccount } from "@/components/account";
-import { useChatOptions } from "@/components/chat-options";
-import { useConsent } from "@/components/cookie-notice";
+import { useChatOptions } from "@/components/chatOptions";
+import { useConsent } from "@/components/cookieNotice";
 import { useLocale, useLocalePath, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Logo, Mark } from "@/components/logo";
-import { SearchDialog, SessionRow } from "@/components/session-menu";
+import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
-import { AccountRow, SignInDialog } from "@/components/sign-in";
-import { TooltipIconButton } from "@/components/tooltip-icon-button";
+import { AccountRow, SignInDialog } from "@/components/signIn";
+import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { AskSelection } from "@/components/ask-selection";
+import { AskSelection } from "@/components/askSelection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {

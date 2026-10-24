@@ -28,12 +28,12 @@ import {
 import { IconCheck, IconCopy } from "@tabler/icons-react";
 import { z } from "zod";
 
-import { TooltipIconButton } from "@/components/tooltip-icon-button";
+import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { hidePendingCitation, rehypeCitations, rehypeVerses } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
 import { CitationNumbers, siteName, SourcesContext } from "@/components/sources";
-import { InlineVerse } from "@/components/verse-cards";
-import { useCopyToClipboard } from "@/lib/hooks/use-copy-to-clipboard";
+import { InlineVerse } from "@/components/verseCards";
+import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 import { cn } from "@/lib/utils";
 
 const withMathDelimiters = (text: string) =>
@@ -54,7 +54,7 @@ const MarkdownTextImpl: FC = () => (
 
 export const MarkdownText = memo(MarkdownTextImpl);
 
-const CodeHighlighter = lazy(() => import("@/components/code-highlighter"));
+const CodeHighlighter = lazy(() => import("@/components/codeHighlighter"));
 
 const SyntaxHighlighter: FC<SyntaxHighlighterProps> = (props) => (
   <Suspense

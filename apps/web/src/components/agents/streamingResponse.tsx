@@ -13,7 +13,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
-import { AgentDisclosure } from "@/components/agents/agent-disclosure";
+import { AgentDisclosure } from "@/components/agents/agentDisclosure";
 import { EASE_OUT, SPRING_PRESS, SPRING_SWAP } from "@/lib/ease";
 import { cn } from "@/lib/utils";
 

@@ -3,9 +3,9 @@
 import { useLocalePath, useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
 import { useChatState } from "@/components/chat";
-import { MODE_DETAILS, useChatOptions } from "@/components/chat-options";
+import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { MODE_ICONS } from "@/components/composer";
-import { MakerIcon } from "@/components/maker-icon";
+import { MakerIcon } from "@/components/makerIcon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdownMenu";
 import {
   type ChatMessage,
   feedback as feedbackSchema,

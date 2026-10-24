@@ -2,7 +2,7 @@
 
 import { MODEL_DESCRIPTIONS, useAccount } from "@/components/account";
 import { type Translate, useT } from "@/components/i18n";
-import { MakerIcon } from "@/components/maker-icon";
+import { MakerIcon } from "@/components/makerIcon";
 import {
   AboutSection,
   AccountSection,
@@ -10,12 +10,12 @@ import {
   ModelsSection,
   PersonalizationSection,
   PreferencesSection,
-} from "@/components/settings-sections";
+} from "@/components/settingsSections";
 import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdownMenu";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {

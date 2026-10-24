@@ -1,15 +1,15 @@
 "use client";
 
 import { useAccount } from "@/components/account";
-import { useChatOptions } from "@/components/chat-options";
-import { useConsent } from "@/components/cookie-notice";
+import { useChatOptions } from "@/components/chatOptions";
+import { useConsent } from "@/components/cookieNotice";
 import { saveDraft } from "@/components/draft";
-import { GoogleIcon } from "@/components/google-icon";
+import { GoogleIcon } from "@/components/googleIcon";
 import { useLocalePath, useT } from "@/components/i18n";
-import { CONTACT } from "@/components/legal-page";
+import { CONTACT } from "@/components/legalPage";
 import { markSignInStarted } from "@/lib/analytics";
 import { Mark } from "@/components/logo";
-import { OpenAIIcon } from "@/components/openai-icon";
+import { OpenAIIcon } from "@/components/openaiIcon";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
 import { useSettings } from "@/components/settings";
@@ -26,7 +26,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdownMenu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";

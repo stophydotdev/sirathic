@@ -2,14 +2,14 @@
 
 import { useT } from "@/components/i18n";
 import { track } from "@/lib/analytics";
-import { download } from "@/components/answer-actions";
+import { download } from "@/components/answerActions";
 import { sourcesOf } from "@/components/sources";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdownMenu";
 import { type ThreadMessage, useAui } from "@assistant-ui/react";
 import { IconDownload, IconFileText, IconPrinter } from "@tabler/icons-react";
 import type { FC } from "react";

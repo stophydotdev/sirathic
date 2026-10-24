@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CookieNotice } from "@/components/cookie-notice";
+import { CookieNotice } from "@/components/cookieNotice";
 import { I18nProvider } from "@/components/i18n";
 import { hasLocale, isRtl, LOCALES } from "@/components/locales";
 import { themeScript } from "@/components/preferences";

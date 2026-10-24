@@ -50,7 +50,12 @@
   },
   "overrides": [
     {
-      "files": ["apps/server/**/*.ts", "packages/*/src/**/*.ts", "scripts/**/*.ts"],
+      "files": [
+        "apps/server/**/*.ts",
+        "apps/web/src/**/*.{ts,tsx}",
+        "packages/*/src/**/*.ts",
+        "scripts/**/*.ts"
+      ],
       "rules": {
         "unicorn/filename-case": ["error", { "case": "camelCase" }]
       }

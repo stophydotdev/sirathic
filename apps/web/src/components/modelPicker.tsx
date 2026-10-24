@@ -2,9 +2,9 @@
 
 import { useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
-import { MakerIcon } from "@/components/maker-icon";
+import { MakerIcon } from "@/components/makerIcon";
 import { ModelMenuContent, useSettings } from "@/components/settings";
-import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdownMenu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { IconChevronDown } from "@tabler/icons-react";
 import type { ComponentProps, FC } from "react";
