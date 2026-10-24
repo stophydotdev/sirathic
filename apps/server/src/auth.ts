@@ -10,7 +10,7 @@ import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { createAuthMiddleware } from "better-auth/api";
-import { chatgptSignIn } from "./chatgpt/sign-in";
+import { chatgptSignIn } from "./chatgpt/signIn";
 import { clientOf } from "./client";
 import { track } from "./events";
 import { forgetIfSignedOut, SESSION_DAYS, type User } from "./users";
