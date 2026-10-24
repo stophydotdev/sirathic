@@ -43,7 +43,7 @@ const write = () =>
 
 const settle = async (): Promise<void> => {
   await write();
-  const checked = Bun.spawnSync(["bun", "run", "typecheck"], { cwd: WEB });
+  const checked = Bun.spawnSync(["bun", "run", "check-types"], { cwd: WEB });
   const before = keys.size;
   for (const [, union = ""] of checked.stdout.toString().matchAll(MISSING)) {
     for (const [literal] of union.matchAll(LITERAL)) keys.add(JSON.parse(literal));

@@ -9,7 +9,7 @@
     "start": "bun --bun next start --port 3001",
     "preview": "NEXT_PUBLIC_SERVER=https://api.sirathic.com opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "NEXT_PUBLIC_SERVER=https://api.sirathic.com opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "typecheck": "tsc-rs --noEmit -p ."
+    "check-types": "next typegen && tsc-rs --noEmit -p ."
   },
   "dependencies": {
     "@ai-sdk/react": "4.0.145",
