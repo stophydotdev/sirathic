@@ -1,11 +1,11 @@
 "use client";
 
 import { useAccount } from "@/components/account";
-import { StreamingResponse } from "@/components/agents/streaming-response";
-import { actionButton, AnswerExtras, useAnswer } from "@/components/answer-actions";
+import { StreamingResponse } from "@/components/agents/streamingResponse";
+import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
 import { Favicon } from "@/components/favicon";
-import { MarkdownText } from "@/components/markdown-text";
-import { SourceRow } from "@/components/source-row";
+import { MarkdownText } from "@/components/markdownText";
+import { SourceRow } from "@/components/sourceRow";
 import {
   CitationNumbers,
   citedUrlsOf,
@@ -14,7 +14,7 @@ import {
   sourcesOf,
   turnsOf,
 } from "@/components/sources";
-import { useSignIn } from "@/components/sign-in";
+import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
 import type { Source } from "@sirathic/server/sources";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,7 @@ import {
 import { IconChevronLeft, IconChevronRight, IconCornerDownRight } from "@tabler/icons-react";
 import { type FC, useState } from "react";
 import { z } from "zod";
-import { Research } from "@/components/research-steps";
+import { Research } from "@/components/researchSteps";
 
 export const Reply: FC = () => {
   const content = useAuiState((s) => s.message.content);

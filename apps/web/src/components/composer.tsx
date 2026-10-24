@@ -1,12 +1,12 @@
 "use client";
 
-import { MODE_DETAILS, useChatOptions } from "@/components/chat-options";
+import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { takeDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
-import { ModelPicker } from "@/components/model-picker";
+import { ModelPicker } from "@/components/modelPicker";
 import { usePreferences } from "@/components/preferences";
-import { useSignIn } from "@/components/sign-in";
+import { useSignIn } from "@/components/signIn";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,8 +15,8 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useAttachmentSrc } from "@/lib/hooks/use-attachment-src";
+} from "@/components/ui/dropdownMenu";
+import { useAttachmentSrc } from "@/lib/hooks/useAttachmentSrc";
 import { type Mode, MODES, mode as modeSchema } from "@sirathic/server/messages";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";

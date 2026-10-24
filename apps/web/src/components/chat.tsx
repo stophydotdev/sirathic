@@ -2,7 +2,7 @@
 
 import { useLocalePath } from "@/components/i18n";
 import { chosenModel } from "@/components/account";
-import { useChatOptions } from "@/components/chat-options";
+import { useChatOptions } from "@/components/chatOptions";
 import { usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";

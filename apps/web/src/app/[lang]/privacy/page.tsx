@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CONTACT, LegalPage } from "@/components/legal-page";
+import { CONTACT, LegalPage } from "@/components/legalPage";
 import { translator } from "../dictionaries";
 
 export const metadata: Metadata = {

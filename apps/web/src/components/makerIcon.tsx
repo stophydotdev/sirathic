@@ -1,6 +1,6 @@
 import type { Model } from "@/components/account";
 import { Rosette } from "@/components/logo";
-import { OpenAIIcon } from "@/components/openai-icon";
+import { OpenAIIcon } from "@/components/openaiIcon";
 import type { FC, SVGProps } from "react";
 
 const pathIcon =

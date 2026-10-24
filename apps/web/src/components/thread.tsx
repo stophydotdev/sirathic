@@ -1,15 +1,15 @@
 "use client";
 
 import { useChatState } from "@/components/chat";
-import { useChatOptions } from "@/components/chat-options";
+import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
-import { ExportMenu } from "@/components/export-chat";
+import { ExportMenu } from "@/components/exportChat";
 import { Favicon, FaviconStack } from "@/components/favicon";
 import { siteName, turnsOf } from "@/components/sources";
 import { useLocalePath, useT } from "@/components/i18n";
 import { Logo, Mark } from "@/components/logo";
-import { ThreadImages, ThreadVideos } from "@/components/thread-media";
-import { ThreadShell } from "@/components/thread-shell";
+import { ThreadImages, ThreadVideos } from "@/components/threadMedia";
+import { ThreadShell } from "@/components/threadShell";
 import { Skeleton } from "@/components/ui/skeleton";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";

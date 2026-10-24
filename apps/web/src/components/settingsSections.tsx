@@ -1,13 +1,13 @@
 "use client";
 
 import { MODEL_DESCRIPTIONS, useAccount } from "@/components/account";
-import { MODE_DETAILS, useChatOptions } from "@/components/chat-options";
+import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { browserLocale, type Translate, useLocale, useLocalePath, useT } from "@/components/i18n";
 import { LOCALE_COOKIE, LOCALES, type Locale } from "@/components/locales";
-import { MakerIcon } from "@/components/maker-icon";
+import { MakerIcon } from "@/components/makerIcon";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
 import { useSettings } from "@/components/settings";
-import { useSignIn } from "@/components/sign-in";
+import { useSignIn } from "@/components/signIn";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import { useSessions } from "@/components/sessions";
@@ -21,7 +21,7 @@ import {
 } from "@sirathic/server/settings";
 import { IconAlertCircle, IconArrowUpRight, IconCheck } from "@tabler/icons-react";
 import { type FC, useEffect, useRef, useState } from "react";
-import { Choice, control, Group, Row, Segmented, Toggle } from "@/components/settings-controls";
+import { Choice, control, Group, Row, Segmented, Toggle } from "@/components/settingsControls";
 
 const MADHAB_NAMES = {
   none: "No preference",
