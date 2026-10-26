@@ -1,3 +1,4 @@
+import type { AnthropicLanguageModelOptions } from "@ai-sdk/anthropic";
 import { createOpenAI, type OpenAILanguageModelResponsesOptions } from "@ai-sdk/openai";
 import type { streamText } from "ai";
 import { z } from "zod";
@@ -65,6 +66,9 @@ export const answerOptions = (turn: { research: boolean; sessionId: string }): P
     promptCacheKey: turn.sessionId,
     textVerbosity: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
+  anthropic: {
+    thinking: { type: "adaptive", display: "summarized" },
+  } satisfies AnthropicLanguageModelOptions,
 });
 
 export const sideOptions: ProviderOptions = {
