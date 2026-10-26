@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocalePath, useT } from "@/components/i18n";
+import { useT } from "@/components/i18n";
 import { Logo, Mark } from "@/components/logo";
 import type { MessageKey } from "@/messages/en";
 import { Button } from "@/components/ui/button";
@@ -114,7 +114,6 @@ export default function Brand() {
   const assets = useRef<HTMLDivElement>(null);
   const [zipping, setZipping] = useState(false);
   const t = useT();
-  const href = useLocalePath();
 
   const downloadAll = async () => {
     const tiles = assets.current?.querySelectorAll<HTMLElement>("[data-file]");
@@ -133,10 +132,10 @@ export default function Brand() {
   return (
     <main className="min-h-dvh">
       <header className="border-border/60 flex items-center justify-between border-b px-5 py-3.5 md:px-10">
-        <Link href={href("/")} className="text-foreground">
+        <Link href="/" className="text-foreground">
           <Logo height={20} />
         </Link>
-        <Link href={href("/")} className="text-muted-foreground hover:text-foreground text-sm">
+        <Link href="/" className="text-muted-foreground hover:text-foreground text-sm">
           {t("Back to Sirathic")}
         </Link>
       </header>

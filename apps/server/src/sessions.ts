@@ -3,7 +3,7 @@ import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
 import { type AnyColumn, and, desc, eq, ilike, sql } from "drizzle-orm";
 import { z } from "zod";
-import { type ChatMessage, chatData, feedback, messageMetadata } from "./shared/messages";
+import { type ChatMessage, chatData, feedback, messageMetadata, report } from "./shared/messages";
 import { StatusError } from "./respond";
 
 const TITLE_CHARS = 80;
@@ -27,6 +27,7 @@ export const sessionUpdate = z
 export const feedbackInput = z.object({
   messageId: z.string().min(1),
   value: feedback.nullable(),
+  report: report.optional(),
 });
 
 export const forkInput = z.object({ messageId: z.string().min(1) });
@@ -173,13 +174,15 @@ async function messagesOf(id: string, by: string) {
 export async function setFeedback(
   id: string,
   by: string,
-  { messageId, value }: z.output<typeof feedbackInput>,
+  { messageId, value, report: told }: z.output<typeof feedbackInput>,
 ) {
   const messages = await messagesOf(id, by);
   const target = messages.find((message) => message.id === messageId);
   if (!target) throw new StatusError(404, "no such message");
-  const { feedback: _old, ...rest } = target.metadata ?? {};
-  target.metadata = value ? { ...rest, feedback: value } : rest;
+  const { feedback: _old, report: _oldReport, ...rest } = target.metadata ?? {};
+  target.metadata = rest;
+  if (value) target.metadata.feedback = value;
+  if (value === "down" && told) target.metadata.report = told;
   await db.update(chatSessions).set({ messages, updatedAt: keepUpdatedAt }).where(owned(id, by));
   return { feedback: value };
 }

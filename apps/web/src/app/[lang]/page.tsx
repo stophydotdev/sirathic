@@ -1,19 +1,42 @@
 import type { Metadata } from "next";
 import { Chat } from "@/components/chat";
-import { LOCALES } from "@/components/locales";
-import { alternatesOf } from "@/lib/seo";
-import { translator } from "./dictionaries";
+import { alternatesOf, SITE } from "@/lib/seo";
 
-export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
-  const { locale, t } = await translator((await params).lang);
-  return {
-    description: t(
-      "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.",
-    ),
-    alternates: alternatesOf(locale, "", LOCALES),
-  };
-}
+export const metadata: Metadata = { alternates: alternatesOf("") };
+
+const PROFILES = [
+  "https://x.com/sirathic",
+  "https://www.instagram.com/sirathic",
+  "https://www.tiktok.com/@sirathic",
+  "https://www.facebook.com/sirathic",
+];
+
+const STRUCTURED_DATA = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE}/#organization`,
+      name: "Sirathic",
+      url: SITE,
+      logo: `${SITE}/icon.svg`,
+      sameAs: PROFILES,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE}/#website`,
+      name: "Sirathic",
+      url: SITE,
+      publisher: { "@id": `${SITE}/#organization` },
+    },
+  ],
+});
 
 export default function Home() {
-  return <Chat />;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: STRUCTURED_DATA }} />
+      <Chat />
+    </>
+  );
 }

@@ -21,7 +21,6 @@ export type User = {
   id: string;
   email: string | null;
   image: string | null;
-  createdAt: Date;
 } & ({ via: "chatgpt"; plan: string | null; accountId: string } | { via: "google" });
 
 export type ChatGPTUser = Extract<User, { via: "chatgpt" }>;

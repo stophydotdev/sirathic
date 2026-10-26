@@ -2,19 +2,12 @@
 
 import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
-import {
-  IconCheck,
-  IconChevronDown,
-  IconCopy,
-  IconRotate,
-  IconThumbDown,
-  IconThumbUp,
-} from "@tabler/icons-react";
+import { IconCheck, IconCopy, IconRotate, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
 import { AgentDisclosure } from "@/components/agents/agentDisclosure";
-import { EASE_OUT, SPRING_PRESS, SPRING_SWAP } from "@/lib/ease";
+import { EASE_OUT, SPRING_PRESS } from "@/lib/ease";
 import { cn } from "@/lib/utils";
 
 type StreamingResponseStatus = "streaming" | "complete" | "error";
@@ -150,7 +143,7 @@ export function StreamingResponse({
       <div
         aria-live={announce ? "polite" : "off"}
         className={cn(
-          "text-sm leading-6 text-foreground/90 [&_a]:font-medium [&_a]:underline [&_a]:underline-offset-4 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.9em] [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:ps-5 [&_p+p]:mt-3 [&_pre]:my-3 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted/45 [&_pre]:p-3 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:ps-5",
+          "text-base leading-[26px] text-foreground/90 [&_a]:font-medium [&_a]:underline [&_a]:underline-offset-4 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:ps-5 [&_p+p]:mt-3 [&_pre]:my-3 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted/45 [&_pre]:p-3 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:ps-5",
           contentClassName,
         )}
       >
@@ -172,11 +165,6 @@ export function StreamingResponse({
                   {copied ? <IconCheck className="size-3.5" /> : <IconCopy className="size-3.5" />}
                 </ResponseAction>
               ) : null}
-              {onRetry ? (
-                <ResponseAction label="Retry response" onClick={onRetry}>
-                  <IconRotate className="size-3.5" />
-                </ResponseAction>
-              ) : null}
               {complete ? (
                 <>
                   <ResponseAction
@@ -195,13 +183,19 @@ export function StreamingResponse({
                   </ResponseAction>
                 </>
               ) : null}
+              {onRetry ? (
+                <ResponseAction label="Retry response" onClick={onRetry}>
+                  <IconRotate className="size-3.5" />
+                </ResponseAction>
+              ) : null}
+              {actions}
               {hasSources ? (
                 <button
                   type="button"
                   aria-expanded={currentSourcesOpen}
                   aria-controls={sourcesContentId}
                   onClick={() => setSourcesOpen(!currentSourcesOpen)}
-                  className="group ms-1 inline-flex min-h-7 items-center gap-2 rounded-md px-1.5 text-xs text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+                  className="bg-muted text-foreground hover:bg-foreground/10 focus-visible:ring-ring ms-1 inline-flex h-[31px] items-center gap-1.5 rounded-full ps-1 pe-2.5 text-sm outline-none transition-colors focus-visible:ring-2"
                 >
                   <CitationStack citations={sources} />
                   <span className="tabular-nums">
@@ -209,17 +203,8 @@ export function StreamingResponse({
                       ? t("1 source")
                       : t("{count} sources", { count: sources.length })}
                   </span>
-                  <motion.span
-                    aria-hidden="true"
-                    animate={{ rotate: currentSourcesOpen ? 180 : 0 }}
-                    transition={reduce ? { duration: 0 } : SPRING_SWAP}
-                    className="text-muted-foreground/50 group-hover:text-muted-foreground"
-                  >
-                    <IconChevronDown className="size-3" />
-                  </motion.span>
                 </button>
               ) : null}
-              {actions}
             </div>
 
             {hasSources ? (

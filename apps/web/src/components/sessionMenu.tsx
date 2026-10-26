@@ -1,7 +1,7 @@
 "use client";
 
 import { saveDraft } from "@/components/draft";
-import { useLocalePath, useT } from "@/components/i18n";
+import { useT } from "@/components/i18n";
 import { findSessions, type Session, useSessions } from "@/components/sessions";
 import {
   DropdownMenu,
@@ -9,9 +9,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import {
   IconDots,
+  IconExternalLink,
   IconMail,
   IconMailOpened,
   IconPencil,
@@ -29,12 +31,12 @@ import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "re
 
 const panel =
   "bg-background ring-foreground/7 fixed top-1/2 left-1/2 z-[60] flex w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-[20px] shadow-lg ring-1 outline-none ring-inset";
-const button =
+export const modalButton =
   "border-border hover:bg-muted flex h-8 items-center justify-center rounded-[8px] border px-3 text-sm font-[470] transition-colors";
-const primaryButton =
+export const modalPrimaryButton =
   "bg-primary text-primary-foreground flex h-8 items-center justify-center rounded-[8px] px-3 text-sm font-[470] transition hover:opacity-85 disabled:opacity-60";
 
-const Modal: FC<{
+export const Modal: FC<{
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -87,10 +89,10 @@ const RenameDialog: FC<{
           className="border-border focus-visible:border-foreground/30 h-9 w-full rounded-[8px] border bg-transparent px-3 text-sm outline-none"
         />
         <div className="flex justify-end gap-2">
-          <Dialog.Close type="button" className={button}>
+          <Dialog.Close type="button" className={modalButton}>
             {t("Cancel")}
           </Dialog.Close>
-          <button type="submit" className={primaryButton}>
+          <button type="submit" className={modalPrimaryButton}>
             {t("Save")}
           </button>
         </div>
@@ -107,12 +109,11 @@ const DeleteDialog: FC<{
   const remove = useSessions((s) => s.remove);
   const pathname = usePathname();
   const t = useT();
-  const href = useLocalePath();
 
   const confirm = () => {
     void remove(session.id);
     onOpenChange(false);
-    if (pathname === href(`/s/${session.id}`)) window.location.assign(href("/"));
+    if (pathname === `/c/${session.id}`) window.location.assign("/");
   };
 
   return (
@@ -123,13 +124,13 @@ const DeleteDialog: FC<{
         })}
       </p>
       <div className="flex justify-end gap-2">
-        <Dialog.Close type="button" className={button}>
+        <Dialog.Close type="button" className={modalButton}>
           {t("Cancel")}
         </Dialog.Close>
         <button
           type="button"
           onClick={confirm}
-          className={cn(primaryButton, "bg-destructive text-white")}
+          className={cn(modalPrimaryButton, "bg-destructive text-white")}
         >
           {t("Delete")}
         </button>
@@ -137,6 +138,9 @@ const DeleteDialog: FC<{
     </Modal>
   );
 };
+
+const menuItem = "min-h-8 gap-2 rounded-[10px] px-2";
+const menuIcon = "text-muted-foreground size-[18px]";
 
 const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, className }) => {
   const change = useSessions((s) => s.change);
@@ -150,31 +154,51 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
         <DropdownMenuTrigger
           aria-label={t("Session actions")}
           className={cn(
-            "text-muted-foreground hover:text-foreground data-[state=open]:text-foreground flex size-6 shrink-0 items-center justify-center rounded-md",
+            "text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 data-[state=open]:text-foreground flex size-5 shrink-0 items-center justify-center rounded-md",
             className,
           )}
         >
-          <IconDots className="size-4" />
+          <IconDots className="size-3.5" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-44">
-          <DropdownMenuItem onSelect={() => void change(session.id, { pinned: !session.pinned })}>
-            {session.pinned ? <IconPinnedOff className="size-4" /> : <IconPin className="size-4" />}
-            {session.pinned ? t("Unpin") : t("Pin")}
+        <DropdownMenuContent align="start" className="w-64 rounded-[16px] p-1.5">
+          <DropdownMenuItem asChild className={menuItem}>
+            <a href={`/c/${session.id}`} target="_blank" rel="noreferrer">
+              <IconExternalLink className={menuIcon} />
+              {t("Open in new tab")}
+            </a>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => setRenaming(true)}>
-            <IconPencil className="size-4" />
+          <DropdownMenuItem onSelect={() => setRenaming(true)} className={menuItem}>
+            <IconPencil className={menuIcon} />
             {t("Rename")}
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => void change(session.id, { unread: !session.unread })}>
-            {session.unread ? (
-              <IconMailOpened className="size-4" />
+          <DropdownMenuItem
+            onSelect={() => void change(session.id, { pinned: !session.pinned })}
+            className={menuItem}
+          >
+            {session.pinned ? (
+              <IconPinnedOff className={menuIcon} />
             ) : (
-              <IconMail className="size-4" />
+              <IconPin className={menuIcon} />
+            )}
+            {session.pinned ? t("Unpin") : t("Pin")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={() => void change(session.id, { unread: !session.unread })}
+            className={menuItem}
+          >
+            {session.unread ? (
+              <IconMailOpened className={menuIcon} />
+            ) : (
+              <IconMail className={menuIcon} />
             )}
             {session.unread ? t("Mark as read") : t("Mark as unread")}
           </DropdownMenuItem>
-          <DropdownMenuItem variant="destructive" onSelect={() => setDeleting(true)}>
-            <IconTrash className="size-4" />
+          <DropdownMenuItem
+            variant="destructive"
+            onSelect={() => setDeleting(true)}
+            className={menuItem}
+          >
+            <IconTrash className="size-[18px]" />
             {t("Delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -185,54 +209,64 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
   );
 };
 
-const TITLE_SLIDE_PX_PER_SECOND = 40;
-const TITLE_HIDDEN_ON_HOVER_PX = 72;
-
-const paceTitleSlide = (title: HTMLElement | null) => {
-  const link = title?.parentElement;
-  if (!title || !link) return;
-  const distance = Math.max(0, title.offsetWidth - link.clientWidth + TITLE_HIDDEN_ON_HOVER_PX);
-  title.style.setProperty("--slide-time", `${distance / TITLE_SLIDE_PX_PER_SECOND}s`);
-};
-
 export const SessionRow: FC<{
   session: Session;
   onOpen?: () => void;
 }> = ({ session, onOpen }) => {
   const pathname = usePathname();
-  const href = useLocalePath();
-  const current = pathname === href(`/s/${session.id}`);
+  const change = useSessions((s) => s.change);
+  const t = useT();
+  const [titleShown, setTitleShown] = useState(false);
+  const current = pathname === `/c/${session.id}`;
 
   return (
-    <div
-      className={cn(
-        "group/session hover:bg-muted flex items-center gap-1 rounded-md pe-1",
-        current && "bg-muted",
-      )}
-    >
-      <Link
-        href={href(`/s/${session.id}`)}
-        onClick={onOpen}
-        className={cn(
-          "text-foreground @container flex min-w-0 flex-1 items-center overflow-hidden px-2.5 py-1 text-base whitespace-nowrap [mask-image:linear-gradient(to_right,transparent,#000_10px,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))] rtl:[mask-image:linear-gradient(to_left,transparent,#000_10px,#000_calc(100%_-_34px),transparent_calc(100%_-_10px))]",
-          session.unread && "font-[560]",
-        )}
-      >
-        <span
-          ref={paceTitleSlide}
-          className="[transition:transform_200ms_ease-out] motion-safe:group-hover/session:[transition:transform_var(--slide-time)_linear_400ms] motion-safe:group-hover/session:[transform:translateX(min(0px,calc(100cqw_-_100%_-_24px)))] motion-safe:rtl:group-hover/session:[transform:translateX(max(0px,calc(100%_-_100cqw_+_24px)))]"
-        >
+    <TooltipProvider delayDuration={500}>
+      <Tooltip open={titleShown} onOpenChange={setTitleShown}>
+        <TooltipTrigger asChild>
+          <div
+            onPointerDownCapture={() => setTitleShown(false)}
+            onFocus={(event) => event.preventDefault()}
+            className={cn(
+              "group/session hover:bg-muted flex items-center gap-0.5 rounded-[12px] pe-2",
+              current && "bg-muted",
+            )}
+          >
+            <Link
+              href={`/c/${session.id}`}
+              onClick={onOpen}
+              className={cn(
+                "text-foreground min-w-0 flex-1 truncate px-2.5 py-2 text-sm",
+                session.unread && "font-[560]",
+              )}
+            >
+              {session.title}
+            </Link>
+            {session.unread && (
+              <span className="bg-super me-2 size-1.5 shrink-0 rounded-full group-focus-within/session:hidden group-hover/session:hidden group-has-[[data-state=open]]/session:hidden" />
+            )}
+            <button
+              type="button"
+              aria-label={session.pinned ? t("Unpin") : t("Pin")}
+              onClick={() => void change(session.id, { pinned: !session.pinned })}
+              className="text-muted-foreground hover:bg-muted hover:text-foreground hidden size-5 shrink-0 items-center justify-center rounded-md group-focus-within/session:flex group-hover/session:flex group-has-[[data-state=open]]/session:flex pointer-coarse:flex"
+            >
+              {session.pinned ? (
+                <IconPinnedOff className="size-3.5" />
+              ) : (
+                <IconPin className="size-3.5" />
+              )}
+            </button>
+            <SessionMenu
+              session={session}
+              className="hidden group-focus-within/session:flex group-hover/session:flex data-[state=open]:flex pointer-coarse:flex"
+            />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="right" sideOffset={8}>
           {session.title}
-        </span>
-      </Link>
-      {session.unread && (
-        <span className="bg-super me-2 size-1.5 shrink-0 rounded-full group-focus-within/session:hidden group-hover/session:hidden group-has-[[data-state=open]]/session:hidden" />
-      )}
-      <SessionMenu
-        session={session}
-        className="hidden group-focus-within/session:flex group-hover/session:flex data-[state=open]:flex pointer-coarse:flex"
-      />
-    </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
@@ -254,7 +288,6 @@ export const SearchDialog: FC<{
   const [found, setFound] = useState<Session[]>([]);
   const [active, setActive] = useState(0);
   const t = useT();
-  const href = useLocalePath();
   const router = useRouter();
 
   useEffect(() => {
@@ -290,7 +323,7 @@ export const SearchDialog: FC<{
             hint: asked,
             run: () => {
               saveDraft(asked);
-              window.location.assign(href("/"));
+              window.location.assign("/");
             },
           },
         ]
@@ -299,13 +332,13 @@ export const SearchDialog: FC<{
       key: "new",
       icon: <IconPlus className="size-4" />,
       label: t("New chat"),
-      run: () => window.location.assign(href("/")),
+      run: () => window.location.assign("/"),
     },
     {
       key: "incognito",
       icon: <IconSpy className="size-4" />,
       label: t("New incognito chat"),
-      run: () => window.location.assign(`${href("/")}?incognito`),
+      run: () => window.location.assign("/?incognito"),
     },
   ];
   const results: Command[] = found.map((session) => ({
@@ -313,7 +346,7 @@ export const SearchDialog: FC<{
     label: session.title,
     run: () => {
       onOpenChange(false);
-      router.push(href(`/s/${session.id}`));
+      router.push(`/c/${session.id}`);
     },
   }));
   const options = [...commands, ...results];

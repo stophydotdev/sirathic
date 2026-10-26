@@ -1,7 +1,6 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import { track } from "@/lib/analytics";
 import { download } from "@/components/answerActions";
 import { sourcesOf } from "@/components/sources";
 import {
@@ -40,7 +39,6 @@ export const ExportMenu: FC<{ onPrint: () => void }> = ({ onPrint }) => {
     const { messages } = aui.thread().getState();
     const first = messages.find((message) => message.role === "user");
     const title = first ? textOf(first) : t("Chat");
-    track({ name: "share", params: { method: "markdown", content_type: "chat" } });
     download(title, `${chatMarkdown(messages)}\n`);
   };
 

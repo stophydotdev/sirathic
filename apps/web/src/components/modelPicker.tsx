@@ -3,7 +3,7 @@
 import { useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
 import { MakerIcon } from "@/components/makerIcon";
-import { ModelMenuContent, useSettings } from "@/components/settings";
+import { ModelMenuContent } from "@/components/settings";
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdownMenu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { IconChevronDown } from "@tabler/icons-react";
@@ -16,7 +16,6 @@ export const ModelPicker: FC<Pick<ComponentProps<typeof ModelMenuContent>, "side
   const t = useT();
   const models = useAccount((s) => s.models);
   const chosen = useAccount((s) => s.chosen);
-  const showSettings = useSettings((s) => s.show);
   const current = models.find((m) => m.slug === chosen) ?? models[0];
 
   if (unknown) {
@@ -34,7 +33,7 @@ export const ModelPicker: FC<Pick<ComponentProps<typeof ModelMenuContent>, "side
         <span className="hidden max-w-40 truncate sm:inline">{current?.name ?? t("Model")}</span>
         <IconChevronDown className="size-3.5" />
       </DropdownMenuTrigger>
-      <ModelMenuContent side={side} onManage={() => showSettings("models")} />
+      <ModelMenuContent side={side} />
     </DropdownMenu>
   );
 };

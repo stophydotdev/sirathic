@@ -1,5 +1,4 @@
 import { useSessions } from "@/components/sessions";
-import { reportSignIn } from "@/lib/analytics";
 import { api } from "@/lib/trpc";
 import type { PlainKey } from "@/components/locales";
 import { create } from "zustand";
@@ -42,7 +41,6 @@ export const useAccount = create<{
         const status = await api.account.status.query().catch(() => SIGNED_OUT);
         const models = status.signedIn ? await loadModels() : NO_MODELS;
         set({ status, models: models.list, modelsError: models.error });
-        reportSignIn(status);
       },
       choose: (slug) => set({ chosen: slug }),
       signOut: async () => {

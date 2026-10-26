@@ -1,13 +1,8 @@
 import type { MetadataRoute } from "next";
-import { LOCALES, type Locale } from "@/components/locales";
-import { languagesOf, SITE } from "@/lib/seo";
+import { SITE } from "@/lib/seo";
 
-const pages = (path: string, locales: readonly Locale[]) =>
-  locales.map((locale) => ({
-    url: `${SITE}/${locale}${path}`,
-    alternates: { languages: languagesOf(path, locales) },
-  }));
+const updated = new Date("2026-10-24");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ["", "/download"].flatMap((path) => pages(path, LOCALES));
+  return ["", "/download"].map((path) => ({ url: `${SITE}${path}`, lastModified: updated }));
 }

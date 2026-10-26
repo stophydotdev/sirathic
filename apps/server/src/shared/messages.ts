@@ -10,6 +10,15 @@ export type Mode = z.infer<typeof mode>;
 
 export const feedback = z.enum(["up", "down"]);
 
+export const reportReason = z.enum(["quote", "school", "source", "ruling", "other"]);
+
+export const report = z.object({
+  reason: reportReason,
+  details: z.string().trim().max(1000).optional(),
+});
+
+export type Report = z.infer<typeof report>;
+
 export const device = z.enum(["phone", "tablet", "desktop"]);
 
 export type Device = z.infer<typeof device>;
@@ -19,6 +28,7 @@ export const messageMetadata = z.object({
   mode: mode.optional(),
   model: z.string().optional(),
   feedback: feedback.optional(),
+  report: report.optional(),
 });
 
 type MessageMetadata = z.infer<typeof messageMetadata>;

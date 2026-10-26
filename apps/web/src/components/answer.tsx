@@ -5,15 +5,7 @@ import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
-import { SourceRow } from "@/components/sourceRow";
-import {
-  CitationNumbers,
-  citedUrlsOf,
-  SourcesContext,
-  siteName,
-  sourcesOf,
-  turnsOf,
-} from "@/components/sources";
+import { citedUrlsOf, SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
 import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
 import type { Source } from "@sirathic/server/sources";
@@ -28,22 +20,20 @@ import {
   useAui,
   useAuiState,
 } from "@assistant-ui/react";
-import { IconChevronLeft, IconChevronRight, IconCornerDownRight } from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight, IconArrowDownRight } from "@tabler/icons-react";
 import { type FC, useState } from "react";
 import { z } from "zod";
+import { ReportMistake } from "@/components/reportMistake";
 import { Research } from "@/components/researchSteps";
 
 export const Reply: FC = () => {
   const content = useAuiState((s) => s.message.content);
   const sources = sourcesOf(content);
-  const byUrl = new Map(sources.map((s) => [s.url, s]));
-  const cited = citedUrlsOf(content).flatMap((url) => byUrl.get(url) ?? []);
+  const cited = new Set(citedUrlsOf(content));
 
   return (
-    <SourcesContext value={byUrl}>
-      <CitationNumbers value={new Map(cited.map((source, index) => [source.url, index + 1]))}>
-        <Answer sources={sources} cited={cited} />
-      </CitationNumbers>
+    <SourcesContext value={new Map(sources.map((s) => [s.url, s]))}>
+      <Answer sources={sources} cited={sources.filter((source) => cited.has(source.url))} />
     </SourcesContext>
   );
 };
@@ -64,12 +54,22 @@ const citationOf = (source: Source) => ({
   icon: <Favicon url={source.url} size={16} />,
 });
 
+const startTimes = new Map<string, number>();
+
+const startOf = (messageId: string) => {
+  const started = startTimes.get(messageId) ?? performance.now();
+  startTimes.set(messageId, started);
+  return started;
+};
+
 const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) => {
   const aui = useAui();
   const state = useAuiState((s) => answerState(s.message.status?.type));
+  const messageId = useAuiState((s) => s.message.id);
   const [streamed] = useState(state === "streaming");
-  const [startedAt] = useState(() => performance.now());
+  const [startedAt] = useState(() => startOf(messageId));
   const { feedback, rate, copy } = useAnswer();
+  const [reporting, setReporting] = useState(false);
 
   return (
     <div className="pb-4">
@@ -77,29 +77,22 @@ const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) 
         status={state}
         onCopy={copy}
         onRetry={() => aui.message().reload()}
-        sources={sources.map(citationOf)}
+        sources={cited.map(citationOf)}
         feedback={feedback}
-        onFeedbackChange={rate}
+        onFeedbackChange={(value) => (value === "down" ? setReporting(true) : rate(value))}
         actions={
           <AnswerExtras sources={sources}>
             <BranchPicker />
           </AnswerExtras>
         }
       >
-        <SourceRow sources={cited} />
         <MessagePrimitive.GroupedParts groupBy={research} indicator="empty">
           {({ part }) => {
             switch (part.type) {
               case "group-research":
-                return (
-                  <Research
-                    running={part.status.type === "running"}
-                    indices={part.indices}
-                    startedAt={startedAt}
-                  />
-                );
+                return <Research indices={part.indices} startedAt={startedAt} />;
               case "indicator":
-                return <Research running indices={[]} startedAt={startedAt} />;
+                return <Research indices={[]} startedAt={startedAt} />;
               case "text":
                 return <MarkdownText />;
               default:
@@ -120,6 +113,11 @@ const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) 
           <Related />
         </div>
       </AuiIf>
+      <ReportMistake
+        open={reporting}
+        onOpenChange={setReporting}
+        onSend={(report) => rate("down", report)}
+      />
     </div>
   );
 };
@@ -135,15 +133,15 @@ const Related: FC = () => {
   if (!questions) return null;
 
   return (
-    <div className="border-border/50 mt-4 border-t pt-2 print:hidden">
+    <div className="border-border mt-4 border-t pt-3 print:hidden">
       {questions.map((question) => (
         <ThreadPrimitive.Suggestion
           key={question}
           prompt={question}
           send
-          className="hover:bg-muted -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-2xl px-2 py-3 text-start text-base"
+          className="text-muted-foreground hover:bg-muted hover:text-foreground -mx-2 flex min-h-10 w-[calc(100%+1rem)] items-center gap-2 rounded-[12px] px-2 py-2 text-start text-sm font-medium transition-colors"
         >
-          <IconCornerDownRight className="text-muted-foreground size-4 shrink-0" />
+          <IconArrowDownRight className="size-4 shrink-0" />
           {question}
         </ThreadPrimitive.Suggestion>
       ))}
@@ -191,49 +189,81 @@ const ReplyError: FC = () => {
   );
 };
 
+const readableUrl = (url: string) => {
+  try {
+    return decodeURI(url);
+  } catch {
+    return url;
+  }
+};
+
+const FIRST_LINKS = 10;
+
+type Turn = ReturnType<typeof turnsOf>[number];
+
+const LinksTurn: FC<{ turn: Turn }> = ({ turn }) => {
+  const [all, setAll] = useState(false);
+  const t = useT();
+  const shown = all ? turn.sources : turn.sources.slice(0, FIRST_LINKS);
+
+  return (
+    <section className="flex flex-col gap-2">
+      <p className="text-muted-foreground px-2 text-sm">
+        {t("Search results for:")} <span className="text-foreground">{turn.question}</span>
+      </p>
+      {turn.sources.length === 0 && (
+        <p className="text-muted-foreground px-2 text-sm">{t("No links")}</p>
+      )}
+      {shown.map((source) => (
+        <a
+          key={source.url}
+          href={source.url}
+          target="_blank"
+          rel="noreferrer"
+          className="group/link hover:bg-muted flex flex-col rounded-xl p-2"
+        >
+          <span className="flex items-center gap-3">
+            <Favicon url={source.url} size={28} />
+            <span className="flex min-w-0 flex-col">
+              <span className="text-sm">{siteName(source.url)}</span>
+              <span className="text-muted-foreground truncate text-xs">
+                {readableUrl(source.url)}
+              </span>
+            </span>
+          </span>
+          <span className="text-super mt-2 line-clamp-1 text-sm font-[470] group-hover/link:underline">
+            {source.title}
+          </span>
+          {source.snippet && (
+            <span dir="auto" className="text-muted-foreground line-clamp-2 text-sm">
+              {source.snippet}
+            </span>
+          )}
+          {source.credit && (
+            <span className="text-muted-foreground mt-1 text-xs">{source.credit}</span>
+          )}
+        </a>
+      ))}
+      {shown.length < turn.sources.length && (
+        <button
+          type="button"
+          onClick={() => setAll(true)}
+          className="bg-foreground/[0.06] hover:bg-foreground/10 h-8 self-center rounded-lg px-3.5 text-sm font-[470] transition-colors"
+        >
+          {t("View more")}
+        </button>
+      )}
+    </section>
+  );
+};
+
 export const ThreadLinks: FC = () => {
   const turns = turnsOf(useAuiState((s) => s.thread.messages));
-  const t = useT();
 
   return (
     <div className="mx-auto flex w-full max-w-[736px] flex-col gap-8 px-6 pt-8 pb-16">
       {turns.map((turn) => (
-        <section key={turn.id} className="flex flex-col gap-2">
-          <p className="text-muted-foreground px-2 text-sm">
-            {t("Search results for:")} <span className="text-foreground">{turn.question}</span>
-          </p>
-          {turn.sources.length === 0 && (
-            <p className="text-muted-foreground px-2 text-sm">{t("No links")}</p>
-          )}
-          {turn.sources.map((source) => (
-            <a
-              key={source.url}
-              href={source.url}
-              target="_blank"
-              rel="noreferrer"
-              className="group/link hover:bg-muted flex flex-col rounded-xl p-2"
-            >
-              <span className="flex items-center gap-3">
-                <Favicon url={source.url} size={28} />
-                <span className="flex min-w-0 flex-col">
-                  <span className="text-sm">{siteName(source.url)}</span>
-                  <span className="text-muted-foreground truncate text-xs">{source.url}</span>
-                </span>
-              </span>
-              <span className="text-super mt-2 line-clamp-1 text-sm font-[470] group-hover/link:underline">
-                {source.title}
-              </span>
-              {source.snippet && (
-                <span dir="auto" className="text-muted-foreground line-clamp-2 text-sm">
-                  {source.snippet}
-                </span>
-              )}
-              {source.credit && (
-                <span className="text-muted-foreground mt-1 text-xs">{source.credit}</span>
-              )}
-            </a>
-          ))}
-        </section>
+        <LinksTurn key={turn.id} turn={turn} />
       ))}
     </div>
   );

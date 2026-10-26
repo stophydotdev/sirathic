@@ -4,7 +4,7 @@ import type { FinishReason, UIMessageStreamOutcome } from "ai";
 import type { z } from "zod";
 import type { Client } from "./client";
 import { reasonOf } from "./respond";
-import type { Device, feedback, Mode } from "./shared/messages";
+import type { Device, feedback, Mode, reportReason } from "./shared/messages";
 import type { User } from "./users";
 
 type SignInVia = User["via"];
@@ -56,7 +56,7 @@ export type Event =
     }
   | {
       name: "feedback.given";
-      props: { value: z.infer<typeof feedback> | null };
+      props: { value: z.infer<typeof feedback> | null; reason?: z.infer<typeof reportReason> };
     }
   | { name: "api.failed"; props: { route: string; code: string } };
 

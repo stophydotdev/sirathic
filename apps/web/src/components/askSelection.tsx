@@ -1,7 +1,7 @@
 "use client";
 
 import { saveDraft } from "@/components/draft";
-import { useLocalePath, useT } from "@/components/i18n";
+import { useT } from "@/components/i18n";
 import { type FC, useEffect, useState } from "react";
 
 const MAX_CHARS = 1_000;
@@ -39,7 +39,6 @@ const pickedText = (): Picked | undefined => {
 
 export const AskSelection: FC = () => {
   const t = useT();
-  const href = useLocalePath();
   const [picked, setPicked] = useState<Picked>();
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export const AskSelection: FC = () => {
 
   const ask = () => {
     saveDraft(`${quoted}\n`);
-    window.location.assign(href("/"));
+    window.location.assign("/");
   };
 
   const copy = () => {

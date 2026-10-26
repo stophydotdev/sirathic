@@ -176,6 +176,16 @@ export const Composer: FC<{
   const highlighted = selecting ? Math.min(active, Math.max(choices.length - 1, 0)) : -1;
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "ArrowUp" && text === "" && !selecting) {
+      const index = aui
+        .thread()
+        .getState()
+        .messages.findLastIndex((message) => message.role === "user");
+      if (index < 0) return;
+      event.preventDefault();
+      aui.thread().message({ index }).composer().beginEdit();
+      return;
+    }
     if (signedOut && event.key === "Enter" && !event.shiftKey && !selecting) {
       event.preventDefault();
       ask(text);
@@ -209,6 +219,7 @@ export const Composer: FC<{
         </AuiIf>
 
         <ComposerPrimitive.Input
+          data-composer
           rows={1}
           autoFocus={finePointer}
           placeholder={shown}

@@ -1,74 +1,41 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import { CONSENT_KEY, setAnalyticsConsent } from "@/lib/analytics";
-import { type FC, useEffect } from "react";
-import { create } from "zustand";
+import Link from "next/link";
+import { type FC, useEffect, useState } from "react";
 
-type Choice = "granted" | "denied";
-
-const savedChoice = (): Choice | undefined => {
-  try {
-    const saved = localStorage.getItem(CONSENT_KEY);
-    return saved === "granted" || saved === "denied" ? saved : undefined;
-  } catch {
-    return undefined;
-  }
-};
-
-export const useConsent = create<{
-  open: boolean;
-  load: () => void;
-  choose: (granted: boolean) => void;
-  reopen: () => void;
-}>()((set) => ({
-  open: false,
-  load: () => set({ open: savedChoice() === undefined }),
-  choose: (granted) => {
-    try {
-      localStorage.setItem(CONSENT_KEY, granted ? "granted" : "denied");
-    } catch {}
-    setAnalyticsConsent(granted);
-    set({ open: false });
-  },
-  reopen: () => set({ open: true }),
-}));
-
-const button = "h-8 flex-1 rounded-[8px] text-sm font-[470] transition-colors";
+const SEEN_KEY = "sirathicCookieNotice";
+const link = "text-foreground text-[13px] font-medium underline underline-offset-2";
 
 export const CookieNotice: FC = () => {
-  const open = useConsent((s) => s.open);
-  const choose = useConsent((s) => s.choose);
+  const [open, setOpen] = useState(false);
   const t = useT();
 
-  useEffect(() => useConsent.getState().load(), []);
-
+  useEffect(() => setOpen(!globalThis.localStorage?.getItem(SEEN_KEY)), []);
   if (!open) return null;
+
   return (
-    <div
-      role="dialog"
-      aria-label={t("Cookies")}
-      className="bg-card ring-foreground/10 fixed start-3 bottom-[148px] z-50 flex w-[min(320px,calc(100vw-1.5rem))] flex-col gap-3 rounded-[14px] p-4 shadow-lg ring-1 lg:start-3 lg:bottom-3 print:hidden"
-    >
-      <p className="text-sm leading-5">
-        {t(
-          "Can we use Google Analytics cookies to see which features help? We never send your questions.",
-        )}
+    <div className="bg-background border-foreground/12 fixed end-4 bottom-4 z-50 w-[528px] max-w-[calc(100vw-2rem)] rounded-[16px] border px-4 py-3.5 text-[15px] leading-[22.5px] print:hidden">
+      <p className="text-muted-foreground">
+        {t("Sirathic uses only essential cookies to keep you signed in.")}{" "}
+        <Link href="/privacy" className={link}>
+          {t("Privacy")}
+        </Link>
+        {", "}
+        <Link href="/terms" className={link}>
+          {t("Terms")}
+        </Link>
       </p>
-      <div className="flex gap-2">
+      <div className="mt-2.5 flex justify-end">
         <button
           type="button"
-          onClick={() => choose(false)}
-          className={`${button} bg-muted hover:bg-foreground/10`}
+          onClick={() => {
+            globalThis.localStorage?.setItem(SEEN_KEY, "1");
+            setOpen(false);
+          }}
+          className="bg-foreground text-background h-[29px] rounded-full px-3 text-sm font-medium transition hover:opacity-85"
         >
-          {t("No thanks")}
-        </button>
-        <button
-          type="button"
-          onClick={() => choose(true)}
-          className={`${button} bg-muted hover:bg-foreground/10`}
-        >
-          {t("Allow")}
+          {t("Got it")}
         </button>
       </div>
     </div>

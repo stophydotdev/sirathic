@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function TermsPage({ params }: PageProps<"/[lang]/terms">) {
-  const { locale, t } = await translator((await params).lang);
+  const { t } = await translator((await params).lang);
   return (
     <LegalPage
-      home={`/${locale}`}
+      home="/"
       back={t("Back to Sirathic")}
       title="Terms of service"
       updated="October 20, 2026"
@@ -52,9 +52,9 @@ export default async function TermsPage({ params }: PageProps<"/[lang]/terms">) 
       <h2>Your questions and the sources</h2>
       <p>
         Your questions and chats are yours. You let us process them to answer you, as the{" "}
-        <Link href={`/${locale}/privacy`}>privacy policy</Link> explains. The Quran translations,
-        hadith, fatwas and books Sirathic quotes belong to their authors and publishers, and
-        Sirathic shows them for non-commercial use with credit.
+        <Link href="/privacy">privacy policy</Link> explains. The Quran translations, hadith, fatwas
+        and books Sirathic quotes belong to their authors and publishers, and Sirathic shows them
+        for non-commercial use with credit.
       </p>
 
       <h2>No warranty</h2>

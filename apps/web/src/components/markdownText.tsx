@@ -1,7 +1,6 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import "@assistant-ui/react-markdown/styles/dot.css";
 import "katex/dist/katex.min.css";
 
 import {
@@ -31,7 +30,7 @@ import { z } from "zod";
 import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { hidePendingCitation, rehypeCitations, rehypeVerses } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
-import { CitationNumbers, siteName, SourcesContext } from "@/components/sources";
+import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 import { cn } from "@/lib/utils";
@@ -41,14 +40,19 @@ const withMathDelimiters = (text: string) =>
     .replaceAll(/\\\[([\s\S]*?)\\\]/gu, (_, math: string) => `\n$$\n${math}\n$$\n`)
     .replaceAll(/\\\(([\s\S]*?)\\\)/gu, (_, math: string) => `$$${math}$$`);
 
+const closeOpenBold = (text: string) => {
+  const trimmed = text.endsWith("*") && !text.endsWith("**") ? text.slice(0, -1) : text;
+  if ((trimmed.match(/\*\*/gu)?.length ?? 0) % 2 === 0) return trimmed;
+  return trimmed.endsWith("**") ? trimmed.slice(0, -2) : `${trimmed}**`;
+};
+
 const MarkdownTextImpl: FC = () => (
   <MarkdownTextPrimitive
     remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]}
     rehypePlugins={[rehypeKatex, rehypeCitations, rehypeVerses]}
-    preprocess={(text) => withMathDelimiters(hidePendingCitation(text))}
+    preprocess={(text) => withMathDelimiters(closeOpenBold(hidePendingCitation(text)))}
     className="aui-md"
     components={components}
-    smooth={false}
   />
 );
 
@@ -93,9 +97,8 @@ const citedUrls = z.array(z.string()).min(1);
 
 const Citation: FC<{ urls: string[] }> = ({ urls }) => {
   const sources = useContext(SourcesContext);
-  const numbers = useContext(CitationNumbers);
   const [first, ...more] = urls;
-  const numbered = urls.flatMap((url) => numbers.get(url) ?? []);
+  const name = siteName(first);
 
   return (
     <HoverCard.Root openDelay={150} closeDelay={100}>
@@ -104,17 +107,10 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           href={first}
           target="_blank"
           rel="noreferrer"
-          className="bg-muted hover:bg-foreground/10 relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-md px-[0.3rem] py-[0.1875rem] align-middle font-mono text-[10px] leading-[13.75px] font-[380]! no-underline! transition-colors"
+          className="bg-muted text-muted-foreground! hover:text-foreground! relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-full px-2 py-[2.5px] align-middle text-[13px] leading-[15px] font-medium! no-underline! transition-colors"
         >
-          {numbered.length > 0 ? (
-            <span className="tabular-nums">{numbered.join(", ")}</span>
-          ) : (
-            <>
-              <Favicon url={first} size={12} />
-              <span className="truncate">{siteName(first)}</span>
-              {more.length > 0 && <span className="text-muted-foreground">+{more.length}</span>}
-            </>
-          )}
+          <span className="truncate">{name.charAt(0).toUpperCase() + name.slice(1)}</span>
+          {more.length > 0 && <span>+{more.length}</span>}
         </a>
       </HoverCard.Trigger>
       <HoverCard.Portal>
@@ -162,26 +158,30 @@ const memoized = memoizeMarkdownComponents({
   h1: ({ className, ...props }) => (
     <h1
       dir="auto"
-      className={cn("aui-md-h1 mt-4 mb-2 text-base font-[580] first:mt-0", className)}
+      className={cn("aui-md-h1 mt-5 mb-2 text-lg font-[580] first:mt-0", className)}
       {...props}
     />
   ),
   h2: ({ className, ...props }) => (
     <h2
       dir="auto"
-      className={cn("aui-md-h2 mt-4 mb-2 text-base font-[580] first:mt-0", className)}
+      className={cn("aui-md-h2 mt-5 mb-2 text-lg font-[580] first:mt-0", className)}
       {...props}
     />
   ),
   h3: ({ className, ...props }) => (
     <h3
       dir="auto"
-      className={cn("aui-md-h3 mt-4 mb-2 text-sm font-[580] first:mt-0", className)}
+      className={cn("aui-md-h3 mt-5 mb-2 text-lg font-[580] first:mt-0", className)}
       {...props}
     />
   ),
   h4: ({ className, ...props }) => (
-    <h4 dir="auto" className={cn("aui-md-h4 mt-3 mb-1 text-sm font-[580]", className)} {...props} />
+    <h4
+      dir="auto"
+      className={cn("aui-md-h4 mt-4 mb-1 text-base font-[580]", className)}
+      {...props}
+    />
   ),
   p: ({ className, ...props }) => (
     <p dir="auto" className={cn("aui-md-p mb-2 last:mb-0", className)} {...props} />
@@ -265,8 +265,7 @@ const memoized = memoizeMarkdownComponents({
     return (
       <code
         className={cn(
-          !isCodeBlock &&
-            "aui-md-inline-code bg-muted rounded-md px-1.5 py-0.5 font-mono text-[0.85em]",
+          !isCodeBlock && "aui-md-inline-code bg-muted rounded-md px-1.5 py-0.5 text-[0.85em]",
           className,
         )}
         {...props}
