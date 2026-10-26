@@ -494,6 +494,7 @@ export const MESSAGES = [
   "Automation resumed",
   "Automation deleted",
   "Running now. The answer will show up in Runs.",
+  "Couldn't open",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

@@ -537,4 +537,5 @@ export default {
   "Automation resumed": "Đã tiếp tục tự động hóa",
   "Automation deleted": "Đã xóa tự động hóa",
   "Running now. The answer will show up in Runs.": "Đang chạy. Câu trả lời sẽ hiện trong Lần chạy.",
+  "Couldn't open": "Không mở được",
 } satisfies Messages;

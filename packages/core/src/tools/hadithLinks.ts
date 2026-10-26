@@ -23,6 +23,12 @@ const sunnahComLink = (id: string) => {
     : `https://sunnah.com/${collection}:${page}`;
 };
 
+export const hadithIdOfSunnahUrl = (url: string) => {
+  const found = /^\/([a-z0-9]+):(\d+[a-z]?)$/u.exec(URL.parse(url)?.pathname ?? "");
+  const book = [...SUNNAH_COM_BOOKS].find(([, collection]) => collection === found?.[1])?.[0];
+  return book === undefined || found?.[2] === undefined ? null : `${book}:${found[2]}`;
+};
+
 const HADITH_API =
   "https://github.com/fawazahmed0/hadith-api/blob/df57907be35291c91ad6a6691180e22ca9920784/editions";
 

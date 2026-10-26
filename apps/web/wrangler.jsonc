@@ -10,5 +10,6 @@
   },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "sirathic" }],
   "vars": { "API_ORIGIN": "https://api.sirathic.com" },
+  "previews": { "vars": { "API_ORIGIN": "https://api.sirathic.com" } },
   "routes": [{ "pattern": "sirathic.com", "custom_domain": true }],
 }

@@ -530,4 +530,5 @@ export default {
   "Automation resumed": "অটোমেচন পুনৰ আৰম্ভ হ'ল",
   "Automation deleted": "অটোমেচন মচা হ'ল",
   "Running now. The answer will show up in Runs.": "এতিয়া চলি আছে। উত্তৰটো চলোৱাত দেখা যাব।",
+  "Couldn't open": "খুলিব পৰা নগ'ল",
 } satisfies Messages;

@@ -528,4 +528,5 @@ export default {
   "Automation resumed": "ఆటోమేషన్ మళ్లీ ప్రారంభమైంది",
   "Automation deleted": "ఆటోమేషన్ తొలగించబడింది",
   "Running now. The answer will show up in Runs.": "ఇప్పుడు రన్ అవుతోంది. సమాధానం రన్‌లలో కనిపిస్తుంది.",
+  "Couldn't open": "తెరవలేకపోయింది",
 } satisfies Messages;

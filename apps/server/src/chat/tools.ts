@@ -1,10 +1,21 @@
 import { duaSearch, duaSearchInput } from "@sirathic/core/tools/duaSearch";
+import { hadithsByIds } from "@sirathic/core/tools/hadithGet";
+import { hadithIdOfSunnahUrl } from "@sirathic/core/tools/hadithLinks";
 import { quranGet, quranGetInput } from "@sirathic/core/tools/quranGet";
 import { webFetch, webFetchInput } from "@sirathic/core/tools/webFetch";
 import { tool } from "ai";
 import { z } from "zod";
 import { told } from "../shared/settings";
-import { type Cite, numbered, plainText, textBlocked, verseSource } from "./cite";
+import {
+  type Cite,
+  gradeOf,
+  hadithSource,
+  hadithTitle,
+  numbered,
+  plainText,
+  textBlocked,
+  verseSource,
+} from "./cite";
 import { pageText } from "./compact";
 import { searchAll, searchInput } from "./search";
 
@@ -47,7 +58,22 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       inputSchema: webFetchInput,
       execute: async (input) => {
         if (textBlocked(input.url)) {
-          throw new Error("sunnah.com pages can't be read. Search for the hadith instead.");
+          const id = hadithIdOfSunnahUrl(input.url);
+          const [hadith] = id === null ? [] : await hadithsByIds([id]);
+          const source = hadith && hadithSource(hadith);
+          if (!hadith || !source) {
+            throw new Error("sunnah.com pages can't be read. Search for the hadith instead.");
+          }
+          const markdown = [hadithTitle(hadith), hadith.english, hadith.textAr, gradeOf(hadith)]
+            .filter((part) => part)
+            .join("\n\n");
+          return {
+            url: source.url,
+            title: source.title,
+            markdown,
+            citation: cite(source.url),
+            sources: [source],
+          };
         }
         const page = await webFetch(input);
         const markdown = pageText(page.markdown, PAGE_CHARS);

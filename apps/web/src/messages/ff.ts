@@ -537,4 +537,5 @@ export default {
   "Automation deleted": "Otomatik momtaama",
   "Running now. The answer will show up in Runs.":
     "Ina wurtina jooni. Jaabawol ngol maa feeñ e Wurtin.",
+  "Couldn't open": "Waawaa uddit",
 } satisfies Messages;

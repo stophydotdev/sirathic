@@ -13,7 +13,6 @@ export const MODEL_DESCRIPTIONS = new Map<string, PlainKey>([
   ["sirathic-noor-1-flash", "Longer answers that explain more"],
 ]);
 
-const SIGNED_OUT: Status = { signedIn: false };
 const NO_MODELS: Models = { list: [] };
 
 const loadModels = (): Promise<Models> =>
@@ -38,7 +37,9 @@ export const useAccount = create<{
       modelsError: undefined,
       chosen: undefined,
       refresh: async () => {
-        const status = await api.account.status.query().catch(() => SIGNED_OUT);
+        void fetch("/api/auth/get-session").catch(() => undefined);
+        const status = await api.account.status.query().catch(() => undefined);
+        if (!status) return;
         const models = status.signedIn ? await loadModels() : NO_MODELS;
         set({ status, models: models.list, modelsError: models.error });
       },

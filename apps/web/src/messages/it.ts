@@ -543,4 +543,5 @@ export default {
   "Automation deleted": "Automazione eliminata",
   "Running now. The answer will show up in Runs.":
     "Esecuzione in corso. La risposta apparirà in Esecuzioni.",
+  "Couldn't open": "Impossibile aprire",
 } satisfies Messages;

@@ -24,6 +24,7 @@
     "allowJs": true
   },
   "include": [
+    "../../test/web.test.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

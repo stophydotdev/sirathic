@@ -539,4 +539,5 @@ export default {
   "Automation resumed": "オートメーションを再開しました",
   "Automation deleted": "オートメーションを削除しました",
   "Running now. The answer will show up in Runs.": "実行中です。回答は実行に表示されます。",
+  "Couldn't open": "開けませんでした",
 } satisfies Messages;

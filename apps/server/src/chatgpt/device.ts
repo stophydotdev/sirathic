@@ -26,6 +26,8 @@ const authorized = z.object({
   code_verifier: z.string(),
 });
 
+const deviceError = z.object({ error: z.object({ code: z.string() }) });
+
 const tokenResponse = z.object({
   id_token: z.string(),
   access_token: z.string(),
@@ -110,17 +112,19 @@ export async function pollDeviceLogin(
     device_auth_id: login.deviceAuthId,
     user_code: login.userCode,
   });
-  if ([403, 404, 429].includes(response.status)) return { status: "pending" };
+  if (response.status === 404 || response.status === 429) return { status: "pending" };
+  const body = await response.json().catch(() => undefined);
   if (!response.ok) {
-    throw new Error(`ChatGPT sign-in failed (${response.status})`);
+    const failure = deviceError.safeParse(body).data?.error.code;
+    if (failure === "deviceauth_authorization_pending") return { status: "pending" };
+    throw new Error(`ChatGPT sign-in failed (${response.status} ${failure ?? "no code"})`);
   }
-  const code = authorized.safeParse(await response.json());
-  if (!code.success) return { status: "pending" };
+  const code = authorized.parse(body);
   const exchanged = await postForm("/oauth/token", {
     grant_type: "authorization_code",
     client_id: CLIENT_ID,
-    code: code.data.authorization_code,
-    code_verifier: code.data.code_verifier,
+    code: code.authorization_code,
+    code_verifier: code.code_verifier,
     redirect_uri: REDIRECT_URI,
   });
   if (!exchanged.ok) {

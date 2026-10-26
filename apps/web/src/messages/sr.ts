@@ -541,4 +541,5 @@ export default {
   "Automation deleted": "Аутоматизација је избрисана",
   "Running now. The answer will show up in Runs.":
     "Покреће се сада. Одговор ће се појавити у Покретањима.",
+  "Couldn't open": "Није могло да се отвори",
 } satisfies Messages;

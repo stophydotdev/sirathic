@@ -6,7 +6,6 @@ import {
   createUIMessageStreamResponse,
   type FinishReason,
   type InferUIMessageChunk,
-  isStepCount,
   type LanguageModel,
   type LanguageModelUsage,
   Output,
@@ -19,7 +18,7 @@ import {
 import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
 import type { connectedTools } from "../connectors/connections";
-import type { Event } from "../events";
+import { type Event, toolFailure } from "../events";
 import { citations } from "./citations";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -31,10 +30,8 @@ import { answerRules, searchPrompt } from "./prompts/shared";
 import { type Remember, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
-const MAX_STEPS = 10;
-const RESEARCH_STEPS = 16;
 
-function answerAgent({
+export function answerAgent({
   model,
   modelName,
   tools,
@@ -62,7 +59,7 @@ function answerAgent({
     model,
     instructions: searchPrompt(new Date(), mode, modelName, settings),
     tools,
-    stopWhen: isStepCount(mode === "research" ? RESEARCH_STEPS : MAX_STEPS),
+    stopWhen: () => false,
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const searchFirst = stepNumber === 0 && mustSearch;
@@ -268,6 +265,9 @@ export function chatResponse({
                 tool: call.tool,
                 ms: Math.round(performance.now() - call.at),
                 ok,
+                ...(chunk.type === "tool-output-error" && {
+                  failure: toolFailure(chunk.errorText),
+                }),
               },
             });
           }

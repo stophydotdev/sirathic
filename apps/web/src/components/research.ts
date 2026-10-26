@@ -49,7 +49,7 @@ export type PluginCall = { tool: string; detail: string; done: boolean };
 export type ResearchStep =
   | { kind: "think"; text: string; live: boolean }
   | { kind: "searches"; queries: string[]; results: Read[]; done: boolean }
-  | { kind: "browse"; url: string }
+  | { kind: "browse"; url: string; failed: boolean }
   | { kind: "verses"; title: string; url: string }
   | { kind: "tool"; tool: string; detail: string }
   | { kind: "plugin"; plugin: string; calls: PluginCall[] };
@@ -182,7 +182,7 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
     }
     if (part.toolName === "webFetch") {
       const url = urlArgs.safeParse(part.args).data?.url;
-      if (url) steps.push({ kind: "browse", url });
+      if (url) steps.push({ kind: "browse", url, failed: part.isError === true });
       return;
     }
     if (part.toolName === "quranGet") {

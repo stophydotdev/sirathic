@@ -392,7 +392,7 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
     case "browse":
       return (
         <Row Icon={IconWorld} active={active} code={pageOf(step.url)} href={step.url}>
-          {t("Browsed")}
+          {step.failed ? t("Couldn't open") : t("Browsed")}
         </Row>
       );
     case "verses":

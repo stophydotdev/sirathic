@@ -541,4 +541,5 @@ export default {
   "Automation deleted": "Otomasyon silindi",
   "Running now. The answer will show up in Runs.":
     "Şimdi çalışıyor. Yanıt Çalıştırmalar'da görünecek.",
+  "Couldn't open": "Açılamadı",
 } satisfies Messages;

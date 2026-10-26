@@ -530,4 +530,5 @@ export default {
   "Automation resumed": "ස්වයංක්‍රීයකරණය නැවත ආරම්භ කළා",
   "Automation deleted": "ස්වයංක්‍රීයකරණය මකා දැමුවා",
   "Running now. The answer will show up in Runs.": "දැන් ධාවනය වෙමින් පවතී. පිළිතුර ධාවන තුළ පෙන්වයි.",
+  "Couldn't open": "විවෘත කළ නොහැකි විය",
 } satisfies Messages;

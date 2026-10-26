@@ -25,6 +25,19 @@ type AnswerStats = {
   reasoningTokens?: number;
 };
 
+export type ToolFailure = "blocked" | "no-text" | "timeout" | "not-found" | "other";
+
+export const toolFailure = (errorText: string): ToolFailure =>
+  /can't be read/u.test(errorText)
+    ? "blocked"
+    : /no readable text/u.test(errorText)
+      ? "no-text"
+      : /timed? ?out|aborted/iu.test(errorText)
+        ? "timeout"
+        : /no page at that address|\b404\b/u.test(errorText)
+          ? "not-found"
+          : "other";
+
 export type Event =
   | {
       name: "answer.requested";
@@ -45,7 +58,7 @@ export type Event =
     }
   | {
       name: "tool.completed";
-      props: { tool: string; ms: number; ok: boolean };
+      props: { tool: string; ms: number; ok: boolean; failure?: ToolFailure };
     }
   | {
       name: "signin";

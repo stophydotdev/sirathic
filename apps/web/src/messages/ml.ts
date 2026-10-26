@@ -536,4 +536,5 @@ export default {
   "Automation resumed": "ഓട്ടോമേഷൻ പുനരാരംഭിച്ചു",
   "Automation deleted": "ഓട്ടോമേഷൻ ഇല്ലാതാക്കി",
   "Running now. The answer will show up in Runs.": "ഇപ്പോൾ റൺ ചെയ്യുന്നു. ഉത്തരം റണ്ണുകളിൽ കാണാം.",
+  "Couldn't open": "തുറക്കാനായില്ല",
 } satisfies Messages;
