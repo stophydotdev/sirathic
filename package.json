@@ -11,7 +11,7 @@
     "dev": "bun run --parallel --filter @sirathic/server --filter web dev",
     "test": "bun test",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
-    "check": "oxlint && oxfmt --write && ! git grep -nIP --untracked '\\x{2014}' -- ':!apps/web/AGENTS.md' ':!apps/server/src/chat/prompt.ts'",
+    "check": "oxlint && oxfmt --write && ! git grep -nIP --untracked '\\x{2014}' -- ':!apps/web/AGENTS.md' ':!apps/server/src/chat/prompts/shared.ts'",
     "check-slop": "oxlint --deny-warnings",
     "check-types": "tsc-rs --noEmit && tsc-rs --noEmit -p apps/mobile && bun run --filter web check-types",
     "check-dead": "bun run env ./node_modules/.bin/knip --no-progress",

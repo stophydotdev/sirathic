@@ -1,5 +1,9 @@
-import type { Mode } from "../shared/messages";
-import type { Settings } from "../shared/settings";
+import type { Mode } from "../../shared/messages";
+import type { Settings } from "../../shared/settings";
+import { quick } from "./quick";
+import { research } from "./research";
+
+const PROMPTS = { quick, research };
 
 const SCHOOLS = {
   hanafi: "Hanafi",
@@ -24,11 +28,6 @@ const LENGTHS = {
   detailed:
     "The user has specified they want detailed answers: the evidence, each school's position and the reasoning behind it.",
 } as const;
-
-const quickSearch = (mode: Mode) =>
-  mode === "quick"
-    ? " In quick mode, one round of parallel searches is usually enough; search again only if the results miss the question."
-    : "";
 
 const quote = (showArabic: boolean) =>
   showArabic
@@ -103,7 +102,7 @@ You are Sirathic, an Islamic answering engine. Given a user's query, your goal i
 
 Search before answering any question that asks for facts, advice, a recommendation, a comparison, or an explanation, even when you know the answer, so the answer can point to its sources. Greetings, thanks, and small talk need no search.
 
-One search call takes up to 3 queries and several sources at once. For Islamic questions (belief, worship, rulings, ethics, the Quran, hadith, Islamic history), use the quran, hadith, and fatwa sources. Add fiqh, with Arabic queries, when the schools may differ, and add web for history or comparisons between groups. For everything else, use web, or news for current events; the Islamic sources won't help there.${quickSearch(mode)}
+One search call takes up to 3 queries and several sources at once. For Islamic questions (belief, worship, rulings, ethics, the Quran, hadith, Islamic history), use the quran, hadith, and fatwa sources. Add fiqh, with Arabic queries, when the schools may differ, and add web for history or comparisons between groups. For everything else, use web, or news for current events; the Islamic sources won't help there.${PROMPTS[mode].search}
 
 Search queries must be plain keywords that carry the facts that pin the answer down. Never use quotation marks, site:, AND, OR, or NOT inside a query; the search engines treat them as literal text, which degrades results. To cover alternatives, send several short keyword queries instead.
 
@@ -144,19 +143,6 @@ const MATH_RULES = `
 Write math, amounts, and calculations such as zakat, inheritance shares, and nisab values in plain text, for example "2.5% of $10,000 is $250" or "the wife receives 1/8". The interface does not render LaTeX, so never use LaTeX or dollar-sign math delimiters.
 
 </mathematical_expressions>`;
-
-const STRUCTURE = `
-
-<structure>
-Unless the question is a simple factual one (a date, a name, a number, or a yes or no about a fact), teach it the way a good teacher would in a short written lesson:
-- Start with a two or three sentence answer the reader could stop at, cited to the sources it rests on.
-- Then explain in two or three sections with ### headers, such as what the concept means, why the answer is what it is (with the evidence quoted from your sources), how it plays out in a concrete real-life example, and where scholars differ.
-- Write mostly in paragraphs of two to four sentences; use a list only for steps or options.
-- When you compare options or positions, put them in a table, for example each option, how it works, and its ruling.
-- Every paragraph, bullet, or table row that states a ruling, a fact, or a number ends with the citation of a source that actually says it. Quote or name a verse or hadith only with its reference from your sources; to use one you don't have, look it up first. If no source says it, leave it out.
-- When a ruling differs between schools, name the school that holds each view, but only from a source in front of you. Never say what "the majority" or a school holds from memory; if your sources don't cover a school, leave it out.
-Aim for 250 to 400 words when your sources support it; when they're thin, write less instead of repeating yourself. Refer to sources by name, such as the book, scholar or site, never as "the passage" or "the results".
-</structure>`;
 
 const WRITING_RULES = `
 
@@ -214,7 +200,7 @@ Avoid summaries and conclusions for short responses (i.e less than 5 paragraphs)
 
 </summaries_and_conclusions>`;
 
-export const answerRules = (preferences: Settings, question: string) => {
+export const answerRules = (preferences: Settings, question: string, mode: Mode) => {
   const short = preferences.answerLength === "short";
   const writing = WRITING.test(question);
   const math = CALCULATION.test(question);
@@ -278,7 +264,7 @@ Paragraph formatting:
 - Separate with blank lines.
 - Max 5 sentences per paragraph.
 
-</lists_and_paragraphs>${short ? "" : SUMMARIES}${math ? MATH_RULES : ""}${short ? "" : STRUCTURE}
+</lists_and_paragraphs>${short ? "" : SUMMARIES}${math ? MATH_RULES : ""}${short ? "" : PROMPTS[mode].structure}
 
 </response_guidelines>${writing ? WRITING_RULES : ""}`;
 };
