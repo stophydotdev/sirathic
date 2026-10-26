@@ -546,5 +546,8 @@ export default {
   "Automation resumed": "Itinuloy ang automation",
   "Automation deleted": "Nabura ang automation",
   "Running now. The answer will show up in Runs.": "Tumatakbo na. Lalabas ang sagot sa Mga takbo.",
+  "Search, read and draft your email": "Hanapin, basahin at gumawa ng draft ng iyong email",
+  "See your calendars and events": "Tingnan ang iyong mga kalendaryo at event",
+  "Search and read your files": "Hanapin at basahin ang iyong mga file",
   "Couldn't open": "Hindi mabuksan",
 } satisfies Messages;

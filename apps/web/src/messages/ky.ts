@@ -542,5 +542,8 @@ export default {
   "Automation resumed": "Автоматташтыруу улантылды",
   "Automation deleted": "Автоматташтыруу өчүрүлдү",
   "Running now. The answer will show up in Runs.": "Азыр иштеп жатат. Жооп Иштетүүлөрдө көрүнөт.",
+  "Search, read and draft your email": "Электрондук катыңызды издеңиз, окуңуз жана долбоор жазыңыз",
+  "See your calendars and events": "Календарларыңызды жана иш-чараларыңызды көрүңүз",
+  "Search and read your files": "Файлдарыңызды издеп, окуңуз",
   "Couldn't open": "Ачылган жок",
 } satisfies Messages;

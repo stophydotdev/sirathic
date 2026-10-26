@@ -524,5 +524,8 @@ export default {
   "Automation resumed": "ระบบอัตโนมัติทำงานต่อแล้ว",
   "Automation deleted": "ลบระบบอัตโนมัติแล้ว",
   "Running now. The answer will show up in Runs.": "กำลังรัน คำตอบจะแสดงในการรัน",
+  "Search, read and draft your email": "ค้นหา อ่าน และร่างอีเมลของคุณ",
+  "See your calendars and events": "ดูปฏิทินและกิจกรรมของคุณ",
+  "Search and read your files": "ค้นหาและอ่านไฟล์ของคุณ",
   "Couldn't open": "เปิดไม่ได้",
 } satisfies Messages;

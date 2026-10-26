@@ -540,5 +540,8 @@ export default {
   "Automation resumed": "தானியக்கம் மீண்டும் தொடங்கியது",
   "Automation deleted": "தானியக்கம் நீக்கப்பட்டது",
   "Running now. The answer will show up in Runs.": "இப்போது இயங்குகிறது. பதில் இயக்கங்களில் தோன்றும்.",
+  "Search, read and draft your email": "உங்கள் மின்னஞ்சலைத் தேடுங்கள், படியுங்கள், வரைவு எழுதுங்கள்",
+  "See your calendars and events": "உங்கள் நாட்காட்டிகளையும் நிகழ்வுகளையும் பாருங்கள்",
+  "Search and read your files": "உங்கள் கோப்புகளைத் தேடிப் படியுங்கள்",
   "Couldn't open": "திறக்க முடியவில்லை",
 } satisfies Messages;

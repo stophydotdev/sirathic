@@ -541,5 +541,8 @@ export default {
   "Automation deleted": "Otomasyon silindi",
   "Running now. The answer will show up in Runs.":
     "Şimdi çalışıyor. Yanıt Çalıştırmalar'da görünecek.",
+  "Search, read and draft your email": "E-postalarınızı arayın, okuyun ve taslak yazın",
+  "See your calendars and events": "Takvimlerinizi ve etkinliklerinizi görün",
+  "Search and read your files": "Dosyalarınızı arayın ve okuyun",
   "Couldn't open": "Açılamadı",
 } satisfies Messages;

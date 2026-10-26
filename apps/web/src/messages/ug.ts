@@ -543,5 +543,8 @@ export default {
   "Automation deleted": "ئاپتوماتلاشتۇرۇش ئۆچۈرۈلدى",
   "Running now. The answer will show up in Runs.":
     "ھازىر ئىجرا بولۇۋاتىدۇ. جاۋاب ئىجرالاردا كۆرۈنىدۇ.",
+  "Search, read and draft your email": "ئېلخېتىڭىزنى ئىزدەڭ، ئوقۇڭ ۋە لايىھە يېزىڭ",
+  "See your calendars and events": "كالېندار ۋە پائالىيەتلىرىڭىزنى كۆرۈڭ",
+  "Search and read your files": "ھۆججەتلىرىڭىزنى ئىزدەڭ ۋە ئوقۇڭ",
   "Couldn't open": "ئېچىلمىدى",
 } satisfies Messages;

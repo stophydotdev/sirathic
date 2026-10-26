@@ -537,5 +537,8 @@ export default {
   "Automation deleted": "Otomatik momtaama",
   "Running now. The answer will show up in Runs.":
     "Ina wurtina jooni. Jaabawol ngol maa feeñ e Wurtin.",
+  "Search, read and draft your email": "Yiylo, jangu e winndu daftaruuji iimeel maa",
+  "See your calendars and events": "Yiy kalandaaji e huunde maa",
+  "Search and read your files": "Yiylo e jangu fiile maa",
   "Couldn't open": "Waawaa uddit",
 } satisfies Messages;

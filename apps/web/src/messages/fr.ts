@@ -550,5 +550,8 @@ export default {
   "Automation deleted": "Automatisation supprimée",
   "Running now. The answer will show up in Runs.":
     "Exécution en cours. La réponse apparaîtra dans Exécutions.",
+  "Search, read and draft your email": "Recherchez, lisez et rédigez vos e-mails",
+  "See your calendars and events": "Consultez vos agendas et événements",
+  "Search and read your files": "Recherchez et lisez vos fichiers",
   "Couldn't open": "Impossible d'ouvrir",
 } satisfies Messages;

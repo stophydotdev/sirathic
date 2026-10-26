@@ -5,12 +5,13 @@ import type { FC } from "react";
 
 export const Favicon: FC<{
   url: string;
+  src?: string;
   size: 12 | 14 | 16 | 28;
   className?: string;
-}> = ({ url, size, className }) => {
+}> = ({ url, src, size, className }) => {
   return (
     <Image
-      src={faviconUrl(url)}
+      src={src ?? faviconUrl(url)}
       alt=""
       width={size}
       height={size}

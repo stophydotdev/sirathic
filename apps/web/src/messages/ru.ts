@@ -539,5 +539,8 @@ export default {
   "Automation deleted": "Автоматизация удалена",
   "Running now. The answer will show up in Runs.":
     "Запуск начат. Ответ появится в разделе «Запуски».",
+  "Search, read and draft your email": "Ищите, читайте и пишите черновики писем",
+  "See your calendars and events": "Смотрите свои календари и события",
+  "Search and read your files": "Ищите и читайте свои файлы",
   "Couldn't open": "Не удалось открыть",
 } satisfies Messages;

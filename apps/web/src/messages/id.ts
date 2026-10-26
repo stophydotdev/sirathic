@@ -541,5 +541,8 @@ export default {
   "Automation deleted": "Otomatisasi dihapus",
   "Running now. The answer will show up in Runs.":
     "Sedang berjalan. Jawabannya akan muncul di Eksekusi.",
+  "Search, read and draft your email": "Cari, baca, dan buat draf email Anda",
+  "See your calendars and events": "Lihat kalender dan acara Anda",
+  "Search and read your files": "Cari dan baca file Anda",
   "Couldn't open": "Tidak bisa dibuka",
 } satisfies Messages;

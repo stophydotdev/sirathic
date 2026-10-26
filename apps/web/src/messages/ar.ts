@@ -531,5 +531,8 @@ export default {
   "Automation resumed": "تم استئناف الأتمتة",
   "Automation deleted": "تم حذف الأتمتة",
   "Running now. The answer will show up in Runs.": "جارٍ التشغيل الآن. ستظهر الإجابة في مرات التشغيل.",
+  "Search, read and draft your email": "ابحث في بريدك واقرأه واكتب مسودات",
+  "See your calendars and events": "اطّلع على تقاويمك ومواعيدك",
+  "Search and read your files": "ابحث في ملفاتك واقرأها",
   "Couldn't open": "تعذّر فتح",
 } satisfies Messages;

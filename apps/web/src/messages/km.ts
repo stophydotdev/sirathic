@@ -530,5 +530,8 @@ export default {
   "Automation resumed": "បានបន្តស្វ័យប្រវត្តិកម្ម",
   "Automation deleted": "បានលុបស្វ័យប្រវត្តិកម្ម",
   "Running now. The answer will show up in Runs.": "កំពុងរត់ឥឡូវនេះ។ ចម្លើយនឹងបង្ហាញនៅក្នុងការរត់។",
+  "Search, read and draft your email": "ស្វែងរក អាន និងព្រាងអ៊ីមែលរបស់អ្នក",
+  "See your calendars and events": "មើលប្រតិទិន និងព្រឹត្តិការណ៍របស់អ្នក",
+  "Search and read your files": "ស្វែងរក និងអានឯកសាររបស់អ្នក",
   "Couldn't open": "មិនអាចបើកបាន",
 } satisfies Messages;

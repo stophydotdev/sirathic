@@ -542,5 +542,8 @@ export default {
   "Automation deleted": "ئۆتۆماتکردن سڕایەوە",
   "Running now. The answer will show up in Runs.":
     "ئێستا جێبەجێ دەکرێت. وەڵامەکە لە جارەکان دەردەکەوێت.",
+  "Search, read and draft your email": "ئیمەیڵەکەت بگەڕێ، بیخوێنەوە و ڕەشنووس بنووسە",
+  "See your calendars and events": "ڕۆژژمێر و ڕووداوەکانت ببینە",
+  "Search and read your files": "فایلەکانت بگەڕێ و بیانخوێنەوە",
   "Couldn't open": "نەکرایەوە",
 } satisfies Messages;

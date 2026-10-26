@@ -534,5 +534,8 @@ export default {
   "Automation resumed": "ऑटोमेशन फिर से शुरू हुआ",
   "Automation deleted": "ऑटोमेशन मिटाया गया",
   "Running now. The answer will show up in Runs.": "अभी चल रहा है। जवाब रन में दिखेगा।",
+  "Search, read and draft your email": "अपना ईमेल खोजें, पढ़ें और ड्राफ़्ट करें",
+  "See your calendars and events": "अपने कैलेंडर और इवेंट देखें",
+  "Search and read your files": "अपनी फ़ाइलें खोजें और पढ़ें",
   "Couldn't open": "खुल नहीं सका",
 } satisfies Messages;

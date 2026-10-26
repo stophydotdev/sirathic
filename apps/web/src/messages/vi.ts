@@ -537,5 +537,8 @@ export default {
   "Automation resumed": "Đã tiếp tục tự động hóa",
   "Automation deleted": "Đã xóa tự động hóa",
   "Running now. The answer will show up in Runs.": "Đang chạy. Câu trả lời sẽ hiện trong Lần chạy.",
+  "Search, read and draft your email": "Tìm, đọc và soạn thư nháp email của bạn",
+  "See your calendars and events": "Xem lịch và sự kiện của bạn",
+  "Search and read your files": "Tìm và đọc tệp của bạn",
   "Couldn't open": "Không mở được",
 } satisfies Messages;

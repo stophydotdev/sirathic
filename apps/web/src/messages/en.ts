@@ -494,6 +494,9 @@ export const MESSAGES = [
   "Automation resumed",
   "Automation deleted",
   "Running now. The answer will show up in Runs.",
+  "Search, read and draft your email",
+  "See your calendars and events",
+  "Search and read your files",
   "Couldn't open",
 ] as const;
 
