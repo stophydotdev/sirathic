@@ -97,6 +97,6 @@ export function toUser({
 }
 
 export async function userFor(headers: Headers): Promise<User | undefined> {
-  const found = await auth.api.getSession({ headers });
+  const found = await auth.api.getSession({ headers, query: { disableRefresh: true } });
   return found ? toUser(found.user) : undefined;
 }

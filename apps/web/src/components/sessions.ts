@@ -1,4 +1,5 @@
 import { api } from "@/lib/trpc";
+import { TRPCClientError } from "@trpc/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -18,7 +19,12 @@ export const useSessions = create<{
     (set, get) => ({
       sessions: undefined,
       refresh: async () => {
-        set({ sessions: await findSessions("") });
+        const sessions = await api.sessions.list
+          .query({ query: "" })
+          .catch((err: Error) =>
+            err instanceof TRPCClientError && err.data?.code === "UNAUTHORIZED" ? [] : undefined,
+          );
+        if (sessions) set({ sessions });
       },
       change: async (id, change) => {
         set({
