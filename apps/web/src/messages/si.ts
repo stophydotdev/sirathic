@@ -141,7 +141,7 @@ export default {
   "Enter this code on ChatGPT": "මෙම කේතය ChatGPT හි ඇතුළත් කරන්න",
   "Code expired": "කේතය කල් ඉකුත් විය",
   "Sign-in didn't work": "පිවිසීම සාර්ථක නොවීය",
-  "Results for:": "ප්‍රතිඵල:",
+  "+{count} more": "තවත් {count}",
   "Searching…": "සොයමින්…",
   "The search failed. Try this tab again later.": "සෙවීම අසාර්ථක විය. පසුව මෙම ටැබය නැවත උත්සාහ කරන්න.",
   "Expand sidebar": "පැති තීරුව පුළුල් කරන්න",
@@ -178,7 +178,7 @@ export default {
   "Saved to your preferences": "ඔබේ මනාපවල සුරැකිණි",
   "Finding duas for {detail}": "{detail} සඳහා දුආ සොයමින්",
   "The answer failed.": "පිළිතුර ලැබුණේ නැත.",
-  "Search results for:": "සෙවුම් ප්‍රතිඵල:",
+  "Searched:": "සෙව්වේ:",
   "No links": "සබැඳි නැත",
   "View more": "තවත් බලන්න",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

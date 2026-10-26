@@ -140,7 +140,7 @@ export default {
   "Enter this code on ChatGPT": "ఈ కోడ్‌ను ChatGPTలో నమోదు చేయండి",
   "Code expired": "కోడ్ గడువు ముగిసింది",
   "Sign-in didn't work": "సైన్ ఇన్ కాలేదు",
-  "Results for:": "ఫలితాలు:",
+  "+{count} more": "మరో {count}",
   "Searching…": "వెతుకుతోంది…",
   "The search failed. Try this tab again later.": "వెతకడం విఫలమైంది. తర్వాత ఈ ట్యాబ్‌ను మళ్ళీ ప్రయత్నించండి.",
   "Expand sidebar": "సైడ్‌బార్ విస్తరించండి",
@@ -177,7 +177,7 @@ export default {
   "Saved to your preferences": "మీ ప్రాధాన్యతల్లో సేవ్ అయింది",
   "Finding duas for {detail}": "{detail} కోసం దుఆలు వెతుకుతోంది",
   "The answer failed.": "జవాబు రాలేదు.",
-  "Search results for:": "వెతుకులాట ఫలితాలు:",
+  "Searched:": "వెతికినవి:",
   "No links": "లింకులు లేవు",
   "View more": "మరిన్ని చూడండి",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

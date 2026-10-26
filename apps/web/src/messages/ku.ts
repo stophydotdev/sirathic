@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "ئەم کۆدە لە ChatGPT بنووسە",
   "Code expired": "کۆدەکە بەسەرچوو",
   "Sign-in didn't work": "چوونەژوورەوە سەرکەوتوو نەبوو",
-  "Results for:": "ئەنجامەکان بۆ:",
+  "+{count} more": "+{count} ی تر",
   "Searching…": "گەڕان…",
   "The search failed. Try this tab again later.":
     "گەڕانەکە سەرکەوتوو نەبوو. دواتر ئەم تابە دووبارە تاقی بکەرەوە.",
@@ -182,7 +182,7 @@ export default {
   "Saved to your preferences": "لە هەڵبژاردنەکانتدا پاشەکەوت کرا",
   "Finding duas for {detail}": "دۆزینەوەی دوعا بۆ {detail}",
   "The answer failed.": "وەڵامەکە سەرکەوتوو نەبوو.",
-  "Search results for:": "ئەنجامی گەڕان بۆ:",
+  "Searched:": "گەڕاوە بۆ:",
   "No links": "هیچ بەستەرێک نییە",
   "View more": "زیاتر ببینە",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

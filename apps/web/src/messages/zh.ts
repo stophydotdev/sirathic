@@ -139,7 +139,7 @@ export default {
   "Enter this code on ChatGPT": "在 ChatGPT 中输入此代码",
   "Code expired": "代码已过期",
   "Sign-in didn't work": "登录未成功",
-  "Results for:": "搜索结果：",
+  "+{count} more": "另外 {count} 个",
   "Searching…": "搜索中…",
   "The search failed. Try this tab again later.": "搜索失败，请稍后再打开此标签。",
   "Expand sidebar": "展开侧边栏",
@@ -176,7 +176,7 @@ export default {
   "Saved to your preferences": "已保存到你的偏好设置",
   "Finding duas for {detail}": "查找祈祷词：{detail}",
   "The answer failed.": "回答失败。",
-  "Search results for:": "搜索结果：",
+  "Searched:": "搜索词：",
   "No links": "没有链接",
   "View more": "查看更多",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

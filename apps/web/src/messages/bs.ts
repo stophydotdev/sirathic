@@ -143,7 +143,7 @@ export default {
   "Enter this code on ChatGPT": "Unesite ovaj kod na ChatGPT",
   "Code expired": "Kod je istekao",
   "Sign-in didn't work": "Prijava nije uspjela",
-  "Results for:": "Rezultati za:",
+  "+{count} more": "još {count}",
   "Searching…": "Pretraživanje…",
   "The search failed. Try this tab again later.":
     "Pretraga nije uspjela. Pokušajte ovu karticu kasnije.",
@@ -182,7 +182,7 @@ export default {
   "Saved to your preferences": "Sačuvano u vašim postavkama",
   "Finding duas for {detail}": "Traženje dova: {detail}",
   "The answer failed.": "Odgovor nije uspio.",
-  "Search results for:": "Rezultati pretrage za:",
+  "Searched:": "Pretraženo:",
   "No links": "Nema linkova",
   "View more": "Prikaži više",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

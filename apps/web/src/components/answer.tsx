@@ -5,7 +5,7 @@ import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
-import { citedUrlsOf, SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
+import { citedSourcesOf, SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
 import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
 import type { Source } from "@sirathic/server/sources";
@@ -25,15 +25,15 @@ import { type FC, useState } from "react";
 import { z } from "zod";
 import { ReportMistake } from "@/components/reportMistake";
 import { Research } from "@/components/researchSteps";
+import { Searched } from "@/components/threadMedia";
 
 export const Reply: FC = () => {
   const content = useAuiState((s) => s.message.content);
   const sources = sourcesOf(content);
-  const cited = new Set(citedUrlsOf(content));
 
   return (
     <SourcesContext value={new Map(sources.map((s) => [s.url, s]))}>
-      <Answer sources={sources} cited={sources.filter((source) => cited.has(source.url))} />
+      <Answer sources={sources} cited={citedSourcesOf(content)} />
     </SourcesContext>
   );
 };
@@ -208,9 +208,7 @@ const LinksTurn: FC<{ turn: Turn }> = ({ turn }) => {
 
   return (
     <section className="flex flex-col gap-2">
-      <p className="text-muted-foreground px-2 text-sm">
-        {t("Search results for:")} <span className="text-foreground">{turn.question}</span>
-      </p>
+      <Searched queries={turn.queries} className="px-2" />
       {turn.sources.length === 0 && (
         <p className="text-muted-foreground px-2 text-sm">{t("No links")}</p>
       )}

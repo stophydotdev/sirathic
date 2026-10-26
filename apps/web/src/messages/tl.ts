@@ -146,7 +146,7 @@ export default {
   "Enter this code on ChatGPT": "Ilagay ang code na ito sa ChatGPT",
   "Code expired": "Nag-expire ang code",
   "Sign-in didn't work": "Hindi gumana ang pag-sign in",
-  "Results for:": "Mga resulta para sa:",
+  "+{count} more": "+{count} pa",
   "Searching…": "Naghahanap…",
   "The search failed. Try this tab again later.":
     "Pumalya ang paghahanap. Subukan ulit ang tab na ito mamaya.",
@@ -185,7 +185,7 @@ export default {
   "Saved to your preferences": "Na-save sa iyong mga kagustuhan",
   "Finding duas for {detail}": "Naghahanap ng dua para sa {detail}",
   "The answer failed.": "Pumalya ang sagot.",
-  "Search results for:": "Mga resulta ng paghahanap para sa:",
+  "Searched:": "Hinanap:",
   "No links": "Walang link",
   "View more": "Tingnan pa",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

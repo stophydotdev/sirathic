@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "Nhập mã này trên ChatGPT",
   "Code expired": "Mã đã hết hạn",
   "Sign-in didn't work": "Đăng nhập không thành công",
-  "Results for:": "Kết quả cho:",
+  "+{count} more": "+{count} khác",
   "Searching…": "Đang tìm…",
   "The search failed. Try this tab again later.": "Tìm kiếm thất bại. Hãy thử lại thẻ này sau.",
   "Expand sidebar": "Mở rộng thanh bên",
@@ -182,7 +182,7 @@ export default {
   "Saved to your preferences": "Đã lưu vào tùy chọn của bạn",
   "Finding duas for {detail}": "Đang tìm lời cầu nguyện cho {detail}",
   "The answer failed.": "Không trả lời được.",
-  "Search results for:": "Kết quả tìm kiếm cho:",
+  "Searched:": "Đã tìm:",
   "No links": "Không có liên kết",
   "View more": "Xem thêm",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

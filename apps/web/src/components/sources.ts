@@ -2,6 +2,7 @@ import type { ThreadMessage } from "@assistant-ui/react";
 import { createContext } from "react";
 import { z } from "zod";
 import { type Source, source } from "@sirathic/server/sources";
+import { researchOf } from "@/components/research";
 
 const sourced = z.object({ sources: z.array(source) });
 const CITED_LINK = /\[\d+\]\((https?:\/\/[^)\s]+)\)/gu;
@@ -9,7 +10,7 @@ const CITED_LINK = /\[\d+\]\((https?:\/\/[^)\s]+)\)/gu;
 const textOf = (content: ThreadMessage["content"]) =>
   content.map((part) => (part.type === "text" ? part.text : "")).join("");
 
-export const citedUrlsOf = (content: ThreadMessage["content"]) => [
+const citedUrlsOf = (content: ThreadMessage["content"]) => [
   ...new Set(
     [...textOf(content).matchAll(CITED_LINK)].flatMap((match) => (match[1] ? [match[1]] : [])),
   ),
@@ -28,15 +29,29 @@ export function sourcesOf(content: ThreadMessage["content"]) {
   return [...found.values()].toSorted((a, b) => rank(a.url) - rank(b.url));
 }
 
+export function citedSourcesOf(content: ThreadMessage["content"]) {
+  const cited = new Set(citedUrlsOf(content));
+  return sourcesOf(content).filter((entry) => cited.has(entry.url));
+}
+
 export function turnsOf(messages: readonly ThreadMessage[]) {
   return messages.flatMap((message, i) => {
     if (message.role !== "user") return [];
     const reply = messages[i + 1];
+    const content = reply?.role === "assistant" ? reply.content : [];
     return [
       {
         id: message.id,
         question: textOf(message.content),
-        sources: sourcesOf(reply?.role === "assistant" ? reply.content : []),
+        queries: [
+          ...new Set(
+            researchOf(content, false).flatMap((step) =>
+              step.kind === "searches" ? step.queries : [],
+            ),
+          ),
+        ],
+        sources: sourcesOf(content),
+        cited: citedSourcesOf(content),
       },
     ];
   });

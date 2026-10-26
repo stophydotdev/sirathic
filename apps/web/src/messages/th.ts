@@ -139,7 +139,7 @@ export default {
   "Enter this code on ChatGPT": "ใส่รหัสนี้ใน ChatGPT",
   "Code expired": "รหัสหมดอายุแล้ว",
   "Sign-in didn't work": "ลงชื่อเข้าใช้ไม่สำเร็จ",
-  "Results for:": "ผลลัพธ์สำหรับ:",
+  "+{count} more": "อีก {count} รายการ",
   "Searching…": "กำลังค้นหา…",
   "The search failed. Try this tab again later.": "การค้นหาล้มเหลว โปรดลองแท็บนี้ใหม่ภายหลัง",
   "Expand sidebar": "ขยายแถบด้านข้าง",
@@ -176,7 +176,7 @@ export default {
   "Saved to your preferences": "บันทึกในค่าที่คุณเลือกแล้ว",
   "Finding duas for {detail}": "กำลังหาดุอาอ์สำหรับ {detail}",
   "The answer failed.": "ตอบไม่สำเร็จ",
-  "Search results for:": "ผลการค้นหาสำหรับ:",
+  "Searched:": "ค้นหา:",
   "No links": "ไม่มีลิงก์",
   "View more": "ดูเพิ่มเติม",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

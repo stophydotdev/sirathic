@@ -146,7 +146,7 @@ export default {
   "Enter this code on ChatGPT": "Бу кодни ChatGPT'га киритинг",
   "Code expired": "Код муддати тугади",
   "Sign-in didn't work": "Кириш амалга ошмади",
-  "Results for:": "Натижалар:",
+  "+{count} more": "яна {count}",
   "Searching…": "Қидирилмоқда…",
   "The search failed. Try this tab again later.":
     "Қидирув амалга ошмади. Бу варақни кейинроқ қайта очинг.",
@@ -184,7 +184,7 @@ export default {
   "Saved to your preferences": "Созламаларингизга сақланди",
   "Finding duas for {detail}": "Дуолар қидирилмоқда: {detail}",
   "The answer failed.": "Жавоб олиб бўлмади.",
-  "Search results for:": "Қидирув натижалари:",
+  "Searched:": "Қидирилди:",
   "No links": "Ҳавола йўқ",
   "View more": "Яна кўриш",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

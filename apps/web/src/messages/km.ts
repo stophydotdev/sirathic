@@ -141,7 +141,7 @@ export default {
   "Enter this code on ChatGPT": "បញ្ចូលលេខកូដនេះនៅលើ ChatGPT",
   "Code expired": "លេខកូដផុតកំណត់ហើយ",
   "Sign-in didn't work": "ការចូលគណនីមិនបានសម្រេច",
-  "Results for:": "លទ្ធផលសម្រាប់៖",
+  "+{count} more": "+{count} ទៀត",
   "Searching…": "កំពុងស្វែងរក…",
   "The search failed. Try this tab again later.": "ការស្វែងរកបរាជ័យ។ សូមសាកផ្ទាំងនេះម្ដងទៀតពេលក្រោយ។",
   "Expand sidebar": "ពង្រីករបារចំហៀង",
@@ -178,7 +178,7 @@ export default {
   "Saved to your preferences": "បានរក្សាទុកក្នុងចំណូលចិត្តរបស់អ្នក",
   "Finding duas for {detail}": "កំពុងរកឌូអាសម្រាប់ {detail}",
   "The answer failed.": "ចម្លើយបរាជ័យ។",
-  "Search results for:": "លទ្ធផលស្វែងរកសម្រាប់៖",
+  "Searched:": "បានស្វែងរក៖",
   "No links": "គ្មានតំណ",
   "View more": "មើលបន្ថែម",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

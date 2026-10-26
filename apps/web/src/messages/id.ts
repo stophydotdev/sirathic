@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "Masukkan kode ini di ChatGPT",
   "Code expired": "Kode kedaluwarsa",
   "Sign-in didn't work": "Gagal masuk",
-  "Results for:": "Hasil untuk:",
+  "+{count} more": "+{count} lainnya",
   "Searching…": "Mencari…",
   "The search failed. Try this tab again later.": "Pencarian gagal. Coba buka tab ini lagi nanti.",
   "Expand sidebar": "Lebarkan bilah sisi",
@@ -181,7 +181,7 @@ export default {
   "Saved to your preferences": "Disimpan ke preferensi Anda",
   "Finding duas for {detail}": "Mencari doa untuk {detail}",
   "The answer failed.": "Jawaban gagal.",
-  "Search results for:": "Hasil pencarian untuk:",
+  "Searched:": "Dicari:",
   "No links": "Tidak ada tautan",
   "View more": "Lihat lainnya",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

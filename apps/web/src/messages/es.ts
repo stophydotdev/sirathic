@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "Introduce este código en ChatGPT",
   "Code expired": "El código caducó",
   "Sign-in didn't work": "No se pudo iniciar sesión",
-  "Results for:": "Resultados para:",
+  "+{count} more": "+{count} más",
   "Searching…": "Buscando…",
   "The search failed. Try this tab again later.":
     "La búsqueda falló. Vuelve a abrir esta pestaña más tarde.",
@@ -184,7 +184,7 @@ export default {
   "Saved to your preferences": "Guardado en tus preferencias",
   "Finding duas for {detail}": "Buscando súplicas para {detail}",
   "The answer failed.": "La respuesta falló.",
-  "Search results for:": "Resultados de búsqueda para:",
+  "Searched:": "Búsquedas:",
   "No links": "Sin enlaces",
   "View more": "Ver más",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

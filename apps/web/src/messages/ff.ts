@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "Naatnu kod oo e ChatGPT",
   "Code expired": "Kod oo gasii",
   "Sign-in didn't work": "Naatgol ronkii",
-  "Results for:": "Njeñtudi:",
+  "+{count} more": "+{count} goɗɗi",
   "Searching…": "Ena yiyloo…",
   "The search failed. Try this tab again later.":
     "Yiylo ngol ronkii. Eto tabbere ndee kadi ɓaawo ɗoo.",
@@ -182,7 +182,7 @@ export default {
   "Saved to your preferences": "Danndaama e cuɓe maa",
   "Finding duas for {detail}": "Ena yiyloo du'aaji ngam {detail}",
   "The answer failed.": "Jaabawol ngol ronkii.",
-  "Search results for:": "Njeñtudi yiylo:",
+  "Searched:": "Yiylaama:",
   "No links": "Alaa jokkorɗe",
   "View more": "Yiy goɗɗe",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

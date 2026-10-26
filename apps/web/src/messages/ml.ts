@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "ഈ കോഡ് ChatGPT-ൽ നൽകുക",
   "Code expired": "കോഡിന്റെ കാലാവധി കഴിഞ്ഞു",
   "Sign-in didn't work": "സൈൻ ഇൻ നടന്നില്ല",
-  "Results for:": "ഫലങ്ങൾ:",
+  "+{count} more": "+{count} കൂടി",
   "Searching…": "തിരയുന്നു…",
   "The search failed. Try this tab again later.": "തിരയൽ പരാജയപ്പെട്ടു. പിന്നീട് ഈ ടാബ് വീണ്ടും ശ്രമിക്കുക.",
   "Expand sidebar": "സൈഡ്‌ബാർ വികസിപ്പിക്കുക",
@@ -181,7 +181,7 @@ export default {
   "Saved to your preferences": "നിങ്ങളുടെ മുൻഗണനകളിൽ സേവ് ചെയ്തു",
   "Finding duas for {detail}": "{detail}-നുള്ള ദുആകൾ തിരയുന്നു",
   "The answer failed.": "മറുപടി ലഭിച്ചില്ല.",
-  "Search results for:": "തിരയൽ ഫലങ്ങൾ:",
+  "Searched:": "തിരഞ്ഞത്:",
   "No links": "ലിങ്കുകളില്ല",
   "View more": "കൂടുതൽ കാണുക",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
