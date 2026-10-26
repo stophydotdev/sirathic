@@ -443,7 +443,7 @@ export const DataSection: FC = () => {
     await refresh();
     setBusy(false);
     setConfirming(false);
-    if (window.location.pathname.startsWith("/s/")) {
+    if (window.location.pathname.startsWith("/c/")) {
       window.location.assign("/");
     }
   };

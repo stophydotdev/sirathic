@@ -113,7 +113,7 @@ const DeleteDialog: FC<{
   const confirm = () => {
     void remove(session.id);
     onOpenChange(false);
-    if (pathname === `/s/${session.id}`) window.location.assign("/");
+    if (pathname === `/c/${session.id}`) window.location.assign("/");
   };
 
   return (
@@ -162,7 +162,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-64 rounded-[16px] p-1.5">
           <DropdownMenuItem asChild className={menuItem}>
-            <a href={`/s/${session.id}`} target="_blank" rel="noreferrer">
+            <a href={`/c/${session.id}`} target="_blank" rel="noreferrer">
               <IconExternalLink className={menuIcon} />
               {t("Open in new tab")}
             </a>
@@ -217,7 +217,7 @@ export const SessionRow: FC<{
   const change = useSessions((s) => s.change);
   const t = useT();
   const [titleShown, setTitleShown] = useState(false);
-  const current = pathname === `/s/${session.id}`;
+  const current = pathname === `/c/${session.id}`;
 
   return (
     <TooltipProvider delayDuration={500}>
@@ -232,7 +232,7 @@ export const SessionRow: FC<{
             )}
           >
             <Link
-              href={`/s/${session.id}`}
+              href={`/c/${session.id}`}
               onClick={onOpen}
               className={cn(
                 "text-foreground min-w-0 flex-1 truncate px-2.5 py-2 text-sm",
@@ -346,7 +346,7 @@ export const SearchDialog: FC<{
     label: session.title,
     run: () => {
       onOpenChange(false);
-      router.push(`/s/${session.id}`);
+      router.push(`/c/${session.id}`);
     },
   }));
   const options = [...commands, ...results];

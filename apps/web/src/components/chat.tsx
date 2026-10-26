@@ -143,8 +143,8 @@ export const Chat: FC<{ id?: string; initialMessages?: ChatMessage[] }> = ({
 
   useEffect(() => {
     if (!started || incognito) return;
-    if (window.location.pathname !== `/s/${chatId}`) {
-      window.history.replaceState(null, "", `/s/${chatId}`);
+    if (window.location.pathname !== `/c/${chatId}`) {
+      window.history.replaceState(null, "", `/c/${chatId}`);
     }
   }, [started, chatId, incognito]);
 

@@ -107,7 +107,7 @@ export const AnswerExtras: FC<{
     const forked = await api.sessions.fork
       .mutate({ id: chat.id, messageId })
       .catch(() => undefined);
-    if (forked) window.location.assign(`/s/${forked.id}`);
+    if (forked) window.location.assign(`/c/${forked.id}`);
     else setForking(false);
   };
 

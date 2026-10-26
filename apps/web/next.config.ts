@@ -11,10 +11,11 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@sirathic/server"],
   headers: async () => [
     {
-      source: "/:lang/s/:id",
+      source: "/c/:id",
       headers: [{ key: "X-Robots-Tag", value: "noindex" }],
     },
   ],
+  redirects: async () => [{ source: "/s/:id", destination: "/c/:id", permanent: true }],
   rewrites: async () =>
     ["/trpc/:path*", "/api/chat", "/api/auth/:path*", "/auth/:path*"].map((source) => ({
       source,

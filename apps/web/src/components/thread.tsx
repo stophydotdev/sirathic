@@ -202,7 +202,7 @@ const HeaderActions: FC = () => {
 
   const share = () => {
     if (!chat?.saved) return;
-    void navigator.clipboard.writeText(`${window.location.origin}/s/${chat.id}`).then(() => {
+    void navigator.clipboard.writeText(`${window.location.origin}/c/${chat.id}`).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2_000);
     });
