@@ -170,7 +170,11 @@ const ReplyError: FC = () => {
   const t = useT();
   if (error === undefined) return null;
 
-  const raw = z.string().safeParse(error).data ?? t("The answer failed.");
+  const raw =
+    z
+      .string()
+      .or(z.object({ message: z.string() }).transform((err) => err.message))
+      .safeParse(error).data ?? t("The answer failed.");
   const message = jsonText.pipe(errorBody).safeParse(raw).data?.error ?? raw;
 
   return (

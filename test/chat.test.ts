@@ -17,6 +17,7 @@ import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { clientOf } from "../apps/server/src/client";
 import { toolFailure } from "../apps/server/src/events";
+import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
 import { answerAgent } from "../apps/server/src/chat/response";
 
@@ -424,4 +425,19 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
   });
   const result = await agent.generate({ prompt: "how many users does sirathic have" });
   expect([result.steps.length, result.text]).toEqual([25, "Here is what I found."]);
+});
+
+test("an answer runs until stopped or replaced, not until the browser leaves", () => {
+  const first = startAnswer("user", "chat");
+  expect(isAnswering("user", "chat")).toBe(true);
+  const second = startAnswer("user", "chat");
+  expect(first.signal.aborted).toBe(true);
+  first.settled();
+  expect(isAnswering("user", "chat")).toBe(true);
+  stopAnswer("other", "chat");
+  expect(second.signal.aborted).toBe(false);
+  stopAnswer("user", "chat");
+  expect(second.signal.aborted).toBe(true);
+  second.settled();
+  expect(isAnswering("user", "chat")).toBe(false);
 });

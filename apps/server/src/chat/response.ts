@@ -1,5 +1,6 @@
 import {
   APICallError,
+  consumeStream,
   createAgentUIStream,
   createIdGenerator,
   createUIMessageStream,
@@ -139,6 +140,7 @@ export function chatResponse({
   record,
   remember,
   fileOwner,
+  settled,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   options: { answer: ProviderOptions; side: ProviderOptions };
@@ -155,6 +157,7 @@ export function chatResponse({
   record: (event: Event) => void;
   remember: Remember | undefined;
   fileOwner?: string;
+  settled?: () => void;
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -319,6 +322,7 @@ export function chatResponse({
   const response = createUIMessageStreamResponse({
     stream,
     headers: { "cache-control": "no-cache, no-transform" },
+    consumeSseStream: ({ stream: copy }) => consumeStream({ stream: copy }).then(settled),
   });
   return new Response(response.body?.pipeThrough(keepAlive(KEEPALIVE_MS)) ?? null, response);
 }
