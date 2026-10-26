@@ -5,6 +5,12 @@ const fileA = "3f2b8c1e-5d4a-4e6b-9a7c-0d1e2f3a4b5c";
 
 mock.module(`${src}/auth.ts`, () => ({
   userFor: async (headers: Headers) => ({ id: headers.get("x-user") ?? "user-a" }),
+  toUser: (row: { id: string; email: string | null }) => ({
+    via: "google",
+    id: row.id,
+    email: row.email,
+    image: null,
+  }),
 }));
 mock.module(`${src}/files/storage.ts`, () => ({
   storage: { bytes: async () => new TextEncoder().encode("salam") },
@@ -18,6 +24,7 @@ mock.module(`${src}/files/store.ts`, () => ({
   saveFile: async () => {
     throw new Error("an oversized upload must never be saved");
   },
+  projectFileKeys: async () => [],
 }));
 
 const { filesRoutes } = await import(`${src}/files/routes.ts`);
