@@ -21,6 +21,7 @@ import {
   updateAutomation,
 } from "./automations/store";
 import { runNow } from "./automations/runner";
+import { isAnswering, stopAnswer } from "./chat/answers";
 import { fileId, fileName, listFiles, removeFile, renameFile } from "./files/store";
 import { NOOR_MODELS } from "./noor";
 import { userFor } from "./auth";
@@ -109,7 +110,10 @@ export const appRouter = t.router({
       if (!messages) {
         throw new TRPCError({ code: "NOT_FOUND", message: "no such session" });
       }
-      return { messages };
+      return { messages, answering: isAnswering(ctx.owner, input.id) };
+    }),
+    stop: signedIn.input(session).mutation(({ ctx, input }) => {
+      stopAnswer(ctx.owner, input.id);
     }),
     update: signedIn
       .input(sessionUpdate.safeExtend({ id: sessionId }))

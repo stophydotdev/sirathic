@@ -5,6 +5,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { auth, userFor } from "./auth";
 import { startScheduler } from "./automations/runner";
+import { startAnswer } from "./chat/answers";
 import { countNoorAnswer, pickModels } from "./chat/models";
 import { chatResponse } from "./chat/response";
 import { chatTitle } from "./chat/title";
@@ -114,12 +115,14 @@ app.post("/api/chat", (c) =>
             console.error(`title not set: ${reasonOf(err)}`);
             return undefined;
           });
+    const answer = startAnswer(by, input.id);
     return chatResponse({
       models,
       modelName,
       messages: validated,
       mode: input.mode,
-      abortSignal: c.req.raw.signal,
+      abortSignal: answer.signal,
+      settled: answer.settled,
       preferences: Promise.all([getSettings(by), project])
         .then(([settings, inProject]) => settingsInProject(settings, inProject))
         .catch((err: Error) => {
