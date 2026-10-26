@@ -384,7 +384,6 @@ export default {
   "New automation": "కొత్త ఆటోమేషన్",
   "Edit automation": "ఆటోమేషన్‌ను సవరించండి",
   "Sign in to create automations.": "ఆటోమేషన్‌లు సృష్టించడానికి సైన్ ఇన్ చేయండి.",
-  Suggestions: "సూచనలు",
   Pause: "పాజ్ చేయండి",
   Resume: "కొనసాగించండి",
   Paused: "పాజ్ చేయబడింది",
@@ -442,6 +441,41 @@ export default {
   "Friday reminder": "శుక్రవారం రిమైండర్",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "శుక్రవారం సున్నత్‌ను సంబంధిత ఒక హదీసుతో గుర్తు చేయండి.",
+  Learning: "నేర్చుకోవడం",
+  Worship: "ఆరాధన",
+  Family: "కుటుంబం",
+  Hour: "గంట",
+  Minute: "నిమిషం",
+  "Evening adhkar": "సాయంత్రం అజ్కార్",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "సాయంత్రం అజ్కార్‌ను వాటి మూలాలు మరియు చదవాల్సిన సమయంతో ఇవ్వండి.",
+  "Verse of the day": "నేటి ఆయత్",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "ఖురాన్‌లోని ఒక ఆయత్‌ను దాని అనువాదం మరియు చిన్న తఫ్సీర్‌తో పంచుకోండి.",
+  "Weekly tafsir": "వారపు తఫ్సీర్",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "ఒక చిన్న సూరాలోని కొన్ని ఆయత్‌లను శాస్త్రీయ తఫ్సీర్ గ్రంథాల ఆధారంగా వివరించండి.",
+  "Quran word of the day": "నేటి ఖురాన్ పదం",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "ఖురాన్‌లోని ఒక అరబీ పదాన్ని దాని మూలం మరియు అది వచ్చిన ఆయత్‌తో నాకు నేర్పండి.",
+  "Seerah story": "సీరా కథ",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "ప్రవక్త ﷺ సీరా నుండి ఒక కథ చెప్పండి, నేర్చుకోవాల్సిన పాఠంతో.",
+  "Fiqh question explained": "వివరించిన ఫిఖ్ ప్రశ్న",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "రోజువారీ జీవితంలోని ఒక ఫిఖ్ ప్రశ్నను ప్రతి మజ్హబ్ అభిప్రాయంతో వివరించండి.",
+  "Monday and Thursday fast": "సోమ, గురువారాల ఉపవాసం",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "రేపు సున్నత్ ఉపవాస దినమని గుర్తు చేయండి, దాని ప్రతిఫలంపై ఒక హదీసుతో.",
+  "Nightly dua": "రాత్రి దుఆ",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "రాత్రికి ఒక ప్రామాణిక దుఆను దాని అర్థం మరియు మూలంతో ఇవ్వండి.",
+  "Prophet story for kids": "పిల్లల కోసం ప్రవక్త కథ",
+  "Tell a short story of a prophet for children, in simple words.":
+    "పిల్లల కోసం ఒక ప్రవక్త గురించి చిన్న కథను సులభమైన మాటల్లో చెప్పండి.",
+  "Family halaqa": "కుటుంబ హల్ఖా",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "మా కుటుంబ హల్ఖా కోసం ఒక ఆయత్, ఒక హదీసు మరియు ప్రశ్నలతో ఒక అంశాన్ని సూచించండి.",
   Memory: "మెమరీ",
   "Project only": "ప్రాజెక్ట్ మాత్రమే",
   "Chats here use and add to your main memory.": "ఇక్కడి చాట్‌లు మీ ప్రధాన మెమరీని వాడుతూ దానికి జోడిస్తాయి.",
@@ -527,6 +561,13 @@ export default {
   "Automation paused": "ఆటోమేషన్ పాజ్ చేయబడింది",
   "Automation resumed": "ఆటోమేషన్ మళ్లీ ప్రారంభమైంది",
   "Automation deleted": "ఆటోమేషన్ తొలగించబడింది",
+  "Automation created": "ఆటోమేషన్ సృష్టించబడింది",
+  "No automations yet": "ఇంకా ఆటోమేషన్‌లు లేవు",
+  "Notify me": "నాకు తెలియజేయండి",
+  "In app": "యాప్‌లో",
+  None: "ఏదీ కాదు",
+  "Finished. Open to read the answer.": "పూర్తైంది. సమాధానం చదవడానికి తెరవండి.",
+  "New automation answers": "ఆటోమేషన్‌ల కొత్త సమాధానాలు",
   "Running now. The answer will show up in Runs.": "ఇప్పుడు రన్ అవుతోంది. సమాధానం రన్‌లలో కనిపిస్తుంది.",
   "Search, read and draft your email": "మీ ఈమెయిల్‌ను వెతకండి, చదవండి, డ్రాఫ్ట్ చేయండి",
   "See your calendars and events": "మీ క్యాలెండర్‌లు, ఈవెంట్‌లను చూడండి",

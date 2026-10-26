@@ -382,7 +382,6 @@ export default {
   "New automation": "新建自动化",
   "Edit automation": "编辑自动化",
   "Sign in to create automations.": "登录后即可创建自动化。",
-  Suggestions: "建议",
   Pause: "暂停",
   Resume: "恢复",
   Paused: "已暂停",
@@ -439,6 +438,41 @@ export default {
     "给我早晨的赞念，附上出处和诵读时间。",
   "Friday reminder": "周五提醒",
   "Remind me of the sunnah of Friday with one relevant hadith.": "用一段相关圣训提醒我周五的圣行。",
+  Learning: "学习",
+  Worship: "功修",
+  Family: "家庭",
+  Hour: "小时",
+  Minute: "分钟",
+  "Evening adhkar": "傍晚的赞念",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "给我傍晚的赞念，附上出处和诵读时间。",
+  "Verse of the day": "每日一节经文",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "分享一节古兰经经文，附译文和简短的经注。",
+  "Weekly tafsir": "每周经注",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "根据经典经注著作，讲解一章短章中的几节经文。",
+  "Quran word of the day": "每日古兰经词汇",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "教我一个古兰经中的阿拉伯语词，附词根和出现该词的一节经文。",
+  "Seerah story": "圣行故事",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "给我讲一个先知ﷺ传记中的故事，并说明可以得到的启示。",
+  "Fiqh question explained": "教法问题详解",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "讲解一个日常教法问题，附各学派的观点。",
+  "Monday and Thursday fast": "周一和周四斋戒",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "提醒我明天是圣行斋戒日，并附一段关于其回赐的圣训。",
+  "Nightly dua": "夜间祈祷词",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "给我一段可靠的夜间祈祷词，附含义和出处。",
+  "Prophet story for kids": "儿童先知故事",
+  "Tell a short story of a prophet for children, in simple words.":
+    "用简单的话给孩子讲一个简短的先知故事。",
+  "Family halaqa": "家庭学习圈",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "为我们的家庭学习圈建议一个主题，附一节经文、一段圣训和讨论问题。",
   Memory: "记忆",
   "Project only": "仅限项目",
   "Chats here use and add to your main memory.": "这里的对话会使用并补充你的主记忆。",
@@ -523,6 +557,13 @@ export default {
   "Automation paused": "自动化已暂停",
   "Automation resumed": "自动化已恢复",
   "Automation deleted": "自动化已删除",
+  "Automation created": "已创建自动化",
+  "No automations yet": "还没有自动化",
+  "Notify me": "通知我",
+  "In app": "应用内",
+  None: "无",
+  "Finished. Open to read the answer.": "已完成。打开查看回答。",
+  "New automation answers": "自动化有新回答",
   "Running now. The answer will show up in Runs.": "正在运行。回答会显示在运行记录中。",
   "Search, read and draft your email": "搜索、阅读和起草你的邮件",
   "See your calendars and events": "查看你的日历和日程",

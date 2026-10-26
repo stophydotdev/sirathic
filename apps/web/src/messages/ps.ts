@@ -389,7 +389,6 @@ export default {
   "New automation": "نوی اتومات کار",
   "Edit automation": "اتومات کار سمول",
   "Sign in to create automations.": "د اتومات کارونو جوړولو لپاره ننوځئ.",
-  Suggestions: "وړاندیزونه",
   Pause: "ځنډول",
   Resume: "دوام ورکول",
   Paused: "ځنډول شوی",
@@ -447,6 +446,41 @@ export default {
   "Friday reminder": "د جمعې یادونه",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "ماته د جمعې سنت د یوه اړوند حدیث سره یاد کړه.",
+  Learning: "زده کړه",
+  Worship: "عبادت",
+  Family: "کورنۍ",
+  Hour: "ساعت",
+  Minute: "دقیقه",
+  "Evening adhkar": "د ماښام اذکار",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "ماته د ماښام اذکار د سرچینو او د ویلو د وخت سره راکړه.",
+  "Verse of the day": "د ورځې آیت",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "د قرآن یو آیت د ژباړې او لنډ تفسیر سره شریک کړه.",
+  "Weekly tafsir": "اونیز تفسیر",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "د یوې لنډې سورتې څو آیتونه د پخوانیو تفسیر کتابونو له مخې تشریح کړه.",
+  "Quran word of the day": "د ورځې قرآني کلمه",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "ماته د قرآن یوه عربي کلمه د ریښې او هغه آیت سره زده کړه چې په کې راغلې ده.",
+  "Seerah story": "د سیرت کیسه",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "ماته د پیغمبر ﷺ د سیرت یوه کیسه د یوه درس سره ووایه.",
+  "Fiqh question explained": "تشریح شوې فقهي پوښتنه",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "یوه ورځنۍ فقهي پوښتنه د هر مذهب د نظر سره تشریح کړه.",
+  "Monday and Thursday fast": "د دوشنبې او پنجشنبې روژه",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "ماته یاد راکړه چې سبا د سنت روژې ورځ ده، د هغې د اجر په اړه د یو حدیث سره.",
+  "Nightly dua": "د شپې دعا",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "ماته د شپې لپاره یوه صحیح دعا د معنا او سرچینې سره راکړه.",
+  "Prophet story for kids": "د ماشومانو لپاره د پیغمبر کیسه",
+  "Tell a short story of a prophet for children, in simple words.":
+    "د ماشومانو لپاره د یو پیغمبر لنډه کیسه په ساده ټکو ووایه.",
+  "Family halaqa": "د کورنۍ حلقه",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "زموږ د کورنۍ د حلقې لپاره یو موضوع وړاندیز کړه، د یو آیت، حدیث او پوښتنو سره.",
   Memory: "حافظه",
   "Project only": "یوازې پروژه",
   "Chats here use and add to your main memory.":
@@ -537,6 +571,13 @@ export default {
   "Automation paused": "اتومات کار ودرول شو",
   "Automation resumed": "اتومات کار بیا پیل شو",
   "Automation deleted": "اتومات کار ړنګ شو",
+  "Automation created": "اتومات کار جوړ شو",
+  "No automations yet": "تر اوسه هېڅ اتومات کار نشته",
+  "Notify me": "ماته خبر راکړئ",
+  "In app": "په اپ کې",
+  None: "هېڅ",
+  "Finished. Open to read the answer.": "بشپړ شو. ځواب لوستلو لپاره یې پرانیزئ.",
+  "New automation answers": "د اتومات کارونو نوي ځوابونه",
   "Running now. The answer will show up in Runs.": "اوس روان دی. ځواب به په چلونو کې ښکاره شي.",
   "Search, read and draft your email": "خپل بریښنالیک ولټوئ، ولولئ او مسوده یې ولیکئ",
   "See your calendars and events": "خپلې جنترۍ او پېښې وګورئ",

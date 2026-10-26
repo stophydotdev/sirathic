@@ -392,7 +392,6 @@ export default {
   "New automation": "Yeni otomasyon",
   "Edit automation": "Otomasyonu düzenle",
   "Sign in to create automations.": "Otomasyon oluşturmak için giriş yapın.",
-  Suggestions: "Öneriler",
   Pause: "Duraklat",
   Resume: "Sürdür",
   Paused: "Duraklatıldı",
@@ -450,6 +449,41 @@ export default {
   "Friday reminder": "Cuma hatırlatıcısı",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Bana cuma sünnetini ilgili bir hadisle hatırlat.",
+  Learning: "Öğrenme",
+  Worship: "İbadet",
+  Family: "Aile",
+  Hour: "Saat",
+  Minute: "Dakika",
+  "Evening adhkar": "Akşam ezkârı",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Bana akşam ezkârını kaynakları ve ne zaman okunacağıyla birlikte ver.",
+  "Verse of the day": "Günün ayeti",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Kur'an'dan bir ayeti çevirisi ve kısa bir tefsirle paylaş.",
+  "Weekly tafsir": "Haftalık tefsir",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Kısa bir surenin birkaç ayetini klasik tefsir kitaplarına göre açıkla.",
+  "Quran word of the day": "Günün Kur'an kelimesi",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Bana Kur'an'dan bir Arapça kelimeyi kökü ve geçtiği bir ayetle öğret.",
+  "Seerah story": "Siyer hikâyesi",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Bana Peygamber ﷺ'in siyerinden bir olay anlat, çıkarılacak bir dersle birlikte.",
+  "Fiqh question explained": "Fıkıh sorusu açıklaması",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Günlük hayattan bir fıkıh meselesini her mezhebin görüşüyle açıkla.",
+  "Monday and Thursday fast": "Pazartesi ve perşembe orucu",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Yarının nafile oruç günü olduğunu hatırlat, ödülüne dair bir hadisle birlikte.",
+  "Nightly dua": "Gece duası",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Bana gece için sahih bir duayı anlamı ve kaynağıyla birlikte ver.",
+  "Prophet story for kids": "Çocuklar için peygamber hikâyesi",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Çocuklar için bir peygamberin kısa hikâyesini basit sözlerle anlat.",
+  "Family halaqa": "Aile halakası",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Aile halakamız için bir ayet, bir hadis ve sorularla bir konu öner.",
   Memory: "Hafıza",
   "Project only": "Yalnızca proje",
   "Chats here use and add to your main memory.":
@@ -539,6 +573,13 @@ export default {
   "Automation paused": "Otomasyon duraklatıldı",
   "Automation resumed": "Otomasyon sürdürüldü",
   "Automation deleted": "Otomasyon silindi",
+  "Automation created": "Otomasyon oluşturuldu",
+  "No automations yet": "Henüz otomasyon yok",
+  "Notify me": "Beni bilgilendir",
+  "In app": "Uygulamada",
+  None: "Hiçbiri",
+  "Finished. Open to read the answer.": "Bitti. Yanıtı okumak için aç.",
+  "New automation answers": "Otomasyonlardan yeni yanıtlar",
   "Running now. The answer will show up in Runs.":
     "Şimdi çalışıyor. Yanıt Çalıştırmalar'da görünecek.",
   "Search, read and draft your email": "E-postalarınızı arayın, okuyun ve taslak yazın",

@@ -392,7 +392,6 @@ export default {
   "New automation": "ئۆتۆماتکردنی نوێ",
   "Edit automation": "دەستکاریکردنی ئۆتۆماتکردن",
   "Sign in to create automations.": "بۆ دروستکردنی ئۆتۆماتکردن بچۆ ژوورەوە.",
-  Suggestions: "پێشنیارەکان",
   Pause: "ڕاگرتنی کاتی",
   Resume: "بەردەوامبوون",
   Paused: "ڕاگیراو",
@@ -450,6 +449,41 @@ export default {
   "Friday reminder": "بیرخستنەوەی هەینی",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "سوننەتی هەینیم بیر بخەرەوە لەگەڵ یەک فەرموودەی گونجاو.",
+  Learning: "فێربوون",
+  Worship: "پەرستن",
+  Family: "خێزان",
+  Hour: "کاتژمێر",
+  Minute: "خولەک",
+  "Evening adhkar": "زیکرەکانی ئێوارە",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "زیکرەکانی ئێوارەم بدەرێ لەگەڵ سەرچاوەکانیان و کاتی وتنیان.",
+  "Verse of the day": "ئایەتی ئەمڕۆ",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "ئایەتێکی قورئان لەگەڵ وەرگێڕان و تەفسیرێکی کورت بڵاوبکەرەوە.",
+  "Weekly tafsir": "تەفسیری هەفتانە",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "چەند ئایەتێکی سورەتێکی کورت بەپێی کتێبە کلاسیکییەکانی تەفسیر ڕوونبکەرەوە.",
+  "Quran word of the day": "وشەی قورئانیی ئەمڕۆ",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "وشەیەکی عەرەبی لە قورئان فێرم بکە لەگەڵ ڕەگەکەی و ئایەتێک کە تێیدا هاتووە.",
+  "Seerah story": "چیرۆکی سیرە",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "چیرۆکێکم بۆ بگێڕەرەوە لە سیرەی پێغەمبەر ﷺ، لەگەڵ وانەیەک بۆ وەرگرتن.",
+  "Fiqh question explained": "پرسیاری فیقهی ڕوونکراوە",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "پرسێکی فیقهیی ڕۆژانە لەگەڵ ڕای هەر مەزهەبێک ڕوونبکەرەوە.",
+  "Monday and Thursday fast": "ڕۆژووی دووشەممە و پێنجشەممە",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "بیرم بخەرەوە کە سبەینێ ڕۆژی ڕۆژووی سوننەتە، لەگەڵ فەرموودەیەک دەربارەی پاداشتەکەی.",
+  "Nightly dua": "دوعای شەو",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "دوعایەکی دروستم بدەرێ بۆ شەو لەگەڵ مانا و سەرچاوەکەی.",
+  "Prophet story for kids": "چیرۆکی پێغەمبەران بۆ منداڵان",
+  "Tell a short story of a prophet for children, in simple words.":
+    "چیرۆکێکی کورتی پێغەمبەرێک بۆ منداڵان بە وشەی ئاسان بگێڕەرەوە.",
+  "Family halaqa": "حەڵقەی خێزان",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "بابەتێک بۆ حەڵقەی خێزانەکەمان پێشنیار بکە، لەگەڵ ئایەتێک، فەرموودەیەک و چەند پرسیارێک.",
   Memory: "بیرگە",
   "Project only": "تەنها پڕۆژە",
   "Chats here use and add to your main memory.":
@@ -540,6 +574,13 @@ export default {
   "Automation paused": "ئۆتۆماتکردن ڕاگیرا",
   "Automation resumed": "ئۆتۆماتکردن دەستی پێکردەوە",
   "Automation deleted": "ئۆتۆماتکردن سڕایەوە",
+  "Automation created": "ئۆتۆماتکردن دروستکرا",
+  "No automations yet": "هێشتا هیچ ئۆتۆماتکردنێک نییە",
+  "Notify me": "ئاگادارم بکەرەوە",
+  "In app": "لەناو ئەپ",
+  None: "هیچ",
+  "Finished. Open to read the answer.": "تەواو بوو. بیکەرەوە بۆ خوێندنەوەی وەڵام.",
+  "New automation answers": "وەڵامی نوێی ئۆتۆماتکردن",
   "Running now. The answer will show up in Runs.":
     "ئێستا جێبەجێ دەکرێت. وەڵامەکە لە جارەکان دەردەکەوێت.",
   "Search, read and draft your email": "ئیمەیڵەکەت بگەڕێ، بیخوێنەوە و ڕەشنووس بنووسە",

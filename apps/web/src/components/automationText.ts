@@ -7,8 +7,31 @@ export type Schedule = Automation["schedule"];
 
 export const localZone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-const clockOf = (time: string) => {
+export const clockParts = (time: string) => {
   const [hour = 0, minute = 0] = time.split(":").map(Number);
+  return { hour, minute };
+};
+
+export const clockText24 = (hour: number, minute: number) =>
+  `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+
+export const hour12Of = (hour: number) => hour % 12 || 12;
+
+export const hour24Of = (hour12: number, pm: boolean) => (hour12 % 12) + (pm ? 12 : 0);
+
+export const uses12Hours = (locale: string) =>
+  new Intl.DateTimeFormat(locale, { hour: "numeric" }).resolvedOptions().hour12 === true;
+
+export const dayPeriods = (locale: string) => {
+  const label = (hour: number) =>
+    new Intl.DateTimeFormat(locale, { hour: "numeric", hour12: true })
+      .formatToParts(new Date(2000, 0, 1, hour))
+      .find((part) => part.type === "dayPeriod")?.value ?? "";
+  return { am: label(1), pm: label(13) };
+};
+
+const clockOf = (time: string) => {
+  const { hour, minute } = clockParts(time);
   return new Date(2000, 0, 1, hour, minute);
 };
 
@@ -38,7 +61,7 @@ export const formatInstant = (locale: string, iso: string) =>
     new Date(iso),
   );
 
-const clockText = (locale: string, clock: string) =>
+export const clockText = (locale: string, clock: string) =>
   new Intl.DateTimeFormat(locale, { timeStyle: "short" }).format(clockOf(clock));
 
 export function describeSchedule(t: Translate, locale: string, schedule: Schedule) {

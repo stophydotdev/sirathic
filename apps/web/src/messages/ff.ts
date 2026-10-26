@@ -390,7 +390,6 @@ export default {
   "New automation": "Otomatik heso",
   "Edit automation": "Waylu otomatik",
   "Sign in to create automations.": "Naatu ngam waɗugo otomatik.",
-  Suggestions: "Basiye",
   Pause: "Daro",
   Resume: "Jokku",
   Paused: "Daraama",
@@ -448,6 +447,41 @@ export default {
   "Friday reminder": "Siftinol Aljuma",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Siftin-mi sunna Aljuma e hadiis gooto jokkoowo.",
+  Learning: "Ekkitaago",
+  Worship: "Ibaada",
+  Family: "Galle",
+  Hour: "Sahaa",
+  Minute: "Minit",
+  "Evening adhkar": "Adkaaru kikiiɗe",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Hokku-mi adkaaru kikiiɗe e iwdi maaɗa e wakkati ɗum wowlaaɗa.",
+  "Verse of the day": "Aayaa ñalnde",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Seyo aayaa gooto e Alqur'aan e tafsiir pamarun.",
+  "Weekly tafsir": "Tafsiir yontere",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Fahin aayaaji seeɗa e simoore pamarun e deftere tafsiir ɓurɗe nde ɓooyɗe.",
+  "Quran word of the day": "Konngol Alqur'aan ñalnde",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Ekkit-mi konngol Arab gootol e Alqur'aan e ɗoofre mum e aayaa nde woni.",
+  "Seerah story": "Taaríika siira",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Tindin-mi taaríika gootol e siira Nulaado ﷺ e ekkitol.",
+  "Fiqh question explained": "Naamndal fiqh fahinaaɗo",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Fahin naamndal fiqh ñalnde kala e miijo mazhab kala.",
+  "Monday and Thursday fast": "Soom Altine e Alkamiisa",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Fooftin-mi ko jaango ñalnde soom sunna, e hadiis ko ɗum yoɓde mum.",
+  "Nightly dua": "Duaa jemma",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Hokku-mi duaa goonga gootol ngam jemma e ma'ana mum e iwdi mum.",
+  "Prophet story for kids": "Taaríika nulaaɓe ngam ɓiɓɓe",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Tindin taaríika pamarun nulaado gooto ngam ɓiɓɓe, e kelle juutɗe.",
+  "Family halaqa": "Halqa galle",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Hollu-mi ko mbiɗen ngam halqa galle amen, e aayaa, hadiis e naamndal.",
   Memory: "Raarɗe",
   "Project only": "Gollal tan",
   "Chats here use and add to your main memory.":
@@ -535,6 +569,13 @@ export default {
   "Automation paused": "Otomatik dartaama",
   "Automation resumed": "Otomatik fuɗɗitaama",
   "Automation deleted": "Otomatik momtaama",
+  "Automation created": "Otomatik waɗaama",
+  "No automations yet": "Walaa otomatik tawo",
+  "Notify me": "Anndin mi",
+  "In app": "Nder app",
+  None: "Walaa",
+  "Finished. Open to read the answer.": "Timmii. Uddit ngam tar jawaabu.",
+  "New automation answers": "Jawaabuuji otomatik kesum",
   "Running now. The answer will show up in Runs.":
     "Ina wurtina jooni. Jaabawol ngol maa feeñ e Wurtin.",
   "Search, read and draft your email": "Yiylo, jangu e winndu daftaruuji iimeel maa",
