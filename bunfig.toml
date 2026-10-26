@@ -1,2 +1,2 @@
 [test]
-preload = ["./apps/server/test/placeholderEnv.ts"]
+preload = ["./test/placeholderEnv.ts"]
