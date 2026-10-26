@@ -86,9 +86,9 @@ export const auth = betterAuth({
 export async function userFor(headers: Headers): Promise<User | undefined> {
   const found = await auth.api.getSession({ headers });
   if (!found) return undefined;
-  const { id, email, plan, accountId, createdAt } = found.user;
+  const { id, email, plan, accountId } = found.user;
   const image = found.user.image ?? null;
   return accountId
-    ? { via: "chatgpt", id, email, image, createdAt, plan: plan ?? null, accountId }
-    : { via: "google", id, email, image, createdAt };
+    ? { via: "chatgpt", id, email, image, plan: plan ?? null, accountId }
+    : { via: "google", id, email, image };
 }

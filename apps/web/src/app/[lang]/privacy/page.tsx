@@ -9,17 +9,17 @@ export const metadata: Metadata = {
 };
 
 export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy">) {
-  const { locale, t } = await translator((await params).lang);
+  const { t } = await translator((await params).lang);
   return (
     <LegalPage
-      home={`/${locale}`}
+      home="/"
       back={t("Back to Sirathic")}
       title="Privacy policy"
-      updated="October 24, 2026"
+      updated="October 25, 2026"
     >
       <p>
         Sirathic is a free Islamic answering engine at sirathic.com and in the Sirathic apps. It has
-        no ads, and we don't sell your data.
+        no ads, and we don't sell your data or use outside trackers.
       </p>
 
       <h2>What we keep</h2>
@@ -62,21 +62,11 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
         or carry your data only to run Sirathic.
       </p>
 
-      <h2>Analytics</h2>
-      <p>
-        If you choose Allow on the cookie notice, we use Google Analytics to see how people use
-        Sirathic: the pages you open, when you ask a question (the mode and model, never the text),
-        when you sign in, and when you rate or share an answer. Google sets cookies for this and
-        handles the data under its own privacy policy. Before you choose, or if you choose No
-        thanks, the site only tells Google that a page was viewed, with no cookies. You can change
-        your choice from Cookies in the Help menu.
-      </p>
-
       <h2>Cookies</h2>
       <p>
-        We use cookies to sign you in and keep you signed in. Your browser also keeps your settings
-        and your chat list on your device, so the site loads fast. If you allow analytics, Google
-        Analytics sets cookies too. We use no advertising cookies.
+        We use cookies only to sign you in and keep you signed in. Your browser also keeps your
+        settings and your chat list on your device, so the site loads fast. We use no advertising or
+        analytics cookies.
       </p>
 
       <h2 id="choices">Your choices</h2>
@@ -99,7 +89,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
       <h2>Contact</h2>
       <p>
         <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. See also our{" "}
-        <Link href={`/${locale}/terms`}>terms of service</Link>.
+        <Link href="/terms">terms of service</Link>.
       </p>
     </LegalPage>
   );

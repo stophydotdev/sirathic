@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  hasLocale,
-  isRtl,
-  type Locale,
-  type Messages,
-  translate,
-  type Values,
-} from "@/components/locales";
+import { isRtl, type Locale, type Messages, translate, type Values } from "@/components/locales";
 import { usePreferences } from "@/components/preferences";
 import type { MessageKey } from "@/messages/en";
 import { Direction } from "radix-ui";
@@ -56,12 +49,3 @@ export function useT() {
 }
 
 export type Translate = ReturnType<typeof useT>;
-
-export function useLocalePath() {
-  const locale = useLocale();
-  return useCallback((path: string) => `/${locale}${path === "/" ? "" : path}`, [locale]);
-}
-
-export const browserLocale = (): Locale =>
-  (globalThis.navigator?.languages ?? []).map((tag) => tag.split("-")[0] ?? "").find(hasLocale) ??
-  "en";

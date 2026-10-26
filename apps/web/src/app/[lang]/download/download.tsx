@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocalePath, useT } from "@/components/i18n";
+import { useT } from "@/components/i18n";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import type { MessageKey } from "@/messages/en";
@@ -103,7 +103,6 @@ const AlsoOn: FC<{ others: readonly [Desktop, Desktop] }> = ({ others }) => {
 
 const Actions: FC<{ system: System; arm: boolean }> = ({ system, arm }) => {
   const t = useT();
-  const href = useLocalePath();
   switch (system) {
     case "mac":
       return (
@@ -142,7 +141,7 @@ const Actions: FC<{ system: System; arm: boolean }> = ({ system, arm }) => {
       return (
         <>
           <Button asChild className={pill}>
-            <Link href={href("/")}>{t("Open Sirathic")}</Link>
+            <Link href="/">{t("Open Sirathic")}</Link>
           </Button>
           <p className="text-muted-foreground max-w-sm text-sm">
             {t(
@@ -176,16 +175,15 @@ const Actions: FC<{ system: System; arm: boolean }> = ({ system, arm }) => {
 
 export const Download: FC<{ system: System; arm: boolean }> = ({ system, arm }) => {
   const t = useT();
-  const href = useLocalePath();
   const shown = useShownSystem(system);
 
   return (
     <main className="min-h-dvh">
       <header className="border-border/60 flex items-center justify-between border-b px-5 py-3.5 md:px-10">
-        <Link href={href("/")} className="text-foreground">
+        <Link href="/" className="text-foreground">
           <Logo height={20} />
         </Link>
-        <Link href={href("/")} className="text-muted-foreground hover:text-foreground text-sm">
+        <Link href="/" className="text-muted-foreground hover:text-foreground text-sm">
           {t("Back to Sirathic")}
         </Link>
       </header>

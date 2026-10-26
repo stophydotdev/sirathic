@@ -126,7 +126,7 @@ export const InlineVerse: FC<{ url: string; fallback?: ReactNode }> = ({ url, fa
         <span className="min-w-0 flex-1 truncate">{verse.title}</span>
       </figcaption>
       {showArabic && (
-        <p dir="rtl" lang="ar" className="mt-1 text-xl leading-loose">
+        <p dir="rtl" lang="ar" className="font-quran mt-1 text-xl leading-loose">
           {verse.arabic}
         </p>
       )}

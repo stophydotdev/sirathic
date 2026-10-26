@@ -15,11 +15,19 @@ const preferred = (header: string | null): Locale =>
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (hasLocale(pathname.split("/")[1] ?? "")) return;
+  const [, first = "", ...rest] = pathname.split("/");
+  if (hasLocale(first)) {
+    request.nextUrl.pathname = `/${rest.join("/")}`;
+    const response = NextResponse.redirect(request.nextUrl);
+    response.cookies.set(LOCALE_COOKIE, first, { path: "/", maxAge: 31_536_000, sameSite: "lax" });
+    return response;
+  }
   const chosen = request.cookies.get(LOCALE_COOKIE)?.value ?? "";
   const locale = hasLocale(chosen) ? chosen : preferred(request.headers.get("accept-language"));
   request.nextUrl.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
-  return NextResponse.redirect(request.nextUrl);
+  const response = NextResponse.rewrite(request.nextUrl);
+  response.headers.set("vary", "Cookie, Accept-Language");
+  return response;
 }
 
 export const config = {

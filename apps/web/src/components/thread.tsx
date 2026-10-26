@@ -6,12 +6,12 @@ import { AttachmentChip, Composer } from "@/components/composer";
 import { ExportMenu } from "@/components/exportChat";
 import { Favicon, FaviconStack } from "@/components/favicon";
 import { siteName, turnsOf } from "@/components/sources";
-import { useLocalePath, useT } from "@/components/i18n";
-import { Logo, Mark } from "@/components/logo";
-import { ThreadImages, ThreadVideos } from "@/components/threadMedia";
+import { useT } from "@/components/i18n";
+import { Mark } from "@/components/logo";
+import { ThreadKeys } from "@/components/shortcuts";
+import { ThreadImages } from "@/components/threadMedia";
 import { ThreadShell } from "@/components/threadShell";
 import { Skeleton } from "@/components/ui/skeleton";
-import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -30,7 +30,6 @@ import {
   IconCopy,
   IconPencil,
   IconPhoto,
-  IconPlayerPlay,
   IconPlus,
   IconShare,
   IconSparkles,
@@ -50,7 +49,6 @@ const TABS = [
   { id: "answer", name: "Answer", Icon: IconSparkles },
   { id: "links", name: "Links", Icon: IconWorld },
   { id: "images", name: "Images", Icon: IconPhoto },
-  { id: "videos", name: "Videos", Icon: IconPlayerPlay },
 ] as const satisfies readonly {
   id: string;
   name: MessageKey;
@@ -72,6 +70,7 @@ const ThreadImpl: FC = () => {
 
   return (
     <ThreadShell>
+      <ThreadKeys />
       <ThreadPrimitive.Root className="bg-background text-foreground flex h-full flex-col print:h-auto">
         <AuiIf condition={(s) => s.thread.messages.length === 0}>
           <EmptyState />
@@ -153,7 +152,6 @@ const TabBar: FC = () => {
   const tab = useThreadTab((s) => s.tab);
   const open = useThreadTab((s) => s.open);
   const t = useT();
-  const href = useLocalePath();
 
   return (
     <div className="bg-background border-border/50 sticky top-0 z-20 border-b pe-6 ps-14 lg:ps-6 print:hidden">
@@ -162,7 +160,7 @@ const TabBar: FC = () => {
       </div>
       <TurnRow>
         <div className="flex h-14 items-center gap-4">
-          <a href={href("/")} aria-label={t("New chat")} className={cn(iconButton, "lg:hidden")}>
+          <a href="/" aria-label={t("New chat")} className={cn(iconButton, "lg:hidden")}>
             <IconPlus className="size-4.5" />
           </a>
           <div role="tablist" className="flex h-full gap-5">
@@ -204,7 +202,6 @@ const HeaderActions: FC = () => {
 
   const share = () => {
     if (!chat?.saved) return;
-    track({ name: "share", params: { method: "link", content_type: "chat" } });
     void navigator.clipboard.writeText(`${window.location.origin}/s/${chat.id}`).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2_000);
@@ -224,7 +221,6 @@ const HeaderActions: FC = () => {
       <IncognitoToggle />
       <ExportMenu
         onPrint={() => {
-          track({ name: "share", params: { method: "pdf", content_type: "chat" } });
           useThreadTab.getState().open("answer");
           setTimeout(() => window.print(), 100);
         }}
@@ -274,7 +270,6 @@ const ThreadBody: FC = () => {
   const t = useT();
   if (tab === "links") return <ThreadLinks />;
   if (tab === "images") return <ThreadImages />;
-  if (tab === "videos") return <ThreadVideos />;
 
   return (
     <>
@@ -283,13 +278,14 @@ const ThreadBody: FC = () => {
           <ThreadPrimitive.Messages>{() => <Turn />}</ThreadPrimitive.Messages>
         </TurnRow>
       </div>
-      <ThreadPrimitive.ViewportFooter className="bg-background sticky bottom-0 mt-auto px-6 pb-4 print:hidden">
+      <ThreadPrimitive.ViewportFooter className="bg-background sticky bottom-0 mt-auto px-6 pb-3 print:hidden">
         <TurnRow>
           <div className="relative">
             <ThreadPrimitive.ScrollToBottom className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible">
               <IconArrowDown className="size-4" />
             </ThreadPrimitive.ScrollToBottom>
             <Composer placeholder={t("Ask a follow-up")} menuSide="top" />
+            <Caution />
           </div>
         </TurnRow>
       </ThreadPrimitive.ViewportFooter>
@@ -297,13 +293,19 @@ const ThreadBody: FC = () => {
   );
 };
 
+const Caution: FC = () => {
+  const t = useT();
+  return (
+    <p className="text-muted-foreground mt-2 text-center text-xs">
+      {t("Sirathic can be wrong. Check the sources, and ask a scholar about your own case.")}
+    </p>
+  );
+};
+
 const EmptyState: FC = () => {
   const t = useT();
   return (
     <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
-      <span className="absolute top-3 start-11 flex h-8 items-center lg:hidden">
-        <Logo height={22} />
-      </span>
       <div className="absolute top-3 end-4">
         <IncognitoToggle />
       </div>
@@ -315,6 +317,7 @@ const EmptyState: FC = () => {
           </h1>
         </div>
         <Composer placeholder={t("Ask anything…")} menuSide="bottom" rotate />
+        <Caution />
       </div>
     </div>
   );
@@ -369,8 +372,18 @@ const Question: FC = () => {
         </div>
       </AuiIf>
       <AuiIf condition={(s) => s.message.composer.isEditing}>
-        <ComposerPrimitive.Root className="bg-card my-6 flex flex-col gap-2 rounded-2xl p-3">
-          <ComposerPrimitive.Input className="w-full resize-none bg-transparent px-2 pt-1 text-base outline-none" />
+        <ComposerPrimitive.Root
+          ref={(form) => {
+            requestAnimationFrame(() =>
+              requestAnimationFrame(() => form?.scrollIntoView({ block: "nearest" })),
+            );
+          }}
+          className="bg-card my-6 flex flex-col gap-2 rounded-2xl p-3"
+        >
+          <ComposerPrimitive.Input
+            autoFocus
+            className="w-full resize-none bg-transparent px-2 pt-1 text-base outline-none"
+          />
           <div className="flex justify-end gap-2">
             <ComposerPrimitive.Cancel className="hover:bg-muted h-8 rounded-lg px-3 text-sm">
               {t("Cancel")}

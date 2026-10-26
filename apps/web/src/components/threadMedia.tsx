@@ -1,6 +1,7 @@
 "use client";
 
-import { type Translate, useT } from "@/components/i18n";
+import { Favicon } from "@/components/favicon";
+import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
 import { turnsOf } from "@/components/sources";
 import { api } from "@/lib/trpc";
@@ -9,15 +10,12 @@ import Image from "next/image";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
 type Images = Awaited<ReturnType<typeof api.media.images.query>>;
-type Videos = Awaited<ReturnType<typeof api.media.videos.query>>;
 
 type Load<T> = { status: "loading" } | { status: "failed" } | { status: "done"; value: T };
 
 const imagesByQuestion = new Map<string, Promise<Images>>();
-const videosByQuestion = new Map<string, Promise<Videos>>();
 
 const searchImages = (q: string) => api.media.images.query({ q });
-const searchVideos = (q: string) => api.media.videos.query({ q });
 
 function useSearch<T>(
   cache: Map<string, Promise<T>>,
@@ -50,18 +48,6 @@ function useSearch<T>(
 
   return load;
 }
-
-const duration = (seconds: number) => {
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = String(seconds % 60).padStart(2, "0");
-  return h > 0 ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`;
-};
-
-const views = (count: number, t: Translate) =>
-  t("{count} views", {
-    count: new Intl.NumberFormat(undefined, { notation: "compact" }).format(count),
-  });
 
 const Turn: FC<{
   question: string;
@@ -99,72 +85,30 @@ const TurnImages: FC<{ question: string }> = ({ question }) => {
   return (
     <Turn question={question} load={load} empty="No images">
       {load.status === "done" && (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="flex flex-wrap gap-4 [--row:85px] after:grow-[999] after:content-[''] sm:[--row:120px] lg:gap-x-6 lg:gap-y-5 lg:[--row:115px]">
           {load.value.map((image) => (
             <a
               key={image.imageUrl}
               href={image.pageUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex min-w-0 flex-col gap-1"
+              className="flex min-w-0 flex-col gap-1.5"
+              style={{
+                flexGrow: image.width / image.height,
+                flexBasis: `calc(${image.width / image.height} * var(--row))`,
+              }}
             >
-              <span className="bg-muted relative aspect-[4/3] overflow-hidden rounded-lg">
-                <Image
-                  src={image.thumbnailUrl}
-                  alt={image.title ?? ""}
-                  fill
-                  unoptimized
-                  sizes="50vw"
-                  className="object-cover"
-                />
-              </span>
-              <span className="text-muted-foreground truncate px-0.5 text-xs">{image.source}</span>
-            </a>
-          ))}
-        </div>
-      )}
-    </Turn>
-  );
-};
-
-const TurnVideos: FC<{ question: string }> = ({ question }) => {
-  const load = useSearch(videosByQuestion, searchVideos, question);
-  const t = useT();
-
-  return (
-    <Turn question={question} load={load} empty="No videos">
-      {load.status === "done" && (
-        <div className="flex flex-col gap-1">
-          {load.value.map((video) => (
-            <a
-              key={video.videoId}
-              href={video.url}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:bg-muted flex gap-3 rounded-xl p-1.5"
-            >
-              <span className="bg-muted relative aspect-video w-36 shrink-0 overflow-hidden rounded-lg">
-                <Image
-                  src={`https://i.ytimg.com/vi/${video.videoId}/mqdefault.jpg`}
-                  alt=""
-                  fill
-                  unoptimized
-                  sizes="144px"
-                  className="object-cover"
-                />
-                {video.durationSeconds !== null && (
-                  <span className="absolute end-1 bottom-1 rounded bg-black/75 px-1 text-[11px] text-white tabular-nums">
-                    {duration(video.durationSeconds)}
-                  </span>
-                )}
-              </span>
-              <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="line-clamp-2 text-sm font-[470]">{video.title}</span>
-                <span className="text-muted-foreground truncate text-xs">
-                  {[video.channel, video.views === null ? null : views(video.views, t)]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </span>
+              <Image
+                src={image.thumbnailUrl}
+                alt={image.title ?? ""}
+                width={image.width}
+                height={image.height}
+                unoptimized
+                className="bg-muted h-[120px] w-full rounded-xl object-cover lg:h-40"
+              />
+              <span className="text-muted-foreground flex min-w-0 items-center gap-1.5 text-sm">
+                <Favicon url={image.pageUrl} size={16} />
+                <span className="truncate">{image.source}</span>
               </span>
             </a>
           ))}
@@ -178,7 +122,7 @@ const Turns: FC<{ Each: FC<{ question: string }> }> = ({ Each }) => {
   const turns = turnsOf(useAuiState((s) => s.thread.messages));
 
   return (
-    <div className="mx-auto flex w-full max-w-[736px] flex-col gap-8 px-6 pt-6 pb-16">
+    <div className="mx-auto flex w-full max-w-[736px] flex-col gap-8 px-6 pt-6 pb-16 lg:max-w-5xl">
       {turns.map((turn) => (
         <Each key={turn.id} question={turn.question} />
       ))}
@@ -187,5 +131,3 @@ const Turns: FC<{ Each: FC<{ question: string }> }> = ({ Each }) => {
 };
 
 export const ThreadImages: FC = () => <Turns Each={TurnImages} />;
-
-export const ThreadVideos: FC = () => <Turns Each={TurnVideos} />;

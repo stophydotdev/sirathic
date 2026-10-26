@@ -44,8 +44,6 @@ export function turnsOf(messages: readonly ThreadMessage[]) {
 
 export const SourcesContext = createContext<ReadonlyMap<string, Source>>(new Map());
 
-export const CitationNumbers = createContext<ReadonlyMap<string, number>>(new Map());
-
 export function siteName(url: string) {
   const host = URL.parse(url)?.hostname.replace(/^www\./, "");
   if (!host) return url;

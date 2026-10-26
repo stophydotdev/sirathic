@@ -1,5 +1,4 @@
 import { imageSearch } from "@sirathic/core/tools/imageSearch";
-import { youtubeSearch } from "@sirathic/core/tools/youtubeSearch";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { DEFAULT_MODEL, models } from "./chatgpt/codex";
@@ -118,10 +117,7 @@ export const appRouter = t.router({
   media: t.router({
     images: signedIn
       .input(z.object({ q: z.string() }))
-      .query(({ input }) => imageSearch({ query: input.q })),
-    videos: signedIn
-      .input(z.object({ q: z.string() }))
-      .query(async ({ input }) => (await youtubeSearch({ query: input.q, limit: 10 })).videos),
+      .query(({ input }) => imageSearch({ query: input.q, limit: 10 })),
   }),
   account: t.router({
     status: procedure.query(({ ctx }) =>
@@ -131,7 +127,6 @@ export const appRouter = t.router({
             label: ctx.user.email,
             image: ctx.user.image,
             via: ctx.user.via,
-            joinedAt: ctx.user.createdAt.toISOString(),
           }
         : { signedIn: false as const },
     ),

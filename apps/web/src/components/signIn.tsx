@@ -2,12 +2,10 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chatOptions";
-import { useConsent } from "@/components/cookieNotice";
 import { saveDraft } from "@/components/draft";
 import { GoogleIcon } from "@/components/googleIcon";
-import { useLocalePath, useT } from "@/components/i18n";
+import { useT } from "@/components/i18n";
 import { CONTACT } from "@/components/legalPage";
-import { markSignInStarted } from "@/lib/analytics";
 import { Mark } from "@/components/logo";
 import { OpenAIIcon } from "@/components/openaiIcon";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
@@ -33,7 +31,6 @@ import type { MessageKey } from "@/messages/en";
 import {
   IconArrowUpRight,
   IconChevronRight,
-  IconCookie,
   IconCopy,
   IconDeviceDesktop,
   IconDownload,
@@ -42,7 +39,6 @@ import {
   IconLogout,
   IconMessageCircle,
   IconMoon,
-  IconSelector,
   IconSettings,
   IconShieldLock,
   IconSpy,
@@ -127,7 +123,6 @@ const continueWithGoogle = async (draft: string) => {
     }),
   }).then((res) => readJson(res, socialSignIn));
   if (draft) saveDraft(draft);
-  markSignInStarted("google");
   location.assign(url);
 };
 
@@ -141,7 +136,6 @@ export const SignInDialog: FC = () => {
 
   const getCode = () => {
     setStep({ kind: "asking" });
-    markSignInStarted("chatgpt");
     fetch("/api/auth/chatgpt/start", { method: "POST" })
       .then((res) => readJson(res, deviceCode))
       .then((code) => setStep({ kind: "code", ...code }))
@@ -297,7 +291,7 @@ const CodeCells: FC<{ code: string }> = ({ code }) => (
         <span
           key={`${index}-${char}`}
           aria-hidden
-          className="bg-muted border-border grid h-9 w-6 place-items-center rounded-md border font-mono text-lg font-medium sm:w-[26px]"
+          className="bg-muted border-border grid h-9 w-6 place-items-center rounded-md border text-lg font-medium sm:w-[26px]"
         >
           {char}
         </span>
@@ -341,7 +335,7 @@ const THEME_ICONS = {
 } satisfies Record<(typeof THEMES)[number], ReactNode>;
 
 const row =
-  "hover:bg-foreground/10 bg-muted flex h-11 w-full items-center gap-2.5 rounded-[8px] px-2.5 text-start text-[15px]";
+  "hover:bg-muted flex h-10 w-full items-center gap-2.5 rounded-[12px] px-2.5 text-start text-sm font-medium";
 
 export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
   collapsed = false,
@@ -356,13 +350,12 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
   const theme = usePreferences((s) => s.theme);
   const changePreferences = usePreferences((s) => s.change);
   const t = useT();
-  const href = useLocalePath();
 
   if (status === undefined) {
     return (
       <div
         className={cn(
-          "bg-muted flex h-11 items-center gap-2.5 rounded-[8px] px-2.5",
+          "flex h-10 items-center gap-2.5 rounded-[12px] px-2.5",
           collapsed && "justify-center px-0",
         )}
       >
@@ -409,16 +402,10 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
           </span>
         )}
         {!collapsed && (
-          <span className="flex min-w-0 flex-1 flex-col">
-            <span className="truncate">
-              {status.label ?? t(viaGoogle ? "Google account" : "ChatGPT account")}
-            </span>
-            <span className="text-muted-foreground truncate text-xs">
-              {t(viaGoogle ? "Signed in with Google" : "Signed in with ChatGPT")}
-            </span>
+          <span className="min-w-0 flex-1 truncate">
+            {status.label ?? t(viaGoogle ? "Google account" : "ChatGPT account")}
           </span>
         )}
-        {!collapsed && <IconSelector className="text-muted-foreground size-3.5" />}
       </DropdownMenuTrigger>
       <DropdownMenuContent
         side="top"
@@ -454,7 +441,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
           <span className={shortcut}>Ctrl Shift ,</span>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={href("/download")} onClick={onDone}>
+          <Link href="/download" onClick={onDone}>
             <IconDownload className="size-4" />
             {t("Download")}
           </Link>
@@ -501,20 +488,16 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
               </a>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={href("/privacy")} onClick={onDone}>
+              <Link href="/privacy" onClick={onDone}>
                 <IconShieldLock className="size-4" />
                 {t("Privacy")}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={href("/terms")} onClick={onDone}>
+              <Link href="/terms" onClick={onDone}>
                 <IconFileText className="size-4" />
                 {t("Terms")}
               </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => useConsent.getState().reopen()}>
-              <IconCookie className="size-4" />
-              {t("Cookies")}
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>

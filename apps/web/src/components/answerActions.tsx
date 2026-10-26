@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocalePath, useT } from "@/components/i18n";
+import { useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
 import { useChatState } from "@/components/chat";
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
@@ -25,10 +25,10 @@ import {
   type Mode,
   MODES,
   mode as modeSchema,
+  type Report,
 } from "@sirathic/server/messages";
 import type { Source } from "@sirathic/server/sources";
 import { api } from "@/lib/trpc";
-import { track } from "@/lib/analytics";
 import { useAui, useAuiState } from "@assistant-ui/react";
 import { IconDots, IconDownload, IconGitFork, IconRefresh } from "@tabler/icons-react";
 import { type FC, type ReactNode, useState } from "react";
@@ -41,7 +41,7 @@ const storedFeedback = z.object({ feedback: feedbackSchema.optional() });
 
 type Feedback = z.infer<typeof feedbackSchema>;
 
-const textOf = (message: ChatMessage | undefined) =>
+export const messageText = (message: ChatMessage | undefined) =>
   message?.parts.map((part) => (part.type === "text" ? part.text : "")).join("") ?? "";
 
 export function download(name: string, markdown: string) {
@@ -64,28 +64,29 @@ export function useAnswer() {
   const feedback =
     useAuiState((s) => storedFeedback.safeParse(s.message.metadata.custom).data?.feedback) ?? null;
 
-  const rate = (next: Feedback | null) => {
+  const rate = (next: Feedback | null, report?: Report) => {
     if (!chat) return;
     chat.chat.setMessages((messages) =>
       messages.map((message) => {
         if (message.id !== messageId) return message;
-        const { feedback: _old, ...rest } = message.metadata ?? {};
+        const { feedback: _old, report: _oldReport, ...rest } = message.metadata ?? {};
         return Object.assign({}, message, {
-          metadata: next ? Object.assign(rest, { feedback: next }) : rest,
+          metadata: next
+            ? Object.assign(rest, { feedback: next }, next === "down" && report ? { report } : {})
+            : rest,
         });
       }),
     );
-    track({ name: "answer_feedback", params: { value: next ?? "none" } });
     if (chat.saved) {
       void api.sessions.feedback
-        .mutate({ id: chat.id, messageId, value: next })
+        .mutate({ id: chat.id, messageId, value: next, report })
         .catch(() => undefined);
     }
   };
 
   const copy = () =>
     navigator.clipboard.writeText(
-      textOf(chat?.chat.messages.find((message) => message.id === messageId)),
+      messageText(chat?.chat.messages.find((message) => message.id === messageId)),
     );
 
   return { feedback, rate, copy };
@@ -99,7 +100,6 @@ export const AnswerExtras: FC<{
   const messageId = useAuiState((s) => s.message.id);
   const [forking, setForking] = useState(false);
   const t = useT();
-  const href = useLocalePath();
 
   const fork = async () => {
     if (!chat?.saved) return;
@@ -107,7 +107,7 @@ export const AnswerExtras: FC<{
     const forked = await api.sessions.fork
       .mutate({ id: chat.id, messageId })
       .catch(() => undefined);
-    if (forked) window.location.assign(href(`/s/${forked.id}`));
+    if (forked) window.location.assign(`/s/${forked.id}`);
     else setForking(false);
   };
 
@@ -148,13 +148,13 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
     const question = stored
       .slice(0, Math.max(index, 0))
       .findLast((message) => message.role === "user");
-    const title = textOf(question);
+    const title = messageText(question);
     const sourceList = sources
       .map((source, i) => `${i + 1}. [${source.title}](${source.url})`)
       .join("\n");
     download(
       title,
-      `# ${title}\n\n${textOf(answer)}\n${sourceList ? `\n## ${t("Sources")}\n\n${sourceList}\n` : ""}`,
+      `# ${title}\n\n${messageText(answer)}\n${sourceList ? `\n## ${t("Sources")}\n\n${sourceList}\n` : ""}`,
     );
   };
 

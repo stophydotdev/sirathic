@@ -2,10 +2,9 @@
 
 import { useAccount } from "@/components/account";
 import { useChatOptions } from "@/components/chatOptions";
-import { useConsent } from "@/components/cookieNotice";
-import { useLocale, useLocalePath, useT } from "@/components/i18n";
+import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
-import { Logo, Mark } from "@/components/logo";
+import { Mark } from "@/components/logo";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
@@ -15,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AskSelection } from "@/components/askSelection";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
+import { useKeyNames, withMod } from "@/lib/keys";
 import { cn } from "@/lib/utils";
 import {
   IconChevronDown,
@@ -23,16 +24,15 @@ import {
   IconPlus,
   IconSearch,
 } from "@tabler/icons-react";
-import Link from "next/link";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
 export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const t = useT();
   const rtl = isRtl(useLocale());
-  const href = useLocalePath();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searching, setSearching] = useState(false);
+  const keys = useKeyNames();
   const refresh = useAccount((s) => s.refresh);
   const refreshSessions = useSessions((s) => s.refresh);
 
@@ -53,10 +53,20 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (!event.ctrlKey) return;
-      if (event.key.toLowerCase() === "i" && !event.shiftKey) {
+      if (!withMod(event)) return;
+      if (event.code === "KeyI" && !event.shiftKey) {
         event.preventDefault();
-        window.location.assign(href("/"));
+        window.location.assign("/");
+      } else if (event.code === "KeyK" && !event.shiftKey) {
+        event.preventDefault();
+        setSearching(true);
+      } else if (event.code === "KeyS" && event.shiftKey) {
+        event.preventDefault();
+        if (matchMedia("(min-width: 1024px)").matches) setCollapsed((open) => !open);
+        else setMobileOpen((open) => !open);
+      } else if (event.key === "/" || event.code === "Slash") {
+        event.preventDefault();
+        useShortcuts.getState().setOpen(true);
       } else if (event.code === "Semicolon") {
         event.preventDefault();
         const { incognito, setIncognito } = useChatOptions.getState();
@@ -87,7 +97,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
         <div className="flex h-14 shrink-0 items-center justify-between px-2">
           {!collapsed && (
             <a
-              href={href("/")}
+              href="/"
               className="text-foreground me-auto flex size-10 items-center justify-center"
             >
               <Mark size={20} color="currentColor" />
@@ -144,14 +154,13 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             {!collapsed && <span className="flex-1">{t("New")}</span>}
             {!collapsed && (
               <kbd className="text-muted-foreground font-sans text-xs opacity-0 group-hover/new:opacity-100 group-focus-visible/new:opacity-100 pointer-coarse:hidden">
-                ⌃I
+                {keys.mod} I
               </kbd>
             )}
           </NewButton>
           {!collapsed && <Recents />}
         </nav>
-        {!collapsed && <SignedOutLegalLinks />}
-        <div className="border-sidebar-border shrink-0 border-t p-2">
+        <div className="shrink-0 p-2">
           <AccountRow collapsed={collapsed} />
         </div>
       </aside>
@@ -167,7 +176,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
         </div>
         <SheetContent side={rtl ? "right" : "left"} className="bg-sidebar flex flex-col gap-0 p-0">
           <SheetTitle className="flex h-14 shrink-0 items-center px-4">
-            <Logo height={22} />
+            <Mark size={20} color="currentColor" />
           </SheetTitle>
           <nav className="flex flex-col gap-0.5 overflow-y-auto px-2">
             <NewButton className={mobileRow} onDone={() => setMobileOpen(false)}>
@@ -187,11 +196,8 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             </button>
             <Recents onDone={() => setMobileOpen(false)} />
           </nav>
-          <div className="mt-auto shrink-0">
-            <SignedOutLegalLinks onDone={() => setMobileOpen(false)} />
-            <div className="border-sidebar-border border-t p-2">
-              <AccountRow onDone={() => setMobileOpen(false)} />
-            </div>
+          <div className="mt-auto shrink-0 p-2">
+            <AccountRow onDone={() => setMobileOpen(false)} />
           </div>
         </SheetContent>
       </Sheet>
@@ -199,6 +205,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       <div className="min-w-0 flex-1 overflow-hidden print:overflow-visible">{children}</div>
       <SettingsDialog />
       <SearchDialog open={searching} onOpenChange={setSearching} />
+      <ShortcutsSheet />
       <SignInDialog />
       <AskSelection />
     </div>
@@ -208,46 +215,16 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 type RowProps = { className: string; children: ReactNode; onDone?: () => void };
 
 const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
-  const href = useLocalePath();
   return (
     <Button
       variant="ghost"
       asChild
       className={cn("hover:bg-muted justify-start font-normal", className)}
     >
-      <a href={href("/")} onClick={onDone}>
+      <a href="/" onClick={onDone}>
         {children}
       </a>
     </Button>
-  );
-};
-
-const SignedOutLegalLinks: FC<{ onDone?: () => void }> = ({ onDone }) => {
-  const t = useT();
-  const href = useLocalePath();
-  const signedIn = useAccount((s) => s.status?.signedIn);
-  if (signedIn) return null;
-  return (
-    <p className="text-muted-foreground flex shrink-0 gap-1.5 px-4.5 pb-2 text-xs">
-      <Link href={href("/privacy")} className="hover:text-foreground">
-        {t("Privacy")}
-      </Link>
-      <span aria-hidden>·</span>
-      <Link href={href("/terms")} className="hover:text-foreground">
-        {t("Terms")}
-      </Link>
-      <span aria-hidden>·</span>
-      <button
-        type="button"
-        onClick={() => {
-          onDone?.();
-          useConsent.getState().reopen();
-        }}
-        className="hover:text-foreground"
-      >
-        {t("Cookies")}
-      </button>
-    </p>
   );
 };
 

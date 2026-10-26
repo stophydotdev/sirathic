@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { alternatesOf } from "@/lib/seo";
 import { Download, type System } from "./download";
+
+export const metadata: Metadata = { alternates: alternatesOf("/download") };
 
 const systemOf = (platform: string, userAgent: string, mobile: boolean): System => {
   if (mobile || /Android|iPhone|iPad|iPod/u.test(userAgent)) return "phone";

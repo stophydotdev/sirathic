@@ -15,14 +15,12 @@ import { Switch } from "radix-ui";
 import { type FC, type ReactNode } from "react";
 
 export const control =
-  "border-border hover:bg-muted flex h-[34px] shrink-0 items-center justify-center gap-1.5 rounded-[8px] border px-3 text-sm font-[470] transition-colors";
+  "border-foreground/10 hover:bg-muted flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-[12px] border px-2.5 text-sm font-medium transition-colors";
 
 export const Group: FC<{ title?: string; children: ReactNode }> = ({ title, children }) => (
-  <section className="mt-4 flex flex-col gap-2 first:mt-0">
-    {title && <h2 className="text-muted-foreground text-[13px]">{title}</h2>}
-    <div className="bg-card border-foreground/6 divide-foreground/6 divide-y rounded-[12px] border">
-      {children}
-    </div>
+  <section className="border-foreground/6 flex flex-col border-t py-3 first:border-t-0 first:pt-0">
+    {title && <h2 className="text-muted-foreground pt-1 text-[13px]">{title}</h2>}
+    {children}
   </section>
 );
 
@@ -31,10 +29,10 @@ export const Row: FC<{ label: string; hint?: string; children?: ReactNode }> = (
   hint,
   children,
 }) => (
-  <div className="flex min-h-[58px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
+  <div className="flex min-h-[52px] flex-wrap items-center gap-x-4 gap-y-2 py-3">
     <div className="flex min-w-0 flex-1 flex-col gap-0.5">
       <span className="text-sm">{label}</span>
-      {hint && <span className="text-muted-foreground text-xs">{hint}</span>}
+      {hint && <span className="text-muted-foreground text-[13px]">{hint}</span>}
     </div>
     {children}
   </div>
@@ -56,7 +54,7 @@ export function Segmented<Value extends string>({
     <div
       role="radiogroup"
       aria-label={label}
-      className="border-border flex rounded-[8px] border p-0.5"
+      className="border-foreground/10 flex rounded-[12px] border p-0.5"
     >
       {options.map((option) => (
         <button
@@ -66,7 +64,7 @@ export function Segmented<Value extends string>({
           aria-checked={option.value === value}
           onClick={() => onChange(option.value)}
           className={cn(
-            "h-[28px] rounded-[6px] px-3 text-sm transition-colors",
+            "h-[26px] rounded-[10px] px-2.5 text-sm transition-colors",
             option.value === value
               ? "bg-foreground/12 text-foreground"
               : "text-muted-foreground hover:text-foreground",
@@ -88,9 +86,9 @@ export const Toggle: FC<{
     aria-label={label}
     checked={checked}
     onCheckedChange={onChange}
-    className="bg-foreground/15 data-[state=checked]:bg-super relative h-[22px] w-10 shrink-0 rounded-full transition-colors"
+    className="bg-foreground/15 data-[state=checked]:bg-super relative h-[18px] w-8 shrink-0 rounded-full transition-colors"
   >
-    <Switch.Thumb className="bg-background block size-4 translate-x-[3px] rounded-full transition-transform data-[state=checked]:translate-x-[21px] rtl:-translate-x-[3px] rtl:data-[state=checked]:-translate-x-[21px]" />
+    <Switch.Thumb className="block size-3.5 translate-x-[2px] rounded-full bg-white transition-transform data-[state=checked]:translate-x-[16px] rtl:-translate-x-[2px] rtl:data-[state=checked]:-translate-x-[16px]" />
   </Switch.Root>
 );
 
@@ -111,7 +109,7 @@ export function Choice<Value extends string>({
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label={label}
-        className={cn(control, "w-[220px] justify-between font-normal")}
+        className="text-muted-foreground hover:text-foreground flex h-8 shrink-0 items-center gap-1 rounded-md px-2 text-sm font-medium transition-colors"
       >
         {nameOf(value)}
         <IconChevronDown className="text-muted-foreground size-3.5" />

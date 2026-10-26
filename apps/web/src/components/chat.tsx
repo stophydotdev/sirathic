@@ -1,14 +1,12 @@
 "use client";
 
-import { useLocalePath } from "@/components/i18n";
 import { chosenModel } from "@/components/account";
 import { useChatOptions } from "@/components/chatOptions";
 import { usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";
-import { track } from "@/lib/analytics";
-import type { ChatMessage, Device } from "@sirathic/server/messages";
-import { useChat } from "@ai-sdk/react";
+import { type ChatMessage, type Device } from "@sirathic/server/messages";
+import { Chat as LiveChat, useChat } from "@ai-sdk/react";
 import {
   type AttachmentAdapter,
   AssistantRuntimeProvider,
@@ -74,18 +72,39 @@ const transport = new DefaultChatTransport<ChatMessage>({
   body: () => {
     const options = useChatOptions.getState();
     const override = options.takeOverride();
-    const model = override?.model ?? chosenModel();
-    const mode = override?.mode ?? options.mode;
-    track({ name: "ask_question", params: { mode, model: model ?? "default" } });
     return {
-      model,
-      mode,
+      model: override?.model ?? chosenModel(),
+      mode: override?.mode ?? options.mode,
       incognito: options.incognito,
       device: deviceOf(),
       language: document.documentElement.lang,
     };
   },
 });
+
+const live = new Map<string, LiveChat<ChatMessage>>();
+
+export const isLive = (id: string) => live.has(id);
+
+const refreshSaved = () => {
+  if (!useChatOptions.getState().incognito) void useSessions.getState().refresh();
+};
+
+const liveChat = (id: string, messages: ChatMessage[] | undefined) => {
+  const found = live.get(id);
+  if (found) return found;
+  const created = new LiveChat<ChatMessage>({
+    id,
+    messages,
+    transport,
+    onData: (part) => {
+      if (part.type === "data-title") void useSessions.getState().refresh();
+    },
+    onFinish: refreshSaved,
+  });
+  live.set(id, created);
+  return created;
+};
 
 type ChatState = {
   id: string;
@@ -102,25 +121,20 @@ export const Chat: FC<{ id?: string; initialMessages?: ChatMessage[] }> = ({
   initialMessages,
 }) => {
   const [chatId] = useState(() => id ?? crypto.randomUUID());
-  const href = useLocalePath();
   const incognito = useChatOptions((s) => s.incognito);
-  const chat = useChat<ChatMessage>({
-    id: chatId,
-    messages: initialMessages,
-    transport,
-    onData: (part) => {
-      if (part.type === "data-title") void useSessions.getState().refresh();
-    },
-    onFinish: () => {
-      if (!useChatOptions.getState().incognito) {
-        void useSessions.getState().refresh();
-      }
-    },
-  });
+  const savedTitle = useSessions(
+    (s) => s.sessions?.find((session) => session.id === chatId)?.title,
+  );
+  const [session] = useState(() => liveChat(chatId, initialMessages));
+  const chat = useChat<ChatMessage>({ chat: session });
   const runtime = useAISDKRuntime(chat, {
     adapters: { attachments },
   });
   const started = chat.messages.length > 0;
+  const question = chat.messages
+    .find((message) => message.role === "user")
+    ?.parts.find((part) => part.type === "text")?.text;
+  const title = incognito ? undefined : (savedTitle ?? question);
 
   useEffect(() => {
     usePreferences.getState().load();
@@ -129,10 +143,19 @@ export const Chat: FC<{ id?: string; initialMessages?: ChatMessage[] }> = ({
 
   useEffect(() => {
     if (!started || incognito) return;
-    if (window.location.pathname !== href(`/s/${chatId}`)) {
-      window.history.replaceState(null, "", href(`/s/${chatId}`));
+    if (window.location.pathname !== `/s/${chatId}`) {
+      window.history.replaceState(null, "", `/s/${chatId}`);
     }
-  }, [started, chatId, incognito, href]);
+  }, [started, chatId, incognito]);
+
+  useEffect(() => {
+    if (!title) return;
+    const previous = document.title;
+    document.title = `${title} - Sirathic`;
+    return () => {
+      document.title = previous;
+    };
+  }, [title]);
 
   return (
     <ChatContext value={{ id: chatId, saved: !incognito, chat }}>

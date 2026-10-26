@@ -1,13 +1,14 @@
 "use client";
 
-import { MODEL_DESCRIPTIONS, useAccount } from "@/components/account";
+import { useAccount } from "@/components/account";
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
-import { browserLocale, type Translate, useLocale, useLocalePath, useT } from "@/components/i18n";
+import { type Translate, useLocale, useT } from "@/components/i18n";
 import { LOCALE_COOKIE, LOCALES, type Locale } from "@/components/locales";
-import { MakerIcon } from "@/components/makerIcon";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
 import { useSettings } from "@/components/settings";
+import { useShortcuts } from "@/components/shortcuts";
 import { useSignIn } from "@/components/signIn";
+import { useKeyNames } from "@/lib/keys";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import { useSessions } from "@/components/sessions";
@@ -19,7 +20,7 @@ import {
   MADHABS,
   type Settings,
 } from "@sirathic/server/settings";
-import { IconAlertCircle, IconArrowUpRight, IconCheck } from "@tabler/icons-react";
+import { IconAlertCircle, IconArrowUpRight } from "@tabler/icons-react";
 import { type FC, useEffect, useRef, useState } from "react";
 import { Choice, control, Group, Row, Segmented, Toggle } from "@/components/settingsControls";
 
@@ -47,9 +48,7 @@ const switchLocale = (next: "auto" | Locale) => {
     next === "auto"
       ? `${LOCALE_COOKIE}=; path=/; max-age=0`
       : `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
-  const target = next === "auto" ? browserLocale() : next;
-  const { pathname, search, hash } = window.location;
-  window.location.assign(`${pathname.replace(/^\/[^/]+/u, `/${target}`)}${search}${hash}`);
+  window.location.reload();
 };
 
 const LOCALE_NAMES = {
@@ -151,12 +150,79 @@ export const AccountSection: FC = () => {
   );
 };
 
+type Theme = (typeof THEMES)[number];
+
+const SKETCH_TONES = {
+  light: { page: "bg-white", side: "bg-[#f4f4f4]", line: "bg-[#d9d9d9]" },
+  dark: { page: "bg-[#161616]", side: "bg-[#1c1c1c]", line: "bg-[#3a3a3a]" },
+} as const;
+
+const ThemeSketch: FC<{ tone: keyof typeof SKETCH_TONES }> = ({ tone }) => {
+  const { page, side, line } = SKETCH_TONES[tone];
+  return (
+    <span className={cn("absolute inset-0 flex", page)}>
+      <span className={cn("w-[28%]", side)} />
+      <span className="flex flex-1 flex-col gap-1.5 p-2.5">
+        <span className={cn("h-1.5 w-3/4 rounded-full", line)} />
+        <span className={cn("h-1.5 w-1/2 rounded-full", line)} />
+        <span className={cn("mt-auto h-3 rounded-[4px]", line)} />
+      </span>
+    </span>
+  );
+};
+
+const ThemePictures: FC<{ value: Theme; onChange: (next: Theme) => void }> = ({
+  value,
+  onChange,
+}) => {
+  const t = useT();
+  return (
+    <div role="radiogroup" aria-label={t("Theme")} className="flex gap-2.5">
+      {THEMES.map((option) => (
+        <button
+          key={option}
+          type="button"
+          role="radio"
+          aria-checked={option === value}
+          onClick={() => onChange(option)}
+          className="group flex w-[98px] flex-col items-center gap-1.5"
+        >
+          <span
+            className={cn(
+              "relative h-16 w-full overflow-hidden rounded-[10px] border transition-colors",
+              option === value
+                ? "border-foreground/60 ring-foreground/60 ring-1"
+                : "border-foreground/10 group-hover:border-foreground/30",
+            )}
+          >
+            <ThemeSketch tone={option === "dark" ? "dark" : "light"} />
+            {option === "system" && (
+              <span className="absolute inset-0 [clip-path:inset(0_0_0_50%)]">
+                <ThemeSketch tone="dark" />
+              </span>
+            )}
+          </span>
+          <span
+            className={cn(
+              "text-[13px]",
+              option === value ? "text-foreground" : "text-muted-foreground",
+            )}
+          >
+            {t(THEME_NAMES[option])}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+};
+
 export const PreferencesSection: FC = () => {
   const theme = usePreferences((s) => s.theme);
   const autosuggest = usePreferences((s) => s.autosuggest);
   const change = usePreferences((s) => s.change);
   const mode = useChatOptions((s) => s.mode);
   const setMode = useChatOptions((s) => s.setMode);
+  const keys = useKeyNames();
   const [language] = useState(chosenLocale);
   const t = useT();
 
@@ -173,15 +239,7 @@ export const PreferencesSection: FC = () => {
           />
         </Row>
         <Row label={t("Theme")} hint={t("How Sirathic looks on this device")}>
-          <Segmented
-            label={t("Theme")}
-            value={theme}
-            options={THEMES.map((value) => ({
-              value,
-              label: THEME_NAMES[value],
-            }))}
-            onChange={(next) => change({ theme: next })}
-          />
+          <ThemePictures value={theme} onChange={(next) => change({ theme: next })} />
         </Row>
       </Group>
       <Group title={t("Asking")}>
@@ -205,6 +263,15 @@ export const PreferencesSection: FC = () => {
             checked={autosuggest}
             onChange={(on) => change({ autosuggest: on })}
           />
+        </Row>
+        <Row label={t("Keyboard shortcuts")}>
+          <button
+            type="button"
+            onClick={() => useShortcuts.getState().setOpen(true)}
+            className={control}
+          >
+            {keys.mod} /
+          </button>
         </Row>
       </Group>
     </>
@@ -241,7 +308,7 @@ export const PersonalizationSection: FC = () => {
   }, []);
 
   if (failed) {
-    return <p className="text-muted-foreground text-sm">{t("Sign in to personalize answers.")}</p>;
+    return <p className="text-muted-foreground text-sm">{t("Sign in to customize answers.")}</p>;
   }
   if (!saved) return null;
 
@@ -269,7 +336,7 @@ export const PersonalizationSection: FC = () => {
               if (name.trim() !== saved.name) save({ name: name.trim() });
             }}
             placeholder={t("Your name")}
-            className="border-border placeholder:text-muted-foreground h-[34px] w-[220px] rounded-[8px] border bg-transparent px-3 text-sm outline-none"
+            className="border-foreground/10 placeholder:text-muted-foreground h-8 w-[220px] rounded-[12px] border bg-transparent px-3 text-sm outline-none"
           />
         </Row>
         <Row
@@ -284,7 +351,7 @@ export const PersonalizationSection: FC = () => {
             onChange={(madhab) => save({ madhab })}
           />
         </Row>
-        <div className="flex flex-col gap-2 px-4 py-3">
+        <div className="flex flex-col gap-2 py-3">
           <label htmlFor="custom-instructions" className="text-sm">
             {t("Custom instructions")}
           </label>
@@ -301,7 +368,7 @@ export const PersonalizationSection: FC = () => {
             placeholder={t(
               "Anything Sirathic should keep in mind, like how much you know or how you like answers",
             )}
-            className="border-border placeholder:text-muted-foreground h-28 w-full resize-none rounded-[8px] border bg-transparent px-3 py-2.5 text-sm outline-none"
+            className="border-foreground/10 placeholder:text-muted-foreground h-28 w-full resize-none rounded-[12px] border bg-transparent px-3 py-2.5 text-sm outline-none"
           />
           <span className="text-muted-foreground self-end text-[11px]">
             {instructions.length} / {INSTRUCTIONS_LIMIT}
@@ -360,7 +427,6 @@ export const DataSection: FC = () => {
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const t = useT();
-  const href = useLocalePath();
 
   const exportChats = async () => {
     setBusy(true);
@@ -377,8 +443,8 @@ export const DataSection: FC = () => {
     await refresh();
     setBusy(false);
     setConfirming(false);
-    if (window.location.pathname.startsWith(href("/s/"))) {
-      window.location.assign(href("/"));
+    if (window.location.pathname.startsWith("/s/")) {
+      window.location.assign("/");
     }
   };
 
@@ -439,45 +505,6 @@ export const DataSection: FC = () => {
           </button>
         )}
       </Row>
-    </Group>
-  );
-};
-
-export const ModelsSection: FC = () => {
-  const status = useAccount((s) => s.status);
-  const models = useAccount((s) => s.models);
-  const chosen = useAccount((s) => s.chosen) ?? models[0]?.slug;
-  const choose = useAccount((s) => s.choose);
-  const t = useT();
-
-  return (
-    <Group
-      title={
-        status?.signedIn && status.via === "chatgpt" ? t("From your ChatGPT account") : undefined
-      }
-    >
-      {models.length === 0 && <Row label={t("Sign in to see your models")} />}
-      {models.map((model) => {
-        const description = MODEL_DESCRIPTIONS.get(model.slug);
-        return (
-          <button
-            key={model.slug}
-            type="button"
-            aria-pressed={model.slug === chosen}
-            onClick={() => choose(model.slug)}
-            className="hover:bg-muted/60 flex min-h-[52px] w-full items-center gap-3 px-4 text-start text-sm first:rounded-t-[12px] last:rounded-b-[12px]"
-          >
-            <MakerIcon maker={model.maker} className="size-4 shrink-0" />
-            <span className="flex flex-1 flex-col">
-              {model.name}
-              {description && (
-                <span className="text-muted-foreground text-xs">{t(description)}</span>
-              )}
-            </span>
-            {model.slug === chosen && <IconCheck className="size-4" />}
-          </button>
-        );
-      })}
     </Group>
   );
 };
