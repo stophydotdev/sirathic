@@ -5,7 +5,7 @@ import { mediaTypeOf } from "../apps/server/src/files/sniff";
 const src = `${import.meta.dir}/../apps/server/src`;
 const fileA = "3f2b8c1e-5d4a-4e6b-9a7c-0d1e2f3a4b5c";
 
-mock.module(`${src}/auth.ts`, () => ({
+mock.module(`${src}/account/auth.ts`, () => ({
   userFor: async (headers: Headers) => ({ id: headers.get("x-user") ?? "user-a" }),
   toUser: (row: { id: string; email: string | null }) => ({
     via: "google",
@@ -29,7 +29,7 @@ mock.module(`${src}/files/store.ts`, () => ({
   projectFileKeys: async () => [],
 }));
 
-const { filesRoutes } = await import(`${src}/files/routes.ts`);
+const { uploadRoutes } = await import(`${src}/files/upload.ts`);
 
 test("an upload over the limit with no content-length is refused before the body is read", async () => {
   const chunk = new Uint8Array(1024 * 1024);
@@ -41,7 +41,7 @@ test("an upload over the limit with no content-length is refused before the body
       if (pulled === 200) controller.close();
     },
   });
-  const response = await filesRoutes.fetch(
+  const response = await uploadRoutes.fetch(
     new Request("http://localhost/", {
       method: "POST",
       headers: { "content-type": "multipart/form-data; boundary=x" },
@@ -55,7 +55,7 @@ test("an upload over the limit with no content-length is refused before the body
 });
 
 const get = (user: string) =>
-  filesRoutes.fetch(new Request(`http://localhost/${fileA}`, { headers: { "x-user": user } }));
+  uploadRoutes.fetch(new Request(`http://localhost/${fileA}`, { headers: { "x-user": user } }));
 
 test("a file is served to its owner and is a 404 for another user", async () => {
   const owner = await get("user-a");

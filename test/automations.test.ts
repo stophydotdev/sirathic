@@ -99,7 +99,7 @@ const cache = await import("@sirathic/core/cache");
 mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => 31 }));
 
 const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
-const { automationTools } = await import("../apps/server/src/chat/automationTools");
+const { automationTools } = await import("../apps/server/src/automations/tools");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;

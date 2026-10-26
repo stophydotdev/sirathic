@@ -3,30 +3,31 @@ import { env } from "@sirathic/env/server";
 import { validateUIMessages } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
-import { auth, userFor } from "./auth";
+import { auth, userFor } from "./account/auth";
 import { startScheduler } from "./automations/runner";
 import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
-import { refreshSummary } from "./chat/botSummary";
-import { countNoorAnswer, pickModels } from "./chat/models";
+import { refreshSummary } from "./bots/summary";
+import { countNoorAnswer, pickModels } from "./models/pick";
 import { chatResponse } from "./chat/response";
-import { reviewEvery } from "./chat/botReview";
+import { reviewEvery } from "./bots/review";
 import { chatTitle } from "./chat/title";
-import { clientOf } from "./client";
-import { connectedTools, finishConnect } from "./connectors/connections";
-import { track } from "./events";
+import { clientOf } from "./chat/client";
+import { connectedTools, finishConnect } from "./plugins/connections";
+import { track } from "./chat/events";
 import { readProjectFiles } from "./files/attachments";
-import { filesRoutes } from "./files/routes";
-import { projectOfChat, rememberInBot, rememberInProject } from "./projects";
-import { projectRules, settingsInProject } from "./projectRules";
+import { uploadRoutes } from "./files/upload";
+import { projectOfChat, rememberInBot, rememberInProject } from "./projects/projects";
+import { projectRules, settingsInProject } from "./projects/rules";
 import { appLanguage, type ChatMessage, device, mode } from "./shared/messages";
-import { parseBody, reasonOf, respond, StatusError } from "./respond";
-import { answerOptions, sideOptions } from "./chatgpt/codex";
-import { appRouter, createContext } from "./router";
-import { getSettings, remember } from "./settings";
+import { parseBody, reasonOf, respond, StatusError } from "./http";
+import { answerOptions, sideOptions } from "./models/subscription";
+import { appRouter } from "./router";
+import { createContext } from "./trpc";
+import { getSettings, remember } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
-import { messageSchemas, saveSession, sessionId, titleSession } from "./sessions";
-import { skillRules } from "./skills";
+import { messageSchemas, saveSession, sessionId, titleSession } from "./chat/sessions";
+import { skillRules } from "./skills/skills";
 
 const IDLE_TIMEOUT_SECONDS = 255;
 
@@ -199,7 +200,7 @@ app.post("/api/chat", (c) =>
   }),
 );
 
-app.route("/api/files", filesRoutes);
+app.route("/api/files", uploadRoutes);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 

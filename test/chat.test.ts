@@ -15,12 +15,12 @@ import { shortenEarlierResults } from "../apps/server/src/chat/history";
 import { keepAlive } from "../apps/server/src/chat/keepAlive";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
-import { clientOf } from "../apps/server/src/client";
-import { toolFailure } from "../apps/server/src/events";
+import { clientOf } from "../apps/server/src/chat/client";
+import { toolFailure } from "../apps/server/src/chat/events";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
-import { fallenOut } from "../apps/server/src/chat/botSummary";
-import { recentTurns } from "../apps/server/src/chat/botTools";
-import { findInChat } from "../apps/server/src/chat/chatSearch";
+import { fallenOut } from "../apps/server/src/bots/summary";
+import { recentTurns } from "../apps/server/src/bots/tools";
+import { findInChat } from "../apps/server/src/bots/chatSearch";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
 import { answerAgent } from "../apps/server/src/chat/response";
 
