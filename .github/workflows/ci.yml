@@ -15,6 +15,14 @@ jobs:
       REDIS_URL: redis://127.0.0.1:6379
       OPENAI_API_KEY: ci
       STOPHY_API_KEY: ci
+      ANTHROPIC_API_KEY: ci
+      GOOGLE_CLIENT_ID: ci
+      GOOGLE_CLIENT_SECRET: ci
+      STORAGE_ENDPOINT: http://127.0.0.1:9000
+      STORAGE_REGION: ci
+      STORAGE_BUCKET: ci
+      STORAGE_ACCESS_KEY_ID: ci
+      STORAGE_SECRET_ACCESS_KEY: ci
       BETTER_AUTH_SECRET: ci-only-placeholder-secret-32-chars
     steps:
       - uses: actions/checkout@v6

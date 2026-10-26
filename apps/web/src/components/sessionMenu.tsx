@@ -2,6 +2,7 @@
 
 import { saveDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
+import { MoveToProject } from "@/components/moveToProject";
 import { findSessions, type Session, useSessions } from "@/components/sessions";
 import {
   DropdownMenu,
@@ -139,8 +140,8 @@ const DeleteDialog: FC<{
   );
 };
 
-const menuItem = "min-h-8 gap-2 rounded-[10px] px-2";
-const menuIcon = "text-muted-foreground size-[18px]";
+export const menuItem = "min-h-8 gap-2 rounded-[10px] px-2";
+export const menuIcon = "text-muted-foreground size-[18px]";
 
 const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, className }) => {
   const change = useSessions((s) => s.change);
@@ -193,6 +194,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
             )}
             {session.unread ? t("Mark as read") : t("Mark as unread")}
           </DropdownMenuItem>
+          <MoveToProject session={session} />
           <DropdownMenuItem
             variant="destructive"
             onSelect={() => setDeleting(true)}
@@ -212,7 +214,8 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
 export const SessionRow: FC<{
   session: Session;
   onOpen?: () => void;
-}> = ({ session, onOpen }) => {
+  nested?: boolean;
+}> = ({ session, onOpen, nested }) => {
   const pathname = usePathname();
   const change = useSessions((s) => s.change);
   const t = useT();
@@ -235,7 +238,8 @@ export const SessionRow: FC<{
               href={`/c/${session.id}`}
               onClick={onOpen}
               className={cn(
-                "text-foreground min-w-0 flex-1 truncate px-2.5 py-2 text-sm",
+                "text-foreground min-w-0 flex-1 truncate px-2.5 py-2 text-sm group-hover/session:[text-overflow:clip]",
+                nested && "ps-[34px]",
                 session.unread && "font-[560]",
               )}
             >

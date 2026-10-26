@@ -14,6 +14,7 @@ import {
   smallint,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 
@@ -309,6 +310,70 @@ export const translations = pgTable("translations", {
   kind: text({ enum: ["translation", "transliteration"] }).notNull(),
 });
 
+export const projects = pgTable(
+  "projects",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    owner: text().notNull(),
+    name: text().notNull(),
+    icon: text(),
+    instructions: text().notNull().default(""),
+    projectOnlyMemory: boolean().notNull().default(false),
+    memory: jsonb().$type<string[]>().notNull().default([]),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    foreignKey({
+      name: "projects_owner_fkey",
+      columns: [table.owner],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+  ],
+);
+
+export const automations = pgTable(
+  "automations",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    owner: text().notNull(),
+    projectId: uuid(),
+    name: text().notNull(),
+    prompt: text().notNull(),
+    schedule: jsonb().notNull(),
+    timezone: text().notNull(),
+    enabled: boolean().notNull().default(true),
+    nextRunAt: timestamp({ withTimezone: true }),
+    lastRunAt: timestamp({ withTimezone: true }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+    icon: text(),
+    mode: text().notNull().default("quick"),
+  },
+  (table) => [
+    index("automations_due")
+      .on(table.nextRunAt)
+      .where(sql`${table.enabled}`),
+    index("automations_owner").on(table.owner),
+    foreignKey({
+      name: "automations_owner_fkey",
+      columns: [table.owner],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+    foreignKey({
+      name: "automations_project_id_fkey",
+      columns: [table.projectId],
+      foreignColumns: [projects.id],
+    }).onDelete("set null"),
+  ],
+);
+
 export const chatSessions = pgTable(
   "chat_sessions",
   {
@@ -318,13 +383,27 @@ export const chatSessions = pgTable(
     messages: jsonb().notNull(),
     pinned: boolean().notNull().default(false),
     unread: boolean().notNull().default(false),
+    projectId: uuid(),
+    automationId: uuid(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
       .notNull()
       .defaultNow()
       .$onUpdate(() => new Date()),
   },
-  (table) => [index("chat_sessions_owner_updated").on(table.owner, table.updatedAt)],
+  (table) => [
+    index("chat_sessions_owner_updated").on(table.owner, table.updatedAt),
+    foreignKey({
+      name: "chat_sessions_project_id_fkey",
+      columns: [table.projectId],
+      foreignColumns: [projects.id],
+    }).onDelete("set null"),
+    foreignKey({
+      name: "chat_sessions_automation_id_fkey",
+      columns: [table.automationId],
+      foreignColumns: [automations.id],
+    }).onDelete("set null"),
+  ],
 );
 
 export const settings = pgTable("settings", {
@@ -407,6 +486,30 @@ export const accounts = pgTable(
   ],
 );
 
+export const connections = pgTable(
+  "connections",
+  {
+    owner: text().notNull(),
+    connector: text().notNull(),
+    name: text(),
+    url: text(),
+    secrets: text().notNull(),
+    connected: boolean().notNull().default(false),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    primaryKey({ columns: [table.owner, table.connector] }),
+    foreignKey({
+      name: "connections_owner_fkey",
+      columns: [table.owner],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+  ],
+);
+
 export const verifications = pgTable(
   "verifications",
   {
@@ -433,4 +536,55 @@ export const events = pgTable(
     at: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [index("events_name_at").on(table.name, table.at)],
+);
+
+export const skills = pgTable(
+  "skills",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    owner: text().notNull(),
+    name: text().notNull(),
+    instructions: text().notNull(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    uniqueIndex("skills_owner_name").on(table.owner, sql`lower(${table.name})`),
+    foreignKey({
+      name: "skills_owner_fkey",
+      columns: [table.owner],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+  ],
+);
+
+export const files = pgTable(
+  "files",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    owner: text().notNull(),
+    key: text().notNull(),
+    name: text().notNull(),
+    mediaType: text().notNull(),
+    size: integer().notNull(),
+    projectId: uuid(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("files_owner_created_at").on(table.owner, table.createdAt),
+    index("files_project_id").on(table.projectId),
+    foreignKey({
+      name: "files_owner_fkey",
+      columns: [table.owner],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+    foreignKey({
+      name: "files_project_id_fkey",
+      columns: [table.projectId],
+      foreignColumns: [projects.id],
+    }).onDelete("set null"),
+  ],
 );

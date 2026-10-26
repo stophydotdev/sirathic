@@ -13,19 +13,21 @@ import {
   smoothStream,
   streamText,
   ToolLoopAgent,
+  type ToolSet,
   type UIMessageStreamOutcome,
 } from "ai";
 import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
+import type { connectedTools } from "../connectors/connections";
 import type { Event } from "../events";
 import { citations } from "./citations";
 import { keepAlive } from "./keepAlive";
-import { readPdfs } from "./pdf";
+import { readFiles } from "../files/attachments";
 import { reasonOf } from "../respond";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";
-import { answerRules, searchPrompt } from "./prompt";
+import { answerRules, searchPrompt } from "./prompts/shared";
 import { type Remember, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
@@ -46,7 +48,7 @@ function answerAgent({
 }: {
   model: LanguageModel;
   modelName: string;
-  tools: ReturnType<typeof sirathicTools>;
+  tools: ToolSet;
   mode: Mode;
   settings: Settings;
   rules: string;
@@ -131,11 +133,15 @@ export function chatResponse({
   mode,
   abortSignal,
   preferences,
+  connected,
+  projectRules,
+  skillRules,
   options,
   title,
   save,
   record,
   remember,
+  fileOwner,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   options: { answer: ProviderOptions; side: ProviderOptions };
@@ -144,10 +150,14 @@ export function chatResponse({
   mode: Mode;
   abortSignal: AbortSignal;
   preferences: Promise<Settings>;
+  connected: ReturnType<typeof connectedTools>;
+  projectRules: Promise<string>;
+  skillRules: Promise<string>;
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
   remember: Remember | undefined;
+  fileOwner?: string;
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -189,14 +199,22 @@ export function chatResponse({
           });
         }
       });
-      const settings = await preferences;
+      const stopped = new Promise<never>((_, reject) => {
+        abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
+      });
+      const [settings, connectors, project, skills] = await Promise.all([
+        preferences,
+        Promise.race([connected, stopped]),
+        projectRules,
+        skillRules,
+      ]);
       const agent = answerAgent({
         model: models.model,
         modelName,
-        tools,
+        tools: { ...tools, ...connectors.tools },
         mode,
         settings,
-        rules: answerRules(settings, recent),
+        rules: answerRules(settings, recent, mode) + project + skills,
         mustSearch,
         canRemember: remember !== undefined,
         shorten,
@@ -204,7 +222,7 @@ export function chatResponse({
       });
       const answer = await createAgentUIStream({
         agent,
-        uiMessages: await readPdfs(messages),
+        uiMessages: await readFiles(messages, fileOwner),
         originalMessages: messages,
         abortSignal,
         experimental_transform: [sources.transform(), smoothStream({ chunking: "word" })],
@@ -272,6 +290,7 @@ export function chatResponse({
     },
     onError: (error) => (error instanceof Error ? error.message : String(error)),
     onEnd: ({ messages: answered, outcome }) => {
+      void connected.then(({ close }) => close());
       record({
         name: "answer.completed",
         props: {

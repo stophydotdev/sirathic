@@ -32,7 +32,7 @@ export const Row: FC<{ label: string; hint?: string; children?: ReactNode }> = (
   <div className="flex min-h-[52px] flex-wrap items-center gap-x-4 gap-y-2 py-3">
     <div className="flex min-w-0 flex-1 flex-col gap-0.5">
       <span className="text-sm">{label}</span>
-      {hint && <span className="text-muted-foreground text-[13px]">{hint}</span>}
+      {hint && <span className="text-muted-foreground max-w-[28rem] text-[13px]">{hint}</span>}
     </div>
     {children}
   </div>
@@ -51,11 +51,7 @@ export function Segmented<Value extends string>({
 }) {
   const t = useT();
   return (
-    <div
-      role="radiogroup"
-      aria-label={label}
-      className="border-foreground/10 flex rounded-[12px] border p-0.5"
-    >
+    <div role="radiogroup" aria-label={label} className="flex flex-wrap gap-1.5">
       {options.map((option) => (
         <button
           key={option.value}
@@ -64,10 +60,10 @@ export function Segmented<Value extends string>({
           aria-checked={option.value === value}
           onClick={() => onChange(option.value)}
           className={cn(
-            "h-[26px] rounded-[10px] px-2.5 text-sm transition-colors",
+            "h-8 rounded-full border px-3 text-sm transition-colors",
             option.value === value
-              ? "bg-foreground/12 text-foreground"
-              : "text-muted-foreground hover:text-foreground",
+              ? "border-foreground/40 bg-foreground/12 text-foreground"
+              : "border-foreground/10 text-muted-foreground hover:text-foreground",
           )}
         >
           {t(option.label)}

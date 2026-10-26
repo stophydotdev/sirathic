@@ -10,17 +10,6 @@ import { clientOf } from "./client";
 import { track } from "./events";
 import { forgetIfSignedOut, SESSION_DAYS, type User } from "./users";
 
-const google =
-  env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
-    ? {
-        google: {
-          clientId: env.GOOGLE_CLIENT_ID,
-          clientSecret: env.GOOGLE_CLIENT_SECRET,
-          prompt: "select_account" as const,
-        },
-      }
-    : undefined;
-
 const APP_ORIGINS = env.SITE_URL.startsWith("http://")
   ? ["sirathic://", "exp://**"]
   : ["sirathic://"];
@@ -46,7 +35,13 @@ export const auth = betterAuth({
   },
   session: { expiresIn: SESSION_DAYS * 86_400 },
   account: { storeStateStrategy: "cookie", encryptOAuthTokens: true },
-  socialProviders: google,
+  socialProviders: {
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      prompt: "select_account",
+    },
+  },
   advanced: {
     cookiePrefix: "sirathic",
     ipAddress: { disableIpTracking: true },
@@ -83,12 +78,25 @@ export const auth = betterAuth({
   },
 });
 
+export function toUser({
+  id,
+  email,
+  image,
+  plan,
+  accountId,
+}: {
+  id: string;
+  email: string | null;
+  image?: string | null;
+  plan?: string | null;
+  accountId?: string | null;
+}): User {
+  return accountId
+    ? { via: "chatgpt", id, email, image: image ?? null, plan: plan ?? null, accountId }
+    : { via: "google", id, email, image: image ?? null };
+}
+
 export async function userFor(headers: Headers): Promise<User | undefined> {
   const found = await auth.api.getSession({ headers });
-  if (!found) return undefined;
-  const { id, email, plan, accountId } = found.user;
-  const image = found.user.image ?? null;
-  return accountId
-    ? { via: "chatgpt", id, email, image, plan: plan ?? null, accountId }
-    : { via: "google", id, email, image };
+  return found ? toUser(found.user) : undefined;
 }

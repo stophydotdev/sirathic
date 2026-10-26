@@ -77,7 +77,7 @@ export const ThreadKeys: FC = () => {
         event.preventDefault();
         void navigator.clipboard.writeText(messageText(last));
       } else if (isTyping(event) && document.activeElement === document.body) {
-        document.querySelector<HTMLTextAreaElement>("[data-composer]")?.focus();
+        document.querySelector<HTMLElement>("[data-composer] [contenteditable]")?.focus();
       }
     };
     window.addEventListener("keydown", onKey);

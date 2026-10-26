@@ -5,6 +5,8 @@ import { useChatOptions } from "@/components/chatOptions";
 import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Mark } from "@/components/logo";
+import { ProjectList } from "@/components/projectNav";
+import { useProjects } from "@/components/projects";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
@@ -18,12 +20,16 @@ import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
 import { useKeyNames, withMod } from "@/lib/keys";
 import { cn } from "@/lib/utils";
 import {
+  IconAt,
   IconChevronDown,
+  IconHistory,
+  IconLibrary,
   IconLayoutSidebar,
   IconMenu2,
   IconPlus,
   IconSearch,
 } from "@tabler/icons-react";
+import Link from "next/link";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
 export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
@@ -35,6 +41,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const keys = useKeyNames();
   const refresh = useAccount((s) => s.refresh);
   const refreshSessions = useSessions((s) => s.refresh);
+  const refreshProjects = useProjects((s) => s.refresh);
 
   useEffect(() => {
     void useAccount.persist.rehydrate();
@@ -45,11 +52,12 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
     const onFocus = () => {
       void refresh();
       void refreshSessions();
+      void refreshProjects();
     };
     onFocus();
     window.addEventListener("focus", onFocus);
     return () => window.removeEventListener("focus", onFocus);
-  }, [refresh, refreshSessions]);
+  }, [refresh, refreshSessions, refreshProjects]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -90,7 +98,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
     <div className="relative flex h-full w-full overflow-hidden print:h-auto print:overflow-visible">
       <aside
         className={cn(
-          "bg-background border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 lg:flex print:hidden",
+          "group/sidebar bg-background border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 lg:flex print:hidden",
           collapsed ? "w-14" : "w-60",
         )}
       >
@@ -158,7 +166,20 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               </kbd>
             )}
           </NewButton>
-          {!collapsed && <Recents />}
+          <NavLink href="/library" className={navRow}>
+            <IconLibrary className="size-4.5 shrink-0" />
+            {!collapsed && <span className="flex-1">{t("Library")}</span>}
+          </NavLink>
+          <NavLink href="/automations" className={navRow}>
+            <IconHistory className="size-4.5 shrink-0" />
+            {!collapsed && <span className="flex-1">{t("Automations")}</span>}
+          </NavLink>
+          <NavLink href="/plugins" className={navRow}>
+            <IconAt className="size-4.5 shrink-0" />
+            {!collapsed && <span className="flex-1">{t("Plugins")}</span>}
+          </NavLink>
+          {!collapsed && <ProjectList />}
+          {!collapsed && <Recents onSeeAll={() => setSearching(true)} />}
         </nav>
         <div className="shrink-0 p-2">
           <AccountRow collapsed={collapsed} />
@@ -183,6 +204,18 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <IconPlus className="size-4 shrink-0" />
               <span>{t("New")}</span>
             </NewButton>
+            <NavLink href="/library" className={mobileRow} onDone={() => setMobileOpen(false)}>
+              <IconLibrary className="size-4 shrink-0" />
+              <span>{t("Library")}</span>
+            </NavLink>
+            <NavLink href="/automations" className={mobileRow} onDone={() => setMobileOpen(false)}>
+              <IconHistory className="size-4 shrink-0" />
+              <span>{t("Automations")}</span>
+            </NavLink>
+            <NavLink href="/plugins" className={mobileRow} onDone={() => setMobileOpen(false)}>
+              <IconAt className="size-4 shrink-0" />
+              <span>{t("Plugins")}</span>
+            </NavLink>
             <button
               type="button"
               onClick={() => {
@@ -194,7 +227,14 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <IconSearch className="size-4 shrink-0" />
               <span>{t("Search chats")}</span>
             </button>
-            <Recents onDone={() => setMobileOpen(false)} />
+            <ProjectList onDone={() => setMobileOpen(false)} />
+            <Recents
+              onDone={() => setMobileOpen(false)}
+              onSeeAll={() => {
+                setMobileOpen(false);
+                setSearching(true);
+              }}
+            />
           </nav>
           <div className="mt-auto shrink-0 p-2">
             <AccountRow onDone={() => setMobileOpen(false)} />
@@ -228,34 +268,47 @@ const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
   );
 };
 
-const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
-const RECENT_LIMIT = 8;
+const NavLink: FC<RowProps & { href: string }> = ({ href, className, children, onDone }) => (
+  <Button
+    variant="ghost"
+    asChild
+    className={cn("hover:bg-muted justify-start font-normal", className)}
+  >
+    <Link href={href} onClick={onDone}>
+      {children}
+    </Link>
+  </Button>
+);
 
-const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
+const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
+const RECENT_LIMIT = 4;
+
+const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, onSeeAll }) => {
   const sessions = useSessions((s) => s.sessions);
   const t = useT();
   const [open, setOpen] = useState(true);
-  const pinned = sessions?.filter((session) => session.pinned) ?? [];
-  const recent = sessions?.filter((session) => !session.pinned) ?? [];
+  const chats = sessions?.filter((session) => !session.projectId) ?? [];
+  const ordered = [
+    ...chats.filter((session) => session.pinned),
+    ...chats.filter((session) => !session.pinned),
+  ];
+  const shown = ordered.slice(0, RECENT_LIMIT);
 
   return (
     <>
-      {pinned.length > 0 && (
-        <>
-          <p className="text-muted-foreground px-2.5 pt-6 pb-1 text-sm">{t("Pinned")}</p>
-          {pinned.map((session) => (
-            <SessionRow key={session.id} session={session} onOpen={onDone} />
-          ))}
-        </>
-      )}
       <button
         type="button"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
-        className="text-muted-foreground hover:text-foreground flex items-center justify-between px-2.5 pt-6 pb-1 text-sm"
+        className="group/chats text-muted-foreground hover:text-foreground flex items-center justify-between px-2.5 pt-6 pb-1 text-sm"
       >
-        {t("Recents")}
-        <IconChevronDown className={cn("size-4", !open && "-rotate-90")} />
+        {t("Chats")}
+        <IconChevronDown
+          className={cn(
+            "size-4 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 pointer-coarse:opacity-100",
+            !open && "-rotate-90 opacity-100",
+          )}
+        />
       </button>
       {open &&
         sessions === undefined &&
@@ -264,13 +317,20 @@ const Recents: FC<{ onDone?: () => void }> = ({ onDone }) => {
             <Skeleton className={cn("h-2.5", width)} />
           </div>
         ))}
-      {open && sessions !== undefined && recent.length === 0 && (
+      {open && sessions !== undefined && chats.length === 0 && (
         <p className="text-muted-foreground/70 px-2.5 py-1.5 text-sm">{t("No chats yet")}</p>
       )}
       {open &&
-        recent
-          .slice(0, RECENT_LIMIT)
-          .map((session) => <SessionRow key={session.id} session={session} onOpen={onDone} />)}
+        shown.map((session) => <SessionRow key={session.id} session={session} onOpen={onDone} />)}
+      {open && ordered.length > RECENT_LIMIT && (
+        <button
+          type="button"
+          onClick={onSeeAll}
+          className="text-muted-foreground hover:bg-muted hover:text-foreground rounded-[12px] px-2.5 py-2 text-start text-sm font-[550]"
+        >
+          {t("See all")}
+        </button>
+      )}
     </>
   );
 };

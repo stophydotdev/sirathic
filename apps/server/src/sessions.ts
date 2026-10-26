@@ -3,6 +3,7 @@ import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
 import { type AnyColumn, and, desc, eq, ilike, sql } from "drizzle-orm";
 import { z } from "zod";
+import { projectId, requireProject } from "./projects";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "./shared/messages";
 import { StatusError } from "./respond";
 
@@ -17,11 +18,11 @@ export const sessionUpdate = z
     title: z.string().trim().min(1).max(TITLE_CHARS).optional(),
     pinned: z.boolean().optional(),
     unread: z.boolean().optional(),
+    projectId: projectId.nullable().optional(),
   })
   .refine(
-    ({ title, pinned, unread }) =>
-      title !== undefined || pinned !== undefined || unread !== undefined,
-    "send a title, pinned or unread",
+    (update) => Object.values(update).some((value) => value !== undefined),
+    "send a title, pinned, unread or projectId",
   );
 
 export const feedbackInput = z.object({
@@ -59,6 +60,7 @@ export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
       title: chatSessions.title,
       pinned: chatSessions.pinned,
       unread: chatSessions.unread,
+      projectId: chatSessions.projectId,
       updatedAt: isoTime(chatSessions.updatedAt),
     })
     .from(chatSessions)
@@ -78,7 +80,11 @@ export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
 
 async function storedMessages(id: string, by: string) {
   const [row] = await db
-    .select({ messages: chatSessions.messages, unread: chatSessions.unread })
+    .select({
+      messages: chatSessions.messages,
+      unread: chatSessions.unread,
+      projectId: chatSessions.projectId,
+    })
     .from(chatSessions)
     .where(owned(id, by));
   return row;
@@ -99,10 +105,15 @@ export async function openSession(id: string, by: string) {
   });
 }
 
-export async function saveSession(id: string, by: string, messages: ChatMessage[]) {
+export async function saveSession(
+  id: string,
+  by: string,
+  messages: ChatMessage[],
+  project?: string,
+) {
   const [saved] = await db
     .insert(chatSessions)
-    .values({ id, owner: by, title: titleOf(messages), messages })
+    .values({ id, owner: by, title: titleOf(messages), messages, projectId: project })
     .onConflictDoUpdate({
       target: chatSessions.id,
       set: { messages, updatedAt: new Date() },
@@ -139,6 +150,7 @@ export async function updateSession(
   by: string,
   update: z.output<typeof sessionUpdate>,
 ) {
+  if (update.projectId) await requireProject(update.projectId, by);
   const [row] = await db
     .update(chatSessions)
     .set({ ...update, updatedAt: keepUpdatedAt })
@@ -148,6 +160,7 @@ export async function updateSession(
       title: chatSessions.title,
       pinned: chatSessions.pinned,
       unread: chatSessions.unread,
+      projectId: chatSessions.projectId,
     });
   if (!row) throw new StatusError(404, "no such session");
   return row;
@@ -165,10 +178,11 @@ export async function deleteSession(id: string, by: string) {
 async function messagesOf(id: string, by: string) {
   const row = await storedMessages(id, by);
   if (!row) throw new StatusError(404, "no such session");
-  return validateUIMessages<ChatMessage>({
+  const messages = await validateUIMessages<ChatMessage>({
     messages: row.messages,
     ...messageSchemas,
   });
+  return { messages, projectId: row.projectId };
 }
 
 export async function setFeedback(
@@ -176,7 +190,7 @@ export async function setFeedback(
   by: string,
   { messageId, value, report: told }: z.output<typeof feedbackInput>,
 ) {
-  const messages = await messagesOf(id, by);
+  const { messages } = await messagesOf(id, by);
   const target = messages.find((message) => message.id === messageId);
   if (!target) throw new StatusError(404, "no such message");
   const { feedback: _old, report: _oldReport, ...rest } = target.metadata ?? {};
@@ -192,7 +206,7 @@ export async function forkSession(
   by: string,
   { messageId }: z.output<typeof forkInput>,
 ) {
-  const messages = await messagesOf(id, by);
+  const { messages, projectId: sourceProject } = await messagesOf(id, by);
   const end = messages.findIndex((message) => message.id === messageId);
   if (end === -1) throw new StatusError(404, "no such message");
   const copied = messages.slice(0, end + 1);
@@ -202,6 +216,7 @@ export async function forkSession(
     owner: by,
     title: titleOf(copied),
     messages: copied,
+    projectId: sourceProject,
   });
   return { id: forked };
 }
