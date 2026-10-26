@@ -18,6 +18,9 @@ import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/share
 import { clientOf } from "../apps/server/src/client";
 import { toolFailure } from "../apps/server/src/events";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
+import { fallenOut } from "../apps/server/src/chat/botSummary";
+import { recentTurns } from "../apps/server/src/chat/botTools";
+import { findInChat } from "../apps/server/src/chat/chatSearch";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
 import { answerAgent } from "../apps/server/src/chat/response";
 
@@ -440,4 +443,62 @@ test("an answer runs until stopped or replaced, not until the browser leaves", (
   expect(second.signal.aborted).toBe(true);
   second.settled();
   expect(isAnswering("user", "chat")).toBe(false);
+});
+
+const turn = (i: number) => [
+  { role: "user", id: `q${i}` },
+  { role: "assistant", id: `a${i}` },
+];
+
+test("a long bot chat sends its recent turns, starting at a question", () => {
+  const chat = Array.from({ length: 20 }, (_, i) => turn(i)).flat();
+  const recent = recentTurns(chat, 5);
+  expect(recent.map((message) => message.id)).toEqual(["q18", "a18", "q19", "a19"]);
+  expect(recentTurns(chat.slice(0, 3), 24)).toHaveLength(3);
+});
+
+const chatOf = (turns: number) => Array.from({ length: turns }, (_, i) => turn(i)).flat();
+
+test("the summary takes only the turns that fell out of the window, each once", () => {
+  const first = fallenOut(chatOf(20), 0);
+  expect(first.fresh.map((message) => message.id)).toEqual(chatOf(8).map((message) => message.id));
+  expect(fallenOut(chatOf(20), first.upTo).fresh).toEqual([]);
+  expect(fallenOut(chatOf(22), first.upTo).fresh.map((message) => message.id)).toEqual([
+    "q8",
+    "a8",
+    "q9",
+    "a9",
+  ]);
+  expect(fallenOut(chatOf(5), 0).fresh).toEqual([]);
+});
+
+const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>
+  ({ id, role, parts: [{ type: "text", text }], metadata: { createdAt } }) satisfies ChatMessage;
+
+test("chat search finds earlier messages with dates, best match first, and skips the question", () => {
+  const chat = [
+    said("1", "user", "Teach me a hadith about intentions", Date.UTC(2026, 9, 12)),
+    said(
+      "2",
+      "assistant",
+      "Today's hadith: actions are judged by intentions.",
+      Date.UTC(2026, 9, 12),
+    ),
+    said("3", "user", "What about patience?", Date.UTC(2026, 9, 13)),
+    said(
+      "4",
+      "assistant",
+      "Patience is half of faith, and a hadith praises it.",
+      Date.UTC(2026, 9, 13),
+    ),
+    said("5", "user", "which hadith about intentions did you teach me"),
+  ];
+  const found = findInChat(chat, "hadith intentions");
+  expect(found.map((match) => match.from)).toEqual(["you", "user", "you"]);
+  expect(found[0]).toEqual({
+    from: "you",
+    date: "2026-10-12",
+    snippet: "Today's hadith: actions are judged by intentions.",
+  });
+  expect(findInChat(chat, "zakat")).toEqual([]);
 });

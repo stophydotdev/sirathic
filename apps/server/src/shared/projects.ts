@@ -33,3 +33,46 @@ export const PROJECT_ICONS = [
   "palette",
   "sparkles",
 ] as const;
+
+export const BOT_COLORS = [
+  "white",
+  "brown",
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "teal",
+  "blue",
+  "violet",
+  "pink",
+  "gray",
+] as const;
+
+export const SECTION_NAME_MAX = 40;
+
+export const BOT_ICONS = [
+  "man",
+  "woman",
+  "imam",
+  "scholar",
+  "boy",
+  "girl",
+  "grandfather",
+  "grandmother",
+  "mosque",
+  "crescent",
+  "lantern",
+  "quran",
+  "tasbih",
+  "kaaba",
+  "minaret",
+  "prayerMat",
+  "dates",
+  "star",
+  "dua",
+  "dome",
+] as const;
+
+export const NOTE_MAX = 600;
+
+export const REVIEW_EVERY = 10;

@@ -4,6 +4,7 @@ import { chosenModel } from "@/components/account";
 import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
 import { usePreferences } from "@/components/preferences";
+import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";
 import { uploadToLibrary } from "@/components/libraryUpload";
@@ -95,7 +96,9 @@ const transportIn = (projectId: string | undefined) =>
       const override = options.takeOverride();
       return {
         model: override?.model ?? chosenModel(),
-        mode: override?.mode ?? options.mode,
+        mode: useProjects.getState().bots?.some((bot) => bot.id === projectId)
+          ? "quick"
+          : (override?.mode ?? options.mode),
         incognito: options.incognito,
         projectId,
         device: deviceOf(),
@@ -213,8 +216,10 @@ export const Chat: FC<{
   initialMessages?: ChatMessage[];
   projectId?: string;
   unfinished?: boolean;
-}> = ({ id, initialMessages, projectId, unfinished = false }) => {
+  home?: string;
+}> = ({ id, initialMessages, projectId, unfinished = false, home }) => {
   const [chatId] = useState(() => id ?? crypto.randomUUID());
+  const address = home ?? `/c/${chatId}`;
   const incognito = useChatOptions((s) => s.incognito);
   const savedTitle = useSessions(
     (s) => s.sessions?.find((session) => session.id === chatId)?.title,
@@ -237,10 +242,10 @@ export const Chat: FC<{
 
   useEffect(() => {
     if (!started || incognito) return;
-    if (window.location.pathname !== `/c/${chatId}`) {
-      window.history.replaceState(null, "", `/c/${chatId}`);
+    if (window.location.pathname !== address) {
+      window.history.replaceState(null, "", address);
     }
-  }, [started, chatId, incognito]);
+  }, [started, address, incognito]);
 
   useEffect(() => {
     if (!title) return;

@@ -7,6 +7,7 @@ import {
   hour12Of,
   hour24Of,
 } from "../apps/web/src/components/automationText";
+import { botGroups } from "../apps/web/src/components/botGroups";
 import { researchOf } from "../apps/web/src/components/research";
 
 test("a link keeps its path and drops the trailing period and question mark", () => {
@@ -105,4 +106,49 @@ test("a time keeps its hour and minute through the picker's parts", () => {
   const { hour, minute } = clockParts("07:05");
   expect({ hour, minute }).toEqual({ hour: 7, minute: 5 });
   expect(clockText24(hour, minute)).toBe("07:05");
+});
+
+const bot = (
+  name: string,
+  extra: { pinned?: boolean; section?: string; hidden?: boolean } = {},
+) => ({
+  name,
+  pinned: false,
+  section: null,
+  hidden: false,
+  ...extra,
+});
+
+test("pinned bots come first, then each section, then bots with no section, and hidden ones are set aside", () => {
+  const { groups, hidden } = botGroups(
+    [
+      bot("Zaid", { pinned: true, section: "Study" }),
+      bot("Amal"),
+      bot("Bilal", { section: "Study" }),
+      bot("Dawud", { section: "Kids" }),
+      bot("Hana", { hidden: true }),
+    ],
+    6,
+  );
+  expect(groups.map((group) => [group.kind, group.bots.map((found) => found.name)])).toEqual([
+    ["pinned", ["Zaid"]],
+    ["section", ["Dawud"]],
+    ["section", ["Bilal"]],
+    ["loose", ["Amal"]],
+  ]);
+  expect(hidden.map((found) => found.name)).toEqual(["Hana"]);
+});
+
+test("only the first six unpinned bots show and the rest are counted", () => {
+  const bots = ["a", "b", "c", "d", "e", "f", "g", "h"].map((name) => bot(name));
+  const { groups, more } = botGroups(bots, 6);
+  expect(groups.flatMap((group) => group.bots.map((found) => found.name))).toEqual([
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+  ]);
+  expect(more).toBe(2);
 });

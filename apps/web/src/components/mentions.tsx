@@ -72,6 +72,8 @@ const useMentionTargets = create<{
 
 export const loadMentionTargets = () => useMentionTargets.getState().load();
 
+export const usePlugins = () => useMentionTargets((s) => s.plugins);
+
 export function usePluginTargets() {
   const plugins = useMentionTargets((s) => s.plugins);
   return (id: string): MentionTarget => {

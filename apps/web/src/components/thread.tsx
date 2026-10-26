@@ -13,6 +13,8 @@ import { Mark } from "@/components/logo";
 import { SirathicIcon } from "@/components/makerIcon";
 import { UserText } from "@/components/mentions";
 import { ProjectHome } from "@/components/projectHome";
+import { BotGreeting, BotHeaderMenu, BotHome, BotTitle, useBot } from "@/components/botHome";
+import { BotLearned } from "@/components/botLearned";
 import { ThreadKeys } from "@/components/shortcuts";
 import { ThreadImages } from "@/components/threadMedia";
 import { ThreadShell } from "@/components/threadShell";
@@ -138,7 +140,13 @@ export const ThreadSkeleton: FC = () => (
   </main>
 );
 
-const TurnRow: FC<{ children: ReactNode; aside?: ReactNode }> = ({ children, aside }) => {
+const TurnRow: FC<{
+  children: ReactNode;
+  aside?: ReactNode;
+  layout?: "aside" | "column" | "edge";
+}> = ({ children, aside, layout = "aside" }) => {
+  if (layout === "edge") return children;
+  if (layout === "column") return <div className="mx-auto w-full max-w-182">{children}</div>;
   return (
     <div className="mx-auto grid w-full max-w-[720px] xl:max-w-none xl:grid-cols-[minmax(0,720px)_320px] xl:justify-between xl:ps-[35px]">
       <div className="min-w-0">{children}</div>
@@ -154,38 +162,50 @@ const TurnRow: FC<{ children: ReactNode; aside?: ReactNode }> = ({ children, asi
 const TabBar: FC = () => {
   const tab = useThreadTab((s) => s.tab);
   const open = useThreadTab((s) => s.open);
+  const bot = useBot();
   const t = useT();
 
   return (
-    <div className="bg-background border-border/50 sticky top-0 z-20 border-b pe-6 ps-14 lg:ps-6 print:hidden">
+    <div
+      className={cn(
+        "bg-background sticky top-0 z-20 pe-6 ps-14 print:hidden",
+        bot ? "lg:ps-4" : "lg:ps-6",
+        bot
+          ? "after:from-background after:pointer-events-none after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-linear-to-b after:to-transparent"
+          : "border-border/50 border-b",
+      )}
+    >
       <div className="absolute top-0 end-4 flex h-14 items-center">
-        <HeaderActions />
+        {bot ? <BotHeaderMenu /> : <HeaderActions />}
       </div>
-      <TurnRow>
+      <TurnRow layout={bot ? "edge" : "aside"}>
         <div className="flex h-14 items-center gap-4">
           <a href="/" aria-label={t("New chat")} className={cn(iconButton, "lg:hidden")}>
             <IconPlus className="size-4.5" />
           </a>
-          <div role="tablist" className="flex h-full gap-5">
-            {TABS.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                role="tab"
-                aria-selected={tab === item.id}
-                onClick={() => open(item.id)}
-                className={cn(
-                  "-mb-px flex items-center gap-1.5 border-b-2 text-sm font-[470] transition-colors",
-                  tab === item.id
-                    ? "border-foreground text-foreground"
-                    : "text-muted-foreground hover:text-foreground border-transparent",
-                )}
-              >
-                <item.Icon className="size-4" />
-                <span className="max-sm:sr-only">{t(item.name)}</span>
-              </button>
-            ))}
-          </div>
+          <BotTitle />
+          {!bot && (
+            <div role="tablist" className="flex h-full gap-5">
+              {TABS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={tab === item.id}
+                  onClick={() => open(item.id)}
+                  className={cn(
+                    "-mb-px flex items-center gap-1.5 border-b-2 text-sm font-[470] transition-colors",
+                    tab === item.id
+                      ? "border-foreground text-foreground"
+                      : "text-muted-foreground hover:text-foreground border-transparent",
+                  )}
+                >
+                  <item.Icon className="size-4" />
+                  <span className="max-sm:sr-only">{t(item.name)}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </TurnRow>
     </div>
@@ -276,25 +296,29 @@ const ThreadBody: FC = () => {
   const changeSession = useSessions((s) => s.change);
   const projectId = session ? session.projectId : chat?.projectId;
   const project = useProjects((s) => s.projects?.find((found) => found.id === projectId));
-  if (tab === "links") return <ThreadLinks />;
-  if (tab === "images") return <ThreadImages />;
+  const bot = useBot();
+  if (!bot && tab === "links") return <ThreadLinks />;
+  if (!bot && tab === "images") return <ThreadImages />;
 
   return (
     <>
       <div className="px-6">
-        <TurnRow aside={<SourcesPane />}>
+        <TurnRow aside={bot ? undefined : <SourcesPane />} layout={bot ? "column" : "aside"}>
+          <BotGreeting />
           <ThreadPrimitive.Messages>{() => <Turn />}</ThreadPrimitive.Messages>
+          <BotLearned />
         </TurnRow>
       </div>
       <ThreadPrimitive.ViewportFooter className="bg-background sticky bottom-0 mt-auto px-6 pb-3 print:hidden">
-        <TurnRow>
-          <div className="relative">
+        <TurnRow layout={bot ? "column" : "aside"}>
+          <div className={cn("relative", bot && "-mx-3")}>
             <ThreadPrimitive.ScrollToBottom className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible">
               <IconArrowDown className="size-4" />
             </ThreadPrimitive.ScrollToBottom>
             <Composer
-              placeholder={t("Ask a follow-up")}
+              placeholder={bot ? t("Message {name}", { name: bot.name }) : t("Ask a follow-up")}
               menuSide="top"
+              bot={!!bot}
               project={
                 project && chat
                   ? {
@@ -327,6 +351,8 @@ const Caution: FC = () => {
 const EmptyState: FC = () => {
   const t = useT();
   const projectId = useChatState()?.projectId;
+  const bot = useBot();
+  if (bot) return <BotHome bot={bot} />;
   if (projectId) return <ProjectHome id={projectId} />;
   return (
     <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
@@ -357,8 +383,18 @@ const Turn: FC = () => {
   );
 };
 
+const routineOf = z.object({ routine: z.string() });
+
 const Question: FC = () => {
   const t = useT();
+  const routine = useAuiState((s) => routineOf.safeParse(s.message.metadata.custom).data?.routine);
+  if (routine) {
+    return (
+      <p className="text-muted-foreground pt-8 pb-2 text-xs">
+        {t("Routine")} · {routine}
+      </p>
+    );
+  }
   return (
     <>
       <AuiIf condition={(s) => !s.message.composer.isEditing}>

@@ -2,15 +2,18 @@
 
 import { describeSchedule } from "@/components/automationText";
 import { useLocale, useT } from "@/components/i18n";
+import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
 import { IconArrowUpRight, IconClockPlay } from "@tabler/icons-react";
 import Link from "next/link";
-import { type FC } from "react";
+import { type FC, useEffect } from "react";
 import { z } from "zod";
 
-const CARD_TOOLS = new Set(["createAutomation", "listAutomations"]);
+const CARD_TOOLS = new Set(["createAutomation", "listAutomations", "setBotJob", "askUser"]);
 
 export const isCardTool = (name: string) => CARD_TOOLS.has(name);
+
+const renamed = z.object({ name: z.string() });
 
 const row = z.object({
   id: z.string(),
@@ -58,6 +61,17 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
   const t = useT();
   const created = row.safeParse(result).data;
   const listed = z.array(row).safeParse(result).data;
+  const bot = renamed.safeParse(result).data;
+  if (tool === "setBotJob" && bot) return <BotRenamed name={bot.name} />;
+  if (tool === "createAutomation" && created?.projectId) {
+    return (
+      <p className="text-muted-foreground my-3 flex items-center justify-center gap-1.5 text-xs">
+        {t("Created routine")}
+        <IconClockPlay className="size-3.5" />
+        <span className="text-foreground">{created.name}</span>
+      </p>
+    );
+  }
   if (tool === "createAutomation" && created) {
     return (
       <div className="border-border my-3 flex flex-col gap-2 rounded-[12px] border p-3 print:hidden">
@@ -86,4 +100,16 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
     );
   }
   return null;
+};
+
+const BotRenamed: FC<{ name: string }> = ({ name }) => {
+  const t = useT();
+  useEffect(() => {
+    void useProjects.getState().refresh();
+  }, [name]);
+  return (
+    <p className="text-muted-foreground my-3 text-center text-xs">
+      {t("Renamed to {name}", { name })}
+    </p>
+  );
 };

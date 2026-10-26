@@ -8,6 +8,7 @@ import { isRtl } from "@/components/locales";
 import { Mark } from "@/components/logo";
 import { ProjectList } from "@/components/projectNav";
 import { useProjects } from "@/components/projects";
+import { BotList } from "@/components/botNav";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
@@ -179,6 +180,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             <IconAt className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("Plugins")}</span>}
           </NavLink>
+          {!collapsed && <BotList />}
           {!collapsed && <ProjectList />}
           {!collapsed && <Recents onSeeAll={() => setSearching(true)} />}
         </nav>
@@ -231,6 +233,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <IconSearch className="size-4 shrink-0" />
               <span>{t("Search chats")}</span>
             </button>
+            <BotList onDone={() => setMobileOpen(false)} />
             <ProjectList onDone={() => setMobileOpen(false)} />
             <Recents
               onDone={() => setMobileOpen(false)}

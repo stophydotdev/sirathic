@@ -21,6 +21,8 @@ export type Report = z.infer<typeof report>;
 
 export const device = z.enum(["phone", "tablet", "desktop"]);
 
+export const appLanguage = z.string().regex(/^[a-z]{2,3}$/u);
+
 export type Device = z.infer<typeof device>;
 
 export const messageMetadata = z.object({
@@ -29,9 +31,17 @@ export const messageMetadata = z.object({
   model: z.string().optional(),
   feedback: feedback.optional(),
   report: report.optional(),
+  routine: z.string().optional(),
 });
 
 type MessageMetadata = z.infer<typeof messageMetadata>;
+
+export const ANSWER_MAX = 80;
+
+export const question = z.object({
+  question: z.string().trim().min(1).max(120),
+  options: z.array(z.string().trim().min(1).max(ANSWER_MAX)).min(2).max(5),
+});
 
 export const chatData = {
   related: z.object({ questions: z.array(z.string()) }),

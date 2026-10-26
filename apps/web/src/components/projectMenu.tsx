@@ -106,24 +106,29 @@ export const TextDialog: FC<{
   );
 };
 
-const DeleteProjectDialog: FC<{ id: string; name: string; onClose: () => void }> = ({
-  id,
-  name,
-  onClose,
-}) => {
+export const DeleteProjectDialog: FC<{
+  id: string;
+  name: string;
+  bot?: boolean;
+  onClose: () => void;
+}> = ({ id, name, bot, onClose }) => {
   const remove = useProjects((s) => s.remove);
   const t = useT();
 
   const confirm = async () => {
     await remove(id);
     onClose();
-    if (window.location.pathname === `/project/${id}`) window.location.assign("/");
+    if ([`/project/${id}`, `/bot/${id}`].includes(window.location.pathname)) {
+      window.location.assign("/");
+    }
   };
 
   return (
-    <Modal open onOpenChange={onClose} title={t("Delete project")}>
+    <Modal open onOpenChange={onClose} title={bot ? t("Delete bot") : t("Delete project")}>
       <p className="text-muted-foreground text-sm">
-        {t('Delete the project "{name}"? Its chats stay in your history.', { name })}
+        {bot
+          ? t('Delete the bot "{name}"? Its conversation stays in your history.', { name })
+          : t('Delete the project "{name}"? Its chats stay in your history.', { name })}
       </p>
       <div className="flex justify-end gap-2">
         <Dialog.Close type="button" className={modalButton}>

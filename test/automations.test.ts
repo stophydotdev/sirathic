@@ -98,7 +98,7 @@ mock.module("@sirathic/db", () => ({ db: fakeDb }));
 const cache = await import("@sirathic/core/cache");
 mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => 31 }));
 
-const { runDue } = await import("../apps/server/src/automations/runner");
+const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
 const { automationTools } = await import("../apps/server/src/chat/automationTools");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
@@ -252,4 +252,38 @@ test("Noor creates a weekly reminder in the person's time zone with In app notif
     notify: "app",
   });
   expect(insertedAutomations[0]?.[4]).toBe("Asia/Tokyo");
+});
+
+test("a routine reply of SKIP stays out of the chat, any other reply is a post", () => {
+  expect(["SKIP", " skip.\n", "Skip!"].map(isSkip)).toEqual([true, true, true]);
+  expect(["Nothing to skip today.", "3 items are due.", ""].map(isSkip)).toEqual([
+    false,
+    false,
+    false,
+  ]);
+});
+
+test("a study routine is told what is due and what it said last time", () => {
+  const brief = routineBrief({
+    prompt: "Morning review",
+    previous: "2 items are due.",
+    due: [
+      {
+        kind: "verse",
+        ref: "112:1-4",
+        label: "Al-Ikhlas 112:1-4",
+        step: 2,
+        mistake: "said ahad twice",
+      },
+    ],
+    studying: true,
+  });
+  expect(brief).toContain(
+    "Due for review now: Al-Ikhlas 112:1-4 (step 2, last mistake: said ahad twice).",
+  );
+  expect(brief).toContain("Your last post for this routine was:\n2 items are due.");
+  expect(brief).toContain("reply with exactly SKIP");
+  expect(routineBrief({ prompt: "Daily dua", previous: "", due: [], studying: false })).toBe(
+    "Daily dua",
+  );
 });

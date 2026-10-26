@@ -4,6 +4,9 @@ import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
 import { AutomationCard } from "@/components/automationCard";
+import { useChatState } from "@/components/chat";
+import { useProjects } from "@/components/projects";
+import { AskCard } from "@/components/questionCard";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
 import { citedSourcesOf, SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
@@ -43,6 +46,8 @@ const research = groupPartByType({
   reasoning: ["group-research"],
   "tool-call:createAutomation": [],
   "tool-call:listAutomations": [],
+  "tool-call:setBotJob": [],
+  "tool-call:askUser": [],
   "tool-call": ["group-research"],
 });
 
@@ -99,7 +104,11 @@ const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) 
               case "text":
                 return <MarkdownText />;
               case "tool-call":
-                return <AutomationCard tool={part.toolName} result={part.result} />;
+                return part.toolName === "askUser" ? (
+                  <AskCard args={part.args} />
+                ) : (
+                  <AutomationCard tool={part.toolName} result={part.result} />
+                );
               default:
                 return null;
             }
@@ -134,8 +143,10 @@ const Related: FC = () => {
     const part = s.message.parts.find((p) => p.type === "data" && p.name === "related");
     return part?.type === "data" ? part.data : undefined;
   });
+  const projectId = useChatState()?.projectId;
+  const inBot = useProjects((s) => s.bots?.some((bot) => bot.id === projectId) ?? false);
   const questions = relatedData.safeParse(raw).data?.questions;
-  if (!questions) return null;
+  if (!questions || inBot) return null;
 
   return (
     <div className="border-border mt-4 border-t pt-3 print:hidden">
