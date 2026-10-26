@@ -506,7 +506,6 @@ export const MESSAGES = [
   "Delete file",
   'Delete "{name}"? Chats that use it will no longer show it.',
   "Upload a file",
-  "Recent",
   "No recent files",
   "Add files for Noor to use in this project",
   "Open",
@@ -529,6 +528,7 @@ export const MESSAGES = [
   "See your calendars and events",
   "Search and read your files",
   "Couldn't open",
+  "Recent files",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

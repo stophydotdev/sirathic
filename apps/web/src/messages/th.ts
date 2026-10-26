@@ -546,7 +546,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "ลบ “{name}” ไหม แชทที่ใช้ไฟล์นี้จะไม่แสดงไฟล์นี้อีก",
   "Upload a file": "อัปโหลดไฟล์",
-  Recent: "ล่าสุด",
   "No recent files": "ไม่มีไฟล์ล่าสุด",
   "Add files for Noor to use in this project": "เพิ่มไฟล์ให้ Noor ใช้ในโปรเจกต์นี้",
   Open: "เปิด",
@@ -569,4 +568,5 @@ export default {
   "See your calendars and events": "ดูปฏิทินและกิจกรรมของคุณ",
   "Search and read your files": "ค้นหาและอ่านไฟล์ของคุณ",
   "Couldn't open": "เปิดไม่ได้",
+  "Recent files": "ไฟล์ล่าสุด",
 } satisfies Messages;

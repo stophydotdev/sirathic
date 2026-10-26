@@ -566,7 +566,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "«{name}» ўчирилсинми? Уни ишлатадиган суҳбатлар уни кўрсатмай қўяди.",
   "Upload a file": "Файл юклаш",
-  Recent: "Яқинда",
   "No recent files": "Яқинда ишлатилган файллар йўқ",
   "Add files for Noor to use in this project": "Noor ушбу лойиҳада фойдаланиши учун файллар қўшиш",
   Open: "Очиш",
@@ -590,4 +589,5 @@ export default {
   "See your calendars and events": "Тақвимларингиз ва тадбирларингизни кўринг",
   "Search and read your files": "Файлларингизни қидиринг ва ўқинг",
   "Couldn't open": "Очилмади",
+  "Recent files": "Сўнгги файллар",
 } satisfies Messages;

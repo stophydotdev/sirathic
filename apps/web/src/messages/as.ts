@@ -552,7 +552,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "“{name}” মচিবনে? যিবোৰ চেটে ইয়াক ব্যৱহাৰ কৰে সেইবোৰে আৰু ইয়াক নেদেখুৱায়।",
   "Upload a file": "এটা ফাইল আপলোড কৰক",
-  Recent: "শেহতীয়া",
   "No recent files": "কোনো শেহতীয়া ফাইল নাই",
   "Add files for Noor to use in this project": "এই প্ৰকল্পত Noor-এ ব্যৱহাৰ কৰিবলৈ ফাইল যোগ কৰক",
   Open: "খোলক",
@@ -575,4 +574,5 @@ export default {
   "See your calendars and events": "আপোনাৰ কেলেণ্ডাৰ আৰু ইভেণ্ট চাওক",
   "Search and read your files": "আপোনাৰ ফাইল সন্ধান কৰক আৰু পঢ়ক",
   "Couldn't open": "খুলিব পৰা নগ'ল",
+  "Recent files": "শেহতীয়া ফাইল",
 } satisfies Messages;

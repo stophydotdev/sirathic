@@ -567,7 +567,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "Burahin ang “{name}”? Hindi na ito ipapakita ng mga chat na gumagamit nito.",
   "Upload a file": "Mag-upload ng file",
-  Recent: "Kamakailan",
   "No recent files": "Walang kamakailang file",
   "Add files for Noor to use in this project":
     "Magdagdag ng mga file para magamit ni Noor sa proyektong ito",
@@ -591,4 +590,5 @@ export default {
   "See your calendars and events": "Tingnan ang iyong mga kalendaryo at event",
   "Search and read your files": "Hanapin at basahin ang iyong mga file",
   "Couldn't open": "Hindi mabuksan",
+  "Recent files": "Mga kamakailang file",
 } satisfies Messages;

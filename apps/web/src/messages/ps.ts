@@ -559,7 +559,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "«{name}» ړنګ شي؟ هغه خبرې اترې چې کاروي یې به نور یې و نه ښيي.",
   "Upload a file": "یو فایل پورته کړئ",
-  Recent: "وروستي",
   "No recent files": "وروستي فایلونه نشته",
   "Add files for Noor to use in this project":
     "په دې پروژه کې د Noor د کارولو لپاره فایلونه زیات کړئ",
@@ -583,4 +582,5 @@ export default {
   "See your calendars and events": "خپلې جنترۍ او پېښې وګورئ",
   "Search and read your files": "خپل فایلونه ولټوئ او ولولئ",
   "Couldn't open": "پرانیستل نشو",
+  "Recent files": "وروستي فایلونه",
 } satisfies Messages;

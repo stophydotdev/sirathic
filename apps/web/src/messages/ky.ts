@@ -564,7 +564,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "«{name}» өчүрүлсүнбү? Аны колдонгон маектер аны мындан ары көрсөтпөйт.",
   "Upload a file": "Файл жүктөө",
-  Recent: "Акыркылар",
   "No recent files": "Акыркы файлдар жок",
   "Add files for Noor to use in this project": "Noor бул долбоордо колдонушу үчүн файлдарды кошуу",
   Open: "Ачуу",
@@ -587,4 +586,5 @@ export default {
   "See your calendars and events": "Календарларыңызды жана иш-чараларыңызды көрүңүз",
   "Search and read your files": "Файлдарыңызды издеп, окуңуз",
   "Couldn't open": "Ачылган жок",
+  "Recent files": "Акыркы файлдар",
 } satisfies Messages;

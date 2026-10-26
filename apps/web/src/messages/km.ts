@@ -552,7 +552,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "លុប «{name}» ឬ? ការជជែកដែលប្រើវានឹងលែងបង្ហាញវាទៀតហើយ។",
   "Upload a file": "ផ្ទុកឡើងឯកសារមួយ",
-  Recent: "ថ្មីៗ",
   "No recent files": "គ្មានឯកសារថ្មីៗទេ",
   "Add files for Noor to use in this project": "បន្ថែមឯកសារសម្រាប់ Noor ប្រើក្នុងគម្រោងនេះ",
   Open: "បើក",
@@ -575,4 +574,5 @@ export default {
   "See your calendars and events": "មើលប្រតិទិន និងព្រឹត្តិការណ៍របស់អ្នក",
   "Search and read your files": "ស្វែងរក និងអានឯកសាររបស់អ្នក",
   "Couldn't open": "មិនអាចបើកបាន",
+  "Recent files": "ឯកសារថ្មីៗ",
 } satisfies Messages;

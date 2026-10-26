@@ -552,7 +552,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "“{name}” මකන්නද? එය භාවිත කරන කතාබස් තවදුරටත් එය නොපෙන්වයි.",
   "Upload a file": "ගොනුවක් උඩුගත කරන්න",
-  Recent: "මෑත",
   "No recent files": "මෑත ගොනු නැත",
   "Add files for Noor to use in this project": "මෙම ව්‍යාපෘතියේ Noor භාවිත කිරීමට ගොනු එක් කරන්න",
   Open: "විවෘත කරන්න",
@@ -575,4 +574,5 @@ export default {
   "See your calendars and events": "ඔබේ දින දර්ශන සහ සිදුවීම් බලන්න",
   "Search and read your files": "ඔබේ ගොනු සොයා කියවන්න",
   "Couldn't open": "විවෘත කළ නොහැකි විය",
+  "Recent files": "මෑත ගොනු",
 } satisfies Messages;

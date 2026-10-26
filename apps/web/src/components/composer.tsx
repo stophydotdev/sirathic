@@ -239,7 +239,7 @@ export const Composer: FC<{
   return (
     <ComposerPrimitive.TriggerPopoverRoot>
       <div className="relative w-full">
-        <ComposerPrimitive.Root className="bg-card border-foreground/10 flex w-full flex-col rounded-[20px] border pt-3">
+        <ComposerPrimitive.Root className="bg-card border-foreground/10 flex w-full flex-col rounded-[20px] border">
           <AuiIf condition={(s) => s.composer.attachments.length > 0}>
             <div className="flex flex-wrap gap-2 px-4 pt-4">
               <ComposerPrimitive.Attachments>
@@ -257,7 +257,7 @@ export const Composer: FC<{
             onKeyDownCapture={onKeyDownCapture}
             onFocus={() => setFocused(true)}
             onBlur={() => setTimeout(() => setFocused(false), 150)}
-            className="relative max-h-60 min-h-[52px] w-full px-5 pt-4 text-base leading-6"
+            className="relative max-h-60 min-h-[42px] w-full px-5 pt-3.5 text-base leading-6"
           >
             <LinkPlugin />
             <MentionSpace />
@@ -384,6 +384,10 @@ export const Composer: FC<{
   );
 };
 
+export const menuBox = "border-foreground/6 w-52 rounded-2xl border p-1.5";
+
+export const menuItem = "h-8 gap-2 rounded-lg px-2";
+
 const AddMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
   const upload = useRef<HTMLButtonElement>(null);
   const t = useT();
@@ -395,8 +399,8 @@ const AddMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
         <DropdownMenuTrigger className={iconButton} aria-label={t("Add files or tools")}>
           <IconPlus className="size-4.5" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent side={side} align="start" className="w-60">
-          <DropdownMenuItem onSelect={() => upload.current?.click()}>
+        <DropdownMenuContent side={side} align="start" className={menuBox}>
+          <DropdownMenuItem onSelect={() => upload.current?.click()} className={menuItem}>
             <IconPaperclip className="size-4" />
             {t("Upload a file")}
           </DropdownMenuItem>

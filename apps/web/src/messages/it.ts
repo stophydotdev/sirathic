@@ -564,7 +564,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "Eliminare «{name}»? Le chat che lo usano non lo mostreranno più.",
   "Upload a file": "Carica un file",
-  Recent: "Recenti",
   "No recent files": "Nessun file recente",
   "Add files for Noor to use in this project": "Aggiungi file che Noor userà in questo progetto",
   Open: "Apri",
@@ -588,4 +587,5 @@ export default {
   "See your calendars and events": "Consulta i tuoi calendari ed eventi",
   "Search and read your files": "Cerca e leggi i tuoi file",
   "Couldn't open": "Impossibile aprire",
+  "Recent files": "File recenti",
 } satisfies Messages;

@@ -558,7 +558,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "“{name}” ഇല്ലാതാക്കണോ? ഇത് ഉപയോഗിക്കുന്ന ചാറ്റുകൾ ഇനി ഇത് കാണിക്കില്ല.",
   "Upload a file": "ഒരു ഫയൽ അപ്‌ലോഡ് ചെയ്യുക",
-  Recent: "സമീപകാലം",
   "No recent files": "സമീപകാല ഫയലുകളില്ല",
   "Add files for Noor to use in this project": "ഈ പ്രോജക്റ്റിൽ Noor ഉപയോഗിക്കാൻ ഫയലുകൾ ചേർക്കുക",
   Open: "തുറക്കുക",
@@ -581,4 +580,5 @@ export default {
   "See your calendars and events": "നിങ്ങളുടെ കലണ്ടറുകളും ഇവന്റുകളും കാണുക",
   "Search and read your files": "നിങ്ങളുടെ ഫയലുകൾ തിരയുക, വായിക്കുക",
   "Couldn't open": "തുറക്കാനായില്ല",
+  "Recent files": "സമീപകാല ഫയലുകൾ",
 } satisfies Messages;

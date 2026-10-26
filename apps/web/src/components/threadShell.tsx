@@ -100,7 +100,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       <aside
         className={cn(
           "group/sidebar bg-background border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 lg:flex print:hidden",
-          collapsed ? "w-14" : "w-60",
+          collapsed ? "w-14" : "w-64",
         )}
       >
         <div className="flex h-14 shrink-0 items-center justify-between px-2">

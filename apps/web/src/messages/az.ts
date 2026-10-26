@@ -565,7 +565,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "“{name}” silinsin? Onu istifadə edən söhbətlər artıq göstərməyəcək.",
   "Upload a file": "Fayl yüklə",
-  Recent: "Son",
   "No recent files": "Son fayl yoxdur",
   "Add files for Noor to use in this project":
     "Noor-un bu layihədə istifadə etməsi üçün fayllar əlavə et",
@@ -590,4 +589,5 @@ export default {
   "See your calendars and events": "Təqvimlərinizi və tədbirlərinizi görün",
   "Search and read your files": "Fayllarınızı axtarın və oxuyun",
   "Couldn't open": "Açılmadı",
+  "Recent files": "Son fayllar",
 } satisfies Messages;

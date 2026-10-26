@@ -3,14 +3,18 @@
 import { useT } from "@/components/i18n";
 import { FileKindIcon, type LibraryFile } from "@/components/libraryItems";
 import { fileFromLibrary } from "@/components/libraryUpload";
+import { menuBox, menuItem } from "@/components/composer";
 import {
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdownMenu";
+import { cn } from "@/lib/utils";
 import { api } from "@/lib/trpc";
 import { useAui } from "@assistant-ui/react";
-import { IconBooks } from "@tabler/icons-react";
+import { IconBooks, IconFiles } from "@tabler/icons-react";
 import Link from "next/link";
 import { type FC, useEffect, useState } from "react";
 
@@ -42,27 +46,31 @@ export const RecentFiles: FC = () => {
       .catch(() => undefined);
 
   return (
-    <>
-      {files && (
-        <>
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel>{t("Recent")}</DropdownMenuLabel>
-        </>
-      )}
-      {files?.length === 0 && <DropdownMenuItem disabled>{t("No recent files")}</DropdownMenuItem>}
-      {files?.map((file) => (
-        <DropdownMenuItem key={file.id} onSelect={() => void attach(file)}>
-          <FileKindIcon mediaType={file.mediaType} className="size-4" />
-          <span className="truncate">{file.name}</span>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger className={menuItem}>
+        <IconFiles className="size-4" />
+        {t("Recent files")}
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent className={cn(menuBox, "w-72")}>
+        {files?.length === 0 && (
+          <DropdownMenuItem disabled className={menuItem}>
+            {t("No recent files")}
+          </DropdownMenuItem>
+        )}
+        {files?.map((file) => (
+          <DropdownMenuItem key={file.id} onSelect={() => void attach(file)} className={menuItem}>
+            <FileKindIcon mediaType={file.mediaType} className="size-4" />
+            <span className="truncate">{file.name}</span>
+          </DropdownMenuItem>
+        ))}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild className={menuItem}>
+          <Link href="/library">
+            <IconBooks className="size-4" />
+            {t("Library")}
+          </Link>
         </DropdownMenuItem>
-      ))}
-      <DropdownMenuSeparator />
-      <DropdownMenuItem asChild>
-        <Link href="/library">
-          <IconBooks className="size-4" />
-          {t("Library")}
-        </Link>
-      </DropdownMenuItem>
-    </>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
   );
 };

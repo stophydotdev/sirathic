@@ -561,7 +561,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "Избрисати „{name}”? Разговори који је користе више је неће приказивати.",
   "Upload a file": "Учитај датотеку",
-  Recent: "Недавно",
   "No recent files": "Нема недавних датотека",
   "Add files for Noor to use in this project":
     "Додајте датотеке које ће Noor користити у овом пројекту",
@@ -586,4 +585,5 @@ export default {
   "See your calendars and events": "Погледајте своје календаре и догађаје",
   "Search and read your files": "Претражујте и читајте своје датотеке",
   "Couldn't open": "Није могло да се отвори",
+  "Recent files": "Недавне датотеке",
 } satisfies Messages;

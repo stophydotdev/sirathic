@@ -559,7 +559,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "Удалить «{name}»? Чаты, которые его используют, перестанут его показывать.",
   "Upload a file": "Загрузить файл",
-  Recent: "Недавние",
   "No recent files": "Нет недавних файлов",
   "Add files for Noor to use in this project":
     "Добавьте файлы, которые Noor будет использовать в этом проекте",
@@ -584,4 +583,5 @@ export default {
   "See your calendars and events": "Смотрите свои календари и события",
   "Search and read your files": "Ищите и читайте свои файлы",
   "Couldn't open": "Не удалось открыть",
+  "Recent files": "Недавние файлы",
 } satisfies Messages;

@@ -559,7 +559,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "«{name}» حذف شود؟ گفتگوهایی که از آن استفاده می‌کنند دیگر آن را نشان نمی‌دهند.",
   "Upload a file": "بارگذاری یک پرونده",
-  Recent: "اخیر",
   "No recent files": "پرونده اخیری نیست",
   "Add files for Noor to use in this project":
     "پرونده‌هایی اضافه کنید تا Noor در این پروژه از آن‌ها استفاده کند",
@@ -583,4 +582,5 @@ export default {
   "See your calendars and events": "تقویم‌ها و رویدادهای خود را ببینید",
   "Search and read your files": "فایل‌های خود را جستجو کنید و بخوانید",
   "Couldn't open": "باز نشد",
+  "Recent files": "فایل‌های اخیر",
 } satisfies Messages;

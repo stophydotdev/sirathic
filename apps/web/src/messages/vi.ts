@@ -559,7 +559,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "Xóa “{name}”? Các cuộc trò chuyện đang dùng tệp này sẽ không hiển thị nó nữa.",
   "Upload a file": "Tải một tệp lên",
-  Recent: "Gần đây",
   "No recent files": "Không có tệp gần đây",
   "Add files for Noor to use in this project": "Thêm tệp để Noor dùng trong dự án này",
   Open: "Mở",
@@ -582,4 +581,5 @@ export default {
   "See your calendars and events": "Xem lịch và sự kiện của bạn",
   "Search and read your files": "Tìm và đọc tệp của bạn",
   "Couldn't open": "Không mở được",
+  "Recent files": "Tệp gần đây",
 } satisfies Messages;

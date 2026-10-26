@@ -550,7 +550,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "“{name}”ను తొలగించాలా? దీన్ని ఉపయోగించే చాట్‌లు ఇకపై దీన్ని చూపవు.",
   "Upload a file": "ఒక ఫైల్‌ను అప్‌లోడ్ చేయండి",
-  Recent: "ఇటీవలివి",
   "No recent files": "ఇటీవలి ఫైల్‌లు లేవు",
   "Add files for Noor to use in this project": "ఈ ప్రాజెక్ట్‌లో Noor ఉపయోగించడానికి ఫైళ్ళను జోడించండి",
   Open: "తెరవండి",
@@ -573,4 +572,5 @@ export default {
   "See your calendars and events": "మీ క్యాలెండర్‌లు, ఈవెంట్‌లను చూడండి",
   "Search and read your files": "మీ ఫైల్‌లను వెతికి చదవండి",
   "Couldn't open": "తెరవలేకపోయింది",
+  "Recent files": "ఇటీవలి ఫైల్‌లు",
 } satisfies Messages;

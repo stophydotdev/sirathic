@@ -561,7 +561,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "Hapus “{name}”? Obrolan yang memakainya tidak akan lagi menampilkannya.",
   "Upload a file": "Unggah file",
-  Recent: "Terbaru",
   "No recent files": "Tidak ada file terbaru",
   "Add files for Noor to use in this project":
     "Tambahkan berkas agar Noor dapat memakainya di proyek ini",
@@ -586,4 +585,5 @@ export default {
   "See your calendars and events": "Lihat kalender dan acara Anda",
   "Search and read your files": "Cari dan baca file Anda",
   "Couldn't open": "Tidak bisa dibuka",
+  "Recent files": "File terbaru",
 } satisfies Messages;

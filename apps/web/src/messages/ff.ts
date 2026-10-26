@@ -558,7 +558,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "Momtu “{name}”? Yeewtereeji ɗi kuutoriri ɗum kollataa ɗum ko yeeso.",
   "Upload a file": "Yollu fiilde",
-  Recent: "Ko wayri jooni",
   "No recent files": "Alaa fiilde ko wayri jooni",
   "Add files for Noor to use in this project": "Ɓeydu fiilaaji ngam Noor huutoro ɗum e gollal ndu",
   Open: "Uddit",
@@ -582,4 +581,5 @@ export default {
   "See your calendars and events": "Yiy kalandaaji e huunde maa",
   "Search and read your files": "Yiylo e jangu fiile maa",
   "Couldn't open": "Waawaa uddit",
+  "Recent files": "Fiilaaji sakket",
 } satisfies Messages;

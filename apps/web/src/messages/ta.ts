@@ -562,7 +562,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "“{name}”-ஐ நீக்கவா? இதைப் பயன்படுத்தும் உரையாடல்கள் இனி இதைக் காட்டாது.",
   "Upload a file": "ஒரு கோப்பைப் பதிவேற்று",
-  Recent: "சமீபத்தியவை",
   "No recent files": "சமீபத்திய கோப்புகள் இல்லை",
   "Add files for Noor to use in this project": "இந்தத் திட்டத்தில் Noor பயன்படுத்த கோப்புகளைச் சேர்",
   Open: "திற",
@@ -585,4 +584,5 @@ export default {
   "See your calendars and events": "உங்கள் நாட்காட்டிகளையும் நிகழ்வுகளையும் பாருங்கள்",
   "Search and read your files": "உங்கள் கோப்புகளைத் தேடிப் படியுங்கள்",
   "Couldn't open": "திறக்க முடியவில்லை",
+  "Recent files": "சமீபத்திய கோப்புகள்",
 } satisfies Messages;

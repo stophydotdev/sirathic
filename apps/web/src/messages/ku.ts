@@ -562,7 +562,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "«{name}» بسڕدرێتەوە؟ ئەو گفتوگۆیانەی بەکاری دەهێنن چیتر نایپیشان نادەن.",
   "Upload a file": "بارکردنی فایلێک",
-  Recent: "نوێ",
   "No recent files": "هیچ فایلێکی نوێ نییە",
   "Add files for Noor to use in this project":
     "فایل زیاد بکە بۆ ئەوەی Noor لەم پڕۆژەیەدا بەکاریان بهێنێت",
@@ -587,4 +586,5 @@ export default {
   "See your calendars and events": "ڕۆژژمێر و ڕووداوەکانت ببینە",
   "Search and read your files": "فایلەکانت بگەڕێ و بیانخوێنەوە",
   "Couldn't open": "نەکرایەوە",
+  "Recent files": "فایلە نوێیەکان",
 } satisfies Messages;

@@ -564,7 +564,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "«{name}» ئۆچۈرۈلسۇنمۇ؟ ئۇنى ئىشلىتىدىغان سۆھبەتلەر ئەمدى ئۇنى كۆرسەتمەيدۇ.",
   "Upload a file": "بىر ھۆججەت يۈكلەش",
-  Recent: "يېقىنقى",
   "No recent files": "يېقىنقى ھۆججەت يوق",
   "Add files for Noor to use in this project": "Noor بۇ تۈردە ئىشلىتىشى ئۈچۈن ھۆججەت قوشۇش",
   Open: "ئېچىش",
@@ -588,4 +587,5 @@ export default {
   "See your calendars and events": "كالېندار ۋە پائالىيەتلىرىڭىزنى كۆرۈڭ",
   "Search and read your files": "ھۆججەتلىرىڭىزنى ئىزدەڭ ۋە ئوقۇڭ",
   "Couldn't open": "ئېچىلمىدى",
+  "Recent files": "يېقىنقى ھۆججەتلەر",
 } satisfies Messages;

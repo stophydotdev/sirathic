@@ -546,7 +546,6 @@ export default {
   'Delete "{name}"? Chats that use it will no longer show it.':
     "删除“{name}”？使用它的对话将不再显示它。",
   "Upload a file": "上传文件",
-  Recent: "最近",
   "No recent files": "没有最近的文件",
   "Add files for Noor to use in this project": "添加文件，供 Noor 在此项目中使用",
   Open: "打开",
@@ -569,4 +568,5 @@ export default {
   "See your calendars and events": "查看你的日历和日程",
   "Search and read your files": "搜索和阅读你的文件",
   "Couldn't open": "无法打开",
+  "Recent files": "最近的文件",
 } satisfies Messages;
