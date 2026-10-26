@@ -6,16 +6,26 @@ import { I18nProvider } from "@/components/i18n";
 import { hasLocale, isRtl, LOCALES } from "@/components/locales";
 import { themeScript } from "@/components/preferences";
 import { SITE } from "@/lib/seo";
-import { getDictionary } from "./dictionaries";
+import { getDictionary, translator } from "./dictionaries";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE),
-  title: { default: "Sirathic", template: "%s · Sirathic" },
-  description: "Islamic answering engine.",
-};
+export async function generateMetadata({
+  params,
+}: Pick<LayoutProps<"/[lang]">, "params">): Promise<Metadata> {
+  const { t } = await translator((await params).lang);
+  const description = t(
+    "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.",
+  );
+  return {
+    metadataBase: new URL(SITE),
+    title: { default: "Sirathic", template: "%s · Sirathic" },
+    description,
+    openGraph: { type: "website", siteName: "Sirathic", title: "Sirathic", description },
+    twitter: { card: "summary", site: "@sirathic", title: "Sirathic", description },
+  };
+}
 
 export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
