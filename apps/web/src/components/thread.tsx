@@ -378,7 +378,7 @@ const Question: FC = () => {
               <IconCopy className="size-3" />
             </ActionBarPrimitive.Copy>
           </ActionBarPrimitive.Root>
-          <div className="flex max-w-[85%] flex-col items-end gap-2">
+          <div className="flex max-w-[90%] min-w-0 flex-col items-end gap-2">
             <AuiIf condition={(s) => !!s.message.attachments?.length}>
               <div className="flex flex-wrap justify-end gap-2">
                 <MessagePrimitive.Attachments>
@@ -390,7 +390,7 @@ const Question: FC = () => {
                 </MessagePrimitive.Attachments>
               </div>
             </AuiIf>
-            <div className="bg-foreground/3 rounded-2xl px-4 py-3 wrap-break-word whitespace-pre-line">
+            <div className="bg-foreground/3 max-w-full overflow-x-auto rounded-2xl px-4 py-2 text-[15px] leading-[22.5px] wrap-break-word whitespace-pre-wrap">
               <MessagePrimitive.Parts
                 components={{
                   Text: UserText,

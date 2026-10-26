@@ -295,7 +295,7 @@ export const UserText: FC<{ text: string }> = ({ text }) => {
     if (signedIn && !loaded) void load();
   }, [signedIn, loaded, load]);
   return (
-    <p style={{ whiteSpace: "pre-line" }}>
+    <p>
       <LinkedText text={text} targets={[...plugins, ...skills]} />
     </p>
   );
