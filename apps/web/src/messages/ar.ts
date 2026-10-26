@@ -142,7 +142,7 @@ export default {
   "Enter this code on ChatGPT": "أدخل هذا الرمز في ChatGPT",
   "Code expired": "انتهت صلاحية الرمز",
   "Sign-in didn't work": "لم ينجح تسجيل الدخول",
-  "Results for:": "نتائج:",
+  "+{count} more": "+{count} أخرى",
   "Searching…": "جارٍ البحث…",
   "The search failed. Try this tab again later.": "فشل البحث. حاول فتح هذا التبويب مرة أخرى لاحقًا.",
   "Expand sidebar": "توسيع الشريط الجانبي",
@@ -179,7 +179,7 @@ export default {
   "Saved to your preferences": "حُفظ في تفضيلاتك",
   "Finding duas for {detail}": "البحث عن أدعية لـ {detail}",
   "The answer failed.": "فشلت الإجابة.",
-  "Search results for:": "نتائج البحث عن:",
+  "Searched:": "تم البحث عن:",
   "No links": "لا توجد روابط",
   "View more": "عرض المزيد",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "بۇ كودنى ChatGPT غا كىرگۈزۈڭ",
   "Code expired": "كودنىڭ ۋاقتى ئۆتۈپ كەتتى",
   "Sign-in didn't work": "كىرىش مەغلۇپ بولدى",
-  "Results for:": "نەتىجىلەر:",
+  "+{count} more": "يەنە {count}",
   "Searching…": "ئىزدەۋاتىدۇ…",
   "The search failed. Try this tab again later.":
     "ئىزدەش مەغلۇپ بولدى. بۇ بەتكۈچنى سەل تۇرۇپ قايتا ئېچىڭ.",
@@ -183,7 +183,7 @@ export default {
   "Saved to your preferences": "مايىللىقلىرىڭىزغا ساقلاندى",
   "Finding duas for {detail}": "دۇئا ئىزدەۋاتىدۇ: {detail}",
   "The answer failed.": "جاۋاب بەرگىلى بولمىدى.",
-  "Search results for:": "ئىزدەش نەتىجىلىرى:",
+  "Searched:": "ئىزدەلگىنى:",
   "No links": "ئۇلانما يوق",
   "View more": "تېخىمۇ كۆپ كۆرۈش",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "دا کوډ په ChatGPT کې ولیکئ",
   "Code expired": "کوډ ختم شو",
   "Sign-in didn't work": "ننوتل بریالي نه شول",
-  "Results for:": "پایلې د:",
+  "+{count} more": "+{count} نور",
   "Searching…": "لټون کېږي…",
   "The search failed. Try this tab again later.": "لټون ناکام شو. وروسته دا ټب بیا پرانیزئ.",
   "Expand sidebar": "اړخیز پټه پراخه کړئ",
@@ -181,7 +181,7 @@ export default {
   "Saved to your preferences": "ستاسو په غوره توبونو کې خوندي شو",
   "Finding duas for {detail}": "د {detail} لپاره د دعاګانو موندل",
   "The answer failed.": "ځواب ناکام شو.",
-  "Search results for:": "د لټون پایلې د:",
+  "Searched:": "لټول شوي:",
   "No links": "لینک نشته",
   "View more": "نور وګورئ",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

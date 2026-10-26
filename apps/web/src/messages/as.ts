@@ -141,7 +141,7 @@ export default {
   "Enter this code on ChatGPT": "এই ক'ডটো ChatGPTত দিয়ক",
   "Code expired": "ক'ডৰ ম্যাদ উকলিল",
   "Sign-in didn't work": "ছাইন ইন নহ'ল",
-  "Results for:": "ফলাফল:",
+  "+{count} more": "আৰু {count}",
   "Searching…": "বিচাৰি আছে…",
   "The search failed. Try this tab again later.": "বিচৰা বিফল হ'ল। পিছত এই টেবটো আকৌ চেষ্টা কৰক।",
   "Expand sidebar": "চাইডবাৰ বহল কৰক",
@@ -178,7 +178,7 @@ export default {
   "Saved to your preferences": "আপোনাৰ পছন্দত সংৰক্ষণ কৰা হ'ল",
   "Finding duas for {detail}": "{detail}ৰ বাবে দোৱা বিচাৰি আছে",
   "The answer failed.": "উত্তৰ পোৱা নগ'ল।",
-  "Search results for:": "বিচৰাৰ ফলাফল:",
+  "Searched:": "বিচৰা হ'ল:",
   "No links": "কোনো লিংক নাই",
   "View more": "আৰু চাওক",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

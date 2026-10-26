@@ -142,7 +142,7 @@ export default {
   "Enter this code on ChatGPT": "यह कोड ChatGPT पर डालें",
   "Code expired": "कोड की समय-सीमा ख़त्म हो गई",
   "Sign-in didn't work": "साइन इन नहीं हो सका",
-  "Results for:": "नतीजे:",
+  "+{count} more": "+{count} और",
   "Searching…": "खोज रहे हैं…",
   "The search failed. Try this tab again later.": "खोज नाकाम रही। बाद में यह टैब फिर से खोलें।",
   "Expand sidebar": "साइडबार फैलाएँ",
@@ -179,7 +179,7 @@ export default {
   "Saved to your preferences": "आपकी पसंद में सेव किया गया",
   "Finding duas for {detail}": "{detail} के लिए दुआएँ खोज रहे हैं",
   "The answer failed.": "जवाब नहीं मिल सका।",
-  "Search results for:": "खोज के नतीजे:",
+  "Searched:": "खोजा गया:",
   "No links": "कोई लिंक नहीं",
   "View more": "और देखें",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "Введите этот код в ChatGPT",
   "Code expired": "Срок действия кода истёк",
   "Sign-in didn't work": "Не удалось войти",
-  "Results for:": "Результаты по запросу:",
+  "+{count} more": "ещё {count}",
   "Searching…": "Поиск…",
   "The search failed. Try this tab again later.": "Поиск не удался. Откройте эту вкладку позже.",
   "Expand sidebar": "Развернуть боковую панель",
@@ -181,7 +181,7 @@ export default {
   "Saved to your preferences": "Сохранено в ваших настройках",
   "Finding duas for {detail}": "Поиск дуа: {detail}",
   "The answer failed.": "Не удалось получить ответ.",
-  "Search results for:": "Результаты поиска по запросу:",
+  "Searched:": "Искали:",
   "No links": "Нет ссылок",
   "View more": "Показать ещё",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

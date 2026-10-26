@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "Bu kodu ChatGPT'ye girin",
   "Code expired": "Kodun süresi doldu",
   "Sign-in didn't work": "Giriş yapılamadı",
-  "Results for:": "Sonuçlar:",
+  "+{count} more": "+{count} daha",
   "Searching…": "Aranıyor…",
   "The search failed. Try this tab again later.":
     "Arama başarısız oldu. Bu sekmeyi daha sonra tekrar deneyin.",
@@ -183,7 +183,7 @@ export default {
   "Saved to your preferences": "Tercihlerinize kaydedildi",
   "Finding duas for {detail}": "Dualar aranıyor: {detail}",
   "The answer failed.": "Yanıt alınamadı.",
-  "Search results for:": "Arama sonuçları:",
+  "Searched:": "Arananlar:",
   "No links": "Bağlantı yok",
   "View more": "Daha fazla göster",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

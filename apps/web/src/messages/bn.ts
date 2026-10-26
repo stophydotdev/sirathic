@@ -141,7 +141,7 @@ export default {
   "Enter this code on ChatGPT": "এই কোডটি ChatGPT-তে লিখুন",
   "Code expired": "কোডের মেয়াদ শেষ",
   "Sign-in didn't work": "সাইন ইন হয়নি",
-  "Results for:": "ফলাফল:",
+  "+{count} more": "আরও {count}টি",
   "Searching…": "খোঁজা হচ্ছে…",
   "The search failed. Try this tab again later.": "খোঁজা ব্যর্থ হয়েছে। পরে এই ট্যাবটি আবার খুলুন।",
   "Expand sidebar": "সাইডবার বড় করুন",
@@ -178,7 +178,7 @@ export default {
   "Saved to your preferences": "আপনার পছন্দে সংরক্ষিত হয়েছে",
   "Finding duas for {detail}": "{detail}-এর জন্য দোয়া খোঁজা হচ্ছে",
   "The answer failed.": "উত্তর পাওয়া যায়নি।",
-  "Search results for:": "খোঁজের ফলাফল:",
+  "Searched:": "খোঁজা হয়েছে:",
   "No links": "কোনো লিংক নেই",
   "View more": "আরও দেখুন",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

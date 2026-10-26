@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "இந்தக் குறியீட்டை ChatGPT-இல் உள்ளிடுங்கள்",
   "Code expired": "குறியீடு காலாவதியானது",
   "Sign-in didn't work": "உள்நுழைவு வேலை செய்யவில்லை",
-  "Results for:": "முடிவுகள்:",
+  "+{count} more": "மேலும் {count}",
   "Searching…": "தேடுகிறது…",
   "The search failed. Try this tab again later.":
     "தேடல் தோல்வியடைந்தது. பிறகு இந்தத் தாவலை மீண்டும் முயலுங்கள்.",
@@ -182,7 +182,7 @@ export default {
   "Saved to your preferences": "உங்கள் விருப்பங்களில் சேமிக்கப்பட்டது",
   "Finding duas for {detail}": "{detail}-க்கான துஆக்களைத் தேடுகிறது",
   "The answer failed.": "பதில் கிடைக்கவில்லை.",
-  "Search results for:": "தேடல் முடிவுகள்:",
+  "Searched:": "தேடியவை:",
   "No links": "இணைப்புகள் இல்லை",
   "View more": "மேலும் காண்க",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

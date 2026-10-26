@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "このコードを ChatGPT に入力してください",
   "Code expired": "コードの有効期限が切れました",
   "Sign-in didn't work": "ログインできませんでした",
-  "Results for:": "検索結果：",
+  "+{count} more": "他{count}件",
   "Searching…": "検索中…",
   "The search failed. Try this tab again later.":
     "検索に失敗しました。しばらくしてからこのタブをもう一度開いてください。",
@@ -184,7 +184,7 @@ export default {
   "Saved to your preferences": "設定に保存しました",
   "Finding duas for {detail}": "ドゥアーを探しています：{detail}",
   "The answer failed.": "回答できませんでした。",
-  "Search results for:": "検索結果：",
+  "Searched:": "検索語：",
   "No links": "リンクはありません",
   "View more": "もっと見る",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":

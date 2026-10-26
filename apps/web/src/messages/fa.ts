@@ -143,7 +143,7 @@ export default {
   "Enter this code on ChatGPT": "این کد را در ChatGPT وارد کنید",
   "Code expired": "کد منقضی شد",
   "Sign-in didn't work": "ورود انجام نشد",
-  "Results for:": "نتایج برای:",
+  "+{count} more": "+{count} مورد دیگر",
   "Searching…": "در حال جستجو…",
   "The search failed. Try this tab again later.":
     "جستجو ناموفق بود. بعداً این زبانه را دوباره امتحان کنید.",
@@ -181,7 +181,7 @@ export default {
   "Saved to your preferences": "در تنظیمات شما ذخیره شد",
   "Finding duas for {detail}": "یافتن دعا برای {detail}",
   "The answer failed.": "پاسخ ناموفق بود.",
-  "Search results for:": "نتایج جستجو برای:",
+  "Searched:": "جستجو شد:",
   "No links": "پیوندی نیست",
   "View more": "نمایش بیشتر",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
