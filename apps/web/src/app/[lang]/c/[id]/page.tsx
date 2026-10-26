@@ -1,45 +1,34 @@
 "use client";
 
-import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
-import { validateUIMessages } from "ai";
 import { useParams } from "next/navigation";
+import { type ChatMessage } from "@sirathic/server/messages";
 import { useEffect, useState } from "react";
-import { Chat, isAnswering } from "@/components/chat";
 import { ThreadSkeleton } from "@/components/thread";
-import { api } from "@/lib/trpc";
+import { Chat, isAnswering, savedChat } from "@/components/chat";
 
 export default function SessionPage() {
   const { id } = useParams<{ id: string }>();
-  const [messages, setMessages] = useState<ChatMessage[]>();
+  const [saved, setSaved] = useState<{ messages: ChatMessage[]; unfinished: boolean }>();
   const [resumed] = useState(() => isAnswering(id));
 
   useEffect(() => {
     if (resumed) return;
     let current = true;
-    api.sessions.get
-      .query({ id })
-      .then(({ messages: found }) =>
-        validateUIMessages<ChatMessage>({
-          messages: found,
-          dataSchemas: chatData,
-          metadataSchema: messageMetadata,
-        }),
-      )
-      .then(
-        (valid) => {
-          if (current) setMessages(valid);
-        },
-        () => {
-          if (current) window.location.replace("/");
-        },
-      );
+    savedChat(id).then(
+      (found) => {
+        if (current) setSaved(found);
+      },
+      () => {
+        if (current) window.location.replace("/");
+      },
+    );
     return () => {
       current = false;
     };
   }, [id, resumed]);
 
-  return messages || resumed ? (
-    <Chat key={id} id={id} initialMessages={messages} />
+  return saved || resumed ? (
+    <Chat key={id} id={id} initialMessages={saved?.messages} unfinished={saved?.unfinished} />
   ) : (
     <ThreadSkeleton />
   );

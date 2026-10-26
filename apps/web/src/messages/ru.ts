@@ -144,7 +144,7 @@ export default {
   "Enter this code on ChatGPT": "Введите этот код в ChatGPT",
   "Code expired": "Срок действия кода истёк",
   "Sign-in didn't work": "Не удалось войти",
-  "Results for:": "Результаты по запросу:",
+  "+{count} more": "ещё {count}",
   "Searching…": "Поиск…",
   "The search failed. Try this tab again later.": "Поиск не удался. Откройте эту вкладку позже.",
   "Expand sidebar": "Развернуть боковую панель",
@@ -181,7 +181,7 @@ export default {
   "Saved to your preferences": "Сохранено в ваших настройках",
   "Finding duas for {detail}": "Поиск дуа: {detail}",
   "The answer failed.": "Не удалось получить ответ.",
-  "Search results for:": "Результаты поиска по запросу:",
+  "Searched:": "Искали:",
   "No links": "Нет ссылок",
   "View more": "Показать ещё",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -389,7 +389,6 @@ export default {
   "New automation": "Новая автоматизация",
   "Edit automation": "Изменить автоматизацию",
   "Sign in to create automations.": "Войдите, чтобы создавать автоматизации.",
-  Suggestions: "Подсказки",
   Pause: "Приостановить",
   Resume: "Возобновить",
   Paused: "Приостановлено",
@@ -447,6 +446,41 @@ export default {
   "Friday reminder": "Напоминание о пятнице",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Напомни мне сунну пятницы с одним подходящим хадисом.",
+  Learning: "Обучение",
+  Worship: "Поклонение",
+  Family: "Семья",
+  Hour: "Час",
+  Minute: "Минута",
+  "Evening adhkar": "Вечерние азкары",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Дай мне вечерние азкары с источниками и временем, когда их читать.",
+  "Verse of the day": "Аят дня",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Поделись одним аятом Корана с переводом и кратким тафсиром.",
+  "Weekly tafsir": "Тафсир на неделю",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Объясни несколько аятов короткой суры по классическим книгам тафсира.",
+  "Quran word of the day": "Слово из Корана на каждый день",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Научи меня одному арабскому слову из Корана с его корнем и аятом, где оно встречается.",
+  "Seerah story": "Рассказ из сиры",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Расскажи мне один случай из сиры Пророка ﷺ с уроком, который можно извлечь.",
+  "Fiqh question explained": "Вопрос фикха с объяснением",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Объясни один повседневный вопрос фикха с мнением каждого мазхаба.",
+  "Monday and Thursday fast": "Пост в понедельник и четверг",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Напомни, что завтра день добровольного поста, и приведи хадис о его награде.",
+  "Nightly dua": "Дуа на ночь",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Дай мне одно достоверное дуа на ночь с его смыслом и источником.",
+  "Prophet story for kids": "История пророка для детей",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Расскажи детям короткую историю о пророке простыми словами.",
+  "Family halaqa": "Семейная халака",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Предложи тему для нашей семейной халаки с аятом, хадисом и вопросами.",
   Memory: "Память",
   "Project only": "Только проект",
   "Chats here use and add to your main memory.":
@@ -537,7 +571,17 @@ export default {
   "Automation paused": "Автоматизация приостановлена",
   "Automation resumed": "Автоматизация возобновлена",
   "Automation deleted": "Автоматизация удалена",
+  "Automation created": "Автоматизация создана",
+  "No automations yet": "Автоматизаций пока нет",
+  "Notify me": "Уведомлять меня",
+  "In app": "В приложении",
+  None: "Нет",
+  "Finished. Open to read the answer.": "Готово. Откройте, чтобы прочитать ответ.",
+  "New automation answers": "Новые ответы автоматизаций",
   "Running now. The answer will show up in Runs.":
     "Запуск начат. Ответ появится в разделе «Запуски».",
+  "Search, read and draft your email": "Ищите, читайте и пишите черновики писем",
+  "See your calendars and events": "Смотрите свои календари и события",
+  "Search and read your files": "Ищите и читайте свои файлы",
   "Couldn't open": "Не удалось открыть",
 } satisfies Messages;

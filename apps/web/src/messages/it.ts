@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "Inserisci questo codice su ChatGPT",
   "Code expired": "Codice scaduto",
   "Sign-in didn't work": "L'accesso non è riuscito",
-  "Results for:": "Risultati per:",
+  "+{count} more": "+{count} altre",
   "Searching…": "Ricerca in corso…",
   "The search failed. Try this tab again later.":
     "La ricerca non è riuscita. Riprova questa scheda più tardi.",
@@ -184,7 +184,7 @@ export default {
   "Saved to your preferences": "Salvato nelle tue preferenze",
   "Finding duas for {detail}": "Ricerca di invocazioni per {detail}",
   "The answer failed.": "La risposta non è riuscita.",
-  "Search results for:": "Risultati della ricerca per:",
+  "Searched:": "Cercato:",
   "No links": "Nessun link",
   "View more": "Mostra altro",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -394,7 +394,6 @@ export default {
   "New automation": "Nuova automazione",
   "Edit automation": "Modifica automazione",
   "Sign in to create automations.": "Accedi per creare automazioni.",
-  Suggestions: "Suggerimenti",
   Pause: "Metti in pausa",
   Resume: "Riprendi",
   Paused: "In pausa",
@@ -452,6 +451,41 @@ export default {
   "Friday reminder": "Promemoria del venerdì",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Ricordami la sunna del venerdì con un hadith pertinente.",
+  Learning: "Apprendimento",
+  Worship: "Culto",
+  Family: "Famiglia",
+  Hour: "Ora",
+  Minute: "Minuto",
+  "Evening adhkar": "Adhkar della sera",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Dammi gli adhkar della sera con le loro fonti e quando recitarli.",
+  "Verse of the day": "Versetto del giorno",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Condividi un versetto del Corano con la sua traduzione e un breve tafsir.",
+  "Weekly tafsir": "Tafsir settimanale",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Spiega alcuni versetti di una sura breve secondo i libri classici di tafsir.",
+  "Quran word of the day": "Parola coranica del giorno",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Insegnami una parola araba del Corano con la sua radice e un versetto in cui compare.",
+  "Seerah story": "Racconto della sira",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Raccontami un episodio della sira del Profeta ﷺ, con una lezione da trarre.",
+  "Fiqh question explained": "Questione di fiqh spiegata",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Spiega una questione quotidiana di fiqh con il parere di ogni madhhab.",
+  "Monday and Thursday fast": "Digiuno del lunedì e del giovedì",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Ricordami che domani è un giorno di digiuno sunna, con un hadith sulla sua ricompensa.",
+  "Nightly dua": "Dua della notte",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Dammi una dua autentica per la notte con il suo significato e la sua fonte.",
+  "Prophet story for kids": "Storia di un profeta per bambini",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Racconta una breve storia di un profeta per bambini, con parole semplici.",
+  "Family halaqa": "Halaqa in famiglia",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Suggerisci un tema per la nostra halaqa in famiglia, con un versetto, un hadith e delle domande.",
   Memory: "Memoria",
   "Project only": "Solo progetto",
   "Chats here use and add to your main memory.":
@@ -541,7 +575,17 @@ export default {
   "Automation paused": "Automazione in pausa",
   "Automation resumed": "Automazione ripresa",
   "Automation deleted": "Automazione eliminata",
+  "Automation created": "Automazione creata",
+  "No automations yet": "Ancora nessuna automazione",
+  "Notify me": "Avvisami",
+  "In app": "Nell'app",
+  None: "Nessuna",
+  "Finished. Open to read the answer.": "Fatto. Apri per leggere la risposta.",
+  "New automation answers": "Nuove risposte delle automazioni",
   "Running now. The answer will show up in Runs.":
     "Esecuzione in corso. La risposta apparirà in Esecuzioni.",
+  "Search, read and draft your email": "Cerca, leggi e scrivi bozze delle tue email",
+  "See your calendars and events": "Consulta i tuoi calendari ed eventi",
+  "Search and read your files": "Cerca e leggi i tuoi file",
   "Couldn't open": "Impossibile aprire",
 } satisfies Messages;

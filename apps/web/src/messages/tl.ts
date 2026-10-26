@@ -146,7 +146,7 @@ export default {
   "Enter this code on ChatGPT": "Ilagay ang code na ito sa ChatGPT",
   "Code expired": "Nag-expire ang code",
   "Sign-in didn't work": "Hindi gumana ang pag-sign in",
-  "Results for:": "Mga resulta para sa:",
+  "+{count} more": "+{count} pa",
   "Searching…": "Naghahanap…",
   "The search failed. Try this tab again later.":
     "Pumalya ang paghahanap. Subukan ulit ang tab na ito mamaya.",
@@ -185,7 +185,7 @@ export default {
   "Saved to your preferences": "Na-save sa iyong mga kagustuhan",
   "Finding duas for {detail}": "Naghahanap ng dua para sa {detail}",
   "The answer failed.": "Pumalya ang sagot.",
-  "Search results for:": "Mga resulta ng paghahanap para sa:",
+  "Searched:": "Hinanap:",
   "No links": "Walang link",
   "View more": "Tingnan pa",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -396,7 +396,6 @@ export default {
   "New automation": "Bagong automation",
   "Edit automation": "I-edit ang automation",
   "Sign in to create automations.": "Mag-sign in para gumawa ng mga automation.",
-  Suggestions: "Mga mungkahi",
   Pause: "I-pause",
   Resume: "Ituloy",
   Paused: "Naka-pause",
@@ -454,6 +453,41 @@ export default {
   "Friday reminder": "Paalala sa Biyernes",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Ipaalala sa akin ang sunnah ng Biyernes na may isang kaugnay na hadith.",
+  Learning: "Pag-aaral",
+  Worship: "Pagsamba",
+  Family: "Pamilya",
+  Hour: "Oras",
+  Minute: "Minuto",
+  "Evening adhkar": "Adhkar sa gabi",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Ibigay sa akin ang adhkar sa gabi kasama ang mga sanggunian at kung kailan ito sasabihin.",
+  "Verse of the day": "Talata ng araw",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Magbahagi ng isang talata ng Quran kasama ang salin at maikling tafsir.",
+  "Weekly tafsir": "Lingguhang tafsir",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Ipaliwanag ang ilang talata ng isang maikling surah mula sa mga klasikong aklat ng tafsir.",
+  "Quran word of the day": "Salita ng Quran sa araw na ito",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Turuan ako ng isang salitang Arabe mula sa Quran kasama ang ugat nito at isang talatang gumagamit nito.",
+  "Seerah story": "Kuwento ng seerah",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Magkuwento ng isang pangyayari sa seerah ng Propeta ﷺ, may aral na mapupulot.",
+  "Fiqh question explained": "Tanong sa fiqh, ipinaliwanag",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Ipaliwanag ang isang pang-araw-araw na tanong sa fiqh kasama ang pananaw ng bawat madhhab.",
+  "Monday and Thursday fast": "Pag-aayuno tuwing Lunes at Huwebes",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Ipaalala sa akin na bukas ay araw ng sunnah na pag-aayuno, kasama ang hadith tungkol sa gantimpala nito.",
+  "Nightly dua": "Dua sa gabi",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Bigyan ako ng isang tunay na dua para sa gabi kasama ang kahulugan at sanggunian nito.",
+  "Prophet story for kids": "Kuwento ng propeta para sa mga bata",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Magkuwento ng maikling kuwento ng isang propeta para sa mga bata, sa simpleng salita.",
+  "Family halaqa": "Halaqah ng pamilya",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Magmungkahi ng paksa para sa halaqah ng aming pamilya, may talata, hadith at mga tanong.",
   Memory: "Memorya",
   "Project only": "Proyekto lang",
   "Chats here use and add to your main memory.":
@@ -545,6 +579,16 @@ export default {
   "Automation paused": "Naka-pause ang automation",
   "Automation resumed": "Itinuloy ang automation",
   "Automation deleted": "Nabura ang automation",
+  "Automation created": "Nagawa ang automation",
+  "No automations yet": "Wala pang automation",
+  "Notify me": "Abisuhan ako",
+  "In app": "Sa app",
+  None: "Wala",
+  "Finished. Open to read the answer.": "Tapos na. Buksan para basahin ang sagot.",
+  "New automation answers": "Mga bagong sagot ng automation",
   "Running now. The answer will show up in Runs.": "Tumatakbo na. Lalabas ang sagot sa Mga takbo.",
+  "Search, read and draft your email": "Hanapin, basahin at gumawa ng draft ng iyong email",
+  "See your calendars and events": "Tingnan ang iyong mga kalendaryo at event",
+  "Search and read your files": "Hanapin at basahin ang iyong mga file",
   "Couldn't open": "Hindi mabuksan",
 } satisfies Messages;

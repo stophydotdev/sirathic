@@ -1,13 +1,21 @@
 "use client";
 
 import { chosenModel } from "@/components/account";
+import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
 import { usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";
 import { uploadToLibrary } from "@/components/libraryUpload";
+import { api } from "@/lib/trpc";
+import { TRPCClientError } from "@trpc/client";
 import { fileUrl } from "@sirathic/server/files";
-import { type ChatMessage, type Device } from "@sirathic/server/messages";
+import {
+  type ChatMessage,
+  chatData,
+  type Device,
+  messageMetadata,
+} from "@sirathic/server/messages";
 import { Chat as LiveChat, useChat } from "@ai-sdk/react";
 import {
   type AttachmentAdapter,
@@ -16,7 +24,7 @@ import {
   SimpleTextAttachmentAdapter,
 } from "@assistant-ui/react";
 import { useAISDKRuntime } from "@assistant-ui/react-ai-sdk";
-import { DefaultChatTransport } from "ai";
+import { DefaultChatTransport, validateUIMessages } from "ai";
 import { createContext, type FC, useContext, useEffect, useState } from "react";
 import { z } from "zod";
 
@@ -92,6 +100,7 @@ const transportIn = (projectId: string | undefined) =>
         projectId,
         device: deviceOf(),
         language: document.documentElement.lang,
+        timezone: localZone(),
       };
     },
   });
@@ -110,10 +119,61 @@ const refreshSaved = () => {
   if (!useChatOptions.getState().incognito) void useSessions.getState().refresh();
 };
 
+const SAVED_WAIT_MS = 3000;
+const SAVED_WAITS = 100;
+
+export const savedChat = (id: string) =>
+  api.sessions.get.query({ id }).then(async ({ messages, answering: unfinished }) => ({
+    unfinished,
+    messages: await validateUIMessages<ChatMessage>({
+      messages,
+      dataSchemas: chatData,
+      metadataSchema: messageMetadata,
+    }),
+  }));
+
+const answerText = (messages: readonly ChatMessage[]) => {
+  const last = messages.at(-1);
+  return last?.role === "assistant"
+    ? last.parts.map((part) => (part.type === "text" ? part.text : "")).join("")
+    : "";
+};
+
+const lastAsked = (messages: readonly ChatMessage[]) =>
+  messages.findLast((message) => message.role === "user")?.id;
+
+const answeredFurther = (saved: readonly ChatMessage[], shown: readonly ChatMessage[]) => {
+  const asked = lastAsked(shown);
+  return (
+    asked !== undefined &&
+    lastAsked(saved) === asked &&
+    answerText(saved).length > answerText(shown).length
+  );
+};
+
+const waitForSaved = async (chat: LiveChat<ChatMessage>, waitsLeft = SAVED_WAITS) => {
+  const saved = await savedChat(chat.id).catch((err: Error) =>
+    err instanceof TRPCClientError && err.data?.code === "NOT_FOUND" ? "gone" : "unreachable",
+  );
+  if (saved === "gone") return;
+  if (saved !== "unreachable" && !saved.unfinished) {
+    if (answeredFurther(saved.messages, chat.messages)) {
+      chat.clearError();
+      chat.messages = saved.messages;
+    }
+    return;
+  }
+  if (saved !== "unreachable") chat.clearError();
+  if (waitsLeft > 1) {
+    setTimeout(() => void waitForSaved(chat, waitsLeft - 1), SAVED_WAIT_MS);
+  }
+};
+
 const liveChat = (
   id: string,
   messages: ChatMessage[] | undefined,
   projectId: string | undefined,
+  unfinished: boolean,
 ) => {
   const found = live.get(id);
   if (found && answering(found)) return found;
@@ -125,7 +185,14 @@ const liveChat = (
       if (part.type === "data-title") void useSessions.getState().refresh();
     },
     onFinish: refreshSaved,
+    onError: () => void waitForSaved(created),
   });
+  const stopHere = created.stop;
+  created.stop = async () => {
+    void api.sessions.stop.mutate({ id }).catch(() => undefined);
+    await stopHere();
+  };
+  if (unfinished) void waitForSaved(created);
   live.set(id, created);
   return created;
 };
@@ -141,17 +208,18 @@ const ChatContext = createContext<ChatState | undefined>(undefined);
 
 export const useChatState = () => useContext(ChatContext);
 
-export const Chat: FC<{ id?: string; initialMessages?: ChatMessage[]; projectId?: string }> = ({
-  id,
-  initialMessages,
-  projectId,
-}) => {
+export const Chat: FC<{
+  id?: string;
+  initialMessages?: ChatMessage[];
+  projectId?: string;
+  unfinished?: boolean;
+}> = ({ id, initialMessages, projectId, unfinished = false }) => {
   const [chatId] = useState(() => id ?? crypto.randomUUID());
   const incognito = useChatOptions((s) => s.incognito);
   const savedTitle = useSessions(
     (s) => s.sessions?.find((session) => session.id === chatId)?.title,
   );
-  const [session] = useState(() => liveChat(chatId, initialMessages, projectId));
+  const [session] = useState(() => liveChat(chatId, initialMessages, projectId, unfinished));
   const chat = useChat<ChatMessage>({ chat: session });
   const runtime = useAISDKRuntime(chat, {
     adapters: { attachments },

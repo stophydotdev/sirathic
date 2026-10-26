@@ -4,6 +4,7 @@ import { dayOf, monthNames, type Schedule, weekdayNames } from "@/components/aut
 import { type Draft, isoOf, todayIso } from "@/components/automationDraft";
 import { type Translate, useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
+import { TimePicker } from "@/components/timePicker";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
@@ -38,8 +39,6 @@ const pill =
   "bg-fill hover:bg-foreground/10 flex h-7 shrink-0 items-center gap-1 rounded-[8px] px-2.5 text-sm font-medium outline-none transition-colors";
 
 const menu = "z-[70] w-auto min-w-36 max-h-64";
-
-const nativePill = cn(pill, "scheme-light dark:scheme-dark");
 
 const kindTitles = (t: Translate) =>
   ({
@@ -104,20 +103,6 @@ const ChoicePill: FC<{
       </DropdownMenuRadioGroup>
     </DropdownMenuContent>
   </DropdownMenu>
-);
-
-const TimePill: FC<{ value: string; label: string; onChange: (time: string) => void }> = ({
-  value,
-  label,
-  onChange,
-}) => (
-  <input
-    type="time"
-    aria-label={label}
-    value={value}
-    onChange={(event) => onChange(event.target.value)}
-    className={nativePill}
-  />
 );
 
 const DatePill: FC<{ value: string; onChange: (date: string) => void }> = ({ value, onChange }) => {
@@ -229,7 +214,12 @@ const Sentence: FC<{
     </DropdownMenu>
   );
   const time = (
-    <TimePill value={draft.time} label={t("Time")} onChange={(next) => change({ time: next })} />
+    <TimePicker
+      className={pill}
+      value={draft.time}
+      label={t("Time")}
+      onChange={(next) => change({ time: next })}
+    />
   );
   switch (current) {
     case "once":
@@ -247,14 +237,16 @@ const Sentence: FC<{
         {
           kind: kindPill,
           from: (
-            <TimePill
+            <TimePicker
+              className={pill}
               value={draft.from}
               label={t("From")}
               onChange={(next) => change({ from: next, to: draft.to < next ? next : draft.to })}
             />
           ),
           to: (
-            <TimePill
+            <TimePicker
+              className={pill}
               value={draft.to}
               label={t("To")}
               onChange={(next) => change({ to: next < draft.from ? draft.from : next })}

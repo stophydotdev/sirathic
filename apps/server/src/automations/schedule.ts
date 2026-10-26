@@ -50,6 +50,10 @@ export const schedule = z.discriminatedUnion("kind", [
 
 export type Schedule = z.infer<typeof schedule>;
 
+export const NOTIFY = ["app", "none"] as const;
+
+export const notify = z.enum(NOTIFY);
+
 const wallClock = (instant: number, zone: string) => {
   const parts = Object.fromEntries(
     new Intl.DateTimeFormat("en-US", {

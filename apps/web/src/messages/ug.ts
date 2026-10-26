@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "بۇ كودنى ChatGPT غا كىرگۈزۈڭ",
   "Code expired": "كودنىڭ ۋاقتى ئۆتۈپ كەتتى",
   "Sign-in didn't work": "كىرىش مەغلۇپ بولدى",
-  "Results for:": "نەتىجىلەر:",
+  "+{count} more": "يەنە {count}",
   "Searching…": "ئىزدەۋاتىدۇ…",
   "The search failed. Try this tab again later.":
     "ئىزدەش مەغلۇپ بولدى. بۇ بەتكۈچنى سەل تۇرۇپ قايتا ئېچىڭ.",
@@ -183,7 +183,7 @@ export default {
   "Saved to your preferences": "مايىللىقلىرىڭىزغا ساقلاندى",
   "Finding duas for {detail}": "دۇئا ئىزدەۋاتىدۇ: {detail}",
   "The answer failed.": "جاۋاب بەرگىلى بولمىدى.",
-  "Search results for:": "ئىزدەش نەتىجىلىرى:",
+  "Searched:": "ئىزدەلگىنى:",
   "No links": "ئۇلانما يوق",
   "View more": "تېخىمۇ كۆپ كۆرۈش",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -394,7 +394,6 @@ export default {
   "New automation": "يېڭى ئاپتوماتلاشتۇرۇش",
   "Edit automation": "ئاپتوماتلاشتۇرۇشنى تەھرىرلەش",
   "Sign in to create automations.": "ئاپتوماتلاشتۇرۇش قۇرۇش ئۈچۈن كىرىڭ.",
-  Suggestions: "تەكلىپلەر",
   Pause: "ۋاقىتلىق توختىتىش",
   Resume: "داۋاملاشتۇرۇش",
   Paused: "توختىتىلغان",
@@ -452,6 +451,41 @@ export default {
   "Friday reminder": "جۈمە ئەسكەرتىشى",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "ماڭا جۈمەنىڭ سۈننىتىنى مۇناسىۋەتلىك بىر ھەدىس بىلەن ئەسكەرت.",
+  Learning: "ئۆگىنىش",
+  Worship: "ئىبادەت",
+  Family: "ئائىلە",
+  Hour: "سائەت",
+  Minute: "مىنۇت",
+  "Evening adhkar": "كەچلىك زىكىرلەر",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "ماڭا كەچلىك زىكىرلەرنى مەنبەسى ۋە ئوقۇلىدىغان ۋاقتى بىلەن بەر.",
+  "Verse of the day": "كۈننىڭ ئايىتى",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "قۇرئاندىن بىر ئايەتنى تەرجىمىسى ۋە قىسقا تەپسىرى بىلەن ھەمبەھىرلە.",
+  "Weekly tafsir": "ھەپتىلىك تەپسىر",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "قىسقا سۈرىدىن بىر نەچچە ئايەتنى كلاسسىك تەپسىر كىتابلىرىغا ئاساسەن چۈشەندۈر.",
+  "Quran word of the day": "كۈندىلىك قۇرئان سۆزى",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "ماڭا قۇرئاندىن بىر ئەرەبچە سۆزنى يىلتىزى ۋە ئۇ كەلگەن ئايەت بىلەن ئۆگەتكىن.",
+  "Seerah story": "سىيرەتتىن ھېكايە",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "ماڭا پەيغەمبەرنىڭ ﷺ سىيرىتىدىن بىر ۋەقەنى ئىبرىتى بىلەن سۆزلەپ بەر.",
+  "Fiqh question explained": "چۈشەندۈرۈلگەن پىقھى مەسىلە",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "كۈندىلىك تۇرمۇشتىن بىر پىقھى مەسىلىنى ھەر بىر مەزھەپنىڭ قارىشى بىلەن چۈشەندۈر.",
+  "Monday and Thursday fast": "دۈشەنبە ۋە پەيشەنبە روزىسى",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "ئەتە نەپىل روزا كۈنى ئىكەنلىكىنى، ساۋابى ھەققىدىكى ھەدىس بىلەن ئەسكەرت.",
+  "Nightly dua": "كېچىلىك دۇئا",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "ماڭا كېچە ئۈچۈن بىر ساھىھ دۇئانى مەنىسى ۋە مەنبەسى بىلەن بەر.",
+  "Prophet story for kids": "بالىلارغا پەيغەمبەر ھېكايىسى",
+  "Tell a short story of a prophet for children, in simple words.":
+    "بالىلار ئۈچۈن بىر پەيغەمبەر ھەققىدە قىسقا ھېكايىنى ئاددىي سۆزلەر بىلەن ئېيتىپ بەر.",
+  "Family halaqa": "ئائىلە ھالقىسى",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "ئائىلىمىزنىڭ ھالقىسى ئۈچۈن ئايەت، ھەدىس ۋە سوئاللار بىلەن بىر تېما تەۋسىيە قىل.",
   Memory: "ئەستە",
   "Project only": "پەقەت تۈر",
   "Chats here use and add to your main memory.":
@@ -541,7 +575,17 @@ export default {
   "Automation paused": "ئاپتوماتلاشتۇرۇش توختىتىلدى",
   "Automation resumed": "ئاپتوماتلاشتۇرۇش داۋاملاشتۇرۇلدى",
   "Automation deleted": "ئاپتوماتلاشتۇرۇش ئۆچۈرۈلدى",
+  "Automation created": "ئاپتوماتلاشتۇرۇش قۇرۇلدى",
+  "No automations yet": "ھازىرچە ئاپتوماتلاشتۇرۇش يوق",
+  "Notify me": "ماڭا ئۇقتۇر",
+  "In app": "ئەپ ئىچىدە",
+  None: "يوق",
+  "Finished. Open to read the answer.": "تامام. جاۋابنى ئوقۇش ئۈچۈن ئېچىڭ.",
+  "New automation answers": "ئاپتوماتلاشتۇرۇشنىڭ يېڭى جاۋابلىرى",
   "Running now. The answer will show up in Runs.":
     "ھازىر ئىجرا بولۇۋاتىدۇ. جاۋاب ئىجرالاردا كۆرۈنىدۇ.",
+  "Search, read and draft your email": "ئېلخېتىڭىزنى ئىزدەڭ، ئوقۇڭ ۋە لايىھە يېزىڭ",
+  "See your calendars and events": "كالېندار ۋە پائالىيەتلىرىڭىزنى كۆرۈڭ",
+  "Search and read your files": "ھۆججەتلىرىڭىزنى ئىزدەڭ ۋە ئوقۇڭ",
   "Couldn't open": "ئېچىلمىدى",
 } satisfies Messages;

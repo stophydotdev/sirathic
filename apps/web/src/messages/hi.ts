@@ -142,7 +142,7 @@ export default {
   "Enter this code on ChatGPT": "यह कोड ChatGPT पर डालें",
   "Code expired": "कोड की समय-सीमा ख़त्म हो गई",
   "Sign-in didn't work": "साइन इन नहीं हो सका",
-  "Results for:": "नतीजे:",
+  "+{count} more": "+{count} और",
   "Searching…": "खोज रहे हैं…",
   "The search failed. Try this tab again later.": "खोज नाकाम रही। बाद में यह टैब फिर से खोलें।",
   "Expand sidebar": "साइडबार फैलाएँ",
@@ -179,7 +179,7 @@ export default {
   "Saved to your preferences": "आपकी पसंद में सेव किया गया",
   "Finding duas for {detail}": "{detail} के लिए दुआएँ खोज रहे हैं",
   "The answer failed.": "जवाब नहीं मिल सका।",
-  "Search results for:": "खोज के नतीजे:",
+  "Searched:": "खोजा गया:",
   "No links": "कोई लिंक नहीं",
   "View more": "और देखें",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -387,7 +387,6 @@ export default {
   "New automation": "नया ऑटोमेशन",
   "Edit automation": "ऑटोमेशन बदलें",
   "Sign in to create automations.": "ऑटोमेशन बनाने के लिए साइन इन करें।",
-  Suggestions: "सुझाव",
   Pause: "रोकें",
   Resume: "फिर शुरू करें",
   Paused: "रुका हुआ",
@@ -445,6 +444,41 @@ export default {
   "Friday reminder": "जुमे की याद",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "मुझे जुमे की सुन्नत एक संबंधित हदीस के साथ याद दिलाइए।",
+  Learning: "सीखना",
+  Worship: "इबादत",
+  Family: "परिवार",
+  Hour: "घंटा",
+  Minute: "मिनट",
+  "Evening adhkar": "शाम के अज़कार",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "मुझे शाम के अज़कार उनके स्रोतों और पढ़ने के समय के साथ दीजिए।",
+  "Verse of the day": "आज की आयत",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "क़ुरआन की एक आयत अनुवाद और छोटी तफ़सीर के साथ साझा कीजिए।",
+  "Weekly tafsir": "साप्ताहिक तफ़सीर",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "एक छोटी सूरह की कुछ आयतें क्लासिकल तफ़सीर की किताबों के आधार पर समझाइए।",
+  "Quran word of the day": "आज का क़ुरआनी शब्द",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "मुझे क़ुरआन का एक अरबी शब्द उसकी जड़ और उस आयत के साथ सिखाइए जिसमें वह आता है।",
+  "Seerah story": "सीरत की कहानी",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "मुझे पैग़म्बर ﷺ की सीरत से एक कहानी सुनाइए, साथ में लेने लायक एक सबक़ भी।",
+  "Fiqh question explained": "फ़िक़्ह का सवाल समझाया",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "रोज़मर्रा का एक फ़िक़्ह का मसला हर मसलक की राय के साथ समझाइए।",
+  "Monday and Thursday fast": "सोमवार और गुरुवार का रोज़ा",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "मुझे याद दिलाइए कि कल सुन्नत रोज़े का दिन है, उसके सवाब पर एक हदीस के साथ।",
+  "Nightly dua": "रात की दुआ",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "मुझे रात के लिए एक प्रामाणिक दुआ उसके अर्थ और स्रोत के साथ दीजिए।",
+  "Prophet story for kids": "बच्चों के लिए नबी की कहानी",
+  "Tell a short story of a prophet for children, in simple words.":
+    "बच्चों के लिए किसी नबी की एक छोटी कहानी आसान शब्दों में सुनाइए।",
+  "Family halaqa": "परिवार की हलक़ा",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "हमारे परिवार की हलक़ा के लिए एक विषय सुझाइए, एक आयत, एक हदीस और कुछ सवालों के साथ।",
   Memory: "मेमोरी",
   "Project only": "सिर्फ़ प्रोजेक्ट",
   "Chats here use and add to your main memory.":
@@ -533,6 +567,16 @@ export default {
   "Automation paused": "ऑटोमेशन रोका गया",
   "Automation resumed": "ऑटोमेशन फिर से शुरू हुआ",
   "Automation deleted": "ऑटोमेशन मिटाया गया",
+  "Automation created": "ऑटोमेशन बन गया",
+  "No automations yet": "अभी कोई ऑटोमेशन नहीं",
+  "Notify me": "मुझे सूचित करें",
+  "In app": "ऐप में",
+  None: "कोई नहीं",
+  "Finished. Open to read the answer.": "पूरा हुआ। जवाब पढ़ने के लिए खोलें।",
+  "New automation answers": "ऑटोमेशन के नए जवाब",
   "Running now. The answer will show up in Runs.": "अभी चल रहा है। जवाब रन में दिखेगा।",
+  "Search, read and draft your email": "अपना ईमेल खोजें, पढ़ें और ड्राफ़्ट करें",
+  "See your calendars and events": "अपने कैलेंडर और इवेंट देखें",
+  "Search and read your files": "अपनी फ़ाइलें खोजें और पढ़ें",
   "Couldn't open": "खुल नहीं सका",
 } satisfies Messages;

@@ -143,7 +143,7 @@ export default {
   "Enter this code on ChatGPT": "این کد را در ChatGPT وارد کنید",
   "Code expired": "کد منقضی شد",
   "Sign-in didn't work": "ورود انجام نشد",
-  "Results for:": "نتایج برای:",
+  "+{count} more": "+{count} مورد دیگر",
   "Searching…": "در حال جستجو…",
   "The search failed. Try this tab again later.":
     "جستجو ناموفق بود. بعداً این زبانه را دوباره امتحان کنید.",
@@ -181,7 +181,7 @@ export default {
   "Saved to your preferences": "در تنظیمات شما ذخیره شد",
   "Finding duas for {detail}": "یافتن دعا برای {detail}",
   "The answer failed.": "پاسخ ناموفق بود.",
-  "Search results for:": "نتایج جستجو برای:",
+  "Searched:": "جستجو شد:",
   "No links": "پیوندی نیست",
   "View more": "نمایش بیشتر",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -389,7 +389,6 @@ export default {
   "New automation": "خودکارسازی جدید",
   "Edit automation": "ویرایش خودکارسازی",
   "Sign in to create automations.": "برای ساخت خودکارسازی وارد شوید.",
-  Suggestions: "پیشنهادها",
   Pause: "توقف موقت",
   Resume: "ادامه",
   Paused: "متوقف‌شده",
@@ -447,6 +446,41 @@ export default {
   "Friday reminder": "یادآور جمعه",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "سنت روز جمعه را با یک حدیث مرتبط به من یادآوری کن.",
+  Learning: "یادگیری",
+  Worship: "عبادت",
+  Family: "خانواده",
+  Hour: "ساعت",
+  Minute: "دقیقه",
+  "Evening adhkar": "اذکار شامگاه",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "اذکار شامگاه را با منابع و زمان خواندنشان به من بده.",
+  "Verse of the day": "آیهٔ امروز",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "یک آیه از قرآن را با ترجمه و تفسیری کوتاه به اشتراک بگذار.",
+  "Weekly tafsir": "تفسیر هفتگی",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "چند آیه از یک سورهٔ کوتاه را بر پایهٔ کتاب‌های تفسیر کلاسیک شرح بده.",
+  "Quran word of the day": "واژهٔ قرآنی امروز",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "یک واژهٔ عربی از قرآن را با ریشه و آیه‌ای که در آن آمده به من یاد بده.",
+  "Seerah story": "داستانی از سیره",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "یک داستان از سیرهٔ پیامبر ﷺ را همراه با درسی که می‌شود گرفت برایم بگو.",
+  "Fiqh question explained": "پرسش فقهی شرح‌داده‌شده",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "یک مسئلهٔ فقهی روزمره را با دیدگاه هر مذهب شرح بده.",
+  "Monday and Thursday fast": "روزهٔ دوشنبه و پنجشنبه",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "یادم بینداز که فردا روز روزهٔ مستحب است، همراه با حدیثی دربارهٔ پاداش آن.",
+  "Nightly dua": "دعای شب",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "یک دعای صحیح برای شب را با معنا و منبعش به من بده.",
+  "Prophet story for kids": "داستان پیامبران برای کودکان",
+  "Tell a short story of a prophet for children, in simple words.":
+    "داستانی کوتاه از یکی از پیامبران را با کلمات ساده برای کودکان بگو.",
+  "Family halaqa": "حلقهٔ خانوادگی",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "موضوعی برای حلقهٔ خانوادگی ما پیشنهاد بده، با یک آیه، یک حدیث و چند پرسش.",
   Memory: "حافظه",
   "Project only": "فقط پروژه",
   "Chats here use and add to your main memory.":
@@ -537,6 +571,16 @@ export default {
   "Automation paused": "خودکارسازی متوقف شد",
   "Automation resumed": "خودکارسازی ادامه یافت",
   "Automation deleted": "خودکارسازی حذف شد",
+  "Automation created": "خودکارسازی ساخته شد",
+  "No automations yet": "هنوز خودکارسازی‌ای نیست",
+  "Notify me": "به من اطلاع بده",
+  "In app": "درون برنامه",
+  None: "هیچ‌کدام",
+  "Finished. Open to read the answer.": "تمام شد. برای خواندن پاسخ باز کنید.",
+  "New automation answers": "پاسخ‌های تازهٔ خودکارسازی",
   "Running now. The answer will show up in Runs.": "در حال اجرا. پاسخ در اجراها نمایش داده می‌شود.",
+  "Search, read and draft your email": "ایمیل خود را جستجو کنید، بخوانید و پیش‌نویس کنید",
+  "See your calendars and events": "تقویم‌ها و رویدادهای خود را ببینید",
+  "Search and read your files": "فایل‌های خود را جستجو کنید و بخوانید",
   "Couldn't open": "باز نشد",
 } satisfies Messages;

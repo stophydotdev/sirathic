@@ -11,12 +11,14 @@ const pathIcon =
     </svg>
   );
 
+export const SirathicIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" aria-hidden {...props}>
+    <Rosette color="currentColor" />
+  </svg>
+);
+
 const ICONS = {
-  sirathic: (props: SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 24 24" aria-hidden {...props}>
-      <Rosette color="currentColor" />
-    </svg>
-  ),
+  sirathic: SirathicIcon,
   openai: OpenAIIcon,
   anthropic: pathIcon(
     "M17.304 3.541h-3.672l6.696 16.918H24Zm-10.608 0L0 20.459h3.744l1.37-3.553h7.005l1.369 3.553h3.744L10.536 3.541Zm-.371 10.223 2.291-5.946 2.292 5.946Z",

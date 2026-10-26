@@ -142,7 +142,7 @@ export default {
   "Enter this code on ChatGPT": "أدخل هذا الرمز في ChatGPT",
   "Code expired": "انتهت صلاحية الرمز",
   "Sign-in didn't work": "لم ينجح تسجيل الدخول",
-  "Results for:": "نتائج:",
+  "+{count} more": "+{count} أخرى",
   "Searching…": "جارٍ البحث…",
   "The search failed. Try this tab again later.": "فشل البحث. حاول فتح هذا التبويب مرة أخرى لاحقًا.",
   "Expand sidebar": "توسيع الشريط الجانبي",
@@ -179,7 +179,7 @@ export default {
   "Saved to your preferences": "حُفظ في تفضيلاتك",
   "Finding duas for {detail}": "البحث عن أدعية لـ {detail}",
   "The answer failed.": "فشلت الإجابة.",
-  "Search results for:": "نتائج البحث عن:",
+  "Searched:": "تم البحث عن:",
   "No links": "لا توجد روابط",
   "View more": "عرض المزيد",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -386,7 +386,6 @@ export default {
   "New automation": "أتمتة جديدة",
   "Edit automation": "تعديل الأتمتة",
   "Sign in to create automations.": "سجّل الدخول لإنشاء الأتمتة.",
-  Suggestions: "اقتراحات",
   Pause: "إيقاف مؤقت",
   Resume: "استئناف",
   Paused: "متوقفة مؤقتًا",
@@ -444,6 +443,41 @@ export default {
   "Friday reminder": "تذكير الجمعة",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "ذكّرني بسنة يوم الجمعة مع حديث واحد مناسب.",
+  Learning: "التعلّم",
+  Worship: "العبادة",
+  Family: "الأسرة",
+  Hour: "الساعة",
+  Minute: "الدقيقة",
+  "Evening adhkar": "أذكار المساء",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "أعطني أذكار المساء مع مصادرها ووقت قولها.",
+  "Verse of the day": "آية اليوم",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "شارك آية من القرآن مع ترجمتها وتفسير موجز.",
+  "Weekly tafsir": "تفسير أسبوعي",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "اشرح بضع آيات من سورة قصيرة من كتب التفسير الكلاسيكية.",
+  "Quran word of the day": "كلمة قرآنية في اليوم",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "علّمني كلمة عربية من القرآن مع جذرها وآية ترد فيها.",
+  "Seerah story": "قصة من السيرة",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "احكِ لي قصة من سيرة النبي ﷺ مع عبرة نستفيدها.",
+  "Fiqh question explained": "مسألة فقهية مشروحة",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "اشرح مسألة فقهية من الحياة اليومية مع قول كل مذهب.",
+  "Monday and Thursday fast": "صيام الإثنين والخميس",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "ذكّرني بأن غدًا يوم صيام سنة، مع حديث عن فضله.",
+  "Nightly dua": "دعاء الليل",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "أعطني دعاءً صحيحًا لليل مع معناه ومصدره.",
+  "Prophet story for kids": "قصة نبي للأطفال",
+  "Tell a short story of a prophet for children, in simple words.":
+    "احكِ قصة قصيرة عن نبي للأطفال بكلمات بسيطة.",
+  "Family halaqa": "حلقة العائلة",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "اقترح موضوعًا لحلقة عائلتنا مع آية وحديث وأسئلة.",
   Memory: "الذاكرة",
   "Project only": "المشروع فقط",
   "Chats here use and add to your main memory.":
@@ -530,6 +564,16 @@ export default {
   "Automation paused": "تم إيقاف الأتمتة مؤقتًا",
   "Automation resumed": "تم استئناف الأتمتة",
   "Automation deleted": "تم حذف الأتمتة",
+  "Automation created": "تم إنشاء الأتمتة",
+  "No automations yet": "لا توجد أتمتة بعد",
+  "Notify me": "أبلغني",
+  "In app": "داخل التطبيق",
+  None: "بدون",
+  "Finished. Open to read the answer.": "انتهى. افتح لقراءة الإجابة.",
+  "New automation answers": "إجابات أتمتة جديدة",
   "Running now. The answer will show up in Runs.": "جارٍ التشغيل الآن. ستظهر الإجابة في مرات التشغيل.",
+  "Search, read and draft your email": "ابحث في بريدك واقرأه واكتب مسودات",
+  "See your calendars and events": "اطّلع على تقاويمك ومواعيدك",
+  "Search and read your files": "ابحث في ملفاتك واقرأها",
   "Couldn't open": "تعذّر فتح",
 } satisfies Messages;

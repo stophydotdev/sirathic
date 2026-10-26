@@ -18,6 +18,7 @@ const automationRow: StoredAutomation = {
   lastRunAt: null,
 };
 const savedChats: unknown[][] = [];
+const insertedAutomations: unknown[][] = [];
 
 const fakeDb = drizzle(
   async (sql, params) => {
@@ -40,6 +41,7 @@ const fakeDb = drizzle(
                 dueAt,
                 null,
                 "research",
+                "app",
               ],
             ]
           : [],
@@ -57,6 +59,32 @@ const fakeDb = drizzle(
     if (sql.startsWith('select "id", "email"')) {
       return { rows: [["user-a", "a@example.com", null, null, null]] };
     }
+    if (sql.startsWith("select count(*)")) return { rows: [[0]] };
+    if (sql.startsWith('insert into "automations"')) {
+      insertedAutomations.push(params);
+      const [owner, name, prompt, plan, zone, nextRunAt] = params;
+      return {
+        rows: [
+          [
+            automationId,
+            owner,
+            null,
+            name,
+            prompt,
+            plan,
+            zone,
+            true,
+            nextRunAt,
+            null,
+            dueAt,
+            dueAt,
+            null,
+            "quick",
+            "app",
+          ],
+        ],
+      };
+    }
     if (sql.startsWith('insert into "chat_sessions"')) {
       savedChats.push(params);
       return { rows: [] };
@@ -71,6 +99,7 @@ const cache = await import("@sirathic/core/cache");
 mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => 31 }));
 
 const { runDue } = await import("../apps/server/src/automations/runner");
+const { automationTools } = await import("../apps/server/src/chat/automationTools");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;
@@ -204,4 +233,23 @@ test("schedules with an impossible date, a repeated day or a bad zone are reject
   expect(schedule.safeParse({ kind: "yearly", month: 4, day: 31, time: "09:00" }).success).toBe(
     false,
   );
+});
+
+test("Noor creates a weekly reminder in the person's time zone with In app notification", async () => {
+  const tools = automationTools({ owner: "user-a", timezone: "Asia/Tokyo" });
+  const created = await tools.createAutomation.execute?.(
+    {
+      name: "Read Surah al-Kahf",
+      prompt: "Remind me to read Surah al-Kahf.",
+      schedule: { kind: "weekly", days: [5], time: "08:00" },
+    },
+    { toolCallId: "call-1", messages: [], context: {} },
+  );
+  expect(created).toMatchObject({
+    name: "Read Surah al-Kahf",
+    schedule: { kind: "weekly", days: [5], time: "08:00" },
+    timezone: "Asia/Tokyo",
+    notify: "app",
+  });
+  expect(insertedAutomations[0]?.[4]).toBe("Asia/Tokyo");
 });

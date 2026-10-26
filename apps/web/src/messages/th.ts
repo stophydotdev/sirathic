@@ -139,7 +139,7 @@ export default {
   "Enter this code on ChatGPT": "ใส่รหัสนี้ใน ChatGPT",
   "Code expired": "รหัสหมดอายุแล้ว",
   "Sign-in didn't work": "ลงชื่อเข้าใช้ไม่สำเร็จ",
-  "Results for:": "ผลลัพธ์สำหรับ:",
+  "+{count} more": "อีก {count} รายการ",
   "Searching…": "กำลังค้นหา…",
   "The search failed. Try this tab again later.": "การค้นหาล้มเหลว โปรดลองแท็บนี้ใหม่ภายหลัง",
   "Expand sidebar": "ขยายแถบด้านข้าง",
@@ -176,7 +176,7 @@ export default {
   "Saved to your preferences": "บันทึกในค่าที่คุณเลือกแล้ว",
   "Finding duas for {detail}": "กำลังหาดุอาอ์สำหรับ {detail}",
   "The answer failed.": "ตอบไม่สำเร็จ",
-  "Search results for:": "ผลการค้นหาสำหรับ:",
+  "Searched:": "ค้นหา:",
   "No links": "ไม่มีลิงก์",
   "View more": "ดูเพิ่มเติม",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -381,7 +381,6 @@ export default {
   "New automation": "ระบบอัตโนมัติใหม่",
   "Edit automation": "แก้ไขระบบอัตโนมัติ",
   "Sign in to create automations.": "ลงชื่อเข้าใช้เพื่อสร้างระบบอัตโนมัติ",
-  Suggestions: "คำแนะนำ",
   Pause: "หยุดชั่วคราว",
   Resume: "ทำต่อ",
   Paused: "หยุดชั่วคราวอยู่",
@@ -439,6 +438,41 @@ export default {
   "Friday reminder": "การเตือนวันศุกร์",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "เตือนฉันเรื่องซุนนะฮ์ของวันศุกร์พร้อมหะดีษที่เกี่ยวข้องหนึ่งบท",
+  Learning: "การเรียนรู้",
+  Worship: "การปฏิบัติศาสนกิจ",
+  Family: "ครอบครัว",
+  Hour: "ชั่วโมง",
+  Minute: "นาที",
+  "Evening adhkar": "อัซการ์ยามเย็น",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "ขออัซการ์ยามเย็นพร้อมแหล่งที่มาและเวลาที่ควรอ่าน",
+  "Verse of the day": "อายะฮ์ประจำวัน",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "แบ่งปันอายะฮ์หนึ่งจากอัลกุรอานพร้อมคำแปลและตัฟซีรสั้น ๆ",
+  "Weekly tafsir": "ตัฟซีรประจำสัปดาห์",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "อธิบายอายะฮ์ไม่กี่อายะฮ์จากสูเราะฮ์สั้น ๆ ตามตำราตัฟซีรคลาสสิก",
+  "Quran word of the day": "คำในอัลกุรอานประจำวัน",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "สอนคำภาษาอาหรับจากอัลกุรอานหนึ่งคำพร้อมรากศัพท์และอายะฮ์ที่ใช้คำนั้น",
+  "Seerah story": "เรื่องเล่าซีเราะฮ์",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "เล่าเรื่องหนึ่งจากซีเราะฮ์ของศาสดา ﷺ พร้อมบทเรียนที่ได้",
+  "Fiqh question explained": "อธิบายปัญหาฟิกฮ์",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "อธิบายปัญหาฟิกฮ์ในชีวิตประจำวันหนึ่งข้อพร้อมทัศนะของแต่ละมัซฮับ",
+  "Monday and Thursday fast": "ถือศีลอดวันจันทร์และวันพฤหัสบดี",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "เตือนฉันว่าพรุ่งนี้เป็นวันถือศีลอดซุนนะฮ์ พร้อมหะดีษเกี่ยวกับผลบุญ",
+  "Nightly dua": "ดุอายามค่ำคืน",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "ขอดุอาที่ถูกต้องสำหรับยามค่ำคืนหนึ่งบทพร้อมความหมายและแหล่งที่มา",
+  "Prophet story for kids": "เรื่องเล่าศาสดาสำหรับเด็ก",
+  "Tell a short story of a prophet for children, in simple words.":
+    "เล่าเรื่องสั้น ๆ ของศาสดาท่านหนึ่งให้เด็กฟัง ด้วยถ้อยคำง่าย ๆ",
+  "Family halaqa": "ฮะลากอฮ์ครอบครัว",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "เสนอหัวข้อสำหรับฮะลากอฮ์ครอบครัวของเรา พร้อมอายะฮ์ หะดีษ และคำถาม",
   Memory: "ความจำ",
   "Project only": "เฉพาะโปรเจกต์",
   "Chats here use and add to your main memory.": "แชทที่นี่ใช้และเพิ่มลงในความจำหลักของคุณ",
@@ -523,6 +557,16 @@ export default {
   "Automation paused": "หยุดระบบอัตโนมัติชั่วคราวแล้ว",
   "Automation resumed": "ระบบอัตโนมัติทำงานต่อแล้ว",
   "Automation deleted": "ลบระบบอัตโนมัติแล้ว",
+  "Automation created": "สร้างระบบอัตโนมัติแล้ว",
+  "No automations yet": "ยังไม่มีระบบอัตโนมัติ",
+  "Notify me": "แจ้งเตือนฉัน",
+  "In app": "ในแอป",
+  None: "ไม่มี",
+  "Finished. Open to read the answer.": "เสร็จแล้ว เปิดเพื่ออ่านคำตอบ",
+  "New automation answers": "คำตอบใหม่จากระบบอัตโนมัติ",
   "Running now. The answer will show up in Runs.": "กำลังรัน คำตอบจะแสดงในการรัน",
+  "Search, read and draft your email": "ค้นหา อ่าน และร่างอีเมลของคุณ",
+  "See your calendars and events": "ดูปฏิทินและกิจกรรมของคุณ",
+  "Search and read your files": "ค้นหาและอ่านไฟล์ของคุณ",
   "Couldn't open": "เปิดไม่ได้",
 } satisfies Messages;

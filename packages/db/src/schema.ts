@@ -355,6 +355,7 @@ export const automations = pgTable(
       .$onUpdate(() => new Date()),
     icon: text(),
     mode: text().notNull().default("quick"),
+    notify: text().notNull().default("app"),
   },
   (table) => [
     index("automations_due")

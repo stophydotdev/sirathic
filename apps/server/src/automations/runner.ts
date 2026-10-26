@@ -79,6 +79,7 @@ async function answerPrompt(
     },
     record: (event) => track(event, by),
     remember: undefined,
+    automate: undefined,
   });
   await response.arrayBuffer();
   const reply = answered.findLast((message) => message.role === "assistant");

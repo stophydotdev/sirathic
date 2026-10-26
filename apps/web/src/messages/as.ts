@@ -141,7 +141,7 @@ export default {
   "Enter this code on ChatGPT": "এই ক'ডটো ChatGPTত দিয়ক",
   "Code expired": "ক'ডৰ ম্যাদ উকলিল",
   "Sign-in didn't work": "ছাইন ইন নহ'ল",
-  "Results for:": "ফলাফল:",
+  "+{count} more": "আৰু {count}",
   "Searching…": "বিচাৰি আছে…",
   "The search failed. Try this tab again later.": "বিচৰা বিফল হ'ল। পিছত এই টেবটো আকৌ চেষ্টা কৰক।",
   "Expand sidebar": "চাইডবাৰ বহল কৰক",
@@ -178,7 +178,7 @@ export default {
   "Saved to your preferences": "আপোনাৰ পছন্দত সংৰক্ষণ কৰা হ'ল",
   "Finding duas for {detail}": "{detail}ৰ বাবে দোৱা বিচাৰি আছে",
   "The answer failed.": "উত্তৰ পোৱা নগ'ল।",
-  "Search results for:": "বিচৰাৰ ফলাফল:",
+  "Searched:": "বিচৰা হ'ল:",
   "No links": "কোনো লিংক নাই",
   "View more": "আৰু চাওক",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -385,7 +385,6 @@ export default {
   "New automation": "নতুন অটোমেচন",
   "Edit automation": "অটোমেচন সম্পাদনা কৰক",
   "Sign in to create automations.": "অটোমেচন সৃষ্টি কৰিবলৈ ছাইন ইন কৰক।",
-  Suggestions: "পৰামৰ্শ",
   Pause: "বিৰতি দিয়ক",
   Resume: "পুনৰ আৰম্ভ কৰক",
   Paused: "বিৰতিত আছে",
@@ -443,6 +442,41 @@ export default {
   "Friday reminder": "জুমাৰ সোঁৱৰণী",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "মোক জুমাৰ ছুন্নাহ এটা প্ৰাসংগিক হাদীছৰ সৈতে মনত পেলাই দিয়ক।",
+  Learning: "শিক্ষা",
+  Worship: "ইবাদত",
+  Family: "পৰিয়াল",
+  Hour: "ঘণ্টা",
+  Minute: "মিনিট",
+  "Evening adhkar": "সন্ধিয়াৰ জিকিৰ",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "মোক সন্ধিয়াৰ জিকিৰ সেইবোৰৰ উৎস আৰু পঢ়াৰ সময়ৰ সৈতে দিয়ক।",
+  "Verse of the day": "আজিৰ আয়াত",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "কুৰআনৰ এটা আয়াত অনুবাদ আৰু চমু তাফছিৰৰ সৈতে শ্বেয়াৰ কৰক।",
+  "Weekly tafsir": "সাপ্তাহিক তাফছিৰ",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "এটা চুটি ছূৰাৰ কেইটামান আয়াত ক্লাছিকেল তাফছিৰ গ্ৰন্থৰ ভিত্তিত ব্যাখ্যা কৰক।",
+  "Quran word of the day": "আজিৰ কুৰআনৰ শব্দ",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "মোক কুৰআনৰ এটা আৰবী শব্দ ইয়াৰ মূল আৰু যি আয়াতত আছে সেইটোৰ সৈতে শিকাওক।",
+  "Seerah story": "ছীৰাতৰ সাধু",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "মোক নবী ﷺ ৰ ছীৰাতৰ পৰা এটা সাধু কওক, লগত লবলগীয়া এটা শিক্ষা।",
+  "Fiqh question explained": "ফিকহৰ প্ৰশ্ন ব্যাখ্যাৰ সৈতে",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "দৈনন্দিন জীৱনৰ এটা ফিকহী মাছআলা প্ৰতিটো মাজহাবৰ মতৰ সৈতে ব্যাখ্যা কৰক।",
+  "Monday and Thursday fast": "সোম আৰু বৃহস্পতিবাৰৰ ৰোজা",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "মোক মনত পেলাই দিয়ক যে কাইলৈ ছুন্নত ৰোজাৰ দিন, ইয়াৰ ছোৱাবৰ বিষয়ে এটা হাদীছৰ সৈতে।",
+  "Nightly dua": "ৰাতিৰ দোৱা",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "মোক ৰাতিৰ বাবে এটা ছহীহ দোৱা ইয়াৰ অৰ্থ আৰু উৎসৰ সৈতে দিয়ক।",
+  "Prophet story for kids": "ল'ৰা-ছোৱালীৰ বাবে নবীৰ সাধু",
+  "Tell a short story of a prophet for children, in simple words.":
+    "ল'ৰা-ছোৱালীৰ বাবে এজন নবীৰ চুটি সাধু সহজ ভাষাত কওক।",
+  "Family halaqa": "পৰিয়ালৰ হালকা",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "আমাৰ পৰিয়ালৰ হালকাৰ বাবে এটা আয়াত, এটা হাদীছ আৰু কেইটামান প্ৰশ্নৰ সৈতে এটা বিষয় প্ৰস্তাৱ কৰক।",
   Memory: "স্মৃতি",
   "Project only": "কেৱল প্ৰকল্প",
   "Chats here use and add to your main memory.":
@@ -529,6 +563,16 @@ export default {
   "Automation paused": "অটোমেচন ৰখোৱা হ'ল",
   "Automation resumed": "অটোমেচন পুনৰ আৰম্ভ হ'ল",
   "Automation deleted": "অটোমেচন মচা হ'ল",
+  "Automation created": "অটোমেচন সৃষ্টি কৰা হ'ল",
+  "No automations yet": "এতিয়ালৈকে কোনো অটোমেচন নাই",
+  "Notify me": "মোক জনাওক",
+  "In app": "এপৰ ভিতৰত",
+  None: "একো নাই",
+  "Finished. Open to read the answer.": "শেষ হ'ল। উত্তৰ পঢ়িবলৈ খোলক।",
+  "New automation answers": "নতুন অটোমেচনৰ উত্তৰ",
   "Running now. The answer will show up in Runs.": "এতিয়া চলি আছে। উত্তৰটো চলোৱাত দেখা যাব।",
+  "Search, read and draft your email": "আপোনাৰ ইমেইল সন্ধান কৰক, পঢ়ক আৰু খচৰা লিখক",
+  "See your calendars and events": "আপোনাৰ কেলেণ্ডাৰ আৰু ইভেণ্ট চাওক",
+  "Search and read your files": "আপোনাৰ ফাইল সন্ধান কৰক আৰু পঢ়ক",
   "Couldn't open": "খুলিব পৰা নগ'ল",
 } satisfies Messages;

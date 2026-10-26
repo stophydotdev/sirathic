@@ -146,7 +146,7 @@ export default {
   "Enter this code on ChatGPT": "Бу кодни ChatGPT'га киритинг",
   "Code expired": "Код муддати тугади",
   "Sign-in didn't work": "Кириш амалга ошмади",
-  "Results for:": "Натижалар:",
+  "+{count} more": "яна {count}",
   "Searching…": "Қидирилмоқда…",
   "The search failed. Try this tab again later.":
     "Қидирув амалга ошмади. Бу варақни кейинроқ қайта очинг.",
@@ -184,7 +184,7 @@ export default {
   "Saved to your preferences": "Созламаларингизга сақланди",
   "Finding duas for {detail}": "Дуолар қидирилмоқда: {detail}",
   "The answer failed.": "Жавоб олиб бўлмади.",
-  "Search results for:": "Қидирув натижалари:",
+  "Searched:": "Қидирилди:",
   "No links": "Ҳавола йўқ",
   "View more": "Яна кўриш",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -396,7 +396,6 @@ export default {
   "New automation": "Янги автоматлаштириш",
   "Edit automation": "Автоматлаштиришни таҳрирлаш",
   "Sign in to create automations.": "Автоматлаштириш яратиш учун киринг.",
-  Suggestions: "Таклифлар",
   Pause: "Тўхтатиб туриш",
   Resume: "Давом эттириш",
   Paused: "Тўхтатилган",
@@ -454,6 +453,41 @@ export default {
   "Friday reminder": "Жума эслатмаси",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Менга жуманинг суннатини тегишли битта ҳадис билан эслат.",
+  Learning: "Ўрганиш",
+  Worship: "Ибодат",
+  Family: "Оила",
+  Hour: "Соат",
+  Minute: "Дақиқа",
+  "Evening adhkar": "Кечки зикрлар",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Менга кечки зикрларни манбалари ва қачон ўқилишини ёзиб бер.",
+  "Verse of the day": "Кун ояти",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Қуръондан битта оятни таржимаси ва қисқа тафсири билан улаш.",
+  "Weekly tafsir": "Ҳафталик тафсир",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Қисқа сўранинг бир неча оятини классик тафсир китоблари асосида тушунтир.",
+  "Quran word of the day": "Кунлик Қуръон сўзи",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Менга Қуръондан битта арабча сўзни илдизи ва қайси оятда келиши билан ўргат.",
+  "Seerah story": "Сийрадан ҳикоя",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Менга Пайғамбар ﷺ сийрасидан битта воқеани ибрати билан сўзлаб бер.",
+  "Fiqh question explained": "Тушунтирилган фиқҳ саволи",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Кундалик ҳаётдан битта фиқҳ масаласини ҳар бир мазҳаб фикри билан тушунтир.",
+  "Monday and Thursday fast": "Душанба ва пайшанба рўзаси",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Эртага нафл рўза куни эканини, савоби ҳақидаги ҳадис билан эслат.",
+  "Nightly dua": "Тунги дуо",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Менга тун учун битта саҳиҳ дуони маъноси ва манбаси билан бер.",
+  "Prophet story for kids": "Болалар учун пайғамбар ҳикояси",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Болалар учун бир пайғамбар ҳақида қисқа ҳикояни оддий сўзлар билан айтиб бер.",
+  "Family halaqa": "Оилавий ҳалқа",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Оилавий ҳалқамиз учун оят, ҳадис ва саволлар билан мавзу таклиф қил.",
   Memory: "Хотира",
   "Project only": "Фақат лойиҳа",
   "Chats here use and add to your main memory.":
@@ -543,7 +577,17 @@ export default {
   "Automation paused": "Автоматлаштириш тўхтатилди",
   "Automation resumed": "Автоматлаштириш давом эттирилди",
   "Automation deleted": "Автоматлаштириш ўчирилди",
+  "Automation created": "Автоматлаштириш яратилди",
+  "No automations yet": "Ҳозирча автоматлаштириш йўқ",
+  "Notify me": "Менга хабар бер",
+  "In app": "Иловада",
+  None: "Йўқ",
+  "Finished. Open to read the answer.": "Тайёр. Жавобни ўқиш учун очинг.",
+  "New automation answers": "Автоматлаштиришнинг янги жавоблари",
   "Running now. The answer will show up in Runs.":
     "Ҳозир ишламоқда. Жавоб Ишга туширишларда кўринади.",
+  "Search, read and draft your email": "Почтангизни қидиринг, ўқинг ва қоралама ёзинг",
+  "See your calendars and events": "Тақвимларингиз ва тадбирларингизни кўринг",
+  "Search and read your files": "Файлларингизни қидиринг ва ўқинг",
   "Couldn't open": "Очилмади",
 } satisfies Messages;

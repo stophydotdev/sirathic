@@ -141,7 +141,7 @@ export default {
   "Enter this code on ChatGPT": "បញ្ចូលលេខកូដនេះនៅលើ ChatGPT",
   "Code expired": "លេខកូដផុតកំណត់ហើយ",
   "Sign-in didn't work": "ការចូលគណនីមិនបានសម្រេច",
-  "Results for:": "លទ្ធផលសម្រាប់៖",
+  "+{count} more": "+{count} ទៀត",
   "Searching…": "កំពុងស្វែងរក…",
   "The search failed. Try this tab again later.": "ការស្វែងរកបរាជ័យ។ សូមសាកផ្ទាំងនេះម្ដងទៀតពេលក្រោយ។",
   "Expand sidebar": "ពង្រីករបារចំហៀង",
@@ -178,7 +178,7 @@ export default {
   "Saved to your preferences": "បានរក្សាទុកក្នុងចំណូលចិត្តរបស់អ្នក",
   "Finding duas for {detail}": "កំពុងរកឌូអាសម្រាប់ {detail}",
   "The answer failed.": "ចម្លើយបរាជ័យ។",
-  "Search results for:": "លទ្ធផលស្វែងរកសម្រាប់៖",
+  "Searched:": "បានស្វែងរក៖",
   "No links": "គ្មានតំណ",
   "View more": "មើលបន្ថែម",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -385,7 +385,6 @@ export default {
   "New automation": "ស្វ័យប្រវត្តិកម្មថ្មី",
   "Edit automation": "កែសម្រួលស្វ័យប្រវត្តិកម្ម",
   "Sign in to create automations.": "ចូលគណនីដើម្បីបង្កើតស្វ័យប្រវត្តិកម្ម។",
-  Suggestions: "ការណែនាំ",
   Pause: "ផ្អាក",
   Resume: "បន្ត",
   Paused: "បានផ្អាក",
@@ -443,6 +442,41 @@ export default {
   "Friday reminder": "ការរំលឹកថ្ងៃសុក្រ",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "រំលឹកខ្ញុំអំពីស៊ុន្នះថ្ងៃសុក្រ ជាមួយហាឌីសដែលពាក់ព័ន្ធមួយ។",
+  Learning: "ការរៀន",
+  Worship: "ការគោរពប្រណិប័តន៍",
+  Family: "គ្រួសារ",
+  Hour: "ម៉ោង",
+  Minute: "នាទី",
+  "Evening adhkar": "ហ្សិកគ្រពេលល្ងាច",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "សូមផ្ដល់ហ្សិកគ្រពេលល្ងាចដល់ខ្ញុំ ជាមួយប្រភព និងពេលវេលាដែលត្រូវសូត្រ។",
+  "Verse of the day": "អាយ៉ាត់ប្រចាំថ្ងៃ",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "ចែករំលែកអាយ៉ាត់មួយពីគម្ពីរគួរអានជាមួយការបកប្រែ និងតាហ្វស៊ីរខ្លី។",
+  "Weekly tafsir": "តាហ្វស៊ីរប្រចាំសប្តាហ៍",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "ពន្យល់អាយ៉ាត់ខ្លះនៃស៊ូរ៉ាខ្លីមួយ តាមសៀវភៅតាហ្វស៊ីរបុរាណ។",
+  "Quran word of the day": "ពាក្យគួរអានប្រចាំថ្ងៃ",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "បង្រៀនខ្ញុំពាក្យអារ៉ាប់មួយពីគួរអាន ជាមួយឫសរបស់វា និងអាយ៉ាត់ដែលប្រើពាក្យនោះ។",
+  "Seerah story": "រឿងស៊ីរ៉ះ",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "និទានរឿងមួយពីស៊ីរ៉ះរបស់ព្យាការី ﷺ ជាមួយមេរៀនដែលអាចទទួលបាន។",
+  "Fiqh question explained": "សំណួរហ្វិកហ៍ពន្យល់",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "ពន្យល់បញ្ហាហ្វិកហ៍ប្រចាំថ្ងៃមួយ ជាមួយទស្សនៈរបស់មាហ្ស់ហាបនីមួយៗ។",
+  "Monday and Thursday fast": "ការបួសថ្ងៃច័ន្ទ និងព្រហស្បតិ៍",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "រំលឹកខ្ញុំថាថ្ងៃស្អែកជាថ្ងៃបួសស៊ុននះ ជាមួយហាទីសអំពីផលបុណ្យរបស់វា។",
+  "Nightly dua": "ឌូអាពេលយប់",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "សូមផ្ដល់ឌូអាត្រឹមត្រូវមួយសម្រាប់ពេលយប់ ជាមួយអត្ថន័យ និងប្រភពរបស់វា។",
+  "Prophet story for kids": "រឿងព្យាការីសម្រាប់កុមារ",
+  "Tell a short story of a prophet for children, in simple words.":
+    "និទានរឿងខ្លីអំពីព្យាការីមួយអង្គសម្រាប់កុមារ ដោយពាក្យសាមញ្ញ។",
+  "Family halaqa": "ហាឡាកៈគ្រួសារ",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "ស្នើប្រធានបទមួយសម្រាប់ហាឡាកៈគ្រួសាររបស់យើង ជាមួយអាយ៉ាត់ ហាទីស និងសំណួរ។",
   Memory: "សតិ",
   "Project only": "តែគម្រោង",
   "Chats here use and add to your main memory.": "ការជជែកនៅទីនេះប្រើ និងបន្ថែមទៅសតិមេរបស់អ្នក។",
@@ -529,6 +563,16 @@ export default {
   "Automation paused": "បានផ្អាកស្វ័យប្រវត្តិកម្ម",
   "Automation resumed": "បានបន្តស្វ័យប្រវត្តិកម្ម",
   "Automation deleted": "បានលុបស្វ័យប្រវត្តិកម្ម",
+  "Automation created": "បានបង្កើតស្វ័យប្រវត្តិកម្ម",
+  "No automations yet": "មិនទាន់មានស្វ័យប្រវត្តិកម្មនៅឡើយ",
+  "Notify me": "ជូនដំណឹងខ្ញុំ",
+  "In app": "ក្នុងកម្មវិធី",
+  None: "គ្មាន",
+  "Finished. Open to read the answer.": "បានបញ្ចប់។ បើកដើម្បីអានចម្លើយ។",
+  "New automation answers": "ចម្លើយថ្មីពីស្វ័យប្រវត្តិកម្ម",
   "Running now. The answer will show up in Runs.": "កំពុងរត់ឥឡូវនេះ។ ចម្លើយនឹងបង្ហាញនៅក្នុងការរត់។",
+  "Search, read and draft your email": "ស្វែងរក អាន និងព្រាងអ៊ីមែលរបស់អ្នក",
+  "See your calendars and events": "មើលប្រតិទិន និងព្រឹត្តិការណ៍របស់អ្នក",
+  "Search and read your files": "ស្វែងរក និងអានឯកសាររបស់អ្នក",
   "Couldn't open": "មិនអាចបើកបាន",
 } satisfies Messages;

@@ -143,7 +143,7 @@ export default {
   "Enter this code on ChatGPT": "Unesite ovaj kod na ChatGPT",
   "Code expired": "Kod je istekao",
   "Sign-in didn't work": "Prijava nije uspjela",
-  "Results for:": "Rezultati za:",
+  "+{count} more": "još {count}",
   "Searching…": "Pretraživanje…",
   "The search failed. Try this tab again later.":
     "Pretraga nije uspjela. Pokušajte ovu karticu kasnije.",
@@ -182,7 +182,7 @@ export default {
   "Saved to your preferences": "Sačuvano u vašim postavkama",
   "Finding duas for {detail}": "Traženje dova: {detail}",
   "The answer failed.": "Odgovor nije uspio.",
-  "Search results for:": "Rezultati pretrage za:",
+  "Searched:": "Pretraženo:",
   "No links": "Nema linkova",
   "View more": "Prikaži više",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -390,7 +390,6 @@ export default {
   "New automation": "Nova automatizacija",
   "Edit automation": "Uredi automatizaciju",
   "Sign in to create automations.": "Prijavite se da kreirate automatizacije.",
-  Suggestions: "Prijedlozi",
   Pause: "Pauziraj",
   Resume: "Nastavi",
   Paused: "Pauzirano",
@@ -448,6 +447,41 @@ export default {
   "Friday reminder": "Podsjetnik za petak",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Podsjeti me na sunnet petka s jednim odgovarajućim hadisom.",
+  Learning: "Učenje",
+  Worship: "Ibadet",
+  Family: "Porodica",
+  Hour: "Sat",
+  Minute: "Minuta",
+  "Evening adhkar": "Večernji zikr",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Daj mi večernji zikr s izvorima i kada ga učiti.",
+  "Verse of the day": "Ajet dana",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Podijeli jedan ajet iz Kur'ana s prijevodom i kratkim tefsirom.",
+  "Weekly tafsir": "Sedmični tefsir",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Objasni nekoliko ajeta kratke sure prema klasičnim knjigama tefsira.",
+  "Quran word of the day": "Kur'anska riječ dana",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Nauči me jednoj arapskoj riječi iz Kur'ana s njenim korijenom i ajetom u kojem se javlja.",
+  "Seerah story": "Priča iz sire",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Ispričaj mi jednu priču iz sire Poslanika ﷺ, s poukom koju treba izvući.",
+  "Fiqh question explained": "Objašnjeno fikhsko pitanje",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Objasni jedno svakodnevno fikhsko pitanje sa stavom svakog mezheba.",
+  "Monday and Thursday fast": "Post ponedjeljkom i četvrtkom",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Podsjeti me da je sutra dan sunnetskog posta, s hadisom o njegovoj nagradi.",
+  "Nightly dua": "Dova za noć",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Daj mi jednu vjerodostojnu dovu za noć s njenim značenjem i izvorom.",
+  "Prophet story for kids": "Priča o vjerovjesniku za djecu",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Ispričaj kratku priču o jednom vjerovjesniku za djecu jednostavnim riječima.",
+  "Family halaqa": "Porodična halka",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Predloži temu za našu porodičnu halku s ajetom, hadisom i pitanjima.",
   Memory: "Memorija",
   "Project only": "Samo projekat",
   "Chats here use and add to your main memory.":
@@ -538,7 +572,17 @@ export default {
   "Automation paused": "Automatizacija je pauzirana",
   "Automation resumed": "Automatizacija je nastavljena",
   "Automation deleted": "Automatizacija je izbrisana",
+  "Automation created": "Automatizacija je kreirana",
+  "No automations yet": "Još nema automatizacija",
+  "Notify me": "Obavijesti me",
+  "In app": "U aplikaciji",
+  None: "Nijedno",
+  "Finished. Open to read the answer.": "Gotovo. Otvori da pročitaš odgovor.",
+  "New automation answers": "Novi odgovori automatizacija",
   "Running now. The answer will show up in Runs.":
     "Pokreće se sada. Odgovor će se pojaviti u Pokretanjima.",
+  "Search, read and draft your email": "Pretražujte, čitajte i pišite nacrte e-pošte",
+  "See your calendars and events": "Pogledajte svoje kalendare i događaje",
+  "Search and read your files": "Pretražujte i čitajte svoje datoteke",
   "Couldn't open": "Nije se moglo otvoriti",
 } satisfies Messages;

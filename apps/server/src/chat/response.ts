@@ -1,5 +1,6 @@
 import {
   APICallError,
+  consumeStream,
   createAgentUIStream,
   createIdGenerator,
   createUIMessageStream,
@@ -19,6 +20,7 @@ import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
 import type { connectedTools } from "../connectors/connections";
 import { type Event, toolFailure } from "../events";
+import { type AutomationScope, automationTools } from "./automationTools";
 import { citations } from "./citations";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -138,7 +140,9 @@ export function chatResponse({
   save,
   record,
   remember,
+  automate,
   fileOwner,
+  settled,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   options: { answer: ProviderOptions; side: ProviderOptions };
@@ -154,7 +158,9 @@ export function chatResponse({
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
   remember: Remember | undefined;
+  automate: AutomationScope | undefined;
   fileOwner?: string;
+  settled?: () => void;
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -208,7 +214,11 @@ export function chatResponse({
       const agent = answerAgent({
         model: models.model,
         modelName,
-        tools: { ...tools, ...connectors.tools },
+        tools: {
+          ...tools,
+          ...(automate && automationTools(automate)),
+          ...connectors.tools,
+        },
         mode,
         settings,
         rules: answerRules(settings, recent, mode) + project + skills,
@@ -319,6 +329,7 @@ export function chatResponse({
   const response = createUIMessageStreamResponse({
     stream,
     headers: { "cache-control": "no-cache, no-transform" },
+    consumeSseStream: ({ stream: copy }) => consumeStream({ stream: copy }).then(settled),
   });
   return new Response(response.body?.pipeThrough(keepAlive(KEEPALIVE_MS)) ?? null, response);
 }

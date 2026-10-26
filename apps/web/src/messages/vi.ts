@@ -145,7 +145,7 @@ export default {
   "Enter this code on ChatGPT": "Nhập mã này trên ChatGPT",
   "Code expired": "Mã đã hết hạn",
   "Sign-in didn't work": "Đăng nhập không thành công",
-  "Results for:": "Kết quả cho:",
+  "+{count} more": "+{count} khác",
   "Searching…": "Đang tìm…",
   "The search failed. Try this tab again later.": "Tìm kiếm thất bại. Hãy thử lại thẻ này sau.",
   "Expand sidebar": "Mở rộng thanh bên",
@@ -182,7 +182,7 @@ export default {
   "Saved to your preferences": "Đã lưu vào tùy chọn của bạn",
   "Finding duas for {detail}": "Đang tìm lời cầu nguyện cho {detail}",
   "The answer failed.": "Không trả lời được.",
-  "Search results for:": "Kết quả tìm kiếm cho:",
+  "Searched:": "Đã tìm:",
   "No links": "Không có liên kết",
   "View more": "Xem thêm",
   "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
@@ -390,7 +390,6 @@ export default {
   "New automation": "Tự động hóa mới",
   "Edit automation": "Sửa tự động hóa",
   "Sign in to create automations.": "Đăng nhập để tạo tự động hóa.",
-  Suggestions: "Gợi ý",
   Pause: "Tạm dừng",
   Resume: "Tiếp tục",
   Paused: "Đã tạm dừng",
@@ -448,6 +447,41 @@ export default {
   "Friday reminder": "Nhắc nhở thứ Sáu",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Nhắc tôi về sunnah của ngày thứ Sáu kèm một hadith liên quan.",
+  Learning: "Học tập",
+  Worship: "Thờ phượng",
+  Family: "Gia đình",
+  Hour: "Giờ",
+  Minute: "Phút",
+  "Evening adhkar": "Adhkar buổi tối",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Cho tôi adhkar buổi tối kèm nguồn và thời điểm đọc.",
+  "Verse of the day": "Câu kinh trong ngày",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Chia sẻ một câu kinh Qur'an kèm bản dịch và lời giải nghĩa ngắn.",
+  "Weekly tafsir": "Tafsir hằng tuần",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Giải thích vài câu của một chương ngắn theo các sách tafsir kinh điển.",
+  "Quran word of the day": "Từ Qur'an mỗi ngày",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Dạy tôi một từ tiếng Ả Rập trong Qur'an kèm gốc từ và một câu kinh có từ đó.",
+  "Seerah story": "Câu chuyện sirah",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Kể cho tôi một câu chuyện trong sirah của Nhà Tiên tri ﷺ, kèm bài học rút ra.",
+  "Fiqh question explained": "Giải đáp câu hỏi fiqh",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Giải thích một vấn đề fiqh đời thường kèm quan điểm của từng madhhab.",
+  "Monday and Thursday fast": "Nhịn ăn thứ Hai và thứ Năm",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Nhắc tôi rằng ngày mai là ngày nhịn ăn sunnah, kèm một hadith về phần thưởng của nó.",
+  "Nightly dua": "Dua ban đêm",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Cho tôi một dua xác thực cho ban đêm kèm ý nghĩa và nguồn.",
+  "Prophet story for kids": "Chuyện về nhà tiên tri cho trẻ em",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Kể một câu chuyện ngắn về một vị nhà tiên tri cho trẻ em, bằng lời đơn giản.",
+  "Family halaqa": "Halaqa gia đình",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Gợi ý một chủ đề cho halaqa gia đình chúng tôi, kèm một câu kinh, một hadith và các câu hỏi.",
   Memory: "Bộ nhớ",
   "Project only": "Chỉ trong dự án",
   "Chats here use and add to your main memory.":
@@ -536,6 +570,16 @@ export default {
   "Automation paused": "Đã tạm dừng tự động hóa",
   "Automation resumed": "Đã tiếp tục tự động hóa",
   "Automation deleted": "Đã xóa tự động hóa",
+  "Automation created": "Đã tạo tự động hóa",
+  "No automations yet": "Chưa có tự động hóa nào",
+  "Notify me": "Thông báo cho tôi",
+  "In app": "Trong ứng dụng",
+  None: "Không",
+  "Finished. Open to read the answer.": "Đã xong. Mở để đọc câu trả lời.",
+  "New automation answers": "Câu trả lời mới từ tự động hóa",
   "Running now. The answer will show up in Runs.": "Đang chạy. Câu trả lời sẽ hiện trong Lần chạy.",
+  "Search, read and draft your email": "Tìm, đọc và soạn thư nháp email của bạn",
+  "See your calendars and events": "Xem lịch và sự kiện của bạn",
+  "Search and read your files": "Tìm và đọc tệp của bạn",
   "Couldn't open": "Không mở được",
 } satisfies Messages;

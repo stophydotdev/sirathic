@@ -5,6 +5,7 @@
   "type": "module",
   "main": "src/index.ts",
   "exports": {
+    "./automations": "./src/automations/schedule.ts",
     "./catalog": "./src/connectors/catalog.ts",
     "./files": "./src/shared/files.ts",
     "./messages": "./src/shared/messages.ts",

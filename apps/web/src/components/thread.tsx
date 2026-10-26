@@ -10,6 +10,7 @@ import { Favicon, FaviconStack } from "@/components/favicon";
 import { siteName, turnsOf } from "@/components/sources";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
+import { SirathicIcon } from "@/components/makerIcon";
 import { UserText } from "@/components/mentions";
 import { ProjectHome } from "@/components/projectHome";
 import { ThreadKeys } from "@/components/shortcuts";
@@ -36,10 +37,8 @@ import {
   IconPhoto,
   IconPlus,
   IconShare,
-  IconSparkles,
   IconSpy,
   IconWorld,
-  type TablerIcon,
 } from "@tabler/icons-react";
 import { type FC, memo, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
@@ -50,13 +49,13 @@ const iconButton =
   "text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-40";
 
 const TABS = [
-  { id: "answer", name: "Answer", Icon: IconSparkles },
+  { id: "answer", name: "Answer", Icon: SirathicIcon },
   { id: "links", name: "Links", Icon: IconWorld },
   { id: "images", name: "Images", Icon: IconPhoto },
 ] as const satisfies readonly {
   id: string;
   name: MessageKey;
-  Icon: TablerIcon;
+  Icon: FC<{ className?: string }>;
 }[];
 
 type Tab = (typeof TABS)[number]["id"];
@@ -432,8 +431,8 @@ const SourcesPane: FC = () => {
   const t = useT();
   const [chosen, setChosen] = useState<boolean>();
   const open = chosen ?? true;
-  const turns = turnsOf(messages).filter((turn) => turn.sources.length > 0);
-  const urls = [...new Set(turns.flatMap((turn) => turn.sources.map((s) => s.url)))];
+  const turns = turnsOf(messages).filter((turn) => turn.cited.length > 0);
+  const urls = [...new Set(turns.flatMap((turn) => turn.cited.map((s) => s.url)))];
   if (urls.length === 0) return null;
 
   return (
@@ -464,7 +463,7 @@ const SourcesPane: FC = () => {
                   Results for “{turn.question}”
                 </p>
               )}
-              {turn.sources.map((source) => (
+              {turn.cited.map((source) => (
                 <a
                   key={source.url}
                   href={source.url}
