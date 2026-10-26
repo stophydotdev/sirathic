@@ -644,6 +644,7 @@ export default {
   Guessed: "Божомол",
   Undo: "Артка кайтаруу",
   "Learned: {reason}": "Үйрөндү: {reason}",
+  "Typing…": "Жазып жатат…",
   "Couldn't open": "Ачылган жок",
   "Recent files": "Акыркы файлдар",
   "Search or create bots": "Бот издөө же түзүү",

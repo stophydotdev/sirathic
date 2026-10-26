@@ -639,6 +639,7 @@ export default {
   Guessed: "Phỏng đoán",
   Undo: "Hoàn tác",
   "Learned: {reason}": "Đã học: {reason}",
+  "Typing…": "Đang nhập…",
   "Couldn't open": "Không mở được",
   "Recent files": "Tệp gần đây",
   "Search or create bots": "Tìm hoặc tạo bot",

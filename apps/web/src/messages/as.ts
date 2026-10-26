@@ -632,6 +632,7 @@ export default {
   Guessed: "অনুমান",
   Undo: "আনডু কৰক",
   "Learned: {reason}": "শিকিলে: {reason}",
+  "Typing…": "লিখি আছে…",
   "Couldn't open": "খুলিব পৰা নগ'ল",
   "Recent files": "শেহতীয়া ফাইল",
   "Search or create bots": "বট বিচাৰক বা সৃষ্টি কৰক",

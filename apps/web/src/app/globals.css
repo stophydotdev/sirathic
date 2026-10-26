@@ -287,3 +287,16 @@
 [dir="rtl"] [data-composer] [style*="--link-icon"] {
   background-position: right center;
 }
+
+.bot-bubble {
+  @apply bg-foreground/7 mb-2 w-fit max-w-4/5 rounded-3xl px-4 py-2 text-base;
+}
+
+.bot-bubble .aui-md > :last-child,
+.bot-bubble .aui-md li:last-child {
+  @apply mb-0;
+}
+
+.bot-bubble .aui-md > :is(ul, ol) {
+  @apply ps-5;
+}

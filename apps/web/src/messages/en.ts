@@ -583,6 +583,7 @@ export const MESSAGES = [
   "Guessed",
   "Undo",
   "Learned: {reason}",
+  "Typing…",
   "Couldn't open",
   "Recent files",
   "Search or create bots",

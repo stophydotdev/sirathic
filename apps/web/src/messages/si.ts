@@ -632,6 +632,7 @@ export default {
   Guessed: "අනුමානය",
   Undo: "අහෝසි කරන්න",
   "Learned: {reason}": "ඉගෙන ගත්තා: {reason}",
+  "Typing…": "ටයිප් කරමින්…",
   "Couldn't open": "විවෘත කළ නොහැකි විය",
   "Recent files": "මෑත ගොනු",
   "Search or create bots": "බොට් සොයන්න හෝ සාදන්න",

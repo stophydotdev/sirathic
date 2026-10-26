@@ -630,6 +630,7 @@ export default {
   Guessed: "ఊహ",
   Undo: "రద్దు చేయి",
   "Learned: {reason}": "నేర్చుకుంది: {reason}",
+  "Typing…": "టైప్ చేస్తోంది…",
   "Couldn't open": "తెరవలేకపోయింది",
   "Recent files": "ఇటీవలి ఫైల్‌లు",
   "Search or create bots": "బాట్‌లను వెతకండి లేదా సృష్టించండి",

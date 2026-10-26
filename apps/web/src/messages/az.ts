@@ -647,6 +647,7 @@ export default {
   Guessed: "Təxmin",
   Undo: "Geri al",
   "Learned: {reason}": "Öyrəndi: {reason}",
+  "Typing…": "Yazır…",
   "Couldn't open": "Açılmadı",
   "Recent files": "Son fayllar",
   "Search or create bots": "Bot axtar və ya yarat",

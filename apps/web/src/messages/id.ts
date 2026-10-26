@@ -644,6 +644,7 @@ export default {
   Guessed: "Dugaan",
   Undo: "Urungkan",
   "Learned: {reason}": "Belajar: {reason}",
+  "Typing…": "Mengetik…",
   "Couldn't open": "Tidak bisa dibuka",
   "Recent files": "File terbaru",
   "Search or create bots": "Cari atau buat bot",

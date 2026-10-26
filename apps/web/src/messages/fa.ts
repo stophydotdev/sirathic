@@ -640,6 +640,7 @@ export default {
   Guessed: "حدس",
   Undo: "واگرد",
   "Learned: {reason}": "یاد گرفت: {reason}",
+  "Typing…": "در حال نوشتن…",
   "Couldn't open": "باز نشد",
   "Recent files": "فایل‌های اخیر",
   "Search or create bots": "جستجو یا ساخت بات",

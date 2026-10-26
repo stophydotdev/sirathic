@@ -633,6 +633,7 @@ export default {
   Guessed: "تخمين",
   Undo: "تراجع",
   "Learned: {reason}": "تعلّم: {reason}",
+  "Typing…": "يكتب…",
   "Couldn't open": "تعذّر فتح",
   "Recent files": "الملفات الأخيرة",
   "Search or create bots": "ابحث عن بوت أو أنشئ واحدًا",

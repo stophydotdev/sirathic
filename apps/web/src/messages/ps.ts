@@ -640,6 +640,7 @@ export default {
   Guessed: "اټکل",
   Undo: "بیرته کول",
   "Learned: {reason}": "زده یې کړه: {reason}",
+  "Typing…": "لیکي…",
   "Couldn't open": "پرانیستل نشو",
   "Recent files": "وروستي فایلونه",
   "Search or create bots": "بوټونه ولټوئ یا یې جوړ کړئ",

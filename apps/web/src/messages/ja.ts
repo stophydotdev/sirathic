@@ -641,6 +641,7 @@ export default {
   Guessed: "推測",
   Undo: "取り消し",
   "Learned: {reason}": "学習: {reason}",
+  "Typing…": "入力中…",
   "Couldn't open": "開けませんでした",
   "Recent files": "最近のファイル",
   "Search or create bots": "ボットを検索または作成",

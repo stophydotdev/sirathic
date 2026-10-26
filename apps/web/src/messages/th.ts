@@ -626,6 +626,7 @@ export default {
   Guessed: "คาดเดา",
   Undo: "เลิกทำ",
   "Learned: {reason}": "เรียนรู้แล้ว: {reason}",
+  "Typing…": "กำลังพิมพ์…",
   "Couldn't open": "เปิดไม่ได้",
   "Recent files": "ไฟล์ล่าสุด",
   "Search or create bots": "ค้นหาหรือสร้างบอท",

@@ -632,6 +632,7 @@ export default {
   Guessed: "ការទស្សន៍ទាយ",
   Undo: "មិនធ្វើវិញ",
   "Learned: {reason}": "បានរៀន៖ {reason}",
+  "Typing…": "កំពុងវាយ…",
   "Couldn't open": "មិនអាចបើកបាន",
   "Recent files": "ឯកសារថ្មីៗ",
   "Search or create bots": "ស្វែងរក ឬបង្កើតបុត",

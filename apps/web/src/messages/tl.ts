@@ -648,6 +648,7 @@ export default {
   Guessed: "Hula",
   Undo: "I-undo",
   "Learned: {reason}": "Natutunan: {reason}",
+  "Typing…": "Nagta-type…",
   "Couldn't open": "Hindi mabuksan",
   "Recent files": "Mga kamakailang file",
   "Search or create bots": "Maghanap o gumawa ng bot",

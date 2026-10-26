@@ -641,6 +641,7 @@ export default {
   Guessed: "Fakkitaare",
   Undo: "Gañ",
   "Learned: {reason}": "Ekkii: {reason}",
+  "Typing…": "Ina winnda…",
   "Couldn't open": "Waawaa uddit",
   "Recent files": "Fiilaaji sakket",
   "Search or create bots": "Yiylo walla waɗ bot",

@@ -642,6 +642,7 @@ export default {
   Guessed: "Pretpostavka",
   Undo: "Poništi",
   "Learned: {reason}": "Naučio: {reason}",
+  "Typing…": "Piše…",
   "Couldn't open": "Nije se moglo otvoriti",
   "Recent files": "Nedavni fajlovi",
   "Search or create bots": "Pretraži ili kreiraj botove",

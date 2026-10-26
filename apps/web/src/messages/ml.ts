@@ -638,6 +638,7 @@ export default {
   Guessed: "ഊഹം",
   Undo: "പഴയപടിയാക്കുക",
   "Learned: {reason}": "പഠിച്ചു: {reason}",
+  "Typing…": "ടൈപ്പ് ചെയ്യുന്നു…",
   "Couldn't open": "തുറക്കാനായില്ല",
   "Recent files": "സമീപകാല ഫയലുകൾ",
   "Search or create bots": "ബോട്ടുകൾ തിരയുക അല്ലെങ്കിൽ സൃഷ്ടിക്കുക",

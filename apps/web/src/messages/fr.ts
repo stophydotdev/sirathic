@@ -653,6 +653,7 @@ export default {
   Guessed: "Supposé",
   Undo: "Annuler",
   "Learned: {reason}": "A appris : {reason}",
+  "Typing…": "Écrit…",
   "Couldn't open": "Impossible d'ouvrir",
   "Recent files": "Fichiers récents",
   "Search or create bots": "Rechercher ou créer des bots",

@@ -647,6 +647,7 @@ export default {
   Guessed: "Тахмин",
   Undo: "Бекор қилиш",
   "Learned: {reason}": "Ўрганди: {reason}",
+  "Typing…": "Ёзмоқда…",
   "Couldn't open": "Очилмади",
   "Recent files": "Сўнгги файллар",
   "Search or create bots": "Бот қидириш ёки яратиш",

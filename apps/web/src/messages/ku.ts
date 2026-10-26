@@ -644,6 +644,7 @@ export default {
   Guessed: "تەخمین",
   Undo: "پاشگەزبوونەوە",
   "Learned: {reason}": "فێربوو: {reason}",
+  "Typing…": "دەنووسێت…",
   "Couldn't open": "نەکرایەوە",
   "Recent files": "فایلە نوێیەکان",
   "Search or create bots": "بۆت بگەڕێ یان دروستی بکە",

@@ -636,6 +636,7 @@ export default {
   Guessed: "अनुमान",
   Undo: "पूर्ववत करें",
   "Learned: {reason}": "सीखा: {reason}",
+  "Typing…": "लिख रहा है…",
   "Couldn't open": "खुल नहीं सका",
   "Recent files": "हाल की फ़ाइलें",
   "Search or create bots": "बॉट खोजें या बनाएँ",

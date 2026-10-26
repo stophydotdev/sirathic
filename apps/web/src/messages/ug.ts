@@ -646,6 +646,7 @@ export default {
   Guessed: "پەرەز",
   Undo: "ئۈنۈمسىز قىلىش",
   "Learned: {reason}": "ئۆگەندى: {reason}",
+  "Typing…": "يېزىۋاتىدۇ…",
   "Couldn't open": "ئېچىلمىدى",
   "Recent files": "يېقىنقى ھۆججەتلەر",
   "Search or create bots": "بوت ئىزدەش ياكى قۇرۇش",

@@ -635,6 +635,7 @@ export default {
   Guessed: "অনুমান",
   Undo: "পূর্বাবস্থায় ফেরান",
   "Learned: {reason}": "শিখেছে: {reason}",
+  "Typing…": "লিখছে…",
   "Couldn't open": "খোলা যায়নি",
   "Recent files": "সাম্প্রতিক ফাইল",
   "Search or create bots": "বট খুঁজুন বা তৈরি করুন",

@@ -626,6 +626,7 @@ export default {
   Guessed: "推测",
   Undo: "撤销",
   "Learned: {reason}": "已学会：{reason}",
+  "Typing…": "正在输入…",
   "Couldn't open": "无法打开",
   "Recent files": "最近的文件",
   "Search or create bots": "搜索或创建机器人",

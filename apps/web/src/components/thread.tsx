@@ -13,6 +13,7 @@ import { Mark } from "@/components/logo";
 import { SirathicIcon } from "@/components/makerIcon";
 import { UserText } from "@/components/mentions";
 import { ProjectHome } from "@/components/projectHome";
+import { BotTurn } from "@/components/botChat";
 import { BotGreeting, BotHeaderMenu, BotHome, BotTitle, useBot } from "@/components/botHome";
 import { BotLearned } from "@/components/botLearned";
 import { ThreadKeys } from "@/components/shortcuts";
@@ -305,7 +306,9 @@ const ThreadBody: FC = () => {
       <div className="px-6">
         <TurnRow aside={bot ? undefined : <SourcesPane />} layout={bot ? "column" : "aside"}>
           <BotGreeting />
-          <ThreadPrimitive.Messages>{() => <Turn />}</ThreadPrimitive.Messages>
+          <ThreadPrimitive.Messages>
+            {() => (bot ? <BotTurn /> : <Turn />)}
+          </ThreadPrimitive.Messages>
           <BotLearned />
         </TurnRow>
       </div>

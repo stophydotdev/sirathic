@@ -642,6 +642,7 @@ export default {
   Guessed: "Предположение",
   Undo: "Отменить",
   "Learned: {reason}": "Усвоил: {reason}",
+  "Typing…": "Печатает…",
   "Couldn't open": "Не удалось открыть",
   "Recent files": "Недавние файлы",
   "Search or create bots": "Найти или создать бота",

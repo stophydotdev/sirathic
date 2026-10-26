@@ -175,7 +175,7 @@ const jsonText = z.string().transform((text, ctx) => {
   }
 });
 
-const ReplyError: FC = () => {
+export const ReplyError: FC = () => {
   const error = useAuiState((s) =>
     s.message.status?.type === "incomplete" && s.message.status.reason === "error"
       ? s.message.status.error

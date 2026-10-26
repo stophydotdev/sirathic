@@ -647,6 +647,7 @@ export default {
   Guessed: "Ipotesi",
   Undo: "Annulla",
   "Learned: {reason}": "Ha imparato: {reason}",
+  "Typing…": "Sta scrivendo…",
   "Couldn't open": "Impossibile aprire",
   "Recent files": "File recenti",
   "Search or create bots": "Cerca o crea bot",

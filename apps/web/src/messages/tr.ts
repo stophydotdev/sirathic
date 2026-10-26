@@ -643,6 +643,7 @@ export default {
   Guessed: "Tahmin",
   Undo: "Geri al",
   "Learned: {reason}": "Öğrendi: {reason}",
+  "Typing…": "Yazıyor…",
   "Couldn't open": "Açılamadı",
   "Recent files": "Son dosyalar",
   "Search or create bots": "Bot ara veya oluştur",

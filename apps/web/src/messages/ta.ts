@@ -642,6 +642,7 @@ export default {
   Guessed: "ஊகம்",
   Undo: "செயல்தவிர்",
   "Learned: {reason}": "கற்றுக்கொண்டது: {reason}",
+  "Typing…": "தட்டச்சு செய்கிறது…",
   "Couldn't open": "திறக்க முடியவில்லை",
   "Recent files": "சமீபத்திய கோப்புகள்",
   "Search or create bots": "பாட்களைத் தேடவும் அல்லது உருவாக்கவும்",

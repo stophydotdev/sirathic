@@ -643,6 +643,7 @@ export default {
   Guessed: "Претпоставка",
   Undo: "Поништи",
   "Learned: {reason}": "Научио: {reason}",
+  "Typing…": "Куца…",
   "Couldn't open": "Није могло да се отвори",
   "Recent files": "Недавне датотеке",
   "Search or create bots": "Претражи или направи ботове",
