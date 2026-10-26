@@ -7,17 +7,19 @@ import { auth, userFor } from "./auth";
 import { startScheduler } from "./automations/runner";
 import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
+import { refreshSummary } from "./chat/botSummary";
 import { countNoorAnswer, pickModels } from "./chat/models";
 import { chatResponse } from "./chat/response";
+import { reviewEvery } from "./chat/botReview";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./client";
 import { connectedTools, finishConnect } from "./connectors/connections";
 import { track } from "./events";
 import { readProjectFiles } from "./files/attachments";
 import { filesRoutes } from "./files/routes";
-import { projectOfChat, rememberInProject } from "./projects";
+import { projectOfChat, rememberInBot, rememberInProject } from "./projects";
 import { projectRules, settingsInProject } from "./projectRules";
-import { type ChatMessage, device, mode } from "./shared/messages";
+import { appLanguage, type ChatMessage, device, mode } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./respond";
 import { answerOptions, sideOptions } from "./chatgpt/codex";
 import { appRouter, createContext } from "./router";
@@ -37,12 +39,8 @@ const chatBody = z.object({
   projectId: z.uuid().optional().catch(undefined),
   trigger: z.enum(["submit-message", "regenerate-message"]).optional().catch(undefined),
   device: device.optional().catch(undefined),
-  language: z
-    .string()
-    .regex(/^[a-z]{2,3}$/u)
-    .optional()
-    .catch(undefined),
   timezone: timezone.optional().catch(undefined),
+  language: appLanguage.optional().catch(undefined),
 });
 
 const app = new Hono();
@@ -98,8 +96,26 @@ app.post("/api/chat", (c) =>
       if (input.incognito) return saving;
       saving = saving
         .catch(() => undefined)
-        .then(async () => saveSession(input.id, by, messages, (await project)?.id));
+        .then(async () => {
+          const inProject = await project;
+          await saveSession(input.id, by, messages, inProject?.id);
+          if (inProject?.kind === "bot" && messages.at(-1)?.role === "assistant") {
+            void refreshSummary({
+              bot: { id: inProject.id, owner: by },
+              messages,
+              model: models.small,
+              providerOptions: sideOptions,
+            });
+          }
+        });
       return saving;
+    };
+    const learn = (messages: typeof validated) => {
+      if (owner === undefined || messages.at(-1)?.role !== "assistant") return;
+      void project.then(
+        (inProject) =>
+          inProject?.kind === "bot" && reviewEvery({ user, botId: inProject.id, messages }),
+      );
     };
     const saved = save(validated);
     saved.catch((err: Error) => {
@@ -125,16 +141,25 @@ app.post("/api/chat", (c) =>
       mode: input.mode,
       abortSignal: answer.signal,
       settled: answer.settled,
+      bot:
+        owner === undefined
+          ? undefined
+          : project.then((inProject) =>
+              inProject?.kind === "bot" ? { id: inProject.id, owner } : undefined,
+            ),
       preferences: Promise.all([getSettings(by), project])
         .then(([settings, inProject]) => settingsInProject(settings, inProject))
         .catch((err: Error) => {
           console.error(`settings not read: ${reasonOf(err)}`);
           return DEFAULT_SETTINGS;
         }),
-      connected: connectedTools(by),
+      connected: project.then((inProject) =>
+        connectedTools(by, inProject?.kind === "bot" ? inProject.plugins : undefined),
+      ),
       projectRules: project.then(async (inProject) =>
         inProject ? projectRules(inProject) + (await readProjectFiles(by, inProject.id)) : "",
       ),
+      texting: project.then((inProject) => inProject?.kind === "bot"),
       skillRules:
         owner === undefined
           ? Promise.resolve("")
@@ -153,7 +178,7 @@ app.post("/api/chat", (c) =>
         side: sideOptions,
       },
       title,
-      save,
+      save: (messages) => save(messages).then(() => learn(messages)),
       record: (event) => track(event, owner),
       fileOwner: by,
       automate:
@@ -165,6 +190,7 @@ app.post("/api/chat", (c) =>
           ? undefined
           : async (told) => {
               const inProject = await project;
+              if (inProject?.kind === "bot") return rememberInBot(inProject.id, owner, told);
               return inProject?.projectOnlyMemory
                 ? rememberInProject(inProject.id, owner, told)
                 : remember(owner, told);

@@ -22,6 +22,9 @@ import {
 } from "./automations/store";
 import { runNow } from "./automations/runner";
 import { isAnswering, stopAnswer } from "./chat/answers";
+import { learnedLine, noteId, undoNote } from "./botNotes";
+import { openBot } from "./chat/botOpener";
+import { reviewBot } from "./chat/botReview";
 import { fileId, fileName, listFiles, removeFile, renameFile } from "./files/store";
 import { NOOR_MODELS } from "./noor";
 import { userFor } from "./auth";
@@ -51,8 +54,10 @@ import {
   setFeedback,
   updateSession,
 } from "./sessions";
+import { appLanguage } from "./shared/messages";
 import { settingsUpdate } from "./shared/settings";
 import { listSkills, removeSkill, saveSkill, skillInput } from "./skills";
+import { progressOf } from "./study";
 import { suggestions } from "./suggest";
 
 const TRPC_CODES = {
@@ -96,6 +101,8 @@ const signedIn = procedure.use(({ ctx, next }) => {
 
 const session = z.object({ id: sessionId });
 
+const bot = z.object({ botId: projectId });
+
 const plugin = z.object({ id: pluginId });
 
 const isDefault = (model: { slug: string }) => Number(model.slug === DEFAULT_MODEL);
@@ -127,6 +134,13 @@ export const appRouter = t.router({
       .input(feedbackInput.safeExtend({ id: sessionId }))
       .mutation(async ({ ctx, input: { id, ...feedback } }) => {
         const saved = await setFeedback(id, ctx.owner, feedback);
+        if (feedback.value === "down") {
+          void reviewBot({
+            user: ctx.user,
+            botId: id,
+            why: { kind: "down", messageId: feedback.messageId },
+          });
+        }
         track(
           {
             name: "feedback.given",
@@ -143,14 +157,22 @@ export const appRouter = t.router({
   projects: t.router({
     list: signedIn.query(({ ctx }) => listProjects(ctx.owner)),
     create: signedIn
-      .input(projectInput)
-      .mutation(({ ctx, input }) => createProject(ctx.owner, input)),
+      .input(projectInput.safeExtend({ language: appLanguage.optional() }))
+      .mutation(async ({ ctx, input: { language, ...input } }) => {
+        const created = await createProject(ctx.owner, input);
+        return created.kind === "bot" ? openBot(ctx.user, created, language) : created;
+      }),
     update: signedIn
       .input(projectUpdate.safeExtend({ id: projectId }))
       .mutation(({ ctx, input: { id, ...update } }) => updateProject(id, ctx.owner, update)),
     remove: signedIn
       .input(z.object({ id: projectId }))
       .mutation(({ ctx, input }) => removeProject(input.id, ctx.owner)),
+  }),
+  study: t.router({
+    progress: signedIn
+      .input(z.object({ id: projectId }))
+      .query(({ ctx, input }) => progressOf({ id: input.id, owner: ctx.owner })),
   }),
   automations: t.router({
     list: signedIn.query(({ ctx }) => listAutomations(ctx.owner)),
@@ -183,6 +205,12 @@ export const appRouter = t.router({
     addCustom: signedIn
       .input(customInput)
       .mutation(({ ctx, input }) => addCustom(ctx.owner, input)),
+  }),
+  notes: t.router({
+    learned: signedIn.input(bot).query(({ ctx, input }) => learnedLine(input.botId, ctx.owner)),
+    undo: signedIn
+      .input(bot.extend({ id: noteId }))
+      .mutation(({ ctx, input }) => undoNote(input.botId, ctx.owner, input.id)),
   }),
   skills: t.router({
     list: signedIn.query(({ ctx }) => listSkills(ctx.owner)),

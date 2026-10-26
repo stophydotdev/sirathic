@@ -1,13 +1,14 @@
 import { db } from "@sirathic/db";
 import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
-import { type AnyColumn, and, desc, eq, ilike, sql } from "drizzle-orm";
+import { type AnyColumn, and, desc, eq, ilike, lt, sql } from "drizzle-orm";
 import { z } from "zod";
 import { projectId, requireProject } from "./projects";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "./shared/messages";
 import { StatusError } from "./respond";
 
 const TITLE_CHARS = 80;
+const PREVIEW_CHARS = 90;
 const RECENT_LIMIT = 50;
 const LIKE_SPECIAL = /[\\%_]/gu;
 
@@ -62,6 +63,7 @@ export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
       unread: chatSessions.unread,
       projectId: chatSessions.projectId,
       updatedAt: isoTime(chatSessions.updatedAt),
+      preview: sql<string>`left(coalesce((select string_agg(part->>'text', ' ') from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where part->>'type' = 'text'), ''), ${PREVIEW_CHARS})`,
     })
     .from(chatSessions)
     .where(
@@ -175,7 +177,7 @@ export async function deleteSession(id: string, by: string) {
   return { deleted: true };
 }
 
-async function messagesOf(id: string, by: string) {
+export async function messagesOf(id: string, by: string) {
   const row = await storedMessages(id, by);
   if (!row) throw new StatusError(404, "no such session");
   const messages = await validateUIMessages<ChatMessage>({
@@ -184,6 +186,20 @@ async function messagesOf(id: string, by: string) {
   });
   return { messages, projectId: row.projectId };
 }
+
+export async function readSummary(id: string, by: string) {
+  const [row] = await db
+    .select({ summary: chatSessions.summary, summarized: chatSessions.summarized })
+    .from(chatSessions)
+    .where(owned(id, by));
+  return row;
+}
+
+export const writeSummary = (id: string, by: string, summary: string, summarized: number) =>
+  db
+    .update(chatSessions)
+    .set({ summary, summarized, updatedAt: keepUpdatedAt })
+    .where(and(owned(id, by), lt(chatSessions.summarized, summarized)));
 
 export async function setFeedback(
   id: string,

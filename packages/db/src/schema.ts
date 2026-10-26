@@ -320,6 +320,22 @@ export const projects = pgTable(
     instructions: text().notNull().default(""),
     projectOnlyMemory: boolean().notNull().default(false),
     memory: jsonb().$type<string[]>().notNull().default([]),
+    kind: text().$type<"project" | "bot">().notNull().default("project"),
+    color: text(),
+    symbol: text(),
+    plugins: jsonb().$type<string[]>(),
+    title: text().notNull().default(""),
+    pinned: boolean().notNull().default(false),
+    section: text(),
+    hidden: boolean().notNull().default(false),
+    greeting: text(),
+    question: text(),
+    options: jsonb().$type<string[]>(),
+    profile: jsonb()
+      .$type<{ text: string; source: "said" | "guessed"; at: number }[]>()
+      .notNull()
+      .default([]),
+    note: text().notNull().default(""),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
       .notNull()
@@ -386,6 +402,8 @@ export const chatSessions = pgTable(
     unread: boolean().notNull().default(false),
     projectId: uuid(),
     automationId: uuid(),
+    summary: text(),
+    summarized: integer().notNull().default(0),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
       .notNull()
@@ -587,5 +605,56 @@ export const files = pgTable(
       columns: [table.projectId],
       foreignColumns: [projects.id],
     }).onDelete("set null"),
+  ],
+);
+
+export const botItems = pgTable(
+  "bot_items",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    owner: text().notNull(),
+    botId: uuid().notNull(),
+    kind: text().$type<"verse" | "hadith" | "word" | "other">().notNull(),
+    ref: text().notNull(),
+    label: text().notNull(),
+    step: smallint().notNull().default(0),
+    dueAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    right: integer().notNull().default(0),
+    wrong: integer().notNull().default(0),
+    mistake: text(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    uniqueIndex("bot_items_bot_ref").on(table.botId, table.kind, table.ref),
+    index("bot_items_bot_due").on(table.botId, table.dueAt),
+    foreignKey({
+      name: "bot_items_bot_id_fkey",
+      columns: [table.botId],
+      foreignColumns: [projects.id],
+    }).onDelete("cascade"),
+  ],
+);
+
+export const botNotes = pgTable(
+  "bot_notes",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    owner: text().notNull(),
+    botId: uuid().notNull(),
+    note: text().notNull(),
+    reason: text().notNull(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("bot_notes_bot_created").on(table.botId, table.createdAt),
+    foreignKey({
+      name: "bot_notes_bot_id_fkey",
+      columns: [table.botId],
+      foreignColumns: [projects.id],
+    }).onDelete("cascade"),
   ],
 );

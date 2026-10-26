@@ -324,7 +324,7 @@ async function openConnector(
   }
 }
 
-export async function connectedTools(owner: string) {
+export async function connectedTools(owner: string, only?: readonly string[] | null) {
   const rows = await db
     .select({
       connector: connections.connector,
@@ -338,8 +338,9 @@ export async function connectedTools(owner: string) {
       console.error(`connectors not loaded: ${reasonOf(err)}`);
       return [];
     });
+  const allowed = only ? rows.filter((row) => only.includes(row.connector)) : rows;
   const opened = await Promise.all(
-    rows.map((row) =>
+    allowed.map((row) =>
       openConnector(owner, row).catch((err: Error) => {
         console.warn(`${row.connector} tools skipped: ${reasonOf(err)}`);
         return undefined;

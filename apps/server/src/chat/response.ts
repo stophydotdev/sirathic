@@ -6,6 +6,7 @@ import {
   createUIMessageStream,
   createUIMessageStreamResponse,
   type FinishReason,
+  hasToolCall,
   type InferUIMessageChunk,
   type LanguageModel,
   type LanguageModelUsage,
@@ -21,6 +22,10 @@ import type { ProviderOptions } from "../chatgpt/codex";
 import type { connectedTools } from "../connectors/connections";
 import { type Event, toolFailure } from "../events";
 import { type AutomationScope, automationTools } from "./automationTools";
+import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "./botTools";
+import { summaryNote } from "./botSummary";
+import { chatSearchTools } from "./chatSearch";
+import { studyTools } from "./studyTools";
 import { citations } from "./citations";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -35,7 +40,6 @@ const KEEPALIVE_MS = 15_000;
 
 export function answerAgent({
   model,
-  modelName,
   tools,
   mode,
   settings,
@@ -46,7 +50,6 @@ export function answerAgent({
   answerOptions,
 }: {
   model: LanguageModel;
-  modelName: string;
   tools: ToolSet;
   mode: Mode;
   settings: Settings;
@@ -59,9 +62,9 @@ export function answerAgent({
   const usable = Object.keys(tools).filter((name): name is keyof typeof tools => name in tools);
   return new ToolLoopAgent({
     model,
-    instructions: searchPrompt(new Date(), mode, modelName, settings),
+    instructions: searchPrompt(new Date(), mode, settings),
     tools,
-    stopWhen: () => false,
+    stopWhen: hasToolCall("askUser"),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const searchFirst = stepNumber === 0 && mustSearch;
@@ -135,6 +138,7 @@ export function chatResponse({
   connected,
   projectRules,
   skillRules,
+  texting,
   options,
   title,
   save,
@@ -143,6 +147,8 @@ export function chatResponse({
   automate,
   fileOwner,
   settled,
+  bot,
+  historyLimit,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   options: { answer: ProviderOptions; side: ProviderOptions };
@@ -154,6 +160,7 @@ export function chatResponse({
   connected: ReturnType<typeof connectedTools>;
   projectRules: Promise<string>;
   skillRules: Promise<string>;
+  texting: Promise<boolean>;
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
@@ -161,6 +168,8 @@ export function chatResponse({
   automate: AutomationScope | undefined;
   fileOwner?: string;
   settled?: () => void;
+  bot?: Promise<BotScope | undefined>;
+  historyLimit?: number;
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -205,31 +214,44 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [settings, connectors, project, skills] = await Promise.all([
+      const [preferred, connectors, project, skills, inBot, texts] = await Promise.all([
         preferences,
         Promise.race([connected, stopped]),
         projectRules,
         skillRules,
+        bot,
+        texting,
       ]);
+      const settings = texts
+        ? ({ ...preferred, answerLength: "short" } satisfies Settings)
+        : preferred;
       const agent = answerAgent({
         model: models.model,
-        modelName,
         tools: {
           ...tools,
-          ...(automate && automationTools(automate)),
+          ...(automate && automationTools({ ...automate, projectId: inBot?.id })),
+          ...(inBot && botTools(inBot)),
+          ...(inBot && chatSearchTools(inBot)),
+          ...(inBot && studyTools(inBot)),
           ...connectors.tools,
         },
         mode,
         settings,
-        rules: answerRules(settings, recent, mode) + project + skills,
-        mustSearch,
+        rules: answerRules(settings, recent, mode, texts) + project + skills,
+        mustSearch: mustSearch && !inBot,
         canRemember: remember !== undefined,
         shorten,
         answerOptions: options.answer,
       });
       const answer = await createAgentUIStream({
         agent,
-        uiMessages: await readFiles(messages, fileOwner),
+        uiMessages: [
+          ...(inBot ? await summaryNote(inBot) : []),
+          ...(await readFiles(
+            recentTurns(messages, historyLimit ?? (inBot ? BOT_HISTORY : messages.length)),
+            fileOwner,
+          )),
+        ],
         originalMessages: messages,
         abortSignal,
         experimental_transform: [sources.transform(), smoothStream({ chunking: "word" })],
@@ -282,7 +304,7 @@ export function chatResponse({
             });
           }
         }
-        if (chunk.type === "tool-output-available" && !related) {
+        if (chunk.type === "tool-output-available" && !related && !inBot) {
           related = relatedQuestions(
             models.small,
             lastQuestion(messages),

@@ -1,3 +1,4 @@
+import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { api } from "@/lib/trpc";
 import type { PlainKey } from "@/components/locales";
@@ -12,8 +13,6 @@ type Models = { list: Model[]; error?: string };
 export const MODEL_DESCRIPTIONS = new Map<string, PlainKey>([
   ["sirathic-noor-1-flash", "Longer answers that explain more"],
 ]);
-
-const NO_MODELS: Models = { list: [] };
 
 const loadModels = (): Promise<Models> =>
   api.account.models.query().then(
@@ -38,15 +37,20 @@ export const useAccount = create<{
       chosen: undefined,
       refresh: async () => {
         void fetch("/api/auth/get-session").catch(() => undefined);
-        const status = await api.account.status.query().catch(() => undefined);
-        if (!status) return;
-        const models = status.signedIn ? await loadModels() : NO_MODELS;
-        set({ status, models: models.list, modelsError: models.error });
+        const [status, models] = await Promise.all([
+          api.account.status.query().catch(() => undefined),
+          loadModels(),
+        ]);
+        if (status) set({ status, models: models.list, modelsError: models.error });
       },
       choose: (slug) => set({ chosen: slug }),
       signOut: async () => {
         await fetch("/api/auth/sign-out", { method: "POST" }).catch(() => undefined);
-        await Promise.all([get().refresh(), useSessions.getState().refresh()]);
+        await Promise.all([
+          get().refresh(),
+          useSessions.getState().refresh(),
+          useProjects.getState().refresh(),
+        ]);
       },
     }),
     {

@@ -18,6 +18,9 @@ import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/share
 import { clientOf } from "../apps/server/src/client";
 import { toolFailure } from "../apps/server/src/events";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
+import { fallenOut } from "../apps/server/src/chat/botSummary";
+import { recentTurns } from "../apps/server/src/chat/botTools";
+import { findInChat } from "../apps/server/src/chat/chatSearch";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
 import { answerAgent } from "../apps/server/src/chat/response";
 
@@ -284,20 +287,21 @@ const SITUATIONAL = [
 ];
 
 test.each([
-  ["what is tawakkul", []],
-  ["zakat on gold nisab", ["<mathematical_expressions>"]],
-  ["lyrics of tala al badru", ["<copyright_restrictions>"]],
-  ["write a khutbah on patience", ["<copyright_restrictions>", "<rewrites>", "<followup>"]],
-])("%s gets the situational rules %p", (question, sections) => {
-  const rules = answerRules(DEFAULT_SETTINGS, question, "quick");
+  ["what is tawakkul", false, []],
+  ["zakat on gold nisab", false, ["<mathematical_expressions>"]],
+  ["lyrics of tala al badru", false, ["<copyright_restrictions>"]],
+  ["write a khutbah on patience", false, ["<copyright_restrictions>", "<rewrites>", "<followup>"]],
+  ["write a khutbah on patience", true, ["<copyright_restrictions>"]],
+])("%s (texting %p) gets the situational rules %p", (question, texting, sections) => {
+  const rules = answerRules(DEFAULT_SETTINGS, question, "quick", texting);
   expect(SITUATIONAL.filter((tag) => rules.includes(tag))).toEqual(sections);
 });
 
 test("short answers leave out the lesson structure", () => {
   const question = "is a mortgage halal";
-  expect(answerRules(DEFAULT_SETTINGS, question, "quick")).toContain("<structure>");
+  expect(answerRules(DEFAULT_SETTINGS, question, "quick", false)).toContain("<structure>");
   expect(
-    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question, "quick"),
+    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question, "quick", false),
   ).not.toContain("<structure>");
 });
 
@@ -305,12 +309,12 @@ test.each<[Mode, string, string]>([
   ["quick", "one round of parallel searches", "250 to 400 words"],
   ["research", "search again for those", "600 to 900 words"],
 ])("%s mode gets its own search guidance and length", (mode, search, length) => {
-  expect(searchPrompt(new Date(0), mode, "Noor 1 Flash", DEFAULT_SETTINGS)).toContain(search);
-  expect(answerRules(DEFAULT_SETTINGS, "is a mortgage halal", mode)).toContain(length);
+  expect(searchPrompt(new Date(0), mode, DEFAULT_SETTINGS)).toContain(search);
+  expect(answerRules(DEFAULT_SETTINGS, "is a mortgage halal", mode, false)).toContain(length);
 });
 
 test("the prompt lists what the user told Sirathic about themselves", () => {
-  const prompt = searchPrompt(new Date(0), "quick", "Noor 1 Flash", {
+  const prompt = searchPrompt(new Date(0), "quick", {
     ...DEFAULT_SETTINGS,
     memory: ["is a revert", "studies in the UK"],
   });
@@ -413,7 +417,6 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
   });
   const agent = answerAgent({
     model,
-    modelName: "test",
     tools: { lookup: tool({ inputSchema: z.object({}), execute: async () => "more rows" }) },
     mode: "quick",
     settings: DEFAULT_SETTINGS,
@@ -440,4 +443,62 @@ test("an answer runs until stopped or replaced, not until the browser leaves", (
   expect(second.signal.aborted).toBe(true);
   second.settled();
   expect(isAnswering("user", "chat")).toBe(false);
+});
+
+const turn = (i: number) => [
+  { role: "user", id: `q${i}` },
+  { role: "assistant", id: `a${i}` },
+];
+
+test("a long bot chat sends its recent turns, starting at a question", () => {
+  const chat = Array.from({ length: 20 }, (_, i) => turn(i)).flat();
+  const recent = recentTurns(chat, 5);
+  expect(recent.map((message) => message.id)).toEqual(["q18", "a18", "q19", "a19"]);
+  expect(recentTurns(chat.slice(0, 3), 24)).toHaveLength(3);
+});
+
+const chatOf = (turns: number) => Array.from({ length: turns }, (_, i) => turn(i)).flat();
+
+test("the summary takes only the turns that fell out of the window, each once", () => {
+  const first = fallenOut(chatOf(20), 0);
+  expect(first.fresh.map((message) => message.id)).toEqual(chatOf(8).map((message) => message.id));
+  expect(fallenOut(chatOf(20), first.upTo).fresh).toEqual([]);
+  expect(fallenOut(chatOf(22), first.upTo).fresh.map((message) => message.id)).toEqual([
+    "q8",
+    "a8",
+    "q9",
+    "a9",
+  ]);
+  expect(fallenOut(chatOf(5), 0).fresh).toEqual([]);
+});
+
+const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>
+  ({ id, role, parts: [{ type: "text", text }], metadata: { createdAt } }) satisfies ChatMessage;
+
+test("chat search finds earlier messages with dates, best match first, and skips the question", () => {
+  const chat = [
+    said("1", "user", "Teach me a hadith about intentions", Date.UTC(2026, 9, 12)),
+    said(
+      "2",
+      "assistant",
+      "Today's hadith: actions are judged by intentions.",
+      Date.UTC(2026, 9, 12),
+    ),
+    said("3", "user", "What about patience?", Date.UTC(2026, 9, 13)),
+    said(
+      "4",
+      "assistant",
+      "Patience is half of faith, and a hadith praises it.",
+      Date.UTC(2026, 9, 13),
+    ),
+    said("5", "user", "which hadith about intentions did you teach me"),
+  ];
+  const found = findInChat(chat, "hadith intentions");
+  expect(found.map((match) => match.from)).toEqual(["you", "user", "you"]);
+  expect(found[0]).toEqual({
+    from: "you",
+    date: "2026-10-12",
+    snippet: "Today's hadith: actions are judged by intentions.",
+  });
+  expect(findInChat(chat, "zakat")).toEqual([]);
 });

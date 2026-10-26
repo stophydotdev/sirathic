@@ -131,8 +131,6 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklab, var(--foreground) 15%, transparent) transparent;
   }
   body {
     @apply bg-background text-foreground;
@@ -147,11 +145,40 @@
   [role="button"]:not([aria-disabled="true"]),
   [role="tab"],
   [role="menuitem"]:not([data-disabled]),
+  [role="menuitemcheckbox"]:not([data-disabled]),
+  [role="menuitemradio"]:not([data-disabled]),
   [role="option"]:not([data-disabled]),
+  input[type="radio"]:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  label:has(> input[type="radio"], > input[type="checkbox"]),
   summary,
   label[for] {
     cursor: pointer;
   }
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--foreground) 10%, transparent) transparent;
+  }
+}
+
+::-webkit-scrollbar {
+  @apply size-0.75;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-foreground/10 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-foreground/20;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  @apply bg-transparent;
 }
 
 @font-face {
@@ -245,7 +272,7 @@
 
 [data-composer] .aui-lexical-placeholder {
   position: absolute;
-  top: 1rem;
+  top: 0.875rem;
   inset-inline-start: 1.25rem;
   color: var(--color-muted-foreground);
   pointer-events: none;
@@ -259,4 +286,17 @@
 
 [dir="rtl"] [data-composer] [style*="--link-icon"] {
   background-position: right center;
+}
+
+.bot-bubble {
+  @apply bg-foreground/7 mb-2 w-fit max-w-4/5 rounded-3xl px-4 py-2 text-base;
+}
+
+.bot-bubble .aui-md > :last-child,
+.bot-bubble .aui-md li:last-child {
+  @apply mb-0;
+}
+
+.bot-bubble .aui-md > :is(ul, ol) {
+  @apply ps-5;
 }
