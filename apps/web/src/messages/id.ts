@@ -541,4 +541,5 @@ export default {
   "Automation deleted": "Otomatisasi dihapus",
   "Running now. The answer will show up in Runs.":
     "Sedang berjalan. Jawabannya akan muncul di Eksekusi.",
+  "Couldn't open": "Tidak bisa dibuka",
 } satisfies Messages;

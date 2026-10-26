@@ -546,4 +546,5 @@ export default {
   "Automation resumed": "Itinuloy ang automation",
   "Automation deleted": "Nabura ang automation",
   "Running now. The answer will show up in Runs.": "Tumatakbo na. Lalabas ang sagot sa Mga takbo.",
+  "Couldn't open": "Hindi mabuksan",
 } satisfies Messages;

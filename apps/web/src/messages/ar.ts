@@ -531,4 +531,5 @@ export default {
   "Automation resumed": "تم استئناف الأتمتة",
   "Automation deleted": "تم حذف الأتمتة",
   "Running now. The answer will show up in Runs.": "جارٍ التشغيل الآن. ستظهر الإجابة في مرات التشغيل.",
+  "Couldn't open": "تعذّر فتح",
 } satisfies Messages;

@@ -542,4 +542,5 @@ export default {
   "Automation resumed": "Автоматташтыруу улантылды",
   "Automation deleted": "Автоматташтыруу өчүрүлдү",
   "Running now. The answer will show up in Runs.": "Азыр иштеп жатат. Жооп Иштетүүлөрдө көрүнөт.",
+  "Couldn't open": "Ачылган жок",
 } satisfies Messages;

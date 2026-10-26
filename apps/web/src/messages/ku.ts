@@ -542,4 +542,5 @@ export default {
   "Automation deleted": "ئۆتۆماتکردن سڕایەوە",
   "Running now. The answer will show up in Runs.":
     "ئێستا جێبەجێ دەکرێت. وەڵامەکە لە جارەکان دەردەکەوێت.",
+  "Couldn't open": "نەکرایەوە",
 } satisfies Messages;

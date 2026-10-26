@@ -545,4 +545,5 @@ export default {
   "Automation deleted": "Avtomatlaşdırma silindi",
   "Running now. The answer will show up in Runs.":
     "İndi işləyir. Cavab İcralar bölməsində görünəcək.",
+  "Couldn't open": "Açılmadı",
 } satisfies Messages;

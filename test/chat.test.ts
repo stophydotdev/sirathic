@@ -14,6 +14,7 @@ import { keepAlive } from "../apps/server/src/chat/keepAlive";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { clientOf } from "../apps/server/src/client";
+import { toolFailure } from "../apps/server/src/events";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
 
 const linked = async (urls: string[], deltas: string[]) => {
@@ -361,8 +362,15 @@ test("the country is kept only as a two-letter code", () => {
   ).toEqual(["SI", undefined, undefined, undefined]);
 });
 
-test("a sunnah.com hadith link maps to our hadith id", () => {
+test("a sunnah.com hadith link maps to our hadith id, and a failed tool gets a kind", () => {
   expect(hadithIdOfSunnahUrl("https://sunnah.com/bukhari:7191")).toBe("bukhari:7191");
   expect(hadithIdOfSunnahUrl("https://sunnah.com/nawawi40:3")).toBe("nawawi:3");
   expect(hadithIdOfSunnahUrl("https://sunnah.com/bukhari/93")).toBeNull();
+  expect(toolFailure("sunnah.com pages can't be read. Search for the hadith instead.")).toBe(
+    "blocked",
+  );
+  expect(toolFailure("Fetching https://a.b found no readable text")).toBe("no-text");
+  expect(toolFailure("Fetching https://a.b failed: That site has no page at that address.")).toBe(
+    "not-found",
+  );
 });

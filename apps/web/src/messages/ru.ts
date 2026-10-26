@@ -539,4 +539,5 @@ export default {
   "Automation deleted": "Автоматизация удалена",
   "Running now. The answer will show up in Runs.":
     "Запуск начат. Ответ появится в разделе «Запуски».",
+  "Couldn't open": "Не удалось открыть",
 } satisfies Messages;

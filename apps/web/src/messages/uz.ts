@@ -545,4 +545,5 @@ export default {
   "Automation deleted": "Автоматлаштириш ўчирилди",
   "Running now. The answer will show up in Runs.":
     "Ҳозир ишламоқда. Жавоб Ишга туширишларда кўринади.",
+  "Couldn't open": "Очилмади",
 } satisfies Messages;

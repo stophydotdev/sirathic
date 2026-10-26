@@ -543,4 +543,5 @@ export default {
   "Automation deleted": "ئاپتوماتلاشتۇرۇش ئۆچۈرۈلدى",
   "Running now. The answer will show up in Runs.":
     "ھازىر ئىجرا بولۇۋاتىدۇ. جاۋاب ئىجرالاردا كۆرۈنىدۇ.",
+  "Couldn't open": "ئېچىلمىدى",
 } satisfies Messages;

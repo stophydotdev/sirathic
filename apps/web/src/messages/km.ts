@@ -530,4 +530,5 @@ export default {
   "Automation resumed": "បានបន្តស្វ័យប្រវត្តិកម្ម",
   "Automation deleted": "បានលុបស្វ័យប្រវត្តិកម្ម",
   "Running now. The answer will show up in Runs.": "កំពុងរត់ឥឡូវនេះ។ ចម្លើយនឹងបង្ហាញនៅក្នុងការរត់។",
+  "Couldn't open": "មិនអាចបើកបាន",
 } satisfies Messages;

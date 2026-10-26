@@ -534,4 +534,5 @@ export default {
   "Automation resumed": "ऑटोमेशन फिर से शुरू हुआ",
   "Automation deleted": "ऑटोमेशन मिटाया गया",
   "Running now. The answer will show up in Runs.": "अभी चल रहा है। जवाब रन में दिखेगा।",
+  "Couldn't open": "खुल नहीं सका",
 } satisfies Messages;

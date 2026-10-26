@@ -540,4 +540,5 @@ export default {
   "Automation resumed": "தானியக்கம் மீண்டும் தொடங்கியது",
   "Automation deleted": "தானியக்கம் நீக்கப்பட்டது",
   "Running now. The answer will show up in Runs.": "இப்போது இயங்குகிறது. பதில் இயக்கங்களில் தோன்றும்.",
+  "Couldn't open": "திறக்க முடியவில்லை",
 } satisfies Messages;

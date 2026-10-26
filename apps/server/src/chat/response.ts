@@ -19,7 +19,7 @@ import {
 import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
 import type { connectedTools } from "../connectors/connections";
-import type { Event } from "../events";
+import { type Event, toolFailure } from "../events";
 import { citations } from "./citations";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -268,6 +268,9 @@ export function chatResponse({
                 tool: call.tool,
                 ms: Math.round(performance.now() - call.at),
                 ok,
+                ...(chunk.type === "tool-output-error" && {
+                  failure: toolFailure(chunk.errorText),
+                }),
               },
             });
           }

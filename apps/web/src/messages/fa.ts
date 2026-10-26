@@ -538,4 +538,5 @@ export default {
   "Automation resumed": "خودکارسازی ادامه یافت",
   "Automation deleted": "خودکارسازی حذف شد",
   "Running now. The answer will show up in Runs.": "در حال اجرا. پاسخ در اجراها نمایش داده می‌شود.",
+  "Couldn't open": "باز نشد",
 } satisfies Messages;

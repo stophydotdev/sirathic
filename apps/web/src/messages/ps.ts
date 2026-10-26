@@ -538,4 +538,5 @@ export default {
   "Automation resumed": "اتومات کار بیا پیل شو",
   "Automation deleted": "اتومات کار ړنګ شو",
   "Running now. The answer will show up in Runs.": "اوس روان دی. ځواب به په چلونو کې ښکاره شي.",
+  "Couldn't open": "پرانیستل نشو",
 } satisfies Messages;
