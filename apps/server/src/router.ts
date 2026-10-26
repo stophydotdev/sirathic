@@ -93,7 +93,13 @@ export const appRouter = t.router({
       .input(feedbackInput.safeExtend({ id: sessionId }))
       .mutation(async ({ ctx, input: { id, ...feedback } }) => {
         const saved = await setFeedback(id, ctx.owner, feedback);
-        track({ name: "feedback.given", props: { value: feedback.value } }, ctx.owner);
+        track(
+          {
+            name: "feedback.given",
+            props: { value: feedback.value, reason: feedback.report?.reason },
+          },
+          ctx.owner,
+        );
         return saved;
       }),
     fork: signedIn
