@@ -1,6 +1,7 @@
 "use client";
 
 import { chosenModel } from "@/components/account";
+import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
 import { usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
@@ -99,6 +100,7 @@ const transportIn = (projectId: string | undefined) =>
         projectId,
         device: deviceOf(),
         language: document.documentElement.lang,
+        timezone: localZone(),
       };
     },
   });

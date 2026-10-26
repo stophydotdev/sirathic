@@ -5,6 +5,7 @@ export type Draft = {
   prompt: string;
   icon: Automation["icon"];
   mode: Automation["mode"];
+  notify: Automation["notify"];
   kind: Schedule["kind"] | undefined;
   date: string;
   time: string;
@@ -29,6 +30,7 @@ export const blankDraft = (): Draft => {
     prompt: "",
     icon: null,
     mode: "quick",
+    notify: "app",
     kind: undefined,
     date: todayIso(),
     time: "09:00",
@@ -48,6 +50,7 @@ export const draftOf = (automation: Automation): Draft => {
     prompt: automation.prompt,
     icon: automation.icon,
     mode: automation.mode,
+    notify: automation.notify,
     kind: schedule.kind,
     ...(schedule.kind === "hourly" && { from: schedule.from, to: schedule.to }),
     ...("time" in schedule && { time: schedule.time }),

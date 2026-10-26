@@ -20,6 +20,7 @@ import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
 import type { connectedTools } from "../connectors/connections";
 import { type Event, toolFailure } from "../events";
+import { type AutomationScope, automationTools } from "./automationTools";
 import { citations } from "./citations";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -139,6 +140,7 @@ export function chatResponse({
   save,
   record,
   remember,
+  automate,
   fileOwner,
   settled,
 }: {
@@ -156,6 +158,7 @@ export function chatResponse({
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
   remember: Remember | undefined;
+  automate: AutomationScope | undefined;
   fileOwner?: string;
   settled?: () => void;
 }) {
@@ -211,7 +214,11 @@ export function chatResponse({
       const agent = answerAgent({
         model: models.model,
         modelName,
-        tools: { ...tools, ...connectors.tools },
+        tools: {
+          ...tools,
+          ...(automate && automationTools(automate)),
+          ...connectors.tools,
+        },
         mode,
         settings,
         rules: answerRules(settings, recent, mode) + project + skills,

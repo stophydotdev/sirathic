@@ -394,7 +394,6 @@ export default {
   "New automation": "Жаңы автоматташтыруу",
   "Edit automation": "Автоматташтырууну оңдоо",
   "Sign in to create automations.": "Автоматташтыруу түзүү үчүн кириңиз.",
-  Suggestions: "Сунуштар",
   Pause: "Тыныгуу",
   Resume: "Улантуу",
   Paused: "Токтотулган",
@@ -452,6 +451,41 @@ export default {
   "Friday reminder": "Жума эскертмеси",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Мага жуманын сүннөтүн тиешелүү бир хадис менен эсиме сал.",
+  Learning: "Үйрөнүү",
+  Worship: "Ибадат",
+  Family: "Үй-бүлө",
+  Hour: "Саат",
+  Minute: "Мүнөт",
+  "Evening adhkar": "Кечки зикирлер",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Мага кечки зикирлерди булактары жана качан окуларын жазып бер.",
+  "Verse of the day": "Күндүн аяты",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Куран-Керимден бир аятты котормосу жана кыскача тафсири менен бөлүш.",
+  "Weekly tafsir": "Жумалык тафсир",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Кыска сүрөнүн бир нече аятын классикалык тафсир китептери боюнча түшүндүр.",
+  "Quran word of the day": "Күндүн куран сөзү",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Мага Куран-Керимден бир арабча сөздү анын тамыры жана колдонулган аяты менен үйрөт.",
+  "Seerah story": "Сийрадан окуя",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Мага Пайгамбардын ﷺ сийрасынан бир окуяны сабагы менен айтып бер.",
+  "Fiqh question explained": "Түшүндүрүлгөн фикх суроосу",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Күнүмдүк жашоодон бир фикх маселесин ар бир мазхабдын пикири менен түшүндүр.",
+  "Monday and Thursday fast": "Дүйшөмбү жана бейшемби орозосу",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Эртең нафил орозо күнү экенин, сообу жөнүндө хадис менен эскерт.",
+  "Nightly dua": "Түнкү дуба",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Мага түн үчүн бир ишенимдүү дубаны мааниси жана булагы менен бер.",
+  "Prophet story for kids": "Балдарга пайгамбар жөнүндө окуя",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Балдар үчүн бир пайгамбар жөнүндө кыскача окуяны жөнөкөй сөздөр менен айтып бер.",
+  "Family halaqa": "Үй-бүлөлүк халка",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Үй-бүлөбүздүн халкасы үчүн аят, хадис жана суроолор менен тема сунуштап бер.",
   Memory: "Эс тутум",
   "Project only": "Долбоор гана",
   "Chats here use and add to your main memory.":
@@ -541,6 +575,13 @@ export default {
   "Automation paused": "Автоматташтыруу тындырылды",
   "Automation resumed": "Автоматташтыруу улантылды",
   "Automation deleted": "Автоматташтыруу өчүрүлдү",
+  "Automation created": "Автоматташтыруу түзүлдү",
+  "No automations yet": "Азырынча автоматташтыруу жок",
+  "Notify me": "Мага кабарла",
+  "In app": "Колдонмодо",
+  None: "Жок",
+  "Finished. Open to read the answer.": "Бүттү. Жоопту окуу үчүн ачыңыз.",
+  "New automation answers": "Автоматташтыруунун жаңы жооптору",
   "Running now. The answer will show up in Runs.": "Азыр иштеп жатат. Жооп Иштетүүлөрдө көрүнөт.",
   "Search, read and draft your email": "Электрондук катыңызды издеңиз, окуңуз жана долбоор жазыңыз",
   "See your calendars and events": "Календарларыңызды жана иш-чараларыңызды көрүңүз",

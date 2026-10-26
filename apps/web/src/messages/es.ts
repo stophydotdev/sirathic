@@ -394,7 +394,6 @@ export default {
   "New automation": "Nueva automatización",
   "Edit automation": "Editar automatización",
   "Sign in to create automations.": "Inicia sesión para crear automatizaciones.",
-  Suggestions: "Sugerencias",
   Pause: "Pausar",
   Resume: "Reanudar",
   Paused: "En pausa",
@@ -452,6 +451,41 @@ export default {
   "Friday reminder": "Recordatorio del viernes",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Recuérdame la sunnah del viernes con un hadiz relevante.",
+  Learning: "Aprendizaje",
+  Worship: "Adoración",
+  Family: "Familia",
+  Hour: "Hora",
+  Minute: "Minuto",
+  "Evening adhkar": "Adhkar de la tarde",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Dame los adhkar de la tarde con sus fuentes y cuándo decirlos.",
+  "Verse of the day": "Versículo del día",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Comparte un versículo del Corán con su traducción y un breve tafsir.",
+  "Weekly tafsir": "Tafsir semanal",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Explica unos versículos de una sura corta según los libros clásicos de tafsir.",
+  "Quran word of the day": "Palabra coránica del día",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Enséñame una palabra árabe del Corán con su raíz y un versículo donde aparece.",
+  "Seerah story": "Relato de la sira",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Cuéntame un relato de la sira del Profeta ﷺ, con una lección que aprender.",
+  "Fiqh question explained": "Pregunta de fiqh explicada",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Explica una cuestión cotidiana de fiqh con la opinión de cada madhhab.",
+  "Monday and Thursday fast": "Ayuno del lunes y el jueves",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Recuérdame que mañana es un día de ayuno sunna, con un hadiz sobre su recompensa.",
+  "Nightly dua": "Dua de la noche",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Dame una dua auténtica para la noche con su significado y fuente.",
+  "Prophet story for kids": "Historia de un profeta para niños",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Cuenta una historia corta de un profeta para niños, con palabras sencillas.",
+  "Family halaqa": "Halaqa familiar",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Sugiere un tema para nuestra halaqa familiar, con un versículo, un hadiz y preguntas.",
   Memory: "Memoria",
   "Project only": "Solo el proyecto",
   "Chats here use and add to your main memory.":
@@ -541,6 +575,13 @@ export default {
   "Automation paused": "Automatización en pausa",
   "Automation resumed": "Automatización reanudada",
   "Automation deleted": "Automatización eliminada",
+  "Automation created": "Automatización creada",
+  "No automations yet": "Aún no hay automatizaciones",
+  "Notify me": "Avisarme",
+  "In app": "En la app",
+  None: "Ninguno",
+  "Finished. Open to read the answer.": "Terminó. Ábrelo para leer la respuesta.",
+  "New automation answers": "Respuestas nuevas de automatizaciones",
   "Running now. The answer will show up in Runs.":
     "Ejecutando ahora. La respuesta aparecerá en Ejecuciones.",
   "Search, read and draft your email": "Busca, lee y redacta tu correo",

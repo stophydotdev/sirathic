@@ -3,6 +3,7 @@
 import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
+import { AutomationCard } from "@/components/automationCard";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
 import { citedSourcesOf, SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
@@ -40,6 +41,8 @@ export const Reply: FC = () => {
 
 const research = groupPartByType({
   reasoning: ["group-research"],
+  "tool-call:createAutomation": [],
+  "tool-call:listAutomations": [],
   "tool-call": ["group-research"],
 });
 
@@ -95,6 +98,8 @@ const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) 
                 return <Research indices={[]} startedAt={startedAt} />;
               case "text":
                 return <MarkdownText />;
+              case "tool-call":
+                return <AutomationCard tool={part.toolName} result={part.result} />;
               default:
                 return null;
             }

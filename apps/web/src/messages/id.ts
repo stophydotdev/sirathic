@@ -391,7 +391,6 @@ export default {
   "New automation": "Otomatisasi baru",
   "Edit automation": "Edit otomatisasi",
   "Sign in to create automations.": "Masuk untuk membuat otomatisasi.",
-  Suggestions: "Saran",
   Pause: "Jeda",
   Resume: "Lanjutkan",
   Paused: "Dijeda",
@@ -449,6 +448,41 @@ export default {
   "Friday reminder": "Pengingat Jumat",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "Ingatkan saya tentang sunnah hari Jumat dengan satu hadis yang relevan.",
+  Learning: "Belajar",
+  Worship: "Ibadah",
+  Family: "Keluarga",
+  Hour: "Jam",
+  Minute: "Menit",
+  "Evening adhkar": "Zikir petang",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "Berikan saya zikir petang beserta sumbernya dan waktu membacanya.",
+  "Verse of the day": "Ayat hari ini",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "Bagikan satu ayat Al-Quran beserta terjemahan dan tafsir singkatnya.",
+  "Weekly tafsir": "Tafsir mingguan",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "Jelaskan beberapa ayat dari surah pendek menurut kitab-kitab tafsir klasik.",
+  "Quran word of the day": "Kata Al-Quran hari ini",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "Ajarkan saya satu kata Arab dari Al-Quran beserta akarnya dan ayat yang memuatnya.",
+  "Seerah story": "Kisah sirah",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "Ceritakan satu kisah dari sirah Nabi ﷺ beserta pelajaran yang bisa diambil.",
+  "Fiqh question explained": "Pertanyaan fikih dijelaskan",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "Jelaskan satu masalah fikih sehari-hari beserta pendapat setiap mazhab.",
+  "Monday and Thursday fast": "Puasa Senin dan Kamis",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "Ingatkan saya bahwa besok hari puasa sunnah, beserta hadis tentang pahalanya.",
+  "Nightly dua": "Doa malam",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "Berikan saya satu doa sahih untuk malam beserta artinya dan sumbernya.",
+  "Prophet story for kids": "Kisah nabi untuk anak",
+  "Tell a short story of a prophet for children, in simple words.":
+    "Ceritakan kisah singkat seorang nabi untuk anak-anak dengan kata-kata sederhana.",
+  "Family halaqa": "Halaqah keluarga",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "Usulkan topik untuk halaqah keluarga kami, lengkap dengan ayat, hadis, dan pertanyaan.",
   Memory: "Memori",
   "Project only": "Hanya proyek",
   "Chats here use and add to your main memory.":
@@ -539,6 +573,13 @@ export default {
   "Automation paused": "Otomatisasi dijeda",
   "Automation resumed": "Otomatisasi dilanjutkan",
   "Automation deleted": "Otomatisasi dihapus",
+  "Automation created": "Otomatisasi dibuat",
+  "No automations yet": "Belum ada otomatisasi",
+  "Notify me": "Beri tahu saya",
+  "In app": "Di aplikasi",
+  None: "Tidak ada",
+  "Finished. Open to read the answer.": "Selesai. Buka untuk membaca jawabannya.",
+  "New automation answers": "Jawaban otomatisasi baru",
   "Running now. The answer will show up in Runs.":
     "Sedang berjalan. Jawabannya akan muncul di Eksekusi.",
   "Search, read and draft your email": "Cari, baca, dan buat draf email Anda",

@@ -1,5 +1,6 @@
 "use client";
 
+import { isCardTool } from "@/components/automationCard";
 import { Favicon } from "@/components/favicon";
 import { MentionIcon } from "@/components/mentionIcon";
 import type { MentionTarget } from "@/components/mentionText";
@@ -13,7 +14,7 @@ import {
 } from "@/components/research";
 import { type Translate, useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
-import { useAuiState } from "@assistant-ui/react";
+import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
 import {
   IconBook,
   IconBookmark,
@@ -30,6 +31,8 @@ import {
   type TablerIcon,
 } from "@tabler/icons-react";
 import { type FC, type ReactNode, useEffect, useState } from "react";
+
+type Part = ThreadMessage["content"][number];
 
 const REVEAL_MS = 400;
 const COUNT_MS = 300;
@@ -87,8 +90,8 @@ const summaryOf = (
 
 const THINKING: ResearchStep = { kind: "think", text: "", live: true };
 
-const isResearch = (part: { type: string }) =>
-  part.type === "reasoning" || part.type === "tool-call";
+const isResearch = (part: Part) =>
+  part.type === "reasoning" || (part.type === "tool-call" && !isCardTool(part.toolName));
 
 export const Research: FC<{ indices: readonly number[]; startedAt: number }> = ({
   indices,
@@ -113,6 +116,7 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
   const revealed = useRevealed(steps.length, live);
   const first = parts.findIndex(isResearch);
   if (indices.length > 0 && indices[0] !== first) return null;
+  if (steps.length === 0 && !working) return null;
 
   const visible = steps.slice(0, revealed);
   const busy = working || revealed < steps.length;

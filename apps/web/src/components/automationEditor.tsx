@@ -1,5 +1,6 @@
 "use client";
 
+import { askNotifications } from "@/components/automationAlerts";
 import { type Automation, localZone } from "@/components/automationText";
 import { type Draft, isComplete, scheduleOf } from "@/components/automationDraft";
 import { TriggerField } from "@/components/automationTrigger";
@@ -35,6 +36,7 @@ import {
   useLocalRuntime,
 } from "@assistant-ui/react";
 import { LexicalComposerInput } from "@assistant-ui/react-lexical";
+import { NOTIFY, notify as notifySchema } from "@sirathic/server/automations";
 import { MODES, mode as modeSchema } from "@sirathic/server/messages";
 import { IconChevronDown, IconClockPlay, IconX } from "@tabler/icons-react";
 import { Dialog } from "radix-ui";
@@ -72,6 +74,35 @@ const ModeMenu: FC<{ mode: Draft["mode"]; onChange: (mode: Draft["mode"]) => voi
                   {t(MODE_DETAILS[name].description)}
                 </span>
               </span>
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+const NOTIFY_LABELS = { app: "In app", none: "None" } as const;
+
+const NotifyMenu: FC<{ notify: Draft["notify"]; onChange: (notify: Draft["notify"]) => void }> = ({
+  notify,
+  onChange,
+}) => {
+  const t = useT();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="bg-fill hover:bg-foreground/10 flex h-8 shrink-0 items-center gap-1.5 rounded-[8px] pe-2 ps-3 text-sm transition-colors">
+        {t(NOTIFY_LABELS[notify])}
+        <IconChevronDown className="text-muted-foreground size-3.5" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="z-[70] w-40">
+        <DropdownMenuRadioGroup
+          value={notify}
+          onValueChange={(value) => onChange(notifySchema.parse(value))}
+        >
+          {NOTIFY.map((choice) => (
+            <DropdownMenuRadioItem key={choice} value={choice} className="py-2">
+              {t(NOTIFY_LABELS[choice])}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
@@ -187,9 +218,11 @@ const EditorDialog: FC<EditorProps> = ({
       prompt: draft.prompt,
       icon: draft.icon,
       mode: draft.mode,
+      notify: draft.notify,
       schedule: plan,
       timezone: zone,
     };
+    if (draft.notify === "app") askNotifications();
     void run(() =>
       automation
         ? api.automations.update.mutate({ id: automation.id, ...input })
@@ -245,6 +278,10 @@ const EditorDialog: FC<EditorProps> = ({
         <section className="flex flex-col gap-2">
           <h3 className="text-muted-foreground text-xs font-medium">{t("Instructions")}</h3>
           <InstructionsBox mode={draft.mode} onMode={(mode) => change({ mode })} />
+        </section>
+        <section className="flex items-center justify-between gap-2">
+          <h3 className="text-muted-foreground text-xs font-medium">{t("Notify me")}</h3>
+          <NotifyMenu notify={draft.notify} onChange={(notify) => change({ notify })} />
         </section>
         <p className="text-muted-foreground text-xs">
           {t(

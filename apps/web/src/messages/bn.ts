@@ -386,7 +386,6 @@ export default {
   "New automation": "নতুন অটোমেশন",
   "Edit automation": "অটোমেশন সম্পাদনা",
   "Sign in to create automations.": "অটোমেশন তৈরি করতে সাইন ইন করুন।",
-  Suggestions: "পরামর্শ",
   Pause: "বিরতি",
   Resume: "আবার চালু করুন",
   Paused: "বিরতিতে আছে",
@@ -444,6 +443,41 @@ export default {
   "Friday reminder": "জুমার রিমাইন্ডার",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "আমাকে জুমার সুন্নাহ একটি প্রাসঙ্গিক হাদিসসহ মনে করিয়ে দিন।",
+  Learning: "শেখা",
+  Worship: "ইবাদত",
+  Family: "পরিবার",
+  Hour: "ঘণ্টা",
+  Minute: "মিনিট",
+  "Evening adhkar": "সন্ধ্যার জিকির",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "আমাকে সন্ধ্যার জিকির উৎস ও পড়ার সময়সহ দিন।",
+  "Verse of the day": "আজকের আয়াত",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "কুরআনের একটি আয়াত অনুবাদ ও সংক্ষিপ্ত তাফসিরসহ শেয়ার করুন।",
+  "Weekly tafsir": "সাপ্তাহিক তাফসির",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "একটি ছোট সুরার কয়েকটি আয়াত ক্লাসিক্যাল তাফসির গ্রন্থের আলোকে ব্যাখ্যা করুন।",
+  "Quran word of the day": "আজকের কুরআনের শব্দ",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "আমাকে কুরআনের একটি আরবি শব্দ তার মূল ও যে আয়াতে এসেছে তাসহ শেখান।",
+  "Seerah story": "সিরাতের গল্প",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "আমাকে নবী ﷺ-এর সিরাত থেকে একটি গল্প শোনান, সঙ্গে নেওয়ার মতো একটি শিক্ষা।",
+  "Fiqh question explained": "ফিকহের প্রশ্ন ব্যাখ্যাসহ",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "দৈনন্দিন জীবনের একটি ফিকহি মাসআলা প্রতিটি মাযহাবের মতসহ ব্যাখ্যা করুন।",
+  "Monday and Thursday fast": "সোম ও বৃহস্পতিবারের রোজা",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "আমাকে মনে করিয়ে দিন যে আগামীকাল সুন্নত রোজার দিন, এর সওয়াব নিয়ে একটি হাদিসসহ।",
+  "Nightly dua": "রাতের দোয়া",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "আমাকে রাতের জন্য একটি সহিহ দোয়া অর্থ ও উৎসসহ দিন।",
+  "Prophet story for kids": "শিশুদের জন্য নবীর গল্প",
+  "Tell a short story of a prophet for children, in simple words.":
+    "শিশুদের জন্য একজন নবীর ছোট একটি গল্প সহজ ভাষায় বলুন।",
+  "Family halaqa": "পারিবারিক হালাকা",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "আমাদের পারিবারিক হালাকার জন্য একটি আয়াত, একটি হাদিস ও কিছু প্রশ্নসহ একটি বিষয় প্রস্তাব করুন।",
   Memory: "মেমরি",
   "Project only": "শুধু প্রজেক্ট",
   "Chats here use and add to your main memory.":
@@ -532,6 +566,13 @@ export default {
   "Automation paused": "অটোমেশন বিরতি দেওয়া হয়েছে",
   "Automation resumed": "অটোমেশন আবার চালু হয়েছে",
   "Automation deleted": "অটোমেশন মুছে ফেলা হয়েছে",
+  "Automation created": "অটোমেশন তৈরি হয়েছে",
+  "No automations yet": "এখনও কোনো অটোমেশন নেই",
+  "Notify me": "আমাকে জানান",
+  "In app": "অ্যাপে",
+  None: "কিছু না",
+  "Finished. Open to read the answer.": "শেষ হয়েছে। উত্তর পড়তে খুলুন।",
+  "New automation answers": "নতুন অটোমেশনের উত্তর",
   "Running now. The answer will show up in Runs.": "এখন চলছে। উত্তরটি রান-এ দেখা যাবে।",
   "Search, read and draft your email": "আপনার ইমেল খুঁজুন, পড়ুন ও খসড়া লিখুন",
   "See your calendars and events": "আপনার ক্যালেন্ডার ও ইভেন্ট দেখুন",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useAccount } from "@/components/account";
+import { AutomationsIcon, UnseenDot, useUnseenRuns } from "@/components/automationAlerts";
 import { useChatOptions } from "@/components/chatOptions";
 import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
@@ -22,7 +23,6 @@ import { cn } from "@/lib/utils";
 import {
   IconAt,
   IconChevronDown,
-  IconHistory,
   IconLibrary,
   IconLayoutSidebar,
   IconMenu2,
@@ -58,6 +58,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
     window.addEventListener("focus", onFocus);
     return () => window.removeEventListener("focus", onFocus);
   }, [refresh, refreshSessions, refreshProjects]);
+  const unseenRuns = useUnseenRuns(useAccount((s) => s.status?.signedIn));
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -171,7 +172,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             {!collapsed && <span className="flex-1">{t("Library")}</span>}
           </NavLink>
           <NavLink href="/automations" className={navRow}>
-            <IconHistory className="size-4.5 shrink-0" />
+            <AutomationsIcon unseen={unseenRuns} className="size-4.5" />
             {!collapsed && <span className="flex-1">{t("Automations")}</span>}
           </NavLink>
           <NavLink href="/plugins" className={navRow}>
@@ -190,7 +191,10 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
         <div className="absolute top-3 start-2 z-30 lg:hidden print:hidden">
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="bg-background/70 size-8">
-              <IconMenu2 className="size-4" />
+              <span className="relative">
+                <IconMenu2 className="size-4" />
+                {unseenRuns && <UnseenDot />}
+              </span>
               <span className="sr-only">{t("Open menu")}</span>
             </Button>
           </SheetTrigger>
@@ -209,7 +213,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <span>{t("Library")}</span>
             </NavLink>
             <NavLink href="/automations" className={mobileRow} onDone={() => setMobileOpen(false)}>
-              <IconHistory className="size-4 shrink-0" />
+              <AutomationsIcon unseen={unseenRuns} className="size-4" />
               <span>{t("Automations")}</span>
             </NavLink>
             <NavLink href="/plugins" className={mobileRow} onDone={() => setMobileOpen(false)}>

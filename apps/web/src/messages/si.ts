@@ -385,7 +385,6 @@ export default {
   "New automation": "නව ස්වයංක්‍රීයකරණය",
   "Edit automation": "ස්වයංක්‍රීයකරණය සංස්කරණය කරන්න",
   "Sign in to create automations.": "ස්වයංක්‍රීයකරණ සෑදීමට පුරනය වන්න.",
-  Suggestions: "යෝජනා",
   Pause: "විරාම කරන්න",
   Resume: "නැවත ආරම්භ කරන්න",
   Paused: "විරාම කර ඇත",
@@ -443,6 +442,41 @@ export default {
   "Friday reminder": "සිකුරාදා මතක් කිරීම",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "සිකුරාදාවේ සුන්නාව අදාළ හදීසයක් සමඟ මට මතක් කරන්න.",
+  Learning: "ඉගෙනීම",
+  Worship: "නමස්කාරය",
+  Family: "පවුල",
+  Hour: "පැය",
+  Minute: "මිනිත්තු",
+  "Evening adhkar": "සවස දික්ර්",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "සවස දික්ර් ඒවායේ මූලාශ්‍ර සහ කියවිය යුතු වේලාවත් සමඟ දෙන්න.",
+  "Verse of the day": "අද පද්‍යය",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "අල් කුර්ආනයේ එක් පද්‍යයක් එහි පරිවර්තනය සහ කෙටි තෆ්සීරයක් සමඟ බෙදාගන්න.",
+  "Weekly tafsir": "සතිපතා තෆ්සීර්",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "කෙටි සූරාවක පද්‍ය කිහිපයක් සම්භාව්‍ය තෆ්සීර් ග්‍රන්ථ අනුව පහදන්න.",
+  "Quran word of the day": "අද කුර්ආන් වචනය",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "කුර්ආනයේ එන අරාබි වචනයක් එහි මූලය සහ එය එන පද්‍යය සමඟ මට ඉගැන්වන්න.",
+  "Seerah story": "සීරා කතාව",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "නබි ﷺ තුමාගේ සීරාවෙන් එක් කතාවක් කියන්න, ගත හැකි පාඩමක් සමඟ.",
+  "Fiqh question explained": "පැහැදිලි කළ ෆික්හ් ප්‍රශ්නය",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "එදිනෙදා ෆික්හ් ප්‍රශ්නයක් සෑම මද්හබයකම මතය සමඟ පහදන්න.",
+  "Monday and Thursday fast": "සඳුදා සහ බ්‍රහස්පතින්දා උපවාසය",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "හෙට සුන්නත් උපවාස දිනයක් බව මට මතක් කරන්න, එහි ප්‍රතිලාභය ගැන හදීසයක් සමඟ.",
+  "Nightly dua": "රාත්‍රී දුආ",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "රාත්‍රිය සඳහා සත්‍ය දුආවක් එහි තේරුම සහ මූලාශ්‍රය සමඟ දෙන්න.",
+  "Prophet story for kids": "ළමයින් සඳහා නබිවරයෙකුගේ කතාව",
+  "Tell a short story of a prophet for children, in simple words.":
+    "ළමයින් සඳහා නබිවරයෙකු ගැන කෙටි කතාවක් සරල වචනවලින් කියන්න.",
+  "Family halaqa": "පවුල් හල්කා",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "අපේ පවුල් හල්කාව සඳහා පද්‍යයක්, හදීසයක් සහ ප්‍රශ්න සමඟ මාතෘකාවක් යෝජනා කරන්න.",
   Memory: "මතකය",
   "Project only": "ව්‍යාපෘතිය පමණි",
   "Chats here use and add to your main memory.": "මෙහි කතාබස් ඔබේ ප්‍රධාන මතකය භාවිත කර එයට එකතු කරයි.",
@@ -529,6 +563,13 @@ export default {
   "Automation paused": "ස්වයංක්‍රීයකරණය විරාම කළා",
   "Automation resumed": "ස්වයංක්‍රීයකරණය නැවත ආරම්භ කළා",
   "Automation deleted": "ස්වයංක්‍රීයකරණය මකා දැමුවා",
+  "Automation created": "ස්වයංක්‍රීයකරණය සාදා ඇත",
+  "No automations yet": "තවම ස්වයංක්‍රීයකරණ නැත",
+  "Notify me": "මට දැනුම් දෙන්න",
+  "In app": "යෙදුම තුළ",
+  None: "කිසිවක් නැත",
+  "Finished. Open to read the answer.": "අවසන්. පිළිතුර කියවීමට විවෘත කරන්න.",
+  "New automation answers": "ස්වයංක්‍රීයකරණවල නව පිළිතුරු",
   "Running now. The answer will show up in Runs.": "දැන් ධාවනය වෙමින් පවතී. පිළිතුර ධාවන තුළ පෙන්වයි.",
   "Search, read and draft your email": "ඔබේ ඊමේල් සොයන්න, කියවන්න සහ කෙටුම්පත් ලියන්න",
   "See your calendars and events": "ඔබේ දින දර්ශන සහ සිදුවීම් බලන්න",

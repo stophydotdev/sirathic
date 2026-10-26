@@ -393,7 +393,6 @@ export default {
   "New automation": "新しい自動化",
   "Edit automation": "自動化を編集",
   "Sign in to create automations.": "自動化を作成するにはログインしてください。",
-  Suggestions: "候補",
   Pause: "一時停止",
   Resume: "再開",
   Paused: "一時停止中",
@@ -451,6 +450,41 @@ export default {
   "Friday reminder": "金曜日のリマインダー",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "金曜日のスンナを、関連するハディース 1 つとともに思い出させて。",
+  Learning: "学ぶ",
+  Worship: "礼拝",
+  Family: "家族",
+  Hour: "時",
+  Minute: "分",
+  "Evening adhkar": "夕方のアズカール",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "夕方のアズカールを、出典と唱える時間つきで教えて。",
+  "Verse of the day": "今日の一節",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "クルアーンの一節を、訳と短いタフスィールつきで紹介して。",
+  "Weekly tafsir": "週のタフスィール",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "短いスーラの数節を、古典的なタフスィールの書にもとづいて解説して。",
+  "Quran word of the day": "今日のクルアーンの言葉",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "クルアーンに出てくるアラビア語を一語、語根とその語が出てくる一節つきで教えて。",
+  "Seerah story": "スィーラの物語",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "預言者ﷺのスィーラから一つ話を、学べる教訓つきで教えて。",
+  "Fiqh question explained": "フィクフの疑問を解説",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "日常のフィクフの疑問を一つ、各法学派の見解つきで解説して。",
+  "Monday and Thursday fast": "月曜と木曜の断食",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "明日はスンナの断食日だと知らせて、その報奨についてのハディースも添えて。",
+  "Nightly dua": "夜のドゥアー",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "夜のための確かなドゥアーを一つ、意味と出典つきで教えて。",
+  "Prophet story for kids": "子ども向け預言者の物語",
+  "Tell a short story of a prophet for children, in simple words.":
+    "子ども向けに預言者の短い話を、やさしい言葉で聞かせて。",
+  "Family halaqa": "家族のハルカ",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "家族のハルカのテーマを、一節、ハディース、問いかけつきで提案して。",
   Memory: "メモリー",
   "Project only": "プロジェクトのみ",
   "Chats here use and add to your main memory.":
@@ -538,6 +572,13 @@ export default {
   "Automation paused": "オートメーションを一時停止しました",
   "Automation resumed": "オートメーションを再開しました",
   "Automation deleted": "オートメーションを削除しました",
+  "Automation created": "自動化を作成しました",
+  "No automations yet": "自動化はまだありません",
+  "Notify me": "通知する",
+  "In app": "アプリ内",
+  None: "なし",
+  "Finished. Open to read the answer.": "完了しました。開いて回答を読む。",
+  "New automation answers": "自動化の新しい回答",
   "Running now. The answer will show up in Runs.": "実行中です。回答は実行に表示されます。",
   "Search, read and draft your email": "メールを検索、閲覧、下書き",
   "See your calendars and events": "カレンダーと予定を確認",

@@ -390,7 +390,6 @@ export default {
   "New automation": "പുതിയ ഓട്ടോമേഷൻ",
   "Edit automation": "ഓട്ടോമേഷൻ എഡിറ്റ് ചെയ്യുക",
   "Sign in to create automations.": "ഓട്ടോമേഷനുകൾ സൃഷ്ടിക്കാൻ സൈൻ ഇൻ ചെയ്യുക.",
-  Suggestions: "നിർദേശങ്ങൾ",
   Pause: "താൽക്കാലികമായി നിർത്തുക",
   Resume: "തുടരുക",
   Paused: "നിർത്തിവച്ചു",
@@ -448,6 +447,41 @@ export default {
   "Friday reminder": "വെള്ളിയാഴ്ച ഓർമപ്പെടുത്തൽ",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "വെള്ളിയാഴ്ചയുടെ സുന്നത്ത് ബന്ധപ്പെട്ട ഒരു ഹദീസ് സഹിതം ഓർമിപ്പിക്കൂ.",
+  Learning: "പഠനം",
+  Worship: "ആരാധന",
+  Family: "കുടുംബം",
+  Hour: "മണിക്കൂർ",
+  Minute: "മിനിറ്റ്",
+  "Evening adhkar": "സായാഹ്ന ദിക്റുകൾ",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "സായാഹ്ന ദിക്റുകൾ അവയുടെ ഉറവിടങ്ങളും ചൊല്ലേണ്ട സമയവും സഹിതം തരൂ.",
+  "Verse of the day": "ഇന്നത്തെ ആയത്ത്",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "ഖുർആനിലെ ഒരു ആയത്ത് അതിന്റെ പരിഭാഷയും ഹ്രസ്വമായ തഫ്സീറും സഹിതം പങ്കിടൂ.",
+  "Weekly tafsir": "പ്രതിവാര തഫ്സീർ",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "ഒരു ചെറിയ സൂറത്തിലെ ചില ആയത്തുകൾ ക്ലാസിക്കൽ തഫ്സീർ ഗ്രന്ഥങ്ങളെ ആധാരമാക്കി വിശദീകരിക്കൂ.",
+  "Quran word of the day": "ഇന്നത്തെ ഖുർആൻ പദം",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "ഖുർആനിലെ ഒരു അറബി പദം അതിന്റെ മൂലവും അത് വരുന്ന ആയത്തും സഹിതം പഠിപ്പിക്കൂ.",
+  "Seerah story": "സീറ കഥ",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "നബി ﷺ യുടെ സീറയിൽ നിന്ന് ഒരു കഥ പറയൂ, പഠിക്കാവുന്ന ഒരു പാഠത്തോടൊപ്പം.",
+  "Fiqh question explained": "വിശദീകരിച്ച ഫിഖ്ഹ് ചോദ്യം",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "ദൈനംദിന ജീവിതത്തിലെ ഒരു ഫിഖ്ഹ് വിഷയം ഓരോ മദ്ഹബിന്റെയും അഭിപ്രായത്തോടെ വിശദീകരിക്കൂ.",
+  "Monday and Thursday fast": "തിങ്കൾ, വ്യാഴം നോമ്പ്",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "നാളെ സുന്നത്ത് നോമ്പിന്റെ ദിവസമാണെന്ന് ഓർമ്മിപ്പിക്കൂ, അതിന്റെ പ്രതിഫലത്തെക്കുറിച്ചുള്ള ഒരു ഹദീസോടെ.",
+  "Nightly dua": "രാത്രിയിലെ ദുആ",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "രാത്രിക്കായി ഒരു ആധികാരികമായ ദുആ അതിന്റെ അർത്ഥവും ഉറവിടവും സഹിതം തരൂ.",
+  "Prophet story for kids": "കുട്ടികൾക്കുള്ള നബിമാരുടെ കഥ",
+  "Tell a short story of a prophet for children, in simple words.":
+    "കുട്ടികൾക്കായി ഒരു നബിയുടെ ചെറിയ കഥ ലളിതമായ വാക്കുകളിൽ പറയൂ.",
+  "Family halaqa": "കുടുംബ ഹൽഖ",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "ഞങ്ങളുടെ കുടുംബ ഹൽഖയ്ക്ക് ഒരു ആയത്ത്, ഒരു ഹദീസ്, ചില ചോദ്യങ്ങൾ എന്നിവയോടെ ഒരു വിഷയം നിർദ്ദേശിക്കൂ.",
   Memory: "മെമ്മറി",
   "Project only": "പ്രോജക്റ്റ് മാത്രം",
   "Chats here use and add to your main memory.":
@@ -535,6 +569,13 @@ export default {
   "Automation paused": "ഓട്ടോമേഷൻ താൽക്കാലികമായി നിർത്തി",
   "Automation resumed": "ഓട്ടോമേഷൻ പുനരാരംഭിച്ചു",
   "Automation deleted": "ഓട്ടോമേഷൻ ഇല്ലാതാക്കി",
+  "Automation created": "ഓട്ടോമേഷൻ സൃഷ്ടിച്ചു",
+  "No automations yet": "ഇതുവരെ ഓട്ടോമേഷനുകളില്ല",
+  "Notify me": "എന്നെ അറിയിക്കുക",
+  "In app": "ആപ്പിൽ",
+  None: "ഒന്നുമില്ല",
+  "Finished. Open to read the answer.": "പൂർത്തിയായി. ഉത്തരം വായിക്കാൻ തുറക്കുക.",
+  "New automation answers": "ഓട്ടോമേഷനുകളുടെ പുതിയ ഉത്തരങ്ങൾ",
   "Running now. The answer will show up in Runs.": "ഇപ്പോൾ റൺ ചെയ്യുന്നു. ഉത്തരം റണ്ണുകളിൽ കാണാം.",
   "Search, read and draft your email": "നിങ്ങളുടെ ഇമെയിൽ തിരയുക, വായിക്കുക, ഡ്രാഫ്റ്റ് ചെയ്യുക",
   "See your calendars and events": "നിങ്ങളുടെ കലണ്ടറുകളും ഇവന്റുകളും കാണുക",

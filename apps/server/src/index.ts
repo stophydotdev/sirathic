@@ -5,6 +5,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { auth, userFor } from "./auth";
 import { startScheduler } from "./automations/runner";
+import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
 import { countNoorAnswer, pickModels } from "./chat/models";
 import { chatResponse } from "./chat/response";
@@ -41,6 +42,7 @@ const chatBody = z.object({
     .regex(/^[a-z]{2,3}$/u)
     .optional()
     .catch(undefined),
+  timezone: timezone.optional().catch(undefined),
 });
 
 const app = new Hono();
@@ -154,6 +156,10 @@ app.post("/api/chat", (c) =>
       save,
       record: (event) => track(event, owner),
       fileOwner: by,
+      automate:
+        owner === undefined || input.timezone === undefined
+          ? undefined
+          : { owner, timezone: input.timezone },
       remember:
         owner === undefined
           ? undefined

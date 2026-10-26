@@ -392,7 +392,6 @@ export default {
   "New automation": "புதிய தானியக்கம்",
   "Edit automation": "தானியக்கத்தைத் திருத்து",
   "Sign in to create automations.": "தானியக்கங்களை உருவாக்க உள்நுழையுங்கள்.",
-  Suggestions: "பரிந்துரைகள்",
   Pause: "இடைநிறுத்து",
   Resume: "தொடர்",
   Paused: "இடைநிறுத்தப்பட்டது",
@@ -450,6 +449,41 @@ export default {
   "Friday reminder": "வெள்ளிக்கிழமை நினைவூட்டல்",
   "Remind me of the sunnah of Friday with one relevant hadith.":
     "வெள்ளிக்கிழமையின் சுன்னாவை தொடர்புடைய ஒரு ஹதீஸுடன் நினைவூட்டுங்கள்.",
+  Learning: "கற்றல்",
+  Worship: "வழிபாடு",
+  Family: "குடும்பம்",
+  Hour: "மணி",
+  Minute: "நிமிடம்",
+  "Evening adhkar": "மாலை திக்ருகள்",
+  "Give me the evening adhkar with their sources and when to say them.":
+    "மாலை திக்ருகளை அவற்றின் ஆதாரங்களுடனும் ஓத வேண்டிய நேரத்துடனும் தாருங்கள்.",
+  "Verse of the day": "இன்றைய வசனம்",
+  "Share one verse of the Quran with its translation and a short tafsir.":
+    "குர்ஆனின் ஒரு வசனத்தை அதன் மொழிபெயர்ப்பு மற்றும் சிறு தஃப்சீருடன் பகிருங்கள்.",
+  "Weekly tafsir": "வாராந்திர தஃப்சீர்",
+  "Explain a few verses of a short surah from the classical tafsir books.":
+    "ஒரு சிறிய சூராவின் சில வசனங்களை பாரம்பரிய தஃப்சீர் நூல்களின் அடிப்படையில் விளக்குங்கள்.",
+  "Quran word of the day": "இன்றைய குர்ஆன் சொல்",
+  "Teach me one Arabic word from the Quran with its root and a verse using it.":
+    "குர்ஆனிலிருந்து ஒரு அரபு சொல்லை அதன் வேர் மற்றும் அது வரும் வசனத்துடன் எனக்குக் கற்றுக் கொடுங்கள்.",
+  "Seerah story": "சீரா கதை",
+  "Tell me one story from the seerah of the Prophet ﷺ, with a lesson to take.":
+    "நபி ﷺ அவர்களின் சீராவிலிருந்து ஒரு கதையைச் சொல்லுங்கள், எடுத்துக்கொள்ள ஒரு பாடத்துடன்.",
+  "Fiqh question explained": "விளக்கப்பட்ட ஃபிக்ஹ் கேள்வி",
+  "Explain one everyday fiqh question with the view of each madhhab.":
+    "அன்றாட வாழ்வின் ஒரு ஃபிக்ஹ் கேள்வியை ஒவ்வொரு மத்ஹபின் கருத்துடன் விளக்குங்கள்.",
+  "Monday and Thursday fast": "திங்கள், வியாழன் நோன்பு",
+  "Remind me that tomorrow is a sunnah fast day, with a hadith on its reward.":
+    "நாளை சுன்னத் நோன்பு நாள் என்பதை நினைவூட்டுங்கள், அதன் கூலி பற்றிய ஒரு ஹதீஸுடன்.",
+  "Nightly dua": "இரவு துஆ",
+  "Give me one authentic dua for the night with its meaning and source.":
+    "இரவுக்கான ஒரு நம்பகமான துஆவை அதன் பொருள் மற்றும் ஆதாரத்துடன் தாருங்கள்.",
+  "Prophet story for kids": "குழந்தைகளுக்கான நபிகள் கதை",
+  "Tell a short story of a prophet for children, in simple words.":
+    "குழந்தைகளுக்காக ஒரு நபியின் சிறு கதையை எளிய சொற்களில் சொல்லுங்கள்.",
+  "Family halaqa": "குடும்ப ஹல்கா",
+  "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
+    "எங்கள் குடும்ப ஹல்காவுக்கு ஒரு வசனம், ஒரு ஹதீஸ் மற்றும் கேள்விகளுடன் ஒரு தலைப்பைப் பரிந்துரையுங்கள்.",
   Memory: "நினைவகம்",
   "Project only": "திட்டம் மட்டும்",
   "Chats here use and add to your main memory.":
@@ -539,6 +573,13 @@ export default {
   "Automation paused": "தானியக்கம் இடைநிறுத்தப்பட்டது",
   "Automation resumed": "தானியக்கம் மீண்டும் தொடங்கியது",
   "Automation deleted": "தானியக்கம் நீக்கப்பட்டது",
+  "Automation created": "தானியக்கம் உருவாக்கப்பட்டது",
+  "No automations yet": "இன்னும் தானியக்கங்கள் இல்லை",
+  "Notify me": "எனக்குத் தெரிவி",
+  "In app": "ஆப்பில்",
+  None: "எதுவுமில்லை",
+  "Finished. Open to read the answer.": "முடிந்தது. பதிலைப் படிக்கத் திற.",
+  "New automation answers": "தானியக்கங்களின் புதிய பதில்கள்",
   "Running now. The answer will show up in Runs.": "இப்போது இயங்குகிறது. பதில் இயக்கங்களில் தோன்றும்.",
   "Search, read and draft your email": "உங்கள் மின்னஞ்சலைத் தேடுங்கள், படியுங்கள், வரைவு எழுதுங்கள்",
   "See your calendars and events": "உங்கள் நாட்காட்டிகளையும் நிகழ்வுகளையும் பாருங்கள்",

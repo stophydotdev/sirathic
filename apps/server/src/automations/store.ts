@@ -1,12 +1,12 @@
 import { db } from "@sirathic/db";
 import { automations, chatSessions } from "@sirathic/db/schema";
-import { and, count, desc, eq, isNotNull, sql } from "drizzle-orm";
+import { and, count, desc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { projectId, requireProject } from "../projects";
 import { StatusError } from "../respond";
 import { mode } from "../shared/messages";
 import { PROJECT_ICONS } from "../shared/projects";
-import { nextRun, schedule, timezone } from "./schedule";
+import { nextRun, notify, schedule, timezone } from "./schedule";
 
 const MAX_AUTOMATIONS = 10;
 const RUNS_LIMIT = 50;
@@ -23,6 +23,7 @@ const automationFields = z.object({
   prompt,
   icon: icon.optional(),
   mode: mode.optional(),
+  notify: notify.optional(),
   schedule,
   timezone,
 });
@@ -34,7 +35,7 @@ export const automationUpdate = automationFields
   .extend({ enabled: z.boolean().optional() })
   .refine(
     (update) => Object.values(update).some((value) => value !== undefined),
-    "send a name, prompt, icon, mode, schedule, timezone or enabled",
+    "send a name, prompt, icon, mode, notify, schedule, timezone or enabled",
   );
 
 const owned = (id: string, by: string) => and(eq(automations.id, id), eq(automations.owner, by));
@@ -46,6 +47,7 @@ const present = (row: typeof automations.$inferSelect) => ({
   prompt: row.prompt,
   icon: icon.parse(row.icon),
   mode: mode.parse(row.mode),
+  notify: notify.parse(row.notify),
   schedule: schedule.parse(row.schedule),
   timezone: row.timezone,
   enabled: row.enabled,
@@ -121,9 +123,11 @@ export const listRuns = (by: string) =>
       title: chatSessions.title,
       unread: chatSessions.unread,
       automationId: chatSessions.automationId,
+      notify: automations.notify,
       createdAt: sql<string>`to_char(${chatSessions.createdAt} at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`,
     })
     .from(chatSessions)
-    .where(and(eq(chatSessions.owner, by), isNotNull(chatSessions.automationId)))
+    .innerJoin(automations, eq(automations.id, chatSessions.automationId))
+    .where(eq(chatSessions.owner, by))
     .orderBy(desc(chatSessions.createdAt))
     .limit(RUNS_LIMIT);

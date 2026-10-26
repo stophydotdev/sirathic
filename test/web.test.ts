@@ -1,6 +1,12 @@
 import { expect, test } from "bun:test";
 import { splitLinks } from "../apps/web/src/components/linkedText";
 import { splitMentions } from "../apps/web/src/components/mentionText";
+import {
+  clockParts,
+  clockText24,
+  hour12Of,
+  hour24Of,
+} from "../apps/web/src/components/automationText";
 import { researchOf } from "../apps/web/src/components/research";
 
 test("a link keeps its path and drops the trailing period and question mark", () => {
@@ -80,4 +86,23 @@ test("calls in a row to one plugin become one step with readable titles and thei
       calls: [{ tool: "Get Message", detail: "1a17", done: false }],
     },
   ]);
+});
+
+test("the 12 hour clock maps midnight and noon to 12 and back to 24 hour time", () => {
+  const cases = [
+    { hour: 0, twelve: 12, pm: false },
+    { hour: 9, twelve: 9, pm: false },
+    { hour: 12, twelve: 12, pm: true },
+    { hour: 19, twelve: 7, pm: true },
+  ];
+  for (const { hour, twelve, pm } of cases) {
+    expect(hour12Of(hour)).toBe(twelve);
+    expect(hour24Of(twelve, pm)).toBe(hour);
+  }
+});
+
+test("a time keeps its hour and minute through the picker's parts", () => {
+  const { hour, minute } = clockParts("07:05");
+  expect({ hour, minute }).toEqual({ hour: 7, minute: 5 });
+  expect(clockText24(hour, minute)).toBe("07:05");
 });
