@@ -1,12 +1,9 @@
 import { extractText, getDocumentProxy } from "unpdf";
-import type { ChatMessage } from "../shared/messages";
 
 const PDF_CHARS = 60_000;
 
-async function pdfText(url: string) {
-  if (!url.startsWith("data:")) return "This PDF could not be read.";
+export async function pdfText(bytes: Uint8Array) {
   try {
-    const bytes = new Uint8Array(Buffer.from(url.slice(url.indexOf(",") + 1), "base64"));
     const extracted = await extractText(await getDocumentProxy(bytes), {
       mergePages: true,
     });
@@ -19,20 +16,3 @@ async function pdfText(url: string) {
     return "This PDF could not be read.";
   }
 }
-
-export const readPdfs = (messages: ChatMessage[]) =>
-  Promise.all(
-    messages.map(async (message) => ({
-      ...message,
-      parts: await Promise.all(
-        message.parts.map(async (part) =>
-          part.type === "file" && part.mediaType === "application/pdf"
-            ? {
-                type: "text" as const,
-                text: `<pdf name="${part.filename ?? "document.pdf"}">\n${await pdfText(part.url)}\n</pdf>`,
-              }
-            : part,
-        ),
-      ),
-    })),
-  );
