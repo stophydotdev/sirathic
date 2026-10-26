@@ -7,7 +7,9 @@ import {
   quranBlock,
   unvowel,
 } from "../apps/server/src/chat/compact";
-import { convertToModelMessages } from "ai";
+import { convertToModelMessages, tool } from "ai";
+import { MockLanguageModelV4 } from "ai/test";
+import { z } from "zod";
 import type { ChatMessage, Mode } from "../apps/server/src/shared/messages";
 import { shortenEarlierResults } from "../apps/server/src/chat/history";
 import { keepAlive } from "../apps/server/src/chat/keepAlive";
@@ -16,6 +18,7 @@ import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/share
 import { clientOf } from "../apps/server/src/client";
 import { toolFailure } from "../apps/server/src/events";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
+import { answerAgent } from "../apps/server/src/chat/response";
 
 const linked = async (urls: string[], deltas: string[]) => {
   const { add, transform } = citations([]);
@@ -373,4 +376,52 @@ test("a sunnah.com hadith link maps to our hadith id, and a failed tool gets a k
   expect(toolFailure("Fetching https://a.b failed: That site has no page at that address.")).toBe(
     "not-found",
   );
+});
+
+const usage = {
+  inputTokens: { total: 1, noCache: 1, cacheRead: 0, cacheWrite: 0 },
+  outputTokens: { total: 1, text: 1, reasoning: 0 },
+};
+
+test("an answer keeps calling tools until the model replies, with no step cap", async () => {
+  let calls = 0;
+  const model = new MockLanguageModelV4({
+    doGenerate: async () => {
+      calls += 1;
+      return calls > 24
+        ? {
+            content: [{ type: "text", text: "Here is what I found." }],
+            finishReason: { unified: "stop", raw: undefined },
+            usage,
+            warnings: [],
+          }
+        : {
+            content: [
+              {
+                type: "tool-call",
+                toolCallId: crypto.randomUUID(),
+                toolName: "lookup",
+                input: "{}",
+              },
+            ],
+            finishReason: { unified: "tool-calls", raw: undefined },
+            usage,
+            warnings: [],
+          };
+    },
+  });
+  const agent = answerAgent({
+    model,
+    modelName: "test",
+    tools: { lookup: tool({ inputSchema: z.object({}), execute: async () => "more rows" }) },
+    mode: "quick",
+    settings: DEFAULT_SETTINGS,
+    rules: "",
+    mustSearch: false,
+    canRemember: false,
+    shorten: (message) => message,
+    answerOptions: {},
+  });
+  const result = await agent.generate({ prompt: "how many users does sirathic have" });
+  expect([result.steps.length, result.text]).toEqual([25, "Here is what I found."]);
 });
