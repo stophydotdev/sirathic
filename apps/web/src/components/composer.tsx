@@ -4,8 +4,19 @@ import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { takeDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
 import { useAccount } from "@/components/account";
+import {
+  type Choice,
+  LinkPlugin,
+  MentionChip,
+  MentionSpace,
+  mentionFormatter,
+  MentionPopover,
+} from "@/components/mentions";
+import { RecentFiles } from "@/components/libraryRecent";
+import { popoverHeading, popoverIcon, popoverPanel, popoverRow } from "@/components/popover";
 import { ModelPicker } from "@/components/modelPicker";
 import { usePreferences } from "@/components/preferences";
+import { ProjectIcon } from "@/components/projectIcon";
 import { useSignIn } from "@/components/signIn";
 import {
   DropdownMenu,
@@ -28,6 +39,7 @@ import {
   useAui,
   useAuiState,
 } from "@assistant-ui/react";
+import { LexicalComposerInput } from "@assistant-ui/react-lexical";
 import {
   IconArrowUp,
   IconArrowUpLeft,
@@ -42,12 +54,12 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import Image from "next/image";
+import Link from "next/link";
 import { type FC, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
 const ROTATING = [
   "Ask anything…",
-  "Type / for modes",
-  "Type @ for sources",
+  "Type / for modes, @ for plugins and skills",
 ] as const satisfies readonly MessageKey[];
 const ROTATE_MS = 4_000;
 const SUGGEST_DELAY_MS = 150;
@@ -67,15 +79,6 @@ export const MODE_ICONS = {
 } satisfies Record<Mode, ReactNode>;
 
 type Suggestion = Awaited<ReturnType<typeof api.suggest.query>>[number];
-
-type Choice = {
-  key: string;
-  label: string;
-  hint?: string;
-  icon: ReactNode;
-  choose: () => void;
-  fill?: () => void;
-};
 
 function useRotatingPlaceholder(first: string, rotate: boolean) {
   const [index, setIndex] = useState(0);
@@ -119,7 +122,14 @@ export const Composer: FC<{
   placeholder: string;
   menuSide: "top" | "bottom";
   rotate?: boolean;
-}> = ({ placeholder, menuSide, rotate = false }) => {
+  project?: {
+    id: string;
+    name: string;
+    icon: string | null;
+    leaveLabel: string;
+    onLeave: (text: string) => void;
+  };
+}> = ({ placeholder, menuSide, rotate = false, project }) => {
   const aui = useAui();
   const text = useAuiState((s) => s.composer.text);
   const setMode = useChatOptions((s) => s.setMode);
@@ -130,15 +140,26 @@ export const Composer: FC<{
   const [focused, setFocused] = useState(false);
   const [active, setActive] = useState(0);
   const [picked, setPicked] = useState(false);
+  const [seen, setSeen] = useState(text);
+  if (seen !== text) {
+    setSeen(text);
+    setActive(0);
+    setPicked(false);
+  }
   const signedOut = useAccount((s) => s.status?.signedIn === false);
+  const signedIn = useAccount((s) => s.status?.signedIn === true);
   const ask = useSignIn((s) => s.ask);
   const shown = useRotatingPlaceholder(placeholder, rotate && text === "");
   const t = useT();
 
   const command = /^\/[^\s]*$/u.test(text) ? text : undefined;
+  const mentioning = /(?:^|\s)@\S*$/u.test(text);
   const autosuggest = usePreferences((s) => s.autosuggest);
-  const suggestions = useSuggestions(text, autosuggest && focused && command === undefined);
   const composer = () => aui.thread().composer();
+  const suggestions = useSuggestions(
+    text,
+    autosuggest && focused && command === undefined && !mentioning,
+  );
 
   const choices: Choice[] = command?.startsWith("/")
     ? MODES.filter((name) =>
@@ -175,159 +196,191 @@ export const Composer: FC<{
   const selecting = command !== undefined || picked;
   const highlighted = selecting ? Math.min(active, Math.max(choices.length - 1, 0)) : -1;
 
-  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const onKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.nativeEvent.isComposing) return;
+    const take = () => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
     if (event.key === "ArrowUp" && text === "" && !selecting) {
       const index = aui
         .thread()
         .getState()
         .messages.findLastIndex((message) => message.role === "user");
       if (index < 0) return;
-      event.preventDefault();
+      take();
       aui.thread().message({ index }).composer().beginEdit();
       return;
     }
     if (signedOut && event.key === "Enter" && !event.shiftKey && !selecting) {
-      event.preventDefault();
+      take();
       ask(text);
       return;
     }
     if (choices.length === 0) return;
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-      event.preventDefault();
+      take();
       const step = event.key === "ArrowDown" ? 1 : -1;
       const from = selecting ? highlighted : step > 0 ? -1 : 0;
       setActive((from + step + choices.length) % choices.length);
       setPicked(true);
     } else if (event.key === "Enter" && !event.shiftKey && selecting) {
-      event.preventDefault();
+      take();
       choices[highlighted]?.choose();
     } else if (event.key === "Tab" && choices[highlighted]?.fill) {
-      event.preventDefault();
+      take();
       choices[highlighted]?.fill?.();
     }
   };
 
+  const below =
+    menuSide === "top" ? "bottom-full mb-2" : "max-md:bottom-full max-md:mb-2 md:top-full md:mt-2";
+
   return (
-    <div className="relative w-full">
-      <ComposerPrimitive.Root className="bg-card border-foreground/10 flex w-full flex-col rounded-[20px] border pt-3">
-        <AuiIf condition={(s) => s.composer.attachments.length > 0}>
-          <div className="flex flex-wrap gap-2 px-4 pt-4">
-            <ComposerPrimitive.Attachments>
-              {() => <AttachmentPreview />}
-            </ComposerPrimitive.Attachments>
-          </div>
-        </AuiIf>
-
-        <ComposerPrimitive.Input
-          data-composer
-          rows={1}
-          autoFocus={finePointer}
-          placeholder={shown}
-          onKeyDown={onKeyDown}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 150)}
-          onChange={() => {
-            setActive(0);
-            setPicked(false);
-          }}
-          className="placeholder:text-muted-foreground max-h-60 min-h-[52px] w-full resize-none bg-transparent px-5 pt-4 text-base leading-6 outline-none"
-        />
-
-        <div className="flex items-center justify-between gap-2 px-3 pt-2.5 pb-3">
-          <div className="flex min-w-0 items-center gap-1.5">
-            <AddMenu side={menuSide} />
-            <ModeMenu side={menuSide} />
-          </div>
-
-          <div className="flex items-center gap-1">
-            <ModelPicker side={menuSide} />
-            <AuiIf condition={(s) => s.thread.isRunning}>
-              <ComposerPrimitive.Cancel
-                className={primaryButton}
-                aria-label={t("Stop response (Esc)")}
-                title={t("Stop response (Esc)")}
-              >
-                <IconSquare className="size-3 fill-current" />
-              </ComposerPrimitive.Cancel>
-            </AuiIf>
-            <AuiIf condition={(s) => !s.thread.isRunning}>
-              {signedOut ? (
-                <button
-                  type="button"
-                  onClick={() => ask(text)}
-                  className={primaryButton}
-                  aria-label={t("Submit")}
-                >
-                  <IconArrowUp className="size-4" />
-                </button>
-              ) : (
-                <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
-                  <IconArrowUp className="size-4" />
-                </ComposerPrimitive.Send>
-              )}
-            </AuiIf>
-          </div>
-        </div>
-      </ComposerPrimitive.Root>
-
-      {choices.length > 0 && (
-        <div
-          role="listbox"
-          className={cn(
-            "bg-card ring-foreground/7 absolute z-30 flex flex-col gap-0.5 rounded-xl p-1 shadow-lg ring-1",
-            command ? "start-3 w-72" : "inset-x-0",
-            menuSide === "top"
-              ? "bottom-full mb-2"
-              : "max-md:bottom-full max-md:mb-2 md:top-full md:mt-2",
-          )}
-        >
-          {command && (
-            <p className="text-muted-foreground px-2.5 pt-1.5 pb-1 text-xs">
-              {command.startsWith("/") ? t("Mode") : t("Search only")}
-            </p>
-          )}
-          {choices.map((choice, index) => (
-            <div
-              key={choice.key}
-              role="option"
-              aria-selected={index === highlighted}
-              tabIndex={-1}
-              onMouseDown={(event) => event.preventDefault()}
-              onMouseEnter={() => {
-                setActive(index);
-                setPicked(true);
-              }}
-              onClick={choice.choose}
-              className={cn(
-                "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm",
-                index === highlighted ? "bg-muted" : "",
-              )}
-            >
-              <span className="text-muted-foreground">{choice.icon}</span>
-              <span className="flex min-w-0 flex-1 flex-col">
-                <span className="truncate">{choice.label}</span>
-                {choice.hint && (
-                  <span className="text-muted-foreground truncate text-xs">{choice.hint}</span>
-                )}
-              </span>
-              {choice.fill && (
-                <button
-                  type="button"
-                  aria-label={t("Use this text")}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    choice.fill?.();
-                  }}
-                  className="text-super hover:bg-foreground/10 flex size-6 items-center justify-center rounded-md"
-                >
-                  <IconArrowUpLeft className="size-3.5 rtl:-scale-x-100" />
-                </button>
-              )}
+    <ComposerPrimitive.TriggerPopoverRoot>
+      <div className="relative w-full">
+        <ComposerPrimitive.Root className="bg-card border-foreground/10 flex w-full flex-col rounded-[20px] border pt-3">
+          <AuiIf condition={(s) => s.composer.attachments.length > 0}>
+            <div className="flex flex-wrap gap-2 px-4 pt-4">
+              <ComposerPrimitive.Attachments>
+                {() => <AttachmentPreview />}
+              </ComposerPrimitive.Attachments>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          </AuiIf>
+
+          <LexicalComposerInput
+            data-composer
+            autoFocus={finePointer}
+            placeholder={shown}
+            formatter={mentionFormatter}
+            directiveChip={MentionChip}
+            onKeyDownCapture={onKeyDownCapture}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setTimeout(() => setFocused(false), 150)}
+            className="relative max-h-60 min-h-[52px] w-full px-5 pt-4 text-base leading-6"
+          >
+            <LinkPlugin />
+            <MentionSpace />
+          </LexicalComposerInput>
+
+          <div className="flex items-center justify-between gap-2 px-3 pt-2.5 pb-3">
+            <div className="flex min-w-0 items-center gap-1.5">
+              <AddMenu side={menuSide} />
+              {project && (
+                <span className="border-foreground/15 flex h-8 min-w-0 items-center gap-1.5 rounded-full border ps-2.5 pe-1 text-sm font-medium">
+                  <ProjectIcon
+                    icon={project.icon}
+                    className="text-muted-foreground size-4 shrink-0"
+                  />
+                  <Link
+                    href={`/project/${project.id}`}
+                    title={t("Open project")}
+                    className="max-w-48 min-w-6 truncate hover:underline"
+                  >
+                    {project.name}
+                  </Link>
+                  <button
+                    type="button"
+                    aria-label={project.leaveLabel}
+                    title={project.leaveLabel}
+                    onClick={() => project.onLeave(text)}
+                    className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-6 items-center justify-center rounded-full"
+                  >
+                    <IconX className="size-3.5" />
+                  </button>
+                </span>
+              )}
+              <ModeMenu side={menuSide} />
+            </div>
+
+            <div className="flex items-center gap-1">
+              <ModelPicker side={menuSide} />
+              <AuiIf condition={(s) => s.thread.isRunning}>
+                <ComposerPrimitive.Cancel
+                  className={primaryButton}
+                  aria-label={t("Stop response (Esc)")}
+                  title={t("Stop response (Esc)")}
+                >
+                  <IconSquare className="size-3 fill-current" />
+                </ComposerPrimitive.Cancel>
+              </AuiIf>
+              <AuiIf condition={(s) => !s.thread.isRunning}>
+                {signedOut ? (
+                  <button
+                    type="button"
+                    onClick={() => ask(text)}
+                    className={primaryButton}
+                    aria-label={t("Submit")}
+                  >
+                    <IconArrowUp className="size-4" />
+                  </button>
+                ) : (
+                  <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
+                    <IconArrowUp className="size-4" />
+                  </ComposerPrimitive.Send>
+                )}
+              </AuiIf>
+            </div>
+          </div>
+        </ComposerPrimitive.Root>
+
+        {signedIn && <MentionPopover className={cn("absolute start-3 z-30", below)} />}
+
+        {choices.length > 0 && (
+          <div
+            role="listbox"
+            className={cn(
+              popoverPanel,
+              "absolute z-30",
+              command ? "start-3 w-72" : "inset-x-0",
+              below,
+            )}
+          >
+            {command && (
+              <p className={popoverHeading}>
+                {command.startsWith("/") ? t("Mode") : t("Search only")}
+              </p>
+            )}
+            {choices.map((choice, index) => (
+              <div
+                key={choice.key}
+                role="option"
+                aria-selected={index === highlighted}
+                tabIndex={-1}
+                onMouseDown={(event) => event.preventDefault()}
+                onMouseEnter={() => {
+                  setActive(index);
+                  setPicked(true);
+                }}
+                onClick={choice.choose}
+                className={cn(popoverRow, index === highlighted && "bg-foreground/8")}
+              >
+                <span className={popoverIcon}>{choice.icon}</span>
+                <span className="flex min-w-0 flex-1 flex-col">
+                  <span className="truncate">{choice.label}</span>
+                  {choice.hint && (
+                    <span className="text-muted-foreground truncate text-xs">{choice.hint}</span>
+                  )}
+                </span>
+                {choice.fill && (
+                  <button
+                    type="button"
+                    aria-label={t("Use this text")}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      choice.fill?.();
+                    }}
+                    className="text-super hover:bg-foreground/10 flex size-6 items-center justify-center rounded-md"
+                  >
+                    <IconArrowUpLeft className="size-3.5 rtl:-scale-x-100" />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </ComposerPrimitive.TriggerPopoverRoot>
   );
 };
 
@@ -345,8 +398,9 @@ const AddMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
         <DropdownMenuContent side={side} align="start" className="w-60">
           <DropdownMenuItem onSelect={() => upload.current?.click()}>
             <IconPaperclip className="size-4" />
-            {t("Upload files or images")}
+            {t("Upload a file")}
           </DropdownMenuItem>
+          <RecentFiles />
         </DropdownMenuContent>
       </DropdownMenu>
     </>
@@ -360,7 +414,7 @@ const ModeMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="border-border bg-foreground/5 hover:bg-foreground/10 flex h-8 items-center gap-1.5 rounded-full border pe-2.5 ps-2 text-sm transition-colors">
+      <DropdownMenuTrigger className="border-border bg-foreground/5 hover:bg-foreground/10 flex h-8 shrink-0 items-center gap-1.5 rounded-full border pe-2.5 ps-2 text-sm transition-colors">
         {MODE_ICONS[mode]}
         {t(MODE_DETAILS[mode].name)}
         <IconChevronDown className="text-muted-foreground size-3.5" />

@@ -17,7 +17,14 @@ const nextConfig: NextConfig = {
   ],
   redirects: async () => [{ source: "/s/:id", destination: "/c/:id", permanent: true }],
   rewrites: async () =>
-    ["/trpc/:path*", "/api/chat", "/api/auth/:path*", "/auth/:path*"].map((source) => ({
+    [
+      "/trpc/:path*",
+      "/api/chat",
+      "/api/files/:path*",
+      "/api/auth/:path*",
+      "/api/connectors/:path*",
+      "/auth/:path*",
+    ].map((source) => ({
       source,
       destination: `${SERVER}${source}`,
     })),

@@ -4,16 +4,17 @@ import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/me
 import { validateUIMessages } from "ai";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Chat, isLive } from "@/components/chat";
+import { Chat, isAnswering } from "@/components/chat";
 import { ThreadSkeleton } from "@/components/thread";
 import { api } from "@/lib/trpc";
 
 export default function SessionPage() {
   const { id } = useParams<{ id: string }>();
   const [messages, setMessages] = useState<ChatMessage[]>();
+  const [resumed] = useState(() => isAnswering(id));
 
   useEffect(() => {
-    if (isLive(id)) return;
+    if (resumed) return;
     let current = true;
     api.sessions.get
       .query({ id })
@@ -35,9 +36,9 @@ export default function SessionPage() {
     return () => {
       current = false;
     };
-  }, [id]);
+  }, [id, resumed]);
 
-  return messages || isLive(id) ? (
+  return messages || resumed ? (
     <Chat key={id} id={id} initialMessages={messages} />
   ) : (
     <ThreadSkeleton />

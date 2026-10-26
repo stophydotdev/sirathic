@@ -1,7 +1,16 @@
 "use client";
 
 import { Favicon } from "@/components/favicon";
-import { type Read, researchOf, type ResearchStep, type SearchSource } from "@/components/research";
+import { MentionIcon } from "@/components/mentionIcon";
+import type { MentionTarget } from "@/components/mentionText";
+import { usePluginTargets } from "@/components/mentions";
+import {
+  type PluginCall,
+  type Read,
+  researchOf,
+  type ResearchStep,
+  type SearchSource,
+} from "@/components/research";
 import { type Translate, useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
 import { useAuiState } from "@assistant-ui/react";
@@ -47,7 +56,11 @@ function useRevealed(total: number, live: boolean) {
   return revealed;
 }
 
-const summaryOf = (t: Translate, steps: ResearchStep[]) => {
+const summaryOf = (
+  t: Translate,
+  steps: ResearchStep[],
+  targetOf: (plugin: string) => MentionTarget,
+) => {
   const searches = steps.reduce(
     (count, step) => (step.kind === "searches" ? count + step.queries.length : count),
     0,
@@ -57,6 +70,9 @@ const summaryOf = (t: Translate, steps: ResearchStep[]) => {
   const tools = steps.flatMap((step) =>
     step.kind === "tool" ? (TOOLS.get(step.tool)?.done(t) ?? []) : [],
   );
+  const plugins = steps.flatMap((step) =>
+    step.kind === "plugin" ? [t("Used {name}", { name: targetOf(step.plugin).name })] : [],
+  );
   return [
     ...(searches > 0
       ? [searches === 1 ? t("Ran 1 search") : t("Ran {count} searches", { count: searches })]
@@ -65,7 +81,7 @@ const summaryOf = (t: Translate, steps: ResearchStep[]) => {
       ? [pages === 1 ? t("Browsed 1 page") : t("Browsed {count} pages", { count: pages })]
       : []),
     ...(verses.length > 0 ? [`${t("Read")} ${verses.join(", ")}`] : []),
-    ...new Set(tools),
+    ...new Set([...tools, ...plugins]),
   ].join(" · ");
 };
 
@@ -91,6 +107,7 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
   const [live] = useState(working);
   const [open, setOpen] = useState(false);
   const t = useT();
+  const targetOf = usePluginTargets();
   const elapsed = useElapsed(startedAt, working);
   const steps = researchOf(parts.filter(isResearch), thinking);
   const revealed = useRevealed(steps.length, live);
@@ -106,7 +123,7 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
     working && !thinkingShown && (!toolRunning || visible.length === 0)
       ? [...visible, THINKING]
       : visible;
-  const summary = streaming || open ? "" : summaryOf(t, steps);
+  const summary = streaming || open ? "" : summaryOf(t, steps, targetOf);
   const researched = live
     ? Math.max(1, Math.round(elapsed))
     : timing?.firstTokenTime === undefined
@@ -182,6 +199,47 @@ const Row: FC<{
     {aside}
   </div>
 );
+
+const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = ({
+  plugin,
+  calls,
+  active,
+}) => {
+  const t = useT();
+  const target = usePluginTargets()(plugin);
+  return (
+    <div className="flex min-w-0 flex-col gap-2">
+      <div
+        className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", appear)}
+      >
+        <MentionIcon target={target} />
+        <span className={cn("shrink-0", active && "shimmer")}>
+          {t("Used {name} plugin", { name: target.name })}
+        </span>
+        <span className="text-muted-foreground/70 shrink-0 tabular-nums">
+          {calls.length === 1 ? t("1 tool") : t("{count} tools", { count: calls.length })}
+        </span>
+      </div>
+      {calls.map((call, i) => (
+        <div
+          key={i}
+          className={cn(
+            "text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm",
+            appear,
+          )}
+        >
+          <MentionIcon target={target} />
+          <span className="shrink-0">
+            {t("Used {name}", { name: `${target.name} ${call.tool}` })}
+          </span>
+          {call.detail && (
+            <span className="text-muted-foreground/70 min-w-0 truncate">{call.detail}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const READ_ICONS = {
   quran: IconBook,
@@ -343,6 +401,8 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
           {t("Read")}
         </Row>
       );
+    case "plugin":
+      return <PluginRow plugin={step.plugin} calls={step.calls} active={active} />;
     case "tool": {
       const tool = TOOLS.get(step.tool);
       return (

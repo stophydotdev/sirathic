@@ -1,6 +1,8 @@
 "use client";
 
 import { useChatState } from "@/components/chat";
+import { useProjects } from "@/components/projects";
+import { useSessions } from "@/components/sessions";
 import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
 import { ExportMenu } from "@/components/exportChat";
@@ -8,6 +10,8 @@ import { Favicon, FaviconStack } from "@/components/favicon";
 import { siteName, turnsOf } from "@/components/sources";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
+import { UserText } from "@/components/mentions";
+import { ProjectHome } from "@/components/projectHome";
 import { ThreadKeys } from "@/components/shortcuts";
 import { ThreadImages } from "@/components/threadMedia";
 import { ThreadShell } from "@/components/threadShell";
@@ -268,6 +272,11 @@ const IncognitoToggle: FC = () => {
 const ThreadBody: FC = () => {
   const tab = useThreadTab((s) => s.tab);
   const t = useT();
+  const chat = useChatState();
+  const session = useSessions((s) => s.sessions?.find((found) => found.id === chat?.id));
+  const changeSession = useSessions((s) => s.change);
+  const projectId = session ? session.projectId : chat?.projectId;
+  const project = useProjects((s) => s.projects?.find((found) => found.id === projectId));
   if (tab === "links") return <ThreadLinks />;
   if (tab === "images") return <ThreadImages />;
 
@@ -284,7 +293,21 @@ const ThreadBody: FC = () => {
             <ThreadPrimitive.ScrollToBottom className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible">
               <IconArrowDown className="size-4" />
             </ThreadPrimitive.ScrollToBottom>
-            <Composer placeholder={t("Ask a follow-up")} menuSide="top" />
+            <Composer
+              placeholder={t("Ask a follow-up")}
+              menuSide="top"
+              project={
+                project && chat
+                  ? {
+                      id: project.id,
+                      name: project.name,
+                      icon: project.icon,
+                      leaveLabel: t("Remove from project"),
+                      onLeave: () => void changeSession(chat.id, { projectId: null }),
+                    }
+                  : undefined
+              }
+            />
             <Caution />
           </div>
         </TurnRow>
@@ -304,6 +327,8 @@ const Caution: FC = () => {
 
 const EmptyState: FC = () => {
   const t = useT();
+  const projectId = useChatState()?.projectId;
+  if (projectId) return <ProjectHome id={projectId} />;
   return (
     <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
       <div className="absolute top-3 end-4">
@@ -366,7 +391,11 @@ const Question: FC = () => {
               </div>
             </AuiIf>
             <div className="bg-foreground/3 rounded-2xl px-4 py-3 wrap-break-word whitespace-pre-line">
-              <MessagePrimitive.Parts />
+              <MessagePrimitive.Parts
+                components={{
+                  Text: UserText,
+                }}
+              />
             </div>
           </div>
         </div>

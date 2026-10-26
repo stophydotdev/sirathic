@@ -51,4 +51,4 @@ export function siteName(url: string) {
 }
 
 export const faviconUrl = (url: string) =>
-  `https://www.google.com/s2/favicons?sz=128&domain=${URL.parse(url)?.hostname ?? url}`;
+  `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(URL.parse(url)?.hostname ?? url)}`;

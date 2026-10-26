@@ -1,4 +1,5 @@
 import type { ThreadMessage } from "@assistant-ui/react";
+import { CONNECTOR_IDS } from "@sirathic/server/catalog";
 import { z } from "zod";
 
 type Part = ThreadMessage["content"][number];
@@ -43,16 +44,42 @@ const LEGACY_SEARCHES = new Set([
 
 export type Read = { source: SearchSource; title: string; detail?: string; url?: string };
 
+export type PluginCall = { tool: string; detail: string; done: boolean };
+
 export type ResearchStep =
   | { kind: "think"; text: string; live: boolean }
   | { kind: "searches"; queries: string[]; results: Read[]; done: boolean }
   | { kind: "browse"; url: string }
   | { kind: "verses"; title: string; url: string }
-  | { kind: "tool"; tool: string; detail: string };
+  | { kind: "tool"; tool: string; detail: string }
+  | { kind: "plugin"; plugin: string; calls: PluginCall[] };
 
 const hostOf = (url: string) => URL.parse(url)?.hostname.replace(/^www\./u, "") ?? url;
 const capitalized = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 const VERSE_REF = /Quran (\d+):(\d+)/u;
+
+const CUSTOM_PLUGIN = /^custom-[a-z0-9]{8}(?=_)/u;
+
+const pluginOf = (tool: string) =>
+  CONNECTOR_IDS.find((id) => tool.startsWith(`${id}_`)) ?? CUSTOM_PLUGIN.exec(tool)?.[0];
+
+const titleOf = (plugin: string, tool: string) => {
+  const words = tool
+    .slice(plugin.length + 1)
+    .split(/[_-]+/u)
+    .filter((word) => word && word.toLowerCase() !== plugin);
+  return words.length > 0 ? words.map(capitalized).join(" ") : tool;
+};
+
+const callDetail = z
+  .looseObject({ query: z.string().optional() })
+  .catch({})
+  .transform(
+    (fields) =>
+      [fields.query, ...Object.values(fields)]
+        .map((value) => z.string().safeParse(value).data)
+        .find(Boolean) ?? "",
+  );
 
 const sentencesOf = (text: string) =>
   text
@@ -168,6 +195,18 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
         title: `Quran ${verses.surah}:${range}`,
         url: `https://quran.com/${verses.surah}/${from}`,
       });
+      return;
+    }
+    const plugin = pluginOf(part.toolName);
+    if (plugin) {
+      const call = {
+        tool: titleOf(plugin, part.toolName),
+        detail: callDetail.parse(part.args),
+        done: part.result !== undefined,
+      };
+      const group = steps.at(-1);
+      if (group?.kind === "plugin" && group.plugin === plugin) group.calls.push(call);
+      else steps.push({ kind: "plugin", plugin, calls: [call] });
       return;
     }
     steps.push({
