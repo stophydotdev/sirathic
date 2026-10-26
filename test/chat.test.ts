@@ -14,6 +14,7 @@ import { keepAlive } from "../apps/server/src/chat/keepAlive";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { clientOf } from "../apps/server/src/client";
+import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
 
 const linked = async (urls: string[], deltas: string[]) => {
   const { add, transform } = citations([]);
@@ -358,4 +359,10 @@ test("the country is kept only as a two-letter code", () => {
   expect(
     ["SI", "si", "Slovenia", ""].map((country) => clientFor("curl/8.16.0", country).country),
   ).toEqual(["SI", undefined, undefined, undefined]);
+});
+
+test("a sunnah.com hadith link maps to our hadith id", () => {
+  expect(hadithIdOfSunnahUrl("https://sunnah.com/bukhari:7191")).toBe("bukhari:7191");
+  expect(hadithIdOfSunnahUrl("https://sunnah.com/nawawi40:3")).toBe("nawawi:3");
+  expect(hadithIdOfSunnahUrl("https://sunnah.com/bukhari/93")).toBeNull();
 });
