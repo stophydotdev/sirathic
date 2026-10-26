@@ -19,6 +19,7 @@ import { z } from "zod";
 import type { ProviderOptions } from "../chatgpt/codex";
 import type { Event } from "../events";
 import { citations } from "./citations";
+import { keepAlive } from "./keepAlive";
 import { readPdfs } from "./pdf";
 import { reasonOf } from "../respond";
 import type { ChatMessage, Mode } from "../shared/messages";
@@ -27,6 +28,7 @@ import { shortenEarlierResults } from "./history";
 import { answerRules, searchPrompt } from "./prompt";
 import { type Remember, sirathicTools } from "./tools";
 
+const KEEPALIVE_MS = 15_000;
 const MAX_STEPS = 10;
 const RESEARCH_STEPS = 16;
 
@@ -295,8 +297,9 @@ export function chatResponse({
       });
     },
   });
-  return createUIMessageStreamResponse({
+  const response = createUIMessageStreamResponse({
     stream,
     headers: { "cache-control": "no-cache, no-transform" },
   });
+  return new Response(response.body?.pipeThrough(keepAlive(KEEPALIVE_MS)) ?? null, response);
 }
