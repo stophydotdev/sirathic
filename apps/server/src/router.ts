@@ -2,10 +2,38 @@ import { imageSearch } from "@sirathic/core/tools/imageSearch";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { DEFAULT_MODEL, models } from "./chatgpt/codex";
-import { GEMINI_MODELS } from "./gemini";
+import { pluginId } from "./connectors/catalog";
+import {
+  addCustom,
+  connect,
+  customInput,
+  disconnect,
+  listConnections,
+} from "./connectors/connections";
+import {
+  automationId,
+  automationInput,
+  automationUpdate,
+  createAutomation,
+  listAutomations,
+  listRuns,
+  removeAutomation,
+  updateAutomation,
+} from "./automations/store";
+import { runNow } from "./automations/runner";
+import { fileId, fileName, listFiles, removeFile, renameFile } from "./files/store";
 import { NOOR_MODELS } from "./noor";
 import { userFor } from "./auth";
 import { track } from "./events";
+import {
+  createProject,
+  listProjects,
+  projectId,
+  projectInput,
+  projectUpdate,
+  removeProject,
+  updateProject,
+} from "./projects";
 import { StatusError } from "./respond";
 import { getSettings, updateSettings } from "./settings";
 import {
@@ -23,6 +51,7 @@ import {
   updateSession,
 } from "./sessions";
 import { settingsUpdate } from "./shared/settings";
+import { listSkills, removeSkill, saveSkill, skillInput } from "./skills";
 import { suggestions } from "./suggest";
 
 const TRPC_CODES = {
@@ -66,6 +95,8 @@ const signedIn = procedure.use(({ ctx, next }) => {
 
 const session = z.object({ id: sessionId });
 
+const plugin = z.object({ id: pluginId });
+
 const isDefault = (model: { slug: string }) => Number(model.slug === DEFAULT_MODEL);
 
 export const appRouter = t.router({
@@ -105,11 +136,67 @@ export const appRouter = t.router({
       .input(forkInput.safeExtend({ id: sessionId }))
       .mutation(({ ctx, input: { id, ...fork } }) => forkSession(id, ctx.owner, fork)),
   }),
+  projects: t.router({
+    list: signedIn.query(({ ctx }) => listProjects(ctx.owner)),
+    create: signedIn
+      .input(projectInput)
+      .mutation(({ ctx, input }) => createProject(ctx.owner, input)),
+    update: signedIn
+      .input(projectUpdate.safeExtend({ id: projectId }))
+      .mutation(({ ctx, input: { id, ...update } }) => updateProject(id, ctx.owner, update)),
+    remove: signedIn
+      .input(z.object({ id: projectId }))
+      .mutation(({ ctx, input }) => removeProject(input.id, ctx.owner)),
+  }),
+  automations: t.router({
+    list: signedIn.query(({ ctx }) => listAutomations(ctx.owner)),
+    runs: signedIn.query(({ ctx }) => listRuns(ctx.owner)),
+    create: signedIn
+      .input(automationInput)
+      .mutation(({ ctx, input }) => createAutomation(ctx.owner, input)),
+    update: signedIn
+      .input(automationUpdate.safeExtend({ id: automationId }))
+      .mutation(({ ctx, input: { id, ...update } }) => updateAutomation(id, ctx.owner, update)),
+    remove: signedIn
+      .input(z.object({ id: automationId }))
+      .mutation(({ ctx, input }) => removeAutomation(input.id, ctx.owner)),
+    runNow: signedIn
+      .input(z.object({ id: automationId }))
+      .mutation(({ ctx, input }) => runNow(input.id, ctx.owner)),
+  }),
   settings: t.router({
     get: signedIn.query(({ ctx }) => getSettings(ctx.owner)),
     update: signedIn
       .input(settingsUpdate)
       .mutation(({ ctx, input }) => updateSettings(ctx.owner, input)),
+  }),
+  connectors: t.router({
+    list: signedIn.query(({ ctx }) => listConnections(ctx.owner)),
+    connect: signedIn.input(plugin).mutation(({ ctx, input }) => connect(ctx.owner, input.id)),
+    disconnect: signedIn
+      .input(plugin)
+      .mutation(({ ctx, input }) => disconnect(ctx.owner, input.id)),
+    addCustom: signedIn
+      .input(customInput)
+      .mutation(({ ctx, input }) => addCustom(ctx.owner, input)),
+  }),
+  skills: t.router({
+    list: signedIn.query(({ ctx }) => listSkills(ctx.owner)),
+    save: signedIn.input(skillInput).mutation(({ ctx, input }) => saveSkill(ctx.owner, input)),
+    remove: signedIn
+      .input(z.object({ id: z.uuid() }))
+      .mutation(({ ctx, input }) => removeSkill(ctx.owner, input.id)),
+  }),
+  files: t.router({
+    list: signedIn
+      .input(z.object({ projectId: z.uuid().optional() }).optional())
+      .query(({ ctx, input }) => listFiles(ctx.owner, input?.projectId)),
+    rename: signedIn
+      .input(z.object({ id: fileId, name: fileName }))
+      .mutation(({ ctx, input }) => renameFile(input.id, ctx.owner, input.name)),
+    remove: signedIn
+      .input(z.object({ id: fileId }))
+      .mutation(({ ctx, input }) => removeFile(input.id, ctx.owner)),
   }),
   suggest: procedure
     .input(z.object({ q: z.string() }))
@@ -135,7 +222,6 @@ export const appRouter = t.router({
       return [
         ...NOOR_MODELS,
         ...(ctx.user.via === "chatgpt" ? await models(ctx.user) : []),
-        ...GEMINI_MODELS,
       ].toSorted((a, b) => isDefault(b) - isDefault(a));
     }),
   }),

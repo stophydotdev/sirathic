@@ -13,7 +13,7 @@ export type ProviderOptions = NonNullable<Parameters<typeof streamText>[0]["prov
 export type Model = {
   slug: string;
   name: string;
-  maker: "sirathic" | "openai" | "anthropic" | "google" | "deepseek" | "zhipu" | "qwen" | "xiaomi";
+  maker: "sirathic" | "openai" | "anthropic" | "deepseek" | "zhipu" | "qwen" | "xiaomi";
 };
 
 const modelsResponse = z.object({
@@ -67,6 +67,7 @@ export const answerOptions = (turn: { research: boolean; sessionId: string }): P
     textVerbosity: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
   anthropic: {
+    effort: turn.research ? "high" : undefined,
     thinking: { type: "adaptive", display: "summarized" },
   } satisfies AnthropicLanguageModelOptions,
 });

@@ -3,10 +3,7 @@ import { env } from "@sirathic/env/server";
 import { type LanguageModelMiddleware, wrapLanguageModel } from "ai";
 import type { Model } from "./chatgpt/codex";
 
-const anthropic =
-  env.ANTHROPIC_API_KEY === undefined
-    ? undefined
-    : createAnthropic({ apiKey: env.ANTHROPIC_API_KEY });
+const anthropic = createAnthropic({ apiKey: env.ANTHROPIC_API_KEY });
 
 const CACHED = { anthropic: { cacheControl: { type: "ephemeral" } } };
 
@@ -40,18 +37,14 @@ const leanTools: LanguageModelMiddleware = {
 
 const NOOR = "sirathic-noor-1-flash";
 
-const haiku =
-  anthropic &&
-  wrapLanguageModel({
-    model: anthropic("claude-haiku-5-5"),
-    middleware: [cacheMarks, leanTools],
-  });
+const haiku = wrapLanguageModel({
+  model: anthropic("claude-haiku-5-5"),
+  middleware: [cacheMarks, leanTools],
+});
 
-export const NOOR_MODELS: Model[] = haiku
-  ? [{ slug: NOOR, name: "Noor 1 Flash", maker: "sirathic" }]
-  : [];
+export const NOOR_MODELS: Model[] = [{ slug: NOOR, name: "Noor 1 Flash", maker: "sirathic" }];
 
-export const DEFAULT_NOOR = haiku ? NOOR : undefined;
+export const DEFAULT_NOOR = NOOR;
 
 export const NOOR_SIDE_MODEL = haiku;
 
