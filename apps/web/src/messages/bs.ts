@@ -540,5 +540,8 @@ export default {
   "Automation deleted": "Automatizacija je izbrisana",
   "Running now. The answer will show up in Runs.":
     "Pokreće se sada. Odgovor će se pojaviti u Pokretanjima.",
+  "Search, read and draft your email": "Pretražujte, čitajte i pišite nacrte e-pošte",
+  "See your calendars and events": "Pogledajte svoje kalendare i događaje",
+  "Search and read your files": "Pretražujte i čitajte svoje datoteke",
   "Couldn't open": "Nije se moglo otvoriti",
 } satisfies Messages;

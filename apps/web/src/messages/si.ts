@@ -530,5 +530,8 @@ export default {
   "Automation resumed": "ස්වයංක්‍රීයකරණය නැවත ආරම්භ කළා",
   "Automation deleted": "ස්වයංක්‍රීයකරණය මකා දැමුවා",
   "Running now. The answer will show up in Runs.": "දැන් ධාවනය වෙමින් පවතී. පිළිතුර ධාවන තුළ පෙන්වයි.",
+  "Search, read and draft your email": "ඔබේ ඊමේල් සොයන්න, කියවන්න සහ කෙටුම්පත් ලියන්න",
+  "See your calendars and events": "ඔබේ දින දර්ශන සහ සිදුවීම් බලන්න",
+  "Search and read your files": "ඔබේ ගොනු සොයා කියවන්න",
   "Couldn't open": "විවෘත කළ නොහැකි විය",
 } satisfies Messages;

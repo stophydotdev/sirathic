@@ -528,5 +528,8 @@ export default {
   "Automation resumed": "ఆటోమేషన్ మళ్లీ ప్రారంభమైంది",
   "Automation deleted": "ఆటోమేషన్ తొలగించబడింది",
   "Running now. The answer will show up in Runs.": "ఇప్పుడు రన్ అవుతోంది. సమాధానం రన్‌లలో కనిపిస్తుంది.",
+  "Search, read and draft your email": "మీ ఈమెయిల్‌ను వెతకండి, చదవండి, డ్రాఫ్ట్ చేయండి",
+  "See your calendars and events": "మీ క్యాలెండర్‌లు, ఈవెంట్‌లను చూడండి",
+  "Search and read your files": "మీ ఫైల్‌లను వెతికి చదవండి",
   "Couldn't open": "తెరవలేకపోయింది",
 } satisfies Messages;

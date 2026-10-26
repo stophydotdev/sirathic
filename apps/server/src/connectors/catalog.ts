@@ -4,6 +4,9 @@ const TOOL_NAME_LIMIT = 64;
 
 export const CONNECTOR_IDS = [
   "stophy",
+  "gmail",
+  "googlecalendar",
+  "googledrive",
   "notion",
   "todoist",
   "canva",
@@ -86,6 +89,40 @@ export const CONNECTORS = {
     category: "search",
     description: "Get live, structured web data",
     url: "https://mcp.stophy.dev/mcp",
+  },
+  gmail: {
+    name: "Gmail",
+    category: "productivity",
+    description: "Search, read and draft your email",
+    url: "https://gmailmcp.googleapis.com/mcp/v1",
+    icon: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
+    googleScopes: [
+      "https://www.googleapis.com/auth/gmail.readonly",
+      "https://www.googleapis.com/auth/gmail.compose",
+    ],
+  },
+  googlecalendar: {
+    name: "Google Calendar",
+    category: "productivity",
+    description: "See your calendars and events",
+    url: "https://calendarmcp.googleapis.com/mcp/v1",
+    icon: "https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_31_2x.png",
+    googleScopes: [
+      "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
+      "https://www.googleapis.com/auth/calendar.events.freebusy",
+      "https://www.googleapis.com/auth/calendar.events.readonly",
+    ],
+  },
+  googledrive: {
+    name: "Google Drive",
+    category: "productivity",
+    description: "Search and read your files",
+    url: "https://drivemcp.googleapis.com/mcp/v1",
+    icon: "https://ssl.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png",
+    googleScopes: [
+      "https://www.googleapis.com/auth/drive.readonly",
+      "https://www.googleapis.com/auth/drive.file",
+    ],
   },
   notion: {
     name: "Notion",
@@ -395,6 +432,8 @@ export const CONNECTORS = {
     url: string;
     open?: true;
     tokenAuth?: "none" | "client_secret_post";
+    icon?: string;
+    googleScopes?: readonly string[];
   }
 >;
 

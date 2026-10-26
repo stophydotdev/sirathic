@@ -5,7 +5,7 @@ import { CustomPlugin } from "@/components/customPlugin";
 import { Favicon } from "@/components/favicon";
 import { type Translate, useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
-import { rootDomain } from "@/components/mentionIcon";
+import { catalogIcon, rootDomain } from "@/components/mentionIcon";
 import { PluginTabs } from "@/components/pluginTabs";
 import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
 import { useSignIn } from "@/components/signIn";
@@ -39,7 +39,7 @@ const byName = (a: Plugin, b: Plugin) => a.name.localeCompare(b.name);
 
 const PluginIcon: FC<{ plugin: Plugin }> = ({ plugin }) => (
   <span className="bg-muted relative grid size-9 shrink-0 place-items-center rounded-[10px]">
-    <Favicon url={`https://${rootDomain(plugin.url)}`} size={28} />
+    <Favicon url={`https://${rootDomain(plugin.url)}`} src={catalogIcon(plugin.url)} size={28} />
     {plugin.connected && (
       <IconCheck className="bg-foreground text-background absolute -end-1 -bottom-1 size-4 rounded-full p-0.5" />
     )}

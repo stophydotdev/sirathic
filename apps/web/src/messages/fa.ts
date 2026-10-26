@@ -538,5 +538,8 @@ export default {
   "Automation resumed": "خودکارسازی ادامه یافت",
   "Automation deleted": "خودکارسازی حذف شد",
   "Running now. The answer will show up in Runs.": "در حال اجرا. پاسخ در اجراها نمایش داده می‌شود.",
+  "Search, read and draft your email": "ایمیل خود را جستجو کنید، بخوانید و پیش‌نویس کنید",
+  "See your calendars and events": "تقویم‌ها و رویدادهای خود را ببینید",
+  "Search and read your files": "فایل‌های خود را جستجو کنید و بخوانید",
   "Couldn't open": "باز نشد",
 } satisfies Messages;

@@ -545,5 +545,8 @@ export default {
   "Automation deleted": "Автоматлаштириш ўчирилди",
   "Running now. The answer will show up in Runs.":
     "Ҳозир ишламоқда. Жавоб Ишга туширишларда кўринади.",
+  "Search, read and draft your email": "Почтангизни қидиринг, ўқинг ва қоралама ёзинг",
+  "See your calendars and events": "Тақвимларингиз ва тадбирларингизни кўринг",
+  "Search and read your files": "Файлларингизни қидиринг ва ўқинг",
   "Couldn't open": "Очилмади",
 } satisfies Messages;

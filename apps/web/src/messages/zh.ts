@@ -524,5 +524,8 @@ export default {
   "Automation resumed": "自动化已恢复",
   "Automation deleted": "自动化已删除",
   "Running now. The answer will show up in Runs.": "正在运行。回答会显示在运行记录中。",
+  "Search, read and draft your email": "搜索、阅读和起草你的邮件",
+  "See your calendars and events": "查看你的日历和日程",
+  "Search and read your files": "搜索和阅读你的文件",
   "Couldn't open": "无法打开",
 } satisfies Messages;

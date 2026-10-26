@@ -538,5 +538,8 @@ export default {
   "Automation resumed": "اتومات کار بیا پیل شو",
   "Automation deleted": "اتومات کار ړنګ شو",
   "Running now. The answer will show up in Runs.": "اوس روان دی. ځواب به په چلونو کې ښکاره شي.",
+  "Search, read and draft your email": "خپل بریښنالیک ولټوئ، ولولئ او مسوده یې ولیکئ",
+  "See your calendars and events": "خپلې جنترۍ او پېښې وګورئ",
+  "Search and read your files": "خپل فایلونه ولټوئ او ولولئ",
   "Couldn't open": "پرانیستل نشو",
 } satisfies Messages;

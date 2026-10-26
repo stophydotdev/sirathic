@@ -533,5 +533,8 @@ export default {
   "Automation resumed": "অটোমেশন আবার চালু হয়েছে",
   "Automation deleted": "অটোমেশন মুছে ফেলা হয়েছে",
   "Running now. The answer will show up in Runs.": "এখন চলছে। উত্তরটি রান-এ দেখা যাবে।",
+  "Search, read and draft your email": "আপনার ইমেল খুঁজুন, পড়ুন ও খসড়া লিখুন",
+  "See your calendars and events": "আপনার ক্যালেন্ডার ও ইভেন্ট দেখুন",
+  "Search and read your files": "আপনার ফাইল খুঁজুন ও পড়ুন",
   "Couldn't open": "খোলা যায়নি",
 } satisfies Messages;

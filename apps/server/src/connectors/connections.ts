@@ -27,6 +27,11 @@ const REDIRECT_URL = new URL("/api/connectors/callback", env.SITE_URL).href;
 const CONNECT_TIMEOUT_MS = 10_000;
 const ANSWER_CONNECT_MS = 3_000;
 
+const GOOGLE_CLIENT = {
+  client_id: env.GOOGLE_CLIENT_ID,
+  client_secret: env.GOOGLE_CLIENT_SECRET,
+};
+
 const CLIENT_METADATA = {
   client_name: "Sirathic",
   redirect_uris: [REDIRECT_URL],
@@ -85,7 +90,13 @@ const callbackQuery = z.object({
   iss: z.string().optional(),
 });
 
-type Server = { name: string; url: string; open?: true; tokenAuth?: "none" | "client_secret_post" };
+type Server = {
+  name: string;
+  url: string;
+  open?: true;
+  tokenAuth?: "none" | "client_secret_post";
+  googleScopes?: readonly string[];
+};
 
 export const customInput = z.object({
   name: z.string().trim().min(1).max(40),
@@ -149,9 +160,9 @@ function providerFor(owner: string, connector: string, server: Server, stored: S
     clientMetadata: server.tokenAuth
       ? { ...CLIENT_METADATA, token_endpoint_auth_method: server.tokenAuth }
       : CLIENT_METADATA,
-    clientInformation: () => secrets.client,
+    clientInformation: () => (server.googleScopes ? GOOGLE_CLIENT : secrets.client),
     saveClientInformation: (client) => save({ client }),
-    isClientInformationDynamicallyRegistered: () => true,
+    isClientInformationDynamicallyRegistered: () => !server.googleScopes,
     tokens: () => secrets.tokens,
     saveTokens: (tokens) => save({ tokens, verifier: undefined, state: undefined }),
     codeVerifier: () => {
@@ -163,6 +174,10 @@ function providerFor(owner: string, connector: string, server: Server, stored: S
     saveState: (state) => save({ state }),
     storedState: () => secrets.state,
     redirectToAuthorization: (url) => {
+      if (server.googleScopes) {
+        url.searchParams.set("access_type", "offline");
+        url.searchParams.set("prompt", "consent");
+      }
       authorizationUrl = url;
     },
     invalidateCredentials: (scope) => save(FORGET[scope]),
@@ -237,7 +252,10 @@ export async function connect(owner: string, id: string) {
     return { status: "connected" as const };
   }
   const { provider, authorizationUrl } = providerFor(owner, id, server, await storedFor(owner, id));
-  const result = await auth(provider, { serverUrl: server.url }).catch((err: Error) => {
+  const result = await auth(provider, {
+    serverUrl: server.url,
+    scope: server.googleScopes?.join(" "),
+  }).catch((err: Error) => {
     throw new StatusError(502, `${server.name} sign-in failed: ${err.message}`);
   });
   const url = authorizationUrl();

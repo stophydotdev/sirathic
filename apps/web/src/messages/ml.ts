@@ -536,5 +536,8 @@ export default {
   "Automation resumed": "ഓട്ടോമേഷൻ പുനരാരംഭിച്ചു",
   "Automation deleted": "ഓട്ടോമേഷൻ ഇല്ലാതാക്കി",
   "Running now. The answer will show up in Runs.": "ഇപ്പോൾ റൺ ചെയ്യുന്നു. ഉത്തരം റണ്ണുകളിൽ കാണാം.",
+  "Search, read and draft your email": "നിങ്ങളുടെ ഇമെയിൽ തിരയുക, വായിക്കുക, ഡ്രാഫ്റ്റ് ചെയ്യുക",
+  "See your calendars and events": "നിങ്ങളുടെ കലണ്ടറുകളും ഇവന്റുകളും കാണുക",
+  "Search and read your files": "നിങ്ങളുടെ ഫയലുകൾ തിരയുക, വായിക്കുക",
   "Couldn't open": "തുറക്കാനായില്ല",
 } satisfies Messages;

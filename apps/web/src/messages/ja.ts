@@ -539,5 +539,8 @@ export default {
   "Automation resumed": "オートメーションを再開しました",
   "Automation deleted": "オートメーションを削除しました",
   "Running now. The answer will show up in Runs.": "実行中です。回答は実行に表示されます。",
+  "Search, read and draft your email": "メールを検索、閲覧、下書き",
+  "See your calendars and events": "カレンダーと予定を確認",
+  "Search and read your files": "ファイルを検索して閲覧",
   "Couldn't open": "開けませんでした",
 } satisfies Messages;
