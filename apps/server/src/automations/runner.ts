@@ -133,6 +133,7 @@ async function answerPrompt(
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
     projectRules: Promise.resolve(projectRules(project, false)),
     skillRules: Promise.resolve(""),
+    texting: Promise.resolve(project?.kind === "bot"),
     options: {
       answer: answerOptions({ research: runMode === "research", sessionId }),
       side: sideOptions,

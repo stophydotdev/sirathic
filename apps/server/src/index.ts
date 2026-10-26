@@ -159,6 +159,7 @@ app.post("/api/chat", (c) =>
       projectRules: project.then(async (inProject) =>
         inProject ? projectRules(inProject) + (await readProjectFiles(by, inProject.id)) : "",
       ),
+      texting: project.then((inProject) => inProject?.kind === "bot"),
       skillRules:
         owner === undefined
           ? Promise.resolve("")

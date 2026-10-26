@@ -49,6 +49,23 @@ test("a bot keeps to its job, and a bot with no job sets one first", () => {
   }
 });
 
+test("a routine post keeps the bot's voice without the look-it-up line", () => {
+  const coach = {
+    name: "Ramadan Coach",
+    title: "fasting guide",
+    instructions: "Daily tips.",
+    kind: "bot",
+  } as const;
+  const fresh = { ...coach, instructions: "" };
+  for (const bot of [coach, fresh]) {
+    const live = projectRules(bot);
+    const routine = projectRules(bot, false);
+    expect([live, routine].map((rules) => rules.includes("a warm friend"))).toEqual([true, true]);
+    expect([live, routine].map((rules) => rules.includes("Let me check"))).toEqual([true, false]);
+    expect([live, routine].map((rules) => rules.includes("SKIP"))).toEqual([false, true]);
+  }
+});
+
 const told = {
   fact: null,
   madhab: null,

@@ -40,7 +40,6 @@ const KEEPALIVE_MS = 15_000;
 
 export function answerAgent({
   model,
-  modelName,
   tools,
   mode,
   settings,
@@ -51,7 +50,6 @@ export function answerAgent({
   answerOptions,
 }: {
   model: LanguageModel;
-  modelName: string;
   tools: ToolSet;
   mode: Mode;
   settings: Settings;
@@ -64,7 +62,7 @@ export function answerAgent({
   const usable = Object.keys(tools).filter((name): name is keyof typeof tools => name in tools);
   return new ToolLoopAgent({
     model,
-    instructions: searchPrompt(new Date(), mode, modelName, settings),
+    instructions: searchPrompt(new Date(), mode, settings),
     tools,
     stopWhen: hasToolCall("askUser"),
     allowSystemInMessages: true,
@@ -140,6 +138,7 @@ export function chatResponse({
   connected,
   projectRules,
   skillRules,
+  texting,
   options,
   title,
   save,
@@ -161,6 +160,7 @@ export function chatResponse({
   connected: ReturnType<typeof connectedTools>;
   projectRules: Promise<string>;
   skillRules: Promise<string>;
+  texting: Promise<boolean>;
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
@@ -214,16 +214,19 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [settings, connectors, project, skills, inBot] = await Promise.all([
+      const [preferred, connectors, project, skills, inBot, texts] = await Promise.all([
         preferences,
         Promise.race([connected, stopped]),
         projectRules,
         skillRules,
         bot,
+        texting,
       ]);
+      const settings = texts
+        ? ({ ...preferred, answerLength: "short" } satisfies Settings)
+        : preferred;
       const agent = answerAgent({
         model: models.model,
-        modelName,
         tools: {
           ...tools,
           ...(automate && automationTools({ ...automate, projectId: inBot?.id })),
@@ -234,7 +237,7 @@ export function chatResponse({
         },
         mode,
         settings,
-        rules: answerRules(settings, recent, mode) + project + skills,
+        rules: answerRules(settings, recent, mode, texts) + project + skills,
         mustSearch: mustSearch && !inBot,
         canRemember: remember !== undefined,
         shorten,
