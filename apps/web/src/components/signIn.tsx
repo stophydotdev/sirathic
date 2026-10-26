@@ -25,7 +25,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -363,19 +362,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
   const changePreferences = usePreferences((s) => s.change);
   const t = useT();
 
-  if (status === undefined) {
-    return (
-      <div
-        className={cn(
-          "flex h-10 items-center gap-2.5 rounded-[12px] px-2.5",
-          collapsed && "justify-center px-0",
-        )}
-      >
-        <Skeleton className="size-[26px] shrink-0 rounded-full" />
-        {!collapsed && <Skeleton className="h-2.5 w-20" />}
-      </div>
-    );
-  }
+  if (status === undefined) return <div className="h-10" />;
   if (!status.signedIn) {
     return (
       <button

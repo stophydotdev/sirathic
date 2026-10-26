@@ -19,7 +19,6 @@ import { BotLearned } from "@/components/botLearned";
 import { ThreadKeys } from "@/components/shortcuts";
 import { ThreadImages } from "@/components/threadMedia";
 import { ThreadShell } from "@/components/threadShell";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -95,48 +94,10 @@ const ThreadImpl: FC = () => {
 
 export const Thread = memo(ThreadImpl);
 
-const ANSWER_LINES = [
-  ["w-full", "w-11/12", "w-5/6", "w-3/5"],
-  ["w-4/5", "w-full", "w-2/3"],
-];
-
-const SOURCE_LINES = ["w-1/3", "w-full", "w-4/5", "w-2/5", "w-11/12", "w-3/4"];
-
-export const ThreadSkeleton: FC = () => (
+export const EmptyThread: FC = () => (
   <main className="h-dvh">
     <ThreadShell>
-      <div className="bg-background flex h-full flex-col">
-        <div className="border-border/50 h-14 shrink-0 border-b" />
-        <div className="px-6">
-          <TurnRow
-            aside={
-              <div className="bg-card border-foreground/8 flex flex-col gap-3.5 rounded-xl border p-4">
-                {SOURCE_LINES.map((width) => (
-                  <Skeleton key={width} className={cn("h-2.5", width)} />
-                ))}
-              </div>
-            }
-          >
-            <div className="flex justify-end pt-8 pb-6">
-              <Skeleton className="h-12 w-2/5 rounded-2xl" />
-            </div>
-            <div className="flex flex-col gap-7">
-              {ANSWER_LINES.map((lines) => (
-                <div key={lines[0]} className="flex flex-col gap-3.5">
-                  {lines.map((width) => (
-                    <Skeleton key={width} className={cn("h-2.5", width)} />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </TurnRow>
-        </div>
-        <div className="mt-auto px-6 pb-4">
-          <TurnRow>
-            <div className="bg-card border-foreground/10 h-[98px] rounded-2xl border" />
-          </TurnRow>
-        </div>
-      </div>
+      <div className="bg-background h-full" />
     </ThreadShell>
   </main>
 );

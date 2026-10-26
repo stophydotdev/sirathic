@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
+import { AppSync } from "@/components/appSync";
 import { CookieNotice } from "@/components/cookieNotice";
 import { I18nProvider } from "@/components/i18n";
 import { hasLocale, isRtl, LOCALES } from "@/components/locales";
@@ -48,6 +49,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       </head>
       <body className="min-h-full flex flex-col">
         <I18nProvider locale={lang} messages={messages}>
+          <AppSync />
           {children}
           <CookieNotice />
         </I18nProvider>

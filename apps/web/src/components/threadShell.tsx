@@ -7,7 +7,6 @@ import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Mark } from "@/components/logo";
 import { ProjectList } from "@/components/projectNav";
-import { useProjects } from "@/components/projects";
 import { BotList } from "@/components/botNav";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
@@ -17,7 +16,6 @@ import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AskSelection } from "@/components/askSelection";
-import { Skeleton } from "@/components/ui/skeleton";
 import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
 import { useKeyNames, withMod } from "@/lib/keys";
 import { cn } from "@/lib/utils";
@@ -40,25 +38,6 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searching, setSearching] = useState(false);
   const keys = useKeyNames();
-  const refresh = useAccount((s) => s.refresh);
-  const refreshSessions = useSessions((s) => s.refresh);
-  const refreshProjects = useProjects((s) => s.refresh);
-
-  useEffect(() => {
-    void useAccount.persist.rehydrate();
-    void useSessions.persist.rehydrate();
-  }, []);
-
-  useEffect(() => {
-    const onFocus = () => {
-      void refresh();
-      void refreshSessions();
-      void refreshProjects();
-    };
-    onFocus();
-    window.addEventListener("focus", onFocus);
-    return () => window.removeEventListener("focus", onFocus);
-  }, [refresh, refreshSessions, refreshProjects]);
   const unseenRuns = useUnseenRuns(useAccount((s) => s.status?.signedIn));
 
   useEffect(() => {
@@ -287,7 +266,6 @@ const NavLink: FC<RowProps & { href: string }> = ({ href, className, children, o
   </Button>
 );
 
-const ROW_WIDTHS = ["w-4/5", "w-3/5", "w-5/6", "w-1/2", "w-3/4", "w-2/3"];
 const RECENT_LIMIT = 4;
 
 const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, onSeeAll }) => {
@@ -317,13 +295,6 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
           )}
         />
       </button>
-      {open &&
-        sessions === undefined &&
-        ROW_WIDTHS.map((width) => (
-          <div key={width} className="flex h-8 items-center px-2.5">
-            <Skeleton className={cn("h-2.5", width)} />
-          </div>
-        ))}
       {open && sessions !== undefined && chats.length === 0 && (
         <p className="text-muted-foreground/70 px-2.5 py-1.5 text-sm">{t("No chats yet")}</p>
       )}

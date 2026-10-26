@@ -5,7 +5,7 @@ import { TRPCClientError } from "@trpc/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Chat, isAnswering, savedChat } from "@/components/chat";
-import { ThreadSkeleton } from "@/components/thread";
+import { EmptyThread } from "@/components/thread";
 
 const NO_MESSAGES = { messages: [], unfinished: false };
 
@@ -42,6 +42,6 @@ export default function BotPage() {
       home={`/bot/${id}`}
     />
   ) : (
-    <ThreadSkeleton />
+    <EmptyThread />
   );
 }

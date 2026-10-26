@@ -5,7 +5,6 @@ import { useAccount } from "@/components/account";
 import { MakerIcon } from "@/components/makerIcon";
 import { ModelMenuContent } from "@/components/settings";
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdownMenu";
-import { Skeleton } from "@/components/ui/skeleton";
 import { IconChevronDown } from "@tabler/icons-react";
 import type { ComponentProps, FC } from "react";
 
@@ -19,11 +18,7 @@ export const ModelPicker: FC<Pick<ComponentProps<typeof ModelMenuContent>, "side
   const current = models.find((m) => m.slug === chosen) ?? models[0];
 
   if (unknown) {
-    return (
-      <div className="flex h-8 items-center px-3">
-        <Skeleton className="h-2.5 w-8 sm:w-20" />
-      </div>
-    );
+    return <div className="h-8" />;
   }
 
   return (

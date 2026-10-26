@@ -3,9 +3,9 @@
 import { type ChatMessage } from "@sirathic/server/messages";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ThreadSkeleton } from "@/components/thread";
 import { Chat, isAnswering, savedChat } from "@/components/chat";
 import { useProjects } from "@/components/projects";
+import { EmptyThread } from "@/components/thread";
 
 export default function SessionPage() {
   const { id } = useParams<{ id: string }>();
@@ -37,6 +37,6 @@ export default function SessionPage() {
   return saved || resumed ? (
     <Chat key={id} id={id} initialMessages={saved?.messages} unfinished={saved?.unfinished} />
   ) : (
-    <ThreadSkeleton />
+    <EmptyThread />
   );
 }
