@@ -218,11 +218,23 @@ export const SignInDialog: FC = () => {
                 <span className="bg-super ring-super/20 size-1.5 rounded-full ring-3" />
                 {t("Waiting for approval")}
               </span>
-              <p className="text-muted-foreground/70 border-border w-full border-t pt-3.5 text-[11.5px] leading-normal">
+              <p className="text-muted-foreground border-border w-full border-t pt-3.5 text-xs leading-normal">
                 {t(
                   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.",
                 )}
               </p>
+              <button
+                type="button"
+                onClick={() =>
+                  continueWithGoogle(draft).catch((err: Error) =>
+                    setStep({ kind: "failed", message: err.message }),
+                  )
+                }
+                className={cn(button, secondary)}
+              >
+                <GoogleIcon className="size-4" />
+                {t("Continue with Google")}
+              </button>
             </>
           ) : (
             <>
