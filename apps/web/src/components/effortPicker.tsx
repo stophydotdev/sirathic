@@ -13,6 +13,7 @@ import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import type { FC } from "react";
 import { useChatOptions } from "@/components/chatOptions";
 import { useT } from "@/components/i18n";
+import { composerControl } from "@/components/modelPicker";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,19 +40,23 @@ export const EffortPicker: FC<{ side?: "top" | "bottom" }> = ({ side }) => {
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label={`${t("Effort")}: ${t(EFFORT_NAMES[current])}`}
-        className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-muted flex h-8 items-center gap-1.5 rounded-full px-2.5 text-sm font-[470] transition-colors sm:px-3"
+        className={composerControl}
       >
-        <HugeiconsIcon icon={DashboardSpeed02Icon} className="size-4 shrink-0" />
+        <HugeiconsIcon icon={DashboardSpeed02Icon} className="text-muted-foreground size-4" />
         <span className="hidden sm:inline">{t(EFFORT_NAMES[current])}</span>
-        <HugeiconsIcon icon={ArrowDown01Icon} className="size-3.5" />
+        <HugeiconsIcon
+          icon={ArrowDown01Icon}
+          strokeWidth={2.25}
+          className="text-muted-foreground size-3.5"
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        align="end"
+        align="start"
         side={side}
         avoidCollisions={side === undefined}
-        className="ring-foreground/7 w-48 rounded-[12px] p-1"
+        className="w-auto min-w-40 p-1"
       >
-        <DropdownMenuLabel className="text-muted-foreground px-2 py-1.5 text-xs font-medium">
+        <DropdownMenuLabel className="text-muted-foreground px-2 pt-1.5 pb-1 text-xs font-medium">
           {t("Effort")}
         </DropdownMenuLabel>
         <DropdownMenuRadioGroup
@@ -65,14 +70,16 @@ export const EffortPicker: FC<{ side?: "top" | "bottom" }> = ({ side }) => {
             <DropdownMenuPrimitive.RadioItem
               key={level}
               value={level}
-              className="focus:bg-accent data-[state=checked]:bg-foreground/8 flex h-8 cursor-pointer items-center gap-2 rounded-[8px] px-2 text-sm font-[360] outline-hidden select-none"
+              className="text-foreground data-[state=checked]:bg-foreground/8 data-highlighted:bg-accent data-highlighted:text-accent-foreground flex min-h-8 cursor-pointer items-center rounded-sm px-2 py-1 text-base outline-none select-none sm:min-h-7 sm:text-sm"
             >
-              <span className="flex-1">{t(EFFORT_NAMES[level])}</span>
-              {level === fallback && (
-                <span className="border-border text-muted-foreground flex h-4 items-center rounded-sm border px-1 text-xs leading-none">
-                  {t("Default")}
-                </span>
-              )}
+              <span className="flex min-w-0 items-center gap-1">
+                <span className="min-w-0 truncate">{t(EFFORT_NAMES[level])}</span>
+                {level === fallback && (
+                  <span className="border-input bg-background dark:bg-input/32 text-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-sm border px-0.75 text-xs leading-none font-medium sm:h-4 sm:min-w-4">
+                    {t("Default")}
+                  </span>
+                )}
+              </span>
             </DropdownMenuPrimitive.RadioItem>
           ))}
         </DropdownMenuRadioGroup>
