@@ -433,7 +433,7 @@ const Question: FC = () => {
   );
 };
 
-const ARABIC = /\p{Script=Arabic}/u;
+const ARABIC = /^\P{L}*\p{Script=Arabic}/u;
 
 const SourcesPane: FC = () => {
   const messages = useAuiState((s) => s.thread.messages);
