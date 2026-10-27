@@ -50,7 +50,7 @@ type Feedback = z.infer<typeof feedbackSchema>;
 export const messageText = (message: ChatMessage | undefined) =>
   message?.parts.map((part) => (part.type === "text" ? part.text : "")).join("") ?? "";
 
-export function download(name: string, markdown: string) {
+function download(name: string, markdown: string) {
   const url = URL.createObjectURL(new Blob([markdown], { type: "text/markdown" }));
   const link = document.createElement("a");
   link.href = url;

@@ -11,7 +11,7 @@ const pathIcon =
     </svg>
   );
 
-export const SirathicIcon = (props: SVGProps<SVGSVGElement>) => (
+const SirathicIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" aria-hidden {...props}>
     <Rosette color="currentColor" />
   </svg>

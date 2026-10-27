@@ -2,7 +2,6 @@ import type { ThreadMessage } from "@assistant-ui/react";
 import { createContext } from "react";
 import { z } from "zod";
 import { type Source, source } from "@sirathic/server/sources";
-import { researchOf } from "@/components/research";
 import type { MessageKey } from "@/messages/en";
 
 const sourced = z.object({ sources: z.array(source) });
@@ -28,28 +27,6 @@ export function sourcesOf(content: ThreadMessage["content"]) {
   const cited = citedUrlsOf(content);
   const rank = (url: string) => (cited.includes(url) ? cited.indexOf(url) : cited.length);
   return [...found.values()].toSorted((a, b) => rank(a.url) - rank(b.url));
-}
-
-export function turnsOf(messages: readonly ThreadMessage[]) {
-  return messages.flatMap((message, i) => {
-    if (message.role !== "user") return [];
-    const reply = messages[i + 1];
-    const content = reply?.role === "assistant" ? reply.content : [];
-    return [
-      {
-        id: message.id,
-        question: textOf(message.content),
-        queries: [
-          ...new Set(
-            researchOf(content, false).flatMap((step) =>
-              step.kind === "searches" ? step.queries : [],
-            ),
-          ),
-        ],
-        sources: sourcesOf(content),
-      },
-    ];
-  });
 }
 
 export const SourcesContext = createContext<ReadonlyMap<string, Source>>(new Map());
