@@ -16,6 +16,7 @@ const CARD_TOOLS = new Set([
   "update_routine",
   "list_routines",
   "set_bot_job",
+  "update_profile",
   "clarifying_questions",
   ...FILE_TOOLS,
 ]);
@@ -90,7 +91,8 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
   const listed = z.array(row).safeParse(result).data;
   const bot = renamed.safeParse(result).data;
   const name = currentToolName(tool);
-  if (name === "set_bot_job" && bot) return <BotRenamed name={bot.name} />;
+  if ((name === "set_bot_job" || name === "update_profile") && bot)
+    return <BotRenamed name={bot.name} />;
   if (name === "update_routine" && change && (made?.projectId || change.action !== "create")) {
     return (
       <p className="text-muted-foreground my-3 flex items-center justify-center gap-1.5 text-xs">

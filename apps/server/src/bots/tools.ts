@@ -34,5 +34,21 @@ export function botTools({ id, owner }: BotScope) {
         return { name: bot.name };
       },
     }),
+    update_profile: tool({
+      description:
+        "Changes this bot's name or description, only the fields you pass. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words. Use it when the user asks to rename the bot or to change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
+      inputSchema: z.object({
+        name: projectName.optional(),
+        description: projectInstructions.min(1).optional(),
+      }),
+      execute: async ({ name, description }) => {
+        if (name === undefined && description === undefined) return "Nothing to change.";
+        const bot = await updateProject(id, owner, { name, instructions: description });
+        return {
+          ...(name !== undefined && { name: bot.name }),
+          ...(description !== undefined && { description: bot.instructions }),
+        };
+      },
+    }),
   };
 }

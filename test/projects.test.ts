@@ -68,6 +68,7 @@ test("a bot name with a link is caught and a plain name is not", () => {
 });
 
 const botId = "22222222-2222-4222-8222-222222222222";
+const updates: string[] = [];
 let accountFacts = ["Prays at the mosque on Fridays", "Is 28"];
 let botProfile = [
   { text: "Goal: memorize Juz Amma", source: "guessed", at: 1 },
@@ -88,6 +89,10 @@ const fakeDb = drizzle(
       botProfile = JSON.parse(String(params[0]));
       return { rows: [] };
     }
+    if (sql.startsWith('update "projects" set "name"')) {
+      updates.push(sql);
+      return { rows: [Object.assign(Array(23).fill(null), { 1: params[0] })] };
+    }
     throw new Error(`unexpected query: ${sql}`);
   },
   { casing: "snake_case" },
@@ -95,6 +100,7 @@ const fakeDb = drizzle(
 
 mock.module("@sirathic/db", () => ({ db: fakeDb }));
 const { memoryTools } = await import("../apps/server/src/account/memory");
+const { botTools } = await import("../apps/server/src/bots/tools");
 
 const call = { toolCallId: "call", messages: [], context: {} };
 
@@ -301,4 +307,12 @@ test("a cut that lands on a bot reply moves on to the next question", () => {
   const view = recentTurns(chat, BOT_HISTORY);
   expect(view[0]?.role).toBe("user");
   expect(view).toHaveLength(chat.length - 25);
+});
+
+test("update_profile renames the bot and leaves its description alone", async () => {
+  const tools = botTools({ id: botId, owner: "user-a" });
+  const result = await tools.update_profile.execute?.({ name: "Ilm Coach" }, call);
+  expect(result).toEqual({ name: "Ilm Coach" });
+  expect(updates[0]?.split(" returning ")[0]).not.toContain("instructions");
+  expect(await tools.update_profile.execute?.({}, call)).toBe("Nothing to change.");
 });
