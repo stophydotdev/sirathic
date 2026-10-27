@@ -1,5 +1,6 @@
 import { useSessions } from "@/components/sessions";
 import type { Translate } from "@/components/i18n";
+import { refreshing } from "@/lib/refreshing";
 import { api } from "@/lib/trpc";
 import { containsLink } from "@sirathic/server/projects";
 import { TRPCClientError } from "@trpc/client";
@@ -22,17 +23,10 @@ export const useProjects = create<{
   persist(
     (set, get) => ({
       bots: undefined,
-      refresh: async () => {
-        const all = await api.projects.list
-          .query()
-          .catch((err: Error) =>
-            err instanceof TRPCClientError && err.data?.code === "UNAUTHORIZED" ? [] : undefined,
-          );
-        if (all) set({ bots: all });
-      },
+      refresh: () => list.join(),
       createBot: async (input) => {
         const created = await api.projects.create.mutate(input).catch(() => undefined);
-        await get().refresh();
+        await list.fresh();
         return created;
       },
       change: async (id, change) => {
@@ -40,12 +34,12 @@ export const useProjects = create<{
           bots: get().bots?.map((bot) => (bot.id === id ? Object.assign({}, bot, change) : bot)),
         });
         await api.projects.update.mutate(Object.assign({ id }, change)).catch(() => undefined);
-        await get().refresh();
+        await list.fresh();
       },
       remove: async (id) => {
         set({ bots: get().bots?.filter((bot) => bot.id !== id) });
         await api.projects.remove.mutate({ id }).catch(() => undefined);
-        await Promise.all([get().refresh(), useSessions.getState().refresh()]);
+        await Promise.all([list.fresh(), useSessions.getState().refresh()]);
       },
     }),
     {
@@ -54,6 +48,18 @@ export const useProjects = create<{
       skipHydration: true,
     },
   ),
+);
+
+const list = refreshing(
+  () =>
+    api.projects.list
+      .query()
+      .catch((err: Error) =>
+        err instanceof TRPCClientError && err.data?.code === "UNAUTHORIZED" ? [] : undefined,
+      ),
+  (bots): void => {
+    useProjects.setState({ bots });
+  },
 );
 
 export const projectNameError = (t: Translate, name: string) =>

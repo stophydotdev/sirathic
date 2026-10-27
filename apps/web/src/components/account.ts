@@ -1,3 +1,4 @@
+import { useOwnLists } from "@/components/ownLists";
 import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { api } from "@/lib/trpc";
@@ -41,11 +42,18 @@ export const useAccount = create<{
           api.account.status.query().catch(() => undefined),
           loadModels(),
         ]);
-        if (status) set({ status, models: models.list, modelsError: models.error });
+        if (!status) return;
+        const before = get().status;
+        const sameUser =
+          before?.signedIn === status.signedIn &&
+          (!status.signedIn || (before.signedIn && before.label === status.label));
+        if (before && !sameUser) useOwnLists.getState().reset();
+        set({ status, models: models.list, modelsError: models.error });
       },
       choose: (slug) => set({ chosen: slug }),
       signOut: async () => {
         await fetch("/api/auth/sign-out", { method: "POST" }).catch(() => undefined);
+        useOwnLists.getState().reset();
         await Promise.all([
           get().refresh(),
           useSessions.getState().refresh(),

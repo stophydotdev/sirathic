@@ -4,7 +4,7 @@ import { EventLine } from "@/components/botEvents";
 import { Favicon } from "@/components/favicon";
 import { useT } from "@/components/i18n";
 import { catalogIcon, rootDomain } from "@/components/mentionIcon";
-import { api } from "@/lib/trpc";
+import { useOwnLists } from "@/components/ownLists";
 import { CONNECTORS, connectorId } from "@sirathic/server/catalog";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Loading03Icon, Plug01Icon } from "@hugeicons/core-free-icons";
@@ -17,20 +17,17 @@ const installed = z.discriminatedUnion("status", [
 ]);
 
 const useConnected = (id: z.infer<typeof connectorId>, waiting: boolean) => {
-  const [connected, setConnected] = useState(false);
+  const connected = useOwnLists((s) =>
+    s.plugins.some((plugin) => plugin.id === id && plugin.connected),
+  );
+  const load = useOwnLists((s) => s.load);
   useEffect(() => {
-    const check = () =>
-      void api.connectors.list
-        .query()
-        .then((plugins) => {
-          if (plugins.some((plugin) => plugin.id === id && plugin.connected)) setConnected(true);
-        })
-        .catch(() => undefined);
+    const check = () => void load();
     check();
     if (!waiting) return;
     window.addEventListener("focus", check);
     return () => window.removeEventListener("focus", check);
-  }, [id, waiting]);
+  }, [load, waiting]);
   return connected;
 };
 

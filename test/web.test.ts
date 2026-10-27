@@ -12,6 +12,7 @@ import { bubblesOf } from "../apps/web/src/components/botBubbles";
 import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
+import { refreshing } from "../apps/web/src/lib/refreshing";
 
 test("a link keeps its path and drops the trailing period and question mark", () => {
   expect(splitLinks("What does https://a.org/x/y say? Also see https://b.info/en/82536.")).toEqual([
@@ -228,4 +229,32 @@ test("a bot reply splits into a bubble per paragraph, but headings, lists and ta
     "Source: Quran.com",
     "```\ncode\n\nmore\n```",
   ]);
+});
+
+test("components that ask together share one request and a list refreshed after a write is never replaced by an older answer", async () => {
+  const requests = [
+    Promise.withResolvers<string>(),
+    Promise.withResolvers<string>(),
+    Promise.withResolvers<string>(),
+  ];
+  let asked = 0;
+  const shown: string[] = [];
+  const list = refreshing(
+    async () => requests[asked++]?.promise,
+    (value) => void shown.push(value),
+  );
+
+  const first = Promise.all([list.join(), list.join()]);
+  expect(asked).toBe(1);
+
+  const afterWrite = list.fresh();
+  expect(asked).toBe(2);
+  requests[1]?.resolve("after the write");
+  await afterWrite;
+  requests[0]?.resolve("before the write");
+  await first;
+  expect(shown).toEqual(["after the write"]);
+
+  void list.join();
+  expect(asked).toBe(3);
 });

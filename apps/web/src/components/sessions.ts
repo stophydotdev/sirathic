@@ -1,3 +1,4 @@
+import { refreshing } from "@/lib/refreshing";
 import { api } from "@/lib/trpc";
 import { TRPCClientError } from "@trpc/client";
 import { create } from "zustand";
@@ -18,14 +19,7 @@ export const useSessions = create<{
   persist(
     (set, get) => ({
       sessions: undefined,
-      refresh: async () => {
-        const sessions = await api.sessions.list
-          .query({ query: "" })
-          .catch((err: Error) =>
-            err instanceof TRPCClientError && err.data?.code === "UNAUTHORIZED" ? [] : undefined,
-          );
-        if (sessions) set({ sessions });
-      },
+      refresh: () => list.join(),
       change: async (id, change) => {
         set({
           sessions: get().sessions?.map((session) =>
@@ -33,14 +27,14 @@ export const useSessions = create<{
           ),
         });
         await api.sessions.update.mutate(Object.assign({ id }, change)).catch(() => undefined);
-        await get().refresh();
+        await list.fresh();
       },
       remove: async (id) => {
         set({
           sessions: get().sessions?.filter((session) => session.id !== id),
         });
         await api.sessions.remove.mutate({ id }).catch(() => undefined);
-        await get().refresh();
+        await list.fresh();
       },
     }),
     {
@@ -49,4 +43,16 @@ export const useSessions = create<{
       skipHydration: true,
     },
   ),
+);
+
+const list = refreshing(
+  () =>
+    api.sessions.list
+      .query({ query: "" })
+      .catch((err: Error) =>
+        err instanceof TRPCClientError && err.data?.code === "UNAUTHORIZED" ? [] : undefined,
+      ),
+  (sessions): void => {
+    useSessions.setState({ sessions });
+  },
 );

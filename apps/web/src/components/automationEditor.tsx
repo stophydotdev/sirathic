@@ -7,12 +7,12 @@ import { TriggerField } from "@/components/automationTrigger";
 import { useT } from "@/components/i18n";
 import {
   LinkPlugin,
-  loadMentionTargets,
   MentionChip,
   mentionFormatter,
   MentionPopover,
   MentionSpace,
 } from "@/components/mentions";
+import { useOwnLists } from "@/components/ownLists";
 import { IconPicker, ProjectIcon } from "@/components/projectIcon";
 import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
 import { api } from "@/lib/trpc";
@@ -97,12 +97,15 @@ const EditorDialog: FC<EditorProps> = ({ automation, draft: initial, botId, onCl
     const composer = aui.thread().composer();
     composer.setText(initial.prompt);
     setSeeded(true);
-    void loadMentionTargets().then(() => {
-      if (current && composer.getState().text === initial.prompt) {
-        composer.setText("");
-        composer.setText(initial.prompt);
-      }
-    });
+    void useOwnLists
+      .getState()
+      .load()
+      .then(() => {
+        if (current && composer.getState().text === initial.prompt) {
+          composer.setText("");
+          composer.setText(initial.prompt);
+        }
+      });
     return () => {
       current = false;
     };

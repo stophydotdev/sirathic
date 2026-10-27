@@ -4,10 +4,10 @@ import { useAccount } from "@/components/account";
 import { useT } from "@/components/i18n";
 import { LinkedText, splitLinks } from "@/components/linkedText";
 import { MentionIcon } from "@/components/mentionIcon";
+import { type Plugin, type Skill, useOwnLists } from "@/components/ownLists";
 import { type MentionTarget, splitMentions } from "@/components/mentionText";
 import { popoverHeading, popoverIcon, popoverPanel, popoverRow } from "@/components/popover";
 import { faviconUrl } from "@/components/sources";
-import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import {
   ComposerPrimitive,
@@ -37,7 +37,6 @@ import {
 } from "lexical";
 import Link from "next/link";
 import { type FC, Fragment, type ReactNode, useEffect, useMemo } from "react";
-import { create } from "zustand";
 
 export type Choice = {
   key: string;
@@ -47,35 +46,8 @@ export type Choice = {
   choose: () => void;
 };
 
-type Plugin = Awaited<ReturnType<typeof api.connectors.list.query>>[number];
-type Skill = Awaited<ReturnType<typeof api.skills.list.query>>[number];
-
-let loading: Promise<void> | undefined;
-
-const useMentionTargets = create<{
-  plugins: Plugin[];
-  skills: Skill[];
-  loaded: boolean;
-  load: () => Promise<void>;
-}>()((set) => ({
-  plugins: [],
-  skills: [],
-  loaded: false,
-  load: () =>
-    (loading ??= Promise.all([api.connectors.list.query(), api.skills.list.query()])
-      .catch(() => [[], []])
-      .then(([plugins, skills]) => set({ plugins, skills, loaded: true }))
-      .finally(() => {
-        loading = undefined;
-      })),
-}));
-
-export const loadMentionTargets = () => useMentionTargets.getState().load();
-
-export const usePlugins = () => useMentionTargets((s) => s.plugins);
-
 export function usePluginTargets() {
-  const plugins = useMentionTargets((s) => s.plugins);
+  const plugins = useOwnLists((s) => s.plugins);
   return (id: string): MentionTarget => {
     const found = plugins.find((plugin) => plugin.id === id);
     if (found) return { name: found.name, url: found.url };
@@ -99,7 +71,7 @@ const iconTarget = (plugins: Plugin[], id: string, name: string) => {
 export const mentionFormatter: DirectiveFormatter = {
   serialize: (item) => `@${item.label}`,
   parse: (text) => {
-    const { plugins, skills } = useMentionTargets.getState();
+    const { plugins, skills } = useOwnLists.getState();
     const named = itemsOf(plugins, skills).map((item) => ({ name: item.label, item }));
     return splitMentions(text, named).map((part): DirectiveSegment =>
       part.kind === "text"
@@ -115,7 +87,7 @@ export const mentionFormatter: DirectiveFormatter = {
 };
 
 export const MentionChip: FC<DirectiveChipProps> = ({ directiveId, label }) => {
-  const plugins = useMentionTargets((s) => s.plugins);
+  const plugins = useOwnLists((s) => s.plugins);
   return (
     <span className="text-super">
       <MentionIcon target={iconTarget(plugins, directiveId, label)} className="me-1 align-[-3px]" />
@@ -226,7 +198,7 @@ export const MentionSpace: FC = () => {
 
 export const MentionPopover: FC<{ className: string }> = ({ className }) => {
   const t = useT();
-  const { plugins, skills, loaded, load } = useMentionTargets();
+  const { plugins, skills, loaded, load } = useOwnLists();
   const all = useMemo(() => itemsOf(plugins, skills), [plugins, skills]);
   useEffect(() => {
     void load();
@@ -292,7 +264,7 @@ export const MentionPopover: FC<{ className: string }> = ({ className }) => {
 
 export const UserText: FC<{ text: string }> = ({ text }) => {
   const signedIn = useAccount((s) => s.status?.signedIn === true);
-  const { plugins, skills, loaded, load } = useMentionTargets();
+  const { plugins, skills, loaded, load } = useOwnLists();
   useEffect(() => {
     if (signedIn && !loaded) void load();
   }, [signedIn, loaded, load]);
