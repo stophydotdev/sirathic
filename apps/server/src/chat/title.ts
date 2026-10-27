@@ -1,6 +1,6 @@
 import { type LanguageModel, Output, streamText } from "ai";
 import { z } from "zod";
-import type { ProviderOptions } from "../chatgpt/codex";
+import type { ProviderOptions } from "../models/subscription";
 import type { ChatMessage } from "../shared/messages";
 
 const ASKED_LIMIT = 6;

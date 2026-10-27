@@ -9,9 +9,6 @@
     },
     ".": {
       "entry": ["scripts/*.ts"]
-    },
-    "apps/server": {
-      "entry": ["src/chatgpt/login.ts"]
     }
   }
 }

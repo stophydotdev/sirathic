@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
-import { isPrivateAddress, publicUrl } from "../apps/server/src/connectors/address";
-import { type ConnectorId, popularOf, toolName } from "../apps/server/src/connectors/catalog";
-import { FORGET, withUpdate } from "../apps/server/src/connectors/connections";
-import { mentionedSkills } from "../apps/server/src/skillMentions";
+import { isPrivateAddress, publicUrl } from "../apps/server/src/plugins/address";
+import { type ConnectorId, popularOf, toolName } from "../apps/server/src/plugins/catalog";
+import { FORGET, withUpdate } from "../apps/server/src/plugins/connections";
+import { mentionedSkills } from "../apps/server/src/skills/mentions";
 
 test.each([
   "127.0.0.1",

@@ -1,9 +1,9 @@
 import type { ChatMessage } from "../shared/messages";
-import { reasonOf } from "../respond";
+import { reasonOf } from "../http";
 import { fileIdOf, kindOf } from "../shared/files";
 import { pdfText } from "../chat/pdf";
 import { storage } from "./storage";
-import { FILE_CHARS, projectFilesRules, TOTAL_CHARS } from "../projectFiles";
+import { FILE_CHARS, projectFilesRules, TOTAL_CHARS } from "../projects/files";
 import { fileOf, projectFileKeys } from "./store";
 
 type Part = ChatMessage["parts"][number];

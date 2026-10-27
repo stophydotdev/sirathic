@@ -18,18 +18,18 @@ import {
   type UIMessageStreamOutcome,
 } from "ai";
 import { z } from "zod";
-import type { ProviderOptions } from "../chatgpt/codex";
-import type { connectedTools } from "../connectors/connections";
-import { type Event, toolFailure } from "../events";
-import { type AutomationScope, automationTools } from "./automationTools";
-import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "./botTools";
-import { summaryNote } from "./botSummary";
-import { chatSearchTools } from "./chatSearch";
-import { studyTools } from "./studyTools";
+import type { ProviderOptions } from "../models/subscription";
+import type { connectedTools } from "../plugins/connections";
+import { type Event, toolFailure } from "./events";
+import { type AutomationScope, automationTools } from "../automations/tools";
+import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
+import { summaryNote } from "../bots/summary";
+import { chatSearchTools } from "../bots/chatSearch";
+import { studyTools } from "../bots/studyTools";
 import { citations } from "./citations";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
-import { reasonOf } from "../respond";
+import { reasonOf } from "../http";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";

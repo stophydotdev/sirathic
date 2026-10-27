@@ -1,16 +1,16 @@
 import { expect, test } from "bun:test";
-import { profileRejection, withEntry } from "../apps/server/src/botProfile";
-import { taughtNote } from "../apps/server/src/botNotes";
-import { reviewed } from "../apps/server/src/chat/botReview";
+import { profileRejection, withEntry } from "../apps/server/src/bots/profile";
+import { taughtNote } from "../apps/server/src/bots/notes";
+import { reviewed } from "../apps/server/src/bots/review";
 import {
   projectRemembered,
   projectRules,
   settingsInProject,
-} from "../apps/server/src/projectRules";
-import { projectUpdate } from "../apps/server/src/projects";
-import { afterReview, isMemorized } from "../apps/server/src/study";
+} from "../apps/server/src/projects/rules";
+import { projectUpdate } from "../apps/server/src/projects/projects";
+import { afterReview, isMemorized } from "../apps/server/src/bots/study";
 import { containsLink } from "../apps/server/src/shared/projects";
-import { FILE_CHARS, projectFilesRules, TOTAL_CHARS } from "../apps/server/src/projectFiles";
+import { FILE_CHARS, projectFilesRules, TOTAL_CHARS } from "../apps/server/src/projects/files";
 import { rememberedUpdate } from "../apps/server/src/shared/settings";
 
 test("a project with instructions adds them to the chat rules with its name", () => {
