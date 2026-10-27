@@ -35,12 +35,14 @@ import {
   pageText,
   quranBlock,
 } from "./compact";
+import { relevant } from "./relevance";
 import { cleanSearch } from "./searchQuery";
 
 const RESULT_CHARS = 2_000;
 const QUESTION_CHARS = 600;
 const TAFSIR_CHARS = 1_500;
 const TAFSIR_VERSES = 2;
+const HEAD_CHARS = 300;
 const FATWA_CHARS = 3_000;
 
 const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news", "duas"] as const;
@@ -141,7 +143,12 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
     Number.POSITIVE_INFINITY,
   );
   const tafsir = found.flatMap((result) => result.tafsirEn);
-  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.quran), verseSource);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    ranked.slice(0, SEARCH_LIMITS.quran),
+    (verse) => `Quran ${verse.surah}:${verse.ayah}\n${clip(verse.textEn, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, verseSource);
   const results = cited.map((verse, index) => ({
     citation: verse.citation,
     ref: `Quran ${verse.surah}:${verse.ayah} (${verse.surahName})`,
@@ -150,7 +157,7 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
     tafsir: index < TAFSIR_VERSES ? clip(tafsirFor(tafsir, verse), TAFSIR_CHARS) : "",
   }));
   return {
-    sources: [...sources, ...ranked.slice(SEARCH_LIMITS.quran).map(verseSource)],
+    sources: [...sources, ...[...dropped, ...ranked.slice(SEARCH_LIMITS.quran)].map(verseSource)],
     results,
     text: quranBlock(results),
   };
@@ -165,7 +172,12 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
     (hadith) => hadith.id,
     Number.POSITIVE_INFINITY,
   );
-  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.hadith), hadithSource);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    ranked.slice(0, SEARCH_LIMITS.hadith),
+    (hadith) => `${hadithTitle(hadith)}\n${clip(hadith.english, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, hadithSource);
   const results = cited.map((hadith) => ({
     citation: hadith.citation,
     ref: hadithTitle(hadith),
@@ -176,7 +188,9 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
   return {
     sources: [
       ...sources,
-      ...ranked.slice(SEARCH_LIMITS.hadith).flatMap((hadith) => hadithSource(hadith) ?? []),
+      ...[...dropped, ...ranked.slice(SEARCH_LIMITS.hadith)].flatMap(
+        (hadith) => hadithSource(hadith) ?? [],
+      ),
     ],
     results,
     text: hadithBlock(results),
@@ -221,7 +235,13 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
       ({ url }) =>
         sites.length === 0 || (url !== null && sites.some((site) => isOnSite(hostOf(url), site))),
     );
-  const { cited, sources } = numbered(cite, onSites, fiqhSource);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    onSites,
+    (passage) =>
+      `${passage.work} (${passage.school})${passage.heading ? `: ${passage.heading}` : ""}\n${clip(passage.textAr, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, fiqhSource);
   const results = cited.map((passage) => ({
     citation: passage.citation,
     work: passage.work,
@@ -232,7 +252,11 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
     heading: passage.heading,
     text: clip(passage.textAr, RESULT_CHARS),
   }));
-  return { sources, results, text: fiqhBlock(results) };
+  return {
+    sources: [...sources, ...dropped.flatMap((passage) => fiqhSource(passage) ?? [])],
+    results,
+    text: fiqhBlock(results),
+  };
 };
 
 const extract = (markdown: string, queries: readonly string[]) =>
@@ -283,7 +307,12 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[], site
     (fatwa) => fatwa.url,
     Number.POSITIVE_INFINITY,
   );
-  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.fatwa), fatwaSource);
+  const { kept, dropped } = await relevant(
+    [...queries, ...arabic].join("; "),
+    ranked.slice(0, SEARCH_LIMITS.fatwa),
+    (fatwa) => `${fatwa.title}\n${clip(fatwa.question ?? fatwa.summary, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, fatwaSource);
   const results = cited.map((fatwa) => {
     const head = pageText(
       [
@@ -314,7 +343,7 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[], site
     };
   });
   return {
-    sources: [...sources, ...ranked.slice(SEARCH_LIMITS.fatwa).map(fatwaSource)],
+    sources: [...sources, ...[...dropped, ...ranked.slice(SEARCH_LIMITS.fatwa)].map(fatwaSource)],
     results,
     text: pagesBlock("fatwa", results),
   };
@@ -364,10 +393,15 @@ const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: T
     }),
     ...fetched,
   ]);
-  const pages = citedPages(cite, read, passages);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    read,
+    (hit) => `${hit.title}\n${clip(passages.get(hit.url) ?? hit.description, HEAD_CHARS)}`,
+  );
+  const pages = citedPages(cite, kept, passages);
   return {
     ...pages,
-    sources: [...pages.sources, ...hits.slice(SEARCH_LIMITS.web).map(hitSource)],
+    sources: [...pages.sources, ...[...dropped, ...hits.slice(SEARCH_LIMITS.web)].map(hitSource)],
     text: pagesBlock("web", pages.results),
   };
 };

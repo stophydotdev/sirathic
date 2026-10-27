@@ -7,6 +7,8 @@ export const env = createEnv({
     REDIS_URL: z.url(),
     OPENAI_API_KEY: z.string(),
     STOPHY_API_KEY: z.string(),
+    NEON_AI_GATEWAY_TOKEN: z.string(),
+    NEON_AI_GATEWAY_BASE_URL: z.url(),
     ANTHROPIC_API_KEY: z.string(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),

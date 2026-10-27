@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { relevant } from "../apps/server/src/chat/relevance";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { publicUrl } from "@sirathic/core/web/url";
 import { withoutStopwords } from "@sirathic/core/search/arabic";
@@ -122,4 +123,22 @@ test("only public http and https pages can be read", () => {
       "http://intranet/",
     ].map(readable),
   ).toEqual(Array(11).fill(false));
+});
+
+test("passages Jev scores below the floor are dropped in our order, and a failed check keeps them all", async () => {
+  const original = globalThis.fetch;
+  const answers = { p1: { noul: 0.9 }, p2: { noul: 0.05 }, p3: { noul: 0.4 } };
+  globalThis.fetch = Object.assign(async () => Response.json({ answers }), {
+    preconnect: () => {},
+  });
+  const scored = await relevant("wudu", ["a", "b", "c"], (item) => item);
+  globalThis.fetch = Object.assign(async () => new Response("busy", { status: 429 }), {
+    preconnect: () => {},
+  });
+  const failed = await relevant("wudu", ["a", "b", "c"], (item) => item);
+  globalThis.fetch = original;
+  expect([scored, failed]).toEqual([
+    { kept: ["a", "c"], dropped: ["b"] },
+    { kept: ["a", "b", "c"], dropped: [] },
+  ]);
 });
