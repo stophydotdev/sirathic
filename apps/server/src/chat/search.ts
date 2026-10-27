@@ -40,6 +40,7 @@ import { cleanSearch } from "./searchQuery";
 const RESULT_CHARS = 2_000;
 const QUESTION_CHARS = 600;
 const TAFSIR_CHARS = 1_500;
+const TAFSIR_VERSES = 2;
 const FATWA_CHARS = 3_000;
 
 const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news", "duas"] as const;
@@ -141,12 +142,12 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
   );
   const tafsir = found.flatMap((result) => result.tafsirEn);
   const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.quran), verseSource);
-  const results = cited.map((verse) => ({
+  const results = cited.map((verse, index) => ({
     citation: verse.citation,
     ref: `Quran ${verse.surah}:${verse.ayah} (${verse.surahName})`,
     arabic: verse.textAr,
     english: verse.textEn,
-    tafsir: clip(tafsirFor(tafsir, verse), TAFSIR_CHARS),
+    tafsir: index < TAFSIR_VERSES ? clip(tafsirFor(tafsir, verse), TAFSIR_CHARS) : "",
   }));
   return {
     sources: [...sources, ...ranked.slice(SEARCH_LIMITS.quran).map(verseSource)],

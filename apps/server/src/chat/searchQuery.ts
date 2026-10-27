@@ -35,9 +35,10 @@ export const cleanSearch = ({
   ];
   const named = [...sites, ...all.flatMap((cleaned) => cleaned.sites)];
   const parsed = named.map((site) => ({ site, host: siteHost.safeParse(site) }));
+  const keptArabic = keep(cleanedArabic);
   return {
-    queries: keep(cleanedQueries),
-    arabic: keep(cleanedArabic),
+    queries: keep(cleanedQueries).filter((query) => !keptArabic.includes(query)),
+    arabic: keptArabic,
     sites: [...new Set(parsed.flatMap(({ host }) => (host.success ? [host.data] : [])))],
     notes: [
       ...(all.some(({ query }) => query.length < MIN_QUERY_CHARS)
