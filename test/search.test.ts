@@ -83,14 +83,10 @@ test("site: moves into sites, quotes and uppercase operators go, Arabic stays as
   });
 });
 
-test("an Arabic query written in both fields is searched once, as Arabic", () => {
-  expect(
-    cleanSearch({
-      queries: ["bitcoin ruling", "حكم البيتكوين"],
-      arabic: ["حكم البيتكوين"],
-      sites: [],
-    }),
-  ).toEqual({ queries: ["bitcoin ruling"], arabic: ["حكم البيتكوين"], sites: [], notes: [] });
+test("an Arabic query written in both fields stays in queries, so Quran and the web still search it", () => {
+  expect(cleanSearch({ queries: ["حكم البيتكوين"], arabic: ["حكم البيتكوين"], sites: [] })).toEqual(
+    { queries: ["حكم البيتكوين"], arabic: ["حكم البيتكوين"], sites: [], notes: [] },
+  );
 });
 
 test("a query left empty is skipped and a site that is not a domain is reported", () => {

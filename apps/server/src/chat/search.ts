@@ -315,9 +315,9 @@ const citedPages = (
   };
 };
 
-const searchFatwa = async (cite: Cite, queries: string[], arabic: string[], sites: string[]) => {
+const searchFatwa = async (cite: Cite, queries: string[], sites: string[]) => {
   const found = await Promise.all(
-    [...queries, ...arabic].map((query) => fatwaSearch({ query, sites, limit: LISTED_PER_QUERY })),
+    queries.map((query) => fatwaSearch({ query, sites, limit: LISTED_PER_QUERY })),
   );
   const ranked = interleave(
     found.map((result) => result.fatwas),
@@ -325,7 +325,7 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[], site
     Number.POSITIVE_INFINITY,
   );
   const { kept, dropped } = await relevant(
-    [...queries, ...arabic].join("; "),
+    queries.join("; "),
     ranked.slice(0, SEARCH_LIMITS.fatwa),
     (fatwa) => `${fatwa.title}\n${clip(fatwa.question ?? fatwa.summary, HEAD_CHARS)}`,
   );
@@ -348,12 +348,7 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[], site
       date: fatwa.publishedAt?.toISOString().slice(0, 10) ?? null,
       text: [
         head,
-        room > 0 &&
-          bestPieces(
-            pageText(fatwa.answer, Number.POSITIVE_INFINITY),
-            [...queries, ...arabic],
-            room,
-          ),
+        room > 0 && bestPieces(pageText(fatwa.answer, Number.POSITIVE_INFINITY), queries, room),
       ]
         .filter(Boolean)
         .join("\n\n"),
@@ -459,14 +454,15 @@ export const searchAll = async (cite: Cite, input: z.infer<typeof searchInput>) 
   }
   const { time } = input;
   const chosen = [...new Set(input.sources)];
+  const both = [...new Set([...queries, ...arabic])];
   const runs = {
     quran: () => searchQuran(cite, queries),
-    hadith: () => searchHadith(cite, [...queries, ...arabic]),
-    fatwa: () => searchFatwa(cite, queries, arabic, sites),
+    hadith: () => searchHadith(cite, both),
+    fatwa: () => searchFatwa(cite, both, sites),
     fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, sites),
     web: () => searchWeb(cite, queries, sites, time),
     news: () => searchNews(cite, queries, time),
-    duas: () => searchDuas([...queries, ...arabic]),
+    duas: () => searchDuas(both),
   } satisfies Record<SearchSource, () => Promise<Searched>>;
   const done = await Promise.all(
     chosen.map(async (name) => {
