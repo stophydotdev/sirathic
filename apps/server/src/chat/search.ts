@@ -35,6 +35,7 @@ import {
   pageText,
   quranBlock,
 } from "./compact";
+import { nearFused, withinChars } from "./cut";
 import { fuse } from "./fuse";
 import { relevant } from "./relevance";
 import { cleanSearch } from "./searchQuery";
@@ -54,15 +55,16 @@ const TIMES = ["pastWeek", "pastMonth", "pastYear"] as const;
 
 const SEARCH_LIMITS = {
   quran: 6,
-  hadith: 8,
-  fatwa: 8,
-  fiqh: 3,
   web: 8,
   news: 8,
   duas: 5,
-} satisfies Record<SearchSource, number>;
+} satisfies Partial<Record<SearchSource, number>>;
 
 const LISTED_PER_QUERY = 20;
+const POOL_PER_SOURCE = 20;
+const FIQH_PER_SCHOOL = 4;
+const TOTAL_CHARS = 60_000;
+const BUDGETED = new Set<SearchSource>(["hadith", "fatwa", "fiqh"]);
 const WEB_LISTED_PER_QUERY = 10;
 const WEB_READ_PER_QUERY = 5;
 
@@ -147,20 +149,27 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
   };
 };
 
-const searchHadith = async (cite: Cite, queries: string[]) => {
+const searchHadith = async (cite: Cite, queries: string[], chars: number) => {
   const found = await Promise.all(
     queries.map((query) => hadithSearch({ query, limit: LISTED_PER_QUERY })),
   );
-  const ranked = fuse(
+  const { near, far } = nearFused(
     found.map((result) => result.hadiths),
     (hadith) => hadith.id,
   );
   const { kept, dropped } = await relevant(
     queries.join("; "),
-    ranked.slice(0, SEARCH_LIMITS.hadith),
+    near.slice(0, POOL_PER_SOURCE),
     (hadith) => `${hadithTitle(hadith)}\n${clip(hadith.english, HEAD_CHARS)}`,
   );
-  const { cited, sources } = numbered(cite, kept, hadithSource);
+  const { fits, over } = withinChars(
+    kept,
+    (hadith) =>
+      Math.min(hadith.english?.length ?? 0, RESULT_CHARS) +
+      Math.min(hadith.textAr?.length ?? 0, RESULT_CHARS),
+    chars,
+  );
+  const { cited, sources } = numbered(cite, fits, hadithSource);
   const results = cited.map((hadith) => ({
     citation: hadith.citation,
     ref: hadithTitle(hadith),
@@ -171,7 +180,7 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
   return {
     sources: [
       ...sources,
-      ...[...dropped, ...ranked.slice(SEARCH_LIMITS.hadith)].flatMap(
+      ...[...dropped, ...over, ...near.slice(POOL_PER_SOURCE), ...far].flatMap(
         (hadith) => hadithSource(hadith) ?? [],
       ),
     ],
@@ -191,13 +200,7 @@ const searchDuas = async (queries: string[]) => {
   return { results: duas, sources: [], text: duaBlock(duas) };
 };
 
-const FIQH_SCHOOLS = [
-  ["hanafi", SEARCH_LIMITS.fiqh],
-  ["maliki", SEARCH_LIMITS.fiqh],
-  ["shafii", SEARCH_LIMITS.fiqh],
-  ["hanbali", SEARCH_LIMITS.fiqh],
-  ["comparative", 1],
-] as const;
+const FIQH_SCHOOLS = ["hanafi", "maliki", "shafii", "hanbali", "comparative"] as const;
 
 type FiqhHit = Awaited<ReturnType<typeof fiqhSearch>>["passages"][number];
 
@@ -214,24 +217,34 @@ export const onePerPage = (passages: readonly FiqhHit[]) => {
   );
 };
 
-const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
+const searchFiqh = async (cite: Cite, queries: string[], sites: string[], chars: number) => {
   const bySchool = await Promise.all(
-    FIQH_SCHOOLS.map(async ([school, limit]) =>
-      fuse(
-        (await Promise.all(queries.map((query) => fiqhSearch({ query, school, limit })))).map(
-          (result) => result.passages,
+    queries.map((query) =>
+      Promise.all(
+        FIQH_SCHOOLS.map(
+          async (school) => (await fiqhSearch({ query, school, limit: FIQH_PER_SCHOOL })).passages,
         ),
-        (passage) => passage.id,
-      ).slice(0, limit),
+      ),
     ),
   );
+  const bestOfSchool = new Set(
+    bySchool.flatMap((lists) => lists.flatMap((list) => list.slice(0, 1))),
+  );
+  const { near, far } = nearFused(
+    bySchool.map((lists) => lists.flat().toSorted((a, b) => a.distance - b.distance)),
+    (passage) => passage.id,
+    (passage) => bestOfSchool.has(passage),
+  );
+  const pool = near.filter(
+    (passage, index) =>
+      index < POOL_PER_SOURCE ||
+      !near.slice(0, index).some(({ school }) => school === passage.school),
+  );
   const onSites = onePerPage(
-    bySchool
-      .flat()
-      .filter(
-        ({ url }) =>
-          sites.length === 0 || (url !== null && sites.some((site) => isOnSite(hostOf(url), site))),
-      ),
+    pool.filter(
+      ({ url }) =>
+        sites.length === 0 || (url !== null && sites.some((site) => isOnSite(hostOf(url), site))),
+    ),
   );
   const { kept, dropped } = await relevant(
     queries.join("; "),
@@ -239,7 +252,8 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
     (passage) =>
       `${passage.work} (${passage.school})${passage.heading ? `: ${passage.heading}` : ""}\n${clip(passage.textAr, HEAD_CHARS)}`,
   );
-  const { cited, sources } = numbered(cite, kept, fiqhSource);
+  const { fits, over } = withinChars(kept, (passage) => passage.textAr.length, chars);
+  const { cited, sources } = numbered(cite, fits, fiqhSource);
   const results = cited.map((passage) => ({
     citation: passage.citation,
     work: passage.work,
@@ -251,7 +265,15 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
     text: passage.textAr,
   }));
   return {
-    sources: [...sources, ...dropped.flatMap((passage) => fiqhSource(passage) ?? [])],
+    sources: [
+      ...sources,
+      ...[
+        ...dropped,
+        ...over,
+        ...near.filter((passage) => !pool.includes(passage)),
+        ...far,
+      ].flatMap((passage) => fiqhSource(passage) ?? []),
+    ],
     results,
     text: fiqhBlock(results),
   };
@@ -296,20 +318,31 @@ const citedPages = (
   };
 };
 
-const searchFatwa = async (cite: Cite, queries: string[], sites: string[]) => {
+const searchFatwa = async (cite: Cite, queries: string[], sites: string[], chars: number) => {
   const found = await Promise.all(
     queries.map((query) => fatwaSearch({ query, sites, limit: LISTED_PER_QUERY })),
   );
-  const ranked = fuse(
+  const { near, far } = nearFused(
     found.map((result) => result.fatwas),
     (fatwa) => fatwa.url,
   );
   const { kept, dropped } = await relevant(
     queries.join("; "),
-    ranked.slice(0, SEARCH_LIMITS.fatwa),
+    near.slice(0, POOL_PER_SOURCE),
     (fatwa) => `${fatwa.title}\n${clip(fatwa.question ?? fatwa.summary, HEAD_CHARS)}`,
   );
-  const { cited, sources } = numbered(cite, kept, fatwaSource);
+  const { fits, over } = withinChars(
+    kept,
+    (fatwa) =>
+      Math.min(
+        FATWA_CHARS,
+        Math.min(fatwa.question?.length ?? 0, QUESTION_CHARS) +
+          (fatwa.summary?.length ?? 0) +
+          fatwa.answer.length,
+      ),
+    chars,
+  );
+  const { cited, sources } = numbered(cite, fits, fatwaSource);
   const results = cited.map((fatwa) => {
     const head = pageText(
       [
@@ -335,7 +368,10 @@ const searchFatwa = async (cite: Cite, queries: string[], sites: string[]) => {
     };
   });
   return {
-    sources: [...sources, ...[...dropped, ...ranked.slice(SEARCH_LIMITS.fatwa)].map(fatwaSource)],
+    sources: [
+      ...sources,
+      ...[...dropped, ...over, ...near.slice(POOL_PER_SOURCE), ...far].map(fatwaSource),
+    ],
     results,
     text: pagesBlock("fatwa", results),
   };
@@ -433,11 +469,14 @@ export const searchAll = async (cite: Cite, input: z.infer<typeof searchInput>) 
   const { time } = input;
   const chosen = [...new Set(input.sources)];
   const both = [...new Set([...queries, ...arabic])];
+  const share = Math.floor(
+    TOTAL_CHARS / Math.max(1, chosen.filter((name) => BUDGETED.has(name)).length),
+  );
   const runs = {
     quran: () => searchQuran(cite, queries),
-    hadith: () => searchHadith(cite, both),
-    fatwa: () => searchFatwa(cite, both, sites),
-    fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, sites),
+    hadith: () => searchHadith(cite, both, share),
+    fatwa: () => searchFatwa(cite, both, sites, share),
+    fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, sites, share),
     web: () => searchWeb(cite, queries, sites, time),
     news: () => searchNews(cite, queries, time),
     duas: () => searchDuas(both),
