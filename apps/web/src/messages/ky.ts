@@ -388,6 +388,7 @@ export default {
   "{name}'s settings": "{name} жөндөөлөрү",
   "New chat in project": "Долбоордо жаңы маек",
   Runs: "Иштетүүлөр",
+  Ideas: "Идеялар",
   "New automation": "Жаңы автоматташтыруу",
   "Edit automation": "Автоматташтырууну оңдоо",
   "Sign in to create automations.": "Автоматташтыруу түзүү үчүн кириңиз.",

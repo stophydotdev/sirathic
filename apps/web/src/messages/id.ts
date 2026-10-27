@@ -385,6 +385,7 @@ export default {
   "{name}'s settings": "Pengaturan {name}",
   "New chat in project": "Obrolan baru di proyek",
   Runs: "Eksekusi",
+  Ideas: "Ide",
   "New automation": "Otomatisasi baru",
   "Edit automation": "Edit otomatisasi",
   "Sign in to create automations.": "Masuk untuk membuat otomatisasi.",

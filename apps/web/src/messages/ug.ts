@@ -388,6 +388,7 @@ export default {
   "{name}'s settings": "{name} تەڭشەكلىرى",
   "New chat in project": "تۈردە يېڭى سۆھبەت",
   Runs: "ئىجرالار",
+  Ideas: "ئىدىيەلەر",
   "New automation": "يېڭى ئاپتوماتلاشتۇرۇش",
   "Edit automation": "ئاپتوماتلاشتۇرۇشنى تەھرىرلەش",
   "Sign in to create automations.": "ئاپتوماتلاشتۇرۇش قۇرۇش ئۈچۈن كىرىڭ.",

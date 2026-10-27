@@ -48,9 +48,8 @@ export const withEntry = (
   replaces: string | null,
 ) => {
   const gone = new Set([replaces?.trim(), entry.text]);
-  return [...profile.filter((kept) => !gone.has(kept.text)), entry]
-    .toSorted((a, b) => a.at - b.at)
-    .slice(-PROFILE_LIMIT);
+  const kept = profile.filter((old) => !gone.has(old.text));
+  return kept.length < PROFILE_LIMIT ? [...kept, entry].toSorted((a, b) => a.at - b.at) : undefined;
 };
 
 const day = (at: number) => new Date(at).toISOString().slice(0, 10);

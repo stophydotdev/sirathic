@@ -383,6 +383,7 @@ export default {
   "{name}'s settings": "د {name} امستنې",
   "New chat in project": "په پروژه کې نوې خبرې اترې",
   Runs: "چلونې",
+  Ideas: "مفکورې",
   "New automation": "نوی اتومات کار",
   "Edit automation": "اتومات کار سمول",
   "Sign in to create automations.": "د اتومات کارونو جوړولو لپاره ننوځئ.",

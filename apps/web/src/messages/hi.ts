@@ -381,6 +381,7 @@ export default {
   "{name}'s settings": "{name} की सेटिंग",
   "New chat in project": "प्रोजेक्ट में नई चैट",
   Runs: "रन",
+  Ideas: "विचार",
   "New automation": "नया ऑटोमेशन",
   "Edit automation": "ऑटोमेशन बदलें",
   "Sign in to create automations.": "ऑटोमेशन बनाने के लिए साइन इन करें।",

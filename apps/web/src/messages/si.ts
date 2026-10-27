@@ -379,6 +379,7 @@ export default {
   "{name}'s settings": "{name} හි සැකසුම්",
   "New chat in project": "ව්‍යාපෘතියේ නව කතාබසක්",
   Runs: "ධාවන",
+  Ideas: "අදහස්",
   "New automation": "නව ස්වයංක්‍රීයකරණය",
   "Edit automation": "ස්වයංක්‍රීයකරණය සංස්කරණය කරන්න",
   "Sign in to create automations.": "ස්වයංක්‍රීයකරණ සෑදීමට පුරනය වන්න.",

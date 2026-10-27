@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --parallel --filter @sirathic/server --filter web dev",
-    "test": "bun test",
+    "test": "bun test --isolate",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
     "check": "oxlint && oxfmt --write && ! git grep -nIP --untracked '\\x{2014}' -- ':!apps/web/AGENTS.md' ':!apps/server/src/chat/prompts/shared.ts'",
     "check-slop": "oxlint --deny-warnings",

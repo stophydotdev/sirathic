@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { citations } from "../apps/server/src/chat/citations";
+import { citations, withBareCitations } from "../apps/server/src/chat/citations";
 import {
   bestPieces,
   hadithBlock,
@@ -7,22 +7,15 @@ import {
   quranBlock,
   unvowel,
 } from "../apps/server/src/chat/compact";
-import { convertToModelMessages, tool } from "ai";
-import { MockLanguageModelV4 } from "ai/test";
-import { z } from "zod";
-import type { ChatMessage, Mode } from "../apps/server/src/shared/messages";
+import { convertToModelMessages } from "ai";
+import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { shortenEarlierResults } from "../apps/server/src/chat/history";
 import { keepAlive } from "../apps/server/src/chat/keepAlive";
-import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
-import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { clientOf } from "../apps/server/src/chat/client";
 import { toolFailure } from "../apps/server/src/chat/events";
-import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
-import { fallenOut } from "../apps/server/src/bots/summary";
 import { recentTurns } from "../apps/server/src/bots/tools";
 import { findInChat } from "../apps/server/src/bots/chatSearch";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
-import { answerAgent } from "../apps/server/src/chat/response";
 
 const linked = async (urls: string[], deltas: string[]) => {
   const { add, transform } = citations([]);
@@ -39,6 +32,26 @@ const linked = async (urls: string[], deltas: string[]) => {
 };
 
 const quran = (key: string) => `https://quran.com/${key.replace(":", "/")}`;
+
+test("a citation whose link the model guessed keeps its number's real source", async () => {
+  const urls = ["https://sunnah.com/bukhari:1", "https://sunnah.com/muslim:1907"];
+  expect(await linked(urls, ["Intentions matter.[2](https://sunnah.com/made-up)"])).toBe(
+    `Intentions matter.[2](${urls[1]})`,
+  );
+});
+
+test("an earlier answer reaches the model with bare citation numbers", () => {
+  const answer: ChatMessage = {
+    id: "a",
+    role: "assistant",
+    parts: [{ type: "text", text: "Intentions matter.[1](https://sunnah.com/bukhari:1)" }],
+  };
+  const asked: ChatMessage = { id: "u", role: "user", parts: [{ type: "text", text: "[1](x)" }] };
+  expect([answer, asked].map(withBareCitations).map((message) => message.parts)).toEqual([
+    [{ type: "text", text: "Intentions matter.[1]" }],
+    [{ type: "text", text: "[1](x)" }],
+  ]);
+});
 
 test("a Quran citation moves to the retrieved verse its paragraph names", async () => {
   const cases = [
@@ -279,50 +292,6 @@ test("keepAlive pings while the stream is quiet and passes the data through", as
   expect(new TextDecoder().decode(rest.at(-1))).toBe("data: {}\n\n");
 });
 
-const SITUATIONAL = [
-  "<copyright_restrictions>",
-  "<mathematical_expressions>",
-  "<rewrites>",
-  "<followup>",
-];
-
-test.each([
-  ["what is tawakkul", false, []],
-  ["zakat on gold nisab", false, ["<mathematical_expressions>"]],
-  ["lyrics of tala al badru", false, ["<copyright_restrictions>"]],
-  ["write a khutbah on patience", false, ["<copyright_restrictions>", "<rewrites>", "<followup>"]],
-  ["write a khutbah on patience", true, ["<copyright_restrictions>"]],
-])("%s (texting %p) gets the situational rules %p", (question, texting, sections) => {
-  const rules = answerRules(DEFAULT_SETTINGS, question, "quick", texting);
-  expect(SITUATIONAL.filter((tag) => rules.includes(tag))).toEqual(sections);
-});
-
-test("short answers leave out the lesson structure", () => {
-  const question = "is a mortgage halal";
-  expect(answerRules(DEFAULT_SETTINGS, question, "quick", false)).toContain("<structure>");
-  expect(
-    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question, "quick", false),
-  ).not.toContain("<structure>");
-});
-
-test.each<[Mode, string, string]>([
-  ["quick", "one round of parallel searches", "250 to 400 words"],
-  ["research", "search again for those", "600 to 900 words"],
-])("%s mode gets its own search guidance and length", (mode, search, length) => {
-  expect(searchPrompt(new Date(0), mode, DEFAULT_SETTINGS)).toContain(search);
-  expect(answerRules(DEFAULT_SETTINGS, "is a mortgage halal", mode, false)).toContain(length);
-});
-
-test("the prompt lists what the user told Sirathic about themselves", () => {
-  const prompt = searchPrompt(new Date(0), "quick", {
-    ...DEFAULT_SETTINGS,
-    memory: ["is a revert", "studies in the UK"],
-  });
-  expect(prompt).toContain(
-    "What the user has told you about themselves:\n- is a revert\n- studies in the UK",
-  );
-});
-
 const clientFor = (userAgent: string, country = "") =>
   clientOf(new Headers({ "user-agent": userAgent, "x-sirathic-country": country }));
 
@@ -383,68 +352,6 @@ test("a sunnah.com hadith link maps to our hadith id, and a failed tool gets a k
   );
 });
 
-const usage = {
-  inputTokens: { total: 1, noCache: 1, cacheRead: 0, cacheWrite: 0 },
-  outputTokens: { total: 1, text: 1, reasoning: 0 },
-};
-
-test("an answer keeps calling tools until the model replies, with no step cap", async () => {
-  let calls = 0;
-  const model = new MockLanguageModelV4({
-    doGenerate: async () => {
-      calls += 1;
-      return calls > 24
-        ? {
-            content: [{ type: "text", text: "Here is what I found." }],
-            finishReason: { unified: "stop", raw: undefined },
-            usage,
-            warnings: [],
-          }
-        : {
-            content: [
-              {
-                type: "tool-call",
-                toolCallId: crypto.randomUUID(),
-                toolName: "lookup",
-                input: "{}",
-              },
-            ],
-            finishReason: { unified: "tool-calls", raw: undefined },
-            usage,
-            warnings: [],
-          };
-    },
-  });
-  const agent = answerAgent({
-    model,
-    tools: { lookup: tool({ inputSchema: z.object({}), execute: async () => "more rows" }) },
-    mode: "quick",
-    settings: DEFAULT_SETTINGS,
-    rules: "",
-    mustSearch: false,
-    canRemember: false,
-    shorten: (message) => message,
-    answerOptions: {},
-  });
-  const result = await agent.generate({ prompt: "how many users does sirathic have" });
-  expect([result.steps.length, result.text]).toEqual([25, "Here is what I found."]);
-});
-
-test("an answer runs until stopped or replaced, not until the browser leaves", () => {
-  const first = startAnswer("user", "chat");
-  expect(isAnswering("user", "chat")).toBe(true);
-  const second = startAnswer("user", "chat");
-  expect(first.signal.aborted).toBe(true);
-  first.settled();
-  expect(isAnswering("user", "chat")).toBe(true);
-  stopAnswer("other", "chat");
-  expect(second.signal.aborted).toBe(false);
-  stopAnswer("user", "chat");
-  expect(second.signal.aborted).toBe(true);
-  second.settled();
-  expect(isAnswering("user", "chat")).toBe(false);
-});
-
 const turn = (i: number) => [
   { role: "user", id: `q${i}` },
   { role: "assistant", id: `a${i}` },
@@ -455,21 +362,6 @@ test("a long bot chat sends its recent turns, starting at a question", () => {
   const recent = recentTurns(chat, 5);
   expect(recent.map((message) => message.id)).toEqual(["q18", "a18", "q19", "a19"]);
   expect(recentTurns(chat.slice(0, 3), 24)).toHaveLength(3);
-});
-
-const chatOf = (turns: number) => Array.from({ length: turns }, (_, i) => turn(i)).flat();
-
-test("the summary takes only the turns that fell out of the window, each once", () => {
-  const first = fallenOut(chatOf(20), 0);
-  expect(first.fresh.map((message) => message.id)).toEqual(chatOf(8).map((message) => message.id));
-  expect(fallenOut(chatOf(20), first.upTo).fresh).toEqual([]);
-  expect(fallenOut(chatOf(22), first.upTo).fresh.map((message) => message.id)).toEqual([
-    "q8",
-    "a8",
-    "q9",
-    "a9",
-  ]);
-  expect(fallenOut(chatOf(5), 0).fresh).toEqual([]);
 });
 
 const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>

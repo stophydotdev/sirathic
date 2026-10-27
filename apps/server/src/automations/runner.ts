@@ -1,5 +1,6 @@
 import { db } from "@sirathic/db";
 import { automations, chatSessions, projects, users } from "@sirathic/db/schema";
+import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
 import { and, asc, eq, lte } from "drizzle-orm";
 import { toUser } from "../account/auth";
 import { answerOptions, sideOptions } from "../models/subscription";
@@ -9,7 +10,7 @@ import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
 import { projectOfChat } from "../projects/projects";
-import { projectRules, settingsInProject } from "../projects/rules";
+import { botIdentity, projectRules, settingsInProject } from "../projects/rules";
 import { reasonOf, StatusError } from "../http";
 import { openSession, saveSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
@@ -22,6 +23,15 @@ import { nextRun, schedule } from "./schedule";
 const TICK_MS = 60_000;
 const BATCH = 5;
 const RUN_TIMEOUT_MS = 10 * 60_000;
+const PAUSE_AFTER = 3;
+const MISSED_AFTER_MS = 60 * 60_000;
+
+const failureNote = (failedInARow: number, reason: string) =>
+  failedInARow >= PAUSE_AFTER
+    ? `Paused after ${PAUSE_AFTER} failed runs in a row. Turn it back on in Automations.`
+    : failedInARow === 1
+      ? `This run did not finish. ${reason}`
+      : undefined;
 
 async function ownerOf(id: string): Promise<User> {
   const [row] = await db
@@ -64,21 +74,35 @@ export const isSkip = (text: string) =>
     .replace(/[.!]+$/u, "")
     .toUpperCase() === "SKIP";
 
-const lastPost = (earlier: ChatMessage[], routine: string) => {
-  const asked = earlier.findLastIndex((message) => message.metadata?.routine === routine);
-  return asked < 0 ? "" : textOf(earlier[asked + 1]).trim();
-};
+const TOPICS_KEPT = 30;
+const TOPIC_CHARS = 100;
+
+const pastTopics = (earlier: ChatMessage[], routine: string) =>
+  earlier
+    .flatMap((message, index) =>
+      message.metadata?.routine === routine
+        ? [
+            (
+              textOf(earlier[index + 1])
+                .trim()
+                .split("\n")[0] ?? ""
+            ).slice(0, TOPIC_CHARS),
+          ]
+        : [],
+    )
+    .filter(Boolean)
+    .slice(-TOPICS_KEPT);
 
 type Due = Awaited<ReturnType<typeof dueItems>>;
 
 export const routineBrief = ({
   prompt,
-  previous,
+  topics,
   due,
   studying,
 }: {
   prompt: string;
-  previous: string;
+  topics: string[];
   due: Due;
   studying: boolean;
 }) => {
@@ -92,7 +116,8 @@ export const routineBrief = ({
     prompt,
     studying &&
       (due.length > 0 ? `Due for review now: ${list}.` : "Nothing is due for review now."),
-    previous && `Your last post for this routine was:\n${previous}\nDo not repeat it.`,
+    topics.length > 0 &&
+      `Earlier posts for this routine, oldest first:\n${topics.map((topic) => `- ${topic}`).join("\n")}\nDo not repeat any of them.`,
     studying && NUDGE_ONLY,
   ];
   return parts.flatMap((part) => (part ? [part] : [])).join("\n\n");
@@ -109,6 +134,7 @@ async function botOf(projectId: string, owner: string) {
 async function answerPrompt(
   by: string,
   conversation: ChatMessage[],
+  earlier: ChatMessage[],
   sessionId: string,
   inProject: string | null,
   runMode: Mode,
@@ -133,7 +159,7 @@ async function answerPrompt(
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
     projectRules: Promise.resolve(projectRules(project, false)),
     skillRules: Promise.resolve(""),
-    texting: Promise.resolve(project?.kind === "bot"),
+    persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
     options: {
       answer: answerOptions({ research: runMode === "research", sessionId }),
       side: sideOptions,
@@ -146,8 +172,20 @@ async function answerPrompt(
     remember: undefined,
     automate: undefined,
     historyLimit: inProject ? BOT_HISTORY : undefined,
+    citedEarlier: earlier,
   });
-  await response.arrayBuffer();
+  let failure: string | undefined;
+  await parseJsonEventStream({
+    stream: response.body ?? new ReadableStream(),
+    schema: uiMessageChunkSchema,
+  }).pipeTo(
+    new WritableStream({
+      write: (chunk) => {
+        if (chunk.success && chunk.value.type === "error") failure = chunk.value.errorText;
+      },
+    }),
+  );
+  if (failure !== undefined) throw new Error(failure);
   if (!textOf(answered.at(-1)).trim()) throw new Error("the model gave no answer");
   return answered;
 }
@@ -159,6 +197,7 @@ async function runAutomation({
   prompt,
   projectId,
   mode,
+  failures,
 }: typeof automations.$inferSelect) {
   const runMode = modeSchema.catch("quick").parse(mode);
   const bot = projectId ? await botOf(projectId, owner) : undefined;
@@ -177,7 +216,7 @@ async function runAutomation({
             type: "text" as const,
             text: routineBrief({
               prompt,
-              previous: lastPost(earlier, name),
+              topics: pastTopics(earlier, name),
               due,
               studying: progress !== undefined && progress.memorized + progress.learning > 0,
             }),
@@ -185,23 +224,32 @@ async function runAutomation({
         ],
       }
     : asked;
-  const answered = await answerPrompt(
-    owner,
-    [...earlier, briefed],
-    sessionId,
-    projectId,
-    runMode,
-  ).catch((err: Error) => {
-    console.error(`automation ${id} not answered: ${reasonOf(err)}`);
-    return [
-      ...earlier,
-      asked,
-      textMessage("assistant", `This run did not finish. ${reasonOf(err)}`, runMode),
-    ];
-  });
-  const messages = answered.map((message) => (message.id === asked.id ? asked : message));
-  if (bot && isSkip(textOf(messages.at(-1)))) {
-    await db.update(automations).set({ lastRunAt: new Date() }).where(eq(automations.id, id));
+  const outcome = await answerPrompt(owner, [briefed], earlier, sessionId, projectId, runMode).then(
+    (answered) => ({ kind: "answered", answered }) as const,
+    (err: Error) => {
+      console.error(`automation ${id} not answered: ${reasonOf(err)}`);
+      return { kind: "failed", reason: reasonOf(err) } as const;
+    },
+  );
+  const failedInARow = outcome.kind === "failed" ? failures + 1 : 0;
+  const note = outcome.kind === "failed" ? failureNote(failedInARow, outcome.reason) : undefined;
+  const answered =
+    outcome.kind === "answered"
+      ? outcome.answered
+      : note === undefined
+        ? undefined
+        : [asked, textMessage("assistant", note, runMode)];
+  const finished = {
+    lastRunAt: new Date(),
+    failures: failedInARow,
+    ...(failedInARow >= PAUSE_AFTER && { enabled: false, nextRunAt: null }),
+  };
+  const messages = [
+    ...earlier,
+    ...(answered ?? []).map((message) => (message.id === asked.id ? asked : message)),
+  ];
+  if (!answered || (bot && isSkip(textOf(messages.at(-1))))) {
+    await db.update(automations).set(finished).where(eq(automations.id, id));
     return;
   }
   if (bot) {
@@ -221,7 +269,7 @@ async function runAutomation({
       projectId,
     });
   }
-  await db.update(automations).set({ lastRunAt: new Date() }).where(eq(automations.id, id));
+  await db.update(automations).set(finished).where(eq(automations.id, id));
 }
 
 export async function runNow(id: string, by: string) {
@@ -245,7 +293,7 @@ async function claimAndRun(due: typeof automations.$inferSelect) {
     .set({ nextRunAt: next ?? null, enabled: next !== undefined })
     .where(and(eq(automations.id, due.id), eq(automations.nextRunAt, due.nextRunAt)))
     .returning({ id: automations.id });
-  if (!claimed) return;
+  if (!claimed || Date.now() - due.nextRunAt.getTime() > MISSED_AFTER_MS) return;
   await runAutomation(due).catch((err: Error) => {
     console.error(`automation ${due.id} not run: ${reasonOf(err)}`);
   });

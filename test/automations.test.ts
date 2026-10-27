@@ -1,5 +1,7 @@
 import { expect, mock, test } from "bun:test";
+import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
+import type { ChatMessage } from "../apps/server/src/shared/messages";
 import {
   nextRun,
   schedule,
@@ -8,31 +10,42 @@ import {
 } from "../apps/server/src/automations/schedule";
 
 const automationId = "11111111-1111-4111-8111-111111111111";
-const dueAt = "2026-10-26T09:00:00.000Z";
+const dueAt = new Date(Date.now() - 60_000).toISOString();
 
-type StoredAutomation = { nextRunAt: string | null; enabled: boolean; lastRunAt: string | null };
+type StoredAutomation = {
+  nextRunAt: string | null;
+  enabled: boolean;
+  lastRunAt: string | null;
+  failures: number;
+  plan: Schedule;
+};
 
 const automationRow: StoredAutomation = {
   nextRunAt: dueAt,
   enabled: true,
   lastRunAt: null,
+  failures: 0,
+  plan: { kind: "once", date: "2026-10-26", time: "09:00" },
 };
+const botId = "22222222-2222-4222-8222-222222222222";
+let botRoutine = false;
+let storedBotChat: unknown[] = [];
 const savedChats: unknown[][] = [];
 const insertedAutomations: unknown[][] = [];
 
 const fakeDb = drizzle(
   async (sql, params) => {
-    if (sql.startsWith('select "id", "owner"')) {
+    if (sql.startsWith('select "id", "owner"') && sql.includes('from "automations"')) {
       return {
         rows: automationRow.enabled
           ? [
               [
                 automationId,
                 "user-a",
-                null,
-                "Eid reminder",
-                "Remind me of the Eid sunnahs",
-                { kind: "once", date: "2026-10-26", time: "09:00" },
+                botRoutine ? botId : null,
+                botRoutine ? "Morning verse" : "Eid reminder",
+                botRoutine ? "One new verse each morning" : "Remind me of the Eid sunnahs",
+                automationRow.plan,
                 "UTC",
                 true,
                 automationRow.nextRunAt,
@@ -42,24 +55,30 @@ const fakeDb = drizzle(
                 null,
                 "research",
                 "app",
+                automationRow.failures,
               ],
             ]
           : [],
       };
     }
-    if (sql.startsWith('update "automations" set "enabled"')) {
-      const [enabled, nextRunAt] = params;
-      Object.assign(automationRow, { enabled, nextRunAt });
+    if (sql.startsWith('update "automations" set')) {
+      for (const [, column, index] of (sql.split(" where ")[0] ?? "").matchAll(
+        /"(\w+)" = \$(\d+)/g,
+      )) {
+        const field = column.replace(/_(\w)/g, (_, letter: string) => letter.toUpperCase());
+        Object.assign(automationRow, { [field]: params[Number(index) - 1] });
+      }
       return { rows: [[automationId]] };
-    }
-    if (sql.startsWith('update "automations" set "last_run_at"')) {
-      automationRow.lastRunAt = String(params[0]);
-      return { rows: [] };
     }
     if (sql.startsWith('select "id", "email"')) {
       return { rows: [["user-a", "a@example.com", null, null, null]] };
     }
     if (sql.startsWith("select count(*)")) return { rows: [[0]] };
+    if (sql.startsWith('select "id" from "projects"')) return { rows: [[botId]] };
+    if (sql.startsWith('select "messages"')) return { rows: [[storedBotChat, false, botId]] };
+    if (sql.startsWith('select "project_id" from "chat_sessions"')) return { rows: [] };
+    if (sql.includes('from "bot_items"') || sql.includes('from "projects"')) return { rows: [] };
+    if (sql.startsWith('update "chat_sessions"')) return { rows: [] };
     if (sql.startsWith('insert into "automations"')) {
       insertedAutomations.push(params);
       const [owner, name, prompt, plan, zone, nextRunAt] = params;
@@ -81,13 +100,14 @@ const fakeDb = drizzle(
             null,
             "quick",
             "app",
+            0,
           ],
         ],
       };
     }
     if (sql.startsWith('insert into "chat_sessions"')) {
       savedChats.push(params);
-      return { rows: [] };
+      return { rows: [[botId]] };
     }
     throw new Error(`unexpected query: ${sql}`);
   },
@@ -96,7 +116,44 @@ const fakeDb = drizzle(
 
 mock.module("@sirathic/db", () => ({ db: fakeDb }));
 const cache = await import("@sirathic/core/cache");
-mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => 31 }));
+let answersToday = 31;
+mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => answersToday }));
+const response = await import("../apps/server/src/chat/response");
+const modelInputs: ChatMessage[][] = [];
+const citedInputs: (ChatMessage[] | undefined)[] = [];
+let modelError: string | undefined;
+mock.module("../apps/server/src/chat/response", () => ({
+  ...response,
+  chatResponse: ({ messages, save, citedEarlier }: Parameters<typeof response.chatResponse>[0]) => {
+    modelInputs.push(messages);
+    citedInputs.push(citedEarlier);
+    const reply = {
+      id: "reply-1",
+      role: "assistant",
+      metadata: { createdAt: 1, mode: "quick" },
+      parts: [{ type: "text", text: "Verse 33\nAn-Nasr 110:1" }],
+    } satisfies ChatMessage;
+    if (modelError !== undefined) {
+      const errorText = modelError;
+      return createUIMessageStreamResponse({
+        stream: createUIMessageStream({
+          execute: async ({ writer }) => {
+            await save([
+              ...messages,
+              { ...reply, parts: [{ type: "text", text: "Let me check." }] },
+            ]);
+            writer.write({ type: "error", errorText });
+          },
+        }),
+      });
+    }
+    return new Response(
+      new ReadableStream({
+        start: (controller) => save([...messages, reply]).then(() => controller.close()),
+      }),
+    );
+  },
+}));
 
 const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
 const { automationTools } = await import("../apps/server/src/automations/tools");
@@ -129,6 +186,75 @@ test("a run that fails still saves an unread chat with the reason and ends the o
       "This run did not finish. You've used today's 30 Noor answers. They come back tomorrow.",
     ],
   ]);
+});
+
+const runDueQuietly = async () => {
+  const logged = console.error;
+  console.error = () => {};
+  await runDue();
+  console.error = logged;
+};
+
+const lastSavedText = () => {
+  const messages: ChatMessage[] = JSON.parse(String(savedChats.at(-1)?.[3]));
+  return messages.at(-1)?.parts.flatMap((part) => (part.type === "text" ? [part.text] : []));
+};
+
+test("a failing routine posts its first failure, stays quiet on the second and pauses on the third", async () => {
+  Object.assign(automationRow, {
+    plan: { kind: "daily", time: "09:00" },
+    enabled: true,
+    failures: 0,
+  });
+  answersToday = 31;
+  savedChats.length = 0;
+  const runOnce = async () => {
+    automationRow.nextRunAt = dueAt;
+    await runDueQuietly();
+    return [savedChats.length, automationRow.failures, automationRow.enabled];
+  };
+
+  expect([await runOnce(), await runOnce(), await runOnce()]).toEqual([
+    [1, 1, true],
+    [1, 2, true],
+    [2, 3, false],
+  ]);
+  expect(lastSavedText()).toEqual([
+    "Paused after 3 failed runs in a row. Turn it back on in Automations.",
+  ]);
+  expect(automationRow.nextRunAt).toBeNull();
+});
+
+test("a run that works resets the failure count", async () => {
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 2 });
+  answersToday = 1;
+
+  await runDueQuietly();
+
+  expect(automationRow.failures).toBe(0);
+  expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
+});
+
+test("a run whose model call fails posts the reason the provider gave, even after some text", async () => {
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 0 });
+  modelError = "401: invalid x-api-key";
+
+  await runDueQuietly();
+  modelError = undefined;
+
+  expect(lastSavedText()).toEqual(["This run did not finish. 401: invalid x-api-key"]);
+});
+
+test("a run missed by more than an hour is skipped and the next one is scheduled", async () => {
+  const missedAt = new Date(Date.now() - 2 * 60 * 60_000).toISOString();
+  Object.assign(automationRow, { enabled: true, nextRunAt: missedAt });
+  savedChats.length = 0;
+  modelInputs.length = 0;
+
+  await runDueQuietly();
+
+  expect([savedChats, modelInputs]).toEqual([[], []]);
+  expect(Date.parse(String(automationRow.nextRunAt))).toBeGreaterThan(Date.now());
 });
 
 const next = (plan: Schedule, zone: string, after: string) =>
@@ -266,7 +392,7 @@ test("a routine reply of SKIP stays out of the chat, any other reply is a post",
 test("a study routine is told what is due and what it said last time", () => {
   const brief = routineBrief({
     prompt: "Morning review",
-    previous: "2 items are due.",
+    topics: ["2 items are due."],
     due: [
       {
         kind: "verse",
@@ -281,9 +407,60 @@ test("a study routine is told what is due and what it said last time", () => {
   expect(brief).toContain(
     "Due for review now: Al-Ikhlas 112:1-4 (step 2, last mistake: said ahad twice).",
   );
-  expect(brief).toContain("Your last post for this routine was:\n2 items are due.");
+  expect(brief).toContain("Earlier posts for this routine, oldest first:\n- 2 items are due.");
   expect(brief).toContain("reply with exactly SKIP");
-  expect(routineBrief({ prompt: "Daily dua", previous: "", due: [], studying: false })).toBe(
+  expect(routineBrief({ prompt: "Daily dua", topics: [], due: [], studying: false })).toBe(
     "Daily dua",
   );
+});
+
+test("a bot routine run sends the model only its brief, numbers citations after the chat's and appends to it", async () => {
+  const routine = "Morning verse";
+  const post = (index: number): ChatMessage[] => {
+    const number = String(index).padStart(2, "0");
+    return [
+      {
+        id: `ask-${number}`,
+        role: "user",
+        metadata: { createdAt: index, mode: "quick", routine },
+        parts: [{ type: "text", text: "One new verse each morning" }],
+      },
+      {
+        id: `post-${number}`,
+        role: "assistant",
+        metadata: { createdAt: index, mode: "quick" },
+        parts: [{ type: "text", text: `Verse ${number}\n${"long body ".repeat(40)}` }],
+      },
+    ];
+  };
+  const earlier = Array.from({ length: 32 }, (_, index) => post(index + 1)).flat();
+  storedBotChat = earlier;
+  botRoutine = true;
+  answersToday = 1;
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt });
+  savedChats.length = 0;
+  modelInputs.length = 0;
+  citedInputs.length = 0;
+
+  await runDue();
+
+  expect(modelInputs).toHaveLength(1);
+  expect(citedInputs).toEqual([earlier]);
+  const [briefed, ...rest] = modelInputs[0] ?? [];
+  expect(rest).toEqual([]);
+  const lines = briefed?.parts.flatMap((part) => (part.type === "text" ? [part.text] : []));
+  const topics = lines
+    ?.join("")
+    .split("\n")
+    .filter((line) => line.startsWith("- "));
+  expect(topics).toEqual(
+    Array.from({ length: 30 }, (_, index) => `- Verse ${String(index + 3).padStart(2, "0")}`),
+  );
+  expect(lines?.join("")).toContain("Do not repeat any of them.");
+
+  const saved: ChatMessage[] = JSON.parse(String(savedChats[0]?.[3]));
+  expect(saved.map((message) => message.id).slice(0, 64)).toEqual(earlier.map((m) => m.id));
+  expect(saved).toHaveLength(66);
+  expect(saved.at(-2)?.parts).toEqual([{ type: "text", text: "One new verse each morning" }]);
+  expect(saved.at(-1)?.id).toBe("reply-1");
 });

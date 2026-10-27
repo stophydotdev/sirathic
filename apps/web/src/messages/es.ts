@@ -388,6 +388,7 @@ export default {
   "{name}'s settings": "Ajustes de {name}",
   "New chat in project": "Nuevo chat en el proyecto",
   Runs: "Ejecuciones",
+  Ideas: "Ideas",
   "New automation": "Nueva automatización",
   "Edit automation": "Editar automatización",
   "Sign in to create automations.": "Inicia sesión para crear automatizaciones.",

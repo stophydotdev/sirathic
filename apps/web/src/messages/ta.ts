@@ -386,6 +386,7 @@ export default {
   "{name}'s settings": "{name} அமைப்புகள்",
   "New chat in project": "திட்டத்தில் புதிய உரையாடல்",
   Runs: "இயக்கங்கள்",
+  Ideas: "யோசனைகள்",
   "New automation": "புதிய தானியக்கம்",
   "Edit automation": "தானியக்கத்தைத் திருத்து",
   "Sign in to create automations.": "தானியக்கங்களை உருவாக்க உள்நுழையுங்கள்.",

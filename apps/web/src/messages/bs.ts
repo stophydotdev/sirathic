@@ -384,6 +384,7 @@ export default {
   "{name}'s settings": "Postavke za {name}",
   "New chat in project": "Novi razgovor u projektu",
   Runs: "Pokretanja",
+  Ideas: "Ideje",
   "New automation": "Nova automatizacija",
   "Edit automation": "Uredi automatizaciju",
   "Sign in to create automations.": "Prijavite se da kreirate automatizacije.",

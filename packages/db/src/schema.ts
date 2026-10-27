@@ -372,6 +372,7 @@ export const automations = pgTable(
     icon: text(),
     mode: text().notNull().default("quick"),
     notify: text().notNull().default("app"),
+    failures: integer().notNull().default(0),
   },
   (table) => [
     index("automations_due")

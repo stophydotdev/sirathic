@@ -390,6 +390,7 @@ export default {
   "{name}'s settings": "{name} созламалари",
   "New chat in project": "Лойиҳада янги суҳбат",
   Runs: "Ишга туширишлар",
+  Ideas: "Ғоялар",
   "New automation": "Янги автоматлаштириш",
   "Edit automation": "Автоматлаштиришни таҳрирлаш",
   "Sign in to create automations.": "Автоматлаштириш яратиш учун киринг.",

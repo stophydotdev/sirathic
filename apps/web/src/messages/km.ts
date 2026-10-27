@@ -379,6 +379,7 @@ export default {
   "{name}'s settings": "ការកំណត់របស់ {name}",
   "New chat in project": "ការជជែកថ្មីក្នុងគម្រោង",
   Runs: "ការរត់",
+  Ideas: "គំនិត",
   "New automation": "ស្វ័យប្រវត្តិកម្មថ្មី",
   "Edit automation": "កែសម្រួលស្វ័យប្រវត្តិកម្ម",
   "Sign in to create automations.": "ចូលគណនីដើម្បីបង្កើតស្វ័យប្រវត្តិកម្ម។",

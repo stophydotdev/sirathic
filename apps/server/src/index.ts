@@ -9,7 +9,7 @@ import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
 import { countNoorAnswer, pickModels } from "./models/pick";
-import { chatResponse } from "./chat/response";
+import { chatResponse, neededTools } from "./chat/response";
 import { reviewEvery } from "./bots/review";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
@@ -18,7 +18,7 @@ import { track } from "./chat/events";
 import { readProjectFiles } from "./files/attachments";
 import { uploadRoutes } from "./files/upload";
 import { projectOfChat, rememberInBot, rememberInProject } from "./projects/projects";
-import { projectRules, settingsInProject } from "./projects/rules";
+import { botIdentity, projectRules, settingsInProject } from "./projects/rules";
 import { appLanguage, type ChatMessage, device, mode } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./http";
 import { answerOptions, sideOptions } from "./models/subscription";
@@ -33,7 +33,7 @@ const IDLE_TIMEOUT_SECONDS = 255;
 
 const chatBody = z.object({
   id: sessionId,
-  messages: z.array(z.unknown()).min(1),
+  messages: z.array(z.looseObject({ role: z.enum(["user", "assistant"]) })).min(1),
   model: z.string().min(1).optional(),
   mode: mode.default("quick"),
   incognito: z.boolean().default(false),
@@ -134,6 +134,13 @@ app.post("/api/chat", (c) =>
             console.error(`title not set: ${reasonOf(err)}`);
             return undefined;
           });
+    const needs = project.then((inProject) =>
+      neededTools(
+        validated,
+        inProject?.kind === "bot" ? inProject.instructions : "",
+        input.language,
+      ),
+    );
     const answer = startAnswer(by, input.id);
     return chatResponse({
       models,
@@ -157,10 +164,13 @@ app.post("/api/chat", (c) =>
       connected: project.then((inProject) =>
         connectedTools(by, inProject?.kind === "bot" ? inProject.plugins : undefined),
       ),
+      needs,
       projectRules: project.then(async (inProject) =>
         inProject ? projectRules(inProject) + (await readProjectFiles(by, inProject.id)) : "",
       ),
-      texting: project.then((inProject) => inProject?.kind === "bot"),
+      persona: project.then((inProject) =>
+        inProject?.kind === "bot" ? botIdentity(inProject) : undefined,
+      ),
       skillRules:
         owner === undefined
           ? Promise.resolve("")

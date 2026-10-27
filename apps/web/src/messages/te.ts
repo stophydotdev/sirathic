@@ -378,6 +378,7 @@ export default {
   "{name}'s settings": "{name} సెట్టింగ్‌లు",
   "New chat in project": "ప్రాజెక్ట్‌లో కొత్త చాట్",
   Runs: "రన్‌లు",
+  Ideas: "ఆలోచనలు",
   "New automation": "కొత్త ఆటోమేషన్",
   "Edit automation": "ఆటోమేషన్‌ను సవరించండి",
   "Sign in to create automations.": "ఆటోమేషన్‌లు సృష్టించడానికి సైన్ ఇన్ చేయండి.",
