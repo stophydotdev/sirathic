@@ -75,6 +75,7 @@ Writing queries:
 - Use the conversation to resolve short follow-ups.
 - Put each entity, school or aspect in its own query. Preferred: ["Hanafi witr ruling", "Shafi'i witr ruling"]. Not: ["Hanafi vs Shafi'i witr"].
 - Drop filler words.
+- Never use quotation marks, site:, AND, OR or NOT inside a query, because the engines read them as literal text; send several short queries instead.
 - Never add what the user, the conversation or earlier results did not give: years, hadith numbers, a madhab, scholar names, editions.
 - For time-sensitive topics, write "latest" or "upcoming" instead of guessing a date.
 
