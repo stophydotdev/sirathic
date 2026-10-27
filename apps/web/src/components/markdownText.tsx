@@ -48,13 +48,13 @@ const closeOpenBold = (text: string) => {
   return trimmed.endsWith("**") ? trimmed.slice(0, -2) : `${trimmed}**`;
 };
 
-const MarkdownTextImpl: FC = () => (
+const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => (
   <MarkdownTextPrimitive
     remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]}
     rehypePlugins={[rehypeKatex, rehypeCitations, rehypeVerses]}
     preprocess={(text) => withMathDelimiters(closeOpenBold(hidePendingCitation(text)))}
     className="aui-md"
-    components={components}
+    components={citations ? components : withoutCitations}
   />
 );
 
@@ -290,3 +290,8 @@ const Figure: FC<{ node?: Element; children?: ReactNode }> = ({ node, children }
 };
 
 const components = { ...memoized, a: Anchor, figure: Figure };
+
+const BareAnchor: FC<ComponentProps<"a"> & { node?: Element }> = (props) =>
+  citedUrls.safeParse(props.node?.properties.dataUrls).success ? null : <Anchor {...props} />;
+
+const withoutCitations = { ...components, a: BareAnchor };

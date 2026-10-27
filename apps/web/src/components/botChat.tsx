@@ -80,7 +80,7 @@ const Bubble: FC<{ said: Said }> = ({ said }) => {
     return (
       <TextMessagePartProvider text={said.text}>
         <div className="bot-bubble">
-          <MarkdownText />
+          <MarkdownText citations={false} />
         </div>
       </TextMessagePartProvider>
     );
