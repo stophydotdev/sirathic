@@ -17,12 +17,18 @@ const INSTRUCTION =
 const RELIGIOUS_CLAIM =
   /\b(halal|haram|permissible|impermissible|forbidden|obligatory|fatwa|ruling|is a sin|is allowed|is not allowed|is prohibited)\b/i;
 
+const PRIVATE_MATTER =
+  /\b(sins?|sinned|sinful|zina|adultery|fornication|relapsed?|addict\w*|depress\w*|divorc\w*|abus\w*|diagnos\w*|cancer)\b/i;
+
 export const profileRejection = (text: string) => {
   if (INSTRUCTION.test(text) || containsLink(text)) {
     return "Not saved: the profile holds facts about the learner, not instructions or links. Say it as a fact about them.";
   }
   if (RELIGIOUS_CLAIM.test(text)) {
     return "Not saved: the profile never holds religious claims or rulings, only facts about the learner.";
+  }
+  if (PRIVATE_MATTER.test(text)) {
+    return "Not saved: the profile never holds a sin, a struggle with worship, or health or family trouble. Tell them kindly it was not saved.";
   }
   return undefined;
 };
