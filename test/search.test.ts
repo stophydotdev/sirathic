@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { withoutStopwords } from "@sirathic/core/search/arabic";
 import { onePerAnswer } from "@sirathic/core/search/onePerAnswer";
 import { hadithLink } from "@sirathic/core/tools/hadithLinks";
@@ -62,4 +63,31 @@ test("an extra chain numbered like 402.2 links to its hadith's page", () => {
 
 test("Riyad as-Salihin links to sunnah.com in its standard numbering", () => {
   expect(hadithLink("riyadussalihin:1", null)).toBe("https://sunnah.com/riyadussalihin:1");
+});
+
+test("site: moves into sites, quotes and uppercase operators go, Arabic stays as written", () => {
+  expect(
+    cleanSearch({
+      queries: ['"zakat on jewelry" site:islamqa.info', "zakat OR sadaqah  NOT  gold or silver"],
+      arabic: ["«زكاة الحلي» AND الذهب"],
+      sites: ["https://www.Islamweb.net/ar/"],
+    }),
+  ).toEqual({
+    queries: ["zakat on jewelry", "zakat sadaqah gold or silver"],
+    arabic: ["زكاة الحلي الذهب"],
+    sites: ["islamweb.net", "islamqa.info"],
+    notes: [],
+  });
+});
+
+test("a query left empty is skipped and a site that is not a domain is reported", () => {
+  expect(cleanSearch({ queries: ['"" AND', "wudu"], arabic: [], sites: ["islamqa"] })).toEqual({
+    queries: ["wudu"],
+    arabic: [],
+    sites: [],
+    notes: [
+      "A query was empty after removing quotes and operators, so it was skipped.",
+      '"islamqa" is not a domain, so it was ignored. Use one like islamqa.info.',
+    ],
+  });
 });

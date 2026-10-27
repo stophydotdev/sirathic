@@ -2,10 +2,9 @@ import { z } from "zod";
 import { cacheFor } from "../cache";
 import { stophy } from "../stophy";
 import { type WebSearchResult, webSearchResult } from "../web/types";
-import { cleanUrl, hostOf, isOnSite } from "../web/url";
+import { cleanUrl, hostOf, isOnSite, siteHost } from "../web/url";
 
 const DEFAULT_LIMIT = 10;
-const SITE_FILTER = /(?:^|[\s(])site:([^\s)]+)/giu;
 const EXCLUDED_SITES = ["islamweb.net"];
 
 const searchCache = cacheFor({
@@ -15,17 +14,8 @@ const searchCache = cacheFor({
   keepMs: 7 * 24 * 60 * 60_000,
 });
 
-const sitesIn = (query: string) =>
-  [...query.matchAll(SITE_FILTER)].map(([, site = ""]) => {
-    const [host = "", ...path] = site.toLowerCase().split("/");
-    return { host: host.replace(/^www\./u, ""), path: `/${path.join("/")}` };
-  });
-
-const matchesSites = (url: string, sites: ReturnType<typeof sitesIn>) =>
-  sites.length === 0 ||
-  sites.some(
-    (site) => isOnSite(hostOf(url), site.host) && new URL(url).pathname.startsWith(site.path),
-  );
+const matchesSites = (url: string, sites: string[]) =>
+  sites.length === 0 || sites.some((site) => isOnSite(hostOf(url), site));
 
 const stophyResults = z.object({
   results: z.array(
@@ -38,12 +28,13 @@ const stophyResults = z.object({
   ),
 });
 
-const search = async (query: string) => {
-  const sites = sitesIn(query);
+const search = async ({ query, sites, time }: z.infer<typeof webSearchInput>) => {
   const { data } = await stophy.web.search({
     query,
-    safeSearch: true,
-    excludeDomains: EXCLUDED_SITES,
+    ...(sites.length > 0
+      ? { includeDomains: sites }
+      : { safeSearch: true, excludeDomains: EXCLUDED_SITES }),
+    time,
   });
   const seen = new Set<string>();
   const found = stophyResults.parse(data).results;
@@ -61,14 +52,21 @@ const search = async (query: string) => {
 
 export const webSearchInput = z.object({
   query: z.string().min(1),
-  limit: z.number().int().min(1).max(20).optional(),
+  sites: z.array(siteHost).max(5).default([]),
+  time: z.enum(["pastWeek", "pastMonth", "pastYear"]).optional(),
+  limit: z.number().int().min(1).max(20).default(DEFAULT_LIMIT),
 });
 
-export const webSearch = async ({
-  query,
-  limit = DEFAULT_LIMIT,
-}: z.infer<typeof webSearchInput>): Promise<WebSearchResult[]> => {
-  const key = query.trim().replaceAll(/\s+/gu, " ").toLowerCase();
-  const results = await searchCache(key, () => search(query));
+export const webSearch = async (
+  input: z.input<typeof webSearchInput>,
+): Promise<WebSearchResult[]> => {
+  const request = webSearchInput.parse(input);
+  const { limit } = request;
+  const key = [
+    request.time ?? "",
+    request.sites.join(","),
+    request.query.trim().replaceAll(/\s+/gu, " ").toLowerCase(),
+  ].join("|");
+  const results = await searchCache(key, () => search(request));
   return results.slice(0, limit);
 };
