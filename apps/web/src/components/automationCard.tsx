@@ -1,6 +1,7 @@
 "use client";
 
 import { describeSchedule } from "@/components/automationText";
+import { EventLine } from "@/components/botEvents";
 import { FILE_TOOLS } from "@/components/fileCards";
 import { type Translate, useLocale, useT } from "@/components/i18n";
 import { PluginCard } from "@/components/pluginCard";
@@ -8,7 +9,7 @@ import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
 import { currentToolName } from "@sirathic/server/messages";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUpRight01Icon, TimeScheduleIcon } from "@hugeicons/core-free-icons";
+import { ArrowUpRight01Icon, TimeScheduleIcon, UserEdit01Icon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useEffect } from "react";
 import { z } from "zod";
@@ -97,11 +98,12 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
     return <BotRenamed name={bot.name} />;
   if (name === "update_routine" && change && (made?.projectId || change.action !== "create")) {
     return (
-      <p className="text-muted-foreground my-3 flex items-center justify-center gap-1.5 text-xs">
-        {done(t, change.action)}
-        <HugeiconsIcon icon={TimeScheduleIcon} className="size-3.5" />
-        <span className="text-foreground">{change.name}</span>
-      </p>
+      <EventLine
+        icon={TimeScheduleIcon}
+        label={done(t, change.action)}
+        name={change.name}
+        href={change.action === "delete" ? undefined : "/automations"}
+      />
     );
   }
   if (name === "update_routine" && made) {
@@ -140,9 +142,5 @@ const BotRenamed: FC<{ name: string }> = ({ name }) => {
   useEffect(() => {
     void useProjects.getState().refresh();
   }, [name]);
-  return (
-    <p className="text-muted-foreground my-3 text-center text-xs">
-      {t("Renamed to {name}", { name })}
-    </p>
-  );
+  return <EventLine icon={UserEdit01Icon} label={t("Renamed to {name}", { name })} />;
 };
