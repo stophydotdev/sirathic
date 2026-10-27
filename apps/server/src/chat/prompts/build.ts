@@ -44,15 +44,21 @@ export const fill = (template: string, slots: Readonly<Record<string, string>>) 
     return slots[name];
   });
 
+const VERSE_QUOTE = `> "For indeed, with hardship will be ease." (Quran 94:5)[4]`;
+
 const quote = (showArabic: boolean) =>
   showArabic
-    ? `The Arabic, the translation, then the reference, in a > quote:
+    ? `A verse: the translation, then the reference, in a > quote, without the Arabic. The verse card shows the user its Arabic.
 
-> فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا
-> "For indeed, with hardship will be ease." (Quran 94:5)[4]`
+${VERSE_QUOTE}
+
+A hadith: the Arabic, the translation, then the reference, in a > quote:
+
+> إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ
+> "Actions are only by intentions." (Sahih al-Bukhari 1)[5]`
     : `The translation, then the reference, in a > quote, without the Arabic:
 
-> "For indeed, with hardship will be ease." (Quran 94:5)[4]`;
+${VERSE_QUOTE}`;
 
 const dateLine = (now: Date) => {
   const day = new Intl.DateTimeFormat("en", {

@@ -63,7 +63,7 @@ Read a page when the answer depends on detail beyond the snippet: exact wording,
 
 <tool get_verses>
 
-Get a verse's exact text and translation by its reference before you quote it, when your search results don't already have it word for word.
+Get a verse's exact translation by its reference before you quote it, when your search results don't already have it word for word.
 
 </tool get_verses>
 

@@ -124,7 +124,7 @@ test("unvowel drops vowel marks but keeps letters, hamzas and digits", () => {
   expect(unvowel("إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ ٣")).toBe("إنما الأعمال بالنيات ٣");
 });
 
-test("every verse keeps its Arabic, and hadith Arabic is unvowelled", () => {
+test("a verse reaches the model as its translation, and hadith Arabic is unvowelled", () => {
   const verse = {
     citation: 1,
     arabic: "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا",
@@ -135,8 +135,9 @@ test("every verse keeps its Arabic, and hadith Arabic is unvowelled", () => {
     { ...verse, ref: "Quran 94:5 (Ash-Sharh)" },
     { ...verse, citation: 2, ref: "Quran 94:6 (Ash-Sharh)" },
   ]);
-  expect(verses.match(/فَإِنَّ/gu)).toHaveLength(2);
-  expect(verses).toContain("[2] Quran 94:6 (Ash-Sharh)");
+  expect(verses).toBe(
+    "## quran\n[1] Quran 94:5 (Ash-Sharh)\nFor indeed, with hardship will be ease.\n[2] Quran 94:6 (Ash-Sharh)\nFor indeed, with hardship will be ease.",
+  );
 
   const hadith = hadithBlock([
     {

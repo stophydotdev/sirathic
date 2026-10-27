@@ -96,7 +96,10 @@ If results are incomplete, conflicting, only snippets, one-sided, or miss a part
       },
       toModelOutput: ({ output }) => ({
         type: "json",
-        value: { verses: output.verses, truncated: output.truncated },
+        value: {
+          verses: output.verses.map(({ textAr: _shownByTheCard, ...verse }) => verse),
+          truncated: output.truncated,
+        },
       }),
     }),
     fetch_url: tool({

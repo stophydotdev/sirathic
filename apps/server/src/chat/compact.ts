@@ -143,7 +143,6 @@ const block = (title: string, entries: string[]) =>
 type Verse = {
   citation: number | null;
   ref: string;
-  arabic: string;
   english: string;
   tafsir: string | null;
 };
@@ -152,12 +151,7 @@ export const quranBlock = (verses: Verse[]) =>
   block(
     "quran",
     verses.map((verse) =>
-      [
-        cited(verse.citation, verse.ref),
-        verse.arabic,
-        verse.english,
-        verse.tafsir && `Tafsir: ${verse.tafsir}`,
-      ]
+      [cited(verse.citation, verse.ref), verse.english, verse.tafsir && `Tafsir: ${verse.tafsir}`]
         .filter((line) => line)
         .join("\n"),
     ),
