@@ -1,5 +1,6 @@
 import { expect, mock, test } from "bun:test";
 import { drizzle } from "drizzle-orm/pg-proxy";
+import type { ChatMessage } from "../apps/server/src/shared/messages";
 import {
   nextRun,
   schedule,
@@ -17,21 +18,24 @@ const automationRow: StoredAutomation = {
   enabled: true,
   lastRunAt: null,
 };
+const botId = "22222222-2222-4222-8222-222222222222";
+let botRoutine = false;
+let storedBotChat: unknown[] = [];
 const savedChats: unknown[][] = [];
 const insertedAutomations: unknown[][] = [];
 
 const fakeDb = drizzle(
   async (sql, params) => {
-    if (sql.startsWith('select "id", "owner"')) {
+    if (sql.startsWith('select "id", "owner"') && sql.includes('from "automations"')) {
       return {
         rows: automationRow.enabled
           ? [
               [
                 automationId,
                 "user-a",
-                null,
-                "Eid reminder",
-                "Remind me of the Eid sunnahs",
+                botRoutine ? botId : null,
+                botRoutine ? "Morning verse" : "Eid reminder",
+                botRoutine ? "One new verse each morning" : "Remind me of the Eid sunnahs",
                 { kind: "once", date: "2026-10-26", time: "09:00" },
                 "UTC",
                 true,
@@ -60,6 +64,11 @@ const fakeDb = drizzle(
       return { rows: [["user-a", "a@example.com", null, null, null]] };
     }
     if (sql.startsWith("select count(*)")) return { rows: [[0]] };
+    if (sql.startsWith('select "id" from "projects"')) return { rows: [[botId]] };
+    if (sql.startsWith('select "messages"')) return { rows: [[storedBotChat, false, botId]] };
+    if (sql.startsWith('select "project_id" from "chat_sessions"')) return { rows: [] };
+    if (sql.includes('from "bot_items"') || sql.includes('from "projects"')) return { rows: [] };
+    if (sql.startsWith('update "chat_sessions"')) return { rows: [] };
     if (sql.startsWith('insert into "automations"')) {
       insertedAutomations.push(params);
       const [owner, name, prompt, plan, zone, nextRunAt] = params;
@@ -87,7 +96,7 @@ const fakeDb = drizzle(
     }
     if (sql.startsWith('insert into "chat_sessions"')) {
       savedChats.push(params);
-      return { rows: [] };
+      return { rows: [[botId]] };
     }
     throw new Error(`unexpected query: ${sql}`);
   },
@@ -96,7 +105,27 @@ const fakeDb = drizzle(
 
 mock.module("@sirathic/db", () => ({ db: fakeDb }));
 const cache = await import("@sirathic/core/cache");
-mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => 31 }));
+let answersToday = 31;
+mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => answersToday }));
+const response = await import("../apps/server/src/chat/response");
+const modelInputs: ChatMessage[][] = [];
+mock.module("../apps/server/src/chat/response", () => ({
+  ...response,
+  chatResponse: ({ messages, save }: Parameters<typeof response.chatResponse>[0]) => {
+    modelInputs.push(messages);
+    const reply = {
+      id: "reply-1",
+      role: "assistant",
+      metadata: { createdAt: 1, mode: "quick" },
+      parts: [{ type: "text", text: "Verse 33\nAn-Nasr 110:1" }],
+    } satisfies ChatMessage;
+    return new Response(
+      new ReadableStream({
+        start: (controller) => save([...messages, reply]).then(() => controller.close()),
+      }),
+    );
+  },
+}));
 
 const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
 const { automationTools } = await import("../apps/server/src/automations/tools");
@@ -266,7 +295,7 @@ test("a routine reply of SKIP stays out of the chat, any other reply is a post",
 test("a study routine is told what is due and what it said last time", () => {
   const brief = routineBrief({
     prompt: "Morning review",
-    previous: "2 items are due.",
+    topics: ["2 items are due."],
     due: [
       {
         kind: "verse",
@@ -281,9 +310,57 @@ test("a study routine is told what is due and what it said last time", () => {
   expect(brief).toContain(
     "Due for review now: Al-Ikhlas 112:1-4 (step 2, last mistake: said ahad twice).",
   );
-  expect(brief).toContain("Your last post for this routine was:\n2 items are due.");
+  expect(brief).toContain("Earlier posts for this routine, oldest first:\n- 2 items are due.");
   expect(brief).toContain("reply with exactly SKIP");
-  expect(routineBrief({ prompt: "Daily dua", previous: "", due: [], studying: false })).toBe(
+  expect(routineBrief({ prompt: "Daily dua", topics: [], due: [], studying: false })).toBe(
     "Daily dua",
   );
+});
+
+test("a bot routine run sends the model only its brief and appends to the bot's chat", async () => {
+  const routine = "Morning verse";
+  const post = (index: number): ChatMessage[] => {
+    const number = String(index).padStart(2, "0");
+    return [
+      {
+        id: `ask-${number}`,
+        role: "user",
+        metadata: { createdAt: index, mode: "quick", routine },
+        parts: [{ type: "text", text: "One new verse each morning" }],
+      },
+      {
+        id: `post-${number}`,
+        role: "assistant",
+        metadata: { createdAt: index, mode: "quick" },
+        parts: [{ type: "text", text: `Verse ${number}\n${"long body ".repeat(40)}` }],
+      },
+    ];
+  };
+  const earlier = Array.from({ length: 32 }, (_, index) => post(index + 1)).flat();
+  storedBotChat = earlier;
+  botRoutine = true;
+  answersToday = 1;
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt });
+  savedChats.length = 0;
+
+  await runDue();
+
+  expect(modelInputs).toHaveLength(1);
+  const [briefed, ...rest] = modelInputs[0] ?? [];
+  expect(rest).toEqual([]);
+  const lines = briefed?.parts.flatMap((part) => (part.type === "text" ? [part.text] : []));
+  const topics = lines
+    ?.join("")
+    .split("\n")
+    .filter((line) => line.startsWith("- "));
+  expect(topics).toEqual(
+    Array.from({ length: 30 }, (_, index) => `- Verse ${String(index + 3).padStart(2, "0")}`),
+  );
+  expect(lines?.join("")).toContain("Do not repeat any of them.");
+
+  const saved: ChatMessage[] = JSON.parse(String(savedChats[0]?.[3]));
+  expect(saved.map((message) => message.id).slice(0, 64)).toEqual(earlier.map((m) => m.id));
+  expect(saved).toHaveLength(66);
+  expect(saved.at(-2)?.parts).toEqual([{ type: "text", text: "One new verse each morning" }]);
+  expect(saved.at(-1)?.id).toBe("reply-1");
 });

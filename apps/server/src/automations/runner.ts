@@ -64,21 +64,35 @@ export const isSkip = (text: string) =>
     .replace(/[.!]+$/u, "")
     .toUpperCase() === "SKIP";
 
-const lastPost = (earlier: ChatMessage[], routine: string) => {
-  const asked = earlier.findLastIndex((message) => message.metadata?.routine === routine);
-  return asked < 0 ? "" : textOf(earlier[asked + 1]).trim();
-};
+const TOPICS_KEPT = 30;
+const TOPIC_CHARS = 100;
+
+const pastTopics = (earlier: ChatMessage[], routine: string) =>
+  earlier
+    .flatMap((message, index) =>
+      message.metadata?.routine === routine
+        ? [
+            (
+              textOf(earlier[index + 1])
+                .trim()
+                .split("\n")[0] ?? ""
+            ).slice(0, TOPIC_CHARS),
+          ]
+        : [],
+    )
+    .filter(Boolean)
+    .slice(-TOPICS_KEPT);
 
 type Due = Awaited<ReturnType<typeof dueItems>>;
 
 export const routineBrief = ({
   prompt,
-  previous,
+  topics,
   due,
   studying,
 }: {
   prompt: string;
-  previous: string;
+  topics: string[];
   due: Due;
   studying: boolean;
 }) => {
@@ -92,7 +106,8 @@ export const routineBrief = ({
     prompt,
     studying &&
       (due.length > 0 ? `Due for review now: ${list}.` : "Nothing is due for review now."),
-    previous && `Your last post for this routine was:\n${previous}\nDo not repeat it.`,
+    topics.length > 0 &&
+      `Earlier posts for this routine, oldest first:\n${topics.map((topic) => `- ${topic}`).join("\n")}\nDo not repeat any of them.`,
     studying && NUDGE_ONLY,
   ];
   return parts.flatMap((part) => (part ? [part] : [])).join("\n\n");
@@ -177,7 +192,7 @@ async function runAutomation({
             type: "text" as const,
             text: routineBrief({
               prompt,
-              previous: lastPost(earlier, name),
+              topics: pastTopics(earlier, name),
               due,
               studying: progress !== undefined && progress.memorized + progress.learning > 0,
             }),
@@ -185,21 +200,19 @@ async function runAutomation({
         ],
       }
     : asked;
-  const answered = await answerPrompt(
-    owner,
-    [...earlier, briefed],
-    sessionId,
-    projectId,
-    runMode,
-  ).catch((err: Error) => {
-    console.error(`automation ${id} not answered: ${reasonOf(err)}`);
-    return [
-      ...earlier,
-      asked,
-      textMessage("assistant", `This run did not finish. ${reasonOf(err)}`, runMode),
-    ];
-  });
-  const messages = answered.map((message) => (message.id === asked.id ? asked : message));
+  const answered = await answerPrompt(owner, [briefed], sessionId, projectId, runMode).catch(
+    (err: Error) => {
+      console.error(`automation ${id} not answered: ${reasonOf(err)}`);
+      return [
+        asked,
+        textMessage("assistant", `This run did not finish. ${reasonOf(err)}`, runMode),
+      ];
+    },
+  );
+  const messages = [
+    ...earlier,
+    ...answered.map((message) => (message.id === asked.id ? asked : message)),
+  ];
   if (bot && isSkip(textOf(messages.at(-1)))) {
     await db.update(automations).set({ lastRunAt: new Date() }).where(eq(automations.id, id));
     return;
