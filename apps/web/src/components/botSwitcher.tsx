@@ -124,7 +124,12 @@ export const BotSwitcher: FC<{
                   </>
                 ) : (
                   <>
-                    <BotAvatar color={option.bot.color} seed={option.bot.id} className="size-7" />
+                    <BotAvatar
+                      color={option.bot.color}
+                      body={option.bot.symbol}
+                      seed={option.bot.id}
+                      className="size-7"
+                    />
                     <span className="min-w-0 flex-1 truncate">{botLabel(option.bot)}</span>
                     {current === `/bot/${option.bot.id}` && (
                       <HugeiconsIcon icon={Tick02Icon} className="size-4" />

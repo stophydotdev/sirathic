@@ -45,6 +45,7 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
         <span className="relative shrink-0">
           <BotAvatar
             color={bot.color}
+            body={bot.symbol}
             seed={bot.id}
             state={bot.hidden ? "paused" : session?.working ? "thinking" : "ready"}
             className="size-9"

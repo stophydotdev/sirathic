@@ -294,13 +294,17 @@ test("a hidden citation takes the space before it, so the period stays against t
   expect(tree).toEqual(sentence("That is the Hanafi view"));
 });
 
-test("a bot keeps one body, loses its shine while it thinks and gets it back after the done burst", () => {
-  expect(BODIES).toContain(bodyOf("4b1f"));
-  expect(bodyOf("4b1f")).toBe(bodyOf("4b1f"));
-  const motion = blobMotion(bodyOf("4b1f"), "ready");
+test("a bot's chosen shape wins, an old icon name falls back to the shape its id picks", () => {
+  expect(bodyOf("drop", "4b1f")).toBe(BODIES.drop);
+  expect(bodyOf("star", "4b1f")).toBe(bodyOf(null, "4b1f"));
+  expect(Object.values(BODIES)).toContain(bodyOf(null, "4b1f"));
+});
+
+test("the shine hides while the bot thinks and comes back after the done burst", () => {
+  const motion = blobMotion(BODIES.circle, "ready");
   motion.set("thinking", 0);
   expect(motion.frame(1).shine).toBeNull();
-  motion.set("ready", 1);
+  motion.set("done", 1);
   expect(motion.frame(1.5).shine).toBeNull();
   expect(motion.still(2)).toBe(false);
   motion.frame(3.5);

@@ -24,8 +24,6 @@ const TIMING = {
   paused: { morph: 0.5, course: { kind: "settles", at: 2.4 } },
 } satisfies Record<BlobState, { morph: number; course: Course }>;
 
-const BUSY = new Set<BlobState>(["thinking", "searching", "working", "writing"]);
-
 export const restingOf = (state: BlobState) => {
   const { course } = TIMING[state];
   return course.kind === "then" && course.state !== state ? course.state : state;
@@ -86,8 +84,7 @@ export const blobMotion = (body: readonly number[], initial: BlobState) => {
 
   return {
     set: (state: BlobState, now: number) => {
-      const next = state === "ready" && BUSY.has(current) ? "done" : state;
-      if (next !== current) enter(next, now);
+      if (state !== current) enter(state, now);
     },
     still: (now: number) => {
       const { morph, course } = TIMING[current];

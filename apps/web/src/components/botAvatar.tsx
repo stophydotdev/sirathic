@@ -28,18 +28,35 @@ export const tintOf = (color: string | null) =>
 
 const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const IDLE_CYCLE: readonly BlobState[] = ["egg", "hexagon", "ready"];
+const BUSY = new Set<BlobState>(["thinking", "searching", "working", "writing"]);
 
-const useBlob = (seed: string, state: BlobState) => {
-  const motion = useMemo(() => blobMotion(bodyOf(seed), "ready"), [seed]);
+const SITE_CYCLE: readonly (readonly [BlobState, number])[] = [
+  ["ready", 2.4],
+  ["thinking", 2.6],
+  ["ready", 3.4],
+  ["failed", 2.4],
+  ["asking", 2.2],
+  ["stopped", 2],
+  ["paused", 2.4],
+  ["egg", 1.8],
+  ["hexagon", 1.6],
+  ["working", 2],
+  ["searching", 3.4],
+  ["done", 2.6],
+  ["writing", 2.4],
+];
+
+const useBlob = (body: readonly number[], state: BlobState, start: number) => {
+  const motion = useMemo(() => blobMotion(body, "ready"), [body]);
   const [frame, setFrame] = useState<BlobFrame>(() => motion.frame(0));
   const raf = useRef(0);
+  const previous = useRef(state);
 
   const play = useCallback(
     (next: BlobState) => {
       cancelAnimationFrame(raf.current);
       if (reduced()) {
-        setFrame(blobMotion(bodyOf(seed), restingOf(next)).frame(1));
+        setFrame(blobMotion(body, restingOf(next)).frame(1));
         return;
       }
       const clock = () => performance.now() / 1000;
@@ -51,21 +68,32 @@ const useBlob = (seed: string, state: BlobState) => {
       };
       tick();
     },
-    [motion, seed],
+    [motion, body],
   );
 
   useEffect(() => {
-    play(state);
-    let step = 0;
-    const timer =
-      state === "ready" && !reduced()
-        ? setInterval(() => play(IDLE_CYCLE[step++ % IDLE_CYCLE.length]), 1000)
-        : undefined;
-    return () => {
-      clearInterval(timer);
+    const finished = state === "ready" && BUSY.has(previous.current);
+    previous.current = state;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const stop = () => {
+      clearTimeout(timer);
       cancelAnimationFrame(raf.current);
     };
-  }, [play, state]);
+    if (state !== "ready" || reduced()) {
+      play(finished ? "done" : state);
+      return stop;
+    }
+    const run = (index: number) => {
+      const [next, seconds] = SITE_CYCLE[index % SITE_CYCLE.length];
+      play(next);
+      timer = setTimeout(() => run(index + 1), seconds * 1000);
+    };
+    if (finished) {
+      play("done");
+      timer = setTimeout(() => run(start), 2600);
+    } else run(start);
+    return stop;
+  }, [play, state, start]);
 
   return frame;
 };
@@ -74,12 +102,17 @@ const BOX = 160;
 
 export const BotAvatar: FC<{
   color: string | null;
+  body: string | null;
   seed: string;
   state?: BlobState;
   className?: string;
-}> = ({ color, seed, state = "ready", className }) => {
+}> = ({ color, body, seed, state = "ready", className }) => {
   const id = useId().replace(/\W/g, "");
-  const frame = useBlob(seed, state);
+  const frame = useBlob(
+    bodyOf(body, seed),
+    state,
+    [...seed].reduce((sum, char) => sum + char.charCodeAt(0), 0) % SITE_CYCLE.length,
+  );
   const area = { x: -BOX, y: -BOX, width: BOX * 2, height: BOX * 2 };
   const dots = frame.dots.map((dot, index) =>
     dot.d ? (

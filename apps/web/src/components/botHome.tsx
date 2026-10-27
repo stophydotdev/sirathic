@@ -73,7 +73,13 @@ export const BotTitle: FC = () => {
       title={t("Settings")}
       className="bg-muted hover:bg-foreground/10 flex h-8 min-w-0 items-center gap-2 rounded-xl px-2.5 text-sm font-medium"
     >
-      <BotAvatar color={bot.color} seed={bot.id} state={state} className="size-5" />
+      <BotAvatar
+        color={bot.color}
+        body={bot.symbol}
+        seed={bot.id}
+        state={state}
+        className="size-5"
+      />
       <span className="max-w-40 truncate">{bot.name}</span>
     </button>
   );

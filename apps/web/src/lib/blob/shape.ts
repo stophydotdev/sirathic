@@ -1,3 +1,5 @@
+import type { BOT_BODIES } from "@sirathic/server/projects";
+
 const SAMPLES = 64;
 const ANGLES = Array.from({ length: SAMPLES }, (_, index) => (index / SAMPLES) * Math.PI * 2);
 
@@ -91,14 +93,16 @@ const peaked = (radii: readonly number[], peak: number) => {
   return radii.map((radius) => (radius * peak) / max);
 };
 
-const roundedHexagon = (radius: number, corner: number) =>
+const roundedPolygon = (sides: number, radius: number, corner: number, turnDegrees: number) =>
   profileOf(
-    [0, 1, 2, 3, 4, 5].flatMap((side) => {
-      const angle = (side / 6) * Math.PI * 2;
+    Array.from(
+      { length: sides },
+      (_, side) => (turnDegrees * Math.PI) / 180 + (side / sides) * Math.PI * 2,
+    ).flatMap((angle) => {
       const x = Math.cos(angle) * (radius - corner);
       const y = Math.sin(angle) * (radius - corner);
       return Array.from({ length: 11 }, (_, step) => {
-        const turn = angle - Math.PI / 6 + ((Math.PI / 3) * step) / 10;
+        const turn = angle - Math.PI / sides + ((2 * Math.PI) / sides) * (step / 10);
         return { x: x + Math.cos(turn) * corner, y: y + Math.sin(turn) * corner };
       });
     }),
@@ -120,28 +124,32 @@ const cloud = ANGLES.map((angle) => {
   }, 0);
 });
 
-export const BODIES = [
-  circle(1).radii,
-  peaked(
+export const BODIES = {
+  circle: circle(1).radii,
+  pebble: peaked(
     ANGLES.map(
       (angle) => 1 + 0.075 * Math.cos(2 * angle + 0.5) + 0.035 * Math.cos(3 * angle + 2.1),
     ),
     1.02,
   ),
-  peaked(
+  squircle: peaked(
     ANGLES.map(
       (angle) =>
         (Math.abs(Math.cos(angle)) ** 4.2 + Math.abs(Math.sin(angle)) ** 4.2) ** (-1 / 4.2),
     ),
     1.15,
   ),
-  profileOf(hullOfCircles([-0.42, 0, 0.62], [0.42, 0, 0.62])),
-  roundedHexagon(1.04, 0.26),
-  peaked(cloud, 1.02),
-  peaked(profileOf(hullOfCircles([0, 0.28, 0.66], [0, -0.96, 0.05])), 1.04),
-];
+  capsule: profileOf(hullOfCircles([-0.42, 0, 0.62], [0.42, 0, 0.62])),
+  triangle: roundedPolygon(3, 1.12, 0.34, -90),
+  hexagon: roundedPolygon(6, 1.04, 0.26, 0),
+  cloud: peaked(cloud, 1.02),
+  drop: peaked(profileOf(hullOfCircles([0, 0.28, 0.66], [0, -0.96, 0.05])), 1.04),
+} satisfies Record<(typeof BOT_BODIES)[number], readonly number[]>;
 
-export const bodyOf = (seed: string) =>
-  BODIES[
-    [...seed].reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 7) % BODIES.length
+const SEEDED = Object.values(BODIES);
+
+export const bodyOf = (chosen: string | null, seed: string) =>
+  Object.entries(BODIES).find(([name]) => name === chosen)?.[1] ??
+  SEEDED[
+    [...seed].reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 7) % SEEDED.length
   ];
