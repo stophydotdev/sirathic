@@ -3,6 +3,7 @@ import { hadithsByIds } from "@sirathic/core/tools/hadithGet";
 import { hadithIdOfSunnahUrl } from "@sirathic/core/tools/hadithLinks";
 import { quranGet, quranGetInput } from "@sirathic/core/tools/quranGet";
 import { webFetch } from "@sirathic/core/tools/webFetch";
+import { publicUrl } from "@sirathic/core/web/url";
 import { tool } from "ai";
 import { z } from "zod";
 import { question } from "../shared/messages";
@@ -36,7 +37,7 @@ Skip it when the question has one factual answer, like how wudu is done or what 
 
 const fetchUrlInput = z.object({
   urls: z
-    .array(z.url())
+    .array(publicUrl)
     .min(1)
     .max(3)
     .describe("1 to 3 URLs to read. Prioritize the pages most important to the answer."),

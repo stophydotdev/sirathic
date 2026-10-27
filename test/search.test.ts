@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
+import { publicUrl } from "@sirathic/core/web/url";
 import { withoutStopwords } from "@sirathic/core/search/arabic";
 import { onePerAnswer } from "@sirathic/core/search/onePerAnswer";
 import { hadithLink } from "@sirathic/core/tools/hadithLinks";
@@ -90,4 +91,25 @@ test("a query left empty is skipped and a site that is not a domain is reported"
       '"islamqa" is not a domain, so it was ignored. Use one like islamqa.info.',
     ],
   });
+});
+
+const readable = (url: string) => publicUrl.safeParse(url).success;
+
+test("only public http and https pages can be read", () => {
+  expect(readable("https://islamqa.info/en/answers/1")).toBe(true);
+  expect(
+    [
+      "file:///etc/passwd",
+      "ftp://islamqa.info/a",
+      "http://localhost:3000/",
+      "http://127.0.0.1/",
+      "http://2130706433/",
+      "http://10.0.0.5/admin",
+      "http://169.254.169.254/latest/meta-data/",
+      "http://192.168.1.1/",
+      "http://[::1]/",
+      "http://metadata.google.internal/",
+      "http://intranet/",
+    ].map(readable),
+  ).toEqual(Array(11).fill(false));
 });

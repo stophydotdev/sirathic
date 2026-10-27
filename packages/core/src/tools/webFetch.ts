@@ -2,7 +2,7 @@ import { z } from "zod";
 import { cacheFor } from "../cache";
 import { stophy } from "../stophy";
 import { type WebFetchResult, webFetchResult } from "../web/types";
-import { cleanUrl } from "../web/url";
+import { cleanUrl, publicUrl } from "../web/url";
 
 const TIMEOUT_MS = 30_000;
 const MIN_TEXT_CHARS = 50;
@@ -48,9 +48,9 @@ const fetchLive = async (url: string): Promise<WebFetchResult> => {
   };
 };
 
-export const webFetchInput = z.object({ url: z.url() });
+export const webFetchInput = z.object({ url: publicUrl });
 
-export const webFetch = ({ url }: z.infer<typeof webFetchInput>) => {
-  const cleaned = cleanUrl(url);
+export const webFetch = (input: z.input<typeof webFetchInput>) => {
+  const cleaned = cleanUrl(webFetchInput.parse(input).url);
   return pageCache(cleaned, () => fetchLive(cleaned));
 };
