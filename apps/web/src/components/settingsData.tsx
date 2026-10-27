@@ -6,6 +6,7 @@ import { usePreferences } from "@/components/preferences";
 import { control, Group, Row, Toggle } from "@/components/settingsControls";
 import { MemoryRow } from "@/components/settingsMemory";
 import { useSessions } from "@/components/sessions";
+import { useStartChat } from "@/components/newChat";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { type FC, useState } from "react";
@@ -24,6 +25,7 @@ export const DataSection: FC = () => {
   const incognitoByDefault = usePreferences((s) => s.incognitoByDefault);
   const change = usePreferences((s) => s.change);
   const refresh = useSessions((s) => s.refresh);
+  const startChat = useStartChat();
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const t = useT();
@@ -43,9 +45,7 @@ export const DataSection: FC = () => {
     await refresh();
     setBusy(false);
     setConfirming(false);
-    if (window.location.pathname.startsWith("/c/")) {
-      window.location.assign("/");
-    }
+    if (window.location.pathname.startsWith("/c/")) startChat();
   };
 
   return (

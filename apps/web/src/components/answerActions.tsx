@@ -30,6 +30,7 @@ import {
 import type { Source } from "@sirathic/server/sources";
 import { api } from "@/lib/trpc";
 import { useAui, useAuiState } from "@assistant-ui/react";
+import { useRouter } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Download04Icon,
@@ -103,6 +104,7 @@ export const AnswerExtras: FC<{
   children?: ReactNode;
 }> = ({ sources, children }) => {
   const chat = useChatState();
+  const router = useRouter();
   const messageId = useAuiState((s) => s.message.id);
   const [forking, setForking] = useState(false);
   const t = useT();
@@ -113,7 +115,7 @@ export const AnswerExtras: FC<{
     const forked = await api.sessions.fork
       .mutate({ id: chat.id, messageId })
       .catch(() => undefined);
-    if (forked) window.location.assign(`/c/${forked.id}`);
+    if (forked) router.push(`/c/${forked.id}`);
     else setForking(false);
   };
 

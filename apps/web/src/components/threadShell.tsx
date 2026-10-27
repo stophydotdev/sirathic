@@ -18,6 +18,7 @@ import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AskSelection } from "@/components/askSelection";
+import { useStartChat } from "@/components/newChat";
 import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
 import { useKeyNames, withMod } from "@/lib/keys";
 import { cn } from "@/lib/utils";
@@ -43,13 +44,14 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const keys = useKeyNames();
   const unseenRuns = useUnseenRuns(useAccount((s) => s.status?.signedIn));
   const bot = useBot();
+  const startChat = useStartChat();
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (!withMod(event)) return;
       if (event.code === "KeyI" && !event.shiftKey) {
         event.preventDefault();
-        window.location.assign("/");
+        startChat();
       } else if (event.code === "KeyK" && !event.shiftKey) {
         event.preventDefault();
         setSearching(true);
@@ -245,15 +247,24 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 type RowProps = { className: string; children: ReactNode; onDone?: () => void };
 
 const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
+  const startChat = useStartChat();
   return (
     <Button
       variant="ghost"
       asChild
       className={cn("hover:bg-muted justify-start font-normal", className)}
     >
-      <a href="/" onClick={onDone}>
+      <Link
+        href="/"
+        onClick={(event) => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
+          event.preventDefault();
+          startChat();
+          onDone?.();
+        }}
+      >
         {children}
-      </a>
+      </Link>
     </Button>
   );
 };
