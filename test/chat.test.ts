@@ -415,6 +415,8 @@ test("a saved chat sent back with the old tool names reaches the agent under the
         },
       },
       { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
+      { type: "tool-duaSearch", toolCallId: "c4", state: "input-available", input: {} },
+      { type: "tool-setBotJob", toolCallId: "c5", state: "input-available", input: {} },
       { type: "text", text: "Done." },
     ],
   });
@@ -437,7 +439,9 @@ test("a saved chat sent back with the old tool names reaches the agent under the
         sources: [{ url: "https://islamqa.info/en/answers/1", title: "Wudu", snippet: "" }],
       },
     },
-    { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
+    { type: "tool-get_verses", toolCallId: "c3", state: "input-available", input: {} },
+    { type: "tool-search_duas", toolCallId: "c4", state: "input-available", input: {} },
+    { type: "tool-set_bot_job", toolCallId: "c5", state: "input-available", input: {} },
     { type: "text", text: "Done." },
   ]);
 });

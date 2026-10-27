@@ -71,7 +71,7 @@ function cardsFrom(part: Part, t: Translate): Card[] {
           ? [quranCard(Number(surah), Number(ayah), hit.ref, hit.arabic, hit.english)]
           : [];
       });
-    case "quranGet":
+    case "get_verses":
       return (quranGetOutput.safeParse(part.result).data?.verses ?? [])
         .filter((verse) => !verse.isContext)
         .map((verse) =>

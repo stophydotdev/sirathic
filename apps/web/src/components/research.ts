@@ -215,7 +215,7 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
       steps.push({ kind: "code", code: codeArgs.parse(part.args) });
       return;
     }
-    if (part.toolName === "quranGet") {
+    if (toolName === "get_verses") {
       const verses = quranArgs.safeParse(part.args).data;
       if (!verses) return;
       const from = verses.from ?? 1;

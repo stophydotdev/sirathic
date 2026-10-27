@@ -21,7 +21,7 @@ export const recentTurns = <Message extends { role: string }>(
 
 export function botTools({ id, owner }: BotScope) {
   return {
-    setBotJob: tool({
+    set_bot_job: tool({
       description:
         "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
       inputSchema: z.object({

@@ -65,6 +65,9 @@ const RENAMED_TOOLS = new Map([
   ["askUser", "clarifying_questions"],
   ["remember", "update_memory"],
   ["learnAboutUser", "update_memory"],
+  ["quranGet", "get_verses"],
+  ["duaSearch", "search_duas"],
+  ["setBotJob", "set_bot_job"],
 ]);
 
 export const currentToolName = (name: string) => RENAMED_TOOLS.get(name) ?? name;

@@ -57,7 +57,7 @@ export const projectRules = (project: RulesProject | undefined, live = true) => 
   const greeted = project.question
     ? ""
     : " You greeted them by asking what they want you around for.";
-  return `\n\nYou are a new bot the user just made in Sirathic, with no job yet.${greeted} If their message is a real question, answer it fully first. When they describe what they want from you, call setBotJob with a short name, a short title and the job in their words. Then, in two or three short sentences, say what you will do and name any of their connected plugins you can use for it.${TEXTING}${CHECK_FIRST}${ACT_WHEN_TOLD}${ASK_WHAT_YOU_NEED}${openedWith(project)}${profileRules(project.profile ?? [])}`;
+  return `\n\nYou are a new bot the user just made in Sirathic, with no job yet.${greeted} If their message is a real question, answer it fully first. When they describe what they want from you, call set_bot_job with a short name, a short title and the job in their words. Then, in two or three short sentences, say what you will do and name any of their connected plugins you can use for it.${TEXTING}${CHECK_FIRST}${ACT_WHEN_TOLD}${ASK_WHAT_YOU_NEED}${openedWith(project)}${profileRules(project.profile ?? [])}`;
 };
 
 export const settingsInProject = <Settings extends { memory: unknown }>(

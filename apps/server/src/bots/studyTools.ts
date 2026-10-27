@@ -13,7 +13,7 @@ export const studyTools = (scope: BotScope) => ({
     execute: (input) => addItem(scope, input),
   }),
   dueStudyItems: tool({
-    description: `Lists up to ${DUE_PER_SESSION} study items that are due for review now, oldest first, with the user's last mistake on each. Call it at the start of a study session. Fetch a verse or hadith text again with quranGet or search before you check an answer.`,
+    description: `Lists up to ${DUE_PER_SESSION} study items that are due for review now, oldest first, with the user's last mistake on each. Call it at the start of a study session. Fetch a verse or hadith text again with get_verses or search_web before you check an answer.`,
     inputSchema: z.object({}),
     execute: async () => ({ due: await dueItems(scope, DUE_PER_SESSION) }),
   }),

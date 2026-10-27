@@ -86,7 +86,7 @@ If results are incomplete, conflicting, only snippets, one-sided, or miss a part
         value: output.text || "No results.",
       }),
     }),
-    quranGet: tool({
+    get_verses: tool({
       description: "Read Quran verses by surah and ayah range.",
       inputSchema: quranGetInput,
       execute: async (input) => {
@@ -99,7 +99,7 @@ If results are incomplete, conflicting, only snippets, one-sided, or miss a part
         value: { verses: output.verses, truncated: output.truncated },
       }),
     }),
-    duaSearch: tool({
+    search_duas: tool({
       description: "Find duas and adhkar for an occasion or need.",
       inputSchema: duaSearchInput,
       execute: duaSearch,

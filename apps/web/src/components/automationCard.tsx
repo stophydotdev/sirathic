@@ -14,7 +14,7 @@ import { z } from "zod";
 const CARD_TOOLS = new Set([
   "createAutomation",
   "listAutomations",
-  "setBotJob",
+  "set_bot_job",
   "clarifying_questions",
 ]);
 
@@ -69,7 +69,7 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
   const created = row.safeParse(result).data;
   const listed = z.array(row).safeParse(result).data;
   const bot = renamed.safeParse(result).data;
-  if (tool === "setBotJob" && bot) return <BotRenamed name={bot.name} />;
+  if (currentToolName(tool) === "set_bot_job" && bot) return <BotRenamed name={bot.name} />;
   if (tool === "createAutomation" && created?.projectId) {
     return (
       <p className="text-muted-foreground my-3 flex items-center justify-center gap-1.5 text-xs">

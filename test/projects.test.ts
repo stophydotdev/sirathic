@@ -22,8 +22,8 @@ test("a bot keeps to its job, and a bot with no job sets one first", () => {
   expect(projectRules(coach)).toContain("Daily tips.");
   expect(projectRules(undefined)).toBe("");
   const fresh = { name: "New bot", title: "", instructions: "", kind: "bot" } as const;
-  expect(projectRules(fresh)).toContain("setBotJob");
-  expect(projectRules(fresh, false)).not.toContain("setBotJob");
+  expect(projectRules(fresh)).toContain("set_bot_job");
+  expect(projectRules(fresh, false)).not.toContain("set_bot_job");
   for (const bot of [coach, fresh]) {
     expect(projectRules(bot)).toContain("Do things only when they tell you to.");
     expect(projectRules(bot)).not.toContain("offer one routine");

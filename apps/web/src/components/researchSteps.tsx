@@ -263,7 +263,7 @@ const TOOLS = new Map<
   }
 >([
   [
-    "duaSearch",
+    "search_duas",
     {
       Icon: FavouriteIcon,
       label: (t, d) => t("Finding duas for {detail}", { detail: d }),
