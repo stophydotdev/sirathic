@@ -38,7 +38,6 @@ type Part = ThreadMessage["content"][number];
 const REVEAL_MS = 400;
 const COUNT_MS = 300;
 const LIVE_TITLES = 4;
-const TITLE_STAGGER_MS = 80;
 
 function useElapsed(startedAt: number, running: boolean) {
   const [now, setNow] = useState(() => performance.now());
@@ -359,15 +358,7 @@ const SearchesRow: FC<{
             href={read.url}
             target="_blank"
             rel="noreferrer"
-            className={cn(
-              "text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm font-normal! no-underline! transition-colors",
-              !open && APPEAR,
-            )}
-            style={
-              open
-                ? undefined
-                : { animationDelay: `${i * TITLE_STAGGER_MS}ms`, animationFillMode: "both" }
-            }
+            className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm font-normal! no-underline! transition-colors"
           >
             <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
             <span className="min-w-0 truncate">{read.title}</span>

@@ -20,7 +20,6 @@ import { ThreadKeys } from "@/components/shortcuts";
 import { ThreadImages } from "@/components/threadMedia";
 import { ThreadShell } from "@/components/threadShell";
 import { cn } from "@/lib/utils";
-import { APPEAR } from "@/lib/ease";
 import type { MessageKey } from "@/messages/en";
 import {
   ActionBarPrimitive,
@@ -348,7 +347,7 @@ const Turn: FC = () => {
   const role = useAuiState((s) => s.message.role);
 
   return (
-    <MessagePrimitive.Root className={cn("group/message", APPEAR)}>
+    <MessagePrimitive.Root className="group/message">
       {role === "user" ? <Question /> : role === "assistant" ? <Reply /> : null}
     </MessagePrimitive.Root>
   );

@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
-import { APPEAR } from "@/lib/ease";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Delete02Icon,
@@ -295,7 +294,7 @@ export const Automations: FC = () => {
         {signedIn && tab === "ideas" && <AutomationIdeas onAdd={create} />}
         {signedIn && tab === "automations" && (
           <>
-            <div className={cn("max-w-2xl", APPEAR)}>
+            <div className="max-w-2xl">
               {automations?.map((automation) => (
                 <AutomationRow
                   key={automation.id}
