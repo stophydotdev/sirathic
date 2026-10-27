@@ -2,7 +2,7 @@ import { z } from "zod";
 import { containsLink } from "../shared/projects";
 
 export const PROFILE_LIMIT = 20;
-export const PROFILE_CHARS = 200;
+const PROFILE_CHARS = 200;
 
 const profileText = z.string().trim().min(1).max(PROFILE_CHARS);
 const profileSource = z.enum(["said", "guessed"]);
