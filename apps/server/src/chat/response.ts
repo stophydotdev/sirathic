@@ -318,6 +318,7 @@ export function chatResponse({
         settings,
         instructions: instructions({
           now: new Date(),
+          timezone: automate?.timezone,
           mode,
           settings,
           project: inProject,

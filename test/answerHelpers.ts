@@ -125,6 +125,7 @@ export const chatTurn = async (
 export const promptFor = (overrides: Partial<Parameters<typeof instructions>[0]> = {}) =>
   instructions({
     now: new Date(0),
+    timezone: undefined,
     mode: "quick",
     settings: DEFAULT_SETTINGS,
     project: undefined,

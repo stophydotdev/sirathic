@@ -149,6 +149,16 @@ test("the prompt lists what the user told Sirathic about themselves", () => {
   );
 });
 
+test("the date line gives the user's own date, and UTC when no zone is known", () => {
+  const now = new Date(Date.UTC(2026, 9, 28, 3, 0));
+  expect(promptFor({ now, timezone: "America/Los_Angeles" })).toContain(
+    "It is currently Tuesday, October 27, 2026 in America/Los_Angeles (Jumada I 16, 1448 AH).",
+  );
+  expect(promptFor({ now })).toContain(
+    "It is currently Wednesday, October 28, 2026 in UTC (Jumada I 17, 1448 AH).",
+  );
+});
+
 test("a bot's prompt names the bot, and a main chat's names Sirathic", () => {
   expect(promptFor({ project: COACH })).toContain(
     'When asked about yourself, you are "Coach", prayer guide.',

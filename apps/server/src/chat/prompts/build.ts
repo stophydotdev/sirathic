@@ -60,22 +60,22 @@ A hadith: the Arabic, the translation, then the reference, in a > quote:
 
 ${VERSE_QUOTE}`;
 
-const dateLine = (now: Date) => {
+const dateLine = (now: Date, timeZone: string) => {
   const day = new Intl.DateTimeFormat("en", {
     weekday: "long",
     month: "long",
     day: "numeric",
     year: "numeric",
-    timeZone: "UTC",
+    timeZone,
   }).format(now);
   const hijri = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", {
     day: "numeric",
     month: "long",
     year: "numeric",
-    timeZone: "UTC",
+    timeZone,
   }).format(now);
-  const year = now.getUTCFullYear();
-  return `It is currently ${day} UTC (${hijri}). The Hijri date is calculated and turns at Maghrib, so it can differ by a day from local sighting. The year began on Jan 1, ${year}. This means ${year - 1} was last year and next year is ${year + 1}.`;
+  const year = Number(new Intl.DateTimeFormat("en", { year: "numeric", timeZone }).format(now));
+  return `It is currently ${day} in ${timeZone} (${hijri}). The Hijri date is calculated and turns at Maghrib, so it can differ by a day from local sighting. The year began on Jan 1, ${year}. This means ${year - 1} was last year and next year is ${year + 1}.`;
 };
 
 const background = ({
@@ -147,6 +147,7 @@ const botPrompt = (project: RulesProject, live: boolean) =>
 
 export const instructions = ({
   now,
+  timezone,
   mode,
   settings,
   project,
@@ -158,6 +159,7 @@ export const instructions = ({
   toolNotes,
 }: {
   now: Date;
+  timezone: string | undefined;
   mode: Mode;
   settings: Settings;
   project: RulesProject | undefined;
@@ -188,7 +190,7 @@ export const instructions = ({
     surface: [project ? botPrompt(project, !unattended) : MODES[mode], unattended && routine]
       .flatMap((part) => (part ? [part] : []))
       .join("\n\n"),
-    date: dateLine(now),
+    date: dateLine(now, timezone ?? "UTC"),
     personalization: personalization(settings),
   });
 };
