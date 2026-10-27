@@ -237,7 +237,7 @@ test("a bot always thinks at high effort, whatever the client asks for", async (
   ]);
 });
 
-test("quick thinks at medium and research at high when the user picks nothing", async () => {
+test("quick and research both think at high when the user picks nothing", async () => {
   const efforts = await Promise.all(
     MODES.map(async (mode) => {
       const { model, seen } = scriptedModel([]);
@@ -247,7 +247,7 @@ test("quick thinks at medium and research at high when the user picks nothing", 
       return seen[0]?.providerOptions?.anthropic?.effort;
     }),
   );
-  expect(efforts).toEqual(["medium", "high"]);
+  expect(efforts).toEqual(["high", "high"]);
 });
 
 test("every step of a turn sends the same tools, and the first one forces search", async () => {

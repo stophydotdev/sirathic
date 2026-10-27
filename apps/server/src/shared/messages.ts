@@ -14,7 +14,7 @@ export const effort = z.enum(EFFORTS);
 
 export type Effort = z.infer<typeof effort>;
 
-export const DEFAULT_EFFORT = { quick: "medium", research: "high" } as const satisfies Record<
+export const DEFAULT_EFFORT = { quick: "high", research: "high" } as const satisfies Record<
   Mode,
   Effort
 >;
