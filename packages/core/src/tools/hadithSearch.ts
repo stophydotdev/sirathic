@@ -10,9 +10,12 @@ export const hadithSearchInput = z.object({
 
 export const hadithSearch = async (input: z.input<typeof hadithSearchInput>) => {
   const { query, limit } = hadithSearchInput.parse(input);
+  const hits = await hybridIds(SEARCHABLE.hadiths, query, limit, { rareWords: true });
+  const distances = new Map(hits.map(({ id, distance }) => [id, distance]));
+  const found = await hadithsByIds(hits.map(({ id }) => id));
   return {
-    hadiths: await hadithsByIds(
-      await hybridIds(SEARCHABLE.hadiths, query, limit, { rareWords: true }),
+    hadiths: found.map((hadith) =>
+      Object.assign(hadith, { distance: distances.get(hadith.id) ?? Number.POSITIVE_INFINITY }),
     ),
   };
 };

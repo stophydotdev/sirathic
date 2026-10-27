@@ -13,9 +13,10 @@ const ENGLISH_MAX_DISTANCE = 0.55;
 
 export const quranSearch = async (input: z.input<typeof quranSearchInput>) => {
   const { query, limit } = quranSearchInput.parse(input);
-  const ids = await hybridIds(SEARCHABLE.verses, query, limit, {
+  const hits = await hybridIds(SEARCHABLE.verses, query, limit, {
     maxDistance: ARABIC.test(query) ? undefined : ENGLISH_MAX_DISTANCE,
   });
+  const ids = hits.map(({ id }) => id);
   const [found, tafsirEn] = await Promise.all([versesByIds(ids), tafsirEnFor(ids)]);
   return { verses: found, tafsirEn };
 };

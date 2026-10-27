@@ -12,7 +12,7 @@ const COMMON_SHARE = 0.08;
 const ARABIC = /\p{Script=Arabic}/u;
 const ARABIC_MARKS = /[ً-ٰٟـ]/gu;
 
-const ranked = z.array(z.object({ id: z.string() }));
+const ranked = z.array(z.object({ id: z.string(), distance: z.number() }));
 
 const wordQuery = (word: string) =>
   ARABIC.test(word)
@@ -117,12 +117,16 @@ export const hybridIds = async (
       order by ${embedding} <=> ${vector}::halfvec
       limit ${POOL}
     )
-    select id
+    select id, coalesce(
+      meaning.distance,
+      (select ${embedding} <=> ${vector}::halfvec from ${table} where ${table.id} = coalesce(keyword.id, meaning.id)),
+      2
+    )::float8 as distance
     from keyword full join meaning using (id)
     where ${maxDistance ?? null}::float8 is null or keyword.rank is not null or meaning.distance <= ${maxDistance ?? null}::float8
     order by coalesce(1.0 / (${RRF_K}::int + keyword.rank), 0) + coalesce(1.0 / (${RRF_K}::int + meaning.rank), 0) desc
     limit ${limit}
   `);
   });
-  return ranked.parse(rows).map((row) => row.id);
+  return ranked.parse(rows);
 };
