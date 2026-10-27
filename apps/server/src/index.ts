@@ -33,7 +33,7 @@ const IDLE_TIMEOUT_SECONDS = 255;
 
 const chatBody = z.object({
   id: sessionId,
-  messages: z.array(z.unknown()).min(1),
+  messages: z.array(z.looseObject({ role: z.enum(["user", "assistant"]) })).min(1),
   model: z.string().min(1).optional(),
   mode: mode.default("quick"),
   incognito: z.boolean().default(false),
