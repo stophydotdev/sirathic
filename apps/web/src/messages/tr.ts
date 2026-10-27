@@ -276,9 +276,6 @@ export default {
     "Ücretsiz İslami cevap motoru. Cevaplar Kur'an'a, sıhhat derecesiyle hadislere ve âlimlerin hükümlerine dayanır ve kaynaklarını gösterir.",
   Privacy: "Gizlilik",
   Terms: "Koşullar",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic, oturumunuzu açık tutmak için yalnızca gerekli çerezleri kullanır.",
-  "Got it": "Anladım",
   "Build and manage Wix sites": "Wix sitelerini oluşturun ve yönetin",
   "Build and run automations": "Otomasyonlar oluşturun ve çalıştırın",
   "Build campaigns and read reports": "Kampanyalar oluşturun ve raporları okuyun",

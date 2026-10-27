@@ -278,9 +278,6 @@ export default {
     "ھەقسىز ئىسلامىي سوئال-جاۋاب سىستېمىسى. جاۋابلار قۇرئان، دەرىجىسى كۆرسىتىلگەن ھەدىسلەر ۋە ئالىملارنىڭ ھۆكۈملىرىگە ئاساسلىنىدۇ ھەمدە مەنبەلىرىنى كۆرسىتىدۇ.",
   Privacy: "مەخپىيەتلىك",
   Terms: "شەرتلەر",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic سىزنى كىرگەن ھالەتتە ساقلاش ئۈچۈنلا زۆرۈر cookie لارنى ئىشلىتىدۇ.",
-  "Got it": "چۈشەندىم",
   "Build and manage Wix sites": "Wix تور بېكەتلىرىنى قۇرۇڭ ۋە باشقۇرۇڭ",
   "Build and run automations": "ئاپتوماتلاشتۇرۇشلارنى قۇرۇڭ ۋە ئىجرا قىلىڭ",
   "Build campaigns and read reports": "ھەرىكەتلەرنى قۇرۇڭ ۋە دوكلاتلارنى ئوقۇڭ",

@@ -271,9 +271,6 @@ export default {
     "বিনামূল্যের ইসলামি উত্তর ইঞ্জিন। উত্তরগুলো আসে কুরআন, মানসহ হাদিস ও আলেমদের ফতোয়া থেকে, এবং সূত্র উল্লেখ করে।",
   Privacy: "গোপনীয়তা",
   Terms: "শর্তাবলী",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic আপনাকে সাইন ইন রাখতে শুধু প্রয়োজনীয় কুকি ব্যবহার করে।",
-  "Got it": "বুঝেছি",
   "Build and manage Wix sites": "Wix সাইট তৈরি ও পরিচালনা করুন",
   "Build and run automations": "অটোমেশন তৈরি ও চালান",
   "Build campaigns and read reports": "ক্যাম্পেইন তৈরি করুন ও রিপোর্ট পড়ুন",

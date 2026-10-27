@@ -273,9 +273,6 @@ export default {
     "وړیا اسلامي ځوابونو انجن. ځوابونه له قرآن، د درجې سره حدیثونو او د علماوو له فتواوو راځي او خپلې سرچينې ښيي.",
   Privacy: "محرمیت",
   Terms: "شرایط",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic یوازې اړین کوکیز کاروي ترڅو تاسو ننوتي وساتي.",
-  "Got it": "پوه شوم",
   "Build and manage Wix sites": "د Wix سایټونه جوړ او اداره کړئ",
   "Build and run automations": "اتومات کارونه جوړ او پرمخ بوځئ",
   "Build campaigns and read reports": "کمپاینونه جوړ کړئ او راپورونه ولولئ",

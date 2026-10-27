@@ -271,9 +271,6 @@ export default {
     "محرك إجابات إسلامي مجاني. تأتي الإجابات من القرآن والأحاديث مع درجاتها وأحكام العلماء، وتذكر مصادرها.",
   Privacy: "الخصوصية",
   Terms: "الشروط",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "يستخدم Sirathic ملفات تعريف الارتباط الضرورية فقط لإبقائك مسجّلًا الدخول.",
-  "Got it": "حسنًا",
   "Build and manage Wix sites": "أنشئ مواقع Wix وأدرها",
   "Build and run automations": "أنشئ الأتمتة وشغّلها",
   "Build campaigns and read reports": "أنشئ الحملات واقرأ التقارير",

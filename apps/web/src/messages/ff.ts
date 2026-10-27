@@ -275,9 +275,6 @@ export default {
     "Jaabotorde Lislaam alaa njoɓdi. Jaabooje ɗee ummotoo e Alkur'aana, hadiisaaji e darja mum'en, e fatwaaji jaŋngooɓe ɓee, ɗe ina tinnda ɗo ɗe ummii.",
   Privacy: "Suturo",
   Terms: "Sarɗiiji",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic huutortoo tan kuukiije ɗe njiyaa ngam haɗde ma e nder konte maa.",
-  "Got it": "Mi faami",
   "Build and manage Wix sites": "Waɗu e toppito saytiiji Wix",
   "Build and run automations": "Waɗu e wurtin otomatik",
   "Build campaigns and read reports": "Waɗu kampaañ e janngu raportiiji",

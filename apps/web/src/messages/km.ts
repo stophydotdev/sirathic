@@ -270,9 +270,6 @@ export default {
     "ម៉ាស៊ីនឆ្លើយសំណួរអំពីអ៊ីស្លាមដោយឥតគិតថ្លៃ។ ចម្លើយផ្អែកលើគម្ពីរគួរអាន ហាឌីសដែលមានកម្រិតភាពត្រឹមត្រូវ និងមតិរបស់អ្នកប្រាជ្ញ ហើយបញ្ជាក់ប្រភព។",
   Privacy: "ឯកជនភាព",
   Terms: "លក្ខខណ្ឌ",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic ប្រើតែខូគីចាំបាច់ ដើម្បីរក្សាអ្នកឱ្យនៅចូលគណនី។",
-  "Got it": "យល់ហើយ",
   "Build and manage Wix sites": "បង្កើត និងគ្រប់គ្រងគេហទំព័រ Wix",
   "Build and run automations": "បង្កើត និងដំណើរការស្វ័យប្រវត្តិកម្ម",
   "Build campaigns and read reports": "បង្កើតយុទ្ធនាការ និងអានរបាយការណ៍",

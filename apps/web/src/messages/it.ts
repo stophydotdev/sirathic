@@ -278,9 +278,6 @@ export default {
     "Motore di risposte islamico gratuito. Le risposte vengono dal Corano, dagli hadith con il loro grado di autenticità e dai pareri dei sapienti, e citano le fonti.",
   Privacy: "Privacy",
   Terms: "Termini",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic usa solo cookie essenziali per mantenerti connesso.",
-  "Got it": "Ho capito",
   "Build and manage Wix sites": "Crea e gestisci siti Wix",
   "Build and run automations": "Crea ed esegui automazioni",
   "Build campaigns and read reports": "Crea campagne e leggi i report",

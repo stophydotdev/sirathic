@@ -255,8 +255,6 @@ export const MESSAGES = [
   "Images",
   "Privacy",
   "Terms",
-  "Sirathic uses only essential cookies to keep you signed in.",
-  "Got it",
   "Build and manage Wix sites",
   "Build and run automations",
   "Build campaigns and read reports",

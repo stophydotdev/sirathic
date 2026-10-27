@@ -280,9 +280,6 @@ export default {
     "Libreng makinang sumasagot tungkol sa Islam. Nagmumula ang mga sagot sa Qur'an, sa mga hadith kasama ang grado ng mga ito, at sa mga hatol ng mga iskolar, at binabanggit ang mga pinagmulan.",
   Privacy: "Privacy",
   Terms: "Mga Tuntunin",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Gumagamit lang ang Sirathic ng mahahalagang cookie para manatili kang naka-sign in.",
-  "Got it": "Sige",
   "Build and manage Wix sites": "Gumawa at mamahala ng mga Wix site",
   "Build and run automations": "Gumawa at magpatakbo ng mga automation",
   "Build campaigns and read reports": "Gumawa ng mga campaign at basahin ang mga ulat",
