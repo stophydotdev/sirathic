@@ -33,6 +33,12 @@ export const told = z.object({
     .describe(
       "Lasting facts the user states about themselves that no other field holds, in under 15 words, or null",
     ),
+  replaces: z
+    .string()
+    .nullable()
+    .describe(
+      "Only after a reply said memory is full: the exact text of the saved fact to swap out for this one, otherwise null",
+    ),
 });
 
 export const settingsUpdate = settings.partial();
@@ -49,11 +55,15 @@ export const DEFAULT_SETTINGS: Settings = {
   memory: [],
 };
 
+export const memoryFact = (fact: string | null) => fact?.trim().slice(0, MEMORY_CHARS);
+
 export const rememberedUpdate = (
   memory: readonly string[],
-  { fact, ...preferences }: z.output<typeof told>,
+  { fact, replaces, ...preferences }: z.output<typeof told>,
 ): z.output<typeof settingsUpdate> => {
-  const kept = fact?.trim().slice(0, MEMORY_CHARS);
+  const kept = memoryFact(fact);
+  const swapped = replaces?.trim();
+  const next = [...memory.filter((old) => old !== swapped), ...(kept ? [kept] : [])];
   return {
     ...(preferences.madhab !== null && { madhab: preferences.madhab }),
     ...(preferences.answerLanguage !== null && {
@@ -67,7 +77,7 @@ export const rememberedUpdate = (
     }),
     ...(kept &&
       !memory.includes(kept) && {
-        memory: [...memory, kept].slice(-MEMORY_LIMIT),
+        memory: next.length <= MEMORY_LIMIT ? next : [...memory],
       }),
   };
 };

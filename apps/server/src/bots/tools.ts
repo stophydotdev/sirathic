@@ -1,6 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { profileRejection, profileWrite } from "./profile";
+import { PROFILE_LIMIT, profileRejection, profileWrite } from "./profile";
 import {
   addProfileEntry,
   botTitle,
@@ -45,8 +45,10 @@ export function botTools({ id, owner }: BotScope) {
       execute: async ({ text, source, replaces }) => {
         const rejected = profileRejection(text);
         if (rejected) return rejected;
-        await addProfileEntry(id, owner, { text, source, at: Date.now() }, replaces);
-        return "Saved.";
+        const added = await addProfileEntry(id, owner, { text, source, at: Date.now() }, replaces);
+        return added.kind === "saved"
+          ? "Saved."
+          : `Not saved: the profile is full at ${PROFILE_LIMIT} entries. Call learnAboutUser again with replaces set to the exact text of the entry this one updates, or of the least useful one. Entries:\n${added.profile.map((old) => `- ${old.text}`).join("\n")}`;
       },
     }),
     askUser: tool({

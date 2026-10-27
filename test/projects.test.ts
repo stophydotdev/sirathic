@@ -11,6 +11,7 @@ import { projectUpdate } from "../apps/server/src/projects/projects";
 import { afterReview, isMemorized } from "../apps/server/src/bots/study";
 import { containsLink } from "../apps/server/src/shared/projects";
 import { FILE_CHARS, projectFilesRules, TOTAL_CHARS } from "../apps/server/src/projects/files";
+import { sirathicTools } from "../apps/server/src/chat/tools";
 import { rememberedUpdate } from "../apps/server/src/shared/settings";
 
 test("a project with instructions adds them to the chat rules with its name", () => {
@@ -68,6 +69,7 @@ test("a routine post keeps the bot's voice without the look-it-up line", () => {
 
 const told = {
   fact: null,
+  replaces: null,
   madhab: null,
   answerLanguage: null,
   answerLength: null,
@@ -135,6 +137,7 @@ const nothing = {
   answerLength: null,
   showArabic: null,
   fact: null,
+  replaces: null,
 };
 
 test("only the preferences the user stated change", () => {
@@ -144,16 +147,35 @@ test("only the preferences the user stated change", () => {
   });
 });
 
+const fullMemory = Array.from({ length: 20 }, (_, i) => `fact ${i}`);
+
 test.each([
-  [["is a revert"], "studies in the UK", { memory: ["is a revert", "studies in the UK"] }],
-  [["is a revert"], "is a revert", {}],
+  [["is a revert"], "studies in the UK", null, { memory: ["is a revert", "studies in the UK"] }],
+  [["is a revert"], "is a revert", null, {}],
+  [fullMemory, "fact 20", null, { memory: fullMemory }],
   [
-    Array.from({ length: 20 }, (_, i) => `fact ${i}`),
+    fullMemory,
     "fact 20",
-    { memory: Array.from({ length: 20 }, (_, i) => `fact ${i + 1}`) },
+    "fact 3",
+    { memory: [...fullMemory.filter((x) => x !== "fact 3"), "fact 20"] },
   ],
-])("memory %p plus %p saves %p", (memory, fact, expected) => {
-  expect(rememberedUpdate(memory, { ...nothing, fact })).toEqual(expected);
+  [fullMemory, "fact 20", "not saved", { memory: fullMemory }],
+  [fullMemory, "fact 5", "fact 3", {}],
+])("memory %p plus %p replacing %p gives %p", (memory, fact, replaces, expected) => {
+  expect(rememberedUpdate(memory, { ...nothing, fact, replaces })).toEqual(expected);
+});
+
+test("a full memory makes the remember tool list the saved facts and ask which to give up", async () => {
+  const { remember } = sirathicTools(
+    () => 0,
+    async () => ({ memory: fullMemory }),
+  );
+  const reply = await remember.execute?.(
+    { ...nothing, fact: "fact 20" },
+    { toolCallId: "call", messages: [], context: {} },
+  );
+  expect(reply).toContain("memory is full at 20 facts");
+  expect(reply).toContain("- fact 0\n- fact 1");
 });
 
 test("a bot's section is trimmed, can be cleared, and cannot be blank or too long", () => {
@@ -171,7 +193,7 @@ test("a bot takes one of the known avatar icons and colors only", () => {
 
 const learned = (text: string, at: number) => ({ text, source: "said" as const, at });
 
-test("a profile entry on the same topic replaces the old one, and the oldest goes at 20", () => {
+test("a profile entry on the same topic replaces the old one, and a full profile refuses a new one", () => {
   const profile = [learned("Goal: memorize Juz Amma", 1), learned("Now on 114", 2)];
   expect(withEntry(profile, learned("Now on 112", 3), "Now on 114")).toEqual([
     learned("Goal: memorize Juz Amma", 1),
@@ -182,9 +204,11 @@ test("a profile entry on the same topic replaces the old one, and the oldest goe
     learned("Now on 114", 4),
   ]);
   const full = Array.from({ length: 20 }, (_, i) => learned(`fact ${i}`, i));
-  const next = withEntry(full, learned("fact 20", 20), null);
-  expect(next).toHaveLength(20);
-  expect(next[0]).toEqual(learned("fact 1", 1));
+  expect(withEntry(full, learned("fact 20", 20), null)).toBeUndefined();
+  const swapped = withEntry(full, learned("fact 20", 20), "fact 0");
+  expect(swapped).toHaveLength(20);
+  expect(swapped?.[0]).toEqual(learned("fact 1", 1));
+  expect(withEntry(full, learned("fact 5", 21), null)?.at(-1)).toEqual(learned("fact 5", 21));
 });
 
 test("profile text that states a fact about the learner is accepted", () => {

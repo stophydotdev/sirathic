@@ -193,20 +193,27 @@ export async function addProfileEntry(
   const [row] = await db.select({ profile: projects.profile }).from(projects).where(owned(id, by));
   if (!row) throw new StatusError(404, "no such project");
   const profile = withEntry(row.profile, entry, replaces);
+  if (!profile) return { kind: "full", profile: row.profile } as const;
   await db.update(projects).set({ profile }).where(owned(id, by));
-  return profile;
+  return { kind: "saved", profile } as const;
 }
 
 export async function rememberInBot(
   id: string,
   by: string,
-  { fact, ...preferences }: z.output<typeof told>,
+  { fact, replaces, ...preferences }: z.output<typeof told>,
 ) {
   const kept = fact?.trim().slice(0, PROFILE_CHARS);
   const entry = kept && !profileRejection(kept) ? kept : undefined;
-  const [saved] = await Promise.all([
-    remember(by, { ...preferences, fact: null }),
-    entry && addProfileEntry(id, by, { text: entry, source: "said", at: Date.now() }, null),
-  ]);
-  return entry ? { ...saved, fact: entry } : saved;
+  const saved = await remember(by, { ...preferences, fact: null, replaces: null });
+  if (!entry) return saved;
+  const added = await addProfileEntry(
+    id,
+    by,
+    { text: entry, source: "said", at: Date.now() },
+    replaces,
+  );
+  return added.kind === "full"
+    ? { ...saved, memory: added.profile.map((old) => old.text) }
+    : { ...saved, fact: entry };
 }
