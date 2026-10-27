@@ -6,6 +6,7 @@
   "exports": {
     "./cache": "./src/cache.ts",
     "./search/*": "./src/search/*.ts",
+    "./stophy": "./src/stophy.ts",
     "./tools/*": "./src/tools/*.ts",
     "./web/*": "./src/web/*.ts"
   },
