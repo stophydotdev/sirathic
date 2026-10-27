@@ -434,8 +434,6 @@ export default {
   Time: "समय",
   "Day of the month": "महीने का दिन",
   Days: "दिन",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "समय आपके टाइम ज़ोन, {zone}, के अनुसार हैं। हर रन एक चैट के रूप में सहेजा जाता है और आपके रोज़ के जवाबों में गिना जाता है।",
   "Delete this automation?": "यह ऑटोमेशन मिटाएँ?",
   "Daily hadith": "रोज़ की हदीस",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -570,8 +568,6 @@ export default {
   "Automation deleted": "ऑटोमेशन मिटाया गया",
   "Automation created": "ऑटोमेशन बन गया",
   "No automations yet": "अभी कोई ऑटोमेशन नहीं",
-  "Notify me": "मुझे सूचित करें",
-  "In app": "ऐप में",
   None: "कोई नहीं",
   "Finished. Open to read the answer.": "पूरा हुआ। जवाब पढ़ने के लिए खोलें।",
   "New automation answers": "ऑटोमेशन के नए जवाब",

@@ -442,8 +442,6 @@ export default {
   Time: "Saat",
   "Day of the month": "Ayın günü",
   Days: "Günlər",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Saatlar saat qurşağınızdan istifadə edir: {zone}. Hər icra söhbət kimi saxlanılır və gündəlik cavablarınıza sayılır.",
   "Delete this automation?": "Bu avtomatlaşdırma silinsin?",
   "Daily hadith": "Günün hədisi",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -580,8 +578,6 @@ export default {
   "Automation deleted": "Avtomatlaşdırma silindi",
   "Automation created": "Avtomatlaşdırma yaradıldı",
   "No automations yet": "Hələ avtomatlaşdırma yoxdur",
-  "Notify me": "Mənə bildir",
-  "In app": "Tətbiqdə",
   None: "Heç biri",
   "Finished. Open to read the answer.": "Bitdi. Cavabı oxumaq üçün aç.",
   "New automation answers": "Yeni avtomatlaşdırma cavabları",

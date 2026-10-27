@@ -433,8 +433,6 @@ export default {
   Time: "الوقت",
   "Day of the month": "يوم الشهر",
   Days: "الأيام",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "تعتمد الأوقات على منطقتك الزمنية، {zone}. يُحفظ كل تشغيل كمحادثة ويُحسب من إجاباتك اليومية.",
   "Delete this automation?": "هل تريد حذف هذه الأتمتة؟",
   "Daily hadith": "حديث اليوم",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -567,8 +565,6 @@ export default {
   "Automation deleted": "تم حذف الأتمتة",
   "Automation created": "تم إنشاء الأتمتة",
   "No automations yet": "لا توجد أتمتة بعد",
-  "Notify me": "أبلغني",
-  "In app": "داخل التطبيق",
   None: "بدون",
   "Finished. Open to read the answer.": "انتهى. افتح لقراءة الإجابة.",
   "New automation answers": "إجابات أتمتة جديدة",

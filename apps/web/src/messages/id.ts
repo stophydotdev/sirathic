@@ -438,8 +438,6 @@ export default {
   Time: "Waktu",
   "Day of the month": "Tanggal dalam bulan",
   Days: "Hari",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Waktu memakai zona waktu Anda, {zone}. Setiap eksekusi disimpan sebagai obrolan dan dihitung dalam jawaban harian Anda.",
   "Delete this automation?": "Hapus otomatisasi ini?",
   "Daily hadith": "Hadis harian",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -576,8 +574,6 @@ export default {
   "Automation deleted": "Otomatisasi dihapus",
   "Automation created": "Otomatisasi dibuat",
   "No automations yet": "Belum ada otomatisasi",
-  "Notify me": "Beri tahu saya",
-  "In app": "Di aplikasi",
   None: "Tidak ada",
   "Finished. Open to read the answer.": "Selesai. Buka untuk membaca jawabannya.",
   "New automation answers": "Jawaban otomatisasi baru",

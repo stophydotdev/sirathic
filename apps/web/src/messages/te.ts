@@ -431,8 +431,6 @@ export default {
   Time: "సమయం",
   "Day of the month": "నెలలో రోజు",
   Days: "రోజులు",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "సమయాలు మీ టైమ్ జోన్, {zone}, ప్రకారం ఉంటాయి. ప్రతి రన్ చాట్‌గా సేవ్ అవుతుంది మరియు మీ రోజువారీ సమాధానాలలో లెక్కించబడుతుంది.",
   "Delete this automation?": "ఈ ఆటోమేషన్‌ను తొలగించాలా?",
   "Daily hadith": "రోజువారీ హదీసు",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -564,8 +562,6 @@ export default {
   "Automation deleted": "ఆటోమేషన్ తొలగించబడింది",
   "Automation created": "ఆటోమేషన్ సృష్టించబడింది",
   "No automations yet": "ఇంకా ఆటోమేషన్‌లు లేవు",
-  "Notify me": "నాకు తెలియజేయండి",
-  "In app": "యాప్‌లో",
   None: "ఏదీ కాదు",
   "Finished. Open to read the answer.": "పూర్తైంది. సమాధానం చదవడానికి తెరవండి.",
   "New automation answers": "ఆటోమేషన్‌ల కొత్త సమాధానాలు",

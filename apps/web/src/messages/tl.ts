@@ -444,8 +444,6 @@ export default {
   Time: "Oras",
   "Day of the month": "Araw ng buwan",
   Days: "Mga araw",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Ginagamit ng mga oras ang iyong time zone, {zone}. Sine-save bilang chat ang bawat takbo at kasama ito sa bilang ng iyong araw-araw na sagot.",
   "Delete this automation?": "Burahin ang automation na ito?",
   "Daily hadith": "Hadith sa araw-araw",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -583,8 +581,6 @@ export default {
   "Automation deleted": "Nabura ang automation",
   "Automation created": "Nagawa ang automation",
   "No automations yet": "Wala pang automation",
-  "Notify me": "Abisuhan ako",
-  "In app": "Sa app",
   None: "Wala",
   "Finished. Open to read the answer.": "Tapos na. Buksan para basahin ang sagot.",
   "New automation answers": "Mga bagong sagot ng automation",

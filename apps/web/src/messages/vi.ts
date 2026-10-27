@@ -437,8 +437,6 @@ export default {
   Time: "Giờ",
   "Day of the month": "Ngày trong tháng",
   Days: "Các ngày",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Giờ theo múi giờ của bạn, {zone}. Mỗi lần chạy được lưu thành một cuộc trò chuyện và tính vào số câu trả lời mỗi ngày của bạn.",
   "Delete this automation?": "Xóa tự động hóa này?",
   "Daily hadith": "Hadith mỗi ngày",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -573,8 +571,6 @@ export default {
   "Automation deleted": "Đã xóa tự động hóa",
   "Automation created": "Đã tạo tự động hóa",
   "No automations yet": "Chưa có tự động hóa nào",
-  "Notify me": "Thông báo cho tôi",
-  "In app": "Trong ứng dụng",
   None: "Không",
   "Finished. Open to read the answer.": "Đã xong. Mở để đọc câu trả lời.",
   "New automation answers": "Câu trả lời mới từ tự động hóa",

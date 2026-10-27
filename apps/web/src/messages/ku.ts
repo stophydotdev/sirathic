@@ -439,8 +439,6 @@ export default {
   Time: "کات",
   "Day of the month": "ڕۆژی مانگ",
   Days: "ڕۆژەکان",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "کاتەکان ناوچەی کاتی تۆ بەکاردەهێنن، {zone}. هەر جارێک وەک گفتوگۆ پاشەکەوت دەکرێت و لە وەڵامە ڕۆژانەکانتدا دەژمێردرێت.",
   "Delete this automation?": "ئەم ئۆتۆماتکردنە بسڕدرێتەوە؟",
   "Daily hadith": "فەرموودەی ڕۆژ",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -577,8 +575,6 @@ export default {
   "Automation deleted": "ئۆتۆماتکردن سڕایەوە",
   "Automation created": "ئۆتۆماتکردن دروستکرا",
   "No automations yet": "هێشتا هیچ ئۆتۆماتکردنێک نییە",
-  "Notify me": "ئاگادارم بکەرەوە",
-  "In app": "لەناو ئەپ",
   None: "هیچ",
   "Finished. Open to read the answer.": "تەواو بوو. بیکەرەوە بۆ خوێندنەوەی وەڵام.",
   "New automation answers": "وەڵامی نوێی ئۆتۆماتکردن",

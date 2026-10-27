@@ -432,8 +432,6 @@ export default {
   Time: "সময়",
   "Day of the month": "মাহৰ দিন",
   Days: "দিন",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "সময় আপোনাৰ টাইম জ'ন, {zone}, অনুসৰি। প্ৰতিবাৰ চলোৱা এটা চেট হিচাপে সংৰক্ষণ হয় আৰু আপোনাৰ দৈনিক উত্তৰত গণ্য হয়।",
   "Delete this automation?": "এই অটোমেচন মচিবনে?",
   "Daily hadith": "দৈনিক হাদীছ",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -566,8 +564,6 @@ export default {
   "Automation deleted": "অটোমেচন মচা হ'ল",
   "Automation created": "অটোমেচন সৃষ্টি কৰা হ'ল",
   "No automations yet": "এতিয়ালৈকে কোনো অটোমেচন নাই",
-  "Notify me": "মোক জনাওক",
-  "In app": "এপৰ ভিতৰত",
   None: "একো নাই",
   "Finished. Open to read the answer.": "শেষ হ'ল। উত্তৰ পঢ়িবলৈ খোলক।",
   "New automation answers": "নতুন অটোমেচনৰ উত্তৰ",

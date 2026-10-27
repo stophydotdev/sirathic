@@ -429,8 +429,6 @@ export default {
   Time: "时间",
   "Day of the month": "每月几号",
   Days: "星期",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "时间按你的时区（{zone}）计算。每次运行都会保存为一个对话，并计入你每天的回答次数。",
   "Delete this automation?": "删除这个自动化？",
   "Daily hadith": "每日圣训",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -560,8 +558,6 @@ export default {
   "Automation deleted": "自动化已删除",
   "Automation created": "已创建自动化",
   "No automations yet": "还没有自动化",
-  "Notify me": "通知我",
-  "In app": "应用内",
   None: "无",
   "Finished. Open to read the answer.": "已完成。打开查看回答。",
   "New automation answers": "自动化有新回答",

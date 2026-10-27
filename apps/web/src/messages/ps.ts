@@ -436,8 +436,6 @@ export default {
   Time: "وخت",
   "Day of the month": "د میاشتې ورځ",
   Days: "ورځې",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "وختونه ستاسو د وخت سیمه کاروي، {zone}. هر چلول د خبرو اترو په توګه خوندي کېږي او ستاسو ورځنیو ځوابونو ته شمېرل کېږي.",
   "Delete this automation?": "دا اتومات کار ړنګ شي؟",
   "Daily hadith": "د ورځې حدیث",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -574,8 +572,6 @@ export default {
   "Automation deleted": "اتومات کار ړنګ شو",
   "Automation created": "اتومات کار جوړ شو",
   "No automations yet": "تر اوسه هېڅ اتومات کار نشته",
-  "Notify me": "ماته خبر راکړئ",
-  "In app": "په اپ کې",
   None: "هېڅ",
   "Finished. Open to read the answer.": "بشپړ شو. ځواب لوستلو لپاره یې پرانیزئ.",
   "New automation answers": "د اتومات کارونو نوي ځوابونه",

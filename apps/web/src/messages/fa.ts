@@ -437,8 +437,6 @@ export default {
   Time: "ساعت",
   "Day of the month": "روز ماه",
   Days: "روزها",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "ساعت‌ها بر پایه منطقه زمانی شما است، {zone}. هر اجرا به‌صورت یک گفتگو ذخیره می‌شود و در پاسخ‌های روزانه شما حساب می‌شود.",
   "Delete this automation?": "این خودکارسازی حذف شود؟",
   "Daily hadith": "حدیث روز",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -575,8 +573,6 @@ export default {
   "Automation deleted": "خودکارسازی حذف شد",
   "Automation created": "خودکارسازی ساخته شد",
   "No automations yet": "هنوز خودکارسازی‌ای نیست",
-  "Notify me": "به من اطلاع بده",
-  "In app": "درون برنامه",
   None: "هیچ‌کدام",
   "Finished. Open to read the answer.": "تمام شد. برای خواندن پاسخ باز کنید.",
   "New automation answers": "پاسخ‌های تازهٔ خودکارسازی",

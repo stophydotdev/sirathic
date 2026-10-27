@@ -437,8 +437,6 @@ export default {
   Time: "Время",
   "Day of the month": "День месяца",
   Days: "Дни",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Время указано в вашем часовом поясе: {zone}. Каждый запуск сохраняется как чат и учитывается в ваших ежедневных ответах.",
   "Delete this automation?": "Удалить эту автоматизацию?",
   "Daily hadith": "Хадис дня",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -575,8 +573,6 @@ export default {
   "Automation deleted": "Автоматизация удалена",
   "Automation created": "Автоматизация создана",
   "No automations yet": "Автоматизаций пока нет",
-  "Notify me": "Уведомлять меня",
-  "In app": "В приложении",
   None: "Нет",
   "Finished. Open to read the answer.": "Готово. Откройте, чтобы прочитать ответ.",
   "New automation answers": "Новые ответы автоматизаций",

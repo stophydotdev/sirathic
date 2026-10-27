@@ -439,8 +439,6 @@ export default {
   Time: "நேரம்",
   "Day of the month": "மாதத்தின் நாள்",
   Days: "நாட்கள்",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "நேரங்கள் உங்கள் நேர மண்டலத்தை, {zone}, பயன்படுத்துகின்றன. ஒவ்வொரு இயக்கமும் ஓர் உரையாடலாகச் சேமிக்கப்பட்டு உங்கள் தினசரி பதில்களில் கணக்கிடப்படும்.",
   "Delete this automation?": "இந்தத் தானியக்கத்தை நீக்கவா?",
   "Daily hadith": "தினம் ஒரு ஹதீஸ்",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -576,8 +574,6 @@ export default {
   "Automation deleted": "தானியக்கம் நீக்கப்பட்டது",
   "Automation created": "தானியக்கம் உருவாக்கப்பட்டது",
   "No automations yet": "இன்னும் தானியக்கங்கள் இல்லை",
-  "Notify me": "எனக்குத் தெரிவி",
-  "In app": "ஆப்பில்",
   None: "எதுவுமில்லை",
   "Finished. Open to read the answer.": "முடிந்தது. பதிலைப் படிக்கத் திற.",
   "New automation answers": "தானியக்கங்களின் புதிய பதில்கள்",

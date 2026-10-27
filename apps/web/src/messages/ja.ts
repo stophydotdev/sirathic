@@ -441,8 +441,6 @@ export default {
   Time: "時刻",
   "Day of the month": "月の日",
   Days: "曜日",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "時刻はあなたのタイムゾーン ({zone}) で扱われます。実行ごとにチャットとして保存され、1 日の回答数に含まれます。",
   "Delete this automation?": "この自動化を削除しますか？",
   "Daily hadith": "今日のハディース",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -576,8 +574,6 @@ export default {
   "Automation deleted": "オートメーションを削除しました",
   "Automation created": "自動化を作成しました",
   "No automations yet": "自動化はまだありません",
-  "Notify me": "通知する",
-  "In app": "アプリ内",
   None: "なし",
   "Finished. Open to read the answer.": "完了しました。開いて回答を読む。",
   "New automation answers": "自動化の新しい回答",

@@ -437,8 +437,6 @@ export default {
   Time: "സമയം",
   "Day of the month": "മാസത്തിലെ ദിവസം",
   Days: "ദിവസങ്ങൾ",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "സമയങ്ങൾ നിങ്ങളുടെ സമയമേഖല, {zone}, ഉപയോഗിക്കുന്നു. ഓരോ റണ്ണും ഒരു ചാറ്റായി സേവ് ചെയ്യപ്പെടുകയും നിങ്ങളുടെ ദൈനംദിന ഉത്തരങ്ങളിൽ കണക്കാക്കുകയും ചെയ്യും.",
   "Delete this automation?": "ഈ ഓട്ടോമേഷൻ ഇല്ലാതാക്കണോ?",
   "Daily hadith": "ദിവസേനയുള്ള ഹദീസ്",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -572,8 +570,6 @@ export default {
   "Automation deleted": "ഓട്ടോമേഷൻ ഇല്ലാതാക്കി",
   "Automation created": "ഓട്ടോമേഷൻ സൃഷ്ടിച്ചു",
   "No automations yet": "ഇതുവരെ ഓട്ടോമേഷനുകളില്ല",
-  "Notify me": "എന്നെ അറിയിക്കുക",
-  "In app": "ആപ്പിൽ",
   None: "ഒന്നുമില്ല",
   "Finished. Open to read the answer.": "പൂർത്തിയായി. ഉത്തരം വായിക്കാൻ തുറക്കുക.",
   "New automation answers": "ഓട്ടോമേഷനുകളുടെ പുതിയ ഉത്തരങ്ങൾ",

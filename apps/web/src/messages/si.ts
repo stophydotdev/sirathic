@@ -432,8 +432,6 @@ export default {
   Time: "වේලාව",
   "Day of the month": "මාසයේ දිනය",
   Days: "දින",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "වේලාවන් ඔබේ වේලා කලාපය, {zone}, භාවිත කරයි. සෑම ධාවනයක්ම කතාබසක් ලෙස සුරැකෙන අතර ඔබේ දෛනික පිළිතුරුවලට ගණන් ගැනේ.",
   "Delete this automation?": "මෙම ස්වයංක්‍රීයකරණය මකන්නද?",
   "Daily hadith": "දෛනික හදීස්",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -566,8 +564,6 @@ export default {
   "Automation deleted": "ස්වයංක්‍රීයකරණය මකා දැමුවා",
   "Automation created": "ස්වයංක්‍රීයකරණය සාදා ඇත",
   "No automations yet": "තවම ස්වයංක්‍රීයකරණ නැත",
-  "Notify me": "මට දැනුම් දෙන්න",
-  "In app": "යෙදුම තුළ",
   None: "කිසිවක් නැත",
   "Finished. Open to read the answer.": "අවසන්. පිළිතුර කියවීමට විවෘත කරන්න.",
   "New automation answers": "ස්වයංක්‍රීයකරණවල නව පිළිතුරු",

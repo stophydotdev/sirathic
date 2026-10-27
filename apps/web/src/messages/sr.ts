@@ -438,8 +438,6 @@ export default {
   Time: "Време",
   "Day of the month": "Дан у месецу",
   Days: "Дани",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Време користи вашу временску зону, {zone}. Свако покретање се чува као разговор и рачуна се у ваше дневне одговоре.",
   "Delete this automation?": "Избрисати ову аутоматизацију?",
   "Daily hadith": "Дневни хадис",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -576,8 +574,6 @@ export default {
   "Automation deleted": "Аутоматизација је избрисана",
   "Automation created": "Аутоматизација је направљена",
   "No automations yet": "Још нема аутоматизација",
-  "Notify me": "Обавести ме",
-  "In app": "У апликацији",
   None: "Ништа",
   "Finished. Open to read the answer.": "Готово. Отвори да прочиташ одговор.",
   "New automation answers": "Нови одговори аутоматизација",

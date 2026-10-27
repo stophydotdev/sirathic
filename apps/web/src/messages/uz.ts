@@ -444,8 +444,6 @@ export default {
   Time: "Вақт",
   "Day of the month": "Ойнинг куни",
   Days: "Кунлар",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Вақт сизнинг вақт минтақангиздан фойдаланади: {zone}. Ҳар бир ишга тушириш суҳбат сифатида сақланади ва кундалик жавобларингизга ҳисобланади.",
   "Delete this automation?": "Бу автоматлаштириш ўчирилсинми?",
   "Daily hadith": "Кун ҳадиси",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -581,8 +579,6 @@ export default {
   "Automation deleted": "Автоматлаштириш ўчирилди",
   "Automation created": "Автоматлаштириш яратилди",
   "No automations yet": "Ҳозирча автоматлаштириш йўқ",
-  "Notify me": "Менга хабар бер",
-  "In app": "Иловада",
   None: "Йўқ",
   "Finished. Open to read the answer.": "Тайёр. Жавобни ўқиш учун очинг.",
   "New automation answers": "Автоматлаштиришнинг янги жавоблари",

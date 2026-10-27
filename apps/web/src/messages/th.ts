@@ -428,8 +428,6 @@ export default {
   Time: "เวลา",
   "Day of the month": "วันที่ของเดือน",
   Days: "วัน",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "เวลาใช้เขตเวลาของคุณ คือ {zone} การรันแต่ละครั้งจะถูกบันทึกเป็นแชทและนับรวมในคำตอบรายวันของคุณ",
   "Delete this automation?": "ลบระบบอัตโนมัตินี้ไหม",
   "Daily hadith": "หะดีษประจำวัน",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -560,8 +558,6 @@ export default {
   "Automation deleted": "ลบระบบอัตโนมัติแล้ว",
   "Automation created": "สร้างระบบอัตโนมัติแล้ว",
   "No automations yet": "ยังไม่มีระบบอัตโนมัติ",
-  "Notify me": "แจ้งเตือนฉัน",
-  "In app": "ในแอป",
   None: "ไม่มี",
   "Finished. Open to read the answer.": "เสร็จแล้ว เปิดเพื่ออ่านคำตอบ",
   "New automation answers": "คำตอบใหม่จากระบบอัตโนมัติ",

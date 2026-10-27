@@ -432,8 +432,6 @@ export default {
   Time: "ម៉ោង",
   "Day of the month": "ថ្ងៃនៃខែ",
   Days: "ថ្ងៃ",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "ម៉ោងប្រើល្វែងម៉ោងរបស់អ្នក {zone}។ រាល់ការរត់ត្រូវបានរក្សាទុកជាការជជែក ហើយរាប់ក្នុងចម្លើយប្រចាំថ្ងៃរបស់អ្នក។",
   "Delete this automation?": "លុបស្វ័យប្រវត្តិកម្មនេះឬ?",
   "Daily hadith": "ហាឌីសប្រចាំថ្ងៃ",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -566,8 +564,6 @@ export default {
   "Automation deleted": "បានលុបស្វ័យប្រវត្តិកម្ម",
   "Automation created": "បានបង្កើតស្វ័យប្រវត្តិកម្ម",
   "No automations yet": "មិនទាន់មានស្វ័យប្រវត្តិកម្មនៅឡើយ",
-  "Notify me": "ជូនដំណឹងខ្ញុំ",
-  "In app": "ក្នុងកម្មវិធី",
   None: "គ្មាន",
   "Finished. Open to read the answer.": "បានបញ្ចប់។ បើកដើម្បីអានចម្លើយ។",
   "New automation answers": "ចម្លើយថ្មីពីស្វ័យប្រវត្តិកម្ម",

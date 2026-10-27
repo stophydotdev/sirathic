@@ -442,8 +442,6 @@ export default {
   Time: "Hora",
   "Day of the month": "Día del mes",
   Days: "Días",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Las horas usan tu zona horaria, {zone}. Cada ejecución se guarda como un chat y cuenta para tus respuestas diarias.",
   "Delete this automation?": "¿Eliminar esta automatización?",
   "Daily hadith": "Hadiz diario",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -579,8 +577,6 @@ export default {
   "Automation deleted": "Automatización eliminada",
   "Automation created": "Automatización creada",
   "No automations yet": "Aún no hay automatizaciones",
-  "Notify me": "Avisarme",
-  "In app": "En la app",
   None: "Ninguno",
   "Finished. Open to read the answer.": "Terminó. Ábrelo para leer la respuesta.",
   "New automation answers": "Respuestas nuevas de automatizaciones",

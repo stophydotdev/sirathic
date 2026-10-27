@@ -437,8 +437,6 @@ export default {
   Time: "Wakkati",
   "Day of the month": "Nyalaade lewru",
   Days: "Ñalɗi",
-  "Times use your time zone, {zone}. Each run is saved as a chat and counts toward your daily answers.":
-    "Saa'i ena huutoro nokku wakkati maa, {zone}. Wurtin kala ena danndaa no yeewtere e ena limtaa e jaabawuuje maa kala nyalaade.",
   "Delete this automation?": "Momtu otomatik ɗu'um?",
   "Daily hadith": "Hadiis nyalaade",
   "Share one authentic hadith with its grading and a short explanation.":
@@ -572,8 +570,6 @@ export default {
   "Automation deleted": "Otomatik momtaama",
   "Automation created": "Otomatik waɗaama",
   "No automations yet": "Walaa otomatik tawo",
-  "Notify me": "Anndin mi",
-  "In app": "Nder app",
   None: "Walaa",
   "Finished. Open to read the answer.": "Timmii. Uddit ngam tar jawaabu.",
   "New automation answers": "Jawaabuuji otomatik kesum",
