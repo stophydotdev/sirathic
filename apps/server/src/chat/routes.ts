@@ -2,7 +2,7 @@ import { imageSearch } from "@sirathic/core/tools/imageSearch";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { reviewBot } from "../bots/review";
-import { procedure, signedIn, t } from "../trpc";
+import { signedIn, t } from "../trpc";
 import { isAnswering, stopAnswer } from "./answers";
 import { track } from "./events";
 import {
@@ -19,7 +19,6 @@ import {
   setFeedback,
   updateSession,
 } from "./sessions";
-import { suggestions } from "./suggest";
 
 const session = z.object({ id: sessionId });
 
@@ -70,9 +69,6 @@ export const chatRoutes = {
       .input(forkInput.safeExtend({ id: sessionId }))
       .mutation(({ ctx, input: { id, ...fork } }) => forkSession(id, ctx.owner, fork)),
   }),
-  suggest: procedure
-    .input(z.object({ q: z.string() }))
-    .query(({ ctx, input }) => suggestions(input.q.trim(), ctx.user?.id)),
   media: t.router({
     images: signedIn
       .input(z.object({ q: z.string() }))

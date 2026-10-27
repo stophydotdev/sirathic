@@ -15,7 +15,6 @@ import {
 import { RecentFiles } from "@/components/libraryRecent";
 import { popoverHeading, popoverIcon, popoverPanel, popoverRow } from "@/components/popover";
 import { ModelPicker } from "@/components/modelPicker";
-import { usePreferences } from "@/components/preferences";
 import { ProjectIcon } from "@/components/projectIcon";
 import { useSignIn } from "@/components/signIn";
 import {
@@ -29,7 +28,6 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { useAttachmentSrc } from "@/lib/hooks/useAttachmentSrc";
 import { type Mode, MODES, mode as modeSchema } from "@sirathic/server/messages";
-import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -42,9 +40,7 @@ import {
 import { LexicalComposerInput } from "@assistant-ui/react-lexical";
 import {
   IconArrowUp,
-  IconArrowUpLeft,
   IconChevronDown,
-  IconClock,
   IconFile,
   IconPaperclip,
   IconPlus,
@@ -62,8 +58,6 @@ const ROTATING = [
   "Type / for modes, @ for plugins and skills",
 ] as const satisfies readonly MessageKey[];
 const ROTATE_MS = 4_000;
-const SUGGEST_DELAY_MS = 150;
-const MIN_SUGGEST_CHARS = 2;
 
 const finePointer = globalThis.matchMedia?.("(pointer: fine)").matches ?? false;
 
@@ -78,8 +72,6 @@ export const MODE_ICONS = {
   research: <IconTelescope className="size-4" />,
 } satisfies Record<Mode, ReactNode>;
 
-type Suggestion = Awaited<ReturnType<typeof api.suggest.query>>[number];
-
 function useRotatingPlaceholder(first: string, rotate: boolean) {
   const [index, setIndex] = useState(0);
   const t = useT();
@@ -93,29 +85,6 @@ function useRotatingPlaceholder(first: string, rotate: boolean) {
   }, [rotate]);
   const current = ROTATING[index];
   return rotate && current ? t(current) : first;
-}
-
-function useSuggestions(text: string, enabled: boolean) {
-  const [found, setFound] = useState<Suggestion[]>([]);
-  useEffect(() => {
-    const query = text.trim();
-    if (!enabled || query.length < MIN_SUGGEST_CHARS) {
-      setFound([]);
-      return;
-    }
-    const controller = new AbortController();
-    const timer = setTimeout(() => {
-      api.suggest
-        .query({ q: query }, { signal: controller.signal })
-        .then(setFound)
-        .catch(() => undefined);
-    }, SUGGEST_DELAY_MS);
-    return () => {
-      clearTimeout(timer);
-      controller.abort();
-    };
-  }, [text, enabled]);
-  return found;
 }
 
 export const Composer: FC<{
@@ -138,7 +107,6 @@ export const Composer: FC<{
     const draft = takeDraft();
     if (draft) aui.thread().composer().setText(draft);
   }, [aui]);
-  const [focused, setFocused] = useState(false);
   const [active, setActive] = useState(0);
   const [picked, setPicked] = useState(false);
   const [seen, setSeen] = useState(text);
@@ -154,13 +122,7 @@ export const Composer: FC<{
   const t = useT();
 
   const command = /^\/[^\s]*$/u.test(text) ? text : undefined;
-  const mentioning = /(?:^|\s)@\S*$/u.test(text);
-  const autosuggest = usePreferences((s) => s.autosuggest);
   const composer = () => aui.thread().composer();
-  const suggestions = useSuggestions(
-    text,
-    autosuggest && focused && command === undefined && !mentioning,
-  );
 
   const choices: Choice[] = command?.startsWith("/")
     ? MODES.filter((name) =>
@@ -177,23 +139,7 @@ export const Composer: FC<{
           composer().setText("");
         },
       }))
-    : focused
-      ? suggestions.map((suggestion) => ({
-          key: suggestion.text,
-          label: suggestion.text,
-          icon: suggestion.past ? (
-            <IconClock className="size-4" />
-          ) : (
-            <IconSearch className="size-4" />
-          ),
-          choose: () => {
-            composer().setText(suggestion.text);
-            if (signedOut) ask(suggestion.text);
-            else composer().send();
-          },
-          fill: () => composer().setText(`${suggestion.text} `),
-        }))
-      : [];
+    : [];
   const selecting = command !== undefined || picked;
   const highlighted = selecting ? Math.min(active, Math.max(choices.length - 1, 0)) : -1;
 
@@ -228,9 +174,6 @@ export const Composer: FC<{
     } else if (event.key === "Enter" && !event.shiftKey && selecting) {
       take();
       choices[highlighted]?.choose();
-    } else if (event.key === "Tab" && choices[highlighted]?.fill) {
-      take();
-      choices[highlighted]?.fill?.();
     }
   };
 
@@ -261,8 +204,6 @@ export const Composer: FC<{
             formatter={mentionFormatter}
             directiveChip={MentionChip}
             onKeyDownCapture={onKeyDownCapture}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setTimeout(() => setFocused(false), 150)}
             className={cn(
               "relative max-h-60 min-h-[42px] w-full px-5 pt-3.5 text-base",
               bot ? "leading-7" : "leading-6",
@@ -374,19 +315,6 @@ export const Composer: FC<{
                     <span className="text-muted-foreground truncate text-xs">{choice.hint}</span>
                   )}
                 </span>
-                {choice.fill && (
-                  <button
-                    type="button"
-                    aria-label={t("Use this text")}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      choice.fill?.();
-                    }}
-                    className="text-super hover:bg-foreground/10 flex size-6 items-center justify-center rounded-md"
-                  >
-                    <IconArrowUpLeft className="size-3.5 rtl:-scale-x-100" />
-                  </button>
-                )}
               </div>
             ))}
           </div>
