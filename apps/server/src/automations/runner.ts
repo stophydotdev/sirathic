@@ -179,7 +179,8 @@ async function answerPrompt(
   })) {
     if (chunk.success && chunk.value.type === "error") failure = chunk.value.errorText;
   }
-  if (!textOf(answered.at(-1)).trim()) throw new Error(failure ?? "the model gave no answer");
+  if (failure !== undefined) throw new Error(failure);
+  if (!textOf(answered.at(-1)).trim()) throw new Error("the model gave no answer");
   return answered;
 }
 

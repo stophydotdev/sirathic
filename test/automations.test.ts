@@ -125,20 +125,23 @@ mock.module("../apps/server/src/chat/response", () => ({
   ...response,
   chatResponse: ({ messages, save }: Parameters<typeof response.chatResponse>[0]) => {
     modelInputs.push(messages);
-    if (modelError !== undefined) {
-      const errorText = modelError;
-      return createUIMessageStreamResponse({
-        stream: createUIMessageStream({
-          execute: ({ writer }) => writer.write({ type: "error", errorText }),
-        }),
-      });
-    }
     const reply = {
       id: "reply-1",
       role: "assistant",
       metadata: { createdAt: 1, mode: "quick" },
       parts: [{ type: "text", text: "Verse 33\nAn-Nasr 110:1" }],
     } satisfies ChatMessage;
+    if (modelError !== undefined) {
+      const errorText = modelError;
+      return createUIMessageStreamResponse({
+        stream: createUIMessageStream({
+          execute: async ({ writer }) => {
+            await save([...messages, { ...reply, parts: [{ type: "text", text: "Let me check." }] }]);
+            writer.write({ type: "error", errorText });
+          },
+        }),
+      });
+    }
     return new Response(
       new ReadableStream({
         start: (controller) => save([...messages, reply]).then(() => controller.close()),
@@ -227,7 +230,7 @@ test("a run that works resets the failure count", async () => {
   expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
 });
 
-test("a run whose model call fails posts the reason the provider gave", async () => {
+test("a run whose model call fails posts the reason the provider gave, even after some text", async () => {
   Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 0 });
   modelError = "401: invalid x-api-key";
 
