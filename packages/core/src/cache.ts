@@ -15,6 +15,11 @@ export const countUp = async (key: string, keepSeconds: number) => {
   return count;
 };
 
+export const countDown = async (key: string) => {
+  await connected;
+  return redis.decr(key);
+};
+
 type CacheOptions<Value> = {
   namespace: string;
   schema: z.ZodType<Value>;

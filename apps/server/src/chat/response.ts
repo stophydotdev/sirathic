@@ -155,6 +155,7 @@ export function chatResponse({
   automate,
   fileOwner,
   settled,
+  release,
   unattended,
   bot,
   historyLimit,
@@ -177,6 +178,7 @@ export function chatResponse({
   automate: AutomationScope | undefined;
   fileOwner?: string;
   settled?: () => void;
+  release?: (completed: boolean) => void;
   unattended?: true;
   bot?: Promise<BotScope | undefined>;
   historyLimit?: number;
@@ -397,12 +399,14 @@ export function chatResponse({
     onError: (error) => (error instanceof Error ? error.message : String(error)),
     onEnd: ({ messages: answered, outcome }) => {
       void connected.then(({ close }) => close());
+      const status = ended?.outcome.status ?? outcome.status;
+      release?.(status === "completed");
       record({
         name: "answer.completed",
         props: {
           mode,
           model: modelName,
-          outcome: ended?.outcome.status ?? outcome.status,
+          outcome: status,
           finishReason: ended?.finishReason,
           httpStatus,
           totalMs: since(),

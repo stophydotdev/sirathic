@@ -1,5 +1,7 @@
 import { expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
+import { APICallError, simulateReadableStream } from "ai";
+import { MockLanguageModelV4 } from "ai/test";
 import { DEFAULT_EFFORT, MODES } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { fill } from "../apps/server/src/chat/prompts/build";
@@ -15,6 +17,7 @@ import { pluginTools } from "../apps/server/src/plugins/tools";
 import { skillTools } from "../apps/server/src/skills/tools";
 import server from "../apps/server/src/index";
 import {
+  answered,
   answerWith,
   chatTurn,
   noInput,
@@ -356,4 +359,28 @@ test("the skill list is always in the closing rules, and a chat with no skills h
     withSkills.seen[0]?.prompt.at(-1)?.content,
     without.seen[0]?.prompt.map((message) => message.role),
   ]).toEqual([`${HEADER}${INDEX}`, ["system", "user"]]);
+});
+
+test.each([
+  ["completes", { stream: simulateReadableStream({ chunks: answered }) }, true],
+  ["fails", undefined, false],
+])("an answer that %s tells the daily cap so", async (_, stream, completed) => {
+  const finished: boolean[] = [];
+  const model = new MockLanguageModelV4({
+    doStream: async () => {
+      if (!stream)
+        throw new APICallError({
+          message: "overloaded",
+          url: "x",
+          requestBodyValues: {},
+          statusCode: 529,
+          isRetryable: false,
+        });
+      return stream;
+    },
+  });
+
+  await chatTurn({ models: { model, small: model }, release: (done) => finished.push(done) });
+
+  expect(finished).toEqual([completed]);
 });

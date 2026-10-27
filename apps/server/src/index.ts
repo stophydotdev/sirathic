@@ -8,7 +8,7 @@ import { startScheduler } from "./automations/runner";
 import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
-import { countNoorAnswer, pickModels } from "./models/pick";
+import { pickModels, reserveNoorAnswer } from "./models/pick";
 import { chatResponse } from "./chat/response";
 import { reviewEvery } from "./bots/review";
 import { chatTitle } from "./chat/title";
@@ -77,7 +77,7 @@ app.post("/api/chat", (c) =>
     });
     const owner = input.incognito ? undefined : by;
     const { modelName, models } = pickModels(user, input.model);
-    await countNoorAnswer(by, modelName);
+    const release = await reserveNoorAnswer(by, modelName);
     const asked = validated.findLast((message) => message.role === "user");
     track(
       {
@@ -157,6 +157,7 @@ app.post("/api/chat", (c) =>
       mode: input.mode,
       abortSignal: answer.signal,
       settled: answer.settled,
+      release,
       bot:
         owner === undefined
           ? undefined
