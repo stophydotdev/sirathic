@@ -48,8 +48,6 @@ const SEARCH_LIMITS = {
   news: 8,
 } satisfies Record<SearchSource, number>;
 
-const ISLAMIC_SOURCES: ReadonlySet<SearchSource> = new Set(["quran", "hadith", "fatwa", "fiqh"]);
-const WEB_BESIDE_ISLAMIC = 4;
 const LISTED_PER_QUERY = 20;
 const WEB_LISTED_PER_QUERY = 10;
 
@@ -304,13 +302,7 @@ const unlessAllFail = async <Value>(runs: Promise<Value>[]) => {
   return done;
 };
 
-const searchWeb = async (
-  cite: Cite,
-  queries: string[],
-  sites: string[],
-  time: Time,
-  limit: number,
-) => {
+const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: Time) => {
   const found = await unlessAllFail(
     queries.map((query) => webSearch({ query, sites, time, limit: WEB_LISTED_PER_QUERY })),
   );
@@ -323,11 +315,11 @@ const searchWeb = async (
     title: hit.title,
     description: hit.description ?? "",
   }));
-  const read = hits.slice(0, limit);
+  const read = hits.slice(0, SEARCH_LIMITS.web);
   const pages = citedPages(cite, read, await readPages(read, queries));
   return {
     ...pages,
-    sources: [...pages.sources, ...hits.slice(limit).map(hitSource)],
+    sources: [...pages.sources, ...hits.slice(SEARCH_LIMITS.web).map(hitSource)],
     text: pagesBlock("web", pages.results),
   };
 };
@@ -368,15 +360,12 @@ export const searchAll = async (cite: Cite, input: z.infer<typeof searchInput>) 
   }
   const { time } = input;
   const chosen = [...new Set(input.sources)];
-  const webPages = chosen.some((name) => ISLAMIC_SOURCES.has(name))
-    ? WEB_BESIDE_ISLAMIC
-    : SEARCH_LIMITS.web;
   const runs = {
     quran: () => searchQuran(cite, queries),
     hadith: () => searchHadith(cite, [...queries, ...arabic]),
     fatwa: () => searchFatwa(cite, queries, arabic, sites),
     fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, sites),
-    web: () => searchWeb(cite, queries, sites, time, webPages),
+    web: () => searchWeb(cite, queries, sites, time),
     news: () => searchNews(cite, queries, time),
   } satisfies Record<SearchSource, () => Promise<Searched>>;
   const done = await Promise.all(
