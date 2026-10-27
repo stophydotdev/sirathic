@@ -1,7 +1,7 @@
 import { env } from "@sirathic/env/server";
 import { z } from "zod";
 
-const JEV = "typesafeai-jev-1-14-0";
+export const JEV = "typesafeai-jev-1-14-0";
 const WAIT_MS = 5_000;
 
 type State = string | Readonly<Record<string, string | Readonly<Record<string, string>>>>;
@@ -29,5 +29,5 @@ export const yesChances = async (state: State, questions: Readonly<Record<string
   });
   if (!res.ok) throw new Error(`Jev answered ${res.status}`);
   const { answers } = decided.parse(await res.json());
-  return (name: string) => answers[name]?.noul ?? 0;
+  return (name: string) => answers[name]?.noul;
 };
