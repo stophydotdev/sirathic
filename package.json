@@ -26,14 +26,14 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@oxlint/plugins": "1.88.0",
-    "@types/bun": "^1.4.3",
+    "@oxlint/plugins": "1.89.0",
+    "@types/bun": "^1.4.4",
     "@types/node": "^20",
-    "ai": "7.0.140",
+    "ai": "7.0.154",
     "drizzle-kit": "^0.31.11",
-    "knip": "6.41.0",
+    "knip": "6.43.0",
     "oxfmt": "0.63.0",
-    "oxlint": "1.88.0",
+    "oxlint": "1.89.0",
     "tsc-rs": "0.7.0",
     "typescript": "7"
   }
