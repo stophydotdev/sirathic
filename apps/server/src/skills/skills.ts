@@ -2,6 +2,7 @@ import { db } from "@sirathic/db";
 import { skills } from "@sirathic/db/schema";
 import { and, count, eq, sql } from "drizzle-orm";
 import { z } from "zod";
+import { ownerCache } from "../account/ownerCache";
 import { StatusError } from "../http";
 import { mentionedSkills } from "./mentions";
 
@@ -13,12 +14,16 @@ export const skillInput = z.object({
   instructions: z.string().trim().min(1).max(4000),
 });
 
-export const listSkills = (owner: string) =>
+const loadSkills = async (owner: string) =>
   db
     .select({ id: skills.id, name: skills.name, instructions: skills.instructions })
     .from(skills)
     .where(eq(skills.owner, owner))
     .orderBy(sql`lower(${skills.name})`);
+
+const cache = ownerCache<Awaited<ReturnType<typeof loadSkills>>>();
+
+export const listSkills = (owner: string) => cache.get(owner, () => loadSkills(owner));
 
 export async function saveSkill(owner: string, input: z.output<typeof skillInput>) {
   const { id, name, instructions } = input;
@@ -35,6 +40,7 @@ export async function saveSkill(owner: string, input: z.output<typeof skillInput
       .set({ name, instructions })
       .where(and(eq(skills.id, id), eq(skills.owner, owner)))
       .returning({ id: skills.id });
+    cache.clear(owner);
     if (!updated) throw new StatusError(404, "no such skill");
     return updated;
   }
@@ -49,11 +55,13 @@ export async function saveSkill(owner: string, input: z.output<typeof skillInput
     .insert(skills)
     .values({ owner, name, instructions })
     .returning({ id: skills.id });
+  cache.clear(owner);
   return created;
 }
 
 export async function removeSkill(owner: string, id: string) {
   await db.delete(skills).where(and(eq(skills.id, id), eq(skills.owner, owner)));
+  cache.clear(owner);
 }
 
 export function skillRules(all: readonly { name: string; instructions: string }[], text: string) {

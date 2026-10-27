@@ -41,8 +41,24 @@ let botProfile = [
   { text: "Now on 114", source: "said", at: 2 },
 ];
 
+let botName = "Ilm Coach";
+let skillRows = [["s1", "Tafsir", "Explain verses"]];
+const reads: string[] = [];
+
 const fakeDb = drizzle(
   async (sql, params) => {
+    if (sql.startsWith("select")) reads.push(sql.split(" from ").at(-1)?.split(" ")[0] ?? sql);
+    if (sql.startsWith('select "project_id" from "chat_sessions"')) return { rows: [[botId]] };
+    if (sql.startsWith('select "id", "name", "icon"')) {
+      return { rows: [Object.assign(Array(23).fill(null), { 0: botId, 1: botName })] };
+    }
+    if (sql.startsWith('select "id", "name", "instructions" from "skills"')) {
+      return { rows: skillRows };
+    }
+    if (sql.startsWith('delete from "skills"')) {
+      skillRows = [];
+      return { rows: [] };
+    }
     if (sql.startsWith('select "values" from "settings"')) {
       return { rows: [[{ memory: accountFacts }]] };
     }
@@ -57,6 +73,7 @@ const fakeDb = drizzle(
     }
     if (sql.startsWith('update "projects" set "name"')) {
       updates.push(sql);
+      botName = String(params[0]);
       return { rows: [Object.assign(Array(23).fill(null), { 1: params[0] })] };
     }
     if (sql.startsWith('select "id" from "projects"')) return { rows: [[botId]] };
@@ -332,4 +349,33 @@ test("deleting a bot deletes its chat history first, and a bot in an answer show
   const answer = startAnswer("user-a", botId);
   expect((await listSessions("user-a")).map((row) => row.working)).toEqual([true]);
   answer.settled();
+});
+
+test("setup data reads stay in memory for a minute and a save shows at once", async () => {
+  const { getSettings, updateSettings } = await import("../apps/server/src/account/settings");
+  const { listSkills, removeSkill } = await import("../apps/server/src/skills/skills");
+  const { projectOfChat, updateProject } = await import("../apps/server/src/projects/projects");
+  reads.length = 0;
+
+  accountFacts = ["Is 28"];
+  expect((await getSettings("user-b")).memory).toEqual(["Is 28"]);
+  accountFacts = ["changed behind the cache"];
+  expect((await getSettings("user-b")).memory).toEqual(["Is 28"]);
+  await updateSettings("user-b", { memory: ["Is 29"] });
+  expect((await getSettings("user-b")).memory).toEqual(["Is 29"]);
+  expect((await getSettings("user-c")).memory).toEqual(["Is 29"]);
+
+  expect((await listSkills("user-b")).map((skill) => skill.name)).toEqual(["Tafsir"]);
+  await listSkills("user-b");
+  await removeSkill("user-b", "s1");
+  expect(await listSkills("user-b")).toEqual([]);
+
+  expect((await projectOfChat("chat-1", "user-b", undefined))?.name).toBe("Ilm Coach");
+  await updateProject(botId, "user-b", { name: "Fiqh Coach" });
+  expect((await projectOfChat("chat-1", "user-b", undefined))?.name).toBe("Fiqh Coach");
+  expect((await projectOfChat("chat-1", "user-c", undefined))?.name).toBe("Fiqh Coach");
+
+  expect(reads.filter((table) => table === '"settings"')).toHaveLength(3);
+  expect(reads.filter((table) => table === '"skills"')).toHaveLength(2);
+  expect(reads.filter((table) => table === '"projects"')).toHaveLength(3);
 });

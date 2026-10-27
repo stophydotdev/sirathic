@@ -4,6 +4,7 @@ import { type AnyColumn, and, count, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { PROFILE_LIMIT, profileEntry } from "../bots/profile";
 import { pluginId } from "../plugins/catalog";
+import { ownerCache } from "../account/ownerCache";
 import { StatusError } from "../http";
 import {
   BOT_COLORS,
@@ -85,6 +86,20 @@ const owned = (id: string, by: string) => and(eq(projects.id, id), eq(projects.o
 
 const ownedBots = (by: string) => and(eq(projects.owner, by), eq(projects.kind, "bot"));
 
+const loadBot = async (id: string, by: string) => {
+  const [project] = await db
+    .select(projectColumns)
+    .from(projects)
+    .where(and(owned(id, by), eq(projects.kind, "bot")));
+  return project;
+};
+
+const bots = ownerCache<Awaited<ReturnType<typeof loadBot>>>();
+
+const botKey = (id: string, by: string) => `${by}:${id}`;
+
+export const forgetBot = (id: string, by: string) => bots.clear(botKey(id, by));
+
 export const listProjects = (by: string) =>
   db
     .select(projectColumns)
@@ -120,6 +135,7 @@ export async function saveOpener(
     .set(opener)
     .where(owned(id, by))
     .returning(projectColumns);
+  forgetBot(id, by);
   if (!row) throw new StatusError(404, "no such project");
   return row;
 }
@@ -134,6 +150,7 @@ export async function updateProject(
     .set(update)
     .where(owned(id, by))
     .returning(projectColumns);
+  forgetBot(id, by);
   if (!row) throw new StatusError(404, "no such project");
   return row;
 }
@@ -144,6 +161,7 @@ export async function removeProject(id: string, by: string) {
     .delete(chatSessions)
     .where(and(eq(chatSessions.projectId, id), eq(chatSessions.owner, by)));
   await db.delete(projects).where(owned(id, by));
+  forgetBot(id, by);
   return { deleted: true };
 }
 
@@ -159,11 +177,7 @@ export async function projectOfChat(chatId: string, by: string, requested: strin
     .where(and(eq(chatSessions.id, chatId), eq(chatSessions.owner, by)));
   const id = existing ? existing.projectId : requested;
   if (!id) return undefined;
-  const [project] = await db
-    .select(projectColumns)
-    .from(projects)
-    .where(and(owned(id, by), eq(projects.kind, "bot")));
-  return project;
+  return bots.get(botKey(id, by), () => loadBot(id, by));
 }
 
 export async function profileOf(id: string, by: string) {
@@ -178,4 +192,5 @@ export async function setProfile(id: string, by: string, facts: readonly string[
     (text) => known.get(text) ?? { text, source: "said" as const, at: Date.now() },
   );
   await db.update(projects).set({ profile }).where(owned(id, by));
+  forgetBot(id, by);
 }

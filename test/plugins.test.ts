@@ -9,10 +9,17 @@ import { matchingPlugins } from "../apps/server/src/plugins/tools";
 import { mentionedSkills } from "../apps/server/src/skills/mentions";
 
 const connectionRow = ["exa", null, null, await seal("{}")];
+const selects: string[] = [];
 mock.module("@sirathic/db", () => ({
-  db: drizzle(async () => ({ rows: [connectionRow] }), { casing: "snake_case" }),
+  db: drizzle(
+    async (sql) => {
+      if (sql.startsWith("select")) selects.push(sql);
+      return { rows: [connectionRow] };
+    },
+    { casing: "snake_case" },
+  ),
 }));
-const { connectedTools, FORGET, withUpdate } =
+const { connectedTools, disconnect, FORGET, withUpdate } =
   await import("../apps/server/src/plugins/connections");
 
 test.each([
@@ -218,4 +225,14 @@ test("a plugin's tools come from the saved list and its server is reached only w
   expect(serverSaw).toContain("tools/call");
   expect(serverSaw).not.toContain("tools/list");
   await second.close();
+});
+
+test("a plugin's connection row is read once for a minute and again after a disconnect", async () => {
+  selects.length = 0;
+  await (await connectedTools("owner-2")).close();
+  await (await connectedTools("owner-2")).close();
+  expect(selects).toHaveLength(1);
+  await disconnect("owner-2", "exa");
+  await (await connectedTools("owner-2")).close();
+  expect(selects).toHaveLength(2);
 });

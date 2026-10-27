@@ -3,6 +3,7 @@ import { botNotes, chatSessions, projects } from "@sirathic/db/schema";
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { StatusError } from "../http";
+import { forgetBot } from "../projects/projects";
 import { containsLink, NOTE_MAX } from "../shared/projects";
 
 export const REASON_MAX = 100;
@@ -45,8 +46,8 @@ const noteColumns = {
 
 export const noteId = z.uuid();
 
-export const setNote = (botId: string, by: string, note: string, reason: string) =>
-  db.transaction(async (tx) => {
+export async function setNote(botId: string, by: string, note: string, reason: string) {
+  const added = await db.transaction(async (tx) => {
     const [bot] = await tx
       .select({ note: projects.note })
       .from(projects)
@@ -60,6 +61,9 @@ export const setNote = (botId: string, by: string, note: string, reason: string)
       .returning(noteColumns);
     return entry;
   });
+  forgetBot(botId, by);
+  return added;
+}
 
 export async function undoNote(botId: string, by: string, id: string) {
   const [latest, before] = await db

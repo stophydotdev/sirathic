@@ -13,6 +13,7 @@ import type { Tool } from "ai";
 import { and, count, eq } from "drizzle-orm";
 import { z } from "zod";
 import { reasonOf, StatusError } from "../http";
+import { ownerCache } from "../account/ownerCache";
 import { seal, unseal } from "../account/vault";
 import { publicUrl } from "./address";
 import {
@@ -113,6 +114,8 @@ export const customInput = z.object({
   url: z.string().trim().max(500),
 });
 
+const connectedRows = ownerCache<Awaited<ReturnType<typeof loadConnectedRows>>>();
+
 const owned = (owner: string, connector: string) =>
   and(eq(connections.owner, owner), eq(connections.connector, connector));
 
@@ -155,6 +158,7 @@ async function store(owner: string, connector: string, secrets: Secrets, connect
     .insert(connections)
     .values({ owner, connector, ...row })
     .onConflictDoUpdate({ target: [connections.owner, connections.connector], set: row });
+  connectedRows.clear(owner);
 }
 
 function providerFor(owner: string, connector: string, server: Server, stored: Secrets) {
@@ -312,6 +316,7 @@ export async function finishConnect(owner: string, query: Record<string, string>
 export async function disconnect(owner: string, connector: string) {
   listedTools.delete(`${owner}:${connector}`);
   await db.delete(connections).where(owned(owner, connector));
+  connectedRows.clear(owner);
 }
 
 const toolArguments = z.record(z.string(), z.unknown());
@@ -379,8 +384,8 @@ async function connectorTools(owner: string, row: ConnectionRow) {
   };
 }
 
-export async function connectedTools(owner: string, only?: readonly string[] | null) {
-  const rows = await db
+const loadConnectedRows = async (owner: string) =>
+  db
     .select({
       connector: connections.connector,
       name: connections.name,
@@ -388,7 +393,11 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
       secrets: connections.secrets,
     })
     .from(connections)
-    .where(and(eq(connections.owner, owner), eq(connections.connected, true)))
+    .where(and(eq(connections.owner, owner), eq(connections.connected, true)));
+
+export async function connectedTools(owner: string, only?: readonly string[] | null) {
+  const rows = await connectedRows
+    .get(owner, () => loadConnectedRows(owner))
     .catch((err: Error) => {
       console.error(`connectors not loaded: ${reasonOf(err)}`);
       return [];
