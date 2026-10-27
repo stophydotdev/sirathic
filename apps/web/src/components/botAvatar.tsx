@@ -28,11 +28,12 @@ export const tintOf = (color: string | null) =>
 
 const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const IDLE_CYCLE: readonly BlobState[] = ["egg", "hexagon", "ready"];
+
 const useBlob = (seed: string, state: BlobState) => {
   const motion = useMemo(() => blobMotion(bodyOf(seed), "ready"), [seed]);
   const [frame, setFrame] = useState<BlobFrame>(() => motion.frame(0));
   const raf = useRef(0);
-  const pokes = useRef(0);
 
   const play = useCallback(
     (next: BlobState) => {
@@ -55,16 +56,18 @@ const useBlob = (seed: string, state: BlobState) => {
 
   useEffect(() => {
     play(state);
-    return () => cancelAnimationFrame(raf.current);
+    let step = 0;
+    const timer =
+      state === "ready" && !reduced()
+        ? setInterval(() => play(IDLE_CYCLE[step++ % IDLE_CYCLE.length]), 1000)
+        : undefined;
+    return () => {
+      clearInterval(timer);
+      cancelAnimationFrame(raf.current);
+    };
   }, [play, state]);
 
-  const poke = () => {
-    if (state !== "ready" || reduced()) return;
-    pokes.current += 1;
-    play(pokes.current % 2 === 1 ? "egg" : "hexagon");
-  };
-
-  return { frame, poke, rest: () => play(state) };
+  return frame;
 };
 
 const BOX = 160;
@@ -76,7 +79,7 @@ export const BotAvatar: FC<{
   className?: string;
 }> = ({ color, seed, state = "ready", className }) => {
   const id = useId().replace(/\W/g, "");
-  const { frame, poke, rest } = useBlob(seed, state);
+  const frame = useBlob(seed, state);
   const area = { x: -BOX, y: -BOX, width: BOX * 2, height: BOX * 2 };
   const dots = frame.dots.map((dot, index) =>
     dot.d ? (
@@ -116,8 +119,6 @@ export const BotAvatar: FC<{
       aria-hidden
       viewBox="-115 -115 230 230"
       overflow="visible"
-      onPointerEnter={poke}
-      onPointerLeave={rest}
       className={cn("size-6 shrink-0", tintOf(color).text, className)}
     >
       <defs>
