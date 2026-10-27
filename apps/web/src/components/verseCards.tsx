@@ -2,6 +2,7 @@
 
 import { type Translate, useT } from "@/components/i18n";
 import { api } from "@/lib/trpc";
+import { currentToolName } from "@sirathic/server/messages";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
@@ -62,8 +63,8 @@ const quranCard = (
 
 function cardsFrom(part: Part, t: Translate): Card[] {
   if (part.type !== "tool-call") return [];
-  switch (part.toolName) {
-    case "search":
+  switch (currentToolName(part.toolName)) {
+    case "search_web":
       return (searchOutput.safeParse(part.result).data?.results.quran ?? []).flatMap((hit) => {
         const [, surah, ayah] = ayahOf.exec(hit.ref) ?? [];
         return surah && ayah

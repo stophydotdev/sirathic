@@ -25,9 +25,9 @@ export type Remember = (input: z.output<typeof told>) => Promise<z.output<typeof
 
 export function sirathicTools(cite: Cite, remember?: Remember) {
   return {
-    search: tool({
+    search_web: tool({
       description:
-        "Search the Quran, hadith, fatwas, fiqh books, the web or news in one call. Returns numbered results to cite.",
+        "Search Islamic sources (the Quran, hadith, fatwas and fiqh books), the web or news in one call. Use it for Islamic questions and for anything else on the web. Returns numbered results to cite.",
       inputSchema: searchInput,
       execute: (input) => searchAll(cite, input),
       toModelOutput: ({ output }) => ({
@@ -53,7 +53,7 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       inputSchema: duaSearchInput,
       execute: duaSearch,
     }),
-    webFetch: tool({
+    fetch_url: tool({
       description: "Read a web page's full text.",
       inputSchema: webFetchInput,
       execute: async (input) => {

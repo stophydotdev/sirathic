@@ -89,6 +89,21 @@ test("calls in a row to one plugin become one step with readable titles and thei
   ]);
 });
 
+const stepsFor = (names: [string, string]) =>
+  researchOf(
+    [
+      { ...call(names[0], {}, "done"), args: { queries: ["wudu"] } },
+      call(names[1], { url: "https://islamqa.info/en/answers/1" }, "done"),
+    ],
+    false,
+  );
+
+test("a chat saved with the old search and fetch tool names shows the same steps as a new one", () => {
+  const old = stepsFor(["search", "webFetch"]);
+  expect(old).toEqual(stepsFor(["search_web", "fetch_url"]));
+  expect(old.map((step) => step.kind)).toEqual(["searches", "browse"]);
+});
+
 test("the 12 hour clock maps midnight and noon to 12 and back to 24 hour time", () => {
   const cases = [
     { hour: 0, twelve: 12, pm: false },

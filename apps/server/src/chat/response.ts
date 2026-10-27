@@ -44,7 +44,7 @@ const RULES_HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 
 const FIRST_STEP = {
-  search: { type: "tool", toolName: "search" },
+  search: { type: "tool", toolName: "search_web" },
   anyTool: "required",
 } as const;
 

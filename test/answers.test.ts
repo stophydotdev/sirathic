@@ -188,7 +188,7 @@ const answerWith = (
 ) =>
   answerAgent({
     model,
-    tools: { search: noInput, remember: noInput },
+    tools: { search_web: noInput, remember: noInput },
     mode: "quick",
     settings: DEFAULT_SETTINGS,
     rules: "RULES",
@@ -233,11 +233,11 @@ test("a bot's quick reply asks for low effort and nothing else changes", async (
 const toolNames = (call: ModelCall | undefined) => call?.tools?.map((entry) => entry.name);
 
 test("every step of a turn sends the same tools, and the first one forces search", async () => {
-  const { model, seen } = scriptedModel(["search", "remember"]);
+  const { model, seen } = scriptedModel(["search_web", "remember"]);
   await answerWith(model, { firstStep: "search" }).generate({ prompt: "hi" });
-  expect(seen.map(toolNames)).toEqual(Array.from({ length: 3 }, () => ["search", "remember"]));
+  expect(seen.map(toolNames)).toEqual(Array.from({ length: 3 }, () => ["search_web", "remember"]));
   expect(seen.map((call) => call.toolChoice)).toEqual([
-    { type: "tool", toolName: "search" },
+    { type: "tool", toolName: "search_web" },
     { type: "auto" },
     { type: "auto" },
   ]);
@@ -246,7 +246,7 @@ test("every step of a turn sends the same tools, and the first one forces search
 test("a chat that cannot remember never lists the remember tool", async () => {
   const { model, seen } = scriptedModel([]);
   await answerWith(model, { canRemember: false }).generate({ prompt: "hi" });
-  expect(toolNames(seen[0])).toEqual(["search"]);
+  expect(toolNames(seen[0])).toEqual(["search_web"]);
 });
 
 const createDescribedFor = (timezone: string) =>
@@ -305,7 +305,7 @@ const chatTurn = async (overrides: Partial<Parameters<typeof chatResponse>[0]>) 
 };
 
 test.each<[string, ModelCall["toolChoice"]]>([
-  ["sirathic-noor-1-flash", { type: "tool", toolName: "search" }],
+  ["sirathic-noor-1-flash", { type: "tool", toolName: "search_web" }],
   ["gpt-6-luna", { type: "required" }],
 ])("a first question on %s forces %p first", async (modelName, toolChoice) => {
   const [first] = await chatTurn({
@@ -336,7 +336,7 @@ const HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 
 test("the rules close every step, the forced first search included, and say who sent them", async () => {
-  const { model, seen } = scriptedModel(["search"]);
+  const { model, seen } = scriptedModel(["search_web"]);
   await answerWith(model, { firstStep: "search" }).generate({ prompt: "hi" });
   expect(seen.map((call) => call.prompt.at(-1))).toMatchObject(
     Array.from({ length: 2 }, () => ({ role: "system", content: `${HEADER}RULES` })),
@@ -353,7 +353,7 @@ const checkingModel = (saysFirst: string) => {
         content: first
           ? [
               ...(saysFirst ? [{ type: "text" as const, text: saysFirst }] : []),
-              { type: "tool-call" as const, toolCallId: "c1", toolName: "search", input: "{}" },
+              { type: "tool-call" as const, toolCallId: "c1", toolName: "search_web", input: "{}" },
             ]
           : [{ type: "text" as const, text: "Done." }],
         finishReason: { unified: first ? "tool-calls" : "stop", raw: undefined },
@@ -397,9 +397,9 @@ const addedInLastMessage = (call: ModelCall | undefined) =>
 const routineTools = { createAutomation: noInput, listAutomations: noInput };
 
 test("the study and routine tools are deferred, and a turn adds only the ones it needs", async () => {
-  const { model, seen } = scriptedModel(["search"]);
+  const { model, seen } = scriptedModel(["search_web"]);
   await answerWith(model, {
-    tools: { search: noInput, ...routineTools, dueStudyItems: noInput },
+    tools: { search_web: noInput, ...routineTools, dueStudyItems: noInput },
     added: ["createAutomation", "listAutomations", "addStudyItem"],
   }).generate({ prompt: "hi" });
   expect(
@@ -408,7 +408,7 @@ test("the study and routine tools are deferred, and a turn adds only the ones it
       entry.type === "function" ? entry.providerOptions?.anthropic?.deferLoading : undefined,
     ]),
   ).toEqual([
-    ["search", undefined],
+    ["search_web", undefined],
     ["createAutomation", true],
     ["listAutomations", true],
     ["dueStudyItems", true],
@@ -423,7 +423,7 @@ test("the study and routine tools are deferred, and a turn adds only the ones it
 
 test("a turn that needs no deferred tool adds none", async () => {
   const { model, seen } = scriptedModel([]);
-  await answerWith(model, { tools: { search: noInput, ...routineTools } }).generate({
+  await answerWith(model, { tools: { search_web: noInput, ...routineTools } }).generate({
     prompt: "hi",
   });
   expect(addedInLastMessage(seen[0])).toBeUndefined();

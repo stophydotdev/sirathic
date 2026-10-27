@@ -26,6 +26,7 @@ import {
   device,
   effort,
   mode,
+  sentMessage,
 } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./http";
 import { answerOptions, sideOptions } from "./models/subscription";
@@ -40,7 +41,7 @@ const IDLE_TIMEOUT_SECONDS = 255;
 
 const chatBody = z.object({
   id: sessionId,
-  messages: z.array(z.looseObject({ role: z.enum(["user", "assistant"]) })).min(1),
+  messages: z.array(sentMessage).min(1),
   model: z.string().min(1).optional(),
   mode: mode.default("quick"),
   effort: effort.optional().catch(undefined),

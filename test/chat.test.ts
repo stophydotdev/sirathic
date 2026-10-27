@@ -8,7 +8,7 @@ import {
   unvowel,
 } from "../apps/server/src/chat/compact";
 import { convertToModelMessages } from "ai";
-import type { ChatMessage } from "../apps/server/src/shared/messages";
+import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
 import { shortenEarlierResults } from "../apps/server/src/chat/history";
 import { keepAlive } from "../apps/server/src/chat/keepAlive";
 import { clientOf } from "../apps/server/src/chat/client";
@@ -200,7 +200,7 @@ test("a long text keeps the pieces that carry the query words, in page order", (
 });
 
 const searched = (toolCallId: string): ChatMessage["parts"][number] => ({
-  type: "tool-search",
+  type: "tool-search_web",
   toolCallId,
   state: "output-available",
   input: { queries: ["what breaks wudu"], sources: ["fatwa"] },
@@ -393,4 +393,22 @@ test("chat search finds earlier messages with dates, best match first, and skips
     snippet: "Today's hadith: actions are judged by intentions.",
   });
   expect(findInChat(chat, "zakat")).toEqual([]);
+});
+
+test("a saved chat sent back with the old tool names reaches the agent under the new ones", () => {
+  const sent = sentMessage.parse({
+    role: "assistant",
+    parts: [
+      { type: "tool-search", toolCallId: "c1", state: "input-available", input: {} },
+      { type: "tool-webFetch", toolCallId: "c2", state: "input-available", input: {} },
+      { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
+      { type: "text", text: "Done." },
+    ],
+  });
+  expect(sent.parts.map((part) => part.type)).toEqual([
+    "tool-search_web",
+    "tool-fetch_url",
+    "tool-quranGet",
+    "text",
+  ]);
 });

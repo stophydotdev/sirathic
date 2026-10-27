@@ -59,6 +59,26 @@ export const chatData = {
   title: z.object({ title: z.string() }),
 };
 
+const RENAMED_TOOLS = new Map([
+  ["search", "search_web"],
+  ["webFetch", "fetch_url"],
+]);
+
+export const currentToolName = (name: string) => RENAMED_TOOLS.get(name) ?? name;
+
+export const sentMessage = z.looseObject({
+  role: z.enum(["user", "assistant"]),
+  parts: z.array(
+    z.looseObject({
+      type: z
+        .string()
+        .transform((type) =>
+          type.startsWith("tool-") ? `tool-${currentToolName(type.slice(5))}` : type,
+        ),
+    }),
+  ),
+});
+
 export type ChatTools = InferUITools<ReturnType<typeof sirathicTools>>;
 
 export type ChatMessage = UIMessage<

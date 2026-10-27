@@ -1,5 +1,6 @@
 import type { ThreadMessage } from "@assistant-ui/react";
 import { CONNECTOR_IDS } from "@sirathic/server/catalog";
+import { currentToolName } from "@sirathic/server/messages";
 import { z } from "zod";
 
 type Part = ThreadMessage["content"][number];
@@ -163,7 +164,8 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
       return;
     }
     if (part.type !== "tool-call") return;
-    if (part.toolName === "search" || LEGACY_SEARCHES.has(part.toolName)) {
+    const toolName = currentToolName(part.toolName);
+    if (toolName === "search_web" || LEGACY_SEARCHES.has(toolName)) {
       const { queries = [], arabic = [] } = searchArgs.safeParse(part.args).data ?? {};
       const legacy = queryArgs.safeParse(part.args).data?.query;
       const asked = legacy ? [legacy] : [...queries, ...arabic];
@@ -180,7 +182,7 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
       }
       return;
     }
-    if (part.toolName === "webFetch") {
+    if (toolName === "fetch_url") {
       const url = urlArgs.safeParse(part.args).data?.url;
       if (url) steps.push({ kind: "browse", url, failed: part.isError === true });
       return;
