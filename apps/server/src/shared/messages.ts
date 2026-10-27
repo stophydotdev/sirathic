@@ -66,17 +66,34 @@ const RENAMED_TOOLS = new Map([
 
 export const currentToolName = (name: string) => RENAMED_TOOLS.get(name) ?? name;
 
+const oldPageRead = z.looseObject({
+  type: z.literal("tool-webFetch"),
+  input: z.looseObject({ url: z.string() }).optional(),
+  output: z.looseObject({ sources: z.array(z.unknown()) }).optional(),
+});
+
+const sentPart = z.union([
+  oldPageRead.transform(({ input, output, ...part }) => {
+    const { sources, ...page } = output ?? { sources: [] };
+    return {
+      ...part,
+      type: "tool-fetch_url",
+      ...(input && { input: { urls: [input.url] } }),
+      ...(output && { output: { pages: [page], sources } }),
+    };
+  }),
+  z.looseObject({
+    type: z
+      .string()
+      .transform((type) =>
+        type.startsWith("tool-") ? `tool-${currentToolName(type.slice(5))}` : type,
+      ),
+  }),
+]);
+
 export const sentMessage = z.looseObject({
   role: z.enum(["user", "assistant"]),
-  parts: z.array(
-    z.looseObject({
-      type: z
-        .string()
-        .transform((type) =>
-          type.startsWith("tool-") ? `tool-${currentToolName(type.slice(5))}` : type,
-        ),
-    }),
-  ),
+  parts: z.array(sentPart),
 });
 
 export type ChatTools = InferUITools<ReturnType<typeof sirathicTools>>;

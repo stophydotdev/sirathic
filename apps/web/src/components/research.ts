@@ -32,7 +32,13 @@ const quranArgs = z.object({
   from: z.number().optional(),
   to: z.number().optional(),
 });
-const urlArgs = z.object({ url: z.string() });
+const fetchArgs = z.union([
+  z.object({ urls: z.array(z.string()) }),
+  z.object({ url: z.string() }).transform(({ url }) => ({ urls: [url] })),
+]);
+const fetchResult = z.object({
+  pages: z.array(z.object({ url: z.string(), error: z.string().optional() })),
+});
 const queryArgs = z.object({ query: z.string() });
 const LEGACY_SEARCHES = new Set([
   "quranSearch",
@@ -183,8 +189,15 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
       return;
     }
     if (toolName === "fetch_url") {
-      const url = urlArgs.safeParse(part.args).data?.url;
-      if (url) steps.push({ kind: "browse", url, failed: part.isError === true });
+      const { urls = [] } = fetchArgs.safeParse(part.args).data ?? {};
+      const unread = new Set(
+        (fetchResult.safeParse(part.result).data?.pages ?? []).flatMap((entry) =>
+          entry.error ? [entry.url] : [],
+        ),
+      );
+      for (const url of urls) {
+        steps.push({ kind: "browse", url, failed: part.isError === true || unread.has(url) });
+      }
       return;
     }
     if (part.toolName === "quranGet") {

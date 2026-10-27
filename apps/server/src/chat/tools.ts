@@ -2,7 +2,7 @@ import { duaSearch, duaSearchInput } from "@sirathic/core/tools/duaSearch";
 import { hadithsByIds } from "@sirathic/core/tools/hadithGet";
 import { hadithIdOfSunnahUrl } from "@sirathic/core/tools/hadithLinks";
 import { quranGet, quranGetInput } from "@sirathic/core/tools/quranGet";
-import { webFetch, webFetchInput } from "@sirathic/core/tools/webFetch";
+import { webFetch } from "@sirathic/core/tools/webFetch";
 import { tool } from "ai";
 import { z } from "zod";
 import { MEMORY_LIMIT, memoryFact, type settingsUpdate, told } from "../shared/settings";
@@ -23,11 +23,51 @@ const PAGE_CHARS = 8_000;
 
 export type Remember = (input: z.output<typeof told>) => Promise<z.output<typeof settingsUpdate>>;
 
+const fetchUrlInput = z.object({
+  urls: z
+    .array(z.url())
+    .min(1)
+    .max(3)
+    .describe("1 to 3 URLs to read. Prioritize the pages most important to the answer."),
+});
+
+const readPage = async (cite: Cite, url: string) => {
+  if (textBlocked(url)) {
+    const id = hadithIdOfSunnahUrl(url);
+    const [hadith] = id === null ? [] : await hadithsByIds([id]);
+    const source = hadith && hadithSource(hadith);
+    if (!hadith || !source) {
+      throw new Error("sunnah.com pages can't be read. Search for the hadith instead.");
+    }
+    const markdown = [hadithTitle(hadith), hadith.english, hadith.textAr, gradeOf(hadith)]
+      .filter((part) => part)
+      .join("\n\n");
+    return {
+      page: { url: source.url, title: source.title, markdown, citation: cite(source.url) },
+      source,
+    };
+  }
+  const page = await webFetch({ url });
+  const markdown = pageText(page.markdown, PAGE_CHARS);
+  return {
+    page: { url: page.url, title: page.title, markdown, citation: cite(page.url) },
+    source: { url: page.url, title: page.title, snippet: plainText(markdown) },
+  };
+};
+
 export function sirathicTools(cite: Cite, remember?: Remember) {
   return {
     search_web: tool({
-      description:
-        "Search Islamic sources (the Quran, hadith, fatwas and fiqh books), the web or news in one call. Use it for Islamic questions and for anything else on the web. Returns numbered results to cite.",
+      description: `Searches the Quran, hadith, fatwas, fiqh books, the web or news in one call. Returns results with a title, link and snippet, numbered for citing. Works best with short keyword queries, not questions or multi-step reasoning.
+
+Writing queries:
+- Use the conversation to resolve short follow-ups.
+- Put each entity, school or aspect in its own query. Preferred: ["Hanafi witr ruling", "Shafi'i witr ruling"]. Not: ["Hanafi vs Shafi'i witr"].
+- Drop filler words.
+- Never add what the user, the conversation or earlier results did not give: years, hadith numbers, a madhab, scholar names, editions.
+- For time-sensitive topics, write "latest" or "upcoming" instead of guessing a date.
+
+If results are incomplete, conflicting, only snippets, one-sided, or miss a part of the question, search again with a focused query or read the page with fetch_url before answering.`,
       inputSchema: searchInput,
       execute: (input) => searchAll(cite, input),
       toModelOutput: ({ output }) => ({
@@ -54,51 +94,32 @@ export function sirathicTools(cite: Cite, remember?: Remember) {
       execute: duaSearch,
     }),
     fetch_url: tool({
-      description: "Read a web page's full text.",
-      inputSchema: webFetchInput,
-      execute: async (input) => {
-        if (textBlocked(input.url)) {
-          const id = hadithIdOfSunnahUrl(input.url);
-          const [hadith] = id === null ? [] : await hadithsByIds([id]);
-          const source = hadith && hadithSource(hadith);
-          if (!hadith || !source) {
-            throw new Error("sunnah.com pages can't be read. Search for the hadith instead.");
-          }
-          const markdown = [hadithTitle(hadith), hadith.english, hadith.textAr, gradeOf(hadith)]
-            .filter((part) => part)
-            .join("\n\n");
-          return {
-            url: source.url,
-            title: source.title,
-            markdown,
-            citation: cite(source.url),
-            sources: [source],
-          };
+      description:
+        "Reads the title and full text of 1 to 3 pages at once, fetched in parallel. Use it when page-level detail matters, such as exact wording, a specific source, a list or table, or the text of a policy or fatwa, and when snippets are thin or conflicting. Pick the pages most important to the answer and batch them in one call.",
+      inputSchema: fetchUrlInput,
+      execute: async ({ urls }) => {
+        const read = await Promise.all(
+          urls.map((url) =>
+            readPage(cite, url).then(
+              (page) => ({ kind: "read", ...page }) as const,
+              (err: Error) => ({ kind: "failed", url, error: err.message }) as const,
+            ),
+          ),
+        );
+        const pages = read.flatMap((entry) => (entry.kind === "read" ? [entry] : []));
+        if (pages.length === 0) {
+          throw new Error(
+            read.map((entry) => (entry.kind === "failed" ? entry.error : "")).join("\n"),
+          );
         }
-        const page = await webFetch(input);
-        const markdown = pageText(page.markdown, PAGE_CHARS);
-        const found = {
-          url: page.url,
-          title: page.title,
-          snippet: plainText(markdown),
-        };
         return {
-          url: page.url,
-          title: page.title,
-          markdown,
-          citation: cite(page.url),
-          sources: [found],
+          pages: read.map((entry) =>
+            entry.kind === "read" ? entry.page : { url: entry.url, error: entry.error },
+          ),
+          sources: pages.map((entry) => entry.source),
         };
       },
-      toModelOutput: ({ output }) => ({
-        type: "json",
-        value: {
-          url: output.url,
-          title: output.title,
-          markdown: output.markdown,
-          citation: output.citation,
-        },
-      }),
+      toModelOutput: ({ output }) => ({ type: "json", value: { pages: output.pages } }),
     }),
     remember: tool({
       description:

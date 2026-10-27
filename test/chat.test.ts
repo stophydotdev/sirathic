@@ -400,15 +400,43 @@ test("a saved chat sent back with the old tool names reaches the agent under the
     role: "assistant",
     parts: [
       { type: "tool-search", toolCallId: "c1", state: "input-available", input: {} },
-      { type: "tool-webFetch", toolCallId: "c2", state: "input-available", input: {} },
+      {
+        type: "tool-webFetch",
+        toolCallId: "c2",
+        state: "output-available",
+        input: { url: "https://islamqa.info/en/answers/1" },
+        output: {
+          url: "https://islamqa.info/en/answers/1",
+          title: "Wudu",
+          markdown: "Text",
+          citation: 1,
+          sources: [{ url: "https://islamqa.info/en/answers/1", title: "Wudu", snippet: "" }],
+        },
+      },
       { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
       { type: "text", text: "Done." },
     ],
   });
-  expect(sent.parts.map((part) => part.type)).toEqual([
-    "tool-search_web",
-    "tool-fetch_url",
-    "tool-quranGet",
-    "text",
+  expect(sent.parts).toEqual([
+    { type: "tool-search_web", toolCallId: "c1", state: "input-available", input: {} },
+    {
+      type: "tool-fetch_url",
+      toolCallId: "c2",
+      state: "output-available",
+      input: { urls: ["https://islamqa.info/en/answers/1"] },
+      output: {
+        pages: [
+          {
+            url: "https://islamqa.info/en/answers/1",
+            title: "Wudu",
+            markdown: "Text",
+            citation: 1,
+          },
+        ],
+        sources: [{ url: "https://islamqa.info/en/answers/1", title: "Wudu", snippet: "" }],
+      },
+    },
+    { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
+    { type: "text", text: "Done." },
   ]);
 });

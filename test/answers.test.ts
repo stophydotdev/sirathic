@@ -315,6 +315,28 @@ test.each<[string, ModelCall["toolChoice"]]>([
   expect(first?.toolChoice).toEqual(toolChoice);
 });
 
+test.each<[string, ModelCall["toolChoice"]]>([
+  ["sirathic-noor-1-flash", { type: "tool", toolName: "fetch_url" }],
+  ["gpt-6-luna", { type: "required" }],
+])(
+  "a message with a link on %s forces %p first, even in a later turn",
+  async (modelName, toolChoice) => {
+    const [first] = await chatTurn({
+      modelName,
+      messages: [
+        { id: "1", role: "user", parts: [{ type: "text", text: "what is zakat" }] },
+        { id: "2", role: "assistant", parts: [{ type: "text", text: "A pillar." }] },
+        {
+          id: "3",
+          role: "user",
+          parts: [{ type: "text", text: "what does https://islamqa.info/en/answers/1 say" }],
+        },
+      ],
+    });
+    expect(first?.toolChoice).toEqual(toolChoice);
+  },
+);
+
 test("the time zone reaches the model in the rules, only when routine tools are added", async () => {
   const automate = { owner: "o", timezone: "Asia/Tokyo" };
   const cases = [

@@ -39,12 +39,14 @@ import { answerRules, searchPrompt } from "./prompts/shared";
 import { type Remember, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
+const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
 const RULES_HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 
 const FIRST_STEP = {
   search: { type: "tool", toolName: "search_web" },
+  fetch: { type: "tool", toolName: "fetch_url" },
   anyTool: "required",
 } as const;
 
@@ -235,7 +237,15 @@ export function chatResponse({
       message.parts.map((part) => (part.type === "text" ? part.text : "")).join(" "),
     )
     .join(" ");
-  const mustSearch = messages.filter((message) => message.role === "user").length === 1;
+  const asked = messages.findLast((message) => message.role === "user");
+  const pastedUrl = asked?.parts.some(
+    (part) => part.type === "text" && URL_IN_TEXT.test(part.text),
+  );
+  const forced = pastedUrl
+    ? "fetch"
+    : messages.filter((message) => message.role === "user").length === 1
+      ? "search"
+      : undefined;
   const messageId = createIdGenerator({ prefix: "msg", size: 16 });
   const stream = createUIMessageStream<ChatMessage>({
     originalMessages: messages,
@@ -302,7 +312,7 @@ export function chatResponse({
           (searchable ? SEARCH_OUR_CHAT : "") +
           groupRules(needed, offered) +
           skills,
-        firstStep: mustSearch && !inBot ? (noorModel(modelName) ? "search" : "anyTool") : undefined,
+        firstStep: forced && !inBot ? (noorModel(modelName) ? forced : "anyTool") : undefined,
         canRemember: remember !== undefined,
         persona: who,
         added,

@@ -53,7 +53,9 @@ export const searchInput = z.object({
     .array(z.string().trim().min(2).max(120))
     .min(1)
     .max(3)
-    .describe("1 to 3 keyword queries, each from a different angle"),
+    .describe(
+      'Short keyword queries, at most 3, covering what matters most to the answer instead of every detail. Preferred: ["zakat on gold jewelry"]. Not: ["Do I have to pay zakat on my gold jewelry?"]',
+    ),
   arabic: z
     .array(z.string().trim().min(2).max(120))
     .max(2)
@@ -65,7 +67,7 @@ export const searchInput = z.object({
     .array(z.enum(SEARCH_SOURCES))
     .min(1)
     .describe(
-      "quran, hadith, fatwa and fiqh for Islamic questions; web or news for everything else",
+      "quran for verses and their tafsir, hadith for hadith and their grades, fatwa for rulings from scholars and fatwa sites, fiqh for the classical books (use it with arabic queries when the schools may differ), web for history, comparisons and everything outside Islamic questions, news for current events",
     ),
 });
 

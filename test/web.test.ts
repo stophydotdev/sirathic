@@ -167,3 +167,25 @@ test("only the first six unpinned bots show and the rest are counted", () => {
   ]);
   expect(more).toBe(2);
 });
+
+test("a fetch of several pages gives one step per page and marks the ones that failed", () => {
+  const steps = researchOf(
+    [
+      {
+        type: "tool-call",
+        toolCallId: "f1",
+        toolName: "fetch_url",
+        args: { urls: ["https://a.org/1", "https://b.org/2"] },
+        argsText: "",
+        result: {
+          pages: [{ url: "https://a.org/1" }, { url: "https://b.org/2", error: "no text" }],
+        },
+      },
+    ],
+    false,
+  );
+  expect(steps).toEqual([
+    { kind: "browse", url: "https://a.org/1", failed: false },
+    { kind: "browse", url: "https://b.org/2", failed: true },
+  ]);
+});
