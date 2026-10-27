@@ -1,68 +1,62 @@
+import { EmbedHttpError, embedMany } from "@sirathic/core/search/embedding";
 import { db } from "@sirathic/db";
-import { EMBEDDING } from "@sirathic/db/schema";
-import { env } from "@sirathic/env/server";
 import { count, isNull, sql } from "drizzle-orm";
-import { z } from "zod";
 import { EMBEDDED } from "./embeddings";
 
-const BATCH_SIZE = 256;
-const PARALLEL_REQUESTS = 4;
-const PAGE_SIZE = BATCH_SIZE * PARALLEL_REQUESTS * 4;
+const BATCH_TEXTS = 100;
+const BATCH_CHARS = 60_000;
+const PARALLEL_REQUESTS = 24;
+const PAGE_SIZE = BATCH_TEXTS * PARALLEL_REQUESTS * 4;
+const REQUEST_TIMEOUT_MS = 120_000;
+const MAX_ATTEMPTS = 8;
+const RETRY_WAIT_MS = 2_000;
 
-const embeddingResponse = z.object({
-  data: z.array(z.object({ index: z.number(), embedding: z.array(z.number()) })),
-  usage: z.object({ total_tokens: z.number() }),
-});
+const only = process.argv.slice(2);
+const entries = Object.entries(EMBEDDED)
+  .filter(([name]) => only.length === 0 || only.includes(name))
+  .map(([, entry]) => entry);
 
 type Row = { id: string; text: string };
 type Embedded = (typeof EMBEDDED)[keyof typeof EMBEDDED];
 
-const apiKey = env.OPENAI_API_KEY;
-
-const RATE_LIMIT_WAIT_MS = 2_000;
-
 const embed = async (
+  entry: Embedded,
   texts: string[],
-  dimensions: number,
-): Promise<{ vectors: number[][]; cost: number }> => {
-  const response = await fetch("https://api.openai.com/v1/embeddings", {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ model: EMBEDDING.model, input: texts, dimensions }),
-  });
-  if (!response.ok) {
-    const body = await response.text();
-    if (response.status === 429 && !body.includes("insufficient_quota")) {
-      await Bun.sleep(RATE_LIMIT_WAIT_MS);
-      return embed(texts, dimensions);
-    }
-    throw new Error(`OpenAI answered HTTP ${response.status}: ${body}`);
+  attempt = 1,
+): ReturnType<typeof embedMany> => {
+  try {
+    return await embedMany(entry.embedder, texts, {
+      dimensions: entry.dimensions,
+      timeoutMs: REQUEST_TIMEOUT_MS,
+    });
+  } catch (error) {
+    const transient =
+      error instanceof EmbedHttpError
+        ? (error.status === 429 && !error.message.includes("insufficient_quota")) ||
+          error.status >= 500
+        : error instanceof DOMException || error instanceof TypeError;
+    if (attempt >= MAX_ATTEMPTS || !transient) throw error;
+    const asked = error instanceof EmbedHttpError ? error.retryAfterMs : 0;
+    await Bun.sleep(Math.max(asked, RETRY_WAIT_MS * attempt));
+    return embed(entry, texts, attempt + 1);
   }
-  const { data, usage } = embeddingResponse.parse(await response.json());
-  const byIndex = new Map(data.map((item) => [item.index, item.embedding]));
-  const vectors = texts.map((_, index) => {
-    const vector = byIndex.get(index);
-    if (vector?.length !== dimensions)
-      throw new Error(`No ${dimensions}-dimension embedding for input ${index}`);
-    return vector;
-  });
-  return {
-    vectors,
-    cost: (usage.total_tokens / 1_000_000) * EMBEDDING.dollarsPerMillionTokens,
-  };
 };
 
 const chunks = (rows: Row[]) =>
-  Array.from({ length: Math.ceil(rows.length / BATCH_SIZE) }, (_, index) =>
-    rows.slice(index * BATCH_SIZE, (index + 1) * BATCH_SIZE),
-  );
+  rows.reduce<Row[][]>((batches, row) => {
+    const last = batches.at(-1);
+    const chars = last?.reduce((sum, item) => sum + item.text.length, 0) ?? 0;
+    if (last && last.length < BATCH_TEXTS && chars + row.text.length <= BATCH_CHARS) {
+      last.push(row);
+    } else {
+      batches.push([row]);
+    }
+    return batches;
+  }, []);
 
 const missing = await Promise.all(
-  Object.values(EMBEDDED).map(async ({ table }) => {
-    const [found] = await db.select({ rows: count() }).from(table).where(isNull(table.embedding));
+  entries.map(async ({ table, embedding }) => {
+    const [found] = await db.select({ rows: count() }).from(table).where(isNull(embedding));
     return found?.rows ?? 0;
   }),
 );
@@ -70,29 +64,29 @@ const total = missing.reduce((sum, rows) => sum + rows, 0);
 let embedded = 0;
 let spent = 0;
 
-const store = async ({ table, dimensions }: Embedded, rows: Row[]) => {
-  const { vectors, cost } = await embed(
+const store = async (entry: Embedded, rows: Row[]) => {
+  const { vectors, tokens } = await embed(
+    entry,
     rows.map((row) => row.text),
-    dimensions,
   );
   const values = sql.join(
     rows.map((row, index) => sql`(${row.id}, ${JSON.stringify(vectors[index])})`),
     sql`, `,
   );
   await db.execute(
-    sql`update ${table} set embedding = data.embedding::halfvec from (values ${values}) as data(id, embedding) where ${table.id} = data.id`,
+    sql`update ${entry.table} set ${sql.identifier(entry.embedding.name)} = data.embedding::halfvec from (values ${values}) as data(id, embedding) where ${entry.table.id} = data.id`,
   );
   embedded += rows.length;
-  spent += cost;
+  spent += (tokens / 1_000_000) * entry.embedder.dollarsPerMillionTokens;
   console.log(`${embedded}/${total} embedded, $${spent.toFixed(4)} spent`);
 };
 
 const embedTable = async (entry: Embedded): Promise<void> => {
-  const { table, text } = entry;
+  const { table, embedding, text } = entry;
   const rows = await db
     .select({ id: table.id, text })
     .from(table)
-    .where(isNull(table.embedding))
+    .where(isNull(embedding))
     .limit(PAGE_SIZE);
   if (rows.length === 0) return;
   const queue = chunks(rows);
@@ -106,8 +100,8 @@ const embedTable = async (entry: Embedded): Promise<void> => {
   return embedTable(entry);
 };
 
-console.log(`${total} rows need embeddings with ${EMBEDDING.model}`);
-await Object.values(EMBEDDED).reduce(
+console.log(`${total} rows need embeddings`);
+await entries.reduce(
   (previous: Promise<void>, entry) => previous.then(() => embedTable(entry)),
   Promise.resolve(),
 );

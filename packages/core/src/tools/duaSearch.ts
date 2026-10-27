@@ -3,6 +3,7 @@ import { duas, hadiths } from "@sirathic/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { hybridIds } from "../search/hybridSearch";
+import { SEARCHABLE } from "../search/searchable";
 import { citableId } from "./hadithGet";
 
 const DUA_WORDS =
@@ -22,7 +23,7 @@ export const duaSearchInput = z.object({
 export const duaSearch = async (input: z.input<typeof duaSearchInput>) => {
   const { query, limit } = duaSearchInput.parse(input);
   const topic = query.replaceAll(DUA_WORDS, " ").trim() || query;
-  const ids = await hybridIds(duas, topic, limit);
+  const ids = await hybridIds(SEARCHABLE.duas, topic, limit);
   if (ids.length === 0) return { duas: [] };
   const rows = await db
     .select({

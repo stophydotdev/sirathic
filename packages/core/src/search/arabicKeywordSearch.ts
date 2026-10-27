@@ -3,7 +3,7 @@ import { type SQL, sql } from "drizzle-orm";
 import { z } from "zod";
 import { withoutStopwords } from "./arabic";
 import { embedQuery } from "./embedding";
-import type { Searchable } from "./hybridSearch";
+import type { Searchable } from "./searchable";
 import { countWhere, tableSize } from "./wordCounts";
 
 const COMMON_SHARE = 0.08;
@@ -34,7 +34,7 @@ export const arabicForms = (word: string) => {
 };
 
 export const arabicKeywordIds = async (
-  table: Searchable,
+  { table, embedding, embedder }: Searchable,
   query: string,
   limit: number,
   { filter = sql`true` }: { filter?: SQL } = {},
@@ -74,11 +74,11 @@ export const arabicKeywordIds = async (
     ),
     sql` + `,
   );
-  const vector = JSON.stringify(await embedQuery(query));
+  const vector = JSON.stringify(await embedQuery(embedder, query));
   const rows = await db.execute(sql`
     select ${table.id} as id from ${table}
     where ${table.search} @@ to_tsquery('simple', ${required}) and ${filter}
-    order by ${score} desc, ${table.embedding} <=> ${vector}::halfvec
+    order by ${score} desc, ${embedding} <=> ${vector}::halfvec
     limit ${limit}
   `);
   return ranked.parse(rows).map((row) => row.id);

@@ -1,10 +1,10 @@
 import { db } from "@sirathic/db";
 import { type SQL, sql } from "drizzle-orm";
-import type { AnyPgColumn, PgTable } from "drizzle-orm/pg-core";
 import { z } from "zod";
 import { withoutStopwords } from "./arabic";
 import { arabicForms } from "./arabicKeywordSearch";
 import { embedQuery } from "./embedding";
+import type { Searchable } from "./searchable";
 import { countWhere, tableSize } from "./wordCounts";
 
 const POOL = 40;
@@ -15,18 +15,12 @@ const ARABIC_MARKS = /[ً-ٰٟـ]/gu;
 
 const ranked = z.array(z.object({ id: z.string() }));
 
-export type Searchable = PgTable & {
-  id: AnyPgColumn;
-  search: AnyPgColumn;
-  embedding: AnyPgColumn;
-};
-
 const wordQuery = (word: string) =>
   ARABIC.test(word)
     ? sql`to_tsquery('simple', ${arabicForms(word).join(" | ")})`
     : sql`plainto_tsquery('english', ${word})`;
 
-const rareWordScore = async (table: Searchable, query: string) => {
+const rareWordScore = async (table: Searchable["table"], query: string) => {
   const words = [
     ...new Set(
       withoutStopwords(query.replaceAll(ARABIC_MARKS, ""))
@@ -63,7 +57,7 @@ const rareWordScore = async (table: Searchable, query: string) => {
 };
 
 export const hybridIds = async (
-  table: Searchable,
+  { table, embedding, embedder }: Searchable,
   query: string,
   limit: number,
   {
@@ -83,10 +77,10 @@ export const hybridIds = async (
   const plain = query.replaceAll(ARABIC_MARKS, "");
   const words = dropStopwords ? withoutStopwords(plain) : plain;
   const [vector, rare] = await Promise.all([
-    embedQuery(query).then((embedding) => JSON.stringify(embedding)),
+    embedQuery(embedder, query).then((values) => JSON.stringify(values)),
     rareWords ? rareWordScore(table, query) : undefined,
   ]);
-  const distance = sql`${table.embedding} <=> ${vector}::halfvec`;
+  const distance = sql`${embedding} <=> ${vector}::halfvec`;
   const keyword = !rareWords
     ? sql`select ${table.id} as id, row_number() over (order by ts_rank_cd(${table.search}, tsq) desc) as rank
       from ${table}, query
@@ -113,10 +107,10 @@ export const hybridIds = async (
     ),
     keyword as (${keyword}),
     meaning as (
-      select ${table.id} as id, row_number() over (order by ${table.embedding} <=> ${vector}::halfvec) as rank, ${table.embedding} <=> ${vector}::halfvec as distance
+      select ${table.id} as id, row_number() over (order by ${embedding} <=> ${vector}::halfvec) as rank, ${embedding} <=> ${vector}::halfvec as distance
       from ${table}
       where ${filter}
-      order by ${table.embedding} <=> ${vector}::halfvec
+      order by ${embedding} <=> ${vector}::halfvec
       limit ${POOL}
     )
     select id

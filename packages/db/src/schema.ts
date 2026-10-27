@@ -23,9 +23,17 @@ const tsvector = customType<{ data: string }>({
 });
 
 export const EMBEDDING = {
+  kind: "openai",
   model: "text-embedding-3-small",
   dimensions: 1536,
   dollarsPerMillionTokens: 0.02,
+} as const;
+
+export const BGE_M3 = {
+  kind: "bgeM3",
+  model: "@cf/baai/bge-m3",
+  dimensions: 1024,
+  dollarsPerMillionTokens: 0.012,
 } as const;
 
 export const surahs = pgTable("surahs", {
@@ -132,10 +140,12 @@ export const fiqhPassages = pgTable(
     textArClean: text().notNull(),
     search: tsvector().generatedAlwaysAs(sql`to_tsvector('simple', text_ar_clean)`),
     embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
+    embeddingM3: halfvec("embedding_m3", { dimensions: BGE_M3.dimensions }),
   },
   (table) => [
     index("fiqh_passages_search").using("gin", table.search),
     index("fiqh_passages_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
+    index("fiqh_passages_embedding_m3").using("hnsw", table.embeddingM3.op("halfvec_cosine_ops")),
   ],
 );
 
@@ -192,10 +202,12 @@ export const fatwas = pgTable(
       sql`to_tsvector('english', title || ' ' || coalesce(question, '') || ' ' || answer)`,
     ),
     embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
+    embeddingM3: halfvec("embedding_m3", { dimensions: BGE_M3.dimensions }),
   },
   (table) => [
     index("fatwas_search").using("gin", table.search),
     index("fatwas_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
+    index("fatwas_embedding_m3").using("hnsw", table.embeddingM3.op("halfvec_cosine_ops")),
   ],
 );
 
