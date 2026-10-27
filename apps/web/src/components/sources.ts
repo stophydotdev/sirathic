@@ -29,11 +29,6 @@ export function sourcesOf(content: ThreadMessage["content"]) {
   return [...found.values()].toSorted((a, b) => rank(a.url) - rank(b.url));
 }
 
-export function citedSourcesOf(content: ThreadMessage["content"]) {
-  const cited = new Set(citedUrlsOf(content));
-  return sourcesOf(content).filter((entry) => cited.has(entry.url));
-}
-
 export function turnsOf(messages: readonly ThreadMessage[]) {
   return messages.flatMap((message, i) => {
     if (message.role !== "user") return [];
@@ -51,7 +46,6 @@ export function turnsOf(messages: readonly ThreadMessage[]) {
           ),
         ],
         sources: sourcesOf(content),
-        cited: citedSourcesOf(content),
       },
     ];
   });

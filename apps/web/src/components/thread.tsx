@@ -431,8 +431,8 @@ const SourcesPane: FC = () => {
   const t = useT();
   const [chosen, setChosen] = useState<boolean>();
   const open = chosen ?? true;
-  const turns = turnsOf(messages).filter((turn) => turn.cited.length > 0);
-  const urls = [...new Set(turns.flatMap((turn) => turn.cited.map((s) => s.url)))];
+  const turns = turnsOf(messages).filter((turn) => turn.sources.length > 0);
+  const urls = [...new Set(turns.flatMap((turn) => turn.sources.map((s) => s.url)))];
   if (urls.length === 0) return null;
 
   return (
@@ -463,7 +463,7 @@ const SourcesPane: FC = () => {
                   Results for “{turn.question}”
                 </p>
               )}
-              {turn.cited.map((source) => (
+              {turn.sources.map((source) => (
                 <a
                   key={source.url}
                   href={source.url}
