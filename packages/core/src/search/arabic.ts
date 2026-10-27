@@ -21,3 +21,24 @@ export const withoutStopwords = (query: string) =>
     .split(/\s+/u)
     .filter((word) => !ARABIC_STOPWORDS.has(arabicTokens(word).join(" ")))
     .join(" ");
+
+export const arabicForms = (word: string) => {
+  const bare = word.startsWith("ال") ? word.slice(2) : word;
+  const definite = `ال${bare}`;
+  return [
+    ...new Set([
+      bare,
+      definite,
+      `و${definite}`,
+      `ف${definite}`,
+      `ب${definite}`,
+      `ك${definite}`,
+      `لل${bare}`,
+      `ولل${bare}`,
+      `و${bare}`,
+      `ب${bare}`,
+      `ل${bare}`,
+      `ف${bare}`,
+    ]),
+  ].filter((form) => form.length > 1);
+};

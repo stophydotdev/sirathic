@@ -1,8 +1,7 @@
 import { db } from "@sirathic/db";
 import { type SQL, sql } from "drizzle-orm";
 import { z } from "zod";
-import { withoutStopwords } from "./arabic";
-import { arabicForms } from "./arabicKeywordSearch";
+import { arabicForms, withoutStopwords } from "./arabic";
 import { embedQuery } from "./embedding";
 import type { Searchable } from "./searchable";
 import { countWhere, tableSize } from "./wordCounts";
@@ -64,18 +63,15 @@ export const hybridIds = async (
     filter = sql`true`,
     anyWord = true,
     rareWords = false,
-    dropStopwords = false,
     maxDistance,
   }: {
     filter?: SQL;
     anyWord?: boolean;
     rareWords?: boolean;
-    dropStopwords?: boolean;
     maxDistance?: number;
   } = {},
 ) => {
   const plain = query.replaceAll(ARABIC_MARKS, "");
-  const words = dropStopwords ? withoutStopwords(plain) : plain;
   const [vector, rare] = await Promise.all([
     embedQuery(embedder, query).then((values) => JSON.stringify(values)),
     rareWords ? rareWordScore(table, query) : undefined,
@@ -98,7 +94,7 @@ export const hybridIds = async (
     await tx.execute(sql`set local hnsw.iterative_scan = relaxed_order`);
     return tx.execute(sql`
     with words as (
-      select plainto_tsquery('english', ${words}) as every_word
+      select plainto_tsquery('english', ${plain}) as every_word
     ),
     query as (
       select case when ${!anyWord} or exists (select 1 from ${table}, words where ${table.search} @@ every_word and ${filter})

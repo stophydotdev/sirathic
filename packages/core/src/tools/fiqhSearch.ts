@@ -1,7 +1,6 @@
 import { fiqhPassages } from "@sirathic/db/schema";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
-import { arabicKeywordIds } from "../search/arabicKeywordSearch";
 import { hybridIds } from "../search/hybridSearch";
 import { SEARCHABLE } from "../search/searchable";
 import { passagesByIds } from "./fiqhGet";
@@ -14,22 +13,9 @@ export const fiqhSearchInput = z.object({
   limit: z.number().int().min(1).max(20).default(6),
 });
 
-const ARABIC = /[؀-ۿ]/u;
-
 export const fiqhSearch = async (input: z.input<typeof fiqhSearchInput>) => {
   const { query, school, limit } = fiqhSearchInput.parse(input);
   const filter = school === undefined ? sql`true` : sql`${fiqhPassages.school} = ${school}`;
-  const keywordIds = ARABIC.test(query)
-    ? await arabicKeywordIds(SEARCHABLE.fiqhPassages, query, limit, { filter })
-    : [];
-  return {
-    passages: await passagesByIds(
-      keywordIds.length > 0
-        ? keywordIds
-        : await hybridIds(SEARCHABLE.fiqhPassages, query, limit, {
-            filter,
-            dropStopwords: true,
-          }),
-    ),
-  };
+  const ids = await hybridIds(SEARCHABLE.fiqhPassages, query, limit, { filter, rareWords: true });
+  return { passages: await passagesByIds(ids) };
 };
