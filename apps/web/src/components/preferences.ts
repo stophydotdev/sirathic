@@ -14,7 +14,6 @@ export const THEME_NAMES = {
 
 const saved = z.object({
   theme: z.enum(THEMES).catch("dark"),
-  autosuggest: z.boolean().catch(true),
   incognitoByDefault: z.boolean().catch(false),
 });
 
@@ -46,11 +45,8 @@ export const usePreferences = create<
   },
   change: (next) => {
     set(next);
-    const { theme, autosuggest, incognitoByDefault } = get();
-    globalThis.localStorage?.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ theme, autosuggest, incognitoByDefault }),
-    );
+    const { theme, incognitoByDefault } = get();
+    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify({ theme, incognitoByDefault }));
     applyTheme(theme);
   },
 }));

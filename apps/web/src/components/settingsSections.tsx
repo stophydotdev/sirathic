@@ -6,7 +6,7 @@ import { type Translate, useT } from "@/components/i18n";
 import { LOCALE_COOKIE, LOCALES, type Locale } from "@/components/locales";
 import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
 import { useSettings } from "@/components/settings";
-import { Choice, control, Group, Row, Segmented, Toggle } from "@/components/settingsControls";
+import { Choice, control, Group, Row, Segmented } from "@/components/settingsControls";
 import { useShortcuts } from "@/components/shortcuts";
 import { useSignIn } from "@/components/signIn";
 import { useKeyNames } from "@/lib/keys";
@@ -228,8 +228,6 @@ export const AppearanceSection: FC = () => {
 };
 
 export const BehaviorSection: FC = () => {
-  const autosuggest = usePreferences((s) => s.autosuggest);
-  const change = usePreferences((s) => s.change);
   const mode = useChatOptions((s) => s.mode);
   const setMode = useChatOptions((s) => s.setMode);
   const keys = useKeyNames();
@@ -247,18 +245,6 @@ export const BehaviorSection: FC = () => {
               label: MODE_DETAILS[value].name,
             }))}
             onChange={setMode}
-          />
-        </Row>
-      </Group>
-      <Group>
-        <Row
-          label={t("Suggestions while typing")}
-          hint={t("Show suggested questions under the box")}
-        >
-          <Toggle
-            label={t("Suggestions while typing")}
-            checked={autosuggest}
-            onChange={(on) => change({ autosuggest: on })}
           />
         </Row>
       </Group>

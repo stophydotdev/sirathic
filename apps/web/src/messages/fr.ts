@@ -34,7 +34,6 @@ export default {
   "Stop response (Esc)": "Arrêter la réponse (Échap)",
   Submit: "Envoyer",
   "Search only": "Recherche seule",
-  "Use this text": "Utiliser ce texte",
   "Add files or tools": "Ajouter des fichiers ou des outils",
   "Upload files or images": "Importer des fichiers ou des images",
   Attachment: "Pièce jointe",
@@ -84,9 +83,6 @@ export default {
   "How Sirathic looks on this device": "L'apparence de Sirathic sur cet appareil",
   Asking: "Questions",
   "Default mode": "Mode par défaut",
-  "Suggestions while typing": "Suggestions pendant la saisie",
-  "Show suggested questions under the box":
-    "Afficher des questions suggérées sous la zone de saisie",
   "Sign in to customize answers.": "Connectez-vous pour personnaliser les réponses.",
   "What should Sirathic call you?": "Comment Sirathic doit-il vous appeler ?",
   "Your name": "Votre nom",

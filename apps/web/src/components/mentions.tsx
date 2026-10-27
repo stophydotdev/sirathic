@@ -44,7 +44,6 @@ export type Choice = {
   hint?: string;
   icon: ReactNode;
   choose: () => void;
-  fill?: () => void;
 };
 
 type Plugin = Awaited<ReturnType<typeof api.connectors.list.query>>[number];
