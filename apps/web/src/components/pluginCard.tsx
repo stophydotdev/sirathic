@@ -16,10 +16,9 @@ const installed = z.discriminatedUnion("status", [
   z.object({ status: z.literal("redirect"), id: connectorId, name: z.string(), url: z.url() }),
 ]);
 
-const useConnectedOnReturn = (id: z.infer<typeof connectorId>, waiting: boolean) => {
+const useConnected = (id: z.infer<typeof connectorId>, waiting: boolean) => {
   const [connected, setConnected] = useState(false);
   useEffect(() => {
-    if (!waiting) return;
     const check = () =>
       void api.connectors.list
         .query()
@@ -27,6 +26,8 @@ const useConnectedOnReturn = (id: z.infer<typeof connectorId>, waiting: boolean)
           if (plugins.some((plugin) => plugin.id === id && plugin.connected)) setConnected(true);
         })
         .catch(() => undefined);
+    check();
+    if (!waiting) return;
     window.addEventListener("focus", check);
     return () => window.removeEventListener("focus", check);
   }, [id, waiting]);
@@ -45,7 +46,7 @@ const ConnectCard: FC<{ id: z.infer<typeof connectorId>; name: string; url: stri
 }) => {
   const t = useT();
   const [waiting, setWaiting] = useState(false);
-  const connected = useConnectedOnReturn(id, waiting);
+  const connected = useConnected(id, waiting);
   const connector = CONNECTORS[id];
   if (connected) return <Connected name={name} />;
   return (
@@ -68,8 +69,6 @@ const ConnectCard: FC<{ id: z.infer<typeof connectorId>; name: string; url: stri
         {!waiting && (
           <a
             href={url}
-            target="_blank"
-            rel="noreferrer"
             onClick={() => setWaiting(true)}
             className="border-foreground/15 hover:bg-foreground/8 flex h-8 shrink-0 items-center rounded-full border px-3 text-sm font-medium"
           >

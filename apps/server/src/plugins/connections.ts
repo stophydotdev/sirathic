@@ -77,6 +77,7 @@ const storedSecrets = z.object({
     .optional(),
   verifier: z.string().optional(),
   state: z.string().optional(),
+  returnTo: z.string().optional(),
 });
 
 type Secrets = z.infer<typeof storedSecrets>;
@@ -140,7 +141,7 @@ async function serverOf(owner: string, id: string): Promise<Server> {
 
 const unsealed = async (sealed: string) => storedSecrets.parse(JSON.parse(await unseal(sealed)));
 
-async function storedFor(owner: string, connector: string) {
+async function storedFor(owner: string, connector: string): Promise<Secrets> {
   const [row] = await db
     .select({ secrets: connections.secrets })
     .from(connections)
@@ -254,13 +255,16 @@ const opensWithoutSignIn = (url: string) =>
     () => false,
   );
 
-export async function connect(owner: string, id: string) {
+export async function connect(owner: string, id: string, returnTo = "/plugins") {
   const server = await serverOf(owner, id);
   if (server.open || (!isCatalog(id) && (await opensWithoutSignIn(server.url)))) {
     await store(owner, id, {}, true);
     return { status: "connected" as const };
   }
-  const { provider, authorizationUrl } = providerFor(owner, id, server, await storedFor(owner, id));
+  const { provider, authorizationUrl } = providerFor(owner, id, server, {
+    ...(await storedFor(owner, id)),
+    returnTo,
+  });
   const result = await auth(provider, {
     serverUrl: server.url,
     scope: server.googleScopes?.join(" "),
@@ -292,15 +296,17 @@ export async function addCustom(owner: string, input: z.output<typeof customInpu
 export async function finishConnect(owner: string, query: Record<string, string>) {
   const { state, code, iss } = callbackQuery.parse(query);
   const connector = pluginId.parse(state.split(".")[0]);
-  if (!code) return;
+  if (!code) return undefined;
   const server = await serverOf(owner, connector);
-  const { provider } = providerFor(owner, connector, server, await storedFor(owner, connector));
+  const stored = await storedFor(owner, connector);
+  const { provider } = providerFor(owner, connector, server, stored);
   await auth(provider, {
     serverUrl: server.url,
     authorizationCode: code,
     callbackState: state,
     callbackIssuer: iss,
   });
+  return stored.returnTo;
 }
 
 export async function disconnect(owner: string, connector: string) {

@@ -193,14 +193,19 @@ app.route("/api/files", uploadRoutes);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 
+const SAME_SITE_PATH = /^\/(?![/\\])/u;
+
 app.get("/api/connectors/callback", async (c) => {
   const user = await userFor(c.req.raw.headers);
-  if (user) {
-    await finishConnect(user.id, c.req.query()).catch((err: Error) => {
-      console.error(`connector not connected: ${reasonOf(err)}`);
-    });
-  }
-  return c.redirect(new URL("/plugins", env.SITE_URL).href);
+  const back = user
+    ? await finishConnect(user.id, c.req.query()).catch((err: Error) => {
+        console.error(`connector not connected: ${reasonOf(err)}`);
+        return undefined;
+      })
+    : undefined;
+  return c.redirect(
+    new URL(back && SAME_SITE_PATH.test(back) ? back : "/plugins", env.SITE_URL).href,
+  );
 });
 
 app.use(

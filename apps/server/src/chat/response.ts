@@ -259,7 +259,9 @@ export function chatResponse({
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
-        ...(owner !== undefined && !unattended && pluginTools(owner)),
+        ...(owner !== undefined &&
+          !unattended &&
+          pluginTools(owner, inBot ? `/bot/${inBot.id}` : `/c/${turn.sessionId}`)),
         ...(!unattended &&
           memoryTools(
             owner === undefined

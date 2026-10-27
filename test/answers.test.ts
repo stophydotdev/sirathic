@@ -179,7 +179,7 @@ test("every tool the prompt files name is a real tool", () => {
     ...Object.keys(botTools({ id: "b", owner: "o" })),
     "islamic_dates",
     ...Object.keys(skillTools("o")),
-    ...Object.keys(pluginTools("o")),
+    ...Object.keys(pluginTools("o", "/c/test")),
     ...Object.keys(memoryTools(undefined)),
     ...Object.keys(fileTools({ owner: "o", incognito: false, research: true, sandbox: undefined })),
     ...Object.keys(codeTools("sirathic-noor-1-flash")),
