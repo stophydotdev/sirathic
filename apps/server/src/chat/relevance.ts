@@ -1,11 +1,8 @@
-import { env } from "@sirathic/env/server";
-import { z } from "zod";
+import { yesChances } from "./jev";
 
-const JEV = "typesafeai-jev-1-14-0";
 const RELEVANT = 0.3;
-const WAIT_MS = 5_000;
-
-const decided = z.object({ answers: z.record(z.string(), z.object({ noul: z.number() })) });
+const NEEDS_SOURCES = 0.1;
+const SHORT_MESSAGE_CHARS = 50;
 
 export const relevant = async <Item>(
   search: string,
@@ -14,36 +11,19 @@ export const relevant = async <Item>(
 ) => {
   if (items.length === 0) return { kept: [...items], dropped: [] };
   try {
-    const res = await fetch(`${env.NEON_AI_GATEWAY_BASE_URL}/typesafe/v1/systemone`, {
-      method: "POST",
-      headers: {
-        authorization: `Bearer ${env.NEON_AI_GATEWAY_TOKEN}`,
-        "content-type": "application/json",
+    const chance = await yesChances(
+      {
+        search,
+        passages: Object.fromEntries(items.map((item, index) => [`p${index + 1}`, head(item)])),
       },
-      body: JSON.stringify({
-        model: JEV,
-        state: {
-          search,
-          passages: Object.fromEntries(items.map((item, index) => [`p${index + 1}`, head(item)])),
-        },
-        questions: Object.fromEntries(
-          items.map((_, index) => [
-            `p${index + 1}`,
-            {
-              type: "noul",
-              instructions: `Does passage p${index + 1} directly help answer the search?`,
-            },
-          ]),
-        ),
-      }),
-      signal: AbortSignal.timeout(WAIT_MS),
-    });
-    if (!res.ok) throw new Error(`Jev answered ${res.status}`);
-    const { answers } = decided.parse(await res.json());
-    const scored = items.map((item, index) => ({
-      item,
-      score: answers[`p${index + 1}`]?.noul ?? 0,
-    }));
+      Object.fromEntries(
+        items.map((_, index) => [
+          `p${index + 1}`,
+          `Does passage p${index + 1} directly help answer the search?`,
+        ]),
+      ),
+    );
+    const scored = items.map((item, index) => ({ item, score: chance(`p${index + 1}`) }));
     const best = Math.max(...scored.map(({ score }) => score));
     const keeps = ({ score }: { score: number }) => score >= RELEVANT || score === best;
     return {
@@ -53,5 +33,19 @@ export const relevant = async <Item>(
   } catch (err) {
     console.warn(`relevance check failed: ${err instanceof Error ? err.message : String(err)}`);
     return { kept: [...items], dropped: [] };
+  }
+};
+
+export const needsSources = async (message: string) => {
+  if (message.trim().length > SHORT_MESSAGE_CHARS) return true;
+  try {
+    const chance = await yesChances(message, {
+      sources:
+        "Does answering this message need looking something up in Islamic sources (Quran, hadith, fiqh books, fatwas)?",
+    });
+    return chance("sources") >= NEEDS_SOURCES;
+  } catch (err) {
+    console.warn(`search check failed: ${err instanceof Error ? err.message : String(err)}`);
+    return true;
   }
 };

@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { relevant } from "../apps/server/src/chat/relevance";
+import { needsSources, relevant } from "../apps/server/src/chat/relevance";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { publicUrl } from "@sirathic/core/web/url";
 import { withoutStopwords } from "@sirathic/core/search/arabic";
@@ -141,4 +141,28 @@ test("passages Jev scores below the floor are dropped in our order, and a failed
     { kept: ["a", "c"], dropped: ["b"] },
     { kept: ["a", "b", "c"], dropped: [] },
   ]);
+});
+
+test("a short first message skips the forced search only when Jev says it needs no sources", async () => {
+  const original = globalThis.fetch;
+  const asked: string[] = [];
+  const answering = (noul: number) =>
+    Object.assign(
+      async (_url: string | URL | Request, init?: RequestInit) => {
+        asked.push(String(init?.body));
+        return Response.json({ answers: { sources: { noul } } });
+      },
+      { preconnect: () => {} },
+    );
+  globalThis.fetch = answering(0.02);
+  const greeting = await needsSources("Salam, who made you?");
+  globalThis.fetch = answering(0.4);
+  const question = await needsSources("riba?");
+  const long = await needsSources("x".repeat(51));
+  globalThis.fetch = Object.assign(async () => new Response("busy", { status: 503 }), {
+    preconnect: () => {},
+  });
+  const failed = await needsSources("wudu?");
+  globalThis.fetch = original;
+  expect([greeting, question, long, failed, asked.length]).toEqual([false, true, true, true, 2]);
 });

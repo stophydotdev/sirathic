@@ -33,6 +33,7 @@ import { islamicDates } from "../bots/islamicDates";
 import { citations, withBareCitations } from "./citations";
 import { codeTools } from "./codeTools";
 import { needsApproval, writingTools } from "./confirm";
+import { needsSources } from "./relevance";
 import { fileTools, sandboxFiles } from "./fileTools";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -194,9 +195,9 @@ export function chatResponse({
   const shorten = shortenEarlierResults(messages, sources.numberOf);
   const tools = sirathicTools(sources.add);
   const asked = messages.findLast((message) => message.role === "user");
-  const pastedUrl = asked?.parts.some(
-    (part) => part.type === "text" && URL_IN_TEXT.test(part.text),
-  );
+  const askedText =
+    asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "";
+  const pastedUrl = URL_IN_TEXT.test(askedText);
   const last = messages.at(-1);
   const resumed = last?.role === "assistant" ? last : undefined;
   const forced = resumed
@@ -229,13 +230,17 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [preferred, connectors, inProject, ownSkills, inBot] = await Promise.all([
-        preferences,
-        Promise.race([connected, stopped]),
-        project,
-        userSkills,
-        bot,
-      ]);
+      const [preferred, connectors, inProject, ownSkills, inBot, sourcesNeeded] = await Promise.all(
+        [
+          preferences,
+          Promise.race([connected, stopped]),
+          project,
+          userSkills,
+          bot,
+          forced === "search" ? needsSources(askedText) : true,
+        ],
+      );
+      const opening = forced === "search" && !sourcesNeeded ? undefined : forced;
       const texts = inProject !== undefined;
       const settings = texts
         ? ({ ...preferred, answerLength: "short" } satisfies Settings)
@@ -315,11 +320,8 @@ export function chatResponse({
           remembers: owner !== undefined && !unattended,
           toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
         }),
-        mentioned: skillRules(
-          ownSkills,
-          asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "",
-        ),
-        firstStep: forced && !inBot ? (noorModel(modelName) ? forced : "anyTool") : undefined,
+        mentioned: skillRules(ownSkills, askedText),
+        firstStep: opening && !inBot ? (noorModel(modelName) ? opening : "anyTool") : undefined,
         inBot: inBot !== undefined,
         skills: builtIn,
         loaded,
