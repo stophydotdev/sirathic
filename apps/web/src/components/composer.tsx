@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { useAttachmentSrc } from "@/lib/hooks/useAttachmentSrc";
 import { type Mode, MODES, mode as modeSchema } from "@sirathic/server/messages";
+import { EffortPicker } from "@/components/effortPicker";
 import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
@@ -279,6 +280,7 @@ export const Composer: FC<{
 
           <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>
             <ModelPicker side={menuSide} />
+            {!bot && <EffortPicker side={menuSide} />}
             <Swap
               swapped={running}
               from={

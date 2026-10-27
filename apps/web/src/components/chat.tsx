@@ -99,6 +99,7 @@ const transportIn = (projectId: string | undefined) =>
         mode: useProjects.getState().bots?.some((bot) => bot.id === projectId)
           ? "quick"
           : (override?.mode ?? options.mode),
+        effort: options.effort,
         incognito: options.incognito,
         projectId,
         device: deviceOf(),
