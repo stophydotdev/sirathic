@@ -1,7 +1,7 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import { useAccount } from "@/components/account";
+import { useAccount, useCurrentModel } from "@/components/account";
 import { MakerIcon } from "@/components/makerIcon";
 import { ModelMenuContent } from "@/components/settings";
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdownMenu";
@@ -18,9 +18,7 @@ export const ModelPicker: FC<Pick<ComponentProps<typeof ModelMenuContent>, "side
 }) => {
   const unknown = useAccount((s) => s.status === undefined);
   const t = useT();
-  const models = useAccount((s) => s.models);
-  const chosen = useAccount((s) => s.chosen);
-  const current = models.find((m) => m.slug === chosen) ?? models[0];
+  const current = useCurrentModel();
 
   if (unknown) {
     return <div className="h-8" />;

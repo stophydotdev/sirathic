@@ -14,10 +14,10 @@ export const effort = z.enum(EFFORTS);
 
 export type Effort = z.infer<typeof effort>;
 
-export const DEFAULT_EFFORT = { quick: "low", research: "high" } as const satisfies Record<
-  Mode,
-  Effort
->;
+const NOOR_EFFORT = { quick: "low", research: "high" } as const satisfies Record<Mode, Effort>;
+
+export const defaultEffort = (turn: { mode: Mode; noor: boolean }): Effort =>
+  turn.noor ? NOOR_EFFORT[turn.mode] : "high";
 
 export const feedback = z.enum(["up", "down"]);
 

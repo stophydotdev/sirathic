@@ -61,6 +61,9 @@ export const useAccount = create<{
   ),
 );
 
+export const useCurrentModel = () =>
+  useAccount((s) => s.models.find((model) => model.slug === s.chosen) ?? s.models[0]);
+
 export function chosenModel() {
   const { chosen, models } = useAccount.getState();
   return models.some((model) => model.slug === chosen) ? chosen : undefined;

@@ -4,13 +4,14 @@ import type { MessageKey } from "@/messages/en";
 import { ArrowDown01Icon, DashboardSpeed02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  DEFAULT_EFFORT,
+  defaultEffort,
   EFFORTS,
   type Effort,
   effort as effortSchema,
 } from "@sirathic/server/messages";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import type { FC } from "react";
+import { useCurrentModel } from "@/components/account";
 import { useChatOptions } from "@/components/chatOptions";
 import { useT } from "@/components/i18n";
 import { composerControl } from "@/components/modelPicker";
@@ -33,7 +34,8 @@ export const EffortPicker: FC<{ side?: "top" | "bottom" }> = ({ side }) => {
   const mode = useChatOptions((s) => s.mode);
   const chosen = useChatOptions((s) => s.effort);
   const setEffort = useChatOptions((s) => s.setEffort);
-  const fallback = DEFAULT_EFFORT[mode];
+  const model = useCurrentModel();
+  const fallback = defaultEffort({ mode, noor: model?.maker !== "openai" });
   const current = chosen ?? fallback;
 
   return (

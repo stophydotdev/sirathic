@@ -8,6 +8,7 @@ import { startScheduler } from "./automations/runner";
 import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
+import { noorModel } from "./models/noor";
 import { countNoorAnswer, pickModels } from "./models/pick";
 import { chatResponse, neededTools } from "./chat/response";
 import { reviewEvery } from "./bots/review";
@@ -21,7 +22,7 @@ import { botIdentity, projectRules, settingsInProject } from "./projects/rules";
 import {
   appLanguage,
   type ChatMessage,
-  DEFAULT_EFFORT,
+  defaultEffort,
   device,
   effort,
   mode,
@@ -188,7 +189,9 @@ app.post("/api/chat", (c) =>
             }),
       options: {
         answer: answerOptions({
-          effort: input.effort ?? DEFAULT_EFFORT[input.mode],
+          effort:
+            input.effort ??
+            defaultEffort({ mode: input.mode, noor: noorModel(modelName) !== undefined }),
           sessionId: input.id,
         }),
       },

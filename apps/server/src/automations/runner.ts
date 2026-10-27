@@ -4,6 +4,7 @@ import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
 import { and, asc, eq, lte } from "drizzle-orm";
 import { toUser } from "../account/auth";
 import { answerOptions } from "../models/subscription";
+import { noorModel } from "../models/noor";
 import { countNoorAnswer, pickModels } from "../models/pick";
 import { BOT_HISTORY } from "../bots/tools";
 import { chatResponse } from "../chat/response";
@@ -14,12 +15,7 @@ import { botIdentity, projectRules, settingsInProject } from "../projects/rules"
 import { reasonOf, StatusError } from "../http";
 import { openSession, saveSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
-import {
-  type ChatMessage,
-  DEFAULT_EFFORT,
-  type Mode,
-  mode as modeSchema,
-} from "../shared/messages";
+import { type ChatMessage, defaultEffort, type Mode, mode as modeSchema } from "../shared/messages";
 import { DEFAULT_SETTINGS } from "../shared/settings";
 import { dueItems, progressOf } from "../bots/study";
 import type { User } from "../account/users";
@@ -166,7 +162,10 @@ async function answerPrompt(
     skillRules: Promise.resolve(""),
     persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
     options: {
-      answer: answerOptions({ effort: DEFAULT_EFFORT[runMode], sessionId }),
+      answer: answerOptions({
+        effort: defaultEffort({ mode: runMode, noor: noorModel(modelName) !== undefined }),
+        sessionId,
+      }),
     },
     title: undefined,
     save: async (messages) => {
