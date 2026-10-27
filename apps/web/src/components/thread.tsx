@@ -30,18 +30,19 @@ import {
   ThreadPrimitive,
   useAuiState,
 } from "@assistant-ui/react";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconArrowDown,
-  IconCheck,
-  IconChevronRight,
-  IconCopy,
-  IconPencil,
-  IconPhoto,
-  IconPlus,
-  IconShare,
-  IconSpy,
-  IconWorld,
-} from "@tabler/icons-react";
+  Add01Icon,
+  ArrowDown02Icon,
+  ArrowRight01Icon,
+  Copy01Icon,
+  Globe02Icon,
+  Image01Icon,
+  IncognitoIcon,
+  PencilEdit02Icon,
+  Share08Icon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
 import { type FC, memo, type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
 import { create } from "zustand";
@@ -51,13 +52,13 @@ const iconButton =
   "text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-40";
 
 const TABS = [
-  { id: "answer", name: "Answer", Icon: SirathicIcon },
-  { id: "links", name: "Links", Icon: IconWorld },
-  { id: "images", name: "Images", Icon: IconPhoto },
+  { id: "answer", name: "Answer", icon: <SirathicIcon className="size-4" /> },
+  { id: "links", name: "Links", icon: <HugeiconsIcon icon={Globe02Icon} className="size-4" /> },
+  { id: "images", name: "Images", icon: <HugeiconsIcon icon={Image01Icon} className="size-4" /> },
 ] as const satisfies readonly {
   id: string;
   name: MessageKey;
-  Icon: FC<{ className?: string }>;
+  icon: ReactNode;
 }[];
 
 type Tab = (typeof TABS)[number]["id"];
@@ -143,7 +144,7 @@ const TabBar: FC = () => {
       <TurnRow layout={bot ? "edge" : "aside"}>
         <div className="flex h-14 items-center gap-4">
           <a href="/" aria-label={t("New chat")} className={cn(iconButton, "lg:hidden")}>
-            <IconPlus className="size-4.5" />
+            <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
           </a>
           <BotTitle />
           {!bot && (
@@ -162,7 +163,7 @@ const TabBar: FC = () => {
                       : "text-muted-foreground hover:text-foreground border-transparent",
                   )}
                 >
-                  <item.Icon className="size-4" />
+                  {item.icon}
                   <span className="max-sm:sr-only">{t(item.name)}</span>
                 </button>
               ))}
@@ -217,7 +218,11 @@ const HeaderActions: FC = () => {
         title={t("Copy a link to this chat")}
         className="bg-foreground/10 hover:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
       >
-        {copied ? <IconCheck className="size-4" /> : <IconShare className="size-4" />}
+        {copied ? (
+          <HugeiconsIcon icon={Tick02Icon} className="size-4" />
+        ) : (
+          <HugeiconsIcon icon={Share08Icon} className="size-4" />
+        )}
         <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
       </button>
     </div>
@@ -244,7 +249,7 @@ const IncognitoToggle: FC = () => {
         incognito && "bg-super/15 text-super hover:text-super",
       )}
     >
-      <IconSpy className="size-4" />
+      <HugeiconsIcon icon={IncognitoIcon} className="size-4" />
       {incognito && t("Incognito")}
     </button>
   );
@@ -277,7 +282,7 @@ const ThreadBody: FC = () => {
         <TurnRow layout={bot ? "column" : "aside"}>
           <div className={cn("relative", bot && "-mx-3")}>
             <ThreadPrimitive.ScrollToBottom className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible">
-              <IconArrowDown className="size-4" />
+              <HugeiconsIcon icon={ArrowDown02Icon} className="size-4" />
             </ThreadPrimitive.ScrollToBottom>
             <Composer
               placeholder={bot ? t("Message {name}", { name: bot.name }) : t("Ask a follow-up")}
@@ -368,13 +373,13 @@ const Question: FC = () => {
               className={cn(iconButton, "size-6 pointer-coarse:size-9")}
               aria-label={t("Edit query")}
             >
-              <IconPencil className="size-3" />
+              <HugeiconsIcon icon={PencilEdit02Icon} className="size-3" />
             </ActionBarPrimitive.Edit>
             <ActionBarPrimitive.Copy
               className={cn(iconButton, "size-6 pointer-coarse:size-9")}
               aria-label={t("Copy query")}
             >
-              <IconCopy className="size-3" />
+              <HugeiconsIcon icon={Copy01Icon} className="size-3" />
             </ActionBarPrimitive.Copy>
           </ActionBarPrimitive.Root>
           <div className="flex max-w-[90%] min-w-0 flex-col items-end gap-2">
@@ -446,7 +451,8 @@ const SourcesPane: FC = () => {
         {!open && <FaviconStack urls={urls} />}
         <span className="text-muted-foreground flex items-center gap-1 text-sm tabular-nums">
           {!open && urls.length}
-          <IconChevronRight
+          <HugeiconsIcon
+            icon={ArrowRight01Icon}
             className={cn(
               "size-4 transition-transform rtl:rotate-180",
               open && "rotate-90 rtl:rotate-90",

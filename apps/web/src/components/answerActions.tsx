@@ -30,7 +30,13 @@ import {
 import type { Source } from "@sirathic/server/sources";
 import { api } from "@/lib/trpc";
 import { useAui, useAuiState } from "@assistant-ui/react";
-import { IconDots, IconDownload, IconGitFork, IconRefresh } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Download04Icon,
+  GitForkIcon,
+  MoreHorizontalIcon,
+  RefreshIcon,
+} from "@hugeicons/core-free-icons";
 import { type FC, type ReactNode, useState } from "react";
 import { z } from "zod";
 
@@ -121,7 +127,7 @@ export const AnswerExtras: FC<{
         onClick={() => void fork()}
         className={actionButton}
       >
-        <IconGitFork className="size-3.5" />
+        <HugeiconsIcon icon={GitForkIcon} className="size-3.5" />
       </button>
       {children}
       <MoreMenu sources={sources} />
@@ -166,16 +172,16 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={actionButton} aria-label={t("More actions")}>
-        <IconDots className="size-3.5" />
+        <HugeiconsIcon icon={MoreHorizontalIcon} className="size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem onSelect={save} disabled={messages.length === 0}>
-          <IconDownload className="size-4" />
+          <HugeiconsIcon icon={Download04Icon} className="size-4" />
           {t("Download")}
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <IconRefresh className="size-4" />
+            <HugeiconsIcon icon={RefreshIcon} className="size-4" />
             {t("Rewrite")}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="w-60">

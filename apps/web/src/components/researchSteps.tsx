@@ -15,21 +15,21 @@ import {
 import { type Translate, useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  IconBook,
-  IconBookmark,
-  IconBulb,
-  IconChevronRight,
-  IconFileDescription,
-  IconFileText,
-  IconHeart,
-  IconLoader2,
-  IconScale,
-  IconSearch,
-  IconSparkles,
-  IconWorld,
-  type TablerIcon,
-} from "@tabler/icons-react";
+  ArrowRight01Icon,
+  Book02Icon,
+  Bookmark02Icon,
+  BulbIcon,
+  FavouriteIcon,
+  File02Icon,
+  Globe02Icon,
+  JusticeScale01Icon,
+  Loading03Icon,
+  Note01Icon,
+  Search01Icon,
+  SparklesIcon,
+} from "@hugeicons/core-free-icons";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
 type Part = ThreadMessage["content"][number];
@@ -142,8 +142,9 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
         ))}
       {busy ? (
         <div className={cn("text-muted-foreground flex h-6 items-center gap-2 text-sm", appear)}>
-          <IconLoader2
-            stroke={1.5}
+          <HugeiconsIcon
+            icon={Loading03Icon}
+
             className="text-foreground/70 size-4 shrink-0 motion-safe:animate-spin"
           />
           <span className="shimmer tabular-nums">
@@ -164,7 +165,8 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
           </span>
           {summary && <span className="text-muted-foreground/70 truncate">· {summary}</span>}
           {!streaming && steps.length > 0 && (
-            <IconChevronRight
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
               className={cn("size-3.5 shrink-0 transition-transform", open && "rotate-90")}
             />
           )}
@@ -175,7 +177,7 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
 };
 
 const Row: FC<{
-  Icon: TablerIcon;
+  Icon: IconSvgElement;
   active?: boolean;
   code?: string;
   href?: string;
@@ -183,7 +185,7 @@ const Row: FC<{
   children: ReactNode;
 }> = ({ Icon, active, code, href, aside, children }) => (
   <div className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", appear)}>
-    <Icon stroke={1.5} className="text-foreground/70 size-4 shrink-0" />
+    <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
     <span className={cn(code ? "shrink-0" : "min-w-0 truncate", active && "shimmer")}>
       {children}
     </span>
@@ -246,18 +248,18 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
 };
 
 const READ_ICONS = {
-  quran: IconBook,
-  hadith: IconFileText,
-  fiqh: IconScale,
-  fatwa: IconFileDescription,
-  web: IconWorld,
-  news: IconWorld,
-} satisfies Record<SearchSource, TablerIcon>;
+  quran: Book02Icon,
+  hadith: File02Icon,
+  fiqh: JusticeScale01Icon,
+  fatwa: Note01Icon,
+  web: Globe02Icon,
+  news: Globe02Icon,
+} satisfies Record<SearchSource, IconSvgElement>;
 
 const TOOLS = new Map<
   string,
   {
-    Icon: TablerIcon;
+    Icon: IconSvgElement;
     label: (t: Translate, detail: string) => string;
     done: (t: Translate) => string;
   }
@@ -265,7 +267,7 @@ const TOOLS = new Map<
   [
     "duaSearch",
     {
-      Icon: IconHeart,
+      Icon: FavouriteIcon,
       label: (t, d) => t("Finding duas for {detail}", { detail: d }),
       done: (t) => t("Found duas"),
     },
@@ -273,7 +275,7 @@ const TOOLS = new Map<
   [
     "remember",
     {
-      Icon: IconBookmark,
+      Icon: Bookmark02Icon,
       label: (t) => t("Saved to your preferences"),
       done: (t) => t("Saved to your preferences"),
     },
@@ -322,7 +324,7 @@ const SearchesRow: FC<{
           appear,
         )}
       >
-        <IconSearch stroke={1.5} className="text-foreground/70 size-4 shrink-0" />
+        <HugeiconsIcon icon={Search01Icon} className="text-foreground/70 size-4 shrink-0" />
         <span className={cn("shrink-0 tabular-nums", active && "shimmer")}>
           {count === 1 ? t("Ran 1 search") : t("Ran {count} searches", { count })}
         </span>
@@ -343,7 +345,7 @@ const SearchesRow: FC<{
             key={query}
             className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm"
           >
-            <IconSearch stroke={1.5} className="text-foreground/50 size-3.5 shrink-0" />
+            <HugeiconsIcon icon={Search01Icon} className="text-foreground/50 size-3.5 shrink-0" />
             <span className="min-w-0 truncate">{query}</span>
           </span>
         ))}
@@ -358,7 +360,7 @@ const SearchesRow: FC<{
               rel="noreferrer"
               className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm font-normal! no-underline! transition-colors"
             >
-              <Icon stroke={1.5} className="text-foreground/70 size-4 shrink-0" />
+              <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
               <span className="min-w-0 truncate">{read.title}</span>
               {read.detail && (
                 <span className="text-muted-foreground/70 shrink-0">· {read.detail}</span>
@@ -379,7 +381,7 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
   switch (step.kind) {
     case "think":
       return (
-        <Row key={step.text} Icon={IconBulb} active={active}>
+        <Row key={step.text} Icon={BulbIcon} active={active}>
           {step.text || t("Thinking")}
         </Row>
       );
@@ -395,13 +397,13 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
       );
     case "browse":
       return (
-        <Row Icon={IconWorld} active={active} code={pageOf(step.url)} href={step.url}>
+        <Row Icon={Globe02Icon} active={active} code={pageOf(step.url)} href={step.url}>
           {step.failed ? t("Couldn't open") : t("Browsed")}
         </Row>
       );
     case "verses":
       return (
-        <Row Icon={IconBook} active={active} code={step.title} href={step.url}>
+        <Row Icon={Book02Icon} active={active} code={step.title} href={step.url}>
           {t("Read")}
         </Row>
       );
@@ -410,7 +412,7 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
     case "tool": {
       const tool = TOOLS.get(step.tool);
       return (
-        <Row Icon={tool?.Icon ?? IconSparkles} active={active}>
+        <Row Icon={tool?.Icon ?? SparklesIcon} active={active}>
           {tool ? tool.label(t, step.detail) : step.tool}
         </Row>
       );

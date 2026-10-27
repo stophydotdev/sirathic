@@ -13,7 +13,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
-import { IconBox, IconCaretDownFilled, IconPlus } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Add01Icon, ArrowDown01Icon, PackageIcon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useState } from "react";
 import { z } from "zod";
@@ -60,7 +61,7 @@ export const ProjectsPage: FC = () => {
         <div className="mb-4 flex items-center justify-end gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger className="bg-muted hover:bg-foreground/10 flex h-9 items-center gap-1.5 rounded-full px-3 text-sm transition-colors">
-              <IconCaretDownFilled className="size-3.5" />
+              <HugeiconsIcon icon={ArrowDown01Icon} className="size-3.5" />
               {t(SORTS[sort].label)}
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-44">
@@ -81,14 +82,14 @@ export const ProjectsPage: FC = () => {
             onClick={create}
             className="bg-foreground text-background flex h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition hover:opacity-85"
           >
-            <IconPlus className="size-4" />
+            <HugeiconsIcon icon={Add01Icon} className="size-4" />
             {t("Create new")}
           </button>
         </div>
         {projects !== undefined && sorted.length === 0 && (
           <div className="border-foreground/10 mb-4 flex flex-col items-center gap-2 rounded-2xl border px-6 py-7 text-center">
             <span className="bg-muted mb-1 flex size-10 items-center justify-center rounded-full">
-              <IconBox className="size-5" />
+              <HugeiconsIcon icon={PackageIcon} className="size-5" />
             </span>
             <p className="text-sm font-[550]">{t("Get started by creating a new project")}</p>
             <p className="text-muted-foreground max-w-sm text-sm">
@@ -99,7 +100,7 @@ export const ProjectsPage: FC = () => {
               onClick={create}
               className="border-foreground/15 hover:bg-muted mt-2 flex h-8 items-center gap-1.5 rounded-lg border px-3 text-sm font-medium"
             >
-              <IconPlus className="size-4" />
+              <HugeiconsIcon icon={Add01Icon} className="size-4" />
               {t("New project")}
             </button>
           </div>

@@ -2,7 +2,8 @@ import { Favicon } from "@/components/favicon";
 import type { MentionTarget } from "@/components/mentionText";
 import { cn } from "@/lib/utils";
 import { CONNECTORS } from "@sirathic/server/catalog";
-import { IconSparkles } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { SparklesIcon } from "@hugeicons/core-free-icons";
 import type { FC } from "react";
 
 export const rootDomain = (url: string) =>
@@ -31,7 +32,7 @@ export const MentionIcon: FC<{ target: MentionTarget; className?: string }> = ({
         className="rounded-[2px] bg-transparent"
       />
     ) : (
-      <IconSparkles className="size-3" />
+      <HugeiconsIcon icon={SparklesIcon} className="size-3" />
     )}
   </span>
 );

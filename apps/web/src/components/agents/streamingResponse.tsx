@@ -2,7 +2,14 @@
 
 import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
-import { IconCheck, IconCopy, IconRotate, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Copy01Icon,
+  RotateClockwiseIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
@@ -162,7 +169,11 @@ export function StreamingResponse({
             <div className={cn("flex items-center gap-0.5", actionsClassName)}>
               {canCopy ? (
                 <ResponseAction label={copied ? "Copied" : "Copy response"} onClick={handleCopy}>
-                  {copied ? <IconCheck className="size-3.5" /> : <IconCopy className="size-3.5" />}
+                  {copied ? (
+                    <HugeiconsIcon icon={Tick02Icon} className="size-3.5" />
+                  ) : (
+                    <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
+                  )}
                 </ResponseAction>
               ) : null}
               {complete ? (
@@ -172,20 +183,20 @@ export function StreamingResponse({
                     active={currentFeedback === "up"}
                     onClick={() => setFeedback("up")}
                   >
-                    <IconThumbUp className="size-3.5" />
+                    <HugeiconsIcon icon={ThumbsUpIcon} className="size-3.5" />
                   </ResponseAction>
                   <ResponseAction
                     label="Not helpful"
                     active={currentFeedback === "down"}
                     onClick={() => setFeedback("down")}
                   >
-                    <IconThumbDown className="size-3.5" />
+                    <HugeiconsIcon icon={ThumbsDownIcon} className="size-3.5" />
                   </ResponseAction>
                 </>
               ) : null}
               {onRetry ? (
                 <ResponseAction label="Retry response" onClick={onRetry}>
-                  <IconRotate className="size-3.5" />
+                  <HugeiconsIcon icon={RotateClockwiseIcon} className="size-3.5" />
                 </ResponseAction>
               ) : null}
               {actions}

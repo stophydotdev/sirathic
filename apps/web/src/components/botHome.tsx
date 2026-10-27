@@ -16,7 +16,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
-import { IconDots, IconTrash } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Delete02Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useState } from "react";
 
@@ -82,11 +83,11 @@ export const BotHeaderMenu: FC = () => {
           aria-label={t("More actions")}
           className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 flex size-8 shrink-0 items-center justify-center rounded-xl"
         >
-          <IconDots className="size-4" />
+          <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-44">
           <DropdownMenuItem variant="destructive" onSelect={() => setDeleting(true)}>
-            <IconTrash className="size-4" />
+            <HugeiconsIcon icon={Delete02Icon} className="size-4" />
             {t("Delete bot")}
           </DropdownMenuItem>
         </DropdownMenuContent>

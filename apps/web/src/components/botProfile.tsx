@@ -2,7 +2,8 @@
 
 import { useLocale, useT } from "@/components/i18n";
 import { type Project, useProjects } from "@/components/projects";
-import { IconX } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { type FC, useEffect } from "react";
 
 export const BotProfile: FC<{ bot: Project }> = ({ bot }) => {
@@ -43,7 +44,7 @@ export const BotProfile: FC<{ bot: Project }> = ({ bot }) => {
             }
             className="text-muted-foreground hover:bg-muted hover:text-foreground shrink-0 rounded-full p-1"
           >
-            <IconX className="size-4" />
+            <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
           </button>
         </div>
       ))}

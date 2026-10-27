@@ -23,7 +23,8 @@ import {
 } from "@assistant-ui/react-lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { connectorId, CONNECTORS } from "@sirathic/server/catalog";
-import { IconPlug, IconSparkles } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Plug01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { mergeRegister } from "@lexical/utils";
 import {
   $getNodeByKey,
@@ -271,13 +272,13 @@ export const MentionPopover: FC<{ className: string }> = ({ className }) => {
             <div className={cn(popoverPanel, "w-60")}>
               <Link href="/plugins" className={cn(popoverRow, "hover:bg-foreground/8")}>
                 <span className={popoverIcon}>
-                  <IconPlug className="size-4" />
+                  <HugeiconsIcon icon={Plug01Icon} className="size-4" />
                 </span>
                 {t("Add a plugin")}
               </Link>
               <Link href="/plugins?tab=skills" className={cn(popoverRow, "hover:bg-foreground/8")}>
                 <span className={popoverIcon}>
-                  <IconSparkles className="size-4" />
+                  <HugeiconsIcon icon={SparklesIcon} className="size-4" />
                 </span>
                 {t("Write a skill")}
               </Link>

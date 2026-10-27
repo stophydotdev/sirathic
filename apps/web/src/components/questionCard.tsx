@@ -3,7 +3,8 @@
 import { useT } from "@/components/i18n";
 import { ANSWER_MAX, question } from "@sirathic/server/messages";
 import { type ThreadMessage, useAui, useAuiState } from "@assistant-ui/react";
-import { IconCircleCheck, IconCircleX, IconX } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Cancel01Icon, CancelCircleIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 
 const textOf = (message: ThreadMessage | undefined) =>
@@ -31,9 +32,9 @@ export const QuestionCard: FC<{
         {closed ? (
           <span className="bg-foreground/8 text-muted-foreground flex h-8 max-w-1/2 min-w-28 shrink-0 items-center justify-center gap-1 self-center rounded-full px-2.5 text-sm leading-snug font-semibold">
             {answer ? (
-              <IconCircleCheck className="size-4.5 shrink-0" />
+              <HugeiconsIcon icon={CheckmarkCircle02Icon} className="size-4.5 shrink-0" />
             ) : (
-              <IconCircleX className="size-4.5 shrink-0" />
+              <HugeiconsIcon icon={CancelCircleIcon} className="size-4.5 shrink-0" />
             )}
             <span className="truncate">{answer ?? t("Dismissed")}</span>
           </span>
@@ -44,7 +45,7 @@ export const QuestionCard: FC<{
             onClick={() => setDismissed(true)}
             className="text-muted-foreground hover:bg-muted hover:text-foreground -me-1 rounded-full p-1"
           >
-            <IconX className="size-4" />
+            <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
           </button>
         )}
       </div>

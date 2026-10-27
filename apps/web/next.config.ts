@@ -8,6 +8,7 @@ if (!SERVER) throw new Error("env NEXT_PUBLIC_SERVER is not set");
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1", ...(PUBLIC_URL ? [new URL(PUBLIC_URL).hostname] : [])],
   devIndicators: false,
+  experimental: { optimizePackageImports: ["@hugeicons/core-free-icons"] },
   transpilePackages: ["@sirathic/server"],
   headers: async () => [
     {

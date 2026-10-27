@@ -25,15 +25,16 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconBolt,
-  IconClockPlay,
-  IconDots,
-  IconPencil,
-  IconPlayerPause,
-  IconPlayerPlay,
-  IconTrash,
-} from "@tabler/icons-react";
+  Delete02Icon,
+  FlashIcon,
+  MoreHorizontalIcon,
+  PauseIcon,
+  PencilEdit02Icon,
+  PlayIcon,
+  TimeScheduleIcon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useCallback, useEffect, useState } from "react";
 
@@ -91,27 +92,27 @@ const AutomationMenu: FC<RowActions & { enabled: boolean; busy: boolean }> = ({
         disabled={busy}
         className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 data-[state=open]:text-foreground grid size-8 shrink-0 place-items-center rounded-[8px] transition-colors disabled:opacity-50"
       >
-        <IconDots className="size-4" />
+        <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44 rounded-[16px] p-1.5">
         <DropdownMenuItem onSelect={onEdit} className={menuItem}>
-          <IconPencil className={menuIcon} />
+          <HugeiconsIcon icon={PencilEdit02Icon} className={menuIcon} />
           {t("Edit")}
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={onToggle} className={menuItem}>
           {enabled ? (
-            <IconPlayerPause className={menuIcon} />
+            <HugeiconsIcon icon={PauseIcon} className={menuIcon} />
           ) : (
-            <IconPlayerPlay className={menuIcon} />
+            <HugeiconsIcon icon={PlayIcon} className={menuIcon} />
           )}
           {enabled ? t("Pause") : t("Resume")}
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={onRunNow} className={menuItem}>
-          <IconBolt className={menuIcon} />
+          <HugeiconsIcon icon={FlashIcon} className={menuIcon} />
           {t("Run now")}
         </DropdownMenuItem>
         <DropdownMenuItem variant="destructive" onSelect={onDelete} className={menuItem}>
-          <IconTrash className="size-[18px]" />
+          <HugeiconsIcon icon={Delete02Icon} className="size-[18px]" />
           {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -141,7 +142,7 @@ const AutomationRow: FC<RowActions & { automation: Automation; busy: boolean }> 
         className="flex min-w-0 flex-1 items-center gap-3 text-start"
       >
         <span className="bg-muted grid size-9 shrink-0 place-items-center rounded-[10px]">
-          <ProjectIcon icon={automation.icon} blank={IconClockPlay} className="size-5" />
+          <ProjectIcon icon={automation.icon} blank={TimeScheduleIcon} className="size-5" />
         </span>
         <span className="flex min-w-0 flex-col">
           <span className="truncate text-sm font-medium">{automation.name}</span>

@@ -27,7 +27,13 @@ import {
   kindOf,
   shownFiles,
 } from "@sirathic/server/files";
-import { IconAdjustmentsHorizontal, IconFolderPlus, IconSearch, IconX } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Cancel01Icon,
+  FolderAddIcon,
+  Search01Icon,
+  SlidersHorizontalIcon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useEffect, useRef, useState } from "react";
 import { z } from "zod";
@@ -178,7 +184,10 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
           <div className="ms-auto flex items-center gap-2">
             {searching ? (
               <label className="bg-muted/60 flex h-9 w-48 items-center gap-2 rounded-full px-3 sm:w-64">
-                <IconSearch className="text-muted-foreground size-4 shrink-0" />
+                <HugeiconsIcon
+                  icon={Search01Icon}
+                  className="text-muted-foreground size-4 shrink-0"
+                />
                 <input
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
@@ -202,7 +211,7 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
                   }}
                   className="text-muted-foreground hover:text-foreground"
                 >
-                  <IconX className="size-4" />
+                  <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
                 </button>
               </label>
             ) : (
@@ -212,12 +221,12 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
                 onClick={() => setSearching(true)}
                 className={circleButton}
               >
-                <IconSearch className="size-4.5" />
+                <HugeiconsIcon icon={Search01Icon} className="size-4.5" />
               </button>
             )}
             <DropdownMenu>
               <DropdownMenuTrigger aria-label={t("View options")} className={circleButton}>
-                <IconAdjustmentsHorizontal className="size-4.5" />
+                <HugeiconsIcon icon={SlidersHorizontalIcon} className="size-4.5" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52">
                 <DropdownMenuRadioGroup
@@ -292,7 +301,7 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
         )}
         {files && files.length === 0 && (
           <div className="border-foreground/15 flex flex-col items-center gap-2 rounded-3xl border border-dashed px-6 py-16 text-center">
-            <IconFolderPlus className="size-6" />
+            <HugeiconsIcon icon={FolderAddIcon} className="size-6" />
             <p className="text-sm font-[550]">{t(empty.title)}</p>
             <p className="text-muted-foreground text-sm">{t(empty.hint)}</p>
             <button

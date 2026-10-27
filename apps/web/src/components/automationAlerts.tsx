@@ -2,7 +2,8 @@
 
 import { useT } from "@/components/i18n";
 import { api } from "@/lib/trpc";
-import { IconHistory } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Clock04Icon } from "@hugeicons/core-free-icons";
 import { usePathname } from "next/navigation";
 import { type FC, useEffect, useState } from "react";
 import { z } from "zod";
@@ -100,7 +101,7 @@ export const AutomationsIcon: FC<{ unseen: boolean; className: string }> = ({
   className,
 }) => (
   <span className="relative shrink-0">
-    <IconHistory className={className} />
+    <HugeiconsIcon icon={Clock04Icon} className={className} />
     {unseen && <UnseenDot />}
   </span>
 );

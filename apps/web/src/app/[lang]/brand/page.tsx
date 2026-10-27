@@ -5,7 +5,13 @@ import { Logo, Mark } from "@/components/logo";
 import type { MessageKey } from "@/messages/en";
 import { Button } from "@/components/ui/button";
 import { strToU8, zipSync } from "fflate";
-import { IconArrowDown, IconCheck, IconCopy, IconDownload } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  ArrowDown02Icon,
+  Copy01Icon,
+  Download04Icon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, type ReactNode, useRef, useState } from "react";
 
@@ -153,7 +159,7 @@ export default function Brand() {
               <Button key={id} variant="outline" size="lg" asChild>
                 <a href={`#${id}`}>
                   {t(label)}
-                  <IconArrowDown />
+                  <HugeiconsIcon icon={ArrowDown02Icon} />
                 </a>
               </Button>
             ))}
@@ -169,7 +175,7 @@ export default function Brand() {
               </p>
             </div>
             <Button variant="outline" size="lg" disabled={zipping} onClick={downloadAll}>
-              <IconDownload />
+              <HugeiconsIcon icon={Download04Icon} />
               {t("Download all brand assets")}
             </Button>
           </div>
@@ -274,12 +280,12 @@ const Asset: FC<{
         <CopyButton label="SVG" value={text} />
         {downloadSvg && (
           <Button variant="outline" className="h-9 rounded-full" onClick={() => download("svg")}>
-            <IconDownload />
+            <HugeiconsIcon icon={Download04Icon} />
             SVG
           </Button>
         )}
         <Button variant="outline" className="h-9 rounded-full" onClick={() => download("png")}>
-          <IconDownload />
+          <HugeiconsIcon icon={Download04Icon} />
           PNG
         </Button>
       </div>
@@ -301,7 +307,7 @@ const CopyButton: FC<{ label: string; value: () => string | undefined }> = ({ la
 
   return (
     <Button variant="outline" className="h-9 rounded-full" onClick={copy}>
-      {copied ? <IconCheck /> : <IconCopy />}
+      {copied ? <HugeiconsIcon icon={Tick02Icon} /> : <HugeiconsIcon icon={Copy01Icon} />}
       {copied ? t("Copied") : label}
     </Button>
   );

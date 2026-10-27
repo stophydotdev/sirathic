@@ -13,7 +13,8 @@ import { SkillsTab } from "@/components/skillsTab";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { type Category, CONNECTORS } from "@sirathic/server/catalog";
-import { IconCheck, IconSearch } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Search01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { Dialog } from "radix-ui";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
@@ -41,7 +42,10 @@ const PluginIcon: FC<{ plugin: Plugin }> = ({ plugin }) => (
   <span className="bg-muted relative grid size-9 shrink-0 place-items-center rounded-[10px]">
     <Favicon url={`https://${rootDomain(plugin.url)}`} src={catalogIcon(plugin.url)} size={28} />
     {plugin.connected && (
-      <IconCheck className="bg-foreground text-background absolute -end-1 -bottom-1 size-4 rounded-full p-0.5" />
+      <HugeiconsIcon
+        icon={Tick02Icon}
+        className="bg-foreground text-background absolute -end-1 -bottom-1 size-4 rounded-full p-0.5"
+      />
     )}
   </span>
 );
@@ -262,7 +266,7 @@ const PluginList: FC = () => {
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <PluginTabs tab="plugins" />
         <label className="bg-muted/60 order-last flex h-9 w-full items-center gap-2 rounded-full px-3 sm:order-none sm:w-64">
-          <IconSearch className="text-muted-foreground size-4 shrink-0" />
+          <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-4 shrink-0" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}

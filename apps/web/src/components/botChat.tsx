@@ -20,7 +20,8 @@ import {
   type ThreadMessage,
   useAuiState,
 } from "@assistant-ui/react";
-import { IconCopy, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Copy01Icon, ThumbsDownIcon, ThumbsUpIcon } from "@hugeicons/core-free-icons";
 import { type FC, useEffect, useRef, useState } from "react";
 
 const actionButton =
@@ -117,7 +118,7 @@ const BotActions: FC = () => {
         onClick={() => rate(feedback === "up" ? null : "up")}
         className={cn(actionButton, feedback === "up" && "text-foreground")}
       >
-        <IconThumbUp className="size-3.5" />
+        <HugeiconsIcon icon={ThumbsUpIcon} className="size-3.5" />
       </button>
       <button
         type="button"
@@ -126,7 +127,7 @@ const BotActions: FC = () => {
         onClick={() => (feedback === "down" ? rate(null) : setReporting(true))}
         className={cn(actionButton, feedback === "down" && "text-foreground")}
       >
-        <IconThumbDown className="size-3.5" />
+        <HugeiconsIcon icon={ThumbsDownIcon} className="size-3.5" />
       </button>
       <button
         type="button"
@@ -134,7 +135,7 @@ const BotActions: FC = () => {
         onClick={() => void copy()}
         className={actionButton}
       >
-        <IconCopy className="size-3.5" />
+        <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
       </button>
       <ReportMistake
         open={reporting}

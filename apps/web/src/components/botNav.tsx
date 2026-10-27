@@ -9,7 +9,8 @@ import { useT } from "@/components/i18n";
 import { type Project, useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { cn } from "@/lib/utils";
-import { IconChevronDown, IconPlus } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Add01Icon, ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type FC, useState } from "react";
@@ -82,7 +83,8 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           className="group/bots hover:text-foreground flex min-w-0 flex-1 items-center gap-1 text-start"
         >
           {t("Bots")}
-          <IconChevronDown
+          <HugeiconsIcon
+            icon={ArrowDown01Icon}
             className={cn(
               "size-3.5 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/bots:opacity-100 pointer-coarse:opacity-100",
               !open && "-rotate-90 opacity-100",
@@ -96,7 +98,7 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           onClick={() => setCreating(true)}
           className="hover:bg-muted hover:text-foreground flex size-5 items-center justify-center rounded-md opacity-0 transition-opacity group-hover/sidebar:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
         >
-          <IconPlus className="size-3.5" />
+          <HugeiconsIcon icon={Add01Icon} className="size-3.5" />
         </button>
       </div>
       {open && (

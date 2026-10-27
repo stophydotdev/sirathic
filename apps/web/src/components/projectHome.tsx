@@ -10,7 +10,8 @@ import { useProjects } from "@/components/projects";
 import { SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { cn } from "@/lib/utils";
-import { IconLayoutSidebarRightExpand } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { SidebarRightIcon } from "@hugeicons/core-free-icons";
 import { type FC, useEffect, useState } from "react";
 
 const PANE_KEY = "sirathicProjectPane";
@@ -72,7 +73,7 @@ export const ProjectHome: FC<{ id: string }> = ({ id }) => {
           title={t("Show project settings")}
           className="text-muted-foreground hover:bg-muted hover:text-foreground absolute top-3 end-4 z-10 hidden size-8 items-center justify-center rounded-full lg:flex"
         >
-          <IconLayoutSidebarRightExpand className="size-5" />
+          <HugeiconsIcon icon={SidebarRightIcon} className="size-5" />
         </button>
       )}
       <div

@@ -39,16 +39,16 @@ import {
   useAuiState,
 } from "@assistant-ui/react";
 import { LexicalComposerInput } from "@assistant-ui/react-lexical";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconArrowUp,
-  IconFile,
-  IconPaperclip,
-  IconPlus,
-  IconSearch,
-  IconSquare,
-  IconTelescope,
-  IconX,
-} from "@tabler/icons-react";
+  Add01Icon,
+  ArrowUp02Icon,
+  Attachment01Icon,
+  Cancel01Icon,
+  File01Icon,
+  Search01Icon,
+  Telescope01Icon,
+} from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { type FC, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
@@ -68,8 +68,8 @@ const primaryButton =
   "bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-foreground/15 disabled:text-background flex size-8 shrink-0 items-center justify-center rounded-full transition-colors";
 
 export const MODE_ICONS = {
-  quick: <IconSearch className="size-4" />,
-  research: <IconTelescope className="size-4" />,
+  quick: <HugeiconsIcon icon={Search01Icon} className="size-4" />,
+  research: <HugeiconsIcon icon={Telescope01Icon} className="size-4" />,
 } satisfies Record<Mode, ReactNode>;
 
 function useRotatingPlaceholder(first: string, rotate: boolean) {
@@ -236,7 +236,7 @@ export const Composer: FC<{
                     onClick={() => project.onLeave(text)}
                     className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-6 items-center justify-center rounded-full"
                   >
-                    <IconX className="size-3.5" />
+                    <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
                   </button>
                 </span>
               )}
@@ -250,7 +250,7 @@ export const Composer: FC<{
                   aria-label={t("Stop response (Esc)")}
                   title={t("Stop response (Esc)")}
                 >
-                  <IconSquare className="size-3 fill-current" />
+                  <span className="size-2.5 rounded-xs bg-current" />
                 </ComposerPrimitive.Cancel>
               </AuiIf>
               <AuiIf condition={(s) => !s.thread.isRunning}>
@@ -261,14 +261,14 @@ export const Composer: FC<{
                     className={cn(primaryButton, bot && "size-10")}
                     aria-label={t("Submit")}
                   >
-                    <IconArrowUp className="size-4" />
+                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
                   </button>
                 ) : (
                   <ComposerPrimitive.Send
                     className={cn(primaryButton, bot && "size-10")}
                     aria-label={t("Submit")}
                   >
-                    <IconArrowUp className="size-4" />
+                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
                   </ComposerPrimitive.Send>
                 )}
               </AuiIf>
@@ -342,7 +342,7 @@ const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10"; modes: b
       <ComposerPrimitive.AddAttachment ref={upload} className="hidden" />
       <DropdownMenu>
         <DropdownMenuTrigger className={cn(iconButton, size)} aria-label={t("Add files or tools")}>
-          <IconPlus className="size-4.5" />
+          <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent
           side={side}
@@ -350,7 +350,7 @@ const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10"; modes: b
           className={modes ? cn(menuBox, "w-72") : menuBox}
         >
           <DropdownMenuItem onSelect={() => upload.current?.click()} className={menuItem}>
-            <IconPaperclip className="size-4" />
+            <HugeiconsIcon icon={Attachment01Icon} className="size-4" />
             {t("Upload a file")}
           </DropdownMenuItem>
           <RecentFiles />
@@ -399,7 +399,7 @@ export const AttachmentChip: FC = () => {
             className="object-cover"
           />
         ) : (
-          <IconFile className="size-4" />
+          <HugeiconsIcon icon={File01Icon} className="size-4" />
         )}
       </div>
       <p className="min-w-0 truncate text-sm leading-5">
@@ -414,7 +414,7 @@ const AttachmentPreview: FC = () => {
     <AttachmentPrimitive.Root className="group/attachment relative">
       <AttachmentChip />
       <AttachmentPrimitive.Remove className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-1.5 -end-1.5 flex size-5 items-center justify-center rounded-full border opacity-0 transition-opacity group-hover/attachment:opacity-100 pointer-coarse:opacity-100">
-        <IconX className="size-3" />
+        <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
       </AttachmentPrimitive.Remove>
     </AttachmentPrimitive.Root>
   );

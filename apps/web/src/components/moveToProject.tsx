@@ -9,7 +9,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdownMenu";
-import { IconCheck, IconFolderMinus, IconFolderSymlink } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { FolderRemoveIcon, FolderShared01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import type { FC } from "react";
 
 const menuItem = "min-h-8 gap-2 rounded-[10px] px-2";
@@ -25,7 +26,7 @@ export const MoveToProject: FC<{ session: Session }> = ({ session }) => {
   return (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger className={menuItem}>
-        <IconFolderSymlink className={menuIcon} />
+        <HugeiconsIcon icon={FolderShared01Icon} className={menuIcon} />
         {t("Move to project")}
       </DropdownMenuSubTrigger>
       <DropdownMenuSubContent className="max-h-72 w-56 overflow-y-auto rounded-[16px] p-1.5">
@@ -39,7 +40,9 @@ export const MoveToProject: FC<{ session: Session }> = ({ session }) => {
             className={menuItem}
           >
             <span className="truncate">{project.name}</span>
-            {session.projectId === project.id && <IconCheck className="ms-auto size-4" />}
+            {session.projectId === project.id && (
+              <HugeiconsIcon icon={Tick02Icon} className="ms-auto size-4" />
+            )}
           </DropdownMenuItem>
         ))}
         {session.projectId && (
@@ -47,7 +50,7 @@ export const MoveToProject: FC<{ session: Session }> = ({ session }) => {
             onSelect={() => void change(session.id, { projectId: null })}
             className={menuItem}
           >
-            <IconFolderMinus className={menuIcon} />
+            <HugeiconsIcon icon={FolderRemoveIcon} className={menuIcon} />
             {t("Remove from project")}
           </DropdownMenuItem>
         )}

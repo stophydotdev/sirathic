@@ -16,7 +16,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import { cn } from "@/lib/utils";
-import { IconCalendar, IconChevronDown, IconPlus, IconX } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Add01Icon,
+  ArrowDown01Icon,
+  Calendar03Icon,
+  Cancel01Icon,
+} from "@hugeicons/core-free-icons";
 import { type FC, Fragment, type ReactNode, useState } from "react";
 
 const KINDS = [
@@ -91,7 +97,7 @@ const ChoicePill: FC<{
   <DropdownMenu>
     <DropdownMenuTrigger className={pill}>
       {label}
-      <IconChevronDown className="text-muted-foreground size-3.5" />
+      <HugeiconsIcon icon={ArrowDown01Icon} className="text-muted-foreground size-3.5" />
     </DropdownMenuTrigger>
     <DropdownMenuContent className={menu}>
       <DropdownMenuRadioGroup value={String(value)} onValueChange={(next) => onPick(Number(next))}>
@@ -114,7 +120,7 @@ const DatePill: FC<{ value: string; onChange: (date: string) => void }> = ({ val
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger aria-label={t("Date")} className={pill}>
-        <IconCalendar className="text-muted-foreground size-3.5" />
+        <HugeiconsIcon icon={Calendar03Icon} className="text-muted-foreground size-3.5" />
         {formatter.format(selected)}
       </PopoverTrigger>
       <PopoverContent className="bg-fill z-[70] w-auto overflow-hidden p-0" align="start">
@@ -160,7 +166,7 @@ const DaysPill: FC<{ days: number[]; onChange: (days: number[]) => void }> = ({
     <DropdownMenu>
       <DropdownMenuTrigger className={pill}>
         {label}
-        <IconChevronDown className="text-muted-foreground size-3.5" />
+        <HugeiconsIcon icon={ArrowDown01Icon} className="text-muted-foreground size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className={menu}>
         {long.map((name, day) => (
@@ -206,7 +212,7 @@ const Sentence: FC<{
     <DropdownMenu>
       <DropdownMenuTrigger className={pill}>
         {kindTitles(t)[current]}
-        <IconChevronDown className="text-muted-foreground size-3.5" />
+        <HugeiconsIcon icon={ArrowDown01Icon} className="text-muted-foreground size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className={cn(menu, "w-80")}>
         <KindItems kind={current} onPick={(picked) => change({ kind: picked })} />
@@ -328,7 +334,7 @@ export const TriggerField: FC<{ draft: Draft; change: (update: Partial<Draft>) =
     return (
       <DropdownMenu>
         <DropdownMenuTrigger className={cn(pill, "w-fit pe-3")}>
-          <IconPlus className="size-3.5" />
+          <HugeiconsIcon icon={Add01Icon} className="size-3.5" />
           {t("Add trigger")}
         </DropdownMenuTrigger>
         <DropdownMenuContent className={cn(menu, "w-80")}>
@@ -347,7 +353,7 @@ export const TriggerField: FC<{ draft: Draft; change: (update: Partial<Draft>) =
         onClick={() => change({ kind: undefined })}
         className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-7 items-center justify-center rounded-full"
       >
-        <IconX className="size-3.5" />
+        <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
       </button>
     </div>
   );

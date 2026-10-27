@@ -5,88 +5,88 @@ import { useProjects } from "@/components/projects";
 import { Modal } from "@/components/sessionMenu";
 import { cn } from "@/lib/utils";
 import { PROJECT_ICONS } from "@sirathic/server/projects";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  type Icon,
-  IconBook,
-  IconBook2,
-  IconBriefcase,
-  IconBuildingMosque,
-  IconBulb,
-  IconCalendar,
-  IconCode,
-  IconCoin,
-  IconCompass,
-  IconFlame,
-  IconFlask,
-  IconFolder,
-  IconFolderOpen,
-  IconHeart,
-  IconHome,
-  IconLanguage,
-  IconLeaf,
-  IconMap,
-  IconMoon,
-  IconPalette,
-  IconPlane,
-  IconPlant,
-  IconPray,
-  IconSchool,
-  IconScale,
-  IconSparkles,
-  IconStar,
-  IconSun,
-  IconUsers,
-  IconWorld,
-} from "@tabler/icons-react";
+  AirplaneIcon,
+  Book02Icon,
+  Book04Icon,
+  Briefcase01Icon,
+  BulbIcon,
+  Calendar03Icon,
+  Coins01Icon,
+  Compass01Icon,
+  FavouriteIcon,
+  FireIcon,
+  Folder01Icon,
+  FolderOpenIcon,
+  Globe02Icon,
+  Home01Icon,
+  JusticeScale01Icon,
+  LanguageSkillIcon,
+  Leaf01Icon,
+  MapsIcon,
+  Moon02Icon,
+  MortarboardIcon,
+  Mosque01Icon,
+  PaintBoardIcon,
+  Plant02Icon,
+  PrayerRugIcon,
+  SourceCodeIcon,
+  SparklesIcon,
+  StarIcon,
+  Sun03Icon,
+  TestTube01Icon,
+  UserMultipleIcon,
+} from "@hugeicons/core-free-icons";
 import type { FC } from "react";
 
 const GLYPHS = {
-  book: IconBook,
-  book2: IconBook2,
-  mosque: IconBuildingMosque,
-  pray: IconPray,
-  moon: IconMoon,
-  sun: IconSun,
-  star: IconStar,
-  heart: IconHeart,
-  leaf: IconLeaf,
-  plant: IconPlant,
-  flame: IconFlame,
-  bulb: IconBulb,
-  school: IconSchool,
-  language: IconLanguage,
-  scale: IconScale,
-  users: IconUsers,
-  home: IconHome,
-  briefcase: IconBriefcase,
-  coin: IconCoin,
-  calendar: IconCalendar,
-  compass: IconCompass,
-  map: IconMap,
-  world: IconWorld,
-  plane: IconPlane,
-  code: IconCode,
-  flask: IconFlask,
-  palette: IconPalette,
-  sparkles: IconSparkles,
-} satisfies Record<(typeof PROJECT_ICONS)[number], Icon>;
+  book: Book02Icon,
+  book2: Book04Icon,
+  mosque: Mosque01Icon,
+  pray: PrayerRugIcon,
+  moon: Moon02Icon,
+  sun: Sun03Icon,
+  star: StarIcon,
+  heart: FavouriteIcon,
+  leaf: Leaf01Icon,
+  plant: Plant02Icon,
+  flame: FireIcon,
+  bulb: BulbIcon,
+  school: MortarboardIcon,
+  language: LanguageSkillIcon,
+  scale: JusticeScale01Icon,
+  users: UserMultipleIcon,
+  home: Home01Icon,
+  briefcase: Briefcase01Icon,
+  coin: Coins01Icon,
+  calendar: Calendar03Icon,
+  compass: Compass01Icon,
+  map: MapsIcon,
+  world: Globe02Icon,
+  plane: AirplaneIcon,
+  code: SourceCodeIcon,
+  flask: TestTube01Icon,
+  palette: PaintBoardIcon,
+  sparkles: SparklesIcon,
+} satisfies Record<(typeof PROJECT_ICONS)[number], IconSvgElement>;
 
 export const ProjectIcon: FC<{
   icon: string | null;
   open?: boolean;
-  blank?: Icon;
+  blank?: IconSvgElement;
   className?: string;
 }> = ({ icon, open, blank, className }) => {
   const name = PROJECT_ICONS.find((known) => known === icon);
-  const Glyph = name ? GLYPHS[name] : (blank ?? (open ? IconFolderOpen : IconFolder));
-  return <Glyph className={className} />;
+  const glyph = name ? GLYPHS[name] : (blank ?? (open ? FolderOpenIcon : Folder01Icon));
+  return <HugeiconsIcon icon={glyph} className={className} />;
 };
 
 const cell = "hover:bg-muted flex size-10 items-center justify-center rounded-[10px]";
 
 export const IconPicker: FC<{
   icon: string | null;
-  blank?: Icon;
+  blank?: IconSvgElement;
   blankLabel?: string;
   onPick: (icon: (typeof PROJECT_ICONS)[number] | null) => void;
   onClose: () => void;

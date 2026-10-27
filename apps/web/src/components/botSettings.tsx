@@ -12,7 +12,8 @@ import { type Project, projectNameError, useProjects } from "@/components/projec
 import { modalPrimaryButton } from "@/components/sessionMenu";
 import { cn } from "@/lib/utils";
 import { BOT_COLORS, type BOT_ICONS, PROJECT_NAME_MAX } from "@sirathic/server/projects";
-import { IconX } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, useState } from "react";
 
@@ -86,7 +87,7 @@ export const BotSettings: FC<{
               aria-label={t("Close")}
               className="text-muted-foreground hover:bg-muted hover:text-foreground ms-auto flex size-8 items-center justify-center rounded-full"
             >
-              <IconX className="size-4.5" />
+              <HugeiconsIcon icon={Cancel01Icon} className="size-4.5" />
             </Dialog.Close>
           </div>
           {routine ? (

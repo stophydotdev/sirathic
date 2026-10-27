@@ -138,7 +138,7 @@
   html {
     @apply font-sans;
   }
-  .tabler-icon {
+  svg[color="currentColor"] [stroke-width="1.5"] {
     stroke-width: 1.75;
   }
   button:not(:disabled),

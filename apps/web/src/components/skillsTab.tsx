@@ -6,7 +6,8 @@ import { PluginTabs } from "@/components/pluginTabs";
 import { useSignIn } from "@/components/signIn";
 import { type Skill, SkillEditor } from "@/components/skillEditor";
 import { api } from "@/lib/trpc";
-import { IconWand } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { MagicWand01Icon } from "@hugeicons/core-free-icons";
 import { type FC, useEffect, useState } from "react";
 
 const firstLine = (instructions: string) => instructions.split("\n")[0] ?? "";
@@ -66,7 +67,7 @@ export const SkillsTab: FC = () => {
             className="flex h-16 min-w-0 items-center gap-3 text-start"
           >
             <span className="bg-muted grid size-9 shrink-0 place-items-center rounded-[10px]">
-              <IconWand className="size-5" />
+              <HugeiconsIcon icon={MagicWand01Icon} className="size-5" />
             </span>
             <span className="flex min-w-0 flex-col">
               <span className="truncate text-sm font-medium">{skill.name}</span>

@@ -38,7 +38,8 @@ import {
 import { LexicalComposerInput } from "@assistant-ui/react-lexical";
 import { NOTIFY, notify as notifySchema } from "@sirathic/server/automations";
 import { MODES, mode as modeSchema } from "@sirathic/server/messages";
-import { IconChevronDown, IconClockPlay, IconX } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowDown01Icon, Cancel01Icon, TimeScheduleIcon } from "@hugeicons/core-free-icons";
 import { Dialog } from "radix-ui";
 import { type FC, useEffect, useState } from "react";
 
@@ -57,7 +58,7 @@ const ModeMenu: FC<{ mode: Draft["mode"]; onChange: (mode: Draft["mode"]) => voi
       <DropdownMenuTrigger className="hover:bg-foreground/10 flex h-7 shrink-0 items-center gap-1.5 rounded-[8px] pe-2 ps-2 text-sm transition-colors">
         {MODE_ICONS[mode]}
         {t(MODE_DETAILS[mode].name)}
-        <IconChevronDown className="text-muted-foreground size-3.5" />
+        <HugeiconsIcon icon={ArrowDown01Icon} className="text-muted-foreground size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="z-[70] w-72">
         <DropdownMenuLabel>{t("Mode")}</DropdownMenuLabel>
@@ -93,7 +94,7 @@ const NotifyMenu: FC<{ notify: Draft["notify"]; onChange: (notify: Draft["notify
     <DropdownMenu>
       <DropdownMenuTrigger className="bg-fill hover:bg-foreground/10 flex h-8 shrink-0 items-center gap-1.5 rounded-[8px] pe-2 ps-3 text-sm transition-colors">
         {t(NOTIFY_LABELS[notify])}
-        <IconChevronDown className="text-muted-foreground size-3.5" />
+        <HugeiconsIcon icon={ArrowDown01Icon} className="text-muted-foreground size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="z-[70] w-40">
         <DropdownMenuRadioGroup
@@ -246,7 +247,7 @@ const EditorDialog: FC<EditorProps> = ({
           aria-label={t("Close")}
           className="text-muted-foreground hover:bg-muted hover:text-foreground absolute end-3 top-3 flex size-8 items-center justify-center rounded-full"
         >
-          <IconX className="size-4" />
+          <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
         </Dialog.Close>
         <div className="flex items-center gap-2">
           <button
@@ -256,7 +257,7 @@ const EditorDialog: FC<EditorProps> = ({
             onClick={() => setPicking(true)}
             className="bg-fill hover:bg-foreground/10 grid size-9 shrink-0 place-items-center rounded-[10px] transition-colors"
           >
-            <ProjectIcon icon={draft.icon} blank={IconClockPlay} className="size-5" />
+            <ProjectIcon icon={draft.icon} blank={TimeScheduleIcon} className="size-5" />
           </button>
           <input
             value={draft.name}
@@ -337,7 +338,7 @@ const EditorDialog: FC<EditorProps> = ({
       {picking && (
         <IconPicker
           icon={draft.icon}
-          blank={IconClockPlay}
+          blank={TimeScheduleIcon}
           blankLabel={t("Default")}
           onPick={(icon) => change({ icon })}
           onClose={() => setPicking(false)}

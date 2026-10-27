@@ -4,7 +4,8 @@ import { BotAvatar } from "@/components/botAvatar";
 import { useT } from "@/components/i18n";
 import { useProjects } from "@/components/projects";
 import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { IconCheck, IconPlus } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Add01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { useRouter } from "next/navigation";
 import { type FC, type ReactNode, useState } from "react";
 
@@ -48,7 +49,7 @@ export const BotSwitcher: FC<{
             title={t("Search or create bots")}
             className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-muted flex size-6 shrink-0 items-center justify-center rounded-lg"
           >
-            <IconPlus className="size-4" />
+            <HugeiconsIcon icon={Add01Icon} className="size-4" />
           </PopoverTrigger>
         </div>
       </PopoverAnchor>
@@ -74,13 +75,13 @@ export const BotSwitcher: FC<{
             <button key={bot.id} type="button" onClick={() => pick(bot.id)} className={row}>
               <BotAvatar color={bot.color} icon={bot.symbol} />
               <span className="min-w-0 flex-1 truncate">{bot.name}</span>
-              {bot.id === current && <IconCheck className="size-4" />}
+              {bot.id === current && <HugeiconsIcon icon={Tick02Icon} className="size-4" />}
             </button>
           ))}
           {typed && !taken && (
             <button type="button" onClick={create} className={row}>
               <span className="bg-foreground/8 flex size-6 items-center justify-center rounded-full">
-                <IconPlus className="size-3.5" />
+                <HugeiconsIcon icon={Add01Icon} className="size-3.5" />
               </span>
               <span className="min-w-0 flex-1 truncate">
                 {t("Create “{name}”", { name: typed })}

@@ -12,7 +12,8 @@ import { useSignIn } from "@/components/signIn";
 import { useKeyNames } from "@/lib/keys";
 import { cn } from "@/lib/utils";
 import { MODES } from "@sirathic/server/messages";
-import { IconAlertCircle, IconUser } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { AlertCircleIcon, UserIcon } from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 
 const chosenLocale = (): "auto" | Locale =>
@@ -101,7 +102,7 @@ export const AccountSection: FC = () => {
               />
             ) : (
               <span className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-full">
-                <IconUser className="size-4" />
+                <HugeiconsIcon icon={UserIcon} className="size-4" />
               </span>
             )}
             <div className="flex min-w-0 flex-1 flex-col">
@@ -139,7 +140,7 @@ export const AccountSection: FC = () => {
       </Group>
       {modelsError && (
         <p className="text-destructive mt-3 flex items-center gap-1.5 text-xs">
-          <IconAlertCircle className="size-3.5 shrink-0" />
+          <HugeiconsIcon icon={AlertCircleIcon} className="size-3.5 shrink-0" />
           {modelsError}
         </p>
       )}

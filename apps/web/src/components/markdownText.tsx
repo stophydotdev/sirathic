@@ -24,7 +24,8 @@ import {
   Suspense,
   useContext,
 } from "react";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { z } from "zod";
 
 import { TooltipIconButton } from "@/components/tooltipIconButton";
@@ -86,8 +87,8 @@ const CodeHeader: FC<CodeHeaderProps> = ({ language, code }) => {
         {language}
       </span>
       <TooltipIconButton tooltip={t("Copy")} onClick={onCopy}>
-        {!isCopied && <IconCopy />}
-        {isCopied && <IconCheck />}
+        {!isCopied && <HugeiconsIcon icon={Copy01Icon} />}
+        {isCopied && <HugeiconsIcon icon={Tick02Icon} />}
       </TooltipIconButton>
     </div>
   );

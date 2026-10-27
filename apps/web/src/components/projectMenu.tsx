@@ -11,7 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import { PROJECT_NAME_MAX } from "@sirathic/server/projects";
-import { IconDots, IconMoodSmile, IconPencil, IconTrash } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Delete02Icon,
+  MoreHorizontalIcon,
+  PencilEdit02Icon,
+  SmileIcon,
+} from "@hugeicons/core-free-icons";
 import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, useState } from "react";
 
@@ -160,19 +166,19 @@ export const ProjectActions: FC<{
     <>
       <DropdownMenu>
         <DropdownMenuTrigger aria-label={t("More actions")} className={triggerClassName}>
-          <IconDots className="size-4" />
+          <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align={align} className="w-44">
           <DropdownMenuItem onSelect={() => setEditing("name")}>
-            <IconPencil className="size-4" />
+            <HugeiconsIcon icon={PencilEdit02Icon} className="size-4" />
             {t("Rename")}
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setEditing("icon")}>
-            <IconMoodSmile className="size-4" />
+            <HugeiconsIcon icon={SmileIcon} className="size-4" />
             {t("Edit icon")}
           </DropdownMenuItem>
           <DropdownMenuItem variant="destructive" onSelect={() => setEditing("delete")}>
-            <IconTrash className="size-4" />
+            <HugeiconsIcon icon={Delete02Icon} className="size-4" />
             {t("Delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -15,13 +15,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import { cn } from "@/lib/utils";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconAdjustmentsHorizontal,
-  IconArrowsDiagonal,
-  IconArrowsDiagonalMinimize2,
-  IconFile,
-  IconLayoutSidebarRightCollapse,
-} from "@tabler/icons-react";
+  ArrowExpand01Icon,
+  ArrowShrink02Icon,
+  File01Icon,
+  SidebarRight01Icon,
+  SlidersHorizontalIcon,
+} from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 
 const iconButton =
@@ -47,7 +48,7 @@ export const ProjectPanel: FC<{
     setTab("files");
   };
   const expandLabel = expanded ? t("Shrink project panel") : t("Expand project panel");
-  const ExpandIcon = expanded ? IconArrowsDiagonalMinimize2 : IconArrowsDiagonal;
+  const ExpandIcon = expanded ? ArrowShrink02Icon : ArrowExpand01Icon;
 
   return (
     <div className="border-foreground/10 bg-background flex flex-col rounded-[14px] border shadow-sm lg:h-full lg:overflow-hidden">
@@ -55,8 +56,8 @@ export const ProjectPanel: FC<{
         <div role="tablist" className="flex items-center gap-1">
           {(
             [
-              ["settings", t("Settings"), IconAdjustmentsHorizontal],
-              ["files", t("Files"), IconFile],
+              ["settings", t("Settings"), SlidersHorizontalIcon],
+              ["files", t("Files"), File01Icon],
             ] as const
           ).map(([name, label, Icon]) => (
             <button
@@ -69,7 +70,7 @@ export const ProjectPanel: FC<{
               onClick={() => setTab(name)}
               className={cn(iconButton, tab === name && "bg-muted text-foreground")}
             >
-              <Icon className="size-4.5" />
+              <HugeiconsIcon icon={Icon} className="size-4.5" />
             </button>
           ))}
         </div>
@@ -82,7 +83,7 @@ export const ProjectPanel: FC<{
             aria-pressed={expanded}
             className={iconButton}
           >
-            <ExpandIcon className="size-4.5" />
+            <HugeiconsIcon icon={ExpandIcon} className="size-4.5" />
           </button>
           <button
             type="button"
@@ -91,7 +92,7 @@ export const ProjectPanel: FC<{
             title={t("Hide project settings")}
             className={iconButton}
           >
-            <IconLayoutSidebarRightCollapse className="size-5" />
+            <HugeiconsIcon icon={SidebarRight01Icon} className="size-5" />
           </button>
         </div>
       </div>

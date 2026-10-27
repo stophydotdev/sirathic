@@ -1,6 +1,7 @@
 "use client";
 
-import { IconExternalLink, IconWorld } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Globe02Icon, LinkSquare02Icon } from "@hugeicons/core-free-icons";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useId } from "react";
 import { EASE_OUT, SPRING_LAYOUT } from "@/lib/ease";
@@ -63,7 +64,7 @@ function CitationFavicon({
           className="size-4 rounded-sm object-contain"
         />
       ) : (
-        <IconWorld className="size-3.5" />
+        <HugeiconsIcon icon={Globe02Icon} className="size-3.5" />
       )}
     </span>
   );
@@ -111,7 +112,10 @@ function CitationRow({
           {index}
         </span>
         {citation.url ? (
-          <IconExternalLink className="size-3.5 text-muted-foreground/40 transition-colors group-hover/citation:text-muted-foreground" />
+          <HugeiconsIcon
+            icon={LinkSquare02Icon}
+            className="size-3.5 text-muted-foreground/40 transition-colors group-hover/citation:text-muted-foreground"
+          />
         ) : null}
       </span>
     </>

@@ -4,7 +4,8 @@ import { describeSchedule } from "@/components/automationText";
 import { useLocale, useT } from "@/components/i18n";
 import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
-import { IconArrowUpRight, IconClockPlay } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowUpRight01Icon, TimeScheduleIcon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useEffect } from "react";
 import { z } from "zod";
@@ -31,7 +32,7 @@ const RowLine: FC<{ automation: Row }> = ({ automation }) => {
   return (
     <div className="flex min-w-0 items-center gap-3">
       <span className="bg-muted grid size-8 shrink-0 place-items-center rounded-[8px]">
-        <IconClockPlay className="size-4" />
+        <HugeiconsIcon icon={TimeScheduleIcon} className="size-4" />
       </span>
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-sm font-medium">{automation.name}</span>
@@ -52,7 +53,7 @@ const OpenLink: FC = () => {
       className="text-muted-foreground hover:text-foreground flex shrink-0 items-center gap-0.5 text-xs transition-colors"
     >
       {t("Open")}
-      <IconArrowUpRight className="size-3.5 rtl:-scale-x-100" />
+      <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-3.5 rtl:-scale-x-100" />
     </Link>
   );
 };
@@ -67,7 +68,7 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
     return (
       <p className="text-muted-foreground my-3 flex items-center justify-center gap-1.5 text-xs">
         {t("Created routine")}
-        <IconClockPlay className="size-3.5" />
+        <HugeiconsIcon icon={TimeScheduleIcon} className="size-3.5" />
         <span className="text-foreground">{created.name}</span>
       </p>
     );

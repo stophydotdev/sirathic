@@ -10,7 +10,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
-import { IconChevronDown } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { Switch } from "radix-ui";
 import { type FC, type ReactNode } from "react";
 
@@ -108,7 +109,7 @@ export function Choice<Value extends string>({
         className="text-muted-foreground hover:text-foreground flex h-8 shrink-0 items-center gap-1 rounded-md px-2 text-sm font-medium transition-colors"
       >
         {nameOf(value)}
-        <IconChevronDown className="text-muted-foreground size-3.5" />
+        <HugeiconsIcon icon={ArrowDown01Icon} className="text-muted-foreground size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[220px]">
         <DropdownMenuRadioGroup

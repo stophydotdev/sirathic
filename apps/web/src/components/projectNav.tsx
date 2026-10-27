@@ -9,7 +9,8 @@ import { Modal, modalButton, modalPrimaryButton, SessionRow } from "@/components
 import { useSessions } from "@/components/sessions";
 import { cn } from "@/lib/utils";
 import { PROJECT_NAME_MAX } from "@sirathic/server/projects";
-import { IconChevronDown, IconEdit, IconLayoutGrid, IconPlus } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Add01Icon, ArrowDown01Icon, Edit02Icon, GridViewIcon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
@@ -161,7 +162,7 @@ const ProjectRow: FC<{ project: Project; onDone?: () => void }> = ({ project, on
             onHover,
           )}
         >
-          <IconEdit className="size-4" />
+          <HugeiconsIcon icon={Edit02Icon} className="size-4" />
         </Link>
       </div>
       {chats.map((session) => (
@@ -190,7 +191,8 @@ export const ProjectList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           className="group/projects hover:text-foreground flex min-w-0 flex-1 items-center gap-1 text-start"
         >
           {t("Projects")}
-          <IconChevronDown
+          <HugeiconsIcon
+            icon={ArrowDown01Icon}
             className={cn(
               "size-3.5 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/projects:opacity-100 pointer-coarse:opacity-100",
               !open && "-rotate-90 opacity-100",
@@ -205,7 +207,7 @@ export const ProjectList: FC<{ onDone?: () => void }> = ({ onDone }) => {
             title={t("All projects")}
             className="hover:bg-muted hover:text-foreground flex size-5 items-center justify-center rounded-md"
           >
-            <IconLayoutGrid className="size-3.5" />
+            <HugeiconsIcon icon={GridViewIcon} className="size-3.5" />
           </Link>
           <button
             type="button"
@@ -214,7 +216,7 @@ export const ProjectList: FC<{ onDone?: () => void }> = ({ onDone }) => {
             onClick={() => setAdding(true)}
             className="hover:bg-muted hover:text-foreground flex size-5 items-center justify-center rounded-md"
           >
-            <IconPlus className="size-3.5" />
+            <HugeiconsIcon icon={Add01Icon} className="size-3.5" />
           </button>
         </div>
       </div>

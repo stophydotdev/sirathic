@@ -24,7 +24,12 @@ import {
   useAui,
   useAuiState,
 } from "@assistant-ui/react";
-import { IconChevronLeft, IconChevronRight, IconArrowDownRight } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  ArrowDownRight01Icon,
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 import { z } from "zod";
 import { ReportMistake } from "@/components/reportMistake";
@@ -157,7 +162,7 @@ const Related: FC = () => {
           send
           className="text-muted-foreground hover:bg-muted hover:text-foreground -mx-2 flex min-h-10 w-[calc(100%+1rem)] items-center gap-2 rounded-[12px] px-2 py-2 text-start text-sm font-medium transition-colors"
         >
-          <IconArrowDownRight className="size-4 shrink-0" />
+          <HugeiconsIcon icon={ArrowDownRight01Icon} className="size-4 shrink-0" />
           {question}
         </ThreadPrimitive.Suggestion>
       ))}
@@ -294,13 +299,13 @@ const BranchPicker: FC = () => {
       className="text-muted-foreground inline-flex items-center gap-1 text-xs"
     >
       <BranchPickerPrimitive.Previous className={actionButton}>
-        <IconChevronLeft className="size-3.5 rtl:rotate-180" />
+        <HugeiconsIcon icon={ArrowLeft01Icon} className="size-3.5 rtl:rotate-180" />
       </BranchPickerPrimitive.Previous>
       <span className="min-w-9 text-center tabular-nums">
         <BranchPickerPrimitive.Number /> / <BranchPickerPrimitive.Count />
       </span>
       <BranchPickerPrimitive.Next className={actionButton}>
-        <IconChevronRight className="size-3.5 rtl:rotate-180" />
+        <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5 rtl:rotate-180" />
       </BranchPickerPrimitive.Next>
     </BranchPickerPrimitive.Root>
   );

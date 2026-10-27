@@ -19,15 +19,16 @@ import { AskSelection } from "@/components/askSelection";
 import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
 import { useKeyNames, withMod } from "@/lib/keys";
 import { cn } from "@/lib/utils";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconAt,
-  IconChevronDown,
-  IconLibrary,
-  IconLayoutSidebar,
-  IconMenu2,
-  IconPlus,
-  IconSearch,
-} from "@tabler/icons-react";
+  Add01Icon,
+  ArrowDown01Icon,
+  AtIcon,
+  LibraryIcon,
+  Menu01Icon,
+  Search01Icon,
+  SidebarLeftIcon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
@@ -101,7 +102,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               onClick={() => setSearching(true)}
               className="text-muted-foreground hover:text-foreground size-8 rounded-full"
             >
-              <IconSearch className="size-4" />
+              <HugeiconsIcon icon={Search01Icon} className="size-4" />
             </TooltipIconButton>
           )}
           <TooltipIconButton
@@ -123,7 +124,8 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
                 <Mark size={20} color="currentColor" />
               </span>
             )}
-            <IconLayoutSidebar
+            <HugeiconsIcon
+              icon={SidebarLeftIcon}
               className={cn(
                 "size-4",
                 collapsed && "hidden group-hover/toggle:block group-focus-visible/toggle:block",
@@ -139,7 +141,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           )}
         >
           <NewButton className={cn(navRow, "group/new")}>
-            <IconPlus className="size-4.5 shrink-0" />
+            <HugeiconsIcon icon={Add01Icon} className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("New")}</span>}
             {!collapsed && (
               <kbd className="text-muted-foreground font-sans text-xs opacity-0 group-hover/new:opacity-100 group-focus-visible/new:opacity-100 pointer-coarse:hidden">
@@ -148,7 +150,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             )}
           </NewButton>
           <NavLink href="/library" className={navRow}>
-            <IconLibrary className="size-4.5 shrink-0" />
+            <HugeiconsIcon icon={LibraryIcon} className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("Library")}</span>}
           </NavLink>
           <NavLink href="/automations" className={navRow}>
@@ -156,7 +158,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             {!collapsed && <span className="flex-1">{t("Automations")}</span>}
           </NavLink>
           <NavLink href="/plugins" className={navRow}>
-            <IconAt className="size-4.5 shrink-0" />
+            <HugeiconsIcon icon={AtIcon} className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("Plugins")}</span>}
           </NavLink>
           {!collapsed && <BotList />}
@@ -173,7 +175,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="bg-background/70 size-8">
               <span className="relative">
-                <IconMenu2 className="size-4" />
+                <HugeiconsIcon icon={Menu01Icon} className="size-4" />
                 {unseenRuns && <UnseenDot />}
               </span>
               <span className="sr-only">{t("Open menu")}</span>
@@ -186,11 +188,11 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           </SheetTitle>
           <nav className="flex flex-col gap-0.5 overflow-y-auto px-2">
             <NewButton className={mobileRow} onDone={() => setMobileOpen(false)}>
-              <IconPlus className="size-4 shrink-0" />
+              <HugeiconsIcon icon={Add01Icon} className="size-4 shrink-0" />
               <span>{t("New")}</span>
             </NewButton>
             <NavLink href="/library" className={mobileRow} onDone={() => setMobileOpen(false)}>
-              <IconLibrary className="size-4 shrink-0" />
+              <HugeiconsIcon icon={LibraryIcon} className="size-4 shrink-0" />
               <span>{t("Library")}</span>
             </NavLink>
             <NavLink href="/automations" className={mobileRow} onDone={() => setMobileOpen(false)}>
@@ -198,7 +200,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <span>{t("Automations")}</span>
             </NavLink>
             <NavLink href="/plugins" className={mobileRow} onDone={() => setMobileOpen(false)}>
-              <IconAt className="size-4 shrink-0" />
+              <HugeiconsIcon icon={AtIcon} className="size-4 shrink-0" />
               <span>{t("Plugins")}</span>
             </NavLink>
             <button
@@ -209,7 +211,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               }}
               className={cn("hover:bg-muted flex items-center rounded-md text-start", mobileRow)}
             >
-              <IconSearch className="size-4 shrink-0" />
+              <HugeiconsIcon icon={Search01Icon} className="size-4 shrink-0" />
               <span>{t("Search chats")}</span>
             </button>
             <BotList onDone={() => setMobileOpen(false)} />
@@ -288,7 +290,8 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
         className="group/chats text-muted-foreground hover:text-foreground flex items-center justify-between px-2.5 pt-6 pb-1 text-sm"
       >
         {t("Chats")}
-        <IconChevronDown
+        <HugeiconsIcon
+          icon={ArrowDown01Icon}
           className={cn(
             "size-4 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 pointer-coarse:opacity-100",
             !open && "-rotate-90 opacity-100",

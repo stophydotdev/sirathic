@@ -14,7 +14,8 @@ import {
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { FILE_ACCEPT, kindOf } from "@sirathic/server/files";
-import { IconDots } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import { type FC, useEffect, useRef, useState } from "react";
 
@@ -66,7 +67,7 @@ const FileRowMenu: FC<{ file: LibraryFile; onOpen: () => void; onRemove: () => v
         aria-label={`${t("File actions")}: ${file.name}`}
         className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 flex size-7 shrink-0 items-center justify-center rounded-full transition-colors"
       >
-        <IconDots className="size-4" />
+        <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
         <DropdownMenuItem onSelect={onOpen}>{t("Open")}</DropdownMenuItem>
