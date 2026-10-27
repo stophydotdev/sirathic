@@ -131,11 +131,12 @@ test("passages Jev scores below the floor are dropped in our order, and a failed
   globalThis.fetch = Object.assign(async () => Response.json({ answers }), {
     preconnect: () => {},
   });
-  const scored = await relevant("wudu", ["a", "b", "c"], (item) => item);
+  const search = `wudu ${crypto.randomUUID()}`;
+  const scored = await relevant(search, ["a", "b", "c"], (item) => item);
   globalThis.fetch = Object.assign(async () => new Response("busy", { status: 429 }), {
     preconnect: () => {},
   });
-  const failed = await relevant("wudu", ["a", "b", "c"], (item) => item);
+  const failed = await relevant(`${search} again`, ["a", "b", "c"], (item) => item);
   globalThis.fetch = original;
   expect([scored, failed]).toEqual([
     { kept: ["a", "c"], dropped: ["b"] },
