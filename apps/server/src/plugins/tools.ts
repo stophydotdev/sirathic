@@ -13,8 +13,8 @@ const wordsOf = (text: string) =>
     .split(/[^\p{L}\p{N}]+/u)
     .filter(Boolean);
 
-export const matchingPlugins = (plugins: readonly Listed[], query: string) => {
-  const wanted = wordsOf(query);
+export const matchingPlugins = (plugins: readonly Listed[], query: string | undefined) => {
+  const wanted = wordsOf(query ?? "");
   return plugins
     .flatMap((plugin) => {
       const id = connectorId.safeParse(plugin.id).data;
@@ -25,9 +25,9 @@ export const matchingPlugins = (plugins: readonly Listed[], query: string) => {
         `${plugin.id} ${plugin.name} ${plugin.category} ${description}`.toLowerCase();
       return { plugin, description, hits: wanted.filter((word) => haystack.includes(word)).length };
     })
-    .filter(({ hits }) => hits > 0)
-    .toSorted((a, b) => b.hits - a.hits)
-    .slice(0, MAX_RESULTS)
+    .filter(({ hits }) => wanted.length === 0 || hits > 0)
+    .toSorted((a, b) => b.hits - a.hits || Number(b.plugin.connected) - Number(a.plugin.connected))
+    .slice(0, wanted.length === 0 ? undefined : MAX_RESULTS)
     .map(({ plugin, description }) => ({
       id: plugin.id,
       name: plugin.name,
@@ -40,19 +40,21 @@ export function pluginTools(owner: string, returnTo: string) {
   return {
     search_plugins: tool({
       description:
-        "Searches the plugin catalog, the apps and services Sirathic can connect to, like a calendar, notes or email. Returns each match with its id, what it does and whether the user already has it installed. Use it when the user asks for a capability you have no tool for, or whether a plugin exists.",
+        "Searches or lists the plugin catalog, the apps and services Sirathic can connect to, like a calendar, notes or email. Returns each plugin with its id, what it does and whether the user already has it installed. Use it when the user asks for a capability you have no tool for, whether a plugin exists, or what they can connect.",
       inputSchema: z.object({
         query: z
           .string()
           .trim()
-          .min(1)
-          .describe("What the user wants to do, like calendar or notes"),
+          .optional()
+          .describe(
+            "What the user wants to do, like calendar or notes. Leave it out to list every plugin, installed first, such as when they ask what you can connect to or what is installed.",
+          ),
       }),
       execute: async ({ query }) => matchingPlugins(await listConnections(owner), query),
     }),
     install_plugin: tool({
       description:
-        "Starts installing a plugin from the catalog by its id from search_plugins. Call it only when the user asked for the plugin or said yes to your offer, never on your own. Before you ask, say in one line what the plugin could read, like their calendar or notes. The user confirms on a card first. Most plugins then need the user to sign in: they get a Connect card with the link, so tell them to finish there and that the plugin's tools arrive on their next message.",
+        "Installs a plugin from the catalog by its id from search_plugins, when the user asks for it or their request needs it. Say in one line what the plugin could read, like their calendar or notes. Most plugins then need the user to sign in on the card that follows, so tell them to finish there and that the plugin's tools arrive on their next message.",
       inputSchema: z.object({ id: connectorId }),
       execute: async ({ id }) => ({
         id,

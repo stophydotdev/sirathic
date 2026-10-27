@@ -128,6 +128,7 @@ export const promptFor = (overrides: Partial<Parameters<typeof instructions>[0]>
     mode: "quick",
     settings: DEFAULT_SETTINGS,
     project: undefined,
+    connectedApps: [],
     unattended: false,
     offered: {},
     skills: [],

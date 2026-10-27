@@ -136,7 +136,7 @@ test("the abilities list names only what is on in this chat", () => {
     "- Set up routines, which are reminders and answers that arrive on a schedule, and change, pause or delete them.",
     "- Remember what they tell you about themselves, across chats.",
     "- Do exact calculations, such as zakat, inheritance shares and dates.",
-    "- Find and install plugins that connect other apps.",
+    "- Find and install plugins that connect other apps. Connected now: none.",
   ]);
 });
 

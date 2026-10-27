@@ -34,6 +34,7 @@ import { citations, withBareCitations } from "./citations";
 import { codeTools } from "./codeTools";
 import { needsApproval, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
+import { listConnections } from "../plugins/connections";
 import { fileTools, sandboxFiles } from "./fileTools";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -232,16 +233,18 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [preferred, connectors, inProject, ownSkills, inBot, sourcesNeeded] = await Promise.all(
-        [
+      const [preferred, connectors, inProject, ownSkills, inBot, sourcesNeeded, plugins] =
+        await Promise.all([
           preferences,
           Promise.race([connected, stopped]),
           project,
           userSkills,
           bot,
           forced === "search" ? needsSources(askedText) : true,
-        ],
-      );
+          owner !== undefined && !unattended
+            ? listConnections(owner).catch(() => [])
+            : Promise.resolve([]),
+        ]);
       const opening = forced === "search" && !sourcesNeeded ? undefined : forced;
       const texts = inProject !== undefined;
       const settings = texts
@@ -322,6 +325,7 @@ export function chatResponse({
           offered,
           skills: builtIn,
           remembers: owner !== undefined && !unattended,
+          connectedApps: plugins.flatMap((plugin) => (plugin.connected ? [plugin.name] : [])),
           toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
         }),
         mentioned: skillRules(ownSkills, askedText),

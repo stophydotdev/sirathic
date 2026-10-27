@@ -114,11 +114,13 @@ const abilitiesOf = ({
   skills,
   inBot,
   remembers,
+  connectedApps,
 }: {
   offered: ToolSet;
   skills: readonly Skill[];
   inBot: boolean;
   remembers: boolean;
+  connectedApps: readonly string[];
 }) =>
   [
     skills.some(({ name }) => name === "routines") &&
@@ -129,7 +131,8 @@ const abilitiesOf = ({
       `Make files they keep in their Library, such as a khutbah draft, a study plan or a table${"create_research_report" in offered ? ", and research reports" : ""}.`,
     "code_execution" in offered &&
       "Do exact calculations, such as zakat, inheritance shares and dates.",
-    "search_plugins" in offered && "Find and install plugins that connect other apps.",
+    "search_plugins" in offered &&
+      `Find and install plugins that connect other apps. Connected now: ${connectedApps.length > 0 ? connectedApps.join(", ") : "none"}.`,
     "update_skill" in offered && "Save their own skills, ways of working you reuse.",
   ].flatMap((line) => (line ? [`- ${line}`] : []));
 
@@ -151,6 +154,7 @@ export const instructions = ({
   offered,
   skills,
   remembers,
+  connectedApps,
   toolNotes,
 }: {
   now: Date;
@@ -161,9 +165,16 @@ export const instructions = ({
   offered: ToolSet;
   skills: readonly Skill[];
   remembers: boolean;
+  connectedApps: readonly string[];
   toolNotes: readonly string[];
 }) => {
-  const abilities = abilitiesOf({ offered, skills, inBot: project !== undefined, remembers });
+  const abilities = abilitiesOf({
+    offered,
+    skills,
+    inBot: project !== undefined,
+    remembers,
+    connectedApps,
+  });
   return fill(core, {
     identity: project ? botIdentity(project) : "Sirathic, an Islamic answering engine",
     abilities: abilities.length > 0 ? abilities.join("\n") : "- None in this run.",

@@ -3,6 +3,7 @@ import { expect, test } from "bun:test";
 import { z } from "zod";
 import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
 import { needsApproval, writingTools } from "../apps/server/src/chat/confirm";
+import { matchingPlugins } from "../apps/server/src/plugins/tools";
 import {
   loadSkill,
   loadedText,
@@ -307,5 +308,29 @@ test("code, file and plugin tools stay closed until their skill loads", async ()
   expect([toolNames(before), toolNames(after)]).toEqual([
     ["search_web", "load_skill"],
     ["search_web", "load_skill", "code_execution"],
+  ]);
+});
+
+const plugin = (id: string, connected: boolean) => ({
+  id,
+  name: id,
+  category: "productivity",
+  connected,
+});
+
+test("with no query the plugin list is the whole catalog, installed first, without custom plugins", () => {
+  const listed = matchingPlugins(
+    [
+      plugin("notion", false),
+      plugin("googlecalendar", true),
+      plugin("todoist", false),
+      plugin("custom-ab12cd34", true),
+    ],
+    undefined,
+  );
+  expect(listed.map(({ id, installed }) => [id, installed])).toEqual([
+    ["googlecalendar", true],
+    ["notion", false],
+    ["todoist", false],
   ]);
 });
