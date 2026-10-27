@@ -175,12 +175,16 @@ async function answerPrompt(
     citedEarlier: earlier,
   });
   let failure: string | undefined;
-  for await (const chunk of parseJsonEventStream({
+  await parseJsonEventStream({
     stream: response.body ?? new ReadableStream(),
     schema: uiMessageChunkSchema,
-  })) {
-    if (chunk.success && chunk.value.type === "error") failure = chunk.value.errorText;
-  }
+  }).pipeTo(
+    new WritableStream({
+      write: (chunk) => {
+        if (chunk.success && chunk.value.type === "error") failure = chunk.value.errorText;
+      },
+    }),
+  );
   if (failure !== undefined) throw new Error(failure);
   if (!textOf(answered.at(-1)).trim()) throw new Error("the model gave no answer");
   return answered;
