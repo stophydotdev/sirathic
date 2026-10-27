@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { fuse } from "../apps/server/src/chat/fuse";
 import { needsSources, relevant } from "../apps/server/src/chat/relevance";
 import { onePerPage } from "../apps/server/src/chat/search";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
@@ -191,4 +192,16 @@ test("every searchable table's vector column is as wide as its embedder's vector
     embedding.getSQLType() === `halfvec(${embedder.dimensions})` ? [] : [name],
   );
   expect(mismatched).toEqual([]);
+});
+
+test("a result two queries both found beats one only a single query ranked first", () => {
+  expect(
+    fuse(
+      [
+        ["a", "b"],
+        ["c", "b"],
+      ],
+      (id) => id,
+    ),
+  ).toEqual(["b", "a", "c"]);
 });
