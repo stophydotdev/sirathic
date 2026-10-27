@@ -473,7 +473,14 @@ test.each<[string, ChatMessage[], string, Needs]>([
     ["study"],
   ],
 ])("%s decides which deferred tools a turn adds", (_name, messages, job, expected) => {
-  expect(neededTools(messages, job)).toEqual(expected);
+  expect(neededTools(messages, job, "en")).toEqual(expected);
+});
+
+test("a turn in another language keeps every deferred tool, since English words can't rule them out", () => {
+  expect(neededTools([said("m", "user", "ذكرني بقراءة الكهف كل جمعة")], "", "ar")).toEqual([
+    "routine",
+    "study",
+  ]);
 });
 
 test("a tool group's rules come only with its tools, on a turn that needs them", () => {

@@ -138,7 +138,10 @@ mock.module("../apps/server/src/chat/response", () => ({
       return createUIMessageStreamResponse({
         stream: createUIMessageStream({
           execute: async ({ writer }) => {
-            await save([...messages, { ...reply, parts: [{ type: "text", text: "Let me check." }] }]);
+            await save([
+              ...messages,
+              { ...reply, parts: [{ type: "text", text: "Let me check." }] },
+            ]);
             writer.write({ type: "error", errorText });
           },
         }),

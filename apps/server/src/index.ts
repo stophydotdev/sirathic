@@ -135,7 +135,11 @@ app.post("/api/chat", (c) =>
             return undefined;
           });
     const needs = project.then((inProject) =>
-      neededTools(validated, inProject?.kind === "bot" ? inProject.instructions : ""),
+      neededTools(
+        validated,
+        inProject?.kind === "bot" ? inProject.instructions : "",
+        input.language,
+      ),
     );
     const answer = startAnswer(by, input.id);
     return chatResponse({

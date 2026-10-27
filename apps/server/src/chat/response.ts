@@ -75,7 +75,7 @@ export const groupRules = (needed: Needs, offered: ToolSet) =>
 
 export type Needs = ReturnType<typeof neededTools>;
 
-export const neededTools = (messages: ChatMessage[], job: string) => {
+export const neededTools = (messages: ChatMessage[], job: string, language: string | undefined) => {
   const said = `${job} ${messages
     .slice(-2)
     .flatMap((message) =>
@@ -86,7 +86,8 @@ export const neededTools = (messages: ChatMessage[], job: string) => {
     messages.flatMap((message) => message.parts.filter(isToolUIPart).map(getToolName)),
   );
   return GROUPS.filter(
-    ({ names, when }) => when.test(said) || names.some((name) => used.has(name)),
+    ({ names, when }) =>
+      language !== "en" || when.test(said) || names.some((name) => used.has(name)),
   ).map(({ kind }) => kind);
 };
 
