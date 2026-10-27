@@ -10,7 +10,7 @@ import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
 import { noorModel } from "./models/noor";
 import { countNoorAnswer, pickModels } from "./models/pick";
-import { chatResponse, neededTools } from "./chat/response";
+import { chatResponse } from "./chat/response";
 import { reviewEvery } from "./bots/review";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
@@ -143,13 +143,6 @@ app.post("/api/chat", (c) =>
             console.error(`title not set: ${reasonOf(err)}`);
             return undefined;
           });
-    const needs = project.then((inProject) =>
-      neededTools(
-        validated,
-        inProject?.kind === "bot" ? inProject.instructions : "",
-        input.language,
-      ),
-    );
     const answer = startAnswer(by, input.id);
     return chatResponse({
       models,
@@ -173,7 +166,6 @@ app.post("/api/chat", (c) =>
       connected: project.then((inProject) =>
         connectedTools(by, inProject?.kind === "bot" ? inProject.plugins : undefined),
       ),
-      needs,
       projectRules: project.then((inProject) => projectRules(inProject)),
       persona: project.then((inProject) =>
         inProject?.kind === "bot" ? botIdentity(inProject) : undefined,

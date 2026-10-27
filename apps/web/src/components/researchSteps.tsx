@@ -274,6 +274,14 @@ const TOOLS = new Map<
       done: (t) => t("Saved to your preferences"),
     },
   ],
+  [
+    "load_skill",
+    {
+      Icon: Book02Icon,
+      label: (t) => t("Skills"),
+      done: (t) => t("Skills"),
+    },
+  ],
 ]);
 
 const pageOf = (url: string) => {

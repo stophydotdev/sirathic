@@ -123,7 +123,7 @@ You are ${whoAmI(persona)}. Given a user's query, your goal is to generate an ex
 
 Search before answering any question that asks for facts, advice, a recommendation, a comparison, or an explanation, even when you know the answer, so the answer can point to its sources. Greetings, thanks, and small talk need no search.
 
-One search call takes up to 3 queries and several sources at once. For Islamic questions (belief, worship, rulings, ethics, the Quran, hadith, Islamic history), use the quran, hadith, and fatwa sources. Add fiqh, with Arabic queries, when the schools may differ, and add web for history or comparisons between groups. For everything else, use web, or news for current events; the Islamic sources won't help there.${PROMPTS[mode].search}
+One search call takes up to 3 queries and several sources at once. For Islamic questions (belief, worship, rulings, ethics, the Quran, hadith, Islamic history), use the quran, hadith, and fatwa sources. Add fiqh, with Arabic queries, when the schools may differ, and add web for history or comparisons between groups. For everything else, use web, or news for current events; the Islamic sources won't help there.${mode === "quick" ? quick.search : ""}
 
 Search queries must be plain keywords that carry the facts that pin the answer down. Never use quotation marks, site:, AND, OR, or NOT inside a query; the search engines treat them as literal text, which degrades results. To cover alternatives, send several short keyword queries instead.
 
@@ -169,28 +169,6 @@ const MATH_RULES = `
 Write math, amounts, and calculations such as zakat, inheritance shares, and nisab values in plain text, for example "2.5% of $10,000 is $250" or "the wife receives 1/8". The interface does not render LaTeX, so never use LaTeX or dollar-sign math delimiters.
 
 </mathematical_expressions>`;
-
-const WRITING_RULES = `
-
-### Rewrites and Writing Format
-
-<rewrites>
-
-When the user requests you to write, rewrite, or create content (khutbahs, reminders, letters, emails, etc.), use the following format: begin with brief commentary about the request, followed by a horizontal break '---', then the generated content, another horizontal break '---', and conclude with a follow-up question. Always put an empty line before each horizontal break.
-Do not use horizontal breaks for section breaks within the content itself; use headers instead to maintain clear document structure.
-
-For shorter requests where the user asks you to write, rewrite, or create content that is less than 2 paragraphs, indent the generated content with > instead of horizontal breaks.
-
-</rewrites>
-
-## Follow up questions
-
-<followup>
-
-For queries that are asking for rewrites, translations, or writing, include a brief follow-up question to clarify preferences. For example, you might ask "Would you like this khutbah shorter, or with more hadith?" or "Would you like the translation more literal, or easier to read?" These questions help refine the output to better match the user's needs.
-If there is a rewrite, translation, or writing before the follow-up question, always use a line break and then write the follow-up question after the line break. Do not add follow-up questions for other types of queries.
-
-</followup>`;
 
 const GOAL = `- Goal: Teach the concept thoroughly. Assume the user wants to understand why and how, not just what. For a ruling, that means the ruling, the evidence from the Quran and Sunnah behind it, and how to apply it.
 `;
@@ -286,12 +264,7 @@ Paragraph formatting:
 </lists_and_paragraphs>${short ? "" : SUMMARIES}`;
 };
 
-export const answerRules = (
-  preferences: Settings,
-  question: string,
-  mode: Mode,
-  texting: boolean,
-) => {
+export const answerRules = (preferences: Settings, question: string, mode: Mode) => {
   const short = preferences.answerLength === "short";
   const writing = WRITING.test(question);
   const math = CALCULATION.test(question);
@@ -304,5 +277,5 @@ ${short ? "" : GOAL}- Write for someone encountering this topic for the first ti
 
 ${writing || COPYRIGHTED.test(question) ? COPYRIGHT_RULES : ""}${math ? MATH_RULES : ""}${short ? "" : PROMPTS[mode].structure}
 
-</response_guidelines>${writing && !texting ? WRITING_RULES : ""}`;
+</response_guidelines>`;
 };

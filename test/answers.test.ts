@@ -6,13 +6,8 @@ import type { ChatMessage, Mode } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
-import {
-  answerAgent,
-  chatResponse,
-  groupRules,
-  neededTools,
-  type Needs,
-} from "../apps/server/src/chat/response";
+import { answerAgent, chatResponse } from "../apps/server/src/chat/response";
+import { loadSkill, skillsFor } from "../apps/server/src/chat/skills/builtIn";
 import { automationTools } from "../apps/server/src/automations/tools";
 import { CHECK_FIRST } from "../apps/server/src/projects/rules";
 import server from "../apps/server/src/index";
@@ -20,38 +15,31 @@ import server from "../apps/server/src/index";
 const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>
   ({ id, role, parts: [{ type: "text", text }], metadata: { createdAt } }) satisfies ChatMessage;
 
-const SITUATIONAL = [
-  "<copyright_restrictions>",
-  "<mathematical_expressions>",
-  "<rewrites>",
-  "<followup>",
-];
+const SITUATIONAL = ["<copyright_restrictions>", "<mathematical_expressions>"];
 
 test.each([
-  ["what is tawakkul", false, []],
-  ["zakat on gold nisab", false, ["<mathematical_expressions>"]],
-  ["lyrics of tala al badru", false, ["<copyright_restrictions>"]],
-  ["write a khutbah on patience", false, ["<copyright_restrictions>", "<rewrites>", "<followup>"]],
-  ["write a khutbah on patience", true, ["<copyright_restrictions>"]],
-])("%s (texting %p) gets the situational rules %p", (question, texting, sections) => {
-  const rules = answerRules(DEFAULT_SETTINGS, question, "quick", texting);
+  ["what is tawakkul", []],
+  ["zakat on gold nisab", ["<mathematical_expressions>"]],
+  ["lyrics of tala al badru", ["<copyright_restrictions>"]],
+  ["write a khutbah on patience", ["<copyright_restrictions>"]],
+])("%s gets the situational rules %p", (question, sections) => {
+  const rules = answerRules(DEFAULT_SETTINGS, question, "quick");
   expect(SITUATIONAL.filter((tag) => rules.includes(tag))).toEqual(sections);
 });
 
 test("short answers leave out the lesson structure", () => {
   const question = "is a mortgage halal";
-  expect(answerRules(DEFAULT_SETTINGS, question, "quick", false)).toContain("<structure>");
+  expect(answerRules(DEFAULT_SETTINGS, question, "quick")).toContain("<structure>");
   expect(
-    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question, "quick", false),
+    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question, "quick"),
   ).not.toContain("<structure>");
 });
 
-test.each<[Mode, string, string]>([
-  ["quick", "one round of parallel searches", "250 to 400 words"],
-  ["research", "search again for those", "600 to 900 words"],
-])("%s mode gets its own search guidance and length", (mode, search, length) => {
-  expect(searchPrompt(new Date(0), mode, DEFAULT_SETTINGS, undefined)).toContain(search);
-  expect(answerRules(DEFAULT_SETTINGS, "is a mortgage halal", mode, false)).toContain(length);
+test.each<[Mode, string]>([
+  ["quick", "250 to 400 words"],
+  ["research", "600 to 900 words"],
+])("%s mode gets its own answer length", (mode, length) => {
+  expect(answerRules(DEFAULT_SETTINGS, "is a mortgage halal", mode)).toContain(length);
 });
 
 test("the prompt lists what the user told Sirathic about themselves", () => {
@@ -120,7 +108,8 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
     firstStep: undefined,
     canRemember: false,
     persona: undefined,
-    added: [],
+    skills: [],
+    loaded: [],
     shorten: (message) => message,
     answerOptions: {},
   });
@@ -161,7 +150,7 @@ test("a chat request with a system message is refused before anything runs", asy
 
 type ModelCall = Parameters<MockLanguageModelV4["doGenerate"]>[0];
 
-const scriptedModel = (toolsCalled: string[]) => {
+const scriptedModel = (toolsCalled: string[], skillNames: string[] = []) => {
   const seen: ModelCall[] = [];
   const model = new MockLanguageModelV4({
     doGenerate: async (options) => {
@@ -169,7 +158,14 @@ const scriptedModel = (toolsCalled: string[]) => {
       const next = toolsCalled[seen.length - 1];
       return {
         content: next
-          ? [{ type: "tool-call", toolCallId: crypto.randomUUID(), toolName: next, input: "{}" }]
+          ? [
+              {
+                type: "tool-call",
+                toolCallId: crypto.randomUUID(),
+                toolName: next,
+                input: JSON.stringify(next === "load_skill" ? { names: skillNames } : {}),
+              },
+            ]
           : [{ type: "text", text: "Done." }],
         finishReason: { unified: next ? "tool-calls" : "stop", raw: undefined },
         usage,
@@ -195,7 +191,8 @@ const answerWith = (
     firstStep: undefined,
     canRemember: true,
     persona: undefined,
-    added: [],
+    skills: [],
+    loaded: [],
     shorten: (message) => message,
     answerOptions: { anthropic: { thinking: { type: "adaptive" } } },
     ...overrides,
@@ -337,21 +334,36 @@ test.each<[string, ModelCall["toolChoice"]]>([
   },
 );
 
-test("the time zone reaches the model in the rules, only when routine tools are added", async () => {
-  const automate = { owner: "o", timezone: "Asia/Tokyo" };
-  const cases = [
-    { needs: Promise.resolve<Needs>(["routine"]), expected: true },
-    { needs: Promise.resolve<Needs>([]), expected: false },
-  ];
-  const mentioned = await Promise.all(
-    cases.map(async ({ needs }) => {
-      const [call] = await chatTurn({ automate, needs });
-      return systemTexts(call)?.some((text) =>
-        text.includes("The user's time zone is Asia/Tokyo."),
-      );
-    }),
-  );
-  expect(mentioned).toEqual(cases.map(({ expected }) => expected));
+const inResearch = (messages: ChatMessage[]) =>
+  chatTurn({ modelName: "sirathic-noor-1-flash", mode: "research", messages });
+
+test("research mode loads the research skill before anything else, once", async () => {
+  const [first] = await inResearch([said("1", "user", "what is zakat")]);
+  const [again] = await inResearch([
+    said("1", "user", "what is zakat"),
+    {
+      id: "2",
+      role: "assistant",
+      parts: [
+        {
+          type: "dynamic-tool",
+          toolName: "load_skill",
+          toolCallId: "c1",
+          state: "output-available",
+          input: { names: ["research"] },
+          output: "Loaded research.",
+        },
+        { type: "text", text: "Which school do you follow?" },
+      ],
+    },
+    said("3", "user", "Hanafi"),
+  ]);
+  expect([first?.toolChoice, toolNames(first), again?.toolChoice]).toEqual([
+    { type: "required" },
+    ["load_skill"],
+    { type: "auto" },
+  ]);
+  expect(systemTexts(again)?.at(-1)).toContain("This is research mode.");
 });
 
 const HEADER =
@@ -412,106 +424,45 @@ test("short answers name a school only from a source, and give the user's school
   expect(short).toContain("bring in the other schools only when they ask");
 });
 
-const addedInLastMessage = (call: ModelCall | undefined) =>
-  call?.prompt.find((message) => message.providerOptions?.anthropic?.toolChanges)?.providerOptions
-    ?.anthropic?.toolChanges;
-
-const routineTools = { createAutomation: noInput, listAutomations: noInput };
-
-test("the study and routine tools are deferred, and a turn adds only the ones it needs", async () => {
-  const { model, seen } = scriptedModel(["search_web"]);
+test("a loaded skill's text joins the rules and its tools open, while the tool result only says it loaded", async () => {
+  const skills = skillsFor({ mode: "quick", texting: true, inBot: true, timezone: "Asia/Tokyo" });
+  const { model, seen } = scriptedModel(["load_skill"], ["study", "routines"]);
   await answerWith(model, {
-    tools: { search_web: noInput, ...routineTools, dueStudyItems: noInput },
-    added: ["createAutomation", "listAutomations", "addStudyItem"],
-  }).generate({ prompt: "hi" });
-  expect(
-    seen[0]?.tools?.map((entry) => [
-      entry.name,
-      entry.type === "function" ? entry.providerOptions?.anthropic?.deferLoading : undefined,
-    ]),
-  ).toEqual([
-    ["search_web", undefined],
-    ["createAutomation", true],
-    ["listAutomations", true],
-    ["dueStudyItems", true],
-  ]);
-  expect(seen.map(addedInLastMessage)).toEqual(
-    Array.from({ length: 2 }, () => [
-      { type: "tool_addition", toolName: "createAutomation" },
-      { type: "tool_addition", toolName: "listAutomations" },
-    ]),
-  );
-});
-
-test("a turn that needs no deferred tool adds none", async () => {
-  const { model, seen } = scriptedModel([]);
-  await answerWith(model, { tools: { search_web: noInput, ...routineTools } }).generate({
-    prompt: "hi",
-  });
-  expect(addedInLastMessage(seen[0])).toBeUndefined();
-});
-
-test.each<[string, ChatMessage[], string, Needs]>([
-  ["a plain question", [said("m", "user", "what is zakat")], "", []],
-  [
-    "a reminder request",
-    [said("m", "user", "remind me to read al-Kahf every Friday")],
-    "",
-    ["routine"],
-  ],
-  ["a job that sends a daily dua", [said("m", "user", "salam")], "Send a daily dua.", ["routine"]],
-  ["a quiz request", [said("m", "user", "quiz me on surah ikhlas")], "", ["study"]],
-  ["a memorizing job", [said("m", "user", "salam")], "Help me memorize Juz Amma.", ["study"]],
-  [
-    "a yes to the bot's offer",
-    [
-      said("m", "user", "salam"),
-      said("m", "assistant", "Want a daily reminder for it?"),
-      said("m", "user", "yes"),
-    ],
-    "",
-    ["routine"],
-  ],
-  [
-    "an earlier turn that used a study tool",
-    [
-      {
-        id: "a",
-        role: "assistant",
-        parts: [
-          {
-            type: "dynamic-tool",
-            toolName: "gradeStudyItem",
-            toolCallId: "t1",
-            state: "output-available",
-            input: {},
-            output: "ok",
-          },
-        ],
-      },
-      said("m", "user", "ok"),
-    ],
-    "",
-    ["study"],
-  ],
-])("%s decides which deferred tools a turn adds", (_name, messages, job, expected) => {
-  expect(neededTools(messages, job, "en")).toEqual(expected);
-});
-
-test("a turn in another language keeps every deferred tool, since English words can't rule them out", () => {
-  expect(neededTools([said("m", "user", "ذكرني بقراءة الكهف كل جمعة")], "", "ar")).toEqual([
-    "routine",
-    "study",
-  ]);
-});
-
-test("a tool group's rules come only with its tools, on a turn that needs them", () => {
-  const studying = { dueStudyItems: noInput };
+    tools: {
+      search_web: noInput,
+      load_skill: loadSkill(skills),
+      dueStudyItems: noInput,
+      createAutomation: noInput,
+    },
+    skills,
+    firstStep: undefined,
+  }).generate({ prompt: "quiz me" });
+  const [before, after] = seen;
+  const result = JSON.stringify(after?.prompt.filter((message) => message.role === "tool"));
   expect([
-    groupRules(["study"], studying).includes("gradeStudyItem"),
-    groupRules([], studying),
-    groupRules(["study"], {}),
-  ]).toEqual([true, "", ""]);
+    toolNames(before),
+    toolNames(after),
+    systemTexts(before)?.at(-1)?.includes("run it as short quizzes"),
+    systemTexts(after)?.at(-1)?.includes("run it as short quizzes"),
+    systemTexts(after)?.at(-1)?.includes("The user's time zone is Asia/Tokyo."),
+    result.includes("short quizzes"),
+    result.includes("Loaded study, routines."),
+  ]).toEqual([
+    ["search_web", "load_skill"],
+    ["search_web", "load_skill", "dueStudyItems", "createAutomation"],
+    false,
+    true,
+    true,
+    false,
+    true,
+  ]);
+});
+
+test("a skill loaded in an earlier turn stays loaded", async () => {
+  const skills = skillsFor({ mode: "quick", texting: false, inBot: false, timezone: undefined });
+  const { model, seen } = scriptedModel([]);
+  await answerWith(model, { skills, loaded: ["writing"] }).generate({ prompt: "shorter" });
+  expect(systemTexts(seen[0])?.at(-1)).toContain("<rewrites>");
 });
 
 const STATIC_RULES = [
@@ -525,7 +476,7 @@ const STATIC_RULES = [
 
 test("the rules that never change per request sit in the system prompt, not the closing rules", () => {
   const prompt = searchPrompt(new Date(0), "quick", DEFAULT_SETTINGS, undefined);
-  const closing = answerRules(DEFAULT_SETTINGS, "is a mortgage halal", "quick", false);
+  const closing = answerRules(DEFAULT_SETTINGS, "is a mortgage halal", "quick");
   expect([
     STATIC_RULES.filter((tag) => prompt.includes(tag)),
     STATIC_RULES.filter((tag) => closing.includes(tag)),

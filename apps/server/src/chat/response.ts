@@ -12,7 +12,6 @@ import {
   isToolUIPart,
   type LanguageModel,
   type LanguageModelUsage,
-  type ModelMessage,
   smoothStream,
   ToolLoopAgent,
   type ToolSet,
@@ -27,7 +26,7 @@ import { type AutomationScope, automationTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
-import { STUDY_RULES, studyTools } from "../bots/studyTools";
+import { studyTools } from "../bots/studyTools";
 import { citations, withBareCitations } from "./citations";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -36,6 +35,16 @@ import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";
 import { answerRules, searchPrompt } from "./prompts/shared";
+import {
+  closedTools,
+  loadedNames,
+  loadedText,
+  loadSkill,
+  LOAD_SKILL,
+  type Skill,
+  skillIndex,
+  skillsFor,
+} from "./skills/builtIn";
 import { type Remember, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
@@ -47,56 +56,9 @@ const RULES_HEADER =
 const FIRST_STEP = {
   search: { type: "tool", toolName: "search_web" },
   fetch: { type: "tool", toolName: "fetch_url" },
+  skill: "required",
   anyTool: "required",
 } as const;
-
-const GROUPS = [
-  {
-    kind: "routine",
-    names: ["createAutomation", "listAutomations"],
-    when: /\b(remind\w*|routines?|schedul\w*|automat\w*|daily|weekly|every (day|morning|evening|night|week|month|\w+day))\b/iu,
-    rules: "",
-  },
-  {
-    kind: "study",
-    names: ["addStudyItem", "dueStudyItems", "gradeStudyItem"],
-    when: /\b(memori[sz]\w*|hifz|revis\w*|review\w*|quiz\w*|stud(y|ies|ying)|flashcards?)\b/iu,
-    rules: STUDY_RULES,
-  },
-] as const;
-
-const deferred = new Set<string>(GROUPS.flatMap((group) => group.names));
-
-export const groupRules = (needed: Needs, offered: ToolSet) =>
-  GROUPS.filter(({ kind, names }) => needed.includes(kind) && names.some((name) => name in offered))
-    .map(({ rules }) => rules)
-    .join("");
-
-export type Needs = ReturnType<typeof neededTools>;
-
-export const neededTools = (messages: ChatMessage[], job: string, language: string | undefined) => {
-  const said = `${job} ${messages
-    .slice(-2)
-    .flatMap((message) =>
-      message.parts.flatMap((part) => (part.type === "text" ? [part.text] : [])),
-    )
-    .join(" ")}`;
-  const used = new Set(
-    messages.flatMap((message) => message.parts.filter(isToolUIPart).map(getToolName)),
-  );
-  return GROUPS.filter(
-    ({ names, when }) =>
-      language !== "en" || when.test(said) || names.some((name) => used.has(name)),
-  ).map(({ kind }) => kind);
-};
-
-const deferLoading = (entry: ToolSet[string]) => ({
-  ...entry,
-  providerOptions: {
-    ...entry.providerOptions,
-    anthropic: { ...entry.providerOptions?.anthropic, deferLoading: true },
-  },
-});
 
 export function answerAgent({
   model,
@@ -107,7 +69,8 @@ export function answerAgent({
   firstStep,
   canRemember,
   persona,
-  added,
+  skills,
+  loaded,
   shorten,
   answerOptions,
 }: {
@@ -119,48 +82,47 @@ export function answerAgent({
   firstStep: keyof typeof FIRST_STEP | undefined;
   canRemember: boolean;
   persona: string | undefined;
-  added: readonly string[];
+  skills: readonly Skill[];
+  loaded: readonly string[];
   shorten: ReturnType<typeof shortenEarlierResults>;
   answerOptions: ProviderOptions;
 }) {
   const available = Object.fromEntries(
-    Object.entries(tools).flatMap(([name, entry]): [string, ToolSet[string]][] =>
-      name === "remember" && !canRemember
-        ? []
-        : [[name, deferred.has(name) ? deferLoading(entry) : entry]],
-    ),
+    Object.entries(tools).filter(([name]) => name !== "remember" || canRemember),
   );
-  const toolChanges = added
-    .filter((toolName) => toolName in available)
-    .map((toolName) => ({ type: "tool_addition", toolName }));
   const options: ProviderOptions =
     persona !== undefined && mode === "quick"
       ? { ...answerOptions, anthropic: { ...answerOptions.anthropic, effort: "low" } }
       : answerOptions;
-  const addTools: ModelMessage[] =
-    toolChanges.length > 0
-      ? [{ role: "system", content: "", providerOptions: { anthropic: { toolChanges } } }]
-      : [];
   return new ToolLoopAgent({
     model,
     instructions: searchPrompt(new Date(), mode, settings, persona),
     tools: available,
     stopWhen: hasToolCall("askUser"),
     allowSystemInMessages: true,
-    prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => ({
-      messages: [
-        ...initialMessages.map(shorten),
-        ...addTools,
-        ...responseMessages,
-        {
-          role: "system",
-          content:
-            RULES_HEADER +
-            (steps.some((step) => step.text.trim()) ? rules.replace(CHECK_FIRST, "") : rules),
-        },
-      ],
-      ...(stepNumber === 0 && firstStep && { toolChoice: FIRST_STEP[firstStep] }),
-    }),
+    prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
+      const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
+      const closed = closedTools(skills, open);
+      const forcing = stepNumber === 0 ? firstStep : undefined;
+      return {
+        messages: [
+          ...initialMessages.map(shorten),
+          ...responseMessages,
+          {
+            role: "system",
+            content:
+              RULES_HEADER +
+              (steps.some((step) => step.text.trim()) ? rules.replace(CHECK_FIRST, "") : rules) +
+              loadedText(skills, open),
+          },
+        ],
+        activeTools:
+          forcing === "skill"
+            ? [LOAD_SKILL]
+            : Object.keys(available).filter((name) => !closed.has(name)),
+        ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
+      };
+    },
     providerOptions:
       settings.answerLength === "short"
         ? options
@@ -191,7 +153,6 @@ export function chatResponse({
   fileOwner,
   settled,
   bot,
-  needs,
   historyLimit,
   citedEarlier,
 }: {
@@ -214,7 +175,6 @@ export function chatResponse({
   fileOwner?: string;
   settled?: () => void;
   bot?: Promise<BotScope | undefined>;
-  needs?: Promise<Needs>;
   historyLimit?: number;
   citedEarlier?: ChatMessage[];
 }) {
@@ -269,19 +229,32 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [preferred, connectors, project, skills, inBot, who, needed = []] = await Promise.all([
+      const [preferred, connectors, project, mentioned, inBot, who] = await Promise.all([
         preferences,
         Promise.race([connected, stopped]),
         projectRules,
         skillRules,
         bot,
         persona,
-        needs,
       ]);
       const texts = who !== undefined;
-      const added = GROUPS.filter(({ kind }) => needed.includes(kind)).flatMap(
-        ({ names }) => names,
+      const builtIn = skillsFor({
+        mode,
+        texting: texts,
+        inBot: inBot !== undefined,
+        timezone: automate?.timezone,
+      });
+      const loaded = loadedNames(
+        messages.flatMap((message) =>
+          message.parts
+            .filter(isToolUIPart)
+            .map((part) => ({ toolName: getToolName(part), input: part.input })),
+        ),
       );
+      const first =
+        builtIn.some(({ name }) => name === "research") && !loaded.includes("research")
+          ? "skill"
+          : forced;
       const settings = texts
         ? ({ ...preferred, answerLength: "short" } satisfies Settings)
         : preferred;
@@ -296,6 +269,7 @@ export function chatResponse({
         ...(inBot && botTools(inBot)),
         ...(searchable && chatSearchTools(searchable)),
         ...(inBot && studyTools(inBot)),
+        ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
         ...connectors.tools,
       };
       const agent = answerAgent({
@@ -304,18 +278,21 @@ export function chatResponse({
         mode,
         settings,
         rules:
-          answerRules(settings, recent, mode, texts) +
-          (automate && added.includes("createAutomation")
-            ? `\n\nThe user's time zone is ${automate.timezone}.`
-            : "") +
+          answerRules(settings, recent, mode) +
           project +
           (searchable ? SEARCH_OUR_CHAT : "") +
-          groupRules(needed, offered) +
-          skills,
-        firstStep: forced && !inBot ? (noorModel(modelName) ? forced : "anyTool") : undefined,
+          skillIndex(builtIn) +
+          mentioned,
+        firstStep:
+          first && !inBot
+            ? first === "skill" || noorModel(modelName)
+              ? first
+              : "anyTool"
+            : undefined,
         canRemember: remember !== undefined,
         persona: who,
-        added,
+        skills: builtIn,
+        loaded,
         shorten,
         answerOptions: options.answer,
       });
