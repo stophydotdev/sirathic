@@ -2,6 +2,11 @@ import { tool } from "ai";
 import { z } from "zod";
 import { botTitle, projectInstructions, projectName, updateProject } from "../projects/projects";
 
+const oneEmoji = z
+  .emoji()
+  .max(16)
+  .refine((text) => [...new Intl.Segmenter().segment(text)].length === 1, "send exactly one emoji");
+
 export type BotScope = { id: string; owner: string };
 
 export const BOT_HISTORY = 40;
@@ -33,6 +38,12 @@ export function botTools({ id, owner }: BotScope) {
         const bot = await updateProject(id, owner, { name, title, instructions: job });
         return { name: bot.name };
       },
+    }),
+    react_to_message: tool({
+      description:
+        "Reacts to the user's last message with one emoji, shown as a small pill on that message. Use it rarely and mirror the user: if they never use emoji, almost never react. It suits good news, something funny, thanks, or a moment where a quick 👍 says more than a sentence. Never use it instead of a reply and never on a request you have not answered. Write your reply as usual after it.",
+      inputSchema: z.object({ emoji: oneEmoji }),
+      execute: async ({ emoji }) => ({ emoji }),
     }),
     update_profile: tool({
       description:

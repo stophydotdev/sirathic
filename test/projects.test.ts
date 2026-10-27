@@ -1,4 +1,5 @@
 import { expect, mock, test } from "bun:test";
+import { asSchema } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import { profileRejection } from "../apps/server/src/bots/profile";
 import { fallenOut } from "../apps/server/src/bots/summary";
@@ -315,4 +316,17 @@ test("update_profile renames the bot and leaves its description alone", async ()
   expect(result).toEqual({ name: "Ilm Coach" });
   expect(updates[0]?.split(" returning ")[0]).not.toContain("instructions");
   expect(await tools.update_profile.execute?.({}, call)).toBe("Nothing to change.");
+});
+
+test.each([
+  ["❤️", true],
+  ["👍", true],
+  ["👨‍👩‍👧", true],
+  ["👍👍", false],
+  ["ok", false],
+  ["", false],
+])("a reaction of %p is one emoji: %p", async (emoji, accepted) => {
+  const { react_to_message } = botTools({ id: botId, owner: "user-a" });
+  const checked = await asSchema(react_to_message.inputSchema).validate?.({ emoji });
+  expect(checked?.success).toBe(accepted);
 });

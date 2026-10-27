@@ -24,6 +24,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Copy01Icon, ThumbsDownIcon, ThumbsUpIcon } from "@hugeicons/core-free-icons";
 import { type FC, useEffect, useRef, useState } from "react";
+import { z } from "zod";
 
 const actionButton =
   "text-muted-foreground hover:bg-muted hover:text-foreground flex size-7 items-center justify-center rounded-full pointer-coarse:size-9";
@@ -173,8 +174,19 @@ const BotSays: FC = () => {
   );
 };
 
+const reacted = z.object({ emoji: z.string() });
+
+const reactionAfter = (messages: readonly ThreadMessage[], id: string) => {
+  const reply = messages[messages.findIndex((message) => message.id === id) + 1];
+  const call = reply?.content.find(
+    (part) => part.type === "tool-call" && currentToolName(part.toolName) === "react_to_message",
+  );
+  return call?.type === "tool-call" ? reacted.safeParse(call.result).data?.emoji : undefined;
+};
+
 const BotYou: FC = () => {
   const t = useT();
+  const reaction = useAuiState((s) => reactionAfter(s.thread.messages, s.message.id));
   const routine = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.routine,
   );
@@ -198,8 +210,15 @@ const BotYou: FC = () => {
           </MessagePrimitive.Attachments>
         </div>
       </AuiIf>
-      <div className="max-w-4/5 rounded-3xl bg-sky-700 px-4 py-2 text-base text-white wrap-break-word whitespace-pre-wrap">
-        <MessagePrimitive.Parts components={{ Text: UserText }} />
+      <div className={cn("relative max-w-4/5 text-base text-white", reaction && "mb-3")}>
+        <div className="rounded-3xl bg-sky-700 px-4 py-2 wrap-break-word whitespace-pre-wrap">
+          <MessagePrimitive.Parts components={{ Text: UserText }} />
+        </div>
+        {reaction && (
+          <span className="bg-background border-border absolute -bottom-3 end-3 rounded-full border px-1.5 py-0.5 text-sm leading-none">
+            {reaction}
+          </span>
+        )}
       </div>
     </div>
   );
