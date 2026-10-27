@@ -14,6 +14,7 @@ import {
 } from "@/components/research";
 import { type Translate, useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
+import { APPEAR } from "@/lib/ease";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
@@ -36,8 +37,8 @@ type Part = ThreadMessage["content"][number];
 
 const REVEAL_MS = 400;
 const COUNT_MS = 300;
-const appear =
-  "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 duration-300";
+const LIVE_TITLES = 4;
+const TITLE_STAGGER_MS = 80;
 
 function useElapsed(startedAt: number, running: boolean) {
   const [now, setNow] = useState(() => performance.now());
@@ -141,7 +142,7 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
           <StepRow key={i} step={step} active={busy && i === rows.length - 1} animate={busy} />
         ))}
       {busy ? (
-        <div className={cn("text-muted-foreground flex h-6 items-center gap-2 text-sm", appear)}>
+        <div className={cn("text-muted-foreground flex h-6 items-center gap-2 text-sm", APPEAR)}>
           <HugeiconsIcon
             icon={Loading03Icon}
 
@@ -184,7 +185,7 @@ const Row: FC<{
   aside?: ReactNode;
   children: ReactNode;
 }> = ({ Icon, active, code, href, aside, children }) => (
-  <div className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", appear)}>
+  <div className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", APPEAR)}>
     <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
     <span className={cn(code ? "shrink-0" : "min-w-0 truncate", active && "shimmer")}>
       {children}
@@ -216,7 +217,7 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
   return (
     <div className="flex min-w-0 flex-col gap-2">
       <div
-        className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", appear)}
+        className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", APPEAR)}
       >
         <MentionIcon target={target} />
         <span className={cn("shrink-0", active && "shimmer")}>
@@ -231,7 +232,7 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
           key={i}
           className={cn(
             "text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm",
-            appear,
+            APPEAR,
           )}
         >
           <MentionIcon target={target} />
@@ -309,6 +310,7 @@ const SearchesRow: FC<{
   const [open, setOpen] = useState(false);
   const t = useT();
   const count = useCountUp(queries.length, animate && !done);
+  const listed = open ? results : animate && done ? results.slice(0, LIVE_TITLES) : [];
   const sites = new Map<string, string>();
   for (const read of results) {
     if (read.url) sites.set(URL.parse(read.url)?.hostname ?? read.url, read.url);
@@ -321,7 +323,7 @@ const SearchesRow: FC<{
         onClick={() => setOpen(!open)}
         className={cn(
           "text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 text-start text-sm transition-colors",
-          appear,
+          APPEAR,
         )}
       >
         <HugeiconsIcon icon={Search01Icon} className="text-foreground/70 size-4 shrink-0" />
@@ -349,25 +351,32 @@ const SearchesRow: FC<{
             <span className="min-w-0 truncate">{query}</span>
           </span>
         ))}
-      {open &&
-        results.map((read, i) => {
-          const Icon = READ_ICONS[read.source];
-          return (
-            <a
-              key={`${read.source}-${i}`}
-              href={read.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm font-normal! no-underline! transition-colors"
-            >
-              <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
-              <span className="min-w-0 truncate">{read.title}</span>
-              {read.detail && (
-                <span className="text-muted-foreground/70 shrink-0">· {read.detail}</span>
-              )}
-            </a>
-          );
-        })}
+      {listed.map((read, i) => {
+        const Icon = READ_ICONS[read.source];
+        return (
+          <a
+            key={`${read.source}-${i}`}
+            href={read.url}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+              "text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm font-normal! no-underline! transition-colors",
+              !open && APPEAR,
+            )}
+            style={
+              open
+                ? undefined
+                : { animationDelay: `${i * TITLE_STAGGER_MS}ms`, animationFillMode: "both" }
+            }
+          >
+            <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
+            <span className="min-w-0 truncate">{read.title}</span>
+            {read.detail && (
+              <span className="text-muted-foreground/70 shrink-0">· {read.detail}</span>
+            )}
+          </a>
+        );
+      })}
     </div>
   );
 };
