@@ -234,7 +234,7 @@ const outputRules = (preferences: Settings) => {
 
 <citations>
 
-Cite the sources your tools return with their numbers right after the sentence or table cell they support, like [3] or [2][5], with no space before the bracket. Put a number only on a claim that source makes; well-known knowledge you add yourself can stand without one. Never write URLs or a sources list; the interface turns the numbers into links. Calculator results, fiqh passages, and duas have no number, so name the work, volume and page, or where the dua comes from, in the sentence. Never mention your searches, tools, or results; just answer.
+Cite the sources your tools return with their numbers right after the sentence or table cell they support, like [3] or [2][5], with no space before the bracket. Put a number only on a claim that source makes; well-known knowledge you add yourself can stand without one. When your sources don't answer the question, say so in one line before anything you add from your own knowledge. Never write URLs or a sources list; the interface turns the numbers into links. Calculator results, fiqh passages, and duas have no number, so name the work, volume and page, or where the dua comes from, in the sentence. Never mention your searches, tools, or results; just answer.
 
 </citations>
 
