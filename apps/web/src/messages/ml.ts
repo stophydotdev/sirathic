@@ -568,7 +568,6 @@ export default {
   Routines: "ദിനചര്യകൾ",
   Description: "വിവരണം",
   "Edit bot avatar": "ബോട്ടിന്റെ അവതാർ എഡിറ്റ് ചെയ്യുക",
-  "Icons from Flaticon": "Flaticon-ൽ നിന്നുള്ള ഐക്കണുകൾ",
   Schedule: "ഷെഡ്യൂൾ",
   Status: "നില",
   Active: "സജീവം",

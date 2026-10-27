@@ -575,7 +575,6 @@ export default {
   Routines: "Mga routine",
   Description: "Paglalarawan",
   "Edit bot avatar": "I-edit ang avatar ng bot",
-  "Icons from Flaticon": "Mga icon mula sa Flaticon",
   Schedule: "Iskedyul",
   Status: "Katayuan",
   Active: "Aktibo",

@@ -573,7 +573,6 @@ export default {
   Routines: "Rutinas",
   Description: "Descripción",
   "Edit bot avatar": "Editar avatar del bot",
-  "Icons from Flaticon": "Iconos de Flaticon",
   Schedule: "Horario",
   Status: "Estado",
   Active: "Activa",

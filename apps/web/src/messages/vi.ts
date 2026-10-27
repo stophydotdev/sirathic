@@ -568,7 +568,6 @@ export default {
   Routines: "Thói quen",
   Description: "Mô tả",
   "Edit bot avatar": "Sửa ảnh đại diện của bot",
-  "Icons from Flaticon": "Biểu tượng từ Flaticon",
   Schedule: "Lịch chạy",
   Status: "Trạng thái",
   Active: "Đang bật",

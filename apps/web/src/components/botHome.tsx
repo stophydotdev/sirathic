@@ -9,6 +9,9 @@ import { Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
 import { type Project, useProjects } from "@/components/projects";
 import { QuestionCard, useFirstReply } from "@/components/questionCard";
+import type { BlobState } from "@/lib/blob/states";
+import { useAuiState } from "@assistant-ui/react";
+import { currentToolName } from "@sirathic/server/messages";
 import { type FC, useEffect, useState } from "react";
 
 const STARTER_REPLIES = [
@@ -26,8 +29,38 @@ export const useBot = () => {
   return useProjects((s) => s.bots?.find((bot) => bot.id === projectId));
 };
 
+const useBotState = () =>
+  useAuiState((s): BlobState => {
+    const last = s.thread.messages.at(-1);
+    if (last?.role !== "assistant") return s.thread.isRunning ? "thinking" : "ready";
+    if (last.status?.type === "incomplete" && last.status.reason === "error") return "failed";
+    if (last.status?.type === "incomplete" && last.status.reason === "cancelled") return "stopped";
+    const open = last.content.filter(
+      (part) => part.type === "tool-call" && part.result === undefined,
+    );
+    const asking = open.some(
+      (part) =>
+        part.type === "tool-call" &&
+        ((part.approval !== undefined &&
+          part.approval.approved === undefined &&
+          part.approval.resolution === undefined) ||
+          currentToolName(part.toolName) === "clarifying_questions"),
+    );
+    if (asking) return "asking";
+    if (!s.thread.isRunning) return "ready";
+    if (
+      open.some(
+        (part) => part.type === "tool-call" && currentToolName(part.toolName) === "search_web",
+      )
+    )
+      return "searching";
+    if (open.length > 0) return "working";
+    return last.content.at(-1)?.type === "text" ? "writing" : "thinking";
+  });
+
 export const BotTitle: FC = () => {
   const bot = useBot();
+  const state = useBotState();
   const open = useBotPanel((s) => s.open);
   const setOpen = useBotPanel((s) => s.setOpen);
   const t = useT();
@@ -40,7 +73,7 @@ export const BotTitle: FC = () => {
       title={t("Settings")}
       className="bg-muted hover:bg-foreground/10 flex h-8 min-w-0 items-center gap-2 rounded-xl px-2.5 text-sm font-medium"
     >
-      <BotAvatar color={bot.color} icon={bot.symbol} className="size-5" />
+      <BotAvatar color={bot.color} seed={bot.id} state={state} className="size-5" />
       <span className="max-w-40 truncate">{bot.name}</span>
     </button>
   );

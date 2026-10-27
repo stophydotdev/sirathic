@@ -572,7 +572,6 @@ export default {
   Routines: "Rutinitas",
   Description: "Deskripsi",
   "Edit bot avatar": "Ubah avatar bot",
-  "Icons from Flaticon": "Ikon dari Flaticon",
   Schedule: "Jadwal",
   Status: "Status",
   Active: "Aktif",

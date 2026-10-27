@@ -563,7 +563,6 @@ export default {
   Routines: "ទម្លាប់",
   Description: "ការពិពណ៌នា",
   "Edit bot avatar": "កែអាវ៉ាតាររបស់បូត",
-  "Icons from Flaticon": "រូបតំណាងពី Flaticon",
   Schedule: "កាលវិភាគ",
   Status: "ស្ថានភាព",
   Active: "សកម្ម",

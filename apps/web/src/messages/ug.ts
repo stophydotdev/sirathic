@@ -575,7 +575,6 @@ export default {
   Routines: "ئادەتلەر",
   Description: "چۈشەندۈرۈش",
   "Edit bot avatar": "بوتنىڭ باش سۈرىتىنى تەھرىرلەش",
-  "Icons from Flaticon": "Flaticon دىكى سىنبەلگىلەر",
   Schedule: "ۋاقىت جەدۋىلى",
   Status: "ھالىتى",
   Active: "ئاكتىپ",

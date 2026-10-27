@@ -570,7 +570,6 @@ export default {
   Routines: "வழக்கங்கள்",
   Description: "விளக்கம்",
   "Edit bot avatar": "பாட்டின் அவதாரைத் திருத்து",
-  "Icons from Flaticon": "Flaticon இலிருந்து ஐகான்கள்",
   Schedule: "அட்டவணை",
   Status: "நிலை",
   Active: "செயலில்",

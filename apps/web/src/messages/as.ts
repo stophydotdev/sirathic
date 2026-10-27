@@ -563,7 +563,6 @@ export default {
   Routines: "ৰুটিনসমূহ",
   Description: "বিৱৰণ",
   "Edit bot avatar": "বটৰ অবতাৰ সলনি কৰক",
-  "Icons from Flaticon": "Flaticon ৰ আইকন",
   Schedule: "সময়সূচী",
   Status: "অৱস্থা",
   Active: "সক্ৰিয়",

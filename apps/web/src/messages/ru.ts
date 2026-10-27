@@ -571,7 +571,6 @@ export default {
   Routines: "Рутины",
   Description: "Описание",
   "Edit bot avatar": "Изменить аватар бота",
-  "Icons from Flaticon": "Иконки с Flaticon",
   Schedule: "Расписание",
   Status: "Статус",
   Active: "Активна",

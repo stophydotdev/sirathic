@@ -571,7 +571,6 @@ export default {
   Routines: "ڕۆتینەکان",
   Description: "وەسف",
   "Edit bot avatar": "دەستکاریکردنی ئەڤاتاری بۆت",
-  "Icons from Flaticon": "ئایکۆنەکان لە Flaticon",
   Schedule: "خشتە",
   Status: "دۆخ",
   Active: "چالاک",

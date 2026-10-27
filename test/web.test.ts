@@ -14,6 +14,8 @@ import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 import { refreshing } from "../apps/web/src/lib/refreshing";
+import { blobMotion } from "../apps/web/src/lib/blob/engine";
+import { BODIES, bodyOf } from "../apps/web/src/lib/blob/shape";
 
 test("a link keeps its path and drops the trailing period and question mark", () => {
   expect(splitLinks("What does https://a.org/x/y say? Also see https://b.info/en/82536.")).toEqual([
@@ -290,4 +292,18 @@ test("a hidden citation takes the space before it, so the period stays against t
   const tree = sentence("That is the Hanafi view ");
   rehypeBareCitations()(tree);
   expect(tree).toEqual(sentence("That is the Hanafi view"));
+});
+
+test("a bot keeps one body, loses its shine while it thinks and gets it back after the done burst", () => {
+  expect(BODIES).toContain(bodyOf("4b1f"));
+  expect(bodyOf("4b1f")).toBe(bodyOf("4b1f"));
+  const motion = blobMotion(bodyOf("4b1f"), "ready");
+  motion.set("thinking", 0);
+  expect(motion.frame(1).shine).toBeNull();
+  motion.set("ready", 1);
+  expect(motion.frame(1.5).shine).toBeNull();
+  expect(motion.still(2)).toBe(false);
+  motion.frame(3.5);
+  expect(motion.frame(4.5).shine?.opacity).toBe(0.85);
+  expect(motion.still(4.5)).toBe(true);
 });

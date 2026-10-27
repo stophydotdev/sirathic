@@ -560,7 +560,6 @@ export default {
   Routines: "กิจวัตร",
   Description: "คำอธิบาย",
   "Edit bot avatar": "แก้ไขอวาตาร์ของบอท",
-  "Icons from Flaticon": "ไอคอนจาก Flaticon",
   Schedule: "กำหนดการ",
   Status: "สถานะ",
   Active: "ใช้งานอยู่",

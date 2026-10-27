@@ -563,7 +563,6 @@ export default {
   Routines: "චර්යා",
   Description: "විස්තරය",
   "Edit bot avatar": "බොට්ගේ අවතාරය සංස්කරණය කරන්න",
-  "Icons from Flaticon": "Flaticon වෙතින් අයිකන",
   Schedule: "කාලසටහන",
   Status: "තත්ත්වය",
   Active: "සක්‍රියයි",

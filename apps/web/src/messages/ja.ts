@@ -571,7 +571,6 @@ export default {
   Routines: "ルーティン",
   Description: "説明",
   "Edit bot avatar": "ボットのアバターを編集",
-  "Icons from Flaticon": "Flaticon のアイコン",
   Schedule: "スケジュール",
   Status: "ステータス",
   Active: "有効",

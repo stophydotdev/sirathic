@@ -569,7 +569,6 @@ export default {
   Routines: "Rutine",
   Description: "Opis",
   "Edit bot avatar": "Uredi avatar bota",
-  "Icons from Flaticon": "Ikone sa Flaticona",
   Schedule: "Raspored",
   Status: "Status",
   Active: "Aktivno",

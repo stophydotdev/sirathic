@@ -568,7 +568,6 @@ export default {
   Routines: "ورځنۍ کارونه",
   Description: "تشریح",
   "Edit bot avatar": "د بوټ اوتار سمول",
-  "Icons from Flaticon": "له Flaticon څخه icons",
   Schedule: "مهالویش",
   Status: "حالت",
   Active: "فعال",

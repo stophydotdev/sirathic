@@ -568,7 +568,6 @@ export default {
   Routines: "روتین‌ها",
   Description: "توضیحات",
   "Edit bot avatar": "ویرایش آواتار ربات",
-  "Icons from Flaticon": "نمادها از Flaticon",
   Schedule: "زمان‌بندی",
   Status: "وضعیت",
   Active: "فعال",

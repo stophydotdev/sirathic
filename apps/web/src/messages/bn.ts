@@ -565,7 +565,6 @@ export default {
   Routines: "রুটিন",
   Description: "বিবরণ",
   "Edit bot avatar": "বটের অবতার সম্পাদনা করুন",
-  "Icons from Flaticon": "Flaticon থেকে আইকন",
   Schedule: "সময়সূচি",
   Status: "অবস্থা",
   Active: "সক্রিয়",

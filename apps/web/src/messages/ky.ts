@@ -573,7 +573,6 @@ export default {
   Routines: "Күнүмдүк иштер",
   Description: "Сүрөттөмө",
   "Edit bot avatar": "Боттун аватарын өзгөртүү",
-  "Icons from Flaticon": "Flaticon сүрөтчөлөрү",
   Schedule: "Жадыбал",
   Status: "Абалы",
   Active: "Активдүү",

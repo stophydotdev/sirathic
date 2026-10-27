@@ -108,7 +108,7 @@ export const BotPanel: FC<{ bot: Project }> = ({ bot }) => {
                 aria-label={t("Edit bot avatar")}
                 className="mx-auto my-4 rounded-full"
               >
-                <BotAvatar color={bot.color} icon={bot.symbol} className="size-20" />
+                <BotAvatar color={bot.color} seed={bot.id} state="opening" className="size-20" />
               </PopoverTrigger>
               <PopoverContent
                 onOpenAutoFocus={(event) => event.preventDefault()}
@@ -116,9 +116,7 @@ export const BotPanel: FC<{ bot: Project }> = ({ bot }) => {
               >
                 <BotPickerPanel
                   color={bot.color}
-                  icon={bot.symbol}
                   onColor={(color) => void change(bot.id, { color })}
-                  onIcon={(symbol) => void change(bot.id, { symbol })}
                 />
               </PopoverContent>
             </Popover>

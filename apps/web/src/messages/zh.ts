@@ -560,7 +560,6 @@ export default {
   Routines: "例行任务",
   Description: "描述",
   "Edit bot avatar": "编辑机器人头像",
-  "Icons from Flaticon": "图标来自 Flaticon",
   Schedule: "计划",
   Status: "状态",
   Active: "已启用",

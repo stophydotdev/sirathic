@@ -572,7 +572,6 @@ export default {
   Routines: "Rutinler",
   Description: "Açıklama",
   "Edit bot avatar": "Botun avatarını düzenle",
-  "Icons from Flaticon": "Flaticon'dan simgeler",
   Schedule: "Zamanlama",
   Status: "Durum",
   Active: "Etkin",

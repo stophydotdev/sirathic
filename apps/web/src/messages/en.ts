@@ -523,7 +523,6 @@ export const MESSAGES = [
   "Routines",
   "Description",
   "Edit bot avatar",
-  "Icons from Flaticon",
   "Schedule",
   "Status",
   "Active",

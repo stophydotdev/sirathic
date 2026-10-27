@@ -564,7 +564,6 @@ export default {
   Routines: "الروتينات",
   Description: "الوصف",
   "Edit bot avatar": "تعديل صورة البوت",
-  "Icons from Flaticon": "أيقونات من Flaticon",
   Schedule: "الجدول",
   Status: "الحالة",
   Active: "نشط",

@@ -570,7 +570,6 @@ export default {
   Routines: "Golle ñalnde kala",
   Description: "Tinndinol",
   "Edit bot avatar": "Wo'ni cuɓal bot",
-  "Icons from Flaticon": "Cuɓal ɗum Flaticon",
   Schedule: "Waajtaare",
   Status: "Ngonka",
   Active: "Hollotooɗum",

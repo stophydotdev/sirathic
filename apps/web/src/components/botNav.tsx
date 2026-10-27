@@ -43,13 +43,16 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
         className="flex min-w-0 flex-1 items-center gap-2.5 px-2.5 py-2"
       >
         <span className="relative shrink-0">
-          <BotAvatar color={bot.color} icon={bot.symbol} className="size-9" />
+          <BotAvatar
+            color={bot.color}
+            seed={bot.id}
+            state={bot.hidden ? "paused" : session?.working ? "thinking" : "ready"}
+            className="size-9"
+          />
           {session?.working && (
-            <span
-              role="status"
-              aria-label={t("Working")}
-              className="ring-background absolute -end-0.5 -bottom-0.5 size-2.5 rounded-full bg-green-500 ring-2"
-            />
+            <span role="status" className="sr-only">
+              {t("Working")}
+            </span>
           )}
         </span>
         <span className="flex min-w-0 flex-1 flex-col">

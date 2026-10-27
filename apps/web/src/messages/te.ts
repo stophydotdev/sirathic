@@ -562,7 +562,6 @@ export default {
   Routines: "రొటీన్లు",
   Description: "వివరణ",
   "Edit bot avatar": "బాట్ అవతార్‌ను సవరించండి",
-  "Icons from Flaticon": "Flaticon నుండి ఐకాన్లు",
   Schedule: "షెడ్యూల్",
   Status: "స్థితి",
   Active: "చురుకు",

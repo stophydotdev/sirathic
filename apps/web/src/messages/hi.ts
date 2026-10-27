@@ -565,7 +565,6 @@ export default {
   Routines: "रूटीन",
   Description: "विवरण",
   "Edit bot avatar": "बॉट का अवतार बदलें",
-  "Icons from Flaticon": "Flaticon से आइकन",
   Schedule: "शेड्यूल",
   Status: "स्थिति",
   Active: "सक्रिय",
