@@ -108,8 +108,9 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           href={first}
           target="_blank"
           rel="noreferrer"
-          className="bg-muted text-muted-foreground! hover:text-foreground! relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-full px-2 py-[2.5px] align-middle text-[13px] leading-[15px] font-medium! no-underline! transition-colors"
+          className="bg-muted text-muted-foreground! hover:text-foreground! relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-full py-[2.5px] ps-1 pe-2 align-middle text-[13px] leading-[15px] font-medium! no-underline! transition-colors"
         >
+          <Favicon url={first} size={12} />
           <span className="truncate">{name.charAt(0).toUpperCase() + name.slice(1)}</span>
           {more.length > 0 && <span>+{more.length}</span>}
         </a>
