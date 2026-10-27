@@ -20,6 +20,11 @@ export const countDown = async (key: string) => {
   return redis.decr(key);
 };
 
+export const dropCached = async (namespace: string, id: string) => {
+  await connected;
+  await redis.del(`${namespace}:${id}`).catch(() => undefined);
+};
+
 type CacheOptions<Value> = {
   namespace: string;
   schema: z.ZodType<Value>;

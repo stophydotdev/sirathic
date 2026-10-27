@@ -5,10 +5,23 @@ import { writingTools } from "../apps/server/src/chat/confirm";
 import { seal } from "../apps/server/src/account/vault";
 import { isPrivateAddress, publicUrl } from "../apps/server/src/plugins/address";
 import { type ConnectorId, popularOf, toolName } from "../apps/server/src/plugins/catalog";
-import { matchingPlugins } from "../apps/server/src/plugins/tools";
 import { mentionedSkills } from "../apps/server/src/skills/mentions";
 
 const connectionRow = ["exa", null, null, await seal("{}")];
+const savedLists = new Map<string, string>();
+mock.module("@sirathic/core/cache", () => ({
+  cacheFor:
+    <Value>({ namespace, schema }: { namespace: string; schema: z.ZodType<Value> }) =>
+    async (id: string, fetchValue: () => Promise<Value>) => {
+      const key = `${namespace}:${id}`;
+      const kept = savedLists.get(key);
+      if (kept !== undefined) return schema.parse(JSON.parse(kept));
+      const value = await fetchValue();
+      savedLists.set(key, JSON.stringify(value));
+      return value;
+    },
+  dropCached: async (namespace: string, id: string) => void savedLists.delete(`${namespace}:${id}`),
+}));
 const selects: string[] = [];
 mock.module("@sirathic/db", () => ({
   db: drizzle(
@@ -19,8 +32,9 @@ mock.module("@sirathic/db", () => ({
     { casing: "snake_case" },
   ),
 }));
-const { connectedTools, disconnect, FORGET, withUpdate } =
+const { connectedTools, disconnect, listConnections, FORGET, withUpdate } =
   await import("../apps/server/src/plugins/connections");
+const { matchingPlugins } = await import("../apps/server/src/plugins/tools");
 
 test.each([
   "127.0.0.1",
@@ -173,6 +187,7 @@ const rpc = z.object({
   params: z.object({ protocolVersion: z.string().optional() }).optional(),
 });
 const serverSaw: string[] = [];
+let callsFail = false;
 const serverTools = [
   {
     name: "search",
@@ -196,6 +211,9 @@ globalThis.fetch = Object.assign(
     const { id, method, params } = rpc.parse(JSON.parse(String(init.body)));
     serverSaw.push(method);
     if (id === undefined) return new Response(null, { status: 202 });
+    if (callsFail && method === "tools/call") {
+      return Response.json({ jsonrpc: "2.0", id, error: { code: -32000, message: "gone" } });
+    }
     return Response.json({
       jsonrpc: "2.0",
       id,
@@ -235,4 +253,31 @@ test("a plugin's connection row is read once for a minute and again after a disc
   await disconnect("owner-2", "exa");
   await (await connectedTools("owner-2")).close();
   expect(selects).toHaveLength(2);
+});
+
+test("a failed tool call drops the saved list and the next answer lists the tools again", async () => {
+  const call = { toolCallId: "call", messages: [], context: {} };
+  await (await connectedTools("owner-3")).close();
+  serverSaw.length = 0;
+
+  const failing = await connectedTools("owner-3");
+  callsFail = true;
+  await expect(failing.tools.exa_search?.execute?.({ q: "wudu" }, call)).rejects.toThrow("gone");
+  callsFail = false;
+  await failing.close();
+  expect(serverSaw).not.toContain("tools/list");
+
+  serverSaw.length = 0;
+  await (await connectedTools("owner-3")).close();
+  expect(serverSaw).toContain("tools/list");
+});
+
+test("the plugin list is read once for a minute and again after a disconnect", async () => {
+  selects.length = 0;
+  await listConnections("owner-4");
+  await listConnections("owner-4");
+  expect(selects).toHaveLength(2);
+  await disconnect("owner-4", "exa");
+  await listConnections("owner-4");
+  expect(selects).toHaveLength(4);
 });
