@@ -36,6 +36,7 @@ type Listed = Tool<unknown, CallToolResult>;
 const listedTools = new Map<string, { tools: Record<string, Listed>; at: number }>();
 
 const GOOGLE_CLIENT = {
+  issuer: "https://accounts.google.com",
   client_id: env.GOOGLE_CLIENT_ID,
   client_secret: env.GOOGLE_CLIENT_SECRET,
 };
