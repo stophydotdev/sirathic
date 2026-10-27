@@ -112,9 +112,12 @@ export async function updateAutomation(
 }
 
 export async function removeAutomation(id: string, by: string) {
-  const [row] = await db.delete(automations).where(owned(id, by)).returning({ id: automations.id });
+  const [row] = await db
+    .delete(automations)
+    .where(owned(id, by))
+    .returning({ name: automations.name });
   if (!row) throw new StatusError(404, "no such automation");
-  return { deleted: true };
+  return { deleted: true, name: row.name };
 }
 
 export const listRuns = (by: string) =>

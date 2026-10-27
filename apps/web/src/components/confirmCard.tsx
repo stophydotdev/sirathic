@@ -13,8 +13,6 @@ type ToolCall = Extract<ThreadMessage["content"][number], { type: "tool-call" }>
 
 const routine = z.object({ name: z.string(), prompt: z.string(), schedule });
 
-const fields = z.record(z.string(), z.unknown());
-
 const shown = z.union([z.string(), z.number(), z.boolean()]);
 
 const nameOf = (tool: string) => tool.replaceAll(/[_-]+/gu, " ");
@@ -34,7 +32,7 @@ const Action: FC<{ call: ToolCall }> = ({ call }) => {
       </div>
     );
   }
-  const rows = Object.entries(fields.safeParse(call.args).data ?? {});
+  const rows = Object.entries(call.args);
   return (
     <div className="flex min-w-0 flex-col gap-1">
       <span className="text-sm font-medium first-letter:uppercase">{nameOf(call.toolName)}</span>

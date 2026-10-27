@@ -13,3 +13,17 @@ export const writingTools = (tools: ToolSet) =>
   Object.entries(tools).flatMap(([name, entry]) =>
     readOnlyTool.safeParse(entry.metadata).success ? [] : [name],
   );
+
+const CONFIRMED_ACTIONS = new Map<string, readonly string[]>([
+  ["update_routine", ["create", "edit", "delete"]],
+]);
+
+const actionOf = z.object({ action: z.string() });
+
+export const needsApproval = (
+  { toolName, input }: { toolName: string; input: unknown },
+  writes: ReadonlySet<string>,
+) =>
+  writes.has(toolName) ||
+  (CONFIRMED_ACTIONS.get(toolName)?.includes(actionOf.safeParse(input).data?.action ?? "") ??
+    false);

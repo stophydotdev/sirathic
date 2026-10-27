@@ -56,9 +56,9 @@ export const skillsFor = ({ mode, texting, inBot, timezone }: Where) =>
       ? [
           {
             name: "routines",
-            when: "the user asks for a reminder, a routine or a scheduled answer, or asks what they have",
+            when: "the user asks for a reminder, a routine or a scheduled answer, or to see, change, pause or delete one",
             text: `${routines}\n\nThe user's time zone is ${timezone}.`,
-            tools: ["createAutomation", "listAutomations"],
+            tools: ["update_routine", "list_routines"],
           },
         ]
       : []),

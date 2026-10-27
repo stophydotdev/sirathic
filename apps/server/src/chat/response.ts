@@ -23,13 +23,13 @@ import { CHECK_FIRST } from "../projects/rules";
 import type { ProviderOptions } from "../models/subscription";
 import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
-import { type AutomationScope, automationTools } from "../automations/tools";
+import { type AutomationScope, routineTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { citations, withBareCitations } from "./citations";
-import { CONFIRM_RULES, writingTools } from "./confirm";
+import { CONFIRM_RULES, needsApproval, writingTools } from "./confirm";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
 import { reasonOf } from "../http";
@@ -85,7 +85,7 @@ export function answerAgent({
   persona: string | undefined;
   skills: readonly Skill[];
   loaded: readonly string[];
-  confirm: ReadonlySet<string>;
+  confirm: (call: { toolName: string; input: unknown }) => boolean;
   shorten: ReturnType<typeof shortenEarlierResults>;
   answerOptions: ProviderOptions;
 }) {
@@ -98,7 +98,7 @@ export function answerAgent({
     instructions: searchPrompt(new Date(), mode, settings, persona),
     tools,
     stopWhen: hasToolCall(CLARIFYING),
-    toolApproval: ({ toolCall }) => (confirm.has(toolCall.toolName) ? "user-approval" : undefined),
+    toolApproval: ({ toolCall }) => (confirm(toolCall) ? "user-approval" : undefined),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
@@ -271,10 +271,8 @@ export function chatResponse({
       const searchable = inBot && visible.length < messages.length ? inBot : undefined;
       const offered = {
         ...tools,
-        ...(automate && automationTools({ ...automate, projectId: inBot?.id })),
+        ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
         ...(inBot && botTools(inBot)),
-        ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
-        ...(searchable && chatSearchTools(searchable)),
         ...memoryTools(
           owner === undefined
             ? undefined
@@ -282,6 +280,8 @@ export function chatResponse({
               ? { kind: "bot", ...inBot }
               : { kind: "account", owner },
         ),
+        ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
+        ...(searchable && chatSearchTools(searchable)),
         ...(inBot && studyTools(inBot)),
         ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
         ...connectors.tools,
@@ -308,7 +308,7 @@ export function chatResponse({
         persona: who,
         skills: builtIn,
         loaded,
-        confirm: new Set([...(automate ? ["createAutomation"] : []), ...writes]),
+        confirm: (call) => needsApproval(call, new Set(writes)),
         shorten,
         answerOptions: options.answer,
       });

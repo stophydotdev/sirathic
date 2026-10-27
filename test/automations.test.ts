@@ -156,7 +156,7 @@ mock.module("../apps/server/src/chat/response", () => ({
 }));
 
 const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
-const { automationTools } = await import("../apps/server/src/automations/tools");
+const { routineTools } = await import("../apps/server/src/automations/tools");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;
@@ -362,9 +362,10 @@ test("schedules with an impossible date, a repeated day or a bad zone are reject
 });
 
 test("Noor creates a weekly reminder in the person's time zone with In app notification", async () => {
-  const tools = automationTools({ owner: "user-a", timezone: "Asia/Tokyo" });
-  const created = await tools.createAutomation.execute?.(
+  const tools = routineTools({ owner: "user-a", timezone: "Asia/Tokyo" });
+  const created = await tools.update_routine.execute?.(
     {
+      action: "create",
       name: "Read Surah al-Kahf",
       prompt: "Remind me to read Surah al-Kahf.",
       schedule: { kind: "weekly", days: [5], time: "08:00" },

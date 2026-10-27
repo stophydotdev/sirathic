@@ -9,28 +9,21 @@ export type MemoryScope =
   | { kind: "account"; owner: string }
   | { kind: "bot"; id: string; owner: string };
 
-const memoryChange = z
-  .object({
-    write: z
-      .string()
-      .trim()
-      .min(1)
-      .max(MEMORY_CHARS)
-      .optional()
-      .describe("One fact about the user in under 15 words, like 'Lives in Leeds'"),
-    forget: z
-      .string()
-      .trim()
-      .min(1)
-      .optional()
-      .describe(
-        "The exact text of a saved fact to drop, as listed in your rules or found by search",
-      ),
-  })
-  .refine(
-    (change) => change.write !== undefined || change.forget !== undefined,
-    "send write, forget or both",
-  );
+const memoryChange = z.object({
+  write: z
+    .string()
+    .trim()
+    .min(1)
+    .max(MEMORY_CHARS)
+    .optional()
+    .describe("One fact about the user in under 15 words, like 'Lives in Leeds'"),
+  forget: z
+    .string()
+    .trim()
+    .min(1)
+    .optional()
+    .describe("The exact text of a saved fact to drop, as listed in your rules or found by search"),
+});
 
 const sameFact = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
@@ -84,6 +77,7 @@ export function memoryTools(scope: MemoryScope | undefined) {
       inputSchema: memoryChange,
       execute: async (change) => {
         if (!scope) throw new Error("Not saved: this chat is incognito, so nothing is remembered.");
+        if (change.write === undefined && change.forget === undefined) return "Nothing to save.";
         if (change.write && scope.kind === "bot") {
           const rejected = profileRejection(change.write);
           if (rejected) return rejected;

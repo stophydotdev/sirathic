@@ -2,7 +2,7 @@ import { dynamicTool } from "ai";
 import { expect, test } from "bun:test";
 import { z } from "zod";
 import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
-import { writingTools } from "../apps/server/src/chat/confirm";
+import { needsApproval, writingTools } from "../apps/server/src/chat/confirm";
 import { loadSkill, skillsFor } from "../apps/server/src/chat/skills/builtIn";
 import {
   answered,
@@ -79,19 +79,38 @@ test("the question tool is offered in research mode only, and never in an unatte
   ]).toEqual([true, false, false]);
 });
 
+function routineInput() {
+  return { name: "Fajr", prompt: "Remind me", schedule: { kind: "daily", time: "05:40" } };
+}
+
 test.each([
-  ["askUser", "clarifying_questions"],
-  ["remember", "update_memory"],
-  ["learnAboutUser", "update_memory"],
-])("a saved %s call from before the rename replays as %s", (old, current) => {
-  const sent = sentMessage.parse({
-    role: "assistant",
-    parts: [
-      { type: `tool-${old}`, toolCallId: "c1", state: "output-available", input: {}, output: {} },
-    ],
-  });
-  expect(sent.parts.map((part) => part.type)).toEqual([`tool-${current}`]);
-});
+  ["askUser", { question: "Which school?" }, "clarifying_questions", { question: "Which school?" }],
+  ["remember", { fact: "Is 28", replaces: null }, "update_memory", { write: "Is 28" }],
+  [
+    "learnAboutUser",
+    { text: "Is 29", replaces: "Is 28" },
+    "update_memory",
+    { write: "Is 29", forget: "Is 28" },
+  ],
+  ["createAutomation", routineInput(), "update_routine", { action: "create", ...routineInput() }],
+  ["listAutomations", {}, "list_routines", {}],
+])(
+  "a saved %s call replays as %s with an input the new tool accepts",
+  (old, input, current, expected) => {
+    const sent = sentMessage.parse({
+      role: "assistant",
+      parts: [
+        { type: `tool-${old}`, toolCallId: "c1", state: "output-available", input, output: {} },
+      ],
+    });
+    expect(
+      sent.parts.map((part) => [
+        part.type,
+        "input" in part ? JSON.parse(JSON.stringify(part.input)) : undefined,
+      ]),
+    ).toEqual([[`tool-${current}`, expected]]);
+  },
+);
 
 const routine = {
   name: "Fajr nudge",
@@ -118,7 +137,7 @@ const afterLoading = (skill: string): ChatMessage[] => [
   said("3", "user", "yes, at 5"),
 ];
 
-const callingTool = (toolName: string, input: typeof routine) =>
+const callingTool = (toolName: string, input: typeof routine & { action: string }) =>
   [
     { type: "stream-start", warnings: [] },
     { type: "tool-call", toolCallId: "c1", toolName, input: JSON.stringify(input) },
@@ -128,13 +147,25 @@ const callingTool = (toolName: string, input: typeof routine) =>
 test("creating a routine waits for the user's confirmation, and only a confirmed one runs", async () => {
   const automate = { owner: "o", timezone: "Asia/Tokyo" };
   const { body } = await chatTurn({ automate, messages: afterLoading("routines") }, [
-    callingTool("createAutomation", routine),
+    callingTool("update_routine", { action: "create", ...routine }),
     answered,
   ]);
   expect([
     body.includes('"type":"tool-approval-request"'),
     body.includes('"type":"tool-output-available"'),
   ]).toEqual([true, false]);
+});
+
+test.each([
+  ["update_routine", { action: "create" }, true],
+  ["update_routine", { action: "edit" }, true],
+  ["update_routine", { action: "delete" }, true],
+  ["update_routine", { action: "pause" }, false],
+  ["update_routine", { action: "resume" }, false],
+  ["list_routines", {}, false],
+  ["slack_send", {}, true],
+])("the %s call %p needs the user's confirmation: %p", (toolName, input, expected) => {
+  expect(needsApproval({ toolName, input }, new Set(["slack_send"]))).toBe(expected);
 });
 
 test("a plugin tool needs confirmation unless the plugin marks it read-only", () => {
@@ -155,7 +186,8 @@ test("a loaded skill's text joins the rules and its tools open, while the tool r
       search_web: noInput,
       load_skill: loadSkill(skills),
       dueStudyItems: noInput,
-      createAutomation: noInput,
+      update_routine: noInput,
+      list_routines: noInput,
     },
     skills,
     firstStep: undefined,
@@ -172,7 +204,7 @@ test("a loaded skill's text joins the rules and its tools open, while the tool r
     result.includes("Loaded study, routines."),
   ]).toEqual([
     ["search_web", "load_skill"],
-    ["search_web", "load_skill", "dueStudyItems", "createAutomation"],
+    ["search_web", "load_skill", "dueStudyItems", "update_routine", "list_routines"],
     false,
     true,
     true,

@@ -1,7 +1,7 @@
 "use client";
 
 import { describeSchedule } from "@/components/automationText";
-import { useLocale, useT } from "@/components/i18n";
+import { type Translate, useLocale, useT } from "@/components/i18n";
 import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
 import { currentToolName } from "@sirathic/server/messages";
@@ -12,8 +12,8 @@ import { type FC, useEffect } from "react";
 import { z } from "zod";
 
 const CARD_TOOLS = new Set([
-  "createAutomation",
-  "listAutomations",
+  "update_routine",
+  "list_routines",
   "set_bot_job",
   "clarifying_questions",
 ]);
@@ -22,12 +22,20 @@ export const isCardTool = (name: string) => CARD_TOOLS.has(currentToolName(name)
 
 const renamed = z.object({ name: z.string() });
 
+const ACTIONS = ["create", "edit", "pause", "resume", "delete"] as const;
+
 const row = z.object({
   id: z.string(),
   name: z.string(),
   schedule,
   enabled: z.boolean(),
   projectId: z.string().nullish(),
+});
+
+const changed = row.partial().extend({
+  action: z.enum(ACTIONS).catch("create"),
+  id: z.string(),
+  name: z.string(),
 });
 
 type Row = z.infer<typeof row>;
@@ -64,33 +72,44 @@ const OpenLink: FC = () => {
   );
 };
 
+const done = (t: Translate, action: (typeof ACTIONS)[number]) =>
+  ({
+    create: t("Created routine"),
+    edit: t("Updated routine"),
+    pause: t("Paused routine"),
+    resume: t("Resumed routine"),
+    delete: t("Deleted routine"),
+  })[action];
+
 export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, result }) => {
   const t = useT();
-  const created = row.safeParse(result).data;
+  const made = row.safeParse(result).data;
+  const change = changed.safeParse(result).data;
   const listed = z.array(row).safeParse(result).data;
   const bot = renamed.safeParse(result).data;
-  if (currentToolName(tool) === "set_bot_job" && bot) return <BotRenamed name={bot.name} />;
-  if (tool === "createAutomation" && created?.projectId) {
+  const name = currentToolName(tool);
+  if (name === "set_bot_job" && bot) return <BotRenamed name={bot.name} />;
+  if (name === "update_routine" && change && (made?.projectId || change.action !== "create")) {
     return (
       <p className="text-muted-foreground my-3 flex items-center justify-center gap-1.5 text-xs">
-        {t("Created routine")}
+        {done(t, change.action)}
         <HugeiconsIcon icon={TimeScheduleIcon} className="size-3.5" />
-        <span className="text-foreground">{created.name}</span>
+        <span className="text-foreground">{change.name}</span>
       </p>
     );
   }
-  if (tool === "createAutomation" && created) {
+  if (name === "update_routine" && made) {
     return (
       <div className="border-border my-3 flex flex-col gap-2 rounded-[12px] border p-3 print:hidden">
         <div className="flex items-center justify-between gap-2">
           <span className="text-muted-foreground text-xs">{t("Automation created")}</span>
           <OpenLink />
         </div>
-        <RowLine automation={created} />
+        <RowLine automation={made} />
       </div>
     );
   }
-  if (tool === "listAutomations" && listed) {
+  if (name === "list_routines" && listed) {
     return (
       <div className="border-border my-3 flex flex-col gap-2.5 rounded-[12px] border p-3 print:hidden">
         <div className="flex items-center justify-between gap-2">

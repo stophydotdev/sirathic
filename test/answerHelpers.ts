@@ -62,7 +62,7 @@ export const answerWith = (
     persona: undefined,
     skills: [],
     loaded: [],
-    confirm: new Set(),
+    confirm: () => false,
     shorten: (message) => message,
     answerOptions: { anthropic: { thinking: { type: "adaptive" } } },
     ...overrides,

@@ -7,7 +7,7 @@ import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
 import { answerAgent } from "../apps/server/src/chat/response";
-import { automationTools } from "../apps/server/src/automations/tools";
+import { routineTools } from "../apps/server/src/automations/tools";
 import { CHECK_FIRST } from "../apps/server/src/projects/rules";
 import server from "../apps/server/src/index";
 import {
@@ -108,7 +108,7 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
     persona: undefined,
     skills: [],
     loaded: [],
-    confirm: new Set(),
+    confirm: () => false,
     shorten: (message) => message,
     answerOptions: {},
   });
@@ -190,7 +190,7 @@ test("every step of a turn sends the same tools, and the first one forces search
 });
 
 const createDescribedFor = (timezone: string) =>
-  automationTools({ owner: "o", timezone }).createAutomation.description;
+  routineTools({ owner: "o", timezone }).update_routine.description;
 
 test("the create tool's description is the same for every time zone", () => {
   expect(createDescribedFor("Europe/London")).toBe(createDescribedFor("Asia/Tokyo"));

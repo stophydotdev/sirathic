@@ -65,6 +65,8 @@ const RENAMED_TOOLS = new Map([
   ["askUser", "clarifying_questions"],
   ["remember", "update_memory"],
   ["learnAboutUser", "update_memory"],
+  ["createAutomation", "update_routine"],
+  ["listAutomations", "list_routines"],
   ["quranGet", "get_verses"],
   ["duaSearch", "search_duas"],
   ["setBotJob", "set_bot_job"],
@@ -78,7 +80,31 @@ const oldPageRead = z.looseObject({
   output: z.looseObject({ sources: z.array(z.unknown()) }).optional(),
 });
 
+const oldCall = <Input extends z.ZodType>(
+  name: string,
+  oldInput: Input,
+  convert: (input: z.output<Input>) => object,
+) =>
+  z
+    .looseObject({ type: z.literal(`tool-${name}`), input: oldInput.optional() })
+    .transform(({ input, ...part }) => ({
+      ...part,
+      type: `tool-${currentToolName(name)}`,
+      ...(input && { input: convert(input) }),
+    }));
+
 const sentPart = z.union([
+  oldCall("createAutomation", z.looseObject({}), (input) => ({ action: "create", ...input })),
+  oldCall(
+    "remember",
+    z.object({ fact: z.string().nullish(), replaces: z.string().nullish() }),
+    ({ fact, replaces }) => ({ write: fact ?? undefined, forget: replaces ?? undefined }),
+  ),
+  oldCall(
+    "learnAboutUser",
+    z.object({ text: z.string(), replaces: z.string().nullish() }),
+    ({ text, replaces }) => ({ write: text, forget: replaces ?? undefined }),
+  ),
   oldPageRead.transform(({ input, output, ...part }) => {
     const { sources, ...page } = output ?? { sources: [] };
     return {
