@@ -26,7 +26,7 @@ export const BotPlugins: FC<{ id: string; allowed: string[] | null }> = ({ id, a
     });
 
   return (
-    <section className="flex flex-col gap-1">
+    <section className="bg-card flex flex-col gap-1 rounded-xl p-4">
       <h3 className="text-sm font-medium">{t("Plugins")}</h3>
       <p className="text-muted-foreground mb-1 text-[13px]">{t("Plugins this bot can use.")}</p>
       {plugins.map((plugin) => {

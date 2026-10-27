@@ -63,6 +63,7 @@ const InstructionsBox: FC = () => {
 type EditorProps = {
   automation: Automation | undefined;
   draft: Draft;
+  botId?: string;
   onClose: () => void;
   onSaved: () => void;
 };
@@ -76,7 +77,7 @@ export const AutomationEditor: FC<EditorProps> = (props) => {
   );
 };
 
-const EditorDialog: FC<EditorProps> = ({ automation, draft: initial, onClose, onSaved }) => {
+const EditorDialog: FC<EditorProps> = ({ automation, draft: initial, botId, onClose, onSaved }) => {
   const aui = useAui();
   const text = useAuiState((s) => s.composer.text);
   const [seeded, setSeeded] = useState(false);
@@ -136,7 +137,7 @@ const EditorDialog: FC<EditorProps> = ({ automation, draft: initial, onClose, on
     void run(() =>
       automation
         ? api.automations.update.mutate({ id: automation.id, ...input })
-        : api.automations.create.mutate(input),
+        : api.automations.create.mutate({ ...input, projectId: botId }),
     );
   };
 

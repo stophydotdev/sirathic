@@ -17,7 +17,7 @@ export const BotProgress: FC<{ id: string }> = ({ id }) => {
 
   if (!progress || progress.memorized + progress.learning === 0) return null;
   return (
-    <section className="flex flex-col gap-1">
+    <section className="bg-card flex flex-col gap-1 rounded-xl p-4">
       <h3 className="text-sm font-medium">{t("Progress")}</h3>
       <p className="text-muted-foreground text-[13px]">
         {t("{count} memorized", { count: progress.memorized })}

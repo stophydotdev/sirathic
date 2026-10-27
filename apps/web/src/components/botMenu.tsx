@@ -1,7 +1,7 @@
 "use client";
 
 import { sectionNames } from "@/components/botGroups";
-import { BotSettings } from "@/components/botSettings";
+import { useBotPanel } from "@/components/botSettings";
 import { useT } from "@/components/i18n";
 import { DeleteProjectDialog, TextDialog } from "@/components/projectMenu";
 import { type Project, useProjects } from "@/components/projects";
@@ -11,6 +11,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -32,6 +33,7 @@ import {
   ViewIcon,
   ViewOffIcon,
 } from "@hugeicons/core-free-icons";
+import { usePathname, useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useState } from "react";
 
@@ -40,14 +42,22 @@ export const BotMenu: FC<{
   open: boolean;
   onOpenChange: (open: boolean) => void;
   className: string;
-}> = ({ bot, open, onOpenChange, className }) => {
+  onDone?: () => void;
+}> = ({ bot, open, onOpenChange, className, onDone }) => {
   const bots = useProjects((s) => s.bots) ?? [];
   const change = useProjects((s) => s.change);
   const session = useSessions((s) => s.sessions?.find((found) => found.id === bot.id));
   const changeSession = useSessions((s) => s.change);
-  const [editing, setEditing] = useState<"profile" | "section" | "delete">();
+  const [editing, setEditing] = useState<"section" | "delete">();
+  const router = useRouter();
+  const pathname = usePathname();
   const t = useT();
   const close = () => setEditing(undefined);
+  const editProfile = () => {
+    onDone?.();
+    if (pathname !== `/bot/${bot.id}`) router.push(`/bot/${bot.id}`);
+    useBotPanel.getState().setOpen(true);
+  };
 
   return (
     <>
@@ -115,10 +125,12 @@ export const BotMenu: FC<{
               {session.unread ? t("Mark as read") : t("Mark as unread")}
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem onSelect={() => setEditing("profile")} className={menuItem}>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onSelect={editProfile} className={menuItem}>
             <HugeiconsIcon icon={UserEdit01Icon} className={menuIcon} />
             {t("Edit profile")}
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             onSelect={() => void change(bot.id, { hidden: !bot.hidden })}
             className={menuItem}
@@ -140,7 +152,6 @@ export const BotMenu: FC<{
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {editing === "profile" && <BotSettings bot={bot} onClose={close} />}
       {editing === "section" && (
         <TextDialog
           title={t("Move to new section")}

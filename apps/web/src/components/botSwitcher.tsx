@@ -1,95 +1,145 @@
 "use client";
 
 import { BotAvatar } from "@/components/botAvatar";
+import { botLabel } from "@/components/botGroups";
 import { useT } from "@/components/i18n";
-import { useProjects } from "@/components/projects";
-import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { type Project, useProjects } from "@/components/projects";
+import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Add01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
-import { useRouter } from "next/navigation";
-import { type FC, type ReactNode, useState } from "react";
+import { Add01Icon, Tick02Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import { usePathname, useRouter } from "next/navigation";
+import { Dialog } from "radix-ui";
+import { type FC, useEffect, useState } from "react";
 
-const row =
-  "hover:bg-foreground/8 focus-visible:bg-foreground/8 flex h-8 shrink-0 items-center gap-2 rounded-lg px-2 text-start text-sm outline-none";
+type Option = { kind: "create"; name: string } | { kind: "bot"; bot: Project };
 
 export const BotSwitcher: FC<{
-  current: string;
-  onCreate: (name: string) => void;
-  children: ReactNode;
-}> = ({ current, onCreate, children }) => {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onDone?: () => void;
+}> = ({ open, onOpenChange, onDone }) => {
   const bots = useProjects((s) => s.bots) ?? [];
+  const createBot = useProjects((s) => s.createBot);
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const current = usePathname();
   const [query, setQuery] = useState("");
+  const [cursor, setCursor] = useState<number>();
+  const [creating, setCreating] = useState(false);
   const t = useT();
   const typed = query.trim();
-  const shown = bots.filter((bot) => bot.name.toLowerCase().includes(typed.toLowerCase()));
-  const taken = bots.some((bot) => bot.name.toLowerCase() === typed.toLowerCase());
+  const shown = bots.filter((bot) => botLabel(bot).toLowerCase().includes(typed.toLowerCase()));
+  const options: Option[] = [
+    { kind: "create", name: typed || t("New bot") },
+    ...shown.map((bot) => ({ kind: "bot" as const, bot })),
+  ];
+  const active = Math.min(cursor ?? (typed && shown.length > 0 ? 1 : 0), options.length - 1);
 
-  const close = () => {
-    setOpen(false);
-    setQuery("");
+  useEffect(() => {
+    document
+      .querySelector('[data-bot-option][aria-selected="true"]')
+      ?.scrollIntoView({ block: "nearest" });
+  }, [active]);
+
+  const close = (next: boolean) => {
+    onOpenChange(next);
+    if (!next) {
+      setQuery("");
+      setCursor(undefined);
+    }
   };
-  const pick = (id: string) => {
-    close();
-    if (id !== current) router.push(`/bot/${id}`);
-  };
-  const create = () => {
-    close();
-    onCreate(typed);
+
+  const choose = async (option: Option) => {
+    if (creating) return;
+    if (option.kind === "bot") {
+      close(false);
+      onDone?.();
+      router.push(`/bot/${option.bot.id}`);
+      return;
+    }
+    setCreating(true);
+    const created = await createBot({ name: option.name, language: document.documentElement.lang });
+    setCreating(false);
+    if (!created) return;
+    close(false);
+    onDone?.();
+    router.push(`/bot/${created.id}`);
   };
 
   return (
-    <Popover open={open} onOpenChange={(next) => (next ? setOpen(true) : close())}>
-      <PopoverAnchor asChild>
-        <div className="flex min-w-0 items-center gap-0.5">
-          {children}
-          <PopoverTrigger
-            aria-label={t("Search or create bots")}
-            title={t("Search or create bots")}
-            className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-muted flex size-6 shrink-0 items-center justify-center rounded-lg"
-          >
-            <HugeiconsIcon icon={Add01Icon} className="size-4" />
-          </PopoverTrigger>
-        </div>
-      </PopoverAnchor>
-      <PopoverContent
-        align="start"
-        className="border-foreground/6 w-80 gap-0 rounded-2xl border p-1 ring-0 sm:w-105"
-      >
-        <input
-          autoFocus
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key !== "Enter") return;
-            event.preventDefault();
-            if (typed && !taken) create();
-            else if (shown[0]) pick(shown[0].id);
-          }}
-          placeholder={t("Search or create bots")}
-          className="placeholder:text-muted-foreground w-full bg-transparent px-2 py-2.5 text-sm outline-none"
-        />
-        <div className="flex max-h-64 flex-col overflow-y-auto">
-          {shown.map((bot) => (
-            <button key={bot.id} type="button" onClick={() => pick(bot.id)} className={row}>
-              <BotAvatar color={bot.color} icon={bot.symbol} />
-              <span className="min-w-0 flex-1 truncate">{bot.name}</span>
-              {bot.id === current && <HugeiconsIcon icon={Tick02Icon} className="size-4" />}
-            </button>
-          ))}
-          {typed && !taken && (
-            <button type="button" onClick={create} className={row}>
-              <span className="bg-foreground/8 flex size-6 items-center justify-center rounded-full">
-                <HugeiconsIcon icon={Add01Icon} className="size-3.5" />
-              </span>
-              <span className="min-w-0 flex-1 truncate">
-                {t("Create “{name}”", { name: typed })}
-              </span>
-            </button>
-          )}
-        </div>
-      </PopoverContent>
-    </Popover>
+    <Dialog.Root open={open} onOpenChange={close}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-60 bg-black/60" />
+        <Dialog.Content
+          aria-describedby={undefined}
+          onCloseAutoFocus={(event) => event.preventDefault()}
+          className="bg-card ring-foreground/7 fixed start-1/2 top-16 z-60 flex w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 flex-col rounded-2xl shadow-lg ring-1 outline-none ring-inset rtl:translate-x-1/2"
+        >
+          <Dialog.Title className="sr-only">{t("Search or create bots")}</Dialog.Title>
+          <div className="flex h-12 items-center gap-3 px-4">
+            <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-4" />
+            <input
+              autoFocus
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setCursor(undefined);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                  event.preventDefault();
+                  const step = event.key === "ArrowDown" ? 1 : -1;
+                  setCursor((active + step + options.length) % options.length);
+                } else if (event.key === "Enter" && options[active]) {
+                  event.preventDefault();
+                  void choose(options[active]);
+                }
+              }}
+              placeholder={t("Search or create bots")}
+              className="placeholder:text-muted-foreground flex-1 bg-transparent text-base outline-none"
+            />
+          </div>
+          <div role="listbox" className="flex max-h-80 flex-col overflow-y-auto p-2 pt-0">
+            {options.map((option, index) => (
+              <button
+                key={option.kind === "create" ? "create" : option.bot.id}
+                type="button"
+                role="option"
+                data-bot-option
+                aria-selected={index === active}
+                onMouseMove={() => setCursor(index)}
+                onClick={() => void choose(option)}
+                className={cn(
+                  "flex h-10 w-full items-center gap-3 rounded-xl px-2 text-start text-sm",
+                  index === active && "bg-foreground/8",
+                )}
+              >
+                {option.kind === "create" ? (
+                  <>
+                    <span className="bg-foreground/10 flex size-7 shrink-0 items-center justify-center rounded-full">
+                      <HugeiconsIcon icon={Add01Icon} className="size-4" />
+                    </span>
+                    <span className="min-w-0 flex-1 truncate">
+                      {typed ? t("Create “{name}”", { name: typed }) : t("Create new bot")}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <BotAvatar
+                      color={option.bot.color}
+                      icon={option.bot.symbol}
+                      className="size-7"
+                    />
+                    <span className="min-w-0 flex-1 truncate">{botLabel(option.bot)}</span>
+                    {current === `/bot/${option.bot.id}` && (
+                      <HugeiconsIcon icon={Tick02Icon} className="size-4" />
+                    )}
+                  </>
+                )}
+              </button>
+            ))}
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };

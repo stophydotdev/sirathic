@@ -19,7 +19,7 @@ export const BotProfile: FC<{ bot: Project }> = ({ bot }) => {
   if (bot.profile.length === 0) return null;
 
   return (
-    <section className="flex flex-col gap-1">
+    <section className="bg-card flex flex-col gap-1 rounded-xl p-4">
       <h3 className="text-sm font-medium">{t("What this bot knows about you")}</h3>
       <p className="text-muted-foreground mb-1 text-[13px]">
         {t("What this bot has learned about you. Remove anything that is wrong.")}

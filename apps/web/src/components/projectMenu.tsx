@@ -3,10 +3,11 @@
 import { useT } from "@/components/i18n";
 import { useProjects } from "@/components/projects";
 import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
+import { cn } from "@/lib/utils";
 import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, useState } from "react";
 
-export const field =
+const field =
   "border-border focus-visible:border-foreground/30 w-full rounded-[8px] border bg-transparent px-3 text-sm outline-none";
 
 export const TextDialog: FC<{
@@ -111,18 +112,18 @@ export const DeleteProjectDialog: FC<{
   };
 
   return (
-    <Modal open onOpenChange={onClose} title={t("Delete bot")}>
-      <p className="text-muted-foreground text-sm">
-        {t('Delete the bot "{name}"? Its conversation stays in your history.', { name })}
+    <Modal open onOpenChange={onClose} title={t("Delete “{name}”?", { name })}>
+      <p className="text-muted-foreground -mt-2 text-sm">
+        {t("This permanently deletes the bot and its chat history. This can't be undone.")}
       </p>
-      <div className="flex justify-end gap-2">
-        <Dialog.Close type="button" className={modalButton}>
+      <div className="grid grid-cols-2 gap-2">
+        <Dialog.Close type="button" className={cn(modalButton, "h-10 rounded-xl")}>
           {t("Cancel")}
         </Dialog.Close>
         <button
           type="button"
           onClick={() => void confirm()}
-          className={`${modalPrimaryButton} bg-destructive text-white`}
+          className={cn(modalPrimaryButton, "bg-destructive h-10 rounded-xl text-white")}
         >
           {t("Delete")}
         </button>

@@ -8,6 +8,7 @@ import {
   hour24Of,
 } from "../apps/web/src/components/automationText";
 import { botGroups } from "../apps/web/src/components/botGroups";
+import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 
 test("a link keeps its path and drops the trailing period and question mark", () => {
@@ -188,4 +189,13 @@ test("a fetch of several pages gives one step per page and marks the ones that f
     { kind: "browse", url: "https://a.org/1", failed: false },
     { kind: "browse", url: "https://b.org/2", failed: true },
   ]);
+});
+
+const localIso = (day: number, hour: number) => new Date(2026, 9, day, hour, 5).toISOString();
+
+test("a bot's last message shows the time today, yesterday, then the date", () => {
+  const now = new Date(2026, 9, 27, 15, 0);
+  expect(
+    [localIso(27, 9), localIso(26, 23), localIso(10, 9)].map((iso) => whenOf("en", iso, now)),
+  ).toEqual(["9:05 AM", "yesterday", "10/10"]);
 });

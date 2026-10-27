@@ -7,7 +7,9 @@ import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Mark } from "@/components/logo";
 import { useProjects } from "@/components/projects";
+import { useBot } from "@/components/botHome";
 import { BotList } from "@/components/botNav";
+import { BotPanel } from "@/components/botSettings";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
@@ -40,6 +42,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const [searching, setSearching] = useState(false);
   const keys = useKeyNames();
   const unseenRuns = useUnseenRuns(useAccount((s) => s.status?.signedIn));
+  const bot = useBot();
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -229,6 +232,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       </Sheet>
 
       <div className="min-w-0 flex-1 overflow-hidden print:overflow-visible">{children}</div>
+      {bot && <BotPanel bot={bot} />}
       <SettingsDialog />
       <SearchDialog open={searching} onOpenChange={setSearching} />
       <ShortcutsSheet />

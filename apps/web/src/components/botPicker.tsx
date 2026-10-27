@@ -3,7 +3,6 @@
 import { BOT_TINTS, BotIconMark, tintOf } from "@/components/botAvatar";
 import { BOT_ICON_FILES } from "@/components/botIconFiles";
 import { useT } from "@/components/i18n";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { BOT_COLORS, BOT_ICONS } from "@sirathic/server/projects";
 import type { FC } from "react";
@@ -80,19 +79,5 @@ export const BotPickerPanel: FC<PickerProps & { className?: string }> = ({
         {t("Icons from Flaticon")}
       </a>
     </div>
-  );
-};
-
-export const BotPicker: FC<PickerProps> = (props) => {
-  const t = useT();
-  return (
-    <Popover>
-      <PopoverTrigger className="border-foreground/15 hover:bg-muted flex h-8 items-center rounded-full border px-3 text-sm font-medium">
-        {t("Edit bot avatar")}
-      </PopoverTrigger>
-      <PopoverContent onOpenAutoFocus={(event) => event.preventDefault()} className="z-70 w-80 p-3">
-        <BotPickerPanel {...props} />
-      </PopoverContent>
-    </Popover>
   );
 };

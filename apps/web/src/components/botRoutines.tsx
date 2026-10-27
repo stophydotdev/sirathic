@@ -31,18 +31,21 @@ export const useRoutines = (botId: string | undefined) => {
   return { routines, refresh };
 };
 
-export const RoutineList: FC<{ routines: Automation[]; onOpen: (id: string) => void }> = ({
-  routines,
-  onOpen,
-}) => {
+export const RoutineList: FC<{
+  routines: Automation[];
+  onOpen: (id: string) => void;
+  onCreate: () => void;
+}> = ({ routines, onOpen, onCreate }) => {
   const t = useT();
   const locale = useLocale();
 
   return (
-    <section className="flex flex-col gap-1">
+    <section className="bg-card flex flex-col gap-1 rounded-xl p-4">
       <h3 className="mb-1 text-sm font-medium">{t("Routines")}</h3>
       {routines.length === 0 && (
-        <p className="text-muted-foreground text-[13px]">{t("No routines yet")}</p>
+        <p className="text-muted-foreground py-3 text-center text-sm">
+          {t("Routines are recurring tasks this bot runs on a schedule.")}
+        </p>
       )}
       {routines.map((routine) => (
         <button
@@ -70,6 +73,13 @@ export const RoutineList: FC<{ routines: Automation[]; onOpen: (id: string) => v
           />
         </button>
       ))}
+      <button
+        type="button"
+        onClick={onCreate}
+        className="border-border hover:bg-foreground/5 mt-2 self-center rounded-xl border px-4 py-2 text-sm"
+      >
+        {t("Create routine")}
+      </button>
     </section>
   );
 };
