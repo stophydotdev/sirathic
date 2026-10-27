@@ -59,7 +59,7 @@ import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
-const RESEARCH_OPENS = ["calculate", "files"];
+const RESEARCH_OPENS = ["research", "calculate", "files"];
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
 type Turn = Parameters<typeof answerOptions>[0];
@@ -70,7 +70,6 @@ const RULES_HEADER =
 const FIRST_STEP = {
   search: { type: "tool", toolName: "search_web" },
   fetch: { type: "tool", toolName: "fetch_url" },
-  skill: "required",
   anyTool: "required",
 } as const;
 
@@ -113,8 +112,9 @@ export function answerAgent({
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
       const closed = closedTools(skills, open);
       const forcing = stepNumber === 0 ? firstStep : undefined;
+      const loadable = skills.filter(({ name }) => !open.has(name));
       const index =
-        skills.length > 0 ? `Skills you can load with load_skill:\n${skillIndex(skills)}` : "";
+        loadable.length > 0 ? `Skills you can load with load_skill:\n${skillIndex(loadable)}` : "";
       const skillText = (index + loadedText(skills, open) + mentioned).trim();
       return {
         messages: [
@@ -122,10 +122,7 @@ export function answerAgent({
           ...responseMessages,
           ...(skillText ? [{ role: "system" as const, content: RULES_HEADER + skillText }] : []),
         ],
-        activeTools:
-          forcing === "skill"
-            ? [LOAD_SKILL]
-            : Object.keys(tools).filter((name) => !closed.has(name)),
+        activeTools: Object.keys(tools).filter((name) => !closed.has(name)),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
       };
     },
@@ -302,10 +299,6 @@ export function chatResponse({
         ),
         ...(mode === "research" ? RESEARCH_OPENS : []),
       ];
-      const first =
-        !resumed && builtIn.some(({ name }) => name === "research") && !loaded.includes("research")
-          ? "skill"
-          : forced;
       const writes = unattended ? [] : writingTools(connectors.tools);
       const agent = answerAgent({
         model: models.model,
@@ -326,12 +319,7 @@ export function chatResponse({
           ownSkills,
           asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "",
         ),
-        firstStep:
-          first && !inBot
-            ? first === "skill" || noorModel(modelName)
-              ? first
-              : "anyTool"
-            : undefined,
+        firstStep: forced && !inBot ? (noorModel(modelName) ? forced : "anyTool") : undefined,
         inBot: inBot !== undefined,
         skills: builtIn,
         loaded,

@@ -329,7 +329,7 @@ const HEADER =
 const researchSkill = { name: "research", when: "x", text: "Split the question." };
 const INDEX = "Skills you can load with load_skill:\n- research: x";
 
-test("the instructions go in once, and the closing rules carry the skill list, loaded skills and @-calls", async () => {
+test("the instructions go in once, and the closing rules carry the unloaded skills, loaded skills and @-calls", async () => {
   const { model, seen } = scriptedModel(["load_skill", "search_web"], ["research"]);
   await answerWith(model, {
     instructions: "CORE",
@@ -342,8 +342,8 @@ test("the instructions go in once, and the closing rules carry the skill list, l
   );
   expect(seen.map((call) => call.prompt.at(-1)?.content)).toEqual([
     `${HEADER}${INDEX}\n\nThe user called @Hadith.`,
-    `${HEADER}${INDEX}\n\n## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
-    `${HEADER}${INDEX}\n\n## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
+    `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
+    `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
   ]);
 });
 

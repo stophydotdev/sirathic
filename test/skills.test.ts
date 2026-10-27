@@ -25,7 +25,7 @@ import {
 const inResearch = (messages: ChatMessage[]) =>
   chatTurn({ modelName: "sirathic-noor-1-flash", mode: "research", messages });
 
-test("research mode loads the research skill before anything else, once", async () => {
+test("research mode has the research skill loaded from the start, without a step for it", async () => {
   const [first] = await inResearch([said("1", "user", "what is zakat")]);
   const [again] = await inResearch([
     said("1", "user", "what is zakat"),
@@ -46,12 +46,11 @@ test("research mode loads the research skill before anything else, once", async 
     },
     said("3", "user", "Hanafi"),
   ]);
-  expect([first?.toolChoice, toolNames(first), again?.toolChoice]).toEqual([
-    { type: "required" },
-    ["load_skill"],
-    { type: "auto" },
-  ]);
-  expect(systemTexts(again)?.at(-1)).toContain("This is research mode.");
+  expect([
+    first?.toolChoice,
+    systemTexts(first)?.at(-1)?.includes("This is research mode."),
+    again?.toolChoice,
+  ]).toEqual([{ type: "tool", toolName: "search_web" }, true, { type: "auto" }]);
 });
 
 test("the question tool is offered in research mode only, and never in an unattended run", async () => {
