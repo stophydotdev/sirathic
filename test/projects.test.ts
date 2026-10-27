@@ -34,6 +34,7 @@ test("a bot name with a link is caught and a plain name is not", () => {
 
 const botId = "22222222-2222-4222-8222-222222222222";
 const updates: string[] = [];
+const deleted: string[] = [];
 let accountFacts = ["Prays at the mosque on Fridays", "Is 28"];
 let botProfile = [
   { text: "Goal: memorize Juz Amma", source: "guessed", at: 1 },
@@ -57,6 +58,22 @@ const fakeDb = drizzle(
     if (sql.startsWith('update "projects" set "name"')) {
       updates.push(sql);
       return { rows: [Object.assign(Array(23).fill(null), { 1: params[0] })] };
+    }
+    if (sql.startsWith('select "id" from "projects"')) return { rows: [[botId]] };
+    if (sql.startsWith('delete from "chat_sessions"')) {
+      deleted.push("chat history");
+      return { rows: [] };
+    }
+    if (sql.startsWith('delete from "projects"')) {
+      deleted.push("bot");
+      return { rows: [] };
+    }
+    if (sql.startsWith('select "id", "title", "pinned"')) {
+      return {
+        rows: [
+          [botId, "Ilm Coach", false, false, botId, "2026-10-27T09:00:00.000Z", "Fajr is at 5"],
+        ],
+      };
     }
     throw new Error(`unexpected query: ${sql}`);
   },
@@ -303,4 +320,16 @@ test("islamic_dates converts both ways with the Umm al-Qura calendar and marks u
       }),
     ]),
   });
+});
+
+test("deleting a bot deletes its chat history first, and a bot in an answer shows as working", async () => {
+  const { removeProject } = await import("../apps/server/src/projects/projects");
+  const { listSessions } = await import("../apps/server/src/chat/sessions");
+  const { startAnswer } = await import("../apps/server/src/chat/answers");
+  expect(await removeProject(botId, "user-a")).toEqual({ deleted: true });
+  expect(deleted).toEqual(["chat history", "bot"]);
+  expect((await listSessions("user-a")).map((row) => row.working)).toEqual([false]);
+  const answer = startAnswer("user-a", botId);
+  expect((await listSessions("user-a")).map((row) => row.working)).toEqual([true]);
+  answer.settled();
 });

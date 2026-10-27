@@ -5,6 +5,7 @@ import { type AnyColumn, and, desc, eq, ilike, lt, sql } from "drizzle-orm";
 import { z } from "zod";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "../shared/messages";
 import { StatusError } from "../http";
+import { isAnswering } from "./answers";
 
 const TITLE_CHARS = 80;
 const PREVIEW_CHARS = 90;
@@ -52,8 +53,8 @@ export const messageSchemas = {
 
 const owned = (id: string, by: string) => and(eq(chatSessions.id, id), eq(chatSessions.owner, by));
 
-export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
-  db
+export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT) => {
+  const rows = await db
     .select({
       id: chatSessions.id,
       title: chatSessions.title,
@@ -77,6 +78,8 @@ export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
     )
     .orderBy(desc(chatSessions.pinned), desc(chatSessions.updatedAt))
     .limit(limit);
+  return rows.map((row) => Object.assign(row, { working: isAnswering(by, row.id) }));
+};
 
 async function storedMessages(id: string, by: string) {
   const [row] = await db

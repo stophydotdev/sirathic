@@ -139,8 +139,11 @@ export async function updateProject(
 }
 
 export async function removeProject(id: string, by: string) {
-  const [row] = await db.delete(projects).where(owned(id, by)).returning({ id: projects.id });
-  if (!row) throw new StatusError(404, "no such project");
+  await requireProject(id, by);
+  await db
+    .delete(chatSessions)
+    .where(and(eq(chatSessions.projectId, id), eq(chatSessions.owner, by)));
+  await db.delete(projects).where(owned(id, by));
   return { deleted: true };
 }
 
