@@ -12,9 +12,9 @@ const INCOGNITO =
   "Not saved: this chat is incognito and incognito chats keep no files. Tell the user to turn incognito off and ask again.";
 
 const FILE_RULES = {
-  create_text_file: `- create_text_file: only when the user asks for a file they will keep or share, like a khutbah draft, a study plan or a table of rulings. Markdown (.md), plain text (.txt) or CSV (.csv). Never for an answer that reads fine in chat.`,
+  create_text_file: `- create_text_file: only when the user asks for a file they will keep or share, like a khutbah draft, a study plan or a table of rulings. Never for an answer that reads fine in chat.`,
   create_research_report: `- create_research_report: in Research, write the full report here, with headings and a Sources list that links each source by its URL (the [n] numbers do not work in a file). Your chat answer is then a short summary of three to five sentences that says the full report is below. Do not repeat the report in chat.`,
-  share_files: `- share_files: gives the user files code_execution wrote. When the sandbox computes a table or chart the user wants as a file, have the same script write it (CSV, PNG or PDF) into the folder in the $OUTPUT_DIR environment variable, in that same call, then call share_files with the file names, like zakat.csv. You never see file ids and do not need them. Do not retype sandbox output into create_text_file. Only images, PDFs and UTF-8 text files can be kept.`,
+  share_files: `- share_files: gives the user files code_execution wrote. When the sandbox computes a table or chart the user wants as a file, have the same script write it (CSV, PNG or PDF) into the folder in the $OUTPUT_DIR environment variable, in that same call, then call share_files with the file names, like zakat.csv. You never see file ids and do not need them. Do not retype sandbox output into create_text_file.`,
 };
 
 const FILE_RULES_END = `For all of them: write your answer first, then call the tool last, and do not say a file is saved until the tool has returned. The user gets a card with the file under your answer and finds the file in their Library. After the tool returns, add one short sentence at most. If it returns an error, say so plainly and give the content in chat.`;
