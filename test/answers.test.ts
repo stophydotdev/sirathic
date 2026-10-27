@@ -76,7 +76,7 @@ test("a bot with no job sets one first, and a routine run does not", () => {
   ]).toEqual([true, false]);
 });
 
-test("a bot's profile and teaching note reach live chats and never routine runs", () => {
+test("a bot's profile and teaching note reach live chats and routine runs", () => {
   const bot = {
     ...COACH,
     note: "Keep answers short.",
@@ -87,10 +87,29 @@ test("a bot's profile and teaching note reach live chats and never routine runs"
   );
   expect(
     [live, routine].map((prompt) => prompt?.includes("- Now on 111 (guessed, 2026-10-26)")),
-  ).toEqual([true, false]);
+  ).toEqual([true, true]);
   expect([live, routine].map((prompt) => prompt?.includes("Keep answers short."))).toEqual([
     true,
-    false,
+    true,
+  ]);
+});
+
+const offeredToBot = async (unattended: true | undefined) => {
+  const [call] = await chatTurn({
+    owner: "user-a",
+    project: Promise.resolve(COACH),
+    bot: Promise.resolve({ id: "22222222-2222-4222-8222-222222222222", owner: "user-a" }),
+    unattended,
+  });
+  return ["update_memory", "update_profile", "set_bot_job", "islamic_dates"].map((name) =>
+    toolNames(call)?.includes(name),
+  );
+};
+
+test("a scheduled bot run cannot save memory or rename the bot, and still reads the date", async () => {
+  expect([await offeredToBot(undefined), await offeredToBot(true)]).toEqual([
+    [true, true, true, true],
+    [false, false, false, true],
   ]);
 });
 
@@ -155,6 +174,7 @@ test("every tool the prompt files name is a real tool", () => {
     ...Object.keys(sirathicTools(() => 0)),
     ...Object.keys(routineTools({ owner: "o", timezone: "UTC" })),
     ...Object.keys(botTools({ id: "b", owner: "o" })),
+    "islamic_dates",
     ...Object.keys(skillTools("o")),
     ...Object.keys(pluginTools("o")),
     ...Object.keys(memoryTools(undefined)),

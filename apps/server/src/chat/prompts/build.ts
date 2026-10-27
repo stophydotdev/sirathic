@@ -132,8 +132,8 @@ const botPrompt = (project: RulesProject, live: boolean) =>
     identity: botIdentity(project),
     job: project.instructions ? `Your job:\n${project.instructions}` : live ? newBot : "",
     opened: live ? openedWith(project) : "",
-    profile: live ? profileRules(project.profile ?? []) : "",
-    teaching: live ? teachingRules(project.note) : "",
+    profile: profileRules(project.profile ?? []),
+    teaching: teachingRules(project.note),
   });
 
 export const instructions = ({

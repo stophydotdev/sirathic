@@ -270,17 +270,18 @@ export function chatResponse({
       const offered = {
         ...tools,
         ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
-        ...(inBot && botTools(inBot)),
+        ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
         ...(owner !== undefined && !unattended && pluginTools(owner)),
-        ...memoryTools(
-          owner === undefined
-            ? undefined
-            : inBot
-              ? { kind: "bot", ...inBot }
-              : { kind: "account", owner },
-        ),
+        ...(!unattended &&
+          memoryTools(
+            owner === undefined
+              ? undefined
+              : inBot
+                ? { kind: "bot", ...inBot }
+                : { kind: "account", owner },
+          )),
         ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
         ...(searchable && chatSearchTools(searchable)),
         ...(inBot && studyTools(inBot)),
@@ -309,7 +310,7 @@ export function chatResponse({
           unattended: unattended === true,
           offered,
           skills: builtIn,
-          remembers: owner !== undefined,
+          remembers: owner !== undefined && !unattended,
           toolNotes: [
             "code_execution" in offered ? CODE_RULES : "",
             fileRules(offered),
