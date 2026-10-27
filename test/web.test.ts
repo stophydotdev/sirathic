@@ -7,6 +7,7 @@ import {
   hour12Of,
   hour24Of,
 } from "../apps/web/src/components/automationText";
+import { rehypeBareCitations } from "../apps/web/src/components/citations";
 import { botGroups } from "../apps/web/src/components/botGroups";
 import { bubblesOf } from "../apps/web/src/components/botBubbles";
 import { stampText } from "../apps/web/src/components/botStamp";
@@ -257,4 +258,36 @@ test("components that ask together share one request and a list refreshed after 
 
   void list.join();
   expect(asked).toBe(3);
+});
+
+type Tree = Parameters<ReturnType<typeof rehypeBareCitations>>[0];
+
+const sentence = (start: string): Tree => {
+  const url = "https://example.com/a";
+  return {
+    type: "root",
+    children: [
+      {
+        type: "element",
+        tagName: "p",
+        properties: {},
+        children: [
+          { type: "text", value: start },
+          {
+            type: "element",
+            tagName: "a",
+            properties: { href: url, dataUrls: [url] },
+            children: [],
+          },
+          { type: "text", value: ". It is not shared by all." },
+        ],
+      },
+    ],
+  };
+};
+
+test("a hidden citation takes the space before it, so the period stays against the word", () => {
+  const tree = sentence("That is the Hanafi view ");
+  rehypeBareCitations()(tree);
+  expect(tree).toEqual(sentence("That is the Hanafi view"));
 });

@@ -29,7 +29,12 @@ import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { z } from "zod";
 
 import { TooltipIconButton } from "@/components/tooltipIconButton";
-import { hidePendingCitation, rehypeCitations, rehypeVerses } from "@/components/citations";
+import {
+  hidePendingCitation,
+  rehypeBareCitations,
+  rehypeCitations,
+  rehypeVerses,
+} from "@/components/citations";
 import { Swap } from "@/components/swap";
 import { Favicon } from "@/components/favicon";
 import { siteName, SourcesContext } from "@/components/sources";
@@ -51,7 +56,12 @@ const closeOpenBold = (text: string) => {
 const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => (
   <MarkdownTextPrimitive
     remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]}
-    rehypePlugins={[rehypeKatex, rehypeCitations, rehypeVerses]}
+    rehypePlugins={[
+      rehypeKatex,
+      rehypeCitations,
+      rehypeVerses,
+      ...(citations ? [] : [rehypeBareCitations]),
+    ]}
     preprocess={(text) => withMathDelimiters(closeOpenBold(hidePendingCitation(text)))}
     className="aui-md"
     components={citations ? components : withoutCitations}

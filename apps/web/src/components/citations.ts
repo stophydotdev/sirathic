@@ -105,3 +105,18 @@ export const rehypeVerses = () => (tree: Root) => {
 const pendingCitation = /\[\d+\](\([^)\s]*)?$|\[\d*$/;
 
 export const hidePendingCitation = (text: string) => text.replace(pendingCitation, "");
+
+const isCited = (node: RootContent) =>
+  node.type === "element" &&
+  node.tagName === "a" &&
+  citedUrls.safeParse(node.properties.dataUrls).success;
+
+function trimBeforeCitations(parent: Root | Element) {
+  parent.children.forEach((child, index) => {
+    const before = parent.children[index - 1];
+    if (isCited(child) && before?.type === "text") before.value = before.value.trimEnd();
+    if (child.type === "element") trimBeforeCitations(child);
+  });
+}
+
+export const rehypeBareCitations = () => (tree: Root) => trimBeforeCitations(tree);
