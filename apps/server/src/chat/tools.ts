@@ -30,7 +30,7 @@ export const clarifyingQuestions = tool({
 - it is a personal decision, like a marriage, a purchase, a career or a case of their own;
 - the scope is open: which madhab, their situation, a budget, a place or their level;
 - the question has several valid readings.
-Skip it when the question has one factual answer, like how wudu is done or what a word means, or when the user already gave the scope. Ask at most one question per turn. If the user skips or dismisses it, never ask it again and answer with what you have. Put the question only in the card, not in your text. The card ends your turn, so write what they should read first and call it last, on its own. Their reply comes as their next message.`,
+Skip it when the question has one factual answer, like how wudu is done or what a word means, or when the user already gave the scope. Skip it too when you can reasonably guess and go ahead. Never use it to ask for the details of a sin, a private matter or a personal case. Ask at most one question per turn. If the user skips or dismisses it, never ask it again and answer with what you have. Put the question only in the card, not in your text. The card ends your turn, so write what they should read first and call it last, on its own. Their reply comes as their next message.`,
   inputSchema: question,
   execute: async () => ({ shown: true }),
 });

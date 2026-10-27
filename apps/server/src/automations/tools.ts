@@ -49,7 +49,7 @@ export type AutomationScope = { owner: string; timezone: string; projectId?: str
 export function routineTools({ owner, timezone, projectId }: AutomationScope) {
   return {
     update_routine: tool({
-      description: `Creates, edits, pauses, resumes or deletes one of the user's routines. A routine is a prompt that runs by itself on a schedule and saves each answer as a chat. Load the routines skill before you use it. edit takes only the fields that change.`,
+      description: `Creates, edits, pauses, resumes or deletes one of the user's routines. A routine is a prompt that runs by itself on a schedule and saves each answer as a chat. Load the routines skill before you use it. edit takes only the fields that change. The prompt says the goal and who it is for, tells the run to reply with exactly SKIP when there is nothing useful, and holds no verse or hadith text and nothing private. Times near a prayer are fixed clock times: ask for the local timetable, never guess them.`,
       inputSchema: routineCall,
       execute: async (call) => {
         switch (call.action) {

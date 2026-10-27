@@ -52,7 +52,7 @@ export function pluginTools(owner: string) {
     }),
     install_plugin: tool({
       description:
-        "Starts installing a plugin from the catalog by its id from search_plugins. Call it only when the user asked for the plugin or said yes to your offer, never on your own. The user confirms on a card first. Most plugins then need the user to sign in: they get a Connect card with the link, so tell them to finish there and that the plugin's tools arrive on their next message.",
+        "Starts installing a plugin from the catalog by its id from search_plugins. Call it only when the user asked for the plugin or said yes to your offer, never on your own. Before you ask, say in one line what the plugin could read, like their calendar or notes. The user confirms on a card first. Most plugins then need the user to sign in: they get a Connect card with the link, so tell them to finish there and that the plugin's tools arrive on their next message.",
       inputSchema: z.object({ id: connectorId }),
       execute: async ({ id }) => ({ id, name: CONNECTORS[id].name, ...(await connect(owner, id)) }),
     }),
