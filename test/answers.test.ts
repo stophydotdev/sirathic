@@ -211,17 +211,16 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
   const agent = answerAgent({
     model,
     tools: { lookup: tool({ inputSchema: z.object({}), execute: async () => "more rows" }) },
-    mode: "quick",
     settings: DEFAULT_SETTINGS,
     instructions: "",
     mentioned: "",
     firstStep: undefined,
-    texting: false,
+    inBot: false,
     skills: [],
     loaded: [],
     confirm: () => false,
     shorten: (message) => message,
-    answerOptions: {},
+    turn: { effort: "high", sessionId: "chat" },
   });
   const result = await agent.generate({ prompt: "how many users does sirathic have" });
   expect([result.steps.length, result.text]).toEqual([25, "Here is what I found."]);
@@ -258,32 +257,26 @@ test("a chat request with a system message is refused before anything runs", asy
   expect(res.status).toBe(400);
 });
 
-test("a bot's quick reply asks for low effort and nothing else changes", async () => {
+test("a bot always thinks at high effort, whatever the client asks for", async () => {
   const cases = [
-    { texting: true, mode: "quick", effort: "low" },
-    { texting: true, mode: "research", effort: "high" },
-    { texting: false, mode: "quick", effort: undefined },
+    { inBot: true, effort: "low" },
+    { inBot: true, effort: "medium" },
+    { inBot: false, effort: "low" },
   ] as const;
   const efforts = await Promise.all(
-    cases.map(async ({ texting, mode }) => {
+    cases.map(async ({ inBot, effort }) => {
       const { model, seen } = scriptedModel([]);
-      await answerWith(model, {
-        texting,
-        mode,
-        answerOptions: {
-          anthropic: {
-            thinking: { type: "adaptive" },
-            effort: mode === "research" ? "high" : undefined,
-          },
-        },
-      }).generate({ prompt: "hi" });
-      return seen[0]?.providerOptions?.anthropic;
+      await answerWith(model, { inBot, turn: { effort, sessionId: "chat" } }).generate({
+        prompt: "hi",
+      });
+      const options = seen[0]?.providerOptions;
+      return [options?.anthropic?.effort, options?.openai?.reasoningEffort];
     }),
   );
   expect(efforts).toEqual([
-    { thinking: { type: "adaptive" }, effort: "low" },
-    { thinking: { type: "adaptive" }, effort: "high" },
-    { thinking: { type: "adaptive" }, effort: undefined },
+    ["high", "high"],
+    ["high", "high"],
+    ["low", "low"],
   ]);
 });
 

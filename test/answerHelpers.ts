@@ -56,17 +56,16 @@ export const answerWith = (
   answerAgent({
     model,
     tools: { search_web: noInput, update_memory: noInput },
-    mode: "quick",
     settings: DEFAULT_SETTINGS,
     instructions: "INSTRUCTIONS",
     mentioned: "",
     firstStep: undefined,
-    texting: false,
+    inBot: false,
     skills: [],
     loaded: [],
     confirm: () => false,
     shorten: (message) => message,
-    answerOptions: { anthropic: { thinking: { type: "adaptive" } } },
+    turn: { effort: "high", sessionId: "chat" },
     ...overrides,
   });
 
@@ -100,7 +99,7 @@ export const chatTurn = async (
   });
   const response = chatResponse({
     models: { model, small: model },
-    options: { answer: {} },
+    turn: { effort: "high", sessionId: "chat" },
     modelName: "test",
     messages: [
       { id: "1", role: "user", parts: [{ type: "text", text: "what is zakat" }] },

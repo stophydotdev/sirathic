@@ -4,14 +4,13 @@ import type { MessageKey } from "@/messages/en";
 import { ArrowDown01Icon, DashboardSpeed02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  defaultEffort,
+  DEFAULT_EFFORT,
   EFFORTS,
   type Effort,
   effort as effortSchema,
 } from "@sirathic/server/messages";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import type { FC } from "react";
-import { useCurrentModel } from "@/components/account";
 import { useChatOptions } from "@/components/chatOptions";
 import { useT } from "@/components/i18n";
 import { composerControl } from "@/components/modelPicker";
@@ -31,12 +30,9 @@ const EFFORT_NAMES = {
 
 export const EffortPicker: FC<{ side?: "top" | "bottom" }> = ({ side }) => {
   const t = useT();
-  const mode = useChatOptions((s) => s.mode);
   const chosen = useChatOptions((s) => s.effort);
   const setEffort = useChatOptions((s) => s.setEffort);
-  const model = useCurrentModel();
-  const fallback = defaultEffort({ mode, noor: model?.maker !== "openai" });
-  const current = chosen ?? fallback;
+  const current = chosen ?? DEFAULT_EFFORT;
 
   return (
     <DropdownMenu>
@@ -65,7 +61,7 @@ export const EffortPicker: FC<{ side?: "top" | "bottom" }> = ({ side }) => {
           value={current}
           onValueChange={(value) => {
             const next = effortSchema.parse(value);
-            setEffort(next === fallback ? undefined : next);
+            setEffort(next === DEFAULT_EFFORT ? undefined : next);
           }}
         >
           {EFFORTS.map((level) => (
@@ -76,7 +72,7 @@ export const EffortPicker: FC<{ side?: "top" | "bottom" }> = ({ side }) => {
             >
               <span className="flex min-w-0 items-center gap-1">
                 <span className="min-w-0 truncate">{t(EFFORT_NAMES[level])}</span>
-                {level === fallback && (
+                {level === DEFAULT_EFFORT && (
                   <span className="border-input bg-background dark:bg-input/32 text-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-sm border px-0.75 text-xs leading-none font-medium sm:h-4 sm:min-w-4">
                     {t("Default")}
                   </span>

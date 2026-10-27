@@ -20,7 +20,7 @@ import {
 import { memoryTools } from "../account/memory";
 import { noorModel } from "../models/noor";
 import type { RulesProject } from "../projects/rules";
-import type { ProviderOptions } from "../models/subscription";
+import { answerOptions } from "../models/subscription";
 import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
 import { type AutomationScope, routineTools } from "../automations/tools";
@@ -58,6 +58,8 @@ import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
 const KEEPALIVE_MS = 15_000;
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
+type Turn = Parameters<typeof answerOptions>[0];
+
 const RULES_HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 
@@ -71,36 +73,31 @@ const FIRST_STEP = {
 export function answerAgent({
   model,
   tools,
-  mode,
   settings,
   instructions: system,
   mentioned,
   firstStep,
-  texting,
+  inBot,
   skills,
   loaded,
   confirm,
   shorten,
-  answerOptions,
+  turn,
 }: {
   model: LanguageModel;
   tools: ToolSet;
-  mode: Mode;
   settings: Settings;
   instructions: string;
   mentioned: string;
   firstStep: keyof typeof FIRST_STEP | undefined;
-  texting: boolean;
+  inBot: boolean;
   skills: readonly Skill[];
   loaded: readonly string[];
   confirm: (call: { toolName: string; input: unknown }) => boolean;
   shorten: ReturnType<typeof shortenEarlierResults>;
-  answerOptions: ProviderOptions;
+  turn: Turn;
 }) {
-  const options: ProviderOptions =
-    texting && mode === "quick"
-      ? { ...answerOptions, anthropic: { ...answerOptions.anthropic, effort: "low" } }
-      : answerOptions;
+  const options = answerOptions({ ...turn, effort: inBot ? "high" : turn.effort });
   return new ToolLoopAgent({
     model,
     instructions: system,
@@ -148,7 +145,7 @@ export function chatResponse({
   connected,
   project,
   userSkills,
-  options,
+  turn,
   title,
   save,
   record,
@@ -162,7 +159,7 @@ export function chatResponse({
   citedEarlier,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
-  options: { answer: ProviderOptions };
+  turn: Turn;
   modelName: string;
   messages: ChatMessage[];
   mode: Mode;
@@ -299,7 +296,6 @@ export function chatResponse({
       const agent = answerAgent({
         model: models.model,
         tools: offered,
-        mode,
         settings,
         instructions: instructions({
           now: new Date(),
@@ -327,12 +323,12 @@ export function chatResponse({
               ? first
               : "anyTool"
             : undefined,
-        texting: texts,
+        inBot: inBot !== undefined,
         skills: builtIn,
         loaded,
         confirm: (call) => needsApproval(call, new Set(writes)),
         shorten,
-        answerOptions: options.answer,
+        turn,
       });
       const answer = await createAgentUIStream({
         agent,

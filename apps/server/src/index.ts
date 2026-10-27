@@ -8,7 +8,6 @@ import { startScheduler } from "./automations/runner";
 import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
-import { noorModel } from "./models/noor";
 import { countNoorAnswer, pickModels } from "./models/pick";
 import { chatResponse } from "./chat/response";
 import { reviewEvery } from "./bots/review";
@@ -22,14 +21,14 @@ import { settingsInProject } from "./projects/rules";
 import {
   appLanguage,
   type ChatMessage,
-  defaultEffort,
+  DEFAULT_EFFORT,
   device,
   effort,
   mode,
   sentMessage,
 } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./http";
-import { answerOptions, sideOptions } from "./models/subscription";
+import { sideOptions } from "./models/subscription";
 import { appRouter } from "./router";
 import { createContext } from "./trpc";
 import { getSettings } from "./account/settings";
@@ -175,14 +174,7 @@ app.post("/api/chat", (c) =>
       ),
       project,
       userSkills,
-      options: {
-        answer: answerOptions({
-          effort:
-            input.effort ??
-            defaultEffort({ mode: input.mode, noor: noorModel(modelName) !== undefined }),
-          sessionId: input.id,
-        }),
-      },
+      turn: { effort: input.effort ?? DEFAULT_EFFORT, sessionId: input.id },
       title,
       save: (messages) => save(messages).then(() => learn(messages)),
       record: (event) => track(event, owner),
