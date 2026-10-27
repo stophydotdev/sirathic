@@ -28,6 +28,7 @@ import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { citations, withBareCitations } from "./citations";
+import { CONFIRM_RULES, writingTools } from "./confirm";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
 import { reasonOf } from "../http";
@@ -71,6 +72,7 @@ export function answerAgent({
   persona,
   skills,
   loaded,
+  confirm,
   shorten,
   answerOptions,
 }: {
@@ -84,6 +86,7 @@ export function answerAgent({
   persona: string | undefined;
   skills: readonly Skill[];
   loaded: readonly string[];
+  confirm: ReadonlySet<string>;
   shorten: ReturnType<typeof shortenEarlierResults>;
   answerOptions: ProviderOptions;
 }) {
@@ -99,6 +102,7 @@ export function answerAgent({
     instructions: searchPrompt(new Date(), mode, settings, persona),
     tools: available,
     stopWhen: hasToolCall(CLARIFYING),
+    toolApproval: ({ toolCall }) => (confirm.has(toolCall.toolName) ? "user-approval" : undefined),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
@@ -203,11 +207,15 @@ export function chatResponse({
   const pastedUrl = asked?.parts.some(
     (part) => part.type === "text" && URL_IN_TEXT.test(part.text),
   );
-  const forced = pastedUrl
-    ? "fetch"
-    : messages.filter((message) => message.role === "user").length === 1
-      ? "search"
-      : undefined;
+  const last = messages.at(-1);
+  const resumed = last?.role === "assistant" ? last : undefined;
+  const forced = resumed
+    ? undefined
+    : pastedUrl
+      ? "fetch"
+      : messages.filter((message) => message.role === "user").length === 1
+        ? "search"
+        : undefined;
   const messageId = createIdGenerator({ prefix: "msg", size: 16 });
   const stream = createUIMessageStream<ChatMessage>({
     originalMessages: messages,
@@ -215,7 +223,7 @@ export function chatResponse({
     execute: async ({ writer }) => {
       writer.write({
         type: "start",
-        messageId: messageId(),
+        messageId: resumed?.id ?? messageId(),
         messageMetadata: { createdAt: Date.now(), mode, model: modelName },
       });
       let streaming = true;
@@ -254,7 +262,7 @@ export function chatResponse({
         ),
       );
       const first =
-        builtIn.some(({ name }) => name === "research") && !loaded.includes("research")
+        !resumed && builtIn.some(({ name }) => name === "research") && !loaded.includes("research")
           ? "skill"
           : forced;
       const settings = texts
@@ -275,6 +283,7 @@ export function chatResponse({
         ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
         ...connectors.tools,
       };
+      const writes = unattended ? [] : writingTools(connectors.tools);
       const agent = answerAgent({
         model: models.model,
         tools: offered,
@@ -285,6 +294,7 @@ export function chatResponse({
           project +
           (searchable ? SEARCH_OUR_CHAT : "") +
           skillIndex(builtIn) +
+          (writes.length > 0 ? CONFIRM_RULES : "") +
           mentioned,
         firstStep:
           first && !inBot
@@ -296,6 +306,7 @@ export function chatResponse({
         persona: who,
         skills: builtIn,
         loaded,
+        confirm: new Set([...(automate ? ["createAutomation"] : []), ...writes]),
         shorten,
         answerOptions: options.answer,
       });

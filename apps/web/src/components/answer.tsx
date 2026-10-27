@@ -4,6 +4,7 @@ import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
 import { AutomationCard } from "@/components/automationCard";
+import { ConfirmCard } from "@/components/confirmCard";
 import { AskCard } from "@/components/questionCard";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
@@ -38,7 +39,7 @@ export const Reply: FC = () => {
   );
 };
 
-const research = groupPartByType({
+const researchByType = groupPartByType({
   reasoning: ["group-research"],
   "tool-call:createAutomation": [],
   "tool-call:listAutomations": [],
@@ -47,6 +48,9 @@ const research = groupPartByType({
   "tool-call:clarifying_questions": [],
   "tool-call": ["group-research"],
 });
+
+const research: typeof researchByType = (part, context) =>
+  part.type === "tool-call" && part.approval ? [] : researchByType(part, context);
 
 const answerState = (status: MessageStatus["type"] | undefined) =>
   status === "running" ? "streaming" : status === "incomplete" ? "error" : "complete";
@@ -109,7 +113,10 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
                 return currentToolName(part.toolName) === "clarifying_questions" ? (
                   <AskCard args={part.args} />
                 ) : (
-                  <AutomationCard tool={part.toolName} result={part.result} />
+                  <>
+                    {part.approval && <ConfirmCard call={part} />}
+                    <AutomationCard tool={part.toolName} result={part.result} />
+                  </>
                 );
               default:
                 return null;

@@ -7,6 +7,7 @@ import { AttachmentChip } from "@/components/composer";
 import { useT } from "@/components/i18n";
 import { MarkdownText } from "@/components/markdownText";
 import { UserText } from "@/components/mentions";
+import { ConfirmCard } from "@/components/confirmCard";
 import { AskCard } from "@/components/questionCard";
 import { ReportMistake } from "@/components/reportMistake";
 import { SourcesContext, sourcesOf } from "@/components/sources";
@@ -47,7 +48,7 @@ type Said =
 const saidOf = (content: ThreadMessage["content"]) =>
   content.flatMap<Said>((part) => {
     if (part.type === "text") return bubblesOf(part.text).map((text) => ({ kind: "text", text }));
-    if (part.type === "tool-call" && isCardTool(part.toolName)) {
+    if (part.type === "tool-call" && (isCardTool(part.toolName) || part.approval)) {
       return [{ kind: "tool", part }];
     }
     return [];
@@ -87,7 +88,12 @@ const Bubble: FC<{ said: Said }> = ({ said }) => {
   }
   const { toolName, args, result } = said.part;
   if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
-  return <AutomationCard tool={toolName} result={result} />;
+  return (
+    <>
+      {said.part.approval && <ConfirmCard call={said.part} />}
+      <AutomationCard tool={toolName} result={result} />
+    </>
+  );
 };
 
 const TypingDots: FC = () => {

@@ -93,7 +93,8 @@ const summaryOf = (
 const THINKING: ResearchStep = { kind: "think", text: "", live: true };
 
 const isResearch = (part: Part) =>
-  part.type === "reasoning" || (part.type === "tool-call" && !isCardTool(part.toolName));
+  part.type === "reasoning" ||
+  (part.type === "tool-call" && !isCardTool(part.toolName) && !part.approval);
 
 export const Research: FC<{ indices: readonly number[]; startedAt: number }> = ({
   indices,

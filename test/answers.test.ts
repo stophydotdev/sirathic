@@ -1,19 +1,23 @@
 import { expect, test } from "bun:test";
-import { simulateReadableStream, tool } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
+import { tool } from "ai";
 import { z } from "zod";
-import { type ChatMessage, type Mode, sentMessage } from "../apps/server/src/shared/messages";
+import type { Mode } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
-import { answerAgent, chatResponse } from "../apps/server/src/chat/response";
-import { loadSkill, skillsFor } from "../apps/server/src/chat/skills/builtIn";
+import { answerAgent } from "../apps/server/src/chat/response";
 import { automationTools } from "../apps/server/src/automations/tools";
 import { CHECK_FIRST } from "../apps/server/src/projects/rules";
 import server from "../apps/server/src/index";
-
-const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>
-  ({ id, role, parts: [{ type: "text", text }], metadata: { createdAt } }) satisfies ChatMessage;
+import {
+  answerWith,
+  chatTurn,
+  type ModelCall,
+  scriptedModel,
+  toolNames,
+  usage,
+} from "./answerHelpers";
 
 const SITUATIONAL = ["<copyright_restrictions>", "<mathematical_expressions>"];
 
@@ -67,11 +71,6 @@ test("a bot's system prompt names the bot, and a main chat's names Sirathic", ()
   ]);
 });
 
-const usage = {
-  inputTokens: { total: 1, noCache: 1, cacheRead: 0, cacheWrite: 0 },
-  outputTokens: { total: 1, text: 1, reasoning: 0 },
-};
-
 test("an answer keeps calling tools until the model replies, with no step cap", async () => {
   let calls = 0;
   const model = new MockLanguageModelV4({
@@ -110,6 +109,7 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
     persona: undefined,
     skills: [],
     loaded: [],
+    confirm: new Set(),
     shorten: (message) => message,
     answerOptions: {},
   });
@@ -148,56 +148,6 @@ test("a chat request with a system message is refused before anything runs", asy
   expect(res.status).toBe(400);
 });
 
-type ModelCall = Parameters<MockLanguageModelV4["doGenerate"]>[0];
-
-const scriptedModel = (toolsCalled: string[], skillNames: string[] = []) => {
-  const seen: ModelCall[] = [];
-  const model = new MockLanguageModelV4({
-    doGenerate: async (options) => {
-      seen.push(options);
-      const next = toolsCalled[seen.length - 1];
-      return {
-        content: next
-          ? [
-              {
-                type: "tool-call",
-                toolCallId: crypto.randomUUID(),
-                toolName: next,
-                input: JSON.stringify(next === "load_skill" ? { names: skillNames } : {}),
-              },
-            ]
-          : [{ type: "text", text: "Done." }],
-        finishReason: { unified: next ? "tool-calls" : "stop", raw: undefined },
-        usage,
-        warnings: [],
-      };
-    },
-  });
-  return { model, seen };
-};
-
-const noInput = tool({ inputSchema: z.object({}), execute: async () => "ok" });
-
-const answerWith = (
-  model: MockLanguageModelV4,
-  overrides: Partial<Parameters<typeof answerAgent>[0]>,
-) =>
-  answerAgent({
-    model,
-    tools: { search_web: noInput, remember: noInput },
-    mode: "quick",
-    settings: DEFAULT_SETTINGS,
-    rules: "RULES",
-    firstStep: undefined,
-    canRemember: true,
-    persona: undefined,
-    skills: [],
-    loaded: [],
-    shorten: (message) => message,
-    answerOptions: { anthropic: { thinking: { type: "adaptive" } } },
-    ...overrides,
-  });
-
 test("a bot's quick reply asks for low effort and nothing else changes", async () => {
   const cases = [
     { persona: '"Coach"', mode: "quick", effort: "low" },
@@ -227,8 +177,6 @@ test("a bot's quick reply asks for low effort and nothing else changes", async (
   ]);
 });
 
-const toolNames = (call: ModelCall | undefined) => call?.tools?.map((entry) => entry.name);
-
 test("every step of a turn sends the same tools, and the first one forces search", async () => {
   const { model, seen } = scriptedModel(["search_web", "remember"]);
   await answerWith(model, { firstStep: "search" }).generate({ prompt: "hi" });
@@ -252,54 +200,6 @@ const createDescribedFor = (timezone: string) =>
 test("the create tool's description is the same for every time zone", () => {
   expect(createDescribedFor("Europe/London")).toBe(createDescribedFor("Asia/Tokyo"));
 });
-
-const systemTexts = (call: ModelCall | undefined) =>
-  call?.prompt.flatMap((message) => (message.role === "system" ? [message.content] : []));
-
-const chatTurn = async (overrides: Partial<Parameters<typeof chatResponse>[0]>) => {
-  const seen: ModelCall[] = [];
-  const model = new MockLanguageModelV4({
-    doStream: async (options) => {
-      seen.push(options);
-      return {
-        stream: simulateReadableStream({
-          chunks: [
-            { type: "stream-start", warnings: [] },
-            { type: "text-start", id: "1" },
-            { type: "text-delta", id: "1", delta: "Done." },
-            { type: "text-end", id: "1" },
-            { type: "finish", finishReason: { unified: "stop", raw: undefined }, usage },
-          ],
-        }),
-      };
-    },
-  });
-  const response = chatResponse({
-    models: { model, small: model },
-    options: { answer: {} },
-    modelName: "test",
-    messages: [
-      { id: "1", role: "user", parts: [{ type: "text", text: "what is zakat" }] },
-      { id: "2", role: "assistant", parts: [{ type: "text", text: "A yearly duty." }] },
-      { id: "3", role: "user", parts: [{ type: "text", text: "on gold?" }] },
-    ],
-    mode: "quick",
-    abortSignal: new AbortController().signal,
-    preferences: Promise.resolve(DEFAULT_SETTINGS),
-    connected: Promise.resolve({ tools: {}, close: async () => [] }),
-    projectRules: Promise.resolve(""),
-    skillRules: Promise.resolve(""),
-    persona: Promise.resolve(undefined),
-    title: undefined,
-    save: async () => {},
-    record: () => {},
-    remember: undefined,
-    automate: undefined,
-    ...overrides,
-  });
-  await response.text();
-  return seen;
-};
 
 test.each<[string, ModelCall["toolChoice"]]>([
   ["sirathic-noor-1-flash", { type: "tool", toolName: "search_web" }],
@@ -333,84 +233,6 @@ test.each<[string, ModelCall["toolChoice"]]>([
     expect(first?.toolChoice).toEqual(toolChoice);
   },
 );
-
-const inResearch = (messages: ChatMessage[]) =>
-  chatTurn({ modelName: "sirathic-noor-1-flash", mode: "research", messages });
-
-test("research mode loads the research skill before anything else, once", async () => {
-  const [first] = await inResearch([said("1", "user", "what is zakat")]);
-  const [again] = await inResearch([
-    said("1", "user", "what is zakat"),
-    {
-      id: "2",
-      role: "assistant",
-      parts: [
-        {
-          type: "dynamic-tool",
-          toolName: "load_skill",
-          toolCallId: "c1",
-          state: "output-available",
-          input: { names: ["research"] },
-          output: "Loaded research.",
-        },
-        { type: "text", text: "Which school do you follow?" },
-      ],
-    },
-    said("3", "user", "Hanafi"),
-  ]);
-  expect([first?.toolChoice, toolNames(first), again?.toolChoice]).toEqual([
-    { type: "required" },
-    ["load_skill"],
-    { type: "auto" },
-  ]);
-  expect(systemTexts(again)?.at(-1)).toContain("This is research mode.");
-});
-
-test("the question tool is offered in research mode only, and never in an unattended run", async () => {
-  const loaded: ChatMessage[] = [
-    said("1", "user", "what is zakat"),
-    {
-      id: "2",
-      role: "assistant",
-      parts: [
-        {
-          type: "dynamic-tool",
-          toolName: "load_skill",
-          toolCallId: "c1",
-          state: "output-available",
-          input: { names: ["research"] },
-          output: "Loaded research.",
-        },
-      ],
-    },
-    said("3", "user", "Hanafi"),
-  ];
-  const offered = async (overrides: Partial<Parameters<typeof chatTurn>[0]>) => {
-    const [call] = await chatTurn({ messages: loaded, ...overrides });
-    return toolNames(call)?.includes("clarifying_questions");
-  };
-  expect([
-    await offered({ mode: "research" }),
-    await offered({ mode: "quick" }),
-    await offered({ mode: "research", unattended: true }),
-  ]).toEqual([true, false, false]);
-});
-
-test("a saved question card from before the rename replays as clarifying_questions", () => {
-  const sent = sentMessage.parse({
-    role: "assistant",
-    parts: [
-      {
-        type: "tool-askUser",
-        toolCallId: "c1",
-        state: "output-available",
-        input: { question: "Which school?", options: ["Hanafi", "Shafi'i"] },
-        output: { shown: true },
-      },
-    ],
-  });
-  expect(sent.parts.map((part) => part.type)).toEqual(["tool-clarifying_questions"]);
-});
 
 const HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
@@ -468,47 +290,6 @@ test("short answers name a school only from a source, and give the user's school
     [short, full].map((prompt) => prompt.includes("then note where the other schools differ")),
   ).toEqual([false, true]);
   expect(short).toContain("bring in the other schools only when they ask");
-});
-
-test("a loaded skill's text joins the rules and its tools open, while the tool result only says it loaded", async () => {
-  const skills = skillsFor({ mode: "quick", texting: true, inBot: true, timezone: "Asia/Tokyo" });
-  const { model, seen } = scriptedModel(["load_skill"], ["study", "routines"]);
-  await answerWith(model, {
-    tools: {
-      search_web: noInput,
-      load_skill: loadSkill(skills),
-      dueStudyItems: noInput,
-      createAutomation: noInput,
-    },
-    skills,
-    firstStep: undefined,
-  }).generate({ prompt: "quiz me" });
-  const [before, after] = seen;
-  const result = JSON.stringify(after?.prompt.filter((message) => message.role === "tool"));
-  expect([
-    toolNames(before),
-    toolNames(after),
-    systemTexts(before)?.at(-1)?.includes("run it as short quizzes"),
-    systemTexts(after)?.at(-1)?.includes("run it as short quizzes"),
-    systemTexts(after)?.at(-1)?.includes("The user's time zone is Asia/Tokyo."),
-    result.includes("short quizzes"),
-    result.includes("Loaded study, routines."),
-  ]).toEqual([
-    ["search_web", "load_skill"],
-    ["search_web", "load_skill", "dueStudyItems", "createAutomation"],
-    false,
-    true,
-    true,
-    false,
-    true,
-  ]);
-});
-
-test("a skill loaded in an earlier turn stays loaded", async () => {
-  const skills = skillsFor({ mode: "quick", texting: false, inBot: false, timezone: undefined });
-  const { model, seen } = scriptedModel([]);
-  await answerWith(model, { skills, loaded: ["writing"] }).generate({ prompt: "shorter" });
-  expect(systemTexts(seen[0])?.at(-1)).toContain("<rewrites>");
 });
 
 const STATIC_RULES = [
