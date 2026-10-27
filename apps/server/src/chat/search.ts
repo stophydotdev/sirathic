@@ -50,6 +50,7 @@ const SEARCH_LIMITS = {
 
 const LISTED_PER_QUERY = 20;
 const WEB_LISTED_PER_QUERY = 10;
+const WEB_READ_PER_QUERY = 5;
 
 export const searchInput = z.object({
   queries: z
@@ -211,12 +212,14 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
   return { sources, results, text: fiqhBlock(results) };
 };
 
+const extract = (markdown: string, queries: readonly string[]) =>
+  bestPieces(pageText(markdown, Number.POSITIVE_INFINITY), queries, RESULT_CHARS);
+
 const readPages = async (hits: Hit[], queries: readonly string[]) => {
   const read = await Promise.all(
     hits.map((hit) =>
       webFetch({ url: hit.url }).then(
-        (page) =>
-          bestPieces(pageText(page.markdown, Number.POSITIVE_INFINITY), queries, RESULT_CHARS),
+        (page) => extract(page.markdown, queries),
         () => undefined,
       ),
     ),
@@ -304,7 +307,18 @@ const unlessAllFail = async <Value>(runs: Promise<Value>[]) => {
 
 const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: Time) => {
   const found = await unlessAllFail(
-    queries.map((query) => webSearch({ query, sites, time, limit: WEB_LISTED_PER_QUERY })),
+    queries.map((query) =>
+      webSearch({
+        query,
+        sites,
+        time,
+        limit: WEB_LISTED_PER_QUERY,
+        read: Math.min(WEB_READ_PER_QUERY, Math.ceil(SEARCH_LIMITS.web / queries.length)),
+      }),
+    ),
+  );
+  const scraped = new Map(
+    found.flat().flatMap((hit) => (hit.markdown ? [[hit.url, hit.markdown]] : [])),
   );
   const hits = interleave(
     found.map((list) => list.filter((hit) => !textBlocked(hit.url))),
@@ -316,7 +330,18 @@ const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: T
     description: hit.description ?? "",
   }));
   const read = hits.slice(0, SEARCH_LIMITS.web);
-  const pages = citedPages(cite, read, await readPages(read, queries));
+  const fetched = await readPages(
+    read.filter((hit) => !scraped.has(hit.url)),
+    queries,
+  );
+  const passages = new Map([
+    ...read.flatMap((hit) => {
+      const markdown = scraped.get(hit.url);
+      return markdown ? [[hit.url, extract(markdown, queries)] as const] : [];
+    }),
+    ...fetched,
+  ]);
+  const pages = citedPages(cite, read, passages);
   return {
     ...pages,
     sources: [...pages.sources, ...hits.slice(SEARCH_LIMITS.web).map(hitSource)],
