@@ -34,7 +34,7 @@ mock.module("@sirathic/db", () => ({
 }));
 const { connectedTools, disconnect, listConnections, FORGET, withUpdate } =
   await import("../apps/server/src/plugins/connections");
-const { matchingPlugins } = await import("../apps/server/src/plugins/tools");
+const { matchingPlugins, notConnected } = await import("../apps/server/src/plugins/tools");
 
 test.each([
   "127.0.0.1",
@@ -280,4 +280,13 @@ test("the plugin list is read once for a minute and again after a disconnect", a
   await disconnect("owner-4", "exa");
   await listConnections("owner-4");
   expect(selects).toHaveLength(4);
+});
+
+test("a failed install tells the model the real reason, without URLs or secrets, and no promise to retry", () => {
+  const err = new Error(
+    "Gmail sign-in failed: invalid_grant from https://oauth2.example.com/token?code=abc with client_secret=s3cr3t for this app.",
+  );
+  expect(notConnected(err)).toBe(
+    "Not connected: Gmail sign-in failed: invalid_grant from with for this app. Tell the user it did not connect and why, in plain words. Do not say whose side failed or promise to retry.",
+  );
 });

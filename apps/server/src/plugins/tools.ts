@@ -1,9 +1,22 @@
 import { tool } from "ai";
 import { z } from "zod";
+import { reasonOf } from "../http";
 import { CONNECTORS, connectorId } from "./catalog";
 import { connect, listConnections } from "./connections";
 
 const MAX_RESULTS = 8;
+
+const URL_OR_SECRET =
+  /https?:\/\/\S+|\w*(?:token|secret|key|password|code)\w*\s*[=:]\s*\S+|[\w-]{32,}/giu;
+
+export const notConnected = (err: Error) =>
+  `Not connected: ${reasonOf(err)
+    .replace(URL_OR_SECRET, "")
+    .replace(/\s+/gu, " ")
+    .replace(
+      /[.\s]+$/u,
+      "",
+    )}. Tell the user it did not connect and why, in plain words. Do not say whose side failed or promise to retry.`;
 
 type Listed = { id: string; name: string; category: string; connected: boolean };
 
@@ -59,7 +72,9 @@ export function pluginTools(owner: string, returnTo: string) {
       execute: async ({ id }) => ({
         id,
         name: CONNECTORS[id].name,
-        ...(await connect(owner, id, returnTo)),
+        ...(await connect(owner, id, returnTo).catch((err: Error) => {
+          throw new Error(notConnected(err));
+        })),
       }),
     }),
   };
