@@ -14,7 +14,6 @@ import {
 } from "@/components/research";
 import { type Translate, useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
-import { APPEAR } from "@/lib/ease";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
@@ -141,7 +140,7 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
           <StepRow key={i} step={step} active={busy && i === rows.length - 1} animate={busy} />
         ))}
       {busy ? (
-        <div className={cn("text-muted-foreground flex h-6 items-center gap-2 text-sm", APPEAR)}>
+        <div className="text-muted-foreground flex h-6 items-center gap-2 text-sm">
           <HugeiconsIcon
             icon={Loading03Icon}
 
@@ -184,7 +183,7 @@ const Row: FC<{
   aside?: ReactNode;
   children: ReactNode;
 }> = ({ Icon, active, code, href, aside, children }) => (
-  <div className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", APPEAR)}>
+  <div className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm">
     <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
     <span className={cn(code ? "shrink-0" : "min-w-0 truncate", active && "shimmer")}>
       {children}
@@ -215,9 +214,7 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
   const target = usePluginTargets()(plugin);
   return (
     <div className="flex min-w-0 flex-col gap-2">
-      <div
-        className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", APPEAR)}
-      >
+      <div className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm">
         <MentionIcon target={target} />
         <span className={cn("shrink-0", active && "shimmer")}>
           {t("Used {name} plugin", { name: target.name })}
@@ -229,10 +226,7 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
       {calls.map((call, i) => (
         <div
           key={i}
-          className={cn(
-            "text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm",
-            APPEAR,
-          )}
+          className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm"
         >
           <MentionIcon target={target} />
           <span className="shrink-0">
@@ -320,10 +314,7 @@ const SearchesRow: FC<{
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className={cn(
-          "text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 text-start text-sm transition-colors",
-          APPEAR,
-        )}
+        className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 text-start text-sm transition-colors"
       >
         <HugeiconsIcon icon={Search01Icon} className="text-foreground/70 size-4 shrink-0" />
         <span className={cn("shrink-0 tabular-nums", active && "shimmer")}>

@@ -369,7 +369,7 @@ const Question: FC = () => {
     <>
       <AuiIf condition={(s) => !s.message.composer.isEditing}>
         <div className="flex w-full items-start justify-end gap-1 pt-8 pb-6">
-          <ActionBarPrimitive.Root className="mt-2.5 flex opacity-0 transition-opacity group-focus-within/message:opacity-100 group-hover/message:opacity-100 pointer-coarse:mt-1.5 pointer-coarse:opacity-100 print:hidden">
+          <ActionBarPrimitive.Root className="mt-2.5 flex opacity-0 group-focus-within/message:opacity-100 group-hover/message:opacity-100 pointer-coarse:mt-1.5 pointer-coarse:opacity-100 print:hidden">
             <ActionBarPrimitive.Edit
               className={cn(iconButton, "size-6 pointer-coarse:size-9")}
               aria-label={t("Edit query")}

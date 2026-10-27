@@ -79,7 +79,7 @@ const Bubble: FC<{ said: Said }> = ({ said }) => {
   if (said.kind === "text") {
     return (
       <TextMessagePartProvider text={said.text}>
-        <div className="bot-bubble animate-in fade-in slide-in-from-bottom-1 duration-200 motion-reduce:animate-none">
+        <div className="bot-bubble">
           <MarkdownText />
         </div>
       </TextMessagePartProvider>
@@ -110,7 +110,7 @@ const BotActions: FC = () => {
   const [reporting, setReporting] = useState(false);
   const t = useT();
   return (
-    <div className="-ms-1 flex opacity-0 transition-opacity group-focus-within/message:opacity-100 group-hover/message:opacity-100 pointer-coarse:opacity-100 print:hidden">
+    <div className="-ms-1 flex opacity-0 group-focus-within/message:opacity-100 group-hover/message:opacity-100 pointer-coarse:opacity-100 print:hidden">
       <button
         type="button"
         aria-label={t("Helpful")}

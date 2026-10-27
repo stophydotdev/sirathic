@@ -293,7 +293,7 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
         <HugeiconsIcon
           icon={ArrowDown01Icon}
           className={cn(
-            "size-4 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 pointer-coarse:opacity-100",
+            "size-4 opacity-0 group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 pointer-coarse:opacity-100",
             !open && "-rotate-90 opacity-100",
           )}
         />

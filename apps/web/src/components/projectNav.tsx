@@ -194,12 +194,12 @@ export const ProjectList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           <HugeiconsIcon
             icon={ArrowDown01Icon}
             className={cn(
-              "size-3.5 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/projects:opacity-100 pointer-coarse:opacity-100",
+              "size-3.5 opacity-0 group-hover/sidebar:opacity-100 group-focus-visible/projects:opacity-100 pointer-coarse:opacity-100",
               !open && "-rotate-90 opacity-100",
             )}
           />
         </button>
-        <div className="flex items-center gap-0.5 opacity-0 transition-opacity group-hover/sidebar:opacity-100 focus-within:opacity-100 pointer-coarse:opacity-100">
+        <div className="flex items-center gap-0.5 opacity-0 group-hover/sidebar:opacity-100 focus-within:opacity-100 pointer-coarse:opacity-100">
           <Link
             href="/project"
             onClick={onDone}

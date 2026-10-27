@@ -439,7 +439,7 @@ const AttachmentPreview: FC = () => {
   return (
     <AttachmentPrimitive.Root className="group/attachment relative">
       <AttachmentChip />
-      <AttachmentPrimitive.Remove className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-1.5 -end-1.5 flex size-5 items-center justify-center rounded-full border opacity-0 transition-opacity group-hover/attachment:opacity-100 pointer-coarse:opacity-100">
+      <AttachmentPrimitive.Remove className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-1.5 -end-1.5 flex size-5 items-center justify-center rounded-full border opacity-0 group-hover/attachment:opacity-100 pointer-coarse:opacity-100">
         <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
       </AttachmentPrimitive.Remove>
     </AttachmentPrimitive.Root>

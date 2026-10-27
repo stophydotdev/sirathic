@@ -86,7 +86,7 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           <HugeiconsIcon
             icon={ArrowDown01Icon}
             className={cn(
-              "size-3.5 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/bots:opacity-100 pointer-coarse:opacity-100",
+              "size-3.5 opacity-0 group-hover/sidebar:opacity-100 group-focus-visible/bots:opacity-100 pointer-coarse:opacity-100",
               !open && "-rotate-90 opacity-100",
             )}
           />
@@ -96,7 +96,7 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           aria-label={t("New bot")}
           title={t("New bot")}
           onClick={() => setCreating(true)}
-          className="hover:bg-muted hover:text-foreground flex size-5 items-center justify-center rounded-md opacity-0 transition-opacity group-hover/sidebar:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
+          className="hover:bg-muted hover:text-foreground flex size-5 items-center justify-center rounded-md opacity-0 group-hover/sidebar:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
         >
           <HugeiconsIcon icon={Add01Icon} className="size-3.5" />
         </button>

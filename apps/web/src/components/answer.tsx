@@ -18,9 +18,7 @@ import {
 import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
 import type { Source } from "@sirathic/server/sources";
-import { cn } from "@/lib/utils";
 import {
-  AuiIf,
   BranchPickerPrimitive,
   groupPartByType,
   MessagePrimitive,
@@ -79,7 +77,6 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const aui = useAui();
   const state = useAuiState((s) => answerState(s.message.status?.type));
   const messageId = useAuiState((s) => s.message.id);
-  const [streamed] = useState(state === "streaming");
   const [startedAt] = useState(() => startOf(messageId));
   const { feedback, rate, copy } = useAnswer();
   const [reporting, setReporting] = useState(false);
@@ -128,14 +125,6 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         <ReplyError />
       </StreamingResponse>
 
-      <AuiIf condition={(s) => s.message.status?.type !== "running"}>
-        <div
-          className={cn(
-            streamed &&
-              "animate-in fade-in motion-safe:slide-in-from-bottom-1 duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-          )}
-        ></div>
-      </AuiIf>
       <ReportMistake
         open={reporting}
         onOpenChange={setReporting}
