@@ -1,11 +1,10 @@
+import { stophy } from "@sirathic/core/stophy";
 import { fatwas, sources } from "@sirathic/db/schema";
 import { z } from "zod";
 import { DATA_DIR } from "./catalog";
 
 export const RAW_DIR = `${DATA_DIR}/fatwas`;
 const ATTEMPTS = 3;
-const BROWSER =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
 export const VERSION = new Date().toISOString().slice(0, 10);
 
 export type Fatwa = Omit<typeof fatwas.$inferInsert, "source" | "url">;
@@ -22,20 +21,23 @@ export type Site = {
   parse: (markdown: string, html: string, url: string) => Fatwa | undefined;
 };
 
-const get = async (
-  url: string,
-  headers: Record<string, string> = {},
-  attempt = 1,
-): Promise<string> => {
-  const response = await fetch(url, {
-    headers: { "user-agent": BROWSER, "accept-language": "en", ...headers },
-    signal: AbortSignal.timeout(30_000),
-  }).catch((error: Error) => error);
-  if (!(response instanceof Error) && response.ok) return response.text();
-  const why = response instanceof Error ? response.message : `HTTP ${response.status}`;
+const spent = new Map<string, number>();
+
+export const creditsSpent = (host: string) => spent.get(host) ?? 0;
+
+const get = async (url: string, attempt = 1): Promise<string> => {
+  const result = await stophy.web
+    .scrape({ url, formats: ["rawHtml"] }, { signal: AbortSignal.timeout(60_000) })
+    .catch((error: Error) => error);
+  if (!(result instanceof Error)) {
+    const host = new URL(url).hostname;
+    spent.set(host, creditsSpent(host) + result.creditsUsed);
+    if (result.data.rawHtml && result.data.metadata.statusCode < 400) return result.data.rawHtml;
+  }
+  const why = result instanceof Error ? result.message : `HTTP ${result.data.metadata.statusCode}`;
   if (attempt === ATTEMPTS) throw new Error(`${url}: ${why}`);
   await Bun.sleep(2_000 * attempt);
-  return get(url, headers, attempt + 1);
+  return get(url, attempt + 1);
 };
 
 export const rawFile = (url: string) =>
@@ -301,13 +303,13 @@ const AMJA_FATWAS = z.object({
 
 export const amjaFatwas = async (lang: "en" | "ar", start = 0): Promise<string[]> => {
   const query = `draw=1&start=${start}&length=${AMJA_PAGE}&order[0][column]=0&order[0][dir]=asc&columns[0][data]=data&columns[0][name]=id&columns[0][searchable]=true&columns[0][orderable]=true&search[value]=`;
-  const { recordsTotal, data } = AMJA_FATWAS.parse(
-    JSON.parse(
-      await get(`https://www.amjaonline.org/fatwa/${lang}?${query}`, {
-        "x-requested-with": "XMLHttpRequest",
-      }),
-    ),
-  );
+  const url = `https://www.amjaonline.org/fatwa/${lang}?${query}`;
+  const response = await fetch(url, {
+    headers: { "x-requested-with": "XMLHttpRequest" },
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
+  const { recordsTotal, data } = AMJA_FATWAS.parse(await response.json());
   const urls = data.map(
     ({ data: { id, slug } }) => `https://www.amjaonline.org/fatwa/${lang}/${id}/${slug}`,
   );

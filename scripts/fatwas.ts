@@ -5,6 +5,7 @@ import { fatwas, sources } from "@sirathic/db/schema";
 import { eq } from "drizzle-orm";
 import {
   clean,
+  creditsSpent,
   type Fatwa,
   listedUrls,
   pageHtml,
@@ -178,9 +179,13 @@ if (!DRY && chosen.length > 0) {
 }
 await Promise.all(
   chosen.map((site) =>
-    crawl(site).catch((error: Error) =>
-      console.warn(`${site.source.name} stopped: ${error.message}`),
-    ),
+    crawl(site)
+      .catch((error: Error) => console.warn(`${site.source.name} stopped: ${error.message}`))
+      .finally(() =>
+        console.log(
+          `${site.source.name}: ${creditsSpent(new URL(site.source.url).hostname)} Stophy credits`,
+        ),
+      ),
   ),
 );
 if (!DRY) await db.$client.end();
