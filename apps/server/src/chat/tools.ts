@@ -6,7 +6,6 @@ import { webFetch } from "@sirathic/core/tools/webFetch";
 import { tool } from "ai";
 import { z } from "zod";
 import { question } from "../shared/messages";
-import { MEMORY_LIMIT, memoryFact, type settingsUpdate, told } from "../shared/settings";
 import {
   type Cite,
   gradeOf,
@@ -34,8 +33,6 @@ Skip it when the question has one factual answer, like how wudu is done or what 
   inputSchema: question,
   execute: async () => ({ shown: true }),
 });
-
-export type Remember = (input: z.output<typeof told>) => Promise<z.output<typeof settingsUpdate>>;
 
 const fetchUrlInput = z.object({
   urls: z
@@ -69,7 +66,7 @@ const readPage = async (cite: Cite, url: string) => {
   };
 };
 
-export function sirathicTools(cite: Cite, remember?: Remember) {
+export function sirathicTools(cite: Cite) {
   return {
     search_web: tool({
       description: `Searches the Quran, hadith, fatwas, fiqh books, the web or news in one call. Returns results with a title, link and snippet, numbered for citing. Works best with short keyword queries, not questions or multi-step reasoning.
@@ -134,21 +131,6 @@ If results are incomplete, conflicting, only snippets, one-sided, or miss a part
         };
       },
       toModelOutput: ({ output }) => ({ type: "json", value: { pages: output.pages } }),
-    }),
-    remember: tool({
-      description:
-        "Saves preferences and lasting facts the user states about themselves, such as their madhab, answer language, answer length, where they live, their work, or that they are a revert, so later answers use them. Call it once, with everything the user stated and null for the rest. Not for details of a personal case. When it says memory is full, ask the user which saved fact to give up, then call it with replaces set to that fact's exact text.",
-      inputSchema: told,
-      strict: true,
-      execute: async (input) => {
-        if (!remember) return "Not saved: this chat is incognito.";
-        const saved = await remember(input);
-        const fact = memoryFact(input.fact);
-        if (fact && saved.memory && !saved.memory.includes(fact)) {
-          return `The fact was not saved: memory is full at ${MEMORY_LIMIT} facts. Ask the user which one to give up, then call remember with replaces set to its exact text. Saved facts:\n${saved.memory.map((old) => `- ${old}`).join("\n")}`;
-        }
-        return Object.keys(saved).length > 0 ? "Saved." : "Nothing new to save.";
-      },
     }),
   };
 }

@@ -105,7 +105,6 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
     settings: DEFAULT_SETTINGS,
     rules: "",
     firstStep: undefined,
-    canRemember: false,
     persona: undefined,
     skills: [],
     loaded: [],
@@ -178,20 +177,16 @@ test("a bot's quick reply asks for low effort and nothing else changes", async (
 });
 
 test("every step of a turn sends the same tools, and the first one forces search", async () => {
-  const { model, seen } = scriptedModel(["search_web", "remember"]);
+  const { model, seen } = scriptedModel(["search_web", "update_memory"]);
   await answerWith(model, { firstStep: "search" }).generate({ prompt: "hi" });
-  expect(seen.map(toolNames)).toEqual(Array.from({ length: 3 }, () => ["search_web", "remember"]));
+  expect(seen.map(toolNames)).toEqual(
+    Array.from({ length: 3 }, () => ["search_web", "update_memory"]),
+  );
   expect(seen.map((call) => call.toolChoice)).toEqual([
     { type: "tool", toolName: "search_web" },
     { type: "auto" },
     { type: "auto" },
   ]);
-});
-
-test("a chat that cannot remember never lists the remember tool", async () => {
-  const { model, seen } = scriptedModel([]);
-  await answerWith(model, { canRemember: false }).generate({ prompt: "hi" });
-  expect(toolNames(seen[0])).toEqual(["search_web"]);
 });
 
 const createDescribedFor = (timezone: string) =>

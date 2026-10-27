@@ -54,12 +54,11 @@ export const answerWith = (
 ) =>
   answerAgent({
     model,
-    tools: { search_web: noInput, remember: noInput },
+    tools: { search_web: noInput, update_memory: noInput },
     mode: "quick",
     settings: DEFAULT_SETTINGS,
     rules: "RULES",
     firstStep: undefined,
-    canRemember: true,
     persona: undefined,
     skills: [],
     loaded: [],
@@ -116,7 +115,7 @@ export const chatTurn = async (
     title: undefined,
     save: async () => {},
     record: () => {},
-    remember: undefined,
+    owner: undefined,
     automate: undefined,
     ...overrides,
   });

@@ -173,7 +173,7 @@ async function answerPrompt(
       answered = messages;
     },
     record: (event) => track(event, by),
-    remember: undefined,
+    owner: undefined,
     automate: undefined,
     historyLimit: inProject ? BOT_HISTORY : undefined,
     citedEarlier: earlier,

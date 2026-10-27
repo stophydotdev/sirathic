@@ -271,7 +271,7 @@ const TOOLS = new Map<
     },
   ],
   [
-    "remember",
+    "update_memory",
     {
       Icon: Bookmark02Icon,
       label: (t) => t("Saved to your preferences"),

@@ -17,6 +17,7 @@ import {
   type ToolSet,
   type UIMessageStreamOutcome,
 } from "ai";
+import { memoryTools } from "../account/memory";
 import { noorModel } from "../models/noor";
 import { CHECK_FIRST } from "../projects/rules";
 import type { ProviderOptions } from "../models/subscription";
@@ -46,7 +47,7 @@ import {
   skillIndex,
   skillsFor,
 } from "./skills/builtIn";
-import { CLARIFYING, clarifyingQuestions, type Remember, sirathicTools } from "./tools";
+import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
@@ -68,7 +69,6 @@ export function answerAgent({
   settings,
   rules,
   firstStep,
-  canRemember,
   persona,
   skills,
   loaded,
@@ -82,7 +82,6 @@ export function answerAgent({
   settings: Settings;
   rules: string;
   firstStep: keyof typeof FIRST_STEP | undefined;
-  canRemember: boolean;
   persona: string | undefined;
   skills: readonly Skill[];
   loaded: readonly string[];
@@ -90,9 +89,6 @@ export function answerAgent({
   shorten: ReturnType<typeof shortenEarlierResults>;
   answerOptions: ProviderOptions;
 }) {
-  const available = Object.fromEntries(
-    Object.entries(tools).filter(([name]) => name !== "remember" || canRemember),
-  );
   const options: ProviderOptions =
     persona !== undefined && mode === "quick"
       ? { ...answerOptions, anthropic: { ...answerOptions.anthropic, effort: "low" } }
@@ -100,7 +96,7 @@ export function answerAgent({
   return new ToolLoopAgent({
     model,
     instructions: searchPrompt(new Date(), mode, settings, persona),
-    tools: available,
+    tools,
     stopWhen: hasToolCall(CLARIFYING),
     toolApproval: ({ toolCall }) => (confirm.has(toolCall.toolName) ? "user-approval" : undefined),
     allowSystemInMessages: true,
@@ -123,7 +119,7 @@ export function answerAgent({
         activeTools:
           forcing === "skill"
             ? [LOAD_SKILL]
-            : Object.keys(available).filter((name) => !closed.has(name)),
+            : Object.keys(tools).filter((name) => !closed.has(name)),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
       };
     },
@@ -152,7 +148,7 @@ export function chatResponse({
   title,
   save,
   record,
-  remember,
+  owner,
   automate,
   fileOwner,
   settled,
@@ -175,7 +171,7 @@ export function chatResponse({
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
-  remember: Remember | undefined;
+  owner: string | undefined;
   automate: AutomationScope | undefined;
   fileOwner?: string;
   settled?: () => void;
@@ -195,7 +191,7 @@ export function chatResponse({
   let text = "";
   const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages, sources.numberOf);
-  const tools = sirathicTools(sources.add, remember);
+  const tools = sirathicTools(sources.add);
   const recent = messages
     .filter((message) => message.role === "user")
     .slice(-2)
@@ -279,6 +275,13 @@ export function chatResponse({
         ...(inBot && botTools(inBot)),
         ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
         ...(searchable && chatSearchTools(searchable)),
+        ...memoryTools(
+          owner === undefined
+            ? undefined
+            : inBot
+              ? { kind: "bot", ...inBot }
+              : { kind: "account", owner },
+        ),
         ...(inBot && studyTools(inBot)),
         ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
         ...connectors.tools,
@@ -302,7 +305,6 @@ export function chatResponse({
               ? first
               : "anyTool"
             : undefined,
-        canRemember: remember !== undefined,
         persona: who,
         skills: builtIn,
         loaded,

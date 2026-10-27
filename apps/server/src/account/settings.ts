@@ -2,14 +2,7 @@ import { db } from "@sirathic/db";
 import { settings as settingsTable } from "@sirathic/db/schema";
 import { eq, sql } from "drizzle-orm";
 import type { z } from "zod";
-import {
-  DEFAULT_SETTINGS,
-  rememberedUpdate,
-  type Settings,
-  settings,
-  type settingsUpdate,
-  type told,
-} from "../shared/settings";
+import { DEFAULT_SETTINGS, type Settings, settings, type settingsUpdate } from "../shared/settings";
 
 const stored = settings
   .partial()
@@ -37,11 +30,4 @@ export async function updateSettings(owner: string, update: z.output<typeof sett
     })
     .returning({ values: settingsTable.values });
   return stored.parse(row?.values);
-}
-
-export async function remember(owner: string, input: z.output<typeof told>) {
-  const { memory } = await getSettings(owner);
-  const update = rememberedUpdate(memory, input);
-  if (Object.keys(update).length > 0) await updateSettings(owner, update);
-  return update;
 }

@@ -2,17 +2,9 @@ import { db } from "@sirathic/db";
 import { chatSessions, projects } from "@sirathic/db/schema";
 import { type AnyColumn, and, count, eq, sql } from "drizzle-orm";
 import { z } from "zod";
-import {
-  PROFILE_CHARS,
-  PROFILE_LIMIT,
-  type ProfileEntry,
-  profileEntry,
-  profileRejection,
-  withEntry,
-} from "../bots/profile";
+import { PROFILE_LIMIT, profileEntry } from "../bots/profile";
 import { pluginId } from "../plugins/catalog";
 import { StatusError } from "../http";
-import { remember } from "../account/settings";
 import {
   BOT_COLORS,
   BOT_ICONS,
@@ -20,7 +12,7 @@ import {
   SECTION_NAME_MAX,
   containsLink,
 } from "../shared/projects";
-import { MEMORY_CHARS, MEMORY_LIMIT, type told } from "../shared/settings";
+import { MEMORY_CHARS, MEMORY_LIMIT } from "../shared/settings";
 
 const MAX_PROJECTS = 50;
 const MAX_BOT_PLUGINS = 100;
@@ -171,36 +163,16 @@ export async function projectOfChat(chatId: string, by: string, requested: strin
   return project;
 }
 
-export async function addProfileEntry(
-  id: string,
-  by: string,
-  entry: ProfileEntry,
-  replaces: string | null,
-) {
+export async function profileOf(id: string, by: string) {
   const [row] = await db.select({ profile: projects.profile }).from(projects).where(owned(id, by));
   if (!row) throw new StatusError(404, "no such project");
-  const profile = withEntry(row.profile, entry, replaces);
-  if (!profile) return { kind: "full", profile: row.profile } as const;
-  await db.update(projects).set({ profile }).where(owned(id, by));
-  return { kind: "saved", profile } as const;
+  return row.profile;
 }
 
-export async function rememberInBot(
-  id: string,
-  by: string,
-  { fact, replaces, ...preferences }: z.output<typeof told>,
-) {
-  const kept = fact?.trim().slice(0, PROFILE_CHARS);
-  const entry = kept && !profileRejection(kept) ? kept : undefined;
-  const saved = await remember(by, { ...preferences, fact: null, replaces: null });
-  if (!entry) return saved;
-  const added = await addProfileEntry(
-    id,
-    by,
-    { text: entry, source: "said", at: Date.now() },
-    replaces,
+export async function setProfile(id: string, by: string, facts: readonly string[]) {
+  const known = new Map((await profileOf(id, by)).map((entry) => [entry.text, entry]));
+  const profile = facts.map(
+    (text) => known.get(text) ?? { text, source: "said" as const, at: Date.now() },
   );
-  return added.kind === "full"
-    ? { ...saved, memory: added.profile.map((old) => old.text) }
-    : { ...saved, fact: entry };
+  await db.update(projects).set({ profile }).where(owned(id, by));
 }

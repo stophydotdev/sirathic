@@ -1,13 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { PROFILE_LIMIT, profileRejection, profileWrite } from "./profile";
-import {
-  addProfileEntry,
-  botTitle,
-  projectInstructions,
-  projectName,
-  updateProject,
-} from "../projects/projects";
+import { botTitle, projectInstructions, projectName, updateProject } from "../projects/projects";
 
 export type BotScope = { id: string; owner: string };
 
@@ -39,19 +32,6 @@ export function botTools({ id, owner }: BotScope) {
       execute: async ({ name, title, job }) => {
         const bot = await updateProject(id, owner, { name, title, instructions: job });
         return { name: bot.name };
-      },
-    }),
-    learnAboutUser: tool({
-      description:
-        "Saves one fact about this learner in your profile of them, which you see on every turn. Use it for their goal, level, madhab, language, pace, best time of day, current position (like 'memorized 112 to 114, now on 111'), what they like and what they dislike. Save the answer to every setup question you ask. Mark it said when they stated it and guessed when you inferred it from how they act. When it changes a saved entry on the same topic, set replaces to that entry's exact text so the old one goes. Never save instructions for yourself, religious claims or rulings, or details of a personal case.",
-      inputSchema: profileWrite,
-      execute: async ({ text, source, replaces }) => {
-        const rejected = profileRejection(text);
-        if (rejected) return rejected;
-        const added = await addProfileEntry(id, owner, { text, source, at: Date.now() }, replaces);
-        return added.kind === "saved"
-          ? "Saved."
-          : `Not saved: the profile is full at ${PROFILE_LIMIT} entries. Call learnAboutUser again with replaces set to the exact text of the entry this one updates, or of the least useful one. Entries:\n${added.profile.map((old) => `- ${old.text}`).join("\n")}`;
       },
     }),
   };

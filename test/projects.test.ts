@@ -1,5 +1,6 @@
-import { expect, test } from "bun:test";
-import { profileRejection, withEntry } from "../apps/server/src/bots/profile";
+import { expect, mock, test } from "bun:test";
+import { drizzle } from "drizzle-orm/pg-proxy";
+import { profileRejection } from "../apps/server/src/bots/profile";
 import { fallenOut } from "../apps/server/src/bots/summary";
 import { BOT_HISTORY, recentTurns } from "../apps/server/src/bots/tools";
 import { taughtNote } from "../apps/server/src/bots/notes";
@@ -7,9 +8,8 @@ import { reviewed } from "../apps/server/src/bots/review";
 import { projectRules, settingsInProject } from "../apps/server/src/projects/rules";
 import { projectUpdate } from "../apps/server/src/projects/projects";
 import { afterReview, isMemorized } from "../apps/server/src/bots/study";
+import { changedFacts, matchingFacts } from "../apps/server/src/account/memory";
 import { containsLink } from "../apps/server/src/shared/projects";
-import { sirathicTools } from "../apps/server/src/chat/tools";
-import { rememberedUpdate } from "../apps/server/src/shared/settings";
 
 test("a bot keeps to its job, and a bot with no job sets one first", () => {
   const coach = {
@@ -67,51 +67,103 @@ test("a bot name with a link is caught and a plain name is not", () => {
   ).toEqual([false, false, false, false]);
 });
 
-const nothing = {
-  madhab: null,
-  answerLanguage: null,
-  answerLength: null,
-  showArabic: null,
-  fact: null,
-  replaces: null,
-};
+const botId = "22222222-2222-4222-8222-222222222222";
+let accountFacts = ["Prays at the mosque on Fridays", "Is 28"];
+let botProfile = [
+  { text: "Goal: memorize Juz Amma", source: "guessed", at: 1 },
+  { text: "Now on 114", source: "said", at: 2 },
+];
 
-test("only the preferences the user stated change", () => {
-  expect(rememberedUpdate([], { ...nothing, madhab: "hanafi", showArabic: false })).toEqual({
-    madhab: "hanafi",
-    showArabic: false,
-  });
+const fakeDb = drizzle(
+  async (sql, params) => {
+    if (sql.startsWith('select "values" from "settings"')) {
+      return { rows: [[{ memory: accountFacts }]] };
+    }
+    if (sql.startsWith('insert into "settings"')) {
+      accountFacts = JSON.parse(String(params[1])).memory;
+      return { rows: [[{ memory: accountFacts }]] };
+    }
+    if (sql.startsWith('select "profile" from "projects"')) return { rows: [[botProfile]] };
+    if (sql.startsWith('update "projects" set "profile"')) {
+      botProfile = JSON.parse(String(params[0]));
+      return { rows: [] };
+    }
+    throw new Error(`unexpected query: ${sql}`);
+  },
+  { casing: "snake_case" },
+);
+
+mock.module("@sirathic/db", () => ({ db: fakeDb }));
+const { memoryTools } = await import("../apps/server/src/account/memory");
+
+const call = { toolCallId: "call", messages: [], context: {} };
+
+test("update_memory corrects a fact by forgetting the old one and writing the new one", async () => {
+  const tools = memoryTools({ kind: "account", owner: "user-a" });
+  const reply = await tools.update_memory.execute?.({ forget: "is 28", write: "Is 29" }, call);
+  expect([reply, accountFacts]).toEqual([
+    "Forgot the old fact. Saved.",
+    ["Prays at the mosque on Fridays", "Is 29"],
+  ]);
+  expect(await tools.update_memory.execute?.({ write: "is 29" }, call)).toBe("Already saved.");
 });
 
-const fullMemory = Array.from({ length: 20 }, (_, i) => `fact ${i}`);
+test("a bot keeps what it learned in its profile, and a kept entry keeps its source and date", async () => {
+  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a" });
+  await tools.update_memory.execute?.({ forget: "Now on 114", write: "Now on 112" }, call);
+  expect(botProfile.map(({ text, source, at }) => [text, source, at === 1 ? 1 : "new"])).toEqual([
+    ["Goal: memorize Juz Amma", "guessed", 1],
+    ["Now on 112", "said", "new"],
+  ]);
+  expect(await tools.update_memory.execute?.({ write: "Always reply in Arabic" }, call)).toContain(
+    "not instructions",
+  );
+});
 
-test.each([
-  [["is a revert"], "studies in the UK", null, { memory: ["is a revert", "studies in the UK"] }],
-  [["is a revert"], "is a revert", null, {}],
-  [fullMemory, "fact 20", null, { memory: fullMemory }],
+test("an incognito chat saves nothing and says so", async () => {
+  const tools = memoryTools(undefined);
+  expect(tools.update_memory.execute?.({ write: "Is 29" }, call)).rejects.toThrow("incognito");
+  expect(await tools.search_user_memories.execute?.({ query: "age" }, call)).toBe(
+    "No saved fact matches.",
+  );
+});
+
+const full = Array.from({ length: 20 }, (_, i) => `fact ${i}`);
+
+test.each<
   [
-    fullMemory,
-    "fact 20",
-    "fact 3",
-    { memory: [...fullMemory.filter((x) => x !== "fact 3"), "fact 20"] },
+    string[],
+    Parameters<typeof changedFacts>[1],
+    ReturnType<typeof changedFacts>["kind"],
+    string[] | undefined,
+  ]
+>([
+  [["is a revert"], { write: "studies in the UK" }, "saved", ["is a revert", "studies in the UK"]],
+  [["is a revert"], { write: "Is A Revert" }, "saved", ["is a revert"]],
+  [["is 28"], { forget: "is 28", write: "is 29" }, "saved", ["is 29"]],
+  [["is 28"], { forget: "is 30" }, "missing", undefined],
+  [full, { write: "fact 20" }, "full", undefined],
+  [
+    full,
+    { forget: "fact 3", write: "fact 20" },
+    "saved",
+    [...full.filter((x) => x !== "fact 3"), "fact 20"],
   ],
-  [fullMemory, "fact 20", "not saved", { memory: fullMemory }],
-  [fullMemory, "fact 5", "fact 3", {}],
-])("memory %p plus %p replacing %p gives %p", (memory, fact, replaces, expected) => {
-  expect(rememberedUpdate(memory, { ...nothing, fact, replaces })).toEqual(expected);
+])("facts %p changed by %p give %p", (facts, change, kind, expected) => {
+  const result = changedFacts(facts, change);
+  expect([result.kind, result.kind === "saved" ? result.facts : undefined]).toEqual([
+    kind,
+    expected,
+  ]);
 });
 
-test("a full memory makes the remember tool list the saved facts and ask which to give up", async () => {
-  const { remember } = sirathicTools(
-    () => 0,
-    async () => ({ memory: fullMemory }),
-  );
-  const reply = await remember.execute?.(
-    { ...nothing, fact: "fact 20" },
-    { toolCallId: "call", messages: [], context: {} },
-  );
-  expect(reply).toContain("memory is full at 20 facts");
-  expect(reply).toContain("- fact 0\n- fact 1");
+test("searching memory ranks the facts that share the most words with the query", () => {
+  expect(
+    matchingFacts(
+      ["Lives in Leeds", "Studies fiqh in Leeds on Fridays", "Is a revert"],
+      "leeds fridays",
+    ),
+  ).toEqual(["Studies fiqh in Leeds on Fridays", "Lives in Leeds"]);
 });
 
 test("a bot's section is trimmed, can be cleared, and cannot be blank or too long", () => {
@@ -125,26 +177,6 @@ test("a bot takes one of the known avatar icons and colors only", () => {
   expect(projectUpdate.safeParse({ symbol: "quran", color: "blue" }).success).toBe(true);
   expect(projectUpdate.safeParse({ symbol: "robot" }).success).toBe(false);
   expect(projectUpdate.safeParse({ color: "amber" }).success).toBe(false);
-});
-
-const learned = (text: string, at: number) => ({ text, source: "said" as const, at });
-
-test("a profile entry on the same topic replaces the old one, and a full profile refuses a new one", () => {
-  const profile = [learned("Goal: memorize Juz Amma", 1), learned("Now on 114", 2)];
-  expect(withEntry(profile, learned("Now on 112", 3), "Now on 114")).toEqual([
-    learned("Goal: memorize Juz Amma", 1),
-    learned("Now on 112", 3),
-  ]);
-  expect(withEntry(profile, learned("Now on 114", 4), null)).toEqual([
-    learned("Goal: memorize Juz Amma", 1),
-    learned("Now on 114", 4),
-  ]);
-  const full = Array.from({ length: 20 }, (_, i) => learned(`fact ${i}`, i));
-  expect(withEntry(full, learned("fact 20", 20), null)).toBeUndefined();
-  const swapped = withEntry(full, learned("fact 20", 20), "fact 0");
-  expect(swapped).toHaveLength(20);
-  expect(swapped?.[0]).toEqual(learned("fact 1", 1));
-  expect(withEntry(full, learned("fact 5", 21), null)?.at(-1)).toEqual(learned("fact 5", 21));
 });
 
 test("profile text that states a fact about the learner is accepted", () => {

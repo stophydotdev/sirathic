@@ -241,7 +241,7 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
     }
     steps.push({
       kind: "tool",
-      tool: part.toolName,
+      tool: toolName,
       detail: queryArgs.safeParse(part.args).data?.query ?? "",
     });
   });

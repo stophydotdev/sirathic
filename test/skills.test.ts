@@ -79,20 +79,18 @@ test("the question tool is offered in research mode only, and never in an unatte
   ]).toEqual([true, false, false]);
 });
 
-test("a saved question card from before the rename replays as clarifying_questions", () => {
+test.each([
+  ["askUser", "clarifying_questions"],
+  ["remember", "update_memory"],
+  ["learnAboutUser", "update_memory"],
+])("a saved %s call from before the rename replays as %s", (old, current) => {
   const sent = sentMessage.parse({
     role: "assistant",
     parts: [
-      {
-        type: "tool-askUser",
-        toolCallId: "c1",
-        state: "output-available",
-        input: { question: "Which school?", options: ["Hanafi", "Shafi'i"] },
-        output: { shown: true },
-      },
+      { type: `tool-${old}`, toolCallId: "c1", state: "output-available", input: {}, output: {} },
     ],
   });
-  expect(sent.parts.map((part) => part.type)).toEqual(["tool-clarifying_questions"]);
+  expect(sent.parts.map((part) => part.type)).toEqual([`tool-${current}`]);
 });
 
 const routine = {

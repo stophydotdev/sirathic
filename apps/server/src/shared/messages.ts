@@ -63,6 +63,8 @@ const RENAMED_TOOLS = new Map([
   ["search", "search_web"],
   ["webFetch", "fetch_url"],
   ["askUser", "clarifying_questions"],
+  ["remember", "update_memory"],
+  ["learnAboutUser", "update_memory"],
 ]);
 
 export const currentToolName = (name: string) => RENAMED_TOOLS.get(name) ?? name;

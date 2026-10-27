@@ -17,7 +17,7 @@ import { clientOf } from "./chat/client";
 import { connectedTools, finishConnect } from "./plugins/connections";
 import { track } from "./chat/events";
 import { uploadRoutes } from "./files/upload";
-import { projectOfChat, rememberInBot } from "./projects/projects";
+import { projectOfChat } from "./projects/projects";
 import { botIdentity, projectRules, settingsInProject } from "./projects/rules";
 import {
   appLanguage,
@@ -32,7 +32,7 @@ import { parseBody, reasonOf, respond, StatusError } from "./http";
 import { answerOptions, sideOptions } from "./models/subscription";
 import { appRouter } from "./router";
 import { createContext } from "./trpc";
-import { getSettings, remember } from "./account/settings";
+import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
 import { messageSchemas, saveSession, sessionId, titleSession } from "./chat/sessions";
 import { skillRules } from "./skills/skills";
@@ -196,15 +196,7 @@ app.post("/api/chat", (c) =>
         owner === undefined || input.timezone === undefined
           ? undefined
           : { owner, timezone: input.timezone },
-      remember:
-        owner === undefined
-          ? undefined
-          : async (told) => {
-              const inProject = await project;
-              return inProject?.kind === "bot"
-                ? rememberInBot(inProject.id, owner, told)
-                : remember(owner, told);
-            },
+      owner,
     });
   }),
 );
