@@ -25,6 +25,18 @@ export const dropCached = async (namespace: string, id: string) => {
   await redis.del(`${namespace}:${id}`).catch(() => undefined);
 };
 
+const DATA_VERSION_KEY = "data-version";
+
+export const dataVersion = async () => {
+  await connected;
+  return (await redis.get(DATA_VERSION_KEY).catch(() => null)) ?? "0";
+};
+
+export const bumpDataVersion = async () => {
+  await connected;
+  return redis.incr(DATA_VERSION_KEY);
+};
+
 type CacheOptions<Value> = {
   namespace: string;
   schema: z.ZodType<Value>;

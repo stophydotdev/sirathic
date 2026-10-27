@@ -16,7 +16,7 @@
     "check-types": "tsc-rs --noEmit && tsc-rs --noEmit -p apps/mobile && bun run --filter web check-types",
     "check-dead": "bun run env ./node_modules/.bin/knip --no-progress",
     "env": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local",
-    "db:crawl": "bun run env scripts/fatwas.ts && bun run env scripts/dedupeFatwas.ts --apply && bun run env scripts/embed.ts"
+    "db:crawl": "bun run env scripts/fatwas.ts && bun run env scripts/dedupeFatwas.ts --apply && bun run env scripts/embed.ts && bun run env scripts/searchVersion.ts"
   },
   "dependencies": {
     "@sirathic/core": "workspace:*",
