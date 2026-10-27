@@ -270,7 +270,7 @@ const ThreadBody: FC = () => {
 
   return (
     <>
-      <div className="px-6">
+      <div className="px-6 pb-8">
         <TurnRow aside={bot ? undefined : <SourcesPane />} layout={bot ? "column" : "aside"}>
           <BotGreeting />
           <ThreadPrimitive.Messages>
