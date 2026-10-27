@@ -49,6 +49,7 @@ import {
   loadSkill,
   LOAD_SKILL,
   type Skill,
+  skillIndex,
   type UserSkill,
   skillsFor,
 } from "./skills/builtIn";
@@ -111,7 +112,9 @@ export function answerAgent({
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
       const closed = closedTools(skills, open);
       const forcing = stepNumber === 0 ? firstStep : undefined;
-      const skillText = (loadedText(skills, open) + mentioned).trim();
+      const index =
+        skills.length > 0 ? `Skills you can load with load_skill:\n${skillIndex(skills)}` : "";
+      const skillText = (index + loadedText(skills, open) + mentioned).trim();
       return {
         messages: [
           ...initialMessages.map(shorten),

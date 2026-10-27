@@ -344,8 +344,9 @@ const HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 
 const researchSkill = { name: "research", when: "x", text: "Split the question." };
+const INDEX = "Skills you can load with load_skill:\n- research: x";
 
-test("the instructions go in once, and the closing rules carry only skills, from the step that has them", async () => {
+test("the instructions go in once, and the closing rules carry the skill list, loaded skills and @-calls", async () => {
   const { model, seen } = scriptedModel(["load_skill", "search_web"], ["research"]);
   await answerWith(model, {
     instructions: "CORE",
@@ -357,14 +358,19 @@ test("the instructions go in once, and the closing rules carry only skills, from
     Array.from({ length: 3 }, () => ({ role: "system", content: "CORE" })),
   );
   expect(seen.map((call) => call.prompt.at(-1)?.content)).toEqual([
-    `${HEADER}The user called @Hadith.`,
-    `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
-    `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
+    `${HEADER}${INDEX}\n\nThe user called @Hadith.`,
+    `${HEADER}${INDEX}\n\n## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
+    `${HEADER}${INDEX}\n\n## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
   ]);
 });
 
-test("with no skill loaded or called, no closing rules message is sent", async () => {
-  const { model, seen } = scriptedModel([]);
-  await answerWith(model, { skills: [researchSkill] }).generate({ prompt: "hi" });
-  expect(seen[0]?.prompt.map((message) => message.role)).toEqual(["system", "user"]);
+test("the skill list is always in the closing rules, and a chat with no skills has none", async () => {
+  const withSkills = scriptedModel([]);
+  await answerWith(withSkills.model, { skills: [researchSkill] }).generate({ prompt: "hi" });
+  const without = scriptedModel([]);
+  await answerWith(without.model, { skills: [] }).generate({ prompt: "hi" });
+  expect([
+    withSkills.seen[0]?.prompt.at(-1)?.content,
+    without.seen[0]?.prompt.map((message) => message.role),
+  ]).toEqual([`${HEADER}${INDEX}`, ["system", "user"]]);
 });

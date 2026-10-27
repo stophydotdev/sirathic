@@ -3,7 +3,7 @@ import { profileRules } from "../../bots/profile";
 import { botIdentity, openedWith, type RulesProject, teachingRules } from "../../projects/rules";
 import type { Mode } from "../../shared/messages";
 import type { Settings } from "../../shared/settings";
-import { type Skill, skillIndex } from "../skills/builtIn";
+import type { Skill } from "../skills/builtIn";
 import answer from "./answer.md" with { type: "text" };
 import bot from "./bot.md" with { type: "text" };
 import core from "./core.md" with { type: "text" };
@@ -161,7 +161,6 @@ export const instructions = ({
   return fill(core, {
     identity: project ? botIdentity(project) : "Sirathic, an Islamic answering engine",
     abilities: abilities.length > 0 ? abilities.join("\n") : "- None in this run.",
-    skills: skillIndex(skills),
     tool_notes: toolNotes
       .map((note) => note.trim())
       .filter(Boolean)

@@ -39,9 +39,7 @@ If a tool fails, try another way once, such as different keywords or another sou
 
 <tool load_skill>
 
-A skill holds the instructions for one kind of task. Load every skill below that fits the request before you answer, and follow it. You can load several in one call.
-
-{skills}
+A skill holds the instructions for one kind of task. The list of skills you can load is in your rules for this reply. Load every skill on it that fits the request before you answer, and follow it. You can load several in one call.
 
 </tool load_skill>
 
