@@ -9,6 +9,7 @@ import {
   getToolName,
   hasToolCall,
   type InferUIMessageChunk,
+  isStepCount,
   isToolUIPart,
   type LanguageModel,
   type LanguageModelUsage,
@@ -56,6 +57,7 @@ import {
 import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
+const STEP_CAP = 20;
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
 type Turn = Parameters<typeof answerOptions>[0];
@@ -102,7 +104,7 @@ export function answerAgent({
     model,
     instructions: system,
     tools,
-    stopWhen: hasToolCall(CLARIFYING),
+    stopWhen: [hasToolCall(CLARIFYING), isStepCount(STEP_CAP)],
     toolApproval: ({ toolCall }) => (confirm(toolCall) ? "user-approval" : undefined),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {

@@ -1,12 +1,8 @@
 import { expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
-import { MockLanguageModelV4 } from "ai/test";
-import { tool } from "ai";
-import { z } from "zod";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { fill } from "../apps/server/src/chat/prompts/build";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
-import { answerAgent } from "../apps/server/src/chat/response";
 import { routineTools } from "../apps/server/src/automations/tools";
 import { memoryTools } from "../apps/server/src/account/memory";
 import { botTools } from "../apps/server/src/bots/tools";
@@ -25,7 +21,6 @@ import {
   promptFor,
   scriptedModel,
   toolNames,
-  usage,
 } from "./answerHelpers";
 
 test("a prompt slot with no value throws, and a value is never read as a slot", () => {
@@ -181,49 +176,10 @@ test("every tool the prompt files name is a real tool", () => {
   expect(named.filter(({ word }) => !real.has(word))).toEqual([]);
 });
 
-test("an answer keeps calling tools until the model replies, with no step cap", async () => {
-  let calls = 0;
-  const model = new MockLanguageModelV4({
-    doGenerate: async () => {
-      calls += 1;
-      return calls > 24
-        ? {
-            content: [{ type: "text", text: "Here is what I found." }],
-            finishReason: { unified: "stop", raw: undefined },
-            usage,
-            warnings: [],
-          }
-        : {
-            content: [
-              {
-                type: "tool-call",
-                toolCallId: crypto.randomUUID(),
-                toolName: "lookup",
-                input: "{}",
-              },
-            ],
-            finishReason: { unified: "tool-calls", raw: undefined },
-            usage,
-            warnings: [],
-          };
-    },
-  });
-  const agent = answerAgent({
-    model,
-    tools: { lookup: tool({ inputSchema: z.object({}), execute: async () => "more rows" }) },
-    settings: DEFAULT_SETTINGS,
-    instructions: "",
-    mentioned: "",
-    firstStep: undefined,
-    inBot: false,
-    skills: [],
-    loaded: [],
-    confirm: () => false,
-    shorten: (message) => message,
-    turn: { effort: "high", sessionId: "chat" },
-  });
-  const result = await agent.generate({ prompt: "how many users does sirathic have" });
-  expect([result.steps.length, result.text]).toEqual([25, "Here is what I found."]);
+test("an answer stops after 20 steps when the model keeps calling tools", async () => {
+  const { model, seen } = scriptedModel(Array.from({ length: 30 }, () => "search_web"));
+  const result = await answerWith(model, {}).generate({ prompt: "hi" });
+  expect([result.steps.length, seen.length]).toEqual([20, 20]);
 });
 
 test("an answer runs until stopped or replaced, not until the browser leaves", () => {
