@@ -408,7 +408,10 @@ export function chatResponse({
     onEnd: ({ messages: answered, outcome }) => {
       void connected.then(({ close }) => close());
       const status = ended?.outcome.status ?? outcome.status;
-      release?.(status === "completed");
+      const waiting = answered
+        .at(-1)
+        ?.parts.some((part) => isToolUIPart(part) && part.state === "approval-requested");
+      release?.(status === "completed" && !waiting);
       record({
         name: "answer.completed",
         props: {
