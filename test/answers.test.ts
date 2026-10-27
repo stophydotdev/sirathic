@@ -279,7 +279,7 @@ const chatTurn = async (overrides: Partial<Parameters<typeof chatResponse>[0]>) 
   });
   const response = chatResponse({
     models: { model, small: model },
-    options: { answer: {}, side: {} },
+    options: { answer: {} },
     modelName: "test",
     messages: [
       { id: "1", role: "user", parts: [{ type: "text", text: "what is zakat" }] },

@@ -186,7 +186,6 @@ app.post("/api/chat", (c) =>
           research: input.mode === "research",
           sessionId: input.id,
         }),
-        side: sideOptions,
       },
       title,
       save: (messages) => save(messages).then(() => learn(messages)),

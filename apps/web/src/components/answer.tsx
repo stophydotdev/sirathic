@@ -4,8 +4,6 @@ import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
 import { AutomationCard } from "@/components/automationCard";
-import { useChatState } from "@/components/chat";
-import { useProjects } from "@/components/projects";
 import { AskCard } from "@/components/questionCard";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
@@ -27,16 +25,11 @@ import {
   groupPartByType,
   MessagePrimitive,
   type MessageStatus,
-  ThreadPrimitive,
   useAui,
   useAuiState,
 } from "@assistant-ui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowDownRight01Icon,
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 import { z } from "zod";
 import { ReportMistake } from "@/components/reportMistake";
@@ -141,44 +134,13 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
             streamed &&
               "animate-in fade-in motion-safe:slide-in-from-bottom-1 duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
           )}
-        >
-          <Related />
-        </div>
+        ></div>
       </AuiIf>
       <ReportMistake
         open={reporting}
         onOpenChange={setReporting}
         onSend={(report) => rate("down", report)}
       />
-    </div>
-  );
-};
-
-const relatedData = z.object({ questions: z.array(z.string()).min(1) });
-
-const Related: FC = () => {
-  const raw = useAuiState((s) => {
-    const part = s.message.parts.find((p) => p.type === "data" && p.name === "related");
-    return part?.type === "data" ? part.data : undefined;
-  });
-  const projectId = useChatState()?.projectId;
-  const inBot = useProjects((s) => s.bots?.some((bot) => bot.id === projectId) ?? false);
-  const questions = relatedData.safeParse(raw).data?.questions;
-  if (!questions || inBot) return null;
-
-  return (
-    <div className="border-border mt-4 border-t pt-3 print:hidden">
-      {questions.map((question) => (
-        <ThreadPrimitive.Suggestion
-          key={question}
-          prompt={question}
-          send
-          className="text-muted-foreground hover:bg-muted hover:text-foreground -mx-2 flex min-h-10 w-[calc(100%+1rem)] items-center gap-2 rounded-[12px] px-2 py-2 text-start text-sm font-medium transition-colors"
-        >
-          <HugeiconsIcon icon={ArrowDownRight01Icon} className="size-4 shrink-0" />
-          {question}
-        </ThreadPrimitive.Suggestion>
-      ))}
     </div>
   );
 };

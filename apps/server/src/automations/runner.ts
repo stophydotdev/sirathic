@@ -3,7 +3,7 @@ import { automations, chatSessions, projects, users } from "@sirathic/db/schema"
 import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
 import { and, asc, eq, lte } from "drizzle-orm";
 import { toUser } from "../account/auth";
-import { answerOptions, sideOptions } from "../models/subscription";
+import { answerOptions } from "../models/subscription";
 import { countNoorAnswer, pickModels } from "../models/pick";
 import { BOT_HISTORY } from "../bots/tools";
 import { chatResponse } from "../chat/response";
@@ -162,7 +162,6 @@ async function answerPrompt(
     persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
     options: {
       answer: answerOptions({ research: runMode === "research", sessionId }),
-      side: sideOptions,
     },
     title: undefined,
     save: async (messages) => {

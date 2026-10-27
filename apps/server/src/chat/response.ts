@@ -13,14 +13,11 @@ import {
   type LanguageModel,
   type LanguageModelUsage,
   type ModelMessage,
-  Output,
   smoothStream,
-  streamText,
   ToolLoopAgent,
   type ToolSet,
   type UIMessageStreamOutcome,
 } from "ai";
-import { z } from "zod";
 import { noorModel } from "../models/noor";
 import { CHECK_FIRST } from "../projects/rules";
 import type { ProviderOptions } from "../models/subscription";
@@ -172,39 +169,6 @@ export function answerAgent({
   });
 }
 
-const RELATED_LIMIT = 5;
-const RELATED_PROMPT =
-  "Suggest 4 short follow-up questions the user might ask next. Each under 10 words. Don't repeat the question or anything the answer already covers.";
-
-const lastQuestion = (messages: ChatMessage[]) =>
-  messages
-    .findLast((message) => message.role === "user")
-    ?.parts.map((part) => (part.type === "text" ? part.text : ""))
-    .join("") ?? "";
-
-function relatedQuestions(
-  model: LanguageModel,
-  conversation: string,
-  providerOptions: ProviderOptions,
-  abortSignal: AbortSignal,
-) {
-  const result = streamText({
-    model,
-    instructions: RELATED_PROMPT,
-    prompt: conversation,
-    output: Output.array({ element: z.string(), maxItems: RELATED_LIMIT }),
-    providerOptions,
-    abortSignal,
-  });
-  return result.output.then(
-    (questions) => questions,
-    (err: Error) => {
-      console.warn(`related questions skipped: ${err.message}`);
-      return undefined;
-    },
-  );
-}
-
 export function chatResponse({
   models,
   modelName,
@@ -230,7 +194,7 @@ export function chatResponse({
   citedEarlier,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
-  options: { answer: ProviderOptions; side: ProviderOptions };
+  options: { answer: ProviderOptions };
   modelName: string;
   messages: ChatMessage[];
   mode: Mode;
@@ -369,7 +333,6 @@ export function chatResponse({
           return error instanceof Error ? error.message : String(error);
         },
       });
-      let related: ReturnType<typeof relatedQuestions> | undefined;
       let finish: InferUIMessageChunk<ChatMessage> | undefined;
       for await (const chunk of answer) {
         if (chunk.type === "start") continue;
@@ -403,18 +366,6 @@ export function chatResponse({
             });
           }
         }
-        if (chunk.type === "tool-output-available" && !related && !inBot) {
-          related = relatedQuestions(
-            models.small,
-            lastQuestion(messages),
-            options.side,
-            abortSignal,
-          );
-        }
-      }
-      const questions = text ? await related : undefined;
-      if (questions?.length) {
-        writer.write({ type: "data-related", data: { questions } });
       }
       streaming = false;
       if (finish) writer.write(finish);
