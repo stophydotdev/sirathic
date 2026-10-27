@@ -347,6 +347,35 @@
   @apply bg-foreground/7 w-fit min-w-0 rounded-3xl px-4 py-2 text-base;
 }
 
+.typing-dot {
+  @apply bg-muted-foreground size-1.5 rounded-full;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .typing-dot {
+    animation: typing-dot 1.2s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes typing-dot {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
 .bot-card {
   @apply bg-foreground/7 my-2 w-full max-w-lg rounded-3xl p-4 print:hidden;
 }

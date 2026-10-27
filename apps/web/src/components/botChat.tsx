@@ -3,10 +3,8 @@
 import { actionButton, useAnswer } from "@/components/answerActions";
 import { ReplyError } from "@/components/answer";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
-import { BotAvatar } from "@/components/botAvatar";
 import { bubblesOf } from "@/components/botBubbles";
 import { BotEvent, isBotEvent } from "@/components/botEvents";
-import { useBot } from "@/components/botHome";
 import { STAMP_GAP, stampText } from "@/components/botStamp";
 import { AttachmentChip } from "@/components/composer";
 import { FILE_TOOLS, FileResult } from "@/components/fileCards";
@@ -114,17 +112,62 @@ const Bubble: FC<{ said: Said; menu: boolean }> = ({ said, menu }) => {
   );
 };
 
-const Working: FC = () => {
-  const bot = useBot();
+const STEP_LINES = [
+  "Searching the Quran…",
+  "Searching hadith…",
+  "Searching fatwas…",
+  "Reading the fiqh books…",
+  "Searching the web…",
+  "Reading the page…",
+  "Calculating…",
+  "Setting it up…",
+] as const;
+
+type StepLine = (typeof STEP_LINES)[number];
+
+const SEARCH_LINES = new Map<string, StepLine>([
+  ["quran", "Searching the Quran…"],
+  ["hadith", "Searching hadith…"],
+  ["fatwa", "Searching fatwas…"],
+  ["fiqh", "Reading the fiqh books…"],
+  ["web", "Searching the web…"],
+  ["news", "Searching the web…"],
+]);
+
+const TOOL_LINES = new Map<string, StepLine>([
+  ["fetch_url", "Reading the page…"],
+  ["get_verses", "Searching the Quran…"],
+  ["code_execution", "Calculating…"],
+  ["update_routine", "Setting it up…"],
+  ["update_skill", "Setting it up…"],
+  ["update_profile", "Setting it up…"],
+  ["update_memory", "Setting it up…"],
+  ["set_bot_job", "Setting it up…"],
+  ["install_plugin", "Setting it up…"],
+]);
+
+const searched = z.object({ sources: z.array(z.string()) });
+
+const stepLineOf = (part: Extract<Part, { type: "tool-call" }>) =>
+  currentToolName(part.toolName) === "search_web"
+    ? (searched.safeParse(part.args).data?.sources ?? []).flatMap(
+        (source) => SEARCH_LINES.get(source) ?? [],
+      )[0]
+    : TOOL_LINES.get(currentToolName(part.toolName));
+
+const Working: FC<{ step: StepLine | undefined }> = ({ step }) => {
   const t = useT();
   return (
-    <div role="status" className="mb-2 ms-1">
+    <div role="status" className="mb-2 flex flex-col items-start gap-1">
       <span className="sr-only">{t("Typing…")}</span>
-      <BotAvatar
-        color={bot?.color ?? null}
-        icon={bot?.symbol ?? null}
-        className="size-7 motion-safe:animate-pulse"
-      />
+      <div aria-hidden className="bot-bubble">
+        <span className="flex h-6 items-center gap-1">
+          <span className="typing-dot" />
+          <span className="typing-dot" />
+          <span className="typing-dot" />
+        </span>
+      </div>
+      {step && <p className="text-muted-foreground ms-1 text-xs">{t(step)}</p>}
     </div>
   );
 };
@@ -214,6 +257,11 @@ const BotSays: FC = () => {
       item.part.approval.resolution === undefined,
   );
   const working = (running && !asking) || shown < said.length;
+  const step = running
+    ? content
+        .flatMap((part) => (part.type === "tool-call" && part.result === undefined ? [part] : []))
+        .at(-1)
+    : undefined;
   const lastText = said.findLastIndex((item) => item.kind === "text");
   return (
     <SourcesContext value={new Map(sources.map((source) => [source.url, source]))}>
@@ -224,7 +272,7 @@ const BotSays: FC = () => {
             {!working && index === lastText && <SourceLine sources={sources} />}
           </Fragment>
         ))}
-        {working && <Working />}
+        {working && <Working step={step && stepLineOf(step)} />}
         <ReplyError />
       </div>
     </SourcesContext>
