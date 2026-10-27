@@ -1,5 +1,6 @@
 import { db } from "@sirathic/db";
 import { automations, chatSessions, projects, users } from "@sirathic/db/schema";
+import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
 import { and, asc, eq, lte } from "drizzle-orm";
 import { toUser } from "../account/auth";
 import { answerOptions, sideOptions } from "../models/subscription";
@@ -171,8 +172,14 @@ async function answerPrompt(
     automate: undefined,
     historyLimit: inProject ? BOT_HISTORY : undefined,
   });
-  await response.arrayBuffer();
-  if (!textOf(answered.at(-1)).trim()) throw new Error("the model gave no answer");
+  let failure: string | undefined;
+  for await (const chunk of parseJsonEventStream({
+    stream: response.body ?? new ReadableStream(),
+    schema: uiMessageChunkSchema,
+  })) {
+    if (chunk.success && chunk.value.type === "error") failure = chunk.value.errorText;
+  }
+  if (!textOf(answered.at(-1)).trim()) throw new Error(failure ?? "the model gave no answer");
   return answered;
 }
 

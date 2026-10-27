@@ -1,4 +1,5 @@
 import { expect, mock, test } from "bun:test";
+import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import {
@@ -119,10 +120,19 @@ let answersToday = 31;
 mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => answersToday }));
 const response = await import("../apps/server/src/chat/response");
 const modelInputs: ChatMessage[][] = [];
+let modelError: string | undefined;
 mock.module("../apps/server/src/chat/response", () => ({
   ...response,
   chatResponse: ({ messages, save }: Parameters<typeof response.chatResponse>[0]) => {
     modelInputs.push(messages);
+    if (modelError !== undefined) {
+      const errorText = modelError;
+      return createUIMessageStreamResponse({
+        stream: createUIMessageStream({
+          execute: ({ writer }) => writer.write({ type: "error", errorText }),
+        }),
+      });
+    }
     const reply = {
       id: "reply-1",
       role: "assistant",
@@ -215,6 +225,16 @@ test("a run that works resets the failure count", async () => {
 
   expect(automationRow.failures).toBe(0);
   expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
+});
+
+test("a run whose model call fails posts the reason the provider gave", async () => {
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 0 });
+  modelError = "401: invalid x-api-key";
+
+  await runDueQuietly();
+  modelError = undefined;
+
+  expect(lastSavedText()).toEqual(["This run did not finish. 401: invalid x-api-key"]);
 });
 
 test("a run missed by more than an hour is skipped and the next one is scheduled", async () => {
