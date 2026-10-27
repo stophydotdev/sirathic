@@ -69,7 +69,7 @@ const dateLine = (now: Date) => {
     timeZone: "UTC",
   }).format(now);
   const year = now.getUTCFullYear();
-  return `It is currently ${day} (${hijri}). The year began on Jan 1, ${year}. This means ${year - 1} was last year and next year is ${year + 1}.`;
+  return `It is currently ${day} UTC (${hijri}). The Hijri date is calculated and turns at Maghrib, so it can differ by a day from local sighting. The year began on Jan 1, ${year}. This means ${year - 1} was last year and next year is ${year + 1}.`;
 };
 
 const background = ({
