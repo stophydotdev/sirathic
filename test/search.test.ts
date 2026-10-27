@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { needsSources, relevant } from "../apps/server/src/chat/relevance";
+import { onePerPage } from "../apps/server/src/chat/search";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { publicUrl } from "@sirathic/core/web/url";
 import { withoutStopwords } from "@sirathic/core/search/arabic";
@@ -165,4 +166,25 @@ test("a short first message skips the forced search only when Jev says it needs 
   const failed = await needsSources("wudu?");
   globalThis.fetch = original;
   expect([greeting, question, long, failed, asked.length]).toEqual([false, true, true, true, 2]);
+});
+
+test("fiqh chunks from the same page become one passage, in the order found", () => {
+  const chunk = {
+    workId: "w1",
+    school: "hanafi" as const,
+    work: "Kitab",
+    author: "Author",
+    deathYearAh: 600,
+    volume: 1,
+    heading: null,
+  };
+  const merged = onePerPage([
+    { ...chunk, id: "a", page: 5, url: "https://shamela.ws/book/1#1:5", textAr: "أول" },
+    { ...chunk, id: "b", page: 6, url: "https://shamela.ws/book/1#1:6", textAr: "آخر" },
+    { ...chunk, id: "c", page: 5, url: "https://shamela.ws/book/1#1:5", textAr: "ثان" },
+  ]);
+  expect(merged.map(({ id, textAr }) => [id, textAr])).toEqual([
+    ["a", "أول\nثان"],
+    ["b", "آخر"],
+  ]);
 });

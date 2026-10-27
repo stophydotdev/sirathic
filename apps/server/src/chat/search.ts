@@ -217,6 +217,21 @@ const FIQH_SCHOOLS = [
   ["comparative", 1],
 ] as const;
 
+type FiqhHit = Awaited<ReturnType<typeof fiqhSearch>>["passages"][number];
+
+export const onePerPage = (passages: readonly FiqhHit[]) => {
+  const pages = new Map<string, { first: FiqhHit; texts: string[] }>();
+  for (const passage of passages) {
+    const key = passage.url ?? passage.id;
+    const texts = pages.get(key)?.texts ?? [];
+    if (texts.length === 0) pages.set(key, { first: passage, texts });
+    texts.push(clip(passage.textAr, RESULT_CHARS) ?? "");
+  }
+  return [...pages.values()].map(({ first, texts }) =>
+    Object.assign(first, { textAr: texts.join("\n") }),
+  );
+};
+
 const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
   const bySchool = await Promise.all(
     FIQH_SCHOOLS.map(async ([school, limit]) =>
@@ -229,12 +244,14 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
       ),
     ),
   );
-  const onSites = bySchool
-    .flat()
-    .filter(
-      ({ url }) =>
-        sites.length === 0 || (url !== null && sites.some((site) => isOnSite(hostOf(url), site))),
-    );
+  const onSites = onePerPage(
+    bySchool
+      .flat()
+      .filter(
+        ({ url }) =>
+          sites.length === 0 || (url !== null && sites.some((site) => isOnSite(hostOf(url), site))),
+      ),
+  );
   const { kept, dropped } = await relevant(
     queries.join("; "),
     onSites,
@@ -250,7 +267,7 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
     volume: passage.volume,
     page: passage.page,
     heading: passage.heading,
-    text: clip(passage.textAr, RESULT_CHARS),
+    text: passage.textAr,
   }));
   return {
     sources: [...sources, ...dropped.flatMap((passage) => fiqhSource(passage) ?? [])],
