@@ -1,7 +1,7 @@
 import { db } from "@sirathic/db";
 import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
-import { type AnyColumn, and, desc, eq, ilike, lt, sql } from "drizzle-orm";
+import { type AnyColumn, and, desc, eq, gt, ilike, lt, sql } from "drizzle-orm";
 import { z } from "zod";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "../shared/messages";
 import { StatusError } from "../http";
@@ -11,6 +11,8 @@ const TITLE_CHARS = 80;
 const PREVIEW_CHARS = 90;
 const RECENT_LIMIT = 50;
 const LIKE_SPECIAL = /[\\%_]/gu;
+const ASK_CHARS = 140;
+const ASKS_PER_CHAT = 3;
 
 export const sessionId = z.uuid();
 
@@ -52,6 +54,20 @@ export const messageSchemas = {
 };
 
 const owned = (id: string, by: string) => and(eq(chatSessions.id, id), eq(chatSessions.owner, by));
+
+const asked = z.array(z.string());
+
+export const recentAsks = async (by: string, since: Date, chats: number) => {
+  const rows = await db
+    .select({
+      asks: sql`coalesce((select json_agg(left(part->>'text', ${ASK_CHARS})) from jsonb_array_elements(${chatSessions.messages}) as message, jsonb_array_elements(message->'parts') as part where message->>'role' = 'user' and part->>'type' = 'text'), '[]'::json)`,
+    })
+    .from(chatSessions)
+    .where(and(eq(chatSessions.owner, by), gt(chatSessions.updatedAt, since)))
+    .orderBy(desc(chatSessions.updatedAt))
+    .limit(chats);
+  return rows.flatMap(({ asks }) => asked.parse(asks).slice(-ASKS_PER_CHAT));
+};
 
 export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT) => {
   const rows = await db

@@ -73,8 +73,12 @@ export const BotGreeting: FC = () => {
             "Assalamu alaikum. What do you want me around for? Anything concrete, or more of a study companion?",
           )}
       </p>
-      {bot.question && bot.options ? (
-        <QuestionCard question={bot.question} options={bot.options} reply={reply} />
+      {bot.options ? (
+        <QuestionCard
+          question={bot.question ?? t("What should I focus on?")}
+          options={bot.options}
+          reply={reply}
+        />
       ) : (
         (!bot.instructions || reply !== undefined) && (
           <QuestionCard
