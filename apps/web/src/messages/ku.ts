@@ -386,6 +386,7 @@ export default {
   "{name}'s settings": "ڕێکخستنەکانی {name}",
   "New chat in project": "گفتوگۆی نوێ لە پڕۆژەدا",
   Runs: "جارەکان",
+  Ideas: "بیرۆکەکان",
   "New automation": "ئۆتۆماتکردنی نوێ",
   "Edit automation": "دەستکاریکردنی ئۆتۆماتکردن",
   "Sign in to create automations.": "بۆ دروستکردنی ئۆتۆماتکردن بچۆ ژوورەوە.",

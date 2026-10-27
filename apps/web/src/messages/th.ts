@@ -375,6 +375,7 @@ export default {
   "{name}'s settings": "การตั้งค่าของ {name}",
   "New chat in project": "แชทใหม่ในโปรเจกต์",
   Runs: "การรัน",
+  Ideas: "ไอเดีย",
   "New automation": "ระบบอัตโนมัติใหม่",
   "Edit automation": "แก้ไขระบบอัตโนมัติ",
   "Sign in to create automations.": "ลงชื่อเข้าใช้เพื่อสร้างระบบอัตโนมัติ",

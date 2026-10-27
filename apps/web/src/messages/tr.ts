@@ -386,6 +386,7 @@ export default {
   "{name}'s settings": "{name} ayarları",
   "New chat in project": "Projede yeni sohbet",
   Runs: "Çalıştırmalar",
+  Ideas: "Fikirler",
   "New automation": "Yeni otomasyon",
   "Edit automation": "Otomasyonu düzenle",
   "Sign in to create automations.": "Otomasyon oluşturmak için giriş yapın.",

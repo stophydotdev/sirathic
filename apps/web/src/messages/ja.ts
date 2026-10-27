@@ -387,6 +387,7 @@ export default {
   "{name}'s settings": "{name}の設定",
   "New chat in project": "プロジェクトで新しいチャット",
   Runs: "実行",
+  Ideas: "アイデア",
   "New automation": "新しい自動化",
   "Edit automation": "自動化を編集",
   "Sign in to create automations.": "自動化を作成するにはログインしてください。",

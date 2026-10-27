@@ -384,6 +384,7 @@ export default {
   "{name}'s settings": "{name}-ന്റെ ക്രമീകരണങ്ങൾ",
   "New chat in project": "പ്രോജക്റ്റിൽ പുതിയ ചാറ്റ്",
   Runs: "റണ്ണുകൾ",
+  Ideas: "ആശയങ്ങൾ",
   "New automation": "പുതിയ ഓട്ടോമേഷൻ",
   "Edit automation": "ഓട്ടോമേഷൻ എഡിറ്റ് ചെയ്യുക",
   "Sign in to create automations.": "ഓട്ടോമേഷനുകൾ സൃഷ്ടിക്കാൻ സൈൻ ഇൻ ചെയ്യുക.",

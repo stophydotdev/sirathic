@@ -383,6 +383,7 @@ export default {
   "{name}'s settings": "تنظیمات {name}",
   "New chat in project": "گفتگوی جدید در پروژه",
   Runs: "اجراها",
+  Ideas: "ایده‌ها",
   "New automation": "خودکارسازی جدید",
   "Edit automation": "ویرایش خودکارسازی",
   "Sign in to create automations.": "برای ساخت خودکارسازی وارد شوید.",

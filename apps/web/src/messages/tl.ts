@@ -390,6 +390,7 @@ export default {
   "{name}'s settings": "Mga setting ng {name}",
   "New chat in project": "Bagong chat sa proyekto",
   Runs: "Mga takbo",
+  Ideas: "Mga ideya",
   "New automation": "Bagong automation",
   "Edit automation": "I-edit ang automation",
   "Sign in to create automations.": "Mag-sign in para gumawa ng mga automation.",

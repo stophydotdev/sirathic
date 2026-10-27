@@ -357,6 +357,7 @@ export const MESSAGES = [
   "{name}'s settings",
   "New chat in project",
   "Runs",
+  "Ideas",
   "New automation",
   "Edit automation",
   "Sign in to create automations.",

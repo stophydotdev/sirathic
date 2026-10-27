@@ -380,6 +380,7 @@ export default {
   "{name}'s settings": "إعدادات {name}",
   "New chat in project": "محادثة جديدة في المشروع",
   Runs: "مرات التشغيل",
+  Ideas: "أفكار",
   "New automation": "أتمتة جديدة",
   "Edit automation": "تعديل الأتمتة",
   "Sign in to create automations.": "سجّل الدخول لإنشاء الأتمتة.",

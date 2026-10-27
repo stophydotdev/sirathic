@@ -383,6 +383,7 @@ export default {
   "{name}'s settings": "Настройки: {name}",
   "New chat in project": "Новый чат в проекте",
   Runs: "Запуски",
+  Ideas: "Идеи",
   "New automation": "Новая автоматизация",
   "Edit automation": "Изменить автоматизацию",
   "Sign in to create automations.": "Войдите, чтобы создавать автоматизации.",

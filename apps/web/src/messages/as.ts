@@ -379,6 +379,7 @@ export default {
   "{name}'s settings": "{name}ৰ ছেটিং",
   "New chat in project": "প্ৰকল্পত নতুন চেট",
   Runs: "চলোৱা",
+  Ideas: "ধাৰণা",
   "New automation": "নতুন অটোমেচন",
   "Edit automation": "অটোমেচন সম্পাদনা কৰক",
   "Sign in to create automations.": "অটোমেচন সৃষ্টি কৰিবলৈ ছাইন ইন কৰক।",

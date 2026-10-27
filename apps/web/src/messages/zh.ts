@@ -376,6 +376,7 @@ export default {
   "{name}'s settings": "{name}的设置",
   "New chat in project": "在项目中新建对话",
   Runs: "运行记录",
+  Ideas: "灵感",
   "New automation": "新建自动化",
   "Edit automation": "编辑自动化",
   "Sign in to create automations.": "登录后即可创建自动化。",

@@ -380,6 +380,7 @@ export default {
   "{name}'s settings": "{name}-এর সেটিংস",
   "New chat in project": "প্রজেক্টে নতুন চ্যাট",
   Runs: "রান",
+  Ideas: "ধারণা",
   "New automation": "নতুন অটোমেশন",
   "Edit automation": "অটোমেশন সম্পাদনা",
   "Sign in to create automations.": "অটোমেশন তৈরি করতে সাইন ইন করুন।",

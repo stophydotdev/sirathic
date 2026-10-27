@@ -384,6 +384,7 @@ export default {
   "{name}'s settings": "Teelte {name}",
   "New chat in project": "Yeewtere heso nder gollal",
   Runs: "Wurtin",
+  Ideas: "Miijooji",
   "New automation": "Otomatik heso",
   "Edit automation": "Waylu otomatik",
   "Sign in to create automations.": "Naatu ngam waɗugo otomatik.",

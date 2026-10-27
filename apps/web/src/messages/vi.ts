@@ -384,6 +384,7 @@ export default {
   "{name}'s settings": "Cài đặt của {name}",
   "New chat in project": "Cuộc trò chuyện mới trong dự án",
   Runs: "Lần chạy",
+  Ideas: "Ý tưởng",
   "New automation": "Tự động hóa mới",
   "Edit automation": "Sửa tự động hóa",
   "Sign in to create automations.": "Đăng nhập để tạo tự động hóa.",
