@@ -24,6 +24,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import { useAttachmentSrc } from "@/lib/hooks/useAttachmentSrc";
@@ -40,7 +41,6 @@ import {
 import { LexicalComposerInput } from "@assistant-ui/react-lexical";
 import {
   IconArrowUp,
-  IconChevronDown,
   IconFile,
   IconPaperclip,
   IconPlus,
@@ -215,7 +215,7 @@ export const Composer: FC<{
 
           <div className="flex items-center justify-between gap-2 px-3 pt-2.5 pb-3">
             <div className="flex min-w-0 items-center gap-1.5">
-              <AddMenu side={menuSide} size={bot ? "size-10" : "size-8"} />
+              <AddMenu side={menuSide} size={bot ? "size-10" : "size-8"} modes={!bot} />
               {project && (
                 <span className="border-foreground/15 flex h-8 min-w-0 items-center gap-1.5 rounded-full border ps-2.5 pe-1 text-sm font-medium">
                   <ProjectIcon
@@ -240,7 +240,6 @@ export const Composer: FC<{
                   </button>
                 </span>
               )}
-              {!bot && <ModeMenu side={menuSide} />}
             </div>
 
             <div className="flex items-center gap-1">
@@ -328,8 +327,14 @@ export const menuBox = "border-foreground/6 w-52 rounded-2xl border p-1.5";
 
 export const menuItem = "h-8 gap-2 rounded-lg px-2";
 
-const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10" }> = ({ side, size }) => {
+const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10"; modes: boolean }> = ({
+  side,
+  size,
+  modes,
+}) => {
   const upload = useRef<HTMLButtonElement>(null);
+  const mode = useChatOptions((s) => s.mode);
+  const setMode = useChatOptions((s) => s.setMode);
   const t = useT();
 
   return (
@@ -339,50 +344,41 @@ const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10" }> = ({ s
         <DropdownMenuTrigger className={cn(iconButton, size)} aria-label={t("Add files or tools")}>
           <IconPlus className="size-4.5" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent side={side} align="start" className={menuBox}>
+        <DropdownMenuContent
+          side={side}
+          align="start"
+          className={modes ? cn(menuBox, "w-72") : menuBox}
+        >
           <DropdownMenuItem onSelect={() => upload.current?.click()} className={menuItem}>
             <IconPaperclip className="size-4" />
             {t("Upload a file")}
           </DropdownMenuItem>
           <RecentFiles />
+          {modes && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>{t("Mode")}</DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={mode}
+                onValueChange={(value) => setMode(modeSchema.parse(value))}
+              >
+                {MODES.map((name) => (
+                  <DropdownMenuRadioItem key={name} value={name} className="py-2">
+                    {MODE_ICONS[name]}
+                    <span className="flex flex-col">
+                      <span>{t(MODE_DETAILS[name].name)}</span>
+                      <span className="text-muted-foreground text-xs">
+                        {t(MODE_DETAILS[name].description)}
+                      </span>
+                    </span>
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
-};
-
-const ModeMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
-  const mode = useChatOptions((s) => s.mode);
-  const setMode = useChatOptions((s) => s.setMode);
-  const t = useT();
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="border-border bg-foreground/5 hover:bg-foreground/10 flex h-8 shrink-0 items-center gap-1.5 rounded-full border pe-2.5 ps-2 text-sm transition-colors">
-        {MODE_ICONS[mode]}
-        {t(MODE_DETAILS[mode].name)}
-        <IconChevronDown className="text-muted-foreground size-3.5" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent side={side} align="start" className="w-72">
-        <DropdownMenuLabel>{t("Mode")}</DropdownMenuLabel>
-        <DropdownMenuRadioGroup
-          value={mode}
-          onValueChange={(value) => setMode(modeSchema.parse(value))}
-        >
-          {MODES.map((name) => (
-            <DropdownMenuRadioItem key={name} value={name} className="py-2">
-              {MODE_ICONS[name]}
-              <span className="flex flex-col">
-                <span>{t(MODE_DETAILS[name].name)}</span>
-                <span className="text-muted-foreground text-xs">
-                  {t(MODE_DETAILS[name].description)}
-                </span>
-              </span>
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 };
 
