@@ -8,7 +8,7 @@ import { ownerCache } from "../account/ownerCache";
 import { StatusError } from "../http";
 import {
   BOT_COLORS,
-  BOT_ICONS,
+  BOT_BODIES,
   PROJECT_NAME_MAX,
   SECTION_NAME_MAX,
   containsLink,
@@ -34,14 +34,14 @@ export const projectInput = z.object({
   instructions: projectInstructions.default(""),
   title: botTitle.default(""),
   color: z.enum(BOT_COLORS).optional(),
-  symbol: z.enum(BOT_ICONS).optional(),
+  symbol: z.enum(BOT_BODIES).optional(),
 });
 
 export const projectUpdate = z
   .object({
     name: projectName.optional(),
     color: z.enum(BOT_COLORS).optional(),
-    symbol: z.enum(BOT_ICONS).nullable().optional(),
+    symbol: z.enum(BOT_BODIES).nullable().optional(),
     title: botTitle.optional(),
     pinned: z.boolean().optional(),
     section: z.string().trim().min(1).max(SECTION_NAME_MAX).nullable().optional(),

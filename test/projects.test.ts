@@ -188,9 +188,9 @@ test("a bot's section is trimmed, can be cleared, and cannot be blank or too lon
   expect(projectUpdate.safeParse({ section: "x".repeat(41) }).success).toBe(false);
 });
 
-test("a bot takes one of the known avatar icons and colors only", () => {
-  expect(projectUpdate.safeParse({ symbol: "quran", color: "blue" }).success).toBe(true);
-  expect(projectUpdate.safeParse({ symbol: "robot" }).success).toBe(false);
+test("a bot takes one of the known avatar bodies and colors only", () => {
+  expect(projectUpdate.safeParse({ symbol: "drop", color: "blue" }).success).toBe(true);
+  expect(projectUpdate.safeParse({ symbol: "quran" }).success).toBe(false);
   expect(projectUpdate.safeParse({ color: "amber" }).success).toBe(false);
 });
 
