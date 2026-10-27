@@ -154,9 +154,7 @@ export const BotHome: FC<{ bot: Project }> = ({ bot }) => {
           <BotGreeting />
         </div>
         <div className="bg-background sticky bottom-0 mx-auto w-full max-w-182 pt-4 pb-3">
-          <div className="-mx-3">
-            <Composer placeholder={t("Message {name}", { name: bot.name })} menuSide="top" bot />
-          </div>
+          <Composer placeholder={t("Message {name}", { name: bot.name })} menuSide="top" bot />
           <p className="text-muted-foreground mt-2 text-center text-xs">
             {t("Sirathic can make mistakes. Check the sources.")}
           </p>

@@ -186,7 +186,7 @@ export const Composer: FC<{
         <ComposerPrimitive.Root
           className={cn(
             "bg-card flex w-full flex-col border",
-            bot ? "border-foreground/6 rounded-3xl" : "border-foreground/10 rounded-[20px]",
+            "border-foreground/10 rounded-[20px]",
           )}
         >
           <AuiIf condition={(s) => s.composer.attachments.length > 0}>
@@ -206,7 +206,7 @@ export const Composer: FC<{
             onKeyDownCapture={onKeyDownCapture}
             className={cn(
               "relative max-h-60 min-h-[42px] w-full px-5 pt-3.5 text-base",
-              bot ? "leading-7" : "leading-6",
+              "leading-6",
             )}
           >
             <LinkPlugin />
@@ -215,7 +215,7 @@ export const Composer: FC<{
 
           <div className="flex items-center justify-between gap-2 px-3 pt-2.5 pb-3">
             <div className="flex min-w-0 items-center gap-1.5">
-              <AddMenu side={menuSide} size={bot ? "size-10" : "size-8"} modes={!bot} />
+              <AddMenu side={menuSide} modes={!bot} />
               {project && (
                 <span className="border-foreground/15 flex h-8 min-w-0 items-center gap-1.5 rounded-full border ps-2.5 pe-1 text-sm font-medium">
                   <ProjectIcon
@@ -246,7 +246,7 @@ export const Composer: FC<{
               <ModelPicker side={menuSide} />
               <AuiIf condition={(s) => s.thread.isRunning}>
                 <ComposerPrimitive.Cancel
-                  className={cn(primaryButton, bot && "size-10")}
+                  className={primaryButton}
                   aria-label={t("Stop response (Esc)")}
                   title={t("Stop response (Esc)")}
                 >
@@ -258,16 +258,13 @@ export const Composer: FC<{
                   <button
                     type="button"
                     onClick={() => ask(text)}
-                    className={cn(primaryButton, bot && "size-10")}
+                    className={primaryButton}
                     aria-label={t("Submit")}
                   >
                     <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
                   </button>
                 ) : (
-                  <ComposerPrimitive.Send
-                    className={cn(primaryButton, bot && "size-10")}
-                    aria-label={t("Submit")}
-                  >
+                  <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
                     <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
                   </ComposerPrimitive.Send>
                 )}
@@ -327,11 +324,7 @@ export const menuBox = "border-foreground/6 w-52 rounded-2xl border p-1.5";
 
 export const menuItem = "h-8 gap-2 rounded-lg px-2";
 
-const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10"; modes: boolean }> = ({
-  side,
-  size,
-  modes,
-}) => {
+const AddMenu: FC<{ side: "top" | "bottom"; modes: boolean }> = ({ side, modes }) => {
   const upload = useRef<HTMLButtonElement>(null);
   const mode = useChatOptions((s) => s.mode);
   const setMode = useChatOptions((s) => s.setMode);
@@ -341,7 +334,7 @@ const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10"; modes: b
     <>
       <ComposerPrimitive.AddAttachment ref={upload} className="hidden" />
       <DropdownMenu>
-        <DropdownMenuTrigger className={cn(iconButton, size)} aria-label={t("Add files or tools")}>
+        <DropdownMenuTrigger className={iconButton} aria-label={t("Add files or tools")}>
           <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent
