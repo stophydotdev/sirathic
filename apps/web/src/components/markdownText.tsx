@@ -30,6 +30,7 @@ import { z } from "zod";
 
 import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { hidePendingCitation, rehypeCitations, rehypeVerses } from "@/components/citations";
+import { Swap } from "@/components/swap";
 import { Favicon } from "@/components/favicon";
 import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
@@ -87,8 +88,11 @@ const CodeHeader: FC<CodeHeaderProps> = ({ language, code }) => {
         {language}
       </span>
       <TooltipIconButton tooltip={t("Copy")} onClick={onCopy}>
-        {!isCopied && <HugeiconsIcon icon={Copy01Icon} />}
-        {isCopied && <HugeiconsIcon icon={Tick02Icon} />}
+        <Swap
+          swapped={isCopied}
+          from={<HugeiconsIcon icon={Copy01Icon} />}
+          to={<HugeiconsIcon icon={Tick02Icon} />}
+        />
       </TooltipIconButton>
     </div>
   );

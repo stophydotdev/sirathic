@@ -137,7 +137,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
         <nav
           className={cn(
             "flex flex-1 flex-col gap-0.5 px-2",
-            collapsed ? "overflow-hidden" : "overflow-y-auto",
+            collapsed ? "overflow-hidden" : "scroll-fade overflow-y-auto",
           )}
         >
           <NewButton className={cn(navRow, "group/new")}>
@@ -186,7 +186,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           <SheetTitle className="flex h-14 shrink-0 items-center px-4">
             <Mark size={20} color="currentColor" />
           </SheetTitle>
-          <nav className="flex flex-col gap-0.5 overflow-y-auto px-2">
+          <nav className="scroll-fade flex flex-col gap-0.5 overflow-y-auto px-2">
             <NewButton className={mobileRow} onDone={() => setMobileOpen(false)}>
               <HugeiconsIcon icon={Add01Icon} className="size-4 shrink-0" />
               <span>{t("New")}</span>

@@ -19,6 +19,7 @@ import { BotLearned } from "@/components/botLearned";
 import { ThreadKeys } from "@/components/shortcuts";
 import { ThreadImages } from "@/components/threadMedia";
 import { ThreadShell } from "@/components/threadShell";
+import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -218,11 +219,11 @@ const HeaderActions: FC = () => {
         title={t("Copy a link to this chat")}
         className="bg-foreground/10 hover:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
       >
-        {copied ? (
-          <HugeiconsIcon icon={Tick02Icon} className="size-4" />
-        ) : (
-          <HugeiconsIcon icon={Share08Icon} className="size-4" />
-        )}
+        <Swap
+          swapped={copied}
+          from={<HugeiconsIcon icon={Share08Icon} className="size-4" />}
+          to={<HugeiconsIcon icon={Tick02Icon} className="size-4" />}
+        />
         <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
       </button>
     </div>
@@ -464,7 +465,7 @@ const SourcesPane: FC = () => {
         </span>
       </button>
       {open && (
-        <div className="flex max-h-[min(28rem,calc(100dvh-12rem))] flex-col gap-1 overflow-y-auto px-2 pb-2">
+        <div className="scroll-fade flex max-h-[min(28rem,calc(100dvh-12rem))] flex-col gap-1 overflow-y-auto px-2 pb-2">
           {turns.map((turn) => {
             const groups = groupsOf(turn.sources);
             return (

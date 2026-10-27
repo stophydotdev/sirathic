@@ -14,6 +14,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
 import { SPRING_PRESS } from "@/lib/ease";
+import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 
 type StreamingResponseStatus = "streaming" | "complete" | "error";
@@ -160,11 +161,11 @@ export function StreamingResponse({
           <div className={cn("flex items-center gap-0.5", actionsClassName)}>
             {canCopy ? (
               <ResponseAction label={copied ? "Copied" : "Copy response"} onClick={handleCopy}>
-                {copied ? (
-                  <HugeiconsIcon icon={Tick02Icon} className="size-3.5" />
-                ) : (
-                  <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
-                )}
+                <Swap
+                  swapped={copied}
+                  from={<HugeiconsIcon icon={Copy01Icon} className="size-3.5" />}
+                  to={<HugeiconsIcon icon={Tick02Icon} className="size-3.5" />}
+                />
               </ResponseAction>
             ) : null}
             {complete ? (

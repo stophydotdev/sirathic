@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { useAttachmentSrc } from "@/lib/hooks/useAttachmentSrc";
 import { type Mode, MODES, mode as modeSchema } from "@sirathic/server/messages";
+import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -104,6 +105,7 @@ export const Composer: FC<{
 }> = ({ placeholder, menuSide, rotate = false, bot = false, compact = false, project }) => {
   const aui = useAui();
   const text = useAuiState((s) => s.composer.text);
+  const running = useAuiState((s) => s.thread.isRunning);
   const setMode = useChatOptions((s) => s.setMode);
   useEffect(() => {
     const draft = takeDraft();
@@ -277,31 +279,34 @@ export const Composer: FC<{
 
           <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>
             <ModelPicker side={menuSide} />
-            <AuiIf condition={(s) => s.thread.isRunning}>
-              <ComposerPrimitive.Cancel
-                className={primaryButton}
-                aria-label={t("Stop response (Esc)")}
-                title={t("Stop response (Esc)")}
-              >
-                <span className="size-2.5 rounded-xs bg-current" />
-              </ComposerPrimitive.Cancel>
-            </AuiIf>
-            <AuiIf condition={(s) => !s.thread.isRunning}>
-              {signedOut ? (
-                <button
-                  type="button"
-                  onClick={() => ask(text)}
+            <Swap
+              swapped={running}
+              from={
+                signedOut ? (
+                  <button
+                    type="button"
+                    onClick={() => ask(text)}
+                    className={primaryButton}
+                    aria-label={t("Submit")}
+                  >
+                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
+                  </button>
+                ) : (
+                  <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
+                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
+                  </ComposerPrimitive.Send>
+                )
+              }
+              to={
+                <ComposerPrimitive.Cancel
                   className={primaryButton}
-                  aria-label={t("Submit")}
+                  aria-label={t("Stop response (Esc)")}
+                  title={t("Stop response (Esc)")}
                 >
-                  <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
-                </button>
-              ) : (
-                <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
-                  <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
-                </ComposerPrimitive.Send>
-              )}
-            </AuiIf>
+                  <span className="size-2.5 rounded-xs bg-current" />
+                </ComposerPrimitive.Cancel>
+              }
+            />
           </div>
         </ComposerPrimitive.Root>
 
