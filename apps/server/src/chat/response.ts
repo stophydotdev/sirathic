@@ -31,9 +31,9 @@ import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { islamicDates } from "../bots/islamicDates";
 import { citations, withBareCitations } from "./citations";
-import { CODE_RULES, codeTools } from "./codeTools";
-import { CONFIRM_RULES, needsApproval, writingTools } from "./confirm";
-import { fileRules, fileTools, sandboxFiles } from "./fileTools";
+import { codeTools } from "./codeTools";
+import { needsApproval, writingTools } from "./confirm";
+import { fileTools, sandboxFiles } from "./fileTools";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
 import { reasonOf } from "../http";
@@ -59,6 +59,7 @@ import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
+const RESEARCH_OPENS = ["calculate", "files"];
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
 type Turn = Parameters<typeof answerOptions>[0];
@@ -239,25 +240,6 @@ export function chatResponse({
         bot,
       ]);
       const texts = inProject !== undefined;
-      const builtIn = skillsFor({
-        mode,
-        texting: texts,
-        inBot: inBot !== undefined,
-        timezone: automate?.timezone,
-        canWriteSkills: owner !== undefined && !unattended,
-        userSkills: ownSkills,
-      });
-      const loaded = loadedNames(
-        messages.flatMap((message) =>
-          message.parts
-            .filter(isToolUIPart)
-            .map((part) => ({ toolName: getToolName(part), input: part.input })),
-        ),
-      );
-      const first =
-        !resumed && builtIn.some(({ name }) => name === "research") && !loaded.includes("research")
-          ? "skill"
-          : forced;
       const settings = texts
         ? ({ ...preferred, answerLength: "short" } satisfies Settings)
         : preferred;
@@ -267,7 +249,7 @@ export function chatResponse({
       );
       const searchable = inBot && visible.length < messages.length ? inBot : undefined;
       const sandbox = sandboxFiles();
-      const offered = {
+      const available = {
         ...tools,
         ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
@@ -294,9 +276,36 @@ export function chatResponse({
             research: mode === "research",
             sandbox: noorModel(modelName) !== undefined ? sandbox : undefined,
           })),
-        ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
         ...connectors.tools,
       };
+      const builtIn = skillsFor({
+        mode,
+        texting: texts,
+        inBot: inBot !== undefined,
+        timezone: automate?.timezone,
+        canWriteSkills: owner !== undefined && !unattended,
+        userSkills: ownSkills,
+        offered: available,
+        plugins: connectors.tools,
+      });
+      const offered = {
+        ...available,
+        ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
+      };
+      const loaded = [
+        ...loadedNames(
+          messages.flatMap((message) =>
+            message.parts
+              .filter(isToolUIPart)
+              .map((part) => ({ toolName: getToolName(part), input: part.input })),
+          ),
+        ),
+        ...(mode === "research" ? RESEARCH_OPENS : []),
+      ];
+      const first =
+        !resumed && builtIn.some(({ name }) => name === "research") && !loaded.includes("research")
+          ? "skill"
+          : forced;
       const writes = unattended ? [] : writingTools(connectors.tools);
       const agent = answerAgent({
         model: models.model,
@@ -311,12 +320,7 @@ export function chatResponse({
           offered,
           skills: builtIn,
           remembers: owner !== undefined && !unattended,
-          toolNotes: [
-            "code_execution" in offered ? CODE_RULES : "",
-            fileRules(offered),
-            searchable ? SEARCH_OUR_CHAT : "",
-            writes.length > 0 ? CONFIRM_RULES : "",
-          ],
+          toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
         }),
         mentioned: skillRules(
           ownSkills,

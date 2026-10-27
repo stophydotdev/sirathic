@@ -1,6 +1,9 @@
-import { tool } from "ai";
+import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { Mode } from "../../shared/messages";
+import { CODE_RULES } from "../codeTools";
+import { CONFIRM_RULES, writingTools } from "../confirm";
+import { fileRules } from "../fileTools";
 import research from "./research.md" with { type: "text" };
 import routines from "./routines.md" with { type: "text" };
 import skillAuthoring from "./skillAuthoring.md" with { type: "text" };
@@ -25,9 +28,14 @@ type Where = {
   timezone: string | undefined;
   canWriteSkills: boolean;
   userSkills: readonly UserSkill[];
+  offered: ToolSet;
+  plugins: ToolSet;
 };
 
 const WHEN_CHARS = 140;
+
+const PLUGIN_RULES =
+  "Find apps with search_plugins and connect one with install_plugin. The tools of the apps the user has connected open with this skill: use them for what the user asks of that app.";
 
 const whenOf = ({ instructions }: UserSkill) =>
   (instructions.split(/(?<=[.!?])\s/u)[0] ?? instructions).slice(0, WHEN_CHARS);
@@ -39,7 +47,10 @@ export const skillsFor = ({
   timezone,
   canWriteSkills,
   userSkills,
+  offered,
+  plugins,
 }: Where): Skill[] => {
+  const files = fileRules(offered);
   const builtIn = [
     ...(mode === "research"
       ? [
@@ -86,6 +97,38 @@ export const skillsFor = ({
             when: "the user asks you to save, rewrite or delete a skill, or you notice a task worth saving for reuse",
             text: skillAuthoring,
             tools: ["update_skill"],
+          },
+        ]
+      : []),
+    ...("code_execution" in offered
+      ? [
+          {
+            name: "calculate",
+            when: "the answer needs exact numbers, like zakat, nisab, inheritance shares, hijri dates or unit conversions",
+            text: CODE_RULES,
+            tools: ["code_execution"],
+          },
+        ]
+      : []),
+    ...(files.tools.length > 0
+      ? [
+          {
+            name: "files",
+            when: "the user asks for a file to keep or share, like a khutbah draft, a study plan, a table or a report",
+            text: files.text,
+            tools: files.tools,
+          },
+        ]
+      : []),
+    ...("search_plugins" in offered
+      ? [
+          {
+            name: "plugins",
+            when: "the user wants to find or connect an app, or to use one they connected, like their calendar, email, notes or tasks",
+            text: [PLUGIN_RULES, writingTools(plugins).length > 0 ? CONFIRM_RULES : ""]
+              .filter(Boolean)
+              .join("\n\n"),
+            tools: ["search_plugins", "install_plugin", ...Object.keys(plugins)],
           },
         ]
       : []),

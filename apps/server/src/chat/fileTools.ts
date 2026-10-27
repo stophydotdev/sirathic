@@ -20,12 +20,11 @@ const FILE_RULES = {
 const FILE_RULES_END = `For all of them: write your answer first, then call the tool last, and do not say a file is saved until the tool has returned. The user gets a card with the file under your answer and finds the file in their Library. After the tool returns, add one short sentence at most. If it returns an error, say so plainly and give the content in chat.`;
 
 export const fileRules = (offered: ToolSet) => {
-  const rules = Object.entries(FILE_RULES)
-    .filter(([name]) => name in offered)
-    .map(([, rule]) => rule);
-  return rules.length > 0
-    ? `\n\nYou can hand the user files:\n${rules.join("\n")}\n${FILE_RULES_END}`
-    : "";
+  const rules = Object.entries(FILE_RULES).filter(([name]) => name in offered);
+  return {
+    tools: rules.map(([name]) => name),
+    text: `You can hand the user files:\n${rules.map(([, rule]) => rule).join("\n")}\n${FILE_RULES_END}`,
+  };
 };
 
 const sandboxFile = z.object({ filename: z.string(), size_bytes: z.number() });

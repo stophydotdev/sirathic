@@ -123,7 +123,7 @@ const routine = {
   schedule: { kind: "daily", time: "05:00" },
 };
 
-const noSkills = { canWriteSkills: false, userSkills: [] };
+const noSkills = { canWriteSkills: false, userSkills: [], offered: {}, plugins: {} };
 
 const afterLoading = (skill: string): ChatMessage[] => [
   said("1", "user", "remind me every morning"),
@@ -250,6 +250,8 @@ test("the user's own skills join the skill index with the first sentence as when
     inBot: false,
     timezone: undefined,
     canWriteSkills: true,
+    offered: {},
+    plugins: {},
     userSkills: [
       {
         name: "Hadith format",
@@ -277,4 +279,34 @@ test("a chat that cannot save skills has no skill_authoring skill", () => {
     timezone: undefined,
   });
   expect(skills.map(({ name }) => name)).toEqual([]);
+});
+
+test("code, file and plugin tools stay closed until their skill loads", async () => {
+  const skills = skillsFor({
+    ...noSkills,
+    mode: "quick",
+    texting: false,
+    inBot: false,
+    timezone: undefined,
+    offered: { code_execution: noInput, create_text_file: noInput, search_plugins: noInput },
+    plugins: { notion_search: noInput },
+  });
+  const { model, seen } = scriptedModel(["load_skill"], ["calculate"]);
+  await answerWith(model, {
+    tools: {
+      search_web: noInput,
+      load_skill: loadSkill(skills),
+      code_execution: noInput,
+      create_text_file: noInput,
+      search_plugins: noInput,
+      notion_search: noInput,
+    },
+    skills,
+    firstStep: undefined,
+  }).generate({ prompt: "zakat on 100 g of gold" });
+  const [before, after] = seen;
+  expect([toolNames(before), toolNames(after)]).toEqual([
+    ["search_web", "load_skill"],
+    ["search_web", "load_skill", "code_execution"],
+  ]);
 });
