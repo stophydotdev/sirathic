@@ -5,7 +5,7 @@ import { z } from "zod";
 
 type Part = ThreadMessage["content"][number];
 
-const SEARCH_SOURCES = ["quran", "hadith", "fiqh", "fatwa", "web", "news"] as const;
+const SEARCH_SOURCES = ["quran", "hadith", "fiqh", "fatwa", "web", "news", "duas"] as const;
 export type SearchSource = (typeof SEARCH_SOURCES)[number];
 
 const searchArgs = z
@@ -22,6 +22,7 @@ const searchOutput = z.object({
       fatwa: z.array(z.object({ title: z.string(), site: z.string() })).catch([]),
       web: z.array(page).catch([]),
       news: z.array(page).catch([]),
+      duas: z.array(z.object({ title: z.string() })).catch([]),
     })
     .partial(),
   sources: z.array(page).catch([]),
@@ -168,6 +169,7 @@ function readsOf({ results, sources }: z.infer<typeof searchOutput>): Read[] {
       detail: hostOf(url),
       url,
     })),
+    ...(results.duas ?? []).map(({ title }): Read => ({ source: "duas", title })),
   ];
 }
 

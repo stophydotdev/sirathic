@@ -1,4 +1,3 @@
-import { duaSearch, duaSearchInput } from "@sirathic/core/tools/duaSearch";
 import { hadithsByIds } from "@sirathic/core/tools/hadithGet";
 import { hadithIdOfSunnahUrl } from "@sirathic/core/tools/hadithLinks";
 import { quranGet, quranGetInput } from "@sirathic/core/tools/quranGet";
@@ -99,11 +98,6 @@ If results are incomplete, conflicting, only snippets, one-sided, or miss a part
         type: "json",
         value: { verses: output.verses, truncated: output.truncated },
       }),
-    }),
-    search_duas: tool({
-      description: "Find duas and adhkar for an occasion or need.",
-      inputSchema: duaSearchInput,
-      execute: duaSearch,
     }),
     fetch_url: tool({
       description:

@@ -252,6 +252,7 @@ const READ_ICONS = {
   fatwa: Note01Icon,
   web: Globe02Icon,
   news: Globe02Icon,
+  duas: FavouriteIcon,
 } satisfies Record<SearchSource, IconSvgElement>;
 
 const TOOLS = new Map<

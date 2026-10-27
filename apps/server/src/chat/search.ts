@@ -1,3 +1,4 @@
+import { duaSearch } from "@sirathic/core/tools/duaSearch";
 import { fatwaSearch } from "@sirathic/core/tools/fatwaSearch";
 import { fiqhSearch } from "@sirathic/core/tools/fiqhSearch";
 import { hadithSearch } from "@sirathic/core/tools/hadithSearch";
@@ -25,7 +26,15 @@ import {
   type Verse,
   verseSource,
 } from "./cite";
-import { bestPieces, fiqhBlock, hadithBlock, pagesBlock, pageText, quranBlock } from "./compact";
+import {
+  bestPieces,
+  duaBlock,
+  fiqhBlock,
+  hadithBlock,
+  pagesBlock,
+  pageText,
+  quranBlock,
+} from "./compact";
 import { cleanSearch } from "./searchQuery";
 
 const RESULT_CHARS = 2_000;
@@ -33,7 +42,7 @@ const QUESTION_CHARS = 600;
 const TAFSIR_CHARS = 1_500;
 const FATWA_CHARS = 3_000;
 
-const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news"] as const;
+const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news", "duas"] as const;
 
 type SearchSource = (typeof SEARCH_SOURCES)[number];
 
@@ -46,6 +55,7 @@ const SEARCH_LIMITS = {
   fiqh: 3,
   web: 8,
   news: 8,
+  duas: 5,
 } satisfies Record<SearchSource, number>;
 
 const LISTED_PER_QUERY = 20;
@@ -71,7 +81,7 @@ export const searchInput = z.object({
     .array(z.enum(SEARCH_SOURCES))
     .min(1)
     .describe(
-      "quran for verses and their tafsir, hadith for hadith and their grades, fatwa for rulings from scholars and fatwa sites, fiqh for the classical books (use it with arabic queries when the schools may differ), web for history, comparisons and everything outside Islamic questions, news for current events",
+      "quran for verses and their tafsir, hadith for hadith and their grades, fatwa for rulings from scholars and fatwa sites, fiqh for the classical books (use it with arabic queries when the schools may differ), web for history, comparisons and everything outside Islamic questions, news for current events, duas for duas and adhkar for an occasion or need",
     ),
   sites: z
     .array(z.string().trim().max(100))
@@ -170,6 +180,18 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
     results,
     text: hadithBlock(results),
   };
+};
+
+const searchDuas = async (queries: string[]) => {
+  const found = await Promise.all(
+    queries.map((query) => duaSearch({ query, limit: SEARCH_LIMITS.duas })),
+  );
+  const duas = interleave(
+    found.map((result) => result.duas),
+    (dua) => dua.id,
+    SEARCH_LIMITS.duas,
+  );
+  return { results: duas, sources: [], text: duaBlock(duas) };
 };
 
 const FIQH_SCHOOLS = [
@@ -392,6 +414,7 @@ export const searchAll = async (cite: Cite, input: z.infer<typeof searchInput>) 
     fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, sites),
     web: () => searchWeb(cite, queries, sites, time),
     news: () => searchNews(cite, queries, time),
+    duas: () => searchDuas([...queries, ...arabic]),
   } satisfies Record<SearchSource, () => Promise<Searched>>;
   const done = await Promise.all(
     chosen.map(async (name) => {
