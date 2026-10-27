@@ -18,21 +18,21 @@
     "dev": "bun --hot --env-file=.env --env-file=.env.local src/index.ts"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "4.0.80",
-    "@ai-sdk/mcp": "2.0.76",
-    "@ai-sdk/openai": "4.0.93",
-    "@better-auth/expo": "1.7.11",
+    "@ai-sdk/anthropic": "4.0.89",
+    "@ai-sdk/mcp": "2.0.85",
+    "@ai-sdk/openai": "4.0.103",
+    "@better-auth/expo": "1.7.14",
     "@hono/trpc-server": "0.4.2",
     "@sirathic/core": "workspace:*",
     "@sirathic/db": "workspace:*",
     "@sirathic/env": "workspace:*",
     "@trpc/server": "11.19.0",
-    "ai": "7.0.140",
-    "better-auth": "1.7.11",
+    "ai": "7.0.154",
+    "better-auth": "1.7.14",
     "drizzle-orm": "^0.45.4",
-    "hono": "^4.9.0",
-    "jose": "6.2.12",
-    "unpdf": "^1.9.0",
+    "hono": "^4.13.14",
+    "jose": "6.2.13",
+    "unpdf": "^1.9.1",
     "zod": "^4.4.3"
   }
 }
