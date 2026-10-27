@@ -34,6 +34,7 @@ import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
 import { reasonOf } from "../http";
 import { skillRules } from "../skills/skills";
+import { pluginTools } from "../plugins/tools";
 import { skillTools } from "../skills/tools";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
@@ -279,6 +280,7 @@ export function chatResponse({
         ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
         ...(inBot && botTools(inBot)),
         ...(owner !== undefined && !unattended && skillTools(owner)),
+        ...(owner !== undefined && !unattended && pluginTools(owner)),
         ...memoryTools(
           owner === undefined
             ? undefined

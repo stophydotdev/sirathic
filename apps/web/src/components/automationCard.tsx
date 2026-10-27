@@ -3,6 +3,7 @@
 import { describeSchedule } from "@/components/automationText";
 import { FILE_TOOLS } from "@/components/fileCards";
 import { type Translate, useLocale, useT } from "@/components/i18n";
+import { PluginCard } from "@/components/pluginCard";
 import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
 import { currentToolName } from "@sirathic/server/messages";
@@ -17,6 +18,7 @@ const CARD_TOOLS = new Set([
   "list_routines",
   "set_bot_job",
   "update_profile",
+  "install_plugin",
   "clarifying_questions",
   ...FILE_TOOLS,
 ]);
@@ -113,6 +115,7 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
       </div>
     );
   }
+  if (name === "install_plugin") return <PluginCard result={result} />;
   if (name === "list_routines" && listed) {
     return (
       <div className="border-border my-3 flex flex-col gap-2.5 rounded-[12px] border p-3 print:hidden">

@@ -2,6 +2,7 @@ import { expect, test } from "bun:test";
 import { isPrivateAddress, publicUrl } from "../apps/server/src/plugins/address";
 import { type ConnectorId, popularOf, toolName } from "../apps/server/src/plugins/catalog";
 import { FORGET, withUpdate } from "../apps/server/src/plugins/connections";
+import { matchingPlugins } from "../apps/server/src/plugins/tools";
 import { mentionedSkills } from "../apps/server/src/skills/mentions";
 
 test.each([
@@ -112,4 +113,39 @@ test("emails and longer words are not skill calls", () => {
 
 test("a name whose lowercase form is longer is still found", () => {
   expect(namesIn("@İman nedir?")).toEqual(["İman"]);
+});
+
+const listed = (id: string, name: string, category: string, connected: boolean) => ({
+  id,
+  name,
+  category,
+  url: "https://example.com",
+  connected,
+  popular: false,
+});
+
+test("a plugin search ranks by shared words, says what is installed, and never offers a custom plugin", () => {
+  const found = matchingPlugins(
+    [
+      listed("notion", "Notion", "productivity", false),
+      listed("calendly", "Calendly", "productivity", false),
+      listed("googlecalendar", "Google Calendar", "productivity", true),
+      listed("custom-ab12cd34", "My calendar", "custom", true),
+    ],
+    "calendar events meetings",
+  );
+  expect(found).toEqual([
+    {
+      id: "googlecalendar",
+      name: "Google Calendar",
+      does: "See your calendars and events",
+      installed: true,
+    },
+    {
+      id: "calendly",
+      name: "Calendly",
+      does: "Check availability and book meetings",
+      installed: false,
+    },
+  ]);
 });

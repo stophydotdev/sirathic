@@ -14,6 +14,8 @@ export const writingTools = (tools: ToolSet) =>
     readOnlyTool.safeParse(entry.metadata).success ? [] : [name],
   );
 
+const CONFIRMED_TOOLS: ReadonlySet<string> = new Set(["install_plugin"]);
+
 const CONFIRMED_ACTIONS = new Map<string, readonly string[]>([
   ["update_routine", ["create", "edit", "delete"]],
   ["update_skill", ["delete"]],
@@ -26,5 +28,6 @@ export const needsApproval = (
   writes: ReadonlySet<string>,
 ) =>
   writes.has(toolName) ||
+  CONFIRMED_TOOLS.has(toolName) ||
   (CONFIRMED_ACTIONS.get(toolName)?.includes(actionOf.safeParse(input).data?.action ?? "") ??
     false);

@@ -169,6 +169,8 @@ test.each([
   ["update_routine", { action: "delete" }, true],
   ["update_routine", { action: "pause" }, false],
   ["update_skill", { action: "delete" }, true],
+  ["install_plugin", { id: "googlecalendar" }, true],
+  ["search_plugins", { query: "calendar" }, false],
   ["update_skill", { action: "write" }, false],
   ["update_routine", { action: "resume" }, false],
   ["list_routines", {}, false],

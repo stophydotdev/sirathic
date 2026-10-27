@@ -46,6 +46,7 @@ const researchByType = groupPartByType({
   "tool-call:listAutomations": [],
   "tool-call:update_routine": [],
   "tool-call:list_routines": [],
+  "tool-call:install_plugin": [],
   "tool-call:setBotJob": [],
   "tool-call:set_bot_job": [],
   "tool-call:askUser": [],

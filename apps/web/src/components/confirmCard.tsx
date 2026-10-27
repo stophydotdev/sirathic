@@ -3,6 +3,7 @@
 import { describeSchedule } from "@/components/automationText";
 import { useLocale, useT } from "@/components/i18n";
 import { schedule } from "@sirathic/server/automations";
+import { CONNECTORS, connectorId } from "@sirathic/server/catalog";
 import { type ThreadMessage, useAui } from "@assistant-ui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { CancelCircleIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
@@ -12,6 +13,8 @@ import { z } from "zod";
 type ToolCall = Extract<ThreadMessage["content"][number], { type: "tool-call" }>;
 
 const routine = z.object({ name: z.string(), prompt: z.string(), schedule });
+
+const install = z.object({ id: connectorId });
 
 const shown = z.union([z.string(), z.number(), z.boolean()]);
 
@@ -29,6 +32,16 @@ const Action: FC<{ call: ToolCall }> = ({ call }) => {
           {describeSchedule(t, locale, created.schedule)}
         </span>
         <span className="text-muted-foreground line-clamp-3 text-xs">{created.prompt}</span>
+      </div>
+    );
+  }
+  const plugin = call.toolName === "install_plugin" ? install.safeParse(call.args).data : undefined;
+  if (plugin) {
+    const { name, description } = CONNECTORS[plugin.id];
+    return (
+      <div className="flex min-w-0 flex-col gap-1">
+        <span className="truncate text-sm font-medium">{name}</span>
+        <span className="text-muted-foreground text-xs">{description}</span>
       </div>
     );
   }
