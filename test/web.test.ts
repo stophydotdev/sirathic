@@ -8,6 +8,8 @@ import {
   hour24Of,
 } from "../apps/web/src/components/automationText";
 import { botGroups } from "../apps/web/src/components/botGroups";
+import { bubblesOf } from "../apps/web/src/components/botBubbles";
+import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 
@@ -198,4 +200,32 @@ test("a bot's last message shows the time today, yesterday, then the date", () =
   expect(
     [localIso(27, 9), localIso(26, 23), localIso(10, 9)].map((iso) => whenOf("en", iso, now)),
   ).toEqual(["9:05 AM", "yesterday", "10/10"]);
+});
+
+const atOctober = (day: number, hour: number, minute: number) =>
+  new Date(2026, 9, day, hour, minute).getTime();
+
+test("a chat stamp says today or yesterday with the time, and older days by date", () => {
+  const now = atOctober(27, 19, 20);
+  expect(
+    [atOctober(27, 18, 37), atOctober(26, 23, 5), atOctober(20, 9, 0)].map((time) =>
+      stampText("en", time, now).replaceAll(/\s/gu, " "),
+    ),
+  ).toEqual(["today 6:37 PM", "yesterday 11:05 PM", "Oct 20, 2026 9:00 AM"]);
+});
+
+test("a bot reply splits into a bubble per paragraph, but headings, lists and tables stay with the bubble they follow and code blocks stay whole", () => {
+  const reply = [
+    "Here is the guide.",
+    "## Wudu",
+    "1. Intend\n2. Wash",
+    "| Breaks | Notes |\n| - | - |\n| Sleep | Deep |",
+    "Source: Quran.com",
+    "```\ncode\n\nmore\n```",
+  ].join("\n\n");
+  expect(bubblesOf(reply)).toEqual([
+    "Here is the guide.\n\n## Wudu\n\n1. Intend\n2. Wash\n\n| Breaks | Notes |\n| - | - |\n| Sleep | Deep |",
+    "Source: Quran.com",
+    "```\ncode\n\nmore\n```",
+  ]);
 });
