@@ -120,11 +120,13 @@ let answersToday = 31;
 mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => answersToday }));
 const response = await import("../apps/server/src/chat/response");
 const modelInputs: ChatMessage[][] = [];
+const citedInputs: (ChatMessage[] | undefined)[] = [];
 let modelError: string | undefined;
 mock.module("../apps/server/src/chat/response", () => ({
   ...response,
-  chatResponse: ({ messages, save }: Parameters<typeof response.chatResponse>[0]) => {
+  chatResponse: ({ messages, save, citedEarlier }: Parameters<typeof response.chatResponse>[0]) => {
     modelInputs.push(messages);
+    citedInputs.push(citedEarlier);
     const reply = {
       id: "reply-1",
       role: "assistant",
@@ -409,7 +411,7 @@ test("a study routine is told what is due and what it said last time", () => {
   );
 });
 
-test("a bot routine run sends the model only its brief and appends to the bot's chat", async () => {
+test("a bot routine run sends the model only its brief, numbers citations after the chat's and appends to it", async () => {
   const routine = "Morning verse";
   const post = (index: number): ChatMessage[] => {
     const number = String(index).padStart(2, "0");
@@ -435,10 +437,12 @@ test("a bot routine run sends the model only its brief and appends to the bot's 
   Object.assign(automationRow, { enabled: true, nextRunAt: dueAt });
   savedChats.length = 0;
   modelInputs.length = 0;
+  citedInputs.length = 0;
 
   await runDue();
 
   expect(modelInputs).toHaveLength(1);
+  expect(citedInputs).toEqual([earlier]);
   const [briefed, ...rest] = modelInputs[0] ?? [];
   expect(rest).toEqual([]);
   const lines = briefed?.parts.flatMap((part) => (part.type === "text" ? [part.text] : []));

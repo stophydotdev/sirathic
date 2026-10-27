@@ -226,6 +226,7 @@ export function chatResponse({
   bot,
   needs,
   historyLimit,
+  citedEarlier,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   options: { answer: ProviderOptions; side: ProviderOptions };
@@ -248,6 +249,7 @@ export function chatResponse({
   bot?: Promise<BotScope | undefined>;
   needs?: Promise<Needs>;
   historyLimit?: number;
+  citedEarlier?: ChatMessage[];
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -258,7 +260,7 @@ export function chatResponse({
   let httpStatus: number | undefined;
   let usage: LanguageModelUsage | undefined;
   let text = "";
-  const sources = citations(messages);
+  const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages, sources.numberOf);
   const tools = sirathicTools(sources.add, remember);
   const recent = messages

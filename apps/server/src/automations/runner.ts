@@ -134,6 +134,7 @@ async function botOf(projectId: string, owner: string) {
 async function answerPrompt(
   by: string,
   conversation: ChatMessage[],
+  earlier: ChatMessage[],
   sessionId: string,
   inProject: string | null,
   runMode: Mode,
@@ -171,6 +172,7 @@ async function answerPrompt(
     remember: undefined,
     automate: undefined,
     historyLimit: inProject ? BOT_HISTORY : undefined,
+    citedEarlier: earlier,
   });
   let failure: string | undefined;
   for await (const chunk of parseJsonEventStream({
@@ -218,7 +220,7 @@ async function runAutomation({
         ],
       }
     : asked;
-  const outcome = await answerPrompt(owner, [briefed], sessionId, projectId, runMode).then(
+  const outcome = await answerPrompt(owner, [briefed], earlier, sessionId, projectId, runMode).then(
     (answered) => ({ kind: "answered", answered }) as const,
     (err: Error) => {
       console.error(`automation ${id} not answered: ${reasonOf(err)}`);
