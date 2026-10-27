@@ -1,9 +1,19 @@
-import { expect, test } from "bun:test";
+import { expect, mock, test } from "bun:test";
+import { drizzle } from "drizzle-orm/pg-proxy";
+import { z } from "zod";
+import { writingTools } from "../apps/server/src/chat/confirm";
+import { seal } from "../apps/server/src/account/vault";
 import { isPrivateAddress, publicUrl } from "../apps/server/src/plugins/address";
 import { type ConnectorId, popularOf, toolName } from "../apps/server/src/plugins/catalog";
-import { FORGET, withUpdate } from "../apps/server/src/plugins/connections";
 import { matchingPlugins } from "../apps/server/src/plugins/tools";
 import { mentionedSkills } from "../apps/server/src/skills/mentions";
+
+const connectionRow = ["exa", null, null, await seal("{}")];
+mock.module("@sirathic/db", () => ({
+  db: drizzle(async () => ({ rows: [connectionRow] }), { casing: "snake_case" }),
+}));
+const { connectedTools, FORGET, withUpdate } =
+  await import("../apps/server/src/plugins/connections");
 
 test.each([
   "127.0.0.1",
@@ -148,4 +158,64 @@ test("a plugin search ranks by shared words, says what is installed, and never o
       installed: false,
     },
   ]);
+});
+
+const rpc = z.object({
+  id: z.number().optional(),
+  method: z.string(),
+  params: z.object({ protocolVersion: z.string().optional() }).optional(),
+});
+const serverSaw: string[] = [];
+const serverTools = [
+  {
+    name: "search",
+    description: "Finds pages",
+    inputSchema: { type: "object", properties: { q: { type: "string" } } },
+    annotations: { readOnlyHint: true },
+  },
+  { name: "post", description: "Posts a page", inputSchema: { type: "object", properties: {} } },
+];
+
+const resultOf = (method: string, protocolVersion: string | undefined) =>
+  method === "initialize"
+    ? { protocolVersion, capabilities: { tools: {} }, serverInfo: { name: "stub", version: "1" } }
+    : method === "tools/list"
+      ? { tools: serverTools }
+      : { content: [{ type: "text", text: "found" }] };
+
+globalThis.fetch = Object.assign(
+  async (_url: Parameters<typeof fetch>[0], init?: RequestInit) => {
+    if (init?.method !== "POST") return new Response(null, { status: 405 });
+    const { id, method, params } = rpc.parse(JSON.parse(String(init.body)));
+    serverSaw.push(method);
+    if (id === undefined) return new Response(null, { status: 202 });
+    return Response.json({
+      jsonrpc: "2.0",
+      id,
+      result: resultOf(method, params?.protocolVersion),
+    });
+  },
+  { preconnect: () => {} },
+);
+
+test("a plugin's tools come from the saved list and its server is reached only when a tool is called", async () => {
+  const first = await connectedTools("owner");
+  await first.close();
+  expect(serverSaw).toContain("tools/list");
+
+  serverSaw.length = 0;
+  const second = await connectedTools("owner");
+  expect(serverSaw).toEqual([]);
+  expect(Object.keys(second.tools)).toEqual(["exa_search", "exa_post"]);
+  expect(writingTools(second.tools)).toEqual(["exa_post"]);
+
+  const found = await second.tools.exa_search?.execute?.(
+    { q: "wudu" },
+    { toolCallId: "call", messages: [], context: {} },
+  );
+  expect(found).toMatchObject({ content: [{ type: "text", text: "found" }] });
+  expect(serverSaw).toContain("initialize");
+  expect(serverSaw).toContain("tools/call");
+  expect(serverSaw).not.toContain("tools/list");
+  await second.close();
 });

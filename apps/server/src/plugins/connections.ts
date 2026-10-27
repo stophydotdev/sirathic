@@ -1,12 +1,15 @@
 import {
   auth,
+  type CallToolResult,
   createMCPClient,
+  type MCPClient,
   type OAuthClientMetadata,
   type OAuthClientProvider,
 } from "@ai-sdk/mcp";
 import { db } from "@sirathic/db";
 import { connections } from "@sirathic/db/schema";
 import { env } from "@sirathic/env/server";
+import type { Tool } from "ai";
 import { and, count, eq } from "drizzle-orm";
 import { z } from "zod";
 import { reasonOf, StatusError } from "../http";
@@ -26,6 +29,11 @@ import {
 const REDIRECT_URL = new URL("/api/connectors/callback", env.SITE_URL).href;
 const CONNECT_TIMEOUT_MS = 10_000;
 const ANSWER_CONNECT_MS = 3_000;
+const TOOLS_FRESH_MS = 6 * 60 * 60_000;
+
+type Listed = Tool<unknown, CallToolResult>;
+
+const listedTools = new Map<string, { tools: Record<string, Listed>; at: number }>();
 
 const GOOGLE_CLIENT = {
   client_id: env.GOOGLE_CLIENT_ID,
@@ -295,33 +303,73 @@ export async function finishConnect(owner: string, query: Record<string, string>
 }
 
 export async function disconnect(owner: string, connector: string) {
+  listedTools.delete(`${owner}:${connector}`);
   await db.delete(connections).where(owned(owner, connector));
 }
 
-async function openConnector(
-  owner: string,
-  row: { connector: string; name: string | null; url: string | null; secrets: string },
-) {
+const toolArguments = z.record(z.string(), z.unknown());
+
+type ConnectionRow = {
+  connector: string;
+  name: string | null;
+  url: string | null;
+  secrets: string;
+};
+
+async function openClient(owner: string, row: ConnectionRow, signal: AbortSignal) {
   const server = await serverFrom(row);
   const stored = await unsealed(row.secrets);
   const authProvider = stored.tokens
     ? providerFor(owner, row.connector, server, stored).provider
     : undefined;
-  const signal = AbortSignal.timeout(ANSWER_CONNECT_MS);
-  const client = await createMCPClient({
+  return createMCPClient({
     transport: { type: "http", url: server.url, authProvider },
     initializationOptions: { signal },
   });
-  try {
-    const definitions = await client.listTools({ options: { signal } });
-    const tools = Object.entries(client.toolsFromDefinitions(definitions)).map(
-      ([name, tool]) => [toolName(row.connector, name), tool] as const,
-    );
-    return { client, tools };
-  } catch (err) {
-    await client.close();
-    throw err;
-  }
+}
+
+async function connectorTools(owner: string, row: ConnectionRow) {
+  const key = `${owner}:${row.connector}`;
+  let client: Promise<MCPClient> | undefined;
+  const open = (signal: AbortSignal) => (client ??= openClient(owner, row, signal));
+  const list = async () => {
+    const signal = AbortSignal.timeout(ANSWER_CONNECT_MS);
+    const connected = await open(signal);
+    try {
+      const tools = connected.toolsFromDefinitions(
+        await connected.listTools({ options: { signal } }),
+      );
+      listedTools.set(key, { tools, at: Date.now() });
+      return tools;
+    } catch (err) {
+      await connected.close();
+      throw err;
+    }
+  };
+  const lazy = (name: string, listed: Listed): Listed => ({
+    ...listed,
+    execute: async (args, options) => {
+      const connected = await open(AbortSignal.timeout(CONNECT_TIMEOUT_MS));
+      return connected
+        .callTool({
+          name,
+          arguments: toolArguments.parse(args),
+          options: { signal: options.abortSignal },
+        })
+        .catch((err: Error) => {
+          if (!options.abortSignal?.aborted) listedTools.delete(key);
+          throw err;
+        });
+    },
+  });
+  const cached = listedTools.get(key);
+  const listed = cached && Date.now() - cached.at < TOOLS_FRESH_MS ? cached.tools : await list();
+  return {
+    tools: Object.entries(listed).map(
+      ([name, entry]) => [toolName(row.connector, name), lazy(name, entry)] as const,
+    ),
+    close: async () => void (await client?.then((connected) => connected.close())),
+  };
 }
 
 export async function connectedTools(owner: string, only?: readonly string[] | null) {
@@ -341,7 +389,7 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
   const allowed = only ? rows.filter((row) => only.includes(row.connector)) : rows;
   const opened = await Promise.all(
     allowed.map((row) =>
-      openConnector(owner, row).catch((err: Error) => {
+      connectorTools(owner, row).catch((err: Error) => {
         console.warn(`${row.connector} tools skipped: ${reasonOf(err)}`);
         return undefined;
       }),
@@ -350,6 +398,6 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
   const ready = opened.filter((connector) => connector !== undefined);
   return {
     tools: Object.fromEntries(ready.flatMap(({ tools }) => tools)),
-    close: () => Promise.allSettled(ready.map(({ client }) => client.close())),
+    close: () => Promise.allSettled(ready.map(({ close }) => close())),
   };
 }
