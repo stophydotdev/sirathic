@@ -66,6 +66,7 @@ const fakeDb = drizzle(
 mock.module("@sirathic/db", () => ({ db: fakeDb }));
 const { memoryTools } = await import("../apps/server/src/account/memory");
 const { botTools } = await import("../apps/server/src/bots/tools");
+const { islamicDates } = await import("../apps/server/src/bots/islamicDates");
 
 const call = { toolCallId: "call", messages: [], context: {} };
 
@@ -271,4 +272,24 @@ test.each([
   const { react_to_message } = botTools({ id: botId, owner: "user-a" });
   const checked = await asSchema(react_to_message.inputSchema).validate?.({ emoji });
   expect(checked?.success).toBe(accepted);
+});
+
+const dates = (input: Parameters<NonNullable<typeof islamicDates.execute>>[0]) =>
+  islamicDates.execute?.(input, call);
+
+test("islamic_dates converts both ways with the Umm al-Qura calendar and marks upcoming dates expected", async () => {
+  expect(await dates({ gregorian: "2026-02-18" })).toMatchObject({ hijri: "1 Ramadan 1447" });
+  expect(await dates({ hijri: { year: 1447, month: 12, day: 10 } })).toMatchObject({
+    gregorian: "2026-05-27",
+  });
+  expect(await dates({ gregorian: "2026-10-27" })).toMatchObject({
+    upcoming: expect.arrayContaining([
+      expect.objectContaining({
+        name: "Ramadan begins",
+        hijri: "1 Ramadan 1448",
+        gregorian: "2027-02-08",
+        status: "expected, pending local moon sighting",
+      }),
+    ]),
+  });
 });

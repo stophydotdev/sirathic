@@ -29,6 +29,7 @@ import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
+import { islamicDates } from "../bots/islamicDates";
 import { citations, withBareCitations } from "./citations";
 import { CODE_RULES, codeTools } from "./codeTools";
 import { CONFIRM_RULES, needsApproval, writingTools } from "./confirm";
@@ -270,6 +271,7 @@ export function chatResponse({
         ...tools,
         ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
         ...(inBot && botTools(inBot)),
+        ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
         ...(owner !== undefined && !unattended && pluginTools(owner)),
         ...memoryTools(
