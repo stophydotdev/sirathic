@@ -51,6 +51,14 @@ export default {
   Submit: "ส่ง",
   "Search only": "ค้นหาอย่างเดียว",
   "Add files or tools": "เพิ่มไฟล์หรือเครื่องมือ",
+  Working: "กำลังทำงาน",
+  "Create new bot": "สร้างบอตใหม่",
+  "Create routine": "สร้างกิจวัตร",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "กิจวัตรคืองานที่ทำซ้ำตามกำหนดเวลาซึ่งบอตนี้ทำให้",
+  "Delete “{name}”?": "ลบ “{name}” ไหม",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "การดำเนินการนี้จะลบบอตและประวัติแชทของบอตอย่างถาวร และย้อนกลับไม่ได้",
   "Upload files or images": "อัปโหลดไฟล์หรือรูปภาพ",
   Attachment: "ไฟล์แนบ",
   Chat: "แชท",

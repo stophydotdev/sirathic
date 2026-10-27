@@ -53,6 +53,14 @@ export default {
   Submit: "Юбориш",
   "Search only": "Фақат қидириш",
   "Add files or tools": "Файл ёки асбоб қўшиш",
+  Working: "Ишламоқда",
+  "Create new bot": "Янги бот яратиш",
+  "Create routine": "Одат яратиш",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Одатлар: бу бот жадвал бўйича бажарадиган такрорланувчи вазифалардир.",
+  "Delete “{name}”?": "“{name}” ўчирилсинми?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Бу бот ва унинг суҳбат тарихини бутунлай ўчиради. Буни қайтариб бўлмайди.",
   "Upload files or images": "Файл ёки расм юклаш",
   Attachment: "Илова",
   Chat: "Суҳбат",

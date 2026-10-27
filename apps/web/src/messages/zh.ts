@@ -51,6 +51,14 @@ export default {
   Submit: "发送",
   "Search only": "仅搜索",
   "Add files or tools": "添加文件或工具",
+  Working: "工作中",
+  "Create new bot": "创建新机器人",
+  "Create routine": "创建例行任务",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "例行任务是这个机器人按计划重复执行的任务。",
+  "Delete “{name}”?": "删除“{name}”？",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "这将永久删除该机器人及其聊天记录，且无法撤销。",
   "Upload files or images": "上传文件或图片",
   Attachment: "附件",
   Chat: "对话",

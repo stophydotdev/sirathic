@@ -51,6 +51,14 @@ export default {
   Submit: "ផ្ញើ",
   "Search only": "ស្វែងរកតែប៉ុណ្ណោះ",
   "Add files or tools": "បន្ថែមឯកសារ ឬឧបករណ៍",
+  Working: "កំពុងធ្វើការ",
+  "Create new bot": "បង្កើតបូតថ្មី",
+  "Create routine": "បង្កើតទម្លាប់",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "ទម្លាប់គឺជាកិច្ចការដដែលៗ ដែលបូតនេះដំណើរការតាមកាលវិភាគ។",
+  "Delete “{name}”?": "លុប “{name}” ឬ?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "សកម្មភាពនេះលុបបូត និងប្រវត្តិជជែករបស់វាជាអចិន្ត្រៃយ៍។ មិនអាចត្រឡប់វិញបានទេ។",
   "Upload files or images": "ផ្ទុកឯកសារ ឬរូបភាពឡើង",
   Attachment: "ឯកសារភ្ជាប់",
   Chat: "ការជជែក",

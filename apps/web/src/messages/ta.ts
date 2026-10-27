@@ -53,6 +53,14 @@ export default {
   Submit: "அனுப்பு",
   "Search only": "தேடல் மட்டும்",
   "Add files or tools": "கோப்புகள் அல்லது கருவிகளைச் சேர்",
+  Working: "வேலை செய்கிறது",
+  "Create new bot": "புதிய பாட்டை உருவாக்கு",
+  "Create routine": "வழக்கத்தை உருவாக்கு",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "வழக்கங்கள் என்பவை இந்த பாட் அட்டவணைப்படி திரும்பத் திரும்ப செய்யும் பணிகள்.",
+  "Delete “{name}”?": "“{name}” ஐ நீக்கவா?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "இது பாட்டையும் அதன் உரையாடல் வரலாற்றையும் நிரந்தரமாக நீக்கும். இதைத் திரும்பப் பெற முடியாது.",
   "Upload files or images": "கோப்புகள் அல்லது படங்களைப் பதிவேற்று",
   Attachment: "இணைப்புக் கோப்பு",
   Chat: "உரையாடல்",

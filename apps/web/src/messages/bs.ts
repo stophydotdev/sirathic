@@ -52,6 +52,14 @@ export default {
   Submit: "Pošalji",
   "Search only": "Samo pretraga",
   "Add files or tools": "Dodaj datoteke ili alate",
+  Working: "Radi",
+  "Create new bot": "Kreiraj novog bota",
+  "Create routine": "Kreiraj rutinu",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Rutine su ponavljajući zadaci koje ovaj bot izvršava po rasporedu.",
+  "Delete “{name}”?": "Izbrisati “{name}”?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Ovo trajno briše bota i historiju njegovog razgovora. Ovo se ne može poništiti.",
   "Upload files or images": "Otpremi datoteke ili slike",
   Attachment: "Prilog",
   Chat: "Razgovor",

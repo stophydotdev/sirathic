@@ -53,6 +53,14 @@ export default {
   Submit: "Ipadala",
   "Search only": "Maghanap lang",
   "Add files or tools": "Magdagdag ng file o tool",
+  Working: "Gumagana",
+  "Create new bot": "Gumawa ng bagong bot",
+  "Create routine": "Gumawa ng routine",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Ang mga routine ay paulit-ulit na gawain na pinatatakbo ng bot na ito ayon sa iskedyul.",
+  "Delete “{name}”?": "Burahin ang “{name}”?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Permanenteng buburahin nito ang bot at ang kasaysayan ng chat nito. Hindi na ito maibabalik.",
   "Upload files or images": "Mag-upload ng file o larawan",
   Attachment: "Kalakip",
   Chat: "Chat",

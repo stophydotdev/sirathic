@@ -51,6 +51,14 @@ export default {
   Submit: "పంపండి",
   "Search only": "వెతకడం మాత్రమే",
   "Add files or tools": "ఫైళ్ళు లేదా టూల్స్ జోడించండి",
+  Working: "పని చేస్తోంది",
+  "Create new bot": "కొత్త బాట్‌ను సృష్టించండి",
+  "Create routine": "రొటీన్‌ను సృష్టించండి",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "రొటీన్లు అంటే ఈ బాట్ షెడ్యూల్ ప్రకారం పునరావృతంగా చేసే పనులు.",
+  "Delete “{name}”?": "“{name}”ను తొలగించాలా?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "ఇది బాట్‌ను, దాని చాట్ చరిత్రను శాశ్వతంగా తొలగిస్తుంది. దీన్ని వెనక్కి తీసుకోలేరు.",
   "Upload files or images": "ఫైళ్ళు లేదా చిత్రాలు అప్‌లోడ్ చేయండి",
   Attachment: "జోడింపు",
   Chat: "చాట్",

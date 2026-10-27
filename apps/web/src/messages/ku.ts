@@ -52,6 +52,14 @@ export default {
   Submit: "ناردن",
   "Search only": "تەنها گەڕان",
   "Add files or tools": "زیادکردنی فایل یان ئامراز",
+  Working: "کار دەکات",
+  "Create new bot": "دروستکردنی بۆتی نوێ",
+  "Create routine": "دروستکردنی ڕۆتین",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "ڕۆتینەکان ئەرکی دووبارەبوونەوەن کە ئەم بۆتە بەپێی خشتە جێبەجێیان دەکات.",
+  "Delete “{name}”?": "“{name}” بسڕدرێتەوە؟",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "ئەمە بۆتەکە و مێژووی گفتوگۆکانی بۆ هەمیشە دەسڕێتەوە. ناتوانرێت پاشگەز بکرێتەوە.",
   "Upload files or images": "بارکردنی فایل یان وێنە",
   Attachment: "هاوپێچ",
   Chat: "گفتوگۆ",

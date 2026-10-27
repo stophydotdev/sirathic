@@ -52,6 +52,14 @@ export default {
   Submit: "Neldu",
   "Search only": "Yiylo tan",
   "Add files or tools": "Ɓeydu fiilaaji walla kuutorɗe",
+  Working: "Ina golla",
+  "Create new bot": "Waɗ bot keso",
+  "Create routine": "Waɗ golle ñalnde kala",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Golle ñalnde kala ko golle ndeenataa bot ɗo ɗum waɗata dow waajtaare.",
+  "Delete “{name}”?": "Momtu “{name}”?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Ɗum momtan bot ɗon e taariha ndaarooji maako haa abada. Ɗum waawataa foti.",
   "Upload files or images": "Yollu fiilaaji walla nate",
   Attachment: "Ko sakkitii",
   Chat: "Yeewtere",

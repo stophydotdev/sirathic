@@ -53,6 +53,14 @@ export default {
   Submit: "Жөнөтүү",
   "Search only": "Издөө гана",
   "Add files or tools": "Файл же курал кошуу",
+  Working: "Иштеп жатат",
+  "Create new bot": "Жаңы бот түзүү",
+  "Create routine": "Күнүмдүк иш түзүү",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Күнүмдүк иштер: бул бот график боюнча аткарган кайталануучу тапшырмалар.",
+  "Delete “{name}”?": "“{name}” өчүрүлсүнбү?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Бул ботту жана анын чат тарыхын биротоло өчүрөт. Муну кайтарууга болбойт.",
   "Upload files or images": "Файл же сүрөт жүктөө",
   Attachment: "Тиркеме",
   Chat: "Маек",

@@ -52,6 +52,14 @@ export default {
   Submit: "Kirim",
   "Search only": "Hanya cari",
   "Add files or tools": "Tambah berkas atau alat",
+  Working: "Sedang bekerja",
+  "Create new bot": "Buat bot baru",
+  "Create routine": "Buat rutinitas",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Rutinitas adalah tugas berulang yang dijalankan bot ini sesuai jadwal.",
+  "Delete “{name}”?": "Hapus “{name}”?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Ini menghapus bot dan riwayat obrolannya secara permanen. Tindakan ini tidak dapat dibatalkan.",
   "Upload files or images": "Unggah berkas atau gambar",
   Attachment: "Lampiran",
   Chat: "Obrolan",

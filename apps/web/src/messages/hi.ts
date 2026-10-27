@@ -52,6 +52,14 @@ export default {
   Submit: "भेजें",
   "Search only": "सिर्फ़ खोजें",
   "Add files or tools": "फ़ाइलें या टूल जोड़ें",
+  Working: "काम कर रहा है",
+  "Create new bot": "नया बॉट बनाएँ",
+  "Create routine": "रूटीन बनाएँ",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "रूटीन दोहराए जाने वाले कार्य हैं, जिन्हें यह बॉट तय समय-सारणी पर चलाता है।",
+  "Delete “{name}”?": "“{name}” हटाएँ?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "इससे बॉट और उसका चैट इतिहास हमेशा के लिए हट जाएगा। इसे वापस नहीं किया जा सकता।",
   "Upload files or images": "फ़ाइलें या तस्वीरें अपलोड करें",
   Attachment: "अटैचमेंट",
   Chat: "चैट",

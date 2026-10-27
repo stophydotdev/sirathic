@@ -52,6 +52,14 @@ export default {
   Submit: "لېږل",
   "Search only": "یوازې لټون",
   "Add files or tools": "فایل یا اوزار زیات کړئ",
+  Working: "کار کوي",
+  "Create new bot": "نوی بوټ جوړ کړه",
+  "Create routine": "ورځنی کار جوړ کړه",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "ورځني کارونه تکراري کارونه دي چې دا بوټ يې د مهال ویش له مخې ترسره کوي.",
+  "Delete “{name}”?": "“{name}” ړنګ کړم؟",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "دا بوټ او د هغه د خبرو اترو تاریخ د تل لپاره ړنګوي. دا بیرته نشي کېدای.",
   "Upload files or images": "فایل یا انځور پورته کړئ",
   Attachment: "ضمیمه",
   Chat: "خبرې اترې",

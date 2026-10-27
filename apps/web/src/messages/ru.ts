@@ -52,6 +52,14 @@ export default {
   Submit: "Отправить",
   "Search only": "Только поиск",
   "Add files or tools": "Добавить файлы или инструменты",
+  Working: "Работает",
+  "Create new bot": "Создать нового бота",
+  "Create routine": "Создать рутину",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Рутины - это повторяющиеся задачи, которые бот выполняет по расписанию.",
+  "Delete “{name}”?": "Удалить «{name}»?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Бот и история его чата будут удалены навсегда. Это нельзя отменить.",
   "Upload files or images": "Загрузить файлы или изображения",
   Attachment: "Вложение",
   Chat: "Чат",

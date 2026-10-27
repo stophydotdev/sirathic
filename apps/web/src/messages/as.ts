@@ -52,6 +52,14 @@ export default {
   Submit: "পঠাওক",
   "Search only": "কেৱল বিচাৰক",
   "Add files or tools": "ফাইল বা টুল যোগ কৰক",
+  Working: "কাম কৰি আছে",
+  "Create new bot": "নতুন বট সৃষ্টি কৰক",
+  "Create routine": "ৰুটিন সৃষ্টি কৰক",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "ৰুটিন হৈছে এই বটে এটা সময়সূচী অনুসৰি চলোৱা পুনৰাবৃত্ত কাম।",
+  "Delete “{name}”?": "“{name}” মচিবনে?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "এইটোৱে বটটো আৰু ইয়াৰ চেট ইতিহাস স্থায়ীভাৱে মচি পেলাব। এইটো আৰু ঘূৰাই আনিব নোৱাৰি।",
   "Upload files or images": "ফাইল বা ছবি আপল'ড কৰক",
   Attachment: "সংলগ্নক",
   Chat: "চেট",

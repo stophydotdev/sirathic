@@ -52,6 +52,14 @@ export default {
   Submit: "යවන්න",
   "Search only": "සෙවීම පමණි",
   "Add files or tools": "ගොනු හෝ මෙවලම් එක් කරන්න",
+  Working: "වැඩ කරමින්",
+  "Create new bot": "නව බොට් සාදන්න",
+  "Create routine": "චර්යාවක් සාදන්න",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "චර්යා යනු මෙම බොට් කාලසටහනකට අනුව ක්‍රියාත්මක කරන පුනරාවර්තන කාර්යයන් ය.",
+  "Delete “{name}”?": "“{name}” මකන්නද?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "මෙය බොට් සහ එහි කතාබස් ඉතිහාසය ස්ථිරවම මකයි. මෙය ආපසු හැරවිය නොහැක.",
   "Upload files or images": "ගොනු හෝ රූප උඩුගත කරන්න",
   Attachment: "ඇමුණුම",
   Chat: "කතාබස",

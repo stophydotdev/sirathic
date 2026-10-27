@@ -53,6 +53,14 @@ export default {
   Submit: "يوللاش",
   "Search only": "پەقەت ئىزدەش",
   "Add files or tools": "ھۆججەت ياكى قورال قوشۇش",
+  Working: "ئىشلەۋاتىدۇ",
+  "Create new bot": "يېڭى بوت قۇرۇش",
+  "Create routine": "ئادەت قۇرۇش",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "ئادەتلەر بۇ بوت جەدۋەل بويىچە قايتا-قايتا ئىجرا قىلىدىغان ۋەزىپىلەردۇر.",
+  "Delete “{name}”?": "“{name}” ئۆچۈرۈلسۇنمۇ؟",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "بۇ بوتنى ۋە ئۇنىڭ سۆھبەت تارىخىنى مەڭگۈلۈك ئۆچۈرىدۇ. بۇنى ئەسلىگە كەلتۈرگىلى بولمايدۇ.",
   "Upload files or images": "ھۆججەت ياكى رەسىم يۈكلەش",
   Attachment: "قوشۇمچە",
   Chat: "سۆھبەت",

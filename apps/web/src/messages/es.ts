@@ -52,6 +52,14 @@ export default {
   Submit: "Enviar",
   "Search only": "Solo buscar",
   "Add files or tools": "Añadir archivos o herramientas",
+  Working: "Trabajando",
+  "Create new bot": "Crear nuevo bot",
+  "Create routine": "Crear rutina",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Las rutinas son tareas recurrentes que este bot ejecuta según un horario.",
+  "Delete “{name}”?": "¿Eliminar “{name}”?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Esto elimina de forma permanente el bot y su historial de chat. No se puede deshacer.",
   "Upload files or images": "Subir archivos o imágenes",
   Attachment: "Adjunto",
   Chat: "Chat",

@@ -52,6 +52,14 @@ export default {
   Submit: "إرسال",
   "Search only": "بحث فقط",
   "Add files or tools": "إضافة ملفات أو أدوات",
+  Working: "يعمل",
+  "Create new bot": "إنشاء بوت جديد",
+  "Create routine": "إنشاء روتين",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "الروتينات مهام متكررة ينفذها هذا البوت وفق جدول زمني.",
+  "Delete “{name}”?": "حذف “{name}”؟",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "سيؤدي هذا إلى حذف البوت وسجل محادثاته نهائيًا. لا يمكن التراجع عن ذلك.",
   "Upload files or images": "رفع ملفات أو صور",
   Attachment: "مرفق",
   Chat: "محادثة",

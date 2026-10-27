@@ -53,6 +53,14 @@ export default {
   Submit: "Göndər",
   "Search only": "Yalnız axtar",
   "Add files or tools": "Fayl və ya alət əlavə et",
+  Working: "İşləyir",
+  "Create new bot": "Yeni bot yarat",
+  "Create routine": "Rutin yarat",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Rutinlər bu botun cədvəl üzrə yerinə yetirdiyi təkrarlanan tapşırıqlardır.",
+  "Delete “{name}”?": "“{name}” silinsin?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Bu, botu və söhbət tarixçəsini həmişəlik silir. Bunu geri qaytarmaq olmur.",
   "Upload files or images": "Fayl və ya şəkil yüklə",
   Attachment: "Əlavə",
   Chat: "Söhbət",

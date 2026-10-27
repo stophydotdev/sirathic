@@ -52,6 +52,14 @@ export default {
   Submit: "ارسال",
   "Search only": "فقط جستجو",
   "Add files or tools": "افزودن فایل یا ابزار",
+  Working: "در حال کار",
+  "Create new bot": "ساخت بات جدید",
+  "Create routine": "ساخت روتین",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "روتین‌ها کارهای تکرارشونده‌ای هستند که این بات طبق زمان‌بندی انجام می‌دهد.",
+  "Delete “{name}”?": "“{name}” حذف شود؟",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "این کار بات و تاریخچهٔ گفتگوی آن را برای همیشه حذف می‌کند. قابل بازگشت نیست.",
   "Upload files or images": "بارگذاری فایل یا تصویر",
   Attachment: "پیوست",
   Chat: "گفتگو",

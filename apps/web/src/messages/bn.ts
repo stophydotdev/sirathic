@@ -52,6 +52,14 @@ export default {
   Submit: "পাঠান",
   "Search only": "শুধু খুঁজুন",
   "Add files or tools": "ফাইল বা টুল যোগ করুন",
+  Working: "কাজ করছে",
+  "Create new bot": "নতুন বট তৈরি করুন",
+  "Create routine": "রুটিন তৈরি করুন",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "রুটিন হলো পুনরাবৃত্ত কাজ, যা এই বট একটি সময়সূচি অনুযায়ী চালায়।",
+  "Delete “{name}”?": "“{name}” মুছবেন?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "এটি বটটি এবং এর চ্যাটের ইতিহাস স্থায়ীভাবে মুছে ফেলবে। এটি আর ফেরানো যাবে না।",
   "Upload files or images": "ফাইল বা ছবি আপলোড করুন",
   Attachment: "সংযুক্তি",
   Chat: "চ্যাট",

@@ -52,6 +52,14 @@ export default {
   Submit: "Gửi",
   "Search only": "Chỉ tìm kiếm",
   "Add files or tools": "Thêm tệp hoặc công cụ",
+  Working: "Đang làm việc",
+  "Create new bot": "Tạo bot mới",
+  "Create routine": "Tạo thói quen",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "Thói quen là các tác vụ lặp lại mà bot này chạy theo lịch.",
+  "Delete “{name}”?": "Xóa “{name}”?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "Thao tác này xóa vĩnh viễn bot và lịch sử trò chuyện của bot. Không thể hoàn tác.",
   "Upload files or images": "Tải lên tệp hoặc hình ảnh",
   Attachment: "Tệp đính kèm",
   Chat: "Cuộc trò chuyện",

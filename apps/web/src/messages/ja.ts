@@ -52,6 +52,14 @@ export default {
   Submit: "送信",
   "Search only": "検索のみ",
   "Add files or tools": "ファイルやツールを追加",
+  Working: "作業中",
+  "Create new bot": "新しいボットを作成",
+  "Create routine": "ルーティンを作成",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "ルーティンは、このボットがスケジュールに沿って実行する定期的なタスクです。",
+  "Delete “{name}”?": "“{name}”を削除しますか？",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "ボットとそのチャット履歴が完全に削除されます。この操作は元に戻せません。",
   "Upload files or images": "ファイルや画像をアップロード",
   Attachment: "添付ファイル",
   Chat: "チャット",

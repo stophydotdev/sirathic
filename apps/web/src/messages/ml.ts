@@ -52,6 +52,14 @@ export default {
   Submit: "അയയ്ക്കുക",
   "Search only": "തിരയൽ മാത്രം",
   "Add files or tools": "ഫയലുകളോ ടൂളുകളോ ചേർക്കുക",
+  Working: "പ്രവർത്തിക്കുന്നു",
+  "Create new bot": "പുതിയ ബോട്ട് സൃഷ്ടിക്കുക",
+  "Create routine": "ദിനചര്യ സൃഷ്ടിക്കുക",
+  "Routines are recurring tasks this bot runs on a schedule.":
+    "ഈ ബോട്ട് ഒരു ഷെഡ്യൂൾ അനുസരിച്ച് ആവർത്തിച്ച് ചെയ്യുന്ന ജോലികളാണ് ദിനചര്യകൾ.",
+  "Delete “{name}”?": "“{name}” ഇല്ലാതാക്കണോ?",
+  "This permanently deletes the bot and its chat history. This can't be undone.":
+    "ഇത് ബോട്ടിനെയും അതിന്റെ ചാറ്റ് ചരിത്രത്തെയും എന്നെന്നേക്കുമായി ഇല്ലാതാക്കും. ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.",
   "Upload files or images": "ഫയലുകളോ ചിത്രങ്ങളോ അപ്‌ലോഡ് ചെയ്യുക",
   Attachment: "അറ്റാച്ച്‌മെന്റ്",
   Chat: "ചാറ്റ്",
