@@ -7,7 +7,7 @@ import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
 import { ExportMenu } from "@/components/exportChat";
 import { Favicon, FaviconStack } from "@/components/favicon";
-import { siteName, turnsOf } from "@/components/sources";
+import { groupsOf, KIND_NAMES, siteName, turnsOf } from "@/components/sources";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
 import { SirathicIcon } from "@/components/makerIcon";
@@ -462,40 +462,55 @@ const SourcesPane: FC = () => {
       </button>
       {open && (
         <div className="flex max-h-[min(28rem,calc(100dvh-12rem))] flex-col gap-1 overflow-y-auto px-2 pb-2">
-          {turns.map((turn) => (
-            <section key={turn.id} className="flex flex-col gap-1">
-              {turns.length > 1 && (
-                <p className="text-muted-foreground truncate px-2 pt-2 text-xs">
-                  Results for “{turn.question}”
+          {turns.map((turn) => {
+            const groups = groupsOf(turn.sources);
+            return (
+              <section key={turn.id} className="flex flex-col gap-1">
+                {turns.length > 1 && (
+                  <p className="text-muted-foreground truncate px-2 pt-2 text-xs">
+                    Results for “{turn.question}”
+                  </p>
+                )}
+                <p className="text-muted-foreground px-2 pt-1 text-xs tabular-nums">
+                  {groups
+                    .map((group) => `${t(KIND_NAMES[group.kind])} ${group.sources.length}`)
+                    .join(" · ")}
                 </p>
-              )}
-              {turn.sources.map((source) => (
-                <a
-                  key={source.url}
-                  href={source.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:bg-muted flex gap-2 rounded-xl p-2 text-sm"
-                >
-                  <Favicon url={source.url} size={16} className="mt-0.5" />
-                  <span className="flex min-w-0 flex-col">
-                    <span className="text-muted-foreground line-clamp-1 text-xs">
-                      {siteName(source.url)}
-                    </span>
-                    <span className="line-clamp-2">{source.title}</span>
-                    {source.snippet && (
-                      <span dir="auto" className="text-muted-foreground line-clamp-4">
-                        {source.snippet}
-                      </span>
-                    )}
-                    {source.credit && (
-                      <span className="text-muted-foreground text-xs">{source.credit}</span>
-                    )}
-                  </span>
-                </a>
-              ))}
-            </section>
-          ))}
+                {groups.map((group) => (
+                  <div key={group.kind} className="flex flex-col gap-1">
+                    <p className="text-foreground px-2 pt-3 text-xs font-medium">
+                      {t(KIND_NAMES[group.kind])}
+                    </p>
+                    {group.sources.map((source) => (
+                      <a
+                        key={source.url}
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:bg-muted flex gap-2 rounded-xl p-2 text-sm"
+                      >
+                        <Favicon url={source.url} size={16} className="mt-0.5" />
+                        <span className="flex min-w-0 flex-col">
+                          <span className="text-muted-foreground line-clamp-1 text-xs">
+                            {siteName(source.url)}
+                          </span>
+                          <span className="line-clamp-2">{source.title}</span>
+                          {source.snippet && (
+                            <span dir="auto" className="text-muted-foreground line-clamp-4">
+                              {source.snippet}
+                            </span>
+                          )}
+                          {source.credit && (
+                            <span className="text-muted-foreground text-xs">{source.credit}</span>
+                          )}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </section>
+            );
+          })}
         </div>
       )}
     </div>

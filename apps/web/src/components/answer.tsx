@@ -9,7 +9,14 @@ import { useProjects } from "@/components/projects";
 import { AskCard } from "@/components/questionCard";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
-import { SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
+import {
+  groupsOf,
+  KIND_NAMES,
+  SourcesContext,
+  siteName,
+  sourcesOf,
+  turnsOf,
+} from "@/components/sources";
 import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
 import type { Source } from "@sirathic/server/sources";
@@ -83,6 +90,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const [startedAt] = useState(() => startOf(messageId));
   const { feedback, rate, copy } = useAnswer();
   const [reporting, setReporting] = useState(false);
+  const t = useT();
 
   return (
     <div className="pb-4">
@@ -90,7 +98,12 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         status={state}
         onCopy={copy}
         onRetry={() => aui.message().reload()}
-        sources={sources.map(citationOf)}
+        sources={groupsOf(sources).flatMap((group) =>
+          group.sources.map((source) => ({
+            ...citationOf(source),
+            group: t(KIND_NAMES[group.kind]),
+          })),
+        )}
         feedback={feedback}
         onFeedbackChange={(value) => (value === "down" ? setReporting(true) : rate(value))}
         actions={

@@ -14,6 +14,7 @@ export interface CitationItem {
   domain?: ReactNode;
   url?: string;
   icon?: ReactNode;
+  group?: string;
 }
 
 export interface CitationListProps {
@@ -160,6 +161,9 @@ export function CitationList({ citations, idPrefix, className }: CitationListPro
                   }
             }
           >
+            {citation.group && citation.group !== citations[index - 1]?.group && (
+              <p className="text-foreground px-2 pt-3 pb-1 text-xs font-medium">{citation.group}</p>
+            )}
             <CitationRow citation={citation} index={index + 1} idPrefix={resolvedPrefix} />
           </motion.div>
         ))}
