@@ -16,6 +16,7 @@ export const writingTools = (tools: ToolSet) =>
 
 const CONFIRMED_ACTIONS = new Map<string, readonly string[]>([
   ["update_routine", ["create", "edit", "delete"]],
+  ["update_skill", ["delete"]],
 ]);
 
 const actionOf = z.object({ action: z.string() });

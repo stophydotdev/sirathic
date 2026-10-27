@@ -56,8 +56,8 @@ export async function removeSkill(owner: string, id: string) {
   await db.delete(skills).where(and(eq(skills.id, id), eq(skills.owner, owner)));
 }
 
-export async function skillRules(owner: string, text: string) {
-  const called = mentionedSkills(text, await listSkills(owner));
+export function skillRules(all: readonly { name: string; instructions: string }[], text: string) {
+  const called = mentionedSkills(text, all);
   if (called.length === 0) return "";
   const sections = called.map((skill) => `### ${skill.name}\n${skill.instructions}`);
   return `\n\nThe user called these skills with @. Follow them for this answer.\n\n${sections.join("\n\n")}`;

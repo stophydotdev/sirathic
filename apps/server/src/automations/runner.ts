@@ -160,7 +160,7 @@ async function answerPrompt(
       }),
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
     projectRules: Promise.resolve(projectRules(project, false)),
-    skillRules: Promise.resolve(""),
+    userSkills: Promise.resolve([]),
     persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
     options: {
       answer: answerOptions({

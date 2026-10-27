@@ -33,6 +33,8 @@ import { CONFIRM_RULES, needsApproval, writingTools } from "./confirm";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
 import { reasonOf } from "../http";
+import { skillRules } from "../skills/skills";
+import { skillTools } from "../skills/tools";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";
@@ -45,6 +47,7 @@ import {
   LOAD_SKILL,
   type Skill,
   skillIndex,
+  type UserSkill,
   skillsFor,
 } from "./skills/builtIn";
 import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
@@ -142,7 +145,7 @@ export function chatResponse({
   preferences,
   connected,
   projectRules,
-  skillRules,
+  userSkills,
   persona,
   options,
   title,
@@ -166,7 +169,7 @@ export function chatResponse({
   preferences: Promise<Settings>;
   connected: ReturnType<typeof connectedTools>;
   projectRules: Promise<string>;
-  skillRules: Promise<string>;
+  userSkills: Promise<UserSkill[]>;
   persona: Promise<string | undefined>;
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
@@ -235,11 +238,11 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [preferred, connectors, project, mentioned, inBot, who] = await Promise.all([
+      const [preferred, connectors, project, ownSkills, inBot, who] = await Promise.all([
         preferences,
         Promise.race([connected, stopped]),
         projectRules,
-        skillRules,
+        userSkills,
         bot,
         persona,
       ]);
@@ -249,6 +252,8 @@ export function chatResponse({
         texting: texts,
         inBot: inBot !== undefined,
         timezone: automate?.timezone,
+        canWriteSkills: owner !== undefined && !unattended,
+        userSkills: ownSkills,
       });
       const loaded = loadedNames(
         messages.flatMap((message) =>
@@ -273,6 +278,7 @@ export function chatResponse({
         ...tools,
         ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
         ...(inBot && botTools(inBot)),
+        ...(owner !== undefined && !unattended && skillTools(owner)),
         ...memoryTools(
           owner === undefined
             ? undefined
@@ -298,7 +304,10 @@ export function chatResponse({
           (searchable ? SEARCH_OUR_CHAT : "") +
           skillIndex(builtIn) +
           (writes.length > 0 ? CONFIRM_RULES : "") +
-          mentioned,
+          skillRules(
+            ownSkills,
+            asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "",
+          ),
         firstStep:
           first && !inBot
             ? first === "skill" || noorModel(modelName)

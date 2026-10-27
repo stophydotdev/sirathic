@@ -3,7 +3,12 @@ import { expect, test } from "bun:test";
 import { z } from "zod";
 import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
 import { needsApproval, writingTools } from "../apps/server/src/chat/confirm";
-import { loadSkill, skillsFor } from "../apps/server/src/chat/skills/builtIn";
+import {
+  loadSkill,
+  loadedText,
+  skillIndex,
+  skillsFor,
+} from "../apps/server/src/chat/skills/builtIn";
 import {
   answered,
   answerWith,
@@ -118,6 +123,8 @@ const routine = {
   schedule: { kind: "daily", time: "05:00" },
 };
 
+const noSkills = { canWriteSkills: false, userSkills: [] };
+
 const afterLoading = (skill: string): ChatMessage[] => [
   said("1", "user", "remind me every morning"),
   {
@@ -161,6 +168,8 @@ test.each([
   ["update_routine", { action: "edit" }, true],
   ["update_routine", { action: "delete" }, true],
   ["update_routine", { action: "pause" }, false],
+  ["update_skill", { action: "delete" }, true],
+  ["update_skill", { action: "write" }, false],
   ["update_routine", { action: "resume" }, false],
   ["list_routines", {}, false],
   ["slack_send", {}, true],
@@ -179,7 +188,13 @@ test("a plugin tool needs confirmation unless the plugin marks it read-only", ()
 });
 
 test("a loaded skill's text joins the rules and its tools open, while the tool result only says it loaded", async () => {
-  const skills = skillsFor({ mode: "quick", texting: true, inBot: true, timezone: "Asia/Tokyo" });
+  const skills = skillsFor({
+    ...noSkills,
+    mode: "quick",
+    texting: true,
+    inBot: true,
+    timezone: "Asia/Tokyo",
+  });
   const { model, seen } = scriptedModel(["load_skill"], ["study", "routines"]);
   await answerWith(model, {
     tools: {
@@ -214,8 +229,50 @@ test("a loaded skill's text joins the rules and its tools open, while the tool r
 });
 
 test("a skill loaded in an earlier turn stays loaded", async () => {
-  const skills = skillsFor({ mode: "quick", texting: false, inBot: false, timezone: undefined });
+  const skills = skillsFor({
+    ...noSkills,
+    mode: "quick",
+    texting: false,
+    inBot: false,
+    timezone: undefined,
+  });
   const { model, seen } = scriptedModel([]);
   await answerWith(model, { skills, loaded: ["writing"] }).generate({ prompt: "shorter" });
   expect(systemTexts(seen[0])?.at(-1)).toContain("<rewrites>");
+});
+
+test("the user's own skills join the skill index with the first sentence as when, and a built-in name wins", () => {
+  const skills = skillsFor({
+    mode: "quick",
+    texting: true,
+    inBot: false,
+    timezone: undefined,
+    canWriteSkills: true,
+    userSkills: [
+      {
+        name: "Hadith format",
+        instructions: "Use this when the user asks for a hadith. Give the Arabic, then the grade.",
+      },
+      { name: "Skill_Authoring", instructions: "Pretend to be the built-in one." },
+    ],
+  });
+  expect(skillIndex(skills)).toContain(
+    "- Hadith format: Use this when the user asks for a hadith.",
+  );
+  expect(skills.filter(({ name }) => name.toLowerCase() === "skill_authoring")).toHaveLength(1);
+  expect(skills.find(({ name }) => name === "skill_authoring")?.tools).toEqual(["update_skill"]);
+  expect(loadedText(skills, new Set(["Hadith format"]))).toBe(
+    "\n\n## Skill: Hadith format\n\nUse this when the user asks for a hadith. Give the Arabic, then the grade.",
+  );
+});
+
+test("a chat that cannot save skills has no skill_authoring skill", () => {
+  const skills = skillsFor({
+    ...noSkills,
+    mode: "quick",
+    texting: true,
+    inBot: false,
+    timezone: undefined,
+  });
+  expect(skills.map(({ name }) => name)).toEqual([]);
 });

@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { Mode } from "../../shared/messages";
 import research from "./research.md" with { type: "text" };
 import routines from "./routines.md" with { type: "text" };
+import skillAuthoring from "./skillAuthoring.md" with { type: "text" };
 import study from "./study.md" with { type: "text" };
 import writing from "./writing.md" with { type: "text" };
 
@@ -15,15 +16,31 @@ export type Skill = {
   tools?: readonly string[];
 };
 
+export type UserSkill = { name: string; instructions: string };
+
 type Where = {
   mode: Mode;
   texting: boolean;
   inBot: boolean;
   timezone: string | undefined;
+  canWriteSkills: boolean;
+  userSkills: readonly UserSkill[];
 };
 
-export const skillsFor = ({ mode, texting, inBot, timezone }: Where) =>
-  [
+const WHEN_CHARS = 140;
+
+const whenOf = ({ instructions }: UserSkill) =>
+  (instructions.split(/(?<=[.!?])\s/u)[0] ?? instructions).slice(0, WHEN_CHARS);
+
+export const skillsFor = ({
+  mode,
+  texting,
+  inBot,
+  timezone,
+  canWriteSkills,
+  userSkills,
+}: Where): Skill[] => {
+  const builtIn = [
     ...(mode === "research"
       ? [
           {
@@ -62,7 +79,23 @@ export const skillsFor = ({ mode, texting, inBot, timezone }: Where) =>
           },
         ]
       : []),
+    ...(canWriteSkills
+      ? [
+          {
+            name: "skill_authoring",
+            when: "the user asks you to save, rewrite or delete a skill, or you notice a task worth saving for reuse",
+            text: skillAuthoring,
+            tools: ["update_skill"],
+          },
+        ]
+      : []),
   ] satisfies Skill[];
+  const taken = new Set(builtIn.map(({ name }) => name.toLowerCase()));
+  const own = userSkills
+    .filter(({ name }) => !taken.has(name.toLowerCase()))
+    .map((skill) => ({ name: skill.name, when: whenOf(skill), text: skill.instructions }));
+  return [...builtIn, ...own];
+};
 
 export const skillIndex = (skills: readonly Skill[]) =>
   skills.length === 0

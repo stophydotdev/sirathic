@@ -35,7 +35,7 @@ import { createContext } from "./trpc";
 import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
 import { messageSchemas, saveSession, sessionId, titleSession } from "./chat/sessions";
-import { skillRules } from "./skills/skills";
+import { listSkills } from "./skills/skills";
 
 const IDLE_TIMEOUT_SECONDS = 255;
 
@@ -127,6 +127,13 @@ app.post("/api/chat", (c) =>
           inProject?.kind === "bot" && reviewEvery({ user, botId: inProject.id, messages }),
       );
     };
+    const userSkills =
+      owner === undefined
+        ? Promise.resolve([])
+        : listSkills(owner).catch((err: Error) => {
+            console.error(`skills not read: ${reasonOf(err)}`);
+            return [];
+          });
     const saved = save(validated);
     saved.catch((err: Error) => {
       console.error(`session not saved: ${reasonOf(err)}`);
@@ -170,16 +177,7 @@ app.post("/api/chat", (c) =>
       persona: project.then((inProject) =>
         inProject?.kind === "bot" ? botIdentity(inProject) : undefined,
       ),
-      skillRules:
-        owner === undefined
-          ? Promise.resolve("")
-          : skillRules(
-              owner,
-              asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "",
-            ).catch((err: Error) => {
-              console.error(`skills not read: ${reasonOf(err)}`);
-              return "";
-            }),
+      userSkills,
       options: {
         answer: answerOptions({
           effort:

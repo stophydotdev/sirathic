@@ -110,7 +110,7 @@ export const chatTurn = async (
     preferences: Promise.resolve(DEFAULT_SETTINGS),
     connected: Promise.resolve({ tools: {}, close: async () => [] }),
     projectRules: Promise.resolve(""),
-    skillRules: Promise.resolve(""),
+    userSkills: Promise.resolve([]),
     persona: Promise.resolve(undefined),
     title: undefined,
     save: async () => {},

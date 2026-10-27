@@ -1,7 +1,10 @@
 const letterOrDigit = /[\p{L}\p{N}]/u;
 const emailCharacter = /[\p{L}\p{N}._%+-]/u;
 
-export function mentionedSkills<Skill extends { name: string }>(text: string, all: Skill[]) {
+export function mentionedSkills<Skill extends { name: string }>(
+  text: string,
+  all: readonly Skill[],
+) {
   const lower = text.toLowerCase();
   const byLength = all
     .map((skill) => ({ skill, name: skill.name.toLowerCase() }))
