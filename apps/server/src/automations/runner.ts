@@ -164,7 +164,10 @@ async function answerPrompt(
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
     project: Promise.resolve(project),
     userSkills: Promise.resolve([]),
-    turn: { effort: DEFAULT_EFFORT, sessionId },
+    turn: {
+      effort: project?.kind === "bot" ? "high" : DEFAULT_EFFORT[runMode],
+      sessionId,
+    },
     title: undefined,
     save: async (messages) => {
       answered = messages;

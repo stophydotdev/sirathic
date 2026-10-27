@@ -174,7 +174,7 @@ app.post("/api/chat", (c) =>
       ),
       project,
       userSkills,
-      turn: { effort: input.effort ?? DEFAULT_EFFORT, sessionId: input.id },
+      turn: { effort: input.effort ?? DEFAULT_EFFORT[input.mode], sessionId: input.id },
       title,
       save: (messages) => save(messages).then(() => learn(messages)),
       record: (event) => track(event, owner),

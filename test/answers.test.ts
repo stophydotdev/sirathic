@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
+import { DEFAULT_EFFORT, MODES } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { fill } from "../apps/server/src/chat/prompts/build";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
@@ -234,6 +235,19 @@ test("a bot always thinks at high effort, whatever the client asks for", async (
     ["high", "high"],
     ["low", "low"],
   ]);
+});
+
+test("quick thinks at medium and research at high when the user picks nothing", async () => {
+  const efforts = await Promise.all(
+    MODES.map(async (mode) => {
+      const { model, seen } = scriptedModel([]);
+      await answerWith(model, {
+        turn: { effort: DEFAULT_EFFORT[mode], sessionId: "chat" },
+      }).generate({ prompt: "hi" });
+      return seen[0]?.providerOptions?.anthropic?.effort;
+    }),
+  );
+  expect(efforts).toEqual(["medium", "high"]);
 });
 
 test("every step of a turn sends the same tools, and the first one forces search", async () => {
