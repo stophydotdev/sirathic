@@ -1,6 +1,7 @@
 import { expect, mock, test } from "bun:test";
 import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
+import type { z } from "zod";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import {
   nextRun,
@@ -156,7 +157,7 @@ mock.module("../apps/server/src/chat/response", () => ({
 }));
 
 const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
-const { routineTools } = await import("../apps/server/src/automations/tools");
+const { routineCall, routineTools } = await import("../apps/server/src/automations/tools");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;
@@ -464,4 +465,17 @@ test("a bot routine run sends the model only its brief, numbers citations after 
   expect(saved).toHaveLength(66);
   expect(saved.at(-2)?.parts).toEqual([{ type: "text", text: "One new verse each morning" }]);
   expect(saved.at(-1)?.id).toBe("reply-1");
+});
+
+const issues = (call: z.input<typeof routineCall>) =>
+  routineCall.safeParse(call).error?.issues.map((issue) => issue.message);
+
+test("a routine call missing what its action needs is rejected before the user is asked to confirm", () => {
+  const id = "33333333-3333-4333-8333-333333333333";
+  expect(issues({ action: "create", name: "Eid reminder" })).toEqual([
+    "prompt is required to create",
+    "schedule is required to create",
+  ]);
+  expect(issues({ action: "delete", id })).toEqual(["name is required to delete"]);
+  expect(issues({ action: "pause", id })).toBeUndefined();
 });

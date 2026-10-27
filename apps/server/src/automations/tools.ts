@@ -13,12 +13,34 @@ const ACTIONS = ["create", "edit", "pause", "resume", "delete"] as const;
 
 const fields = automationInput.pick({ name: true, prompt: true, schedule: true });
 
-const routineCall = fields.partial().extend({
-  action: z.enum(ACTIONS),
-  id: automationId
-    .optional()
-    .describe("The routine's id from list_routines. Required except for create."),
-});
+const REQUIRED = {
+  create: ["name", "prompt", "schedule"],
+  edit: ["id"],
+  pause: ["id"],
+  resume: ["id"],
+  delete: ["id", "name"],
+} as const satisfies Record<
+  (typeof ACTIONS)[number],
+  readonly (keyof z.input<typeof fields> | "id")[]
+>;
+
+export const routineCall = fields
+  .partial()
+  .extend({
+    action: z.enum(ACTIONS),
+    id: automationId.optional().describe("The routine's id from list_routines."),
+  })
+  .superRefine((call, ctx) => {
+    for (const key of REQUIRED[call.action]) {
+      if (call[key] === undefined) {
+        ctx.addIssue({
+          code: "custom",
+          path: [key],
+          message: `${key} is required to ${call.action}`,
+        });
+      }
+    }
+  });
 
 const needsId = z.object({ id: automationId });
 
@@ -27,7 +49,7 @@ export type AutomationScope = { owner: string; timezone: string; projectId?: str
 export function routineTools({ owner, timezone, projectId }: AutomationScope) {
   return {
     update_routine: tool({
-      description: `Creates, edits, pauses, resumes or deletes one of the user's routines. A routine is a prompt that runs by itself on a schedule and saves each answer as a chat. Load the routines skill before you use it. create needs name, prompt and schedule. edit needs id and only the fields that change. For delete, also pass the routine's name. pause and resume need only id. Times are 24-hour clock times in the user's time zone; weekly days are numbers, 0 is Sunday.`,
+      description: `Creates, edits, pauses, resumes or deletes one of the user's routines. A routine is a prompt that runs by itself on a schedule and saves each answer as a chat. Load the routines skill before you use it. edit takes only the fields that change.`,
       inputSchema: routineCall,
       execute: async (call) => {
         switch (call.action) {
