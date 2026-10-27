@@ -93,7 +93,7 @@ export const BotHeaderMenu: FC = () => {
         </DropdownMenuContent>
       </DropdownMenu>
       {deleting && (
-        <DeleteProjectDialog id={bot.id} name={bot.name} bot onClose={() => setDeleting(false)} />
+        <DeleteProjectDialog id={bot.id} name={bot.name} onClose={() => setDeleting(false)} />
       )}
     </>
   );

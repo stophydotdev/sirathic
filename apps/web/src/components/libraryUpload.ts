@@ -5,12 +5,11 @@ const failed = z.object({ error: z.string() });
 
 const inLibrary = new WeakMap<File, string>();
 
-export async function uploadToLibrary(file: File, projectId?: string) {
+export async function uploadToLibrary(file: File) {
   const known = inLibrary.get(file);
   if (known) return known;
   const form = new FormData();
   form.set("file", file);
-  if (projectId) form.set("projectId", projectId);
   const response = await fetch("/api/files", { method: "POST", body: form });
   const body: unknown = await response.json().catch(() => undefined);
   if (!response.ok) {

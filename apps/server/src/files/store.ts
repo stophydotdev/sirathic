@@ -1,5 +1,5 @@
 import { db } from "@sirathic/db";
-import { files, projects } from "@sirathic/db/schema";
+import { files } from "@sirathic/db/schema";
 import { type AnyColumn, and, count, desc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { StatusError } from "../http";
@@ -17,25 +17,13 @@ const listedColumns = {
   name: files.name,
   mediaType: files.mediaType,
   size: files.size,
-  projectId: files.projectId,
   createdAt: millis(files.createdAt),
 };
 
 const owned = (id: string, by: string) => and(eq(files.id, id), eq(files.owner, by));
 
-export const listFiles = (by: string, projectId?: string) =>
-  db
-    .select(listedColumns)
-    .from(files)
-    .where(and(eq(files.owner, by), projectId ? eq(files.projectId, projectId) : undefined))
-    .orderBy(desc(files.createdAt));
-
-export const projectFileKeys = (by: string, projectId: string) =>
-  db
-    .select({ key: files.key, name: files.name, mediaType: files.mediaType })
-    .from(files)
-    .where(and(eq(files.owner, by), eq(files.projectId, projectId)))
-    .orderBy(files.createdAt);
+export const listFiles = (by: string) =>
+  db.select(listedColumns).from(files).where(eq(files.owner, by)).orderBy(desc(files.createdAt));
 
 export const fileOf = async (id: string, by: string) => {
   const [file] = await db
@@ -51,7 +39,6 @@ export async function saveFile(
     name: string;
     mediaType: string;
     bytes: Uint8Array;
-    projectId: string | undefined;
   },
 ) {
   const [{ total }] = await db.select({ total: count() }).from(files).where(eq(files.owner, by));
@@ -60,13 +47,6 @@ export async function saveFile(
       400,
       `Your library is full. Delete a file first (${MAX_FILES_PER_USER} at most).`,
     );
-  }
-  if (upload.projectId) {
-    const [project] = await db
-      .select({ id: projects.id })
-      .from(projects)
-      .where(and(eq(projects.id, upload.projectId), eq(projects.owner, by)));
-    if (!project) throw new StatusError(404, "no such project");
   }
   const id = crypto.randomUUID();
   const key = `${by}/${id}`;
@@ -81,7 +61,6 @@ export async function saveFile(
         name: upload.name,
         mediaType: upload.mediaType,
         size: upload.bytes.length,
-        projectId: upload.projectId,
       })
       .returning(listedColumns);
     return saved;

@@ -6,7 +6,7 @@ import { useChatOptions } from "@/components/chatOptions";
 import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Mark } from "@/components/logo";
-import { ProjectList } from "@/components/projectNav";
+import { useProjects } from "@/components/projects";
 import { BotList } from "@/components/botNav";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
@@ -162,7 +162,6 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             {!collapsed && <span className="flex-1">{t("Plugins")}</span>}
           </NavLink>
           {!collapsed && <BotList />}
-          {!collapsed && <ProjectList />}
           {!collapsed && <Recents onSeeAll={() => setSearching(true)} />}
         </nav>
         <div className="shrink-0 p-2">
@@ -215,7 +214,6 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <span>{t("Search chats")}</span>
             </button>
             <BotList onDone={() => setMobileOpen(false)} />
-            <ProjectList onDone={() => setMobileOpen(false)} />
             <Recents
               onDone={() => setMobileOpen(false)}
               onSeeAll={() => {
@@ -274,7 +272,11 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
   const sessions = useSessions((s) => s.sessions);
   const t = useT();
   const [open, setOpen] = useState(true);
-  const chats = sessions?.filter((session) => !session.projectId) ?? [];
+  const bots = useProjects((s) => s.bots);
+  const chats =
+    sessions?.filter((session) =>
+      bots ? !bots.some((bot) => bot.id === session.projectId) : !session.projectId,
+    ) ?? [];
   const ordered = [
     ...chats.filter((session) => session.pinned),
     ...chats.filter((session) => !session.pinned),

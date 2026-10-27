@@ -4,35 +4,12 @@ import { fallenOut } from "../apps/server/src/bots/summary";
 import { BOT_HISTORY, recentTurns } from "../apps/server/src/bots/tools";
 import { taughtNote } from "../apps/server/src/bots/notes";
 import { reviewed } from "../apps/server/src/bots/review";
-import {
-  projectRemembered,
-  projectRules,
-  settingsInProject,
-} from "../apps/server/src/projects/rules";
+import { projectRules, settingsInProject } from "../apps/server/src/projects/rules";
 import { projectUpdate } from "../apps/server/src/projects/projects";
 import { afterReview, isMemorized } from "../apps/server/src/bots/study";
 import { containsLink } from "../apps/server/src/shared/projects";
-import { FILE_CHARS, projectFilesRules, TOTAL_CHARS } from "../apps/server/src/projects/files";
 import { sirathicTools } from "../apps/server/src/chat/tools";
 import { rememberedUpdate } from "../apps/server/src/shared/settings";
-
-test("a project with instructions adds them to the chat rules with its name", () => {
-  expect(
-    projectRules({
-      name: "Fiqh notes",
-      instructions: "Answer in two lines.",
-      kind: "project",
-      title: "",
-    }),
-  ).toBe(
-    '\n\nThis chat is in the project "Fiqh notes". Follow its instructions:\nAnswer in two lines.',
-  );
-});
-
-test("a project without instructions, or no project, adds nothing", () => {
-  expect(projectRules({ name: "Empty", instructions: "", kind: "project", title: "" })).toBe("");
-  expect(projectRules(undefined)).toBe("");
-});
 
 test("a bot keeps to its job, and a bot with no job sets one first", () => {
   const coach = {
@@ -43,6 +20,7 @@ test("a bot keeps to its job, and a bot with no job sets one first", () => {
   } as const;
   expect(projectRules(coach)).toContain('You are "Ramadan Coach", fasting guide');
   expect(projectRules(coach)).toContain("Daily tips.");
+  expect(projectRules(undefined)).toBe("");
   const fresh = { name: "New bot", title: "", instructions: "", kind: "bot" } as const;
   expect(projectRules(fresh)).toContain("setBotJob");
   expect(projectRules(fresh, false)).not.toContain("setBotJob");
@@ -69,32 +47,7 @@ test("a routine post keeps the bot's voice without the look-it-up line", () => {
   }
 });
 
-const told = {
-  fact: null,
-  replaces: null,
-  madhab: null,
-  answerLanguage: null,
-  answerLength: null,
-  showArabic: null,
-};
-
-test("a fact goes to the project memory and a preference stays a setting", () => {
-  expect(
-    projectRemembered(["Lives in Kigali"], { ...told, fact: "Has two kids", madhab: "shafii" }),
-  ).toEqual({
-    memory: ["Lives in Kigali", "Has two kids"],
-    preferences: { madhab: "shafii" },
-  });
-});
-
-test("a fact the project already knows is not added twice", () => {
-  expect(projectRemembered(["Has two kids"], { ...told, fact: "Has two kids" })).toEqual({
-    memory: undefined,
-    preferences: {},
-  });
-});
-
-test("a project-only memory replaces the main memory and the default keeps it", () => {
+test("a bot's own memory replaces the main memory and the default keeps it", () => {
   const settings = { madhab: "hanafi", memory: ["Lives in Kigali"] };
   const project = { projectOnlyMemory: true, memory: ["Studies fiqh"] };
   expect(settingsInProject(settings, project)).toEqual({
@@ -105,32 +58,13 @@ test("a project-only memory replaces the main memory and the default keeps it", 
   expect(settingsInProject(settings, undefined)).toEqual(settings);
 });
 
-test("a project name with a link is caught and a plain name is not", () => {
+test("a bot name with a link is caught and a plain name is not", () => {
   expect(
     ["http://localhost", "www.example.com", "visit example.com", "notes.pdf"].map(containsLink),
   ).toEqual([true, true, true, true]);
   expect(
     ["Fiqh notes", "Ramadan 2026", "Q&A, e.g. salah", "Version 1.2"].map(containsLink),
   ).toEqual([false, false, false, false]);
-});
-
-test("each file is wrapped with its name and a long file is cut at its cap", () => {
-  const rules = projectFilesRules([
-    { name: "short.txt", text: "salam" },
-    { name: 'long "one".txt', text: "a".repeat(FILE_CHARS + 5) },
-  ]);
-  expect(rules).toContain('<project_file name="short.txt">\nsalam\n</project_file>');
-  expect(rules).toContain(
-    `<project_file name="long 'one'.txt">\n${"a".repeat(FILE_CHARS)}\n[Cut: the file is longer than this.]\n</project_file>`,
-  );
-});
-
-test("files stop at the total cap and no files add nothing", () => {
-  const full = { name: "big.txt", text: "b".repeat(FILE_CHARS) };
-  const rules = projectFilesRules([full, full, full, { name: "last.txt", text: "x" }]);
-  expect(rules.match(/<project_file /g)?.length).toBe(TOTAL_CHARS / FILE_CHARS);
-  expect(rules).not.toContain("last.txt");
-  expect(projectFilesRules([])).toBe("");
 });
 
 const nothing = {

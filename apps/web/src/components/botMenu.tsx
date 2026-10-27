@@ -151,9 +151,7 @@ export const BotMenu: FC<{
           onClose={close}
         />
       )}
-      {editing === "delete" && (
-        <DeleteProjectDialog id={bot.id} name={bot.name} bot onClose={close} />
-      )}
+      {editing === "delete" && <DeleteProjectDialog id={bot.id} name={bot.name} onClose={close} />}
     </>
   );
 };

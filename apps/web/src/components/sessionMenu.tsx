@@ -2,7 +2,6 @@
 
 import { saveDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
-import { MoveToProject } from "@/components/moveToProject";
 import { findSessions, type Session, useSessions } from "@/components/sessions";
 import {
   DropdownMenu,
@@ -195,7 +194,6 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
             )}
             {session.unread ? t("Mark as read") : t("Mark as unread")}
           </DropdownMenuItem>
-          <MoveToProject session={session} />
           <DropdownMenuItem
             variant="destructive"
             onSelect={() => setDeleting(true)}
@@ -215,8 +213,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
 export const SessionRow: FC<{
   session: Session;
   onOpen?: () => void;
-  nested?: boolean;
-}> = ({ session, onOpen, nested }) => {
+}> = ({ session, onOpen }) => {
   const pathname = usePathname();
   const change = useSessions((s) => s.change);
   const t = useT();
@@ -240,7 +237,6 @@ export const SessionRow: FC<{
               onClick={onOpen}
               className={cn(
                 "text-foreground min-w-0 flex-1 truncate px-2.5 py-2 text-sm group-hover/session:[text-overflow:clip]",
-                nested && "ps-[34px]",
                 session.unread && "font-[560]",
               )}
             >

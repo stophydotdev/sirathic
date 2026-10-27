@@ -26,7 +26,6 @@ mock.module(`${src}/files/store.ts`, () => ({
   saveFile: async () => {
     throw new Error("an oversized upload must never be saved");
   },
-  projectFileKeys: async () => [],
 }));
 
 const { uploadRoutes } = await import(`${src}/files/upload.ts`);

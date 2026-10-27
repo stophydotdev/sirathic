@@ -7,7 +7,6 @@ import { AutomationIdeas } from "@/components/automationIdeas";
 import { type Automation, describeSchedule, formatInstant } from "@/components/automationText";
 import { useLocale, useT } from "@/components/i18n";
 import { ProjectIcon } from "@/components/projectIcon";
-import { useProjects } from "@/components/projects";
 import {
   menuIcon,
   menuItem,
@@ -127,9 +126,6 @@ const AutomationRow: FC<RowActions & { automation: Automation; busy: boolean }> 
 }) => {
   const t = useT();
   const locale = useLocale();
-  const project = useProjects((s) =>
-    s.projects?.find((found) => found.id === automation.projectId),
-  );
   const status = automation.enabled
     ? automation.nextRunAt &&
       t("Next run {time}", { time: formatInstant(locale, automation.nextRunAt) })
@@ -150,12 +146,6 @@ const AutomationRow: FC<RowActions & { automation: Automation; busy: boolean }> 
             {describeSchedule(t, locale, automation.schedule)}
           </span>
           <span className="text-muted-foreground truncate text-xs">{status}</span>
-          {project && (
-            <span className="text-muted-foreground flex min-w-0 items-center gap-1 text-xs">
-              <ProjectIcon icon={project.icon} className="size-3 shrink-0" />
-              <span className="truncate">{project.name}</span>
-            </span>
-          )}
           {automation.lastRunAt && (
             <span className="text-muted-foreground truncate text-xs">
               {t("Last run {time}", { time: formatInstant(locale, automation.lastRunAt) })}

@@ -228,7 +228,14 @@ async function runAutomation({
         ],
       }
     : asked;
-  const outcome = await answerPrompt(owner, [briefed], earlier, sessionId, projectId, runMode).then(
+  const outcome = await answerPrompt(
+    owner,
+    [briefed],
+    earlier,
+    sessionId,
+    bot ? projectId : null,
+    runMode,
+  ).then(
     (answered) => ({ kind: "answered", answered }) as const,
     (err: Error) => {
       console.error(`automation ${id} not answered: ${reasonOf(err)}`);
@@ -270,7 +277,6 @@ async function runAutomation({
       messages,
       unread: true,
       automationId: id,
-      projectId,
     });
   }
   await db.update(automations).set(finished).where(eq(automations.id, id));

@@ -3,7 +3,6 @@ import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
 import { type AnyColumn, and, desc, eq, ilike, lt, sql } from "drizzle-orm";
 import { z } from "zod";
-import { projectId, requireProject } from "../projects/projects";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "../shared/messages";
 import { StatusError } from "../http";
 
@@ -19,11 +18,10 @@ export const sessionUpdate = z
     title: z.string().trim().min(1).max(TITLE_CHARS).optional(),
     pinned: z.boolean().optional(),
     unread: z.boolean().optional(),
-    projectId: projectId.nullable().optional(),
   })
   .refine(
     (update) => Object.values(update).some((value) => value !== undefined),
-    "send a title, pinned, unread or projectId",
+    "send a title, pinned or unread",
   );
 
 export const feedbackInput = z.object({
@@ -152,7 +150,6 @@ export async function updateSession(
   by: string,
   update: z.output<typeof sessionUpdate>,
 ) {
-  if (update.projectId) await requireProject(update.projectId, by);
   const [row] = await db
     .update(chatSessions)
     .set({ ...update, updatedAt: keepUpdatedAt })
@@ -162,7 +159,6 @@ export async function updateSession(
       title: chatSessions.title,
       pinned: chatSessions.pinned,
       unread: chatSessions.unread,
-      projectId: chatSessions.projectId,
     });
   if (!row) throw new StatusError(404, "no such session");
   return row;

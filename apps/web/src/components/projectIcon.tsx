@@ -1,7 +1,6 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import { useProjects } from "@/components/projects";
 import { Modal } from "@/components/sessionMenu";
 import { cn } from "@/lib/utils";
 import { PROJECT_ICONS } from "@sirathic/server/projects";
@@ -18,7 +17,6 @@ import {
   FavouriteIcon,
   FireIcon,
   Folder01Icon,
-  FolderOpenIcon,
   Globe02Icon,
   Home01Icon,
   JusticeScale01Icon,
@@ -73,12 +71,11 @@ const GLYPHS = {
 
 export const ProjectIcon: FC<{
   icon: string | null;
-  open?: boolean;
   blank?: IconSvgElement;
   className?: string;
-}> = ({ icon, open, blank, className }) => {
+}> = ({ icon, blank, className }) => {
   const name = PROJECT_ICONS.find((known) => known === icon);
-  const glyph = name ? GLYPHS[name] : (blank ?? (open ? FolderOpenIcon : Folder01Icon));
+  const glyph = name ? GLYPHS[name] : (blank ?? Folder01Icon);
   return <HugeiconsIcon icon={glyph} className={className} />;
 };
 
@@ -124,20 +121,5 @@ export const IconPicker: FC<{
         ))}
       </div>
     </Modal>
-  );
-};
-
-export const IconPickerDialog: FC<{
-  id: string;
-  icon: string | null;
-  onClose: () => void;
-}> = ({ id, icon, onClose }) => {
-  const change = useProjects((s) => s.change);
-  return (
-    <IconPicker
-      icon={icon}
-      onPick={(chosen) => void change(id, { icon: chosen })}
-      onClose={onClose}
-    />
   );
 };

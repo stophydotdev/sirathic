@@ -15,7 +15,6 @@ import {
 import { RecentFiles } from "@/components/libraryRecent";
 import { popoverHeading, popoverIcon, popoverPanel, popoverRow } from "@/components/popover";
 import { ModelPicker } from "@/components/modelPicker";
-import { ProjectIcon } from "@/components/projectIcon";
 import { useSignIn } from "@/components/signIn";
 import {
   DropdownMenu,
@@ -53,7 +52,6 @@ import {
   Telescope01Icon,
 } from "@hugeicons/core-free-icons";
 import Image from "next/image";
-import Link from "next/link";
 import { type FC, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
 const ROTATING = [
@@ -96,14 +94,7 @@ export const Composer: FC<{
   rotate?: boolean;
   bot?: boolean;
   compact?: boolean;
-  project?: {
-    id: string;
-    name: string;
-    icon: string | null;
-    leaveLabel: string;
-    onLeave: (text: string) => void;
-  };
-}> = ({ placeholder, menuSide, rotate = false, bot = false, compact = false, project }) => {
+}> = ({ placeholder, menuSide, rotate = false, bot = false, compact = false }) => {
   const aui = useAui();
   const text = useAuiState((s) => s.composer.text);
   const running = useAuiState((s) => s.thread.isRunning);
@@ -139,7 +130,7 @@ export const Composer: FC<{
     observer.observe(box);
     return () => observer.disconnect();
   }, []);
-  const row = compact && !wrapped && !hasAttachments && project === undefined;
+  const row = compact && !wrapped && !hasAttachments;
 
   const command = /^\/[^\s]*$/u.test(text) ? text : undefined;
   const composer = () => aui.thread().composer();
@@ -252,30 +243,6 @@ export const Composer: FC<{
             )}
           >
             <AddMenu side={menuSide} modes={!bot} />
-            {project && (
-              <span className="border-foreground/15 flex h-8 min-w-0 items-center gap-1.5 rounded-full border ps-2.5 pe-1 text-sm font-medium">
-                <ProjectIcon
-                  icon={project.icon}
-                  className="text-muted-foreground size-4 shrink-0"
-                />
-                <Link
-                  href={`/project/${project.id}`}
-                  title={t("Open project")}
-                  className="max-w-48 min-w-6 truncate hover:underline"
-                >
-                  {project.name}
-                </Link>
-                <button
-                  type="button"
-                  aria-label={project.leaveLabel}
-                  title={project.leaveLabel}
-                  onClick={() => project.onLeave(text)}
-                  className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-6 items-center justify-center rounded-full"
-                >
-                  <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
-                </button>
-              </span>
-            )}
           </div>
 
           <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>

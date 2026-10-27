@@ -1,10 +1,9 @@
 import type { ChatMessage } from "../shared/messages";
 import { reasonOf } from "../http";
-import { fileIdOf, kindOf } from "../shared/files";
+import { fileIdOf } from "../shared/files";
 import { pdfText } from "../chat/pdf";
 import { storage } from "./storage";
-import { FILE_CHARS, projectFilesRules, TOTAL_CHARS } from "../projects/files";
-import { fileOf, projectFileKeys } from "./store";
+import { fileOf } from "./store";
 
 type Part = ChatMessage["parts"][number];
 
@@ -51,33 +50,3 @@ export const readFiles = (messages: ChatMessage[], owner: string | undefined) =>
       parts: await Promise.all(message.parts.map((part) => readPart(part, owner))),
     })),
   );
-
-type ProjectText = { name: string; text: string };
-
-const readProjectFile = (file: { key: string; name: string; mediaType: string }) =>
-  storage
-    .bytes(file.key)
-    .then((bytes) =>
-      kindOf(file.mediaType) === "pdf" ? pdfText(bytes) : new TextDecoder().decode(bytes),
-    )
-    .then((text): ProjectText => ({ name: file.name, text }))
-    .catch((err: Error) => {
-      console.error(`project file not read: ${reasonOf(err)}`);
-      return undefined;
-    });
-
-const charsRead = (texts: ProjectText[]) =>
-  texts.reduce((sum, { text }) => sum + Math.min(text.length, FILE_CHARS), 0);
-
-export async function readProjectFiles(owner: string, projectId: string) {
-  const found = (await projectFileKeys(owner, projectId)).filter(
-    (file) => kindOf(file.mediaType) !== "image",
-  );
-  const texts = await found.reduce<Promise<ProjectText[]>>(async (reading, file) => {
-    const done = await reading;
-    if (charsRead(done) >= TOTAL_CHARS) return done;
-    const read = await readProjectFile(file);
-    return read ? [...done, read] : done;
-  }, Promise.resolve([]));
-  return projectFilesRules(texts);
-}

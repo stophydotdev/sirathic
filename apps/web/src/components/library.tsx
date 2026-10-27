@@ -6,7 +6,7 @@ import { DeleteFileDialog, PreviewDialog, RenameFileDialog } from "@/components/
 import { FileRow, FileTile, type LibraryFile } from "@/components/libraryItems";
 import { uploadToLibrary } from "@/components/libraryUpload";
 import { useSignIn } from "@/components/signIn";
-import { TabLink, tabClass } from "@/components/tabLink";
+import { TabLink } from "@/components/tabLink";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,7 +34,6 @@ import {
   Search01Icon,
   SlidersHorizontalIcon,
 } from "@hugeicons/core-free-icons";
-import Link from "next/link";
 import { type FC, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
@@ -78,9 +77,6 @@ const Tabs: FC<{ tab: Tab }> = ({ tab }) => {
       <TabLink href="/library?tab=media" active={tab === "media"}>
         {t("Media")}
       </TabLink>
-      <Link href="/project" className={tabClass(false)}>
-        {t("Projects")}
-      </Link>
       <TabLink href="/library?tab=files" active={tab === "files"}>
         {t("Files")}
       </TabLink>

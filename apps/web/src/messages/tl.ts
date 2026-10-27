@@ -346,40 +346,17 @@ export default {
     "I-type ang / para sa mga mode, @ para sa mga plugin at skill",
   "Add a plugin": "Magdagdag ng plugin",
   "Write a skill": "Magsulat ng skill",
-  Projects: "Mga proyekto",
-  "New project": "Bagong proyekto",
-  "Project name": "Pangalan ng proyekto",
   Create: "Gumawa",
-  "Rename project": "Palitan ang pangalan ng proyekto",
-  "Delete project": "Burahin ang proyekto",
-  'Delete the project "{name}"? Its chats stay in your history.':
-    "Burahin ang proyektong “{name}”? Mananatili sa history mo ang mga chat nito.",
-  "Add instructions that apply to every chat in this project":
-    "Magdagdag ng mga tagubilin na ilalapat sa bawat chat sa proyektong ito",
   Chats: "Mga chat",
   "No chats in this project yet": "Wala pang chat sa proyektong ito",
-  "Move to project": "Ilipat sa proyekto",
-  "No projects yet": "Wala pang proyekto",
-  "Remove from project": "Alisin sa proyekto",
   "Used {name} plugin": "Ginamit ang plugin na {name}",
   "Used {name}": "Ginamit ang {name}",
   "1 tool": "1 tool",
   "{count} tools": "{count} tool",
   Automations: "Mga automation",
   "See all": "Tingnan lahat",
-  "All projects": "Lahat ng proyekto",
   "Add project": "Magdagdag ng proyekto",
-  "Create new": "Gumawa ng bago",
-  "Last edited": "Huling na-edit",
   "Date created": "Petsa ng pagkakagawa",
-  View: "Tingnan",
-  "Leave project": "Umalis sa proyekto",
-  "Create project": "Gumawa ng proyekto",
-  "Get started by creating a new project": "Magsimula sa paggawa ng bagong proyekto",
-  "Projects help you set common instructions for conversations.":
-    "Tinutulungan ka ng mga proyekto na magtakda ng karaniwang tagubilin para sa mga usapan.",
-  "{name}'s settings": "Mga setting ng {name}",
-  "New chat in project": "Bagong chat sa proyekto",
   Runs: "Mga takbo",
   Ideas: "Mga ideya",
   "New automation": "Bagong automation",
@@ -475,20 +452,6 @@ export default {
   "Family halaqa": "Halaqah ng pamilya",
   "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
     "Magmungkahi ng paksa para sa halaqah ng aming pamilya, may talata, hadith at mga tanong.",
-  Memory: "Memorya",
-  "Project only": "Proyekto lang",
-  "Chats here use and add to your main memory.":
-    "Ginagamit at dinadagdagan ng mga chat dito ang pangunahin mong memorya.",
-  "Chats here only see what Noor remembers in this project.":
-    "Ang nakikita lang ng mga chat dito ay ang naaalala ni Noor sa proyektong ito.",
-  "Set project instructions": "Itakda ang mga tagubilin ng proyekto",
-  "Provide Noor with instructions for chats in this project.":
-    "Bigyan si Noor ng mga tagubilin para sa mga chat sa proyektong ito.",
-  "Add instructions for Noor in this project…":
-    "Magdagdag ng mga tagubilin para kay Noor sa proyektong ito…",
-  "Add instructions to customize Noor's responses":
-    "Magdagdag ng mga tagubilin para i-customize ang mga sagot ni Noor",
-  "Open project": "Buksan ang proyekto",
   General: "Pangkalahatan",
   Sirathic: "Sirathic",
   "Data and information": "Data at impormasyon",
@@ -504,13 +467,8 @@ export default {
   "Delete everything Sirathic remembers? This can't be undone.":
     "Burahin ang lahat ng naaalala ng Sirathic? Hindi na ito maibabalik.",
   "Your automations": "Mga automation mo",
-  "Schedule recurring tasks that run in this project":
-    "Mag-iskedyul ng mga paulit-ulit na gawain na tatakbo sa proyektong ito",
-  "Hide project settings": "Itago ang mga setting ng proyekto",
-  "Show project settings": "Ipakita ang mga setting ng proyekto",
   "Pick new icon": "Pumili ng bagong icon",
   Folder: "Folder",
-  "Edit icon": "I-edit ang icon",
   "A project name cannot contain a link.": "Hindi puwedeng may link ang pangalan ng proyekto.",
   Library: "Aklatan",
   All: "Lahat",
@@ -544,8 +502,6 @@ export default {
   "Remove plugin": "Alisin ang plugin",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Alisin ang “{name}”? Buburahin ang address at sign-in nito.",
-  "Could not create the project. Try again, or delete one if you have 50.":
-    "Hindi magawa ang proyekto. Subukan ulit, o magbura ng isa kung mayroon kang 50.",
   "Drop files to upload": "I-drop ang mga file para i-upload",
   "No files match your search.": "Walang file na tumutugma sa iyong paghahanap.",
   "File actions": "Mga aksyon sa file",
@@ -555,11 +511,7 @@ export default {
     "Burahin ang “{name}”? Hindi na ito ipapakita ng mga chat na gumagamit nito.",
   "Upload a file": "Mag-upload ng file",
   "No recent files": "Walang kamakailang file",
-  "Add files for Noor to use in this project":
-    "Magdagdag ng mga file para magamit ni Noor sa proyektong ito",
   Open: "Buksan",
-  "Expand project panel": "Palakihin ang panel ng proyekto",
-  "Shrink project panel": "Paliitin ang panel ng proyekto",
   Edit: "I-edit",
   "Run now": "Patakbuhin ngayon",
   "Automation paused": "Naka-pause ang automation",

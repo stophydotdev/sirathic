@@ -17,10 +17,9 @@ export const projectRoutes = {
     list: signedIn.query(({ ctx }) => listProjects(ctx.owner)),
     create: signedIn
       .input(projectInput.safeExtend({ language: appLanguage.optional() }))
-      .mutation(async ({ ctx, input: { language, ...input } }) => {
-        const created = await createProject(ctx.owner, input);
-        return created.kind === "bot" ? openBot(ctx.user, created, language) : created;
-      }),
+      .mutation(async ({ ctx, input: { language, ...input } }) =>
+        openBot(ctx.user, await createProject(ctx.owner, input), language),
+      ),
     update: signedIn
       .input(projectUpdate.safeExtend({ id: projectId }))
       .mutation(({ ctx, input: { id, ...update } }) => updateProject(id, ctx.owner, update)),

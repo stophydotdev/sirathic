@@ -1,17 +1,9 @@
-import type { z } from "zod";
 import { type ProfileEntry, profileRules } from "../bots/profile";
-import { rememberedUpdate, type told } from "../shared/settings";
-
-export const projectRemembered = (memory: readonly string[], input: z.output<typeof told>) => {
-  const { memory: kept, ...preferences } = rememberedUpdate(memory, input);
-  return { memory: kept, preferences };
-};
 
 type RulesProject = {
   name: string;
   title: string;
   instructions: string;
-  kind: "project" | "bot";
   greeting?: string | null;
   question?: string | null;
   options?: string[] | null;
@@ -47,7 +39,8 @@ const teachingRules = (note: string | undefined) =>
 export const botIdentity = ({ name, title }: { name: string; title: string }) =>
   title ? `"${name}", ${title}` : `"${name}"`;
 
-const botRules = (project: RulesProject, live: boolean) => {
+export const projectRules = (project: RulesProject | undefined, live = true) => {
+  if (!project) return "";
   const { instructions } = project;
   const who = botIdentity(project);
   const intro = `\n\nYou are ${who}, the user's own bot in Sirathic. When asked who you are, give this name and what you do for them.`;
@@ -65,13 +58,6 @@ const botRules = (project: RulesProject, live: boolean) => {
     ? ""
     : " You greeted them by asking what they want you around for.";
   return `\n\nYou are a new bot the user just made in Sirathic, with no job yet.${greeted} If their message is a real question, answer it fully first. When they describe what they want from you, call setBotJob with a short name, a short title and the job in their words. Then, in two or three short sentences, say what you will do and name any of their connected plugins you can use for it.${TEXTING}${CHECK_FIRST}${ACT_WHEN_TOLD}${ASK_WHAT_YOU_NEED}${openedWith(project)}${profileRules(project.profile ?? [])}`;
-};
-
-export const projectRules = (project: RulesProject | undefined, live = true) => {
-  if (project?.kind === "bot") return botRules(project, live);
-  return project?.instructions
-    ? `\n\nThis chat is in the project "${project.name}". Follow its instructions:\n${project.instructions}`
-    : "";
 };
 
 export const settingsInProject = <Settings extends { memory: unknown }>(

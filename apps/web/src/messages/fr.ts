@@ -347,40 +347,17 @@ export default {
     "Tapez / pour les modes, @ pour les plugins et les compétences",
   "Add a plugin": "Ajouter un plugin",
   "Write a skill": "Écrire une compétence",
-  Projects: "Projets",
-  "New project": "Nouveau projet",
-  "Project name": "Nom du projet",
   Create: "Créer",
-  "Rename project": "Renommer le projet",
-  "Delete project": "Supprimer le projet",
-  'Delete the project "{name}"? Its chats stay in your history.':
-    "Supprimer le projet « {name} » ? Ses discussions restent dans votre historique.",
-  "Add instructions that apply to every chat in this project":
-    "Ajoutez des instructions qui s'appliquent à chaque discussion de ce projet",
   Chats: "Discussions",
   "No chats in this project yet": "Aucune discussion dans ce projet pour l'instant",
-  "Move to project": "Déplacer vers un projet",
-  "No projects yet": "Aucun projet pour l'instant",
-  "Remove from project": "Retirer du projet",
   "Used {name} plugin": "Plugin {name} utilisé",
   "Used {name}": "{name} utilisé",
   "1 tool": "1 outil",
   "{count} tools": "{count} outils",
   Automations: "Automatisations",
   "See all": "Tout voir",
-  "All projects": "Tous les projets",
   "Add project": "Ajouter un projet",
-  "Create new": "Créer",
-  "Last edited": "Dernière modification",
   "Date created": "Date de création",
-  View: "Voir",
-  "Leave project": "Quitter le projet",
-  "Create project": "Créer un projet",
-  "Get started by creating a new project": "Commencez par créer un projet",
-  "Projects help you set common instructions for conversations.":
-    "Les projets vous aident à définir des instructions communes pour vos discussions.",
-  "{name}'s settings": "Paramètres de {name}",
-  "New chat in project": "Nouvelle discussion dans le projet",
   Runs: "Exécutions",
   Ideas: "Idées",
   "New automation": "Nouvelle automatisation",
@@ -476,20 +453,6 @@ export default {
   "Family halaqa": "Halaqa en famille",
   "Suggest a topic for our family halaqa, with a verse, a hadith and questions.":
     "Propose un thème pour notre halaqa en famille, avec un verset, un hadith et des questions.",
-  Memory: "Mémoire",
-  "Project only": "Projet uniquement",
-  "Chats here use and add to your main memory.":
-    "Les discussions ici utilisent votre mémoire principale et l'enrichissent.",
-  "Chats here only see what Noor remembers in this project.":
-    "Les discussions ici ne voient que ce que Noor retient dans ce projet.",
-  "Set project instructions": "Définir les instructions du projet",
-  "Provide Noor with instructions for chats in this project.":
-    "Donnez à Noor des instructions pour les discussions de ce projet.",
-  "Add instructions for Noor in this project…":
-    "Ajoutez des instructions pour Noor dans ce projet…",
-  "Add instructions to customize Noor's responses":
-    "Ajoutez des instructions pour personnaliser les réponses de Noor",
-  "Open project": "Ouvrir le projet",
   General: "Général",
   Sirathic: "Sirathic",
   "Data and information": "Données et informations",
@@ -505,13 +468,8 @@ export default {
   "Delete everything Sirathic remembers? This can't be undone.":
     "Supprimer tout ce dont Sirathic se souvient ? Cette action est irréversible.",
   "Your automations": "Vos automatisations",
-  "Schedule recurring tasks that run in this project":
-    "Planifiez des tâches récurrentes qui s'exécutent dans ce projet",
-  "Hide project settings": "Masquer les paramètres du projet",
-  "Show project settings": "Afficher les paramètres du projet",
   "Pick new icon": "Choisir une nouvelle icône",
   Folder: "Dossier",
-  "Edit icon": "Modifier l'icône",
   "A project name cannot contain a link.": "Le nom d'un projet ne peut pas contenir de lien.",
   Library: "Bibliothèque",
   All: "Tout",
@@ -546,8 +504,6 @@ export default {
   "Remove plugin": "Retirer le plugin",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Retirer « {name} » ? Son adresse et sa connexion seront supprimées.",
-  "Could not create the project. Try again, or delete one if you have 50.":
-    "Impossible de créer le projet. Réessayez, ou supprimez-en un si vous en avez 50.",
   "Drop files to upload": "Déposez des fichiers pour les importer",
   "No files match your search.": "Aucun fichier ne correspond à votre recherche.",
   "File actions": "Actions du fichier",
@@ -557,11 +513,7 @@ export default {
     "Supprimer « {name} » ? Les discussions qui l'utilisent ne l'afficheront plus.",
   "Upload a file": "Importer un fichier",
   "No recent files": "Aucun fichier récent",
-  "Add files for Noor to use in this project":
-    "Ajoutez des fichiers que Noor utilisera dans ce projet",
   Open: "Ouvrir",
-  "Expand project panel": "Agrandir le panneau du projet",
-  "Shrink project panel": "Réduire le panneau du projet",
   Edit: "Modifier",
   "Run now": "Exécuter maintenant",
   "Automation paused": "Automatisation mise en pause",

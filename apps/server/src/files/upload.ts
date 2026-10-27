@@ -12,7 +12,6 @@ const FORM_OVERHEAD_BYTES = 100 * 1024;
 
 const upload = z.object({
   file: z.instanceof(File),
-  projectId: z.uuid().optional(),
 });
 
 export const uploadRoutes = new Hono();
@@ -27,12 +26,9 @@ uploadRoutes.post("/", tooLarge, (c) =>
     const user = await userFor(c.req.raw.headers);
     if (!user) throw new StatusError(401, "not signed in");
     const form = await c.req.raw.formData().catch(() => undefined);
-    const parsed = upload.safeParse({
-      file: form?.get("file"),
-      projectId: form?.get("projectId") || undefined,
-    });
+    const parsed = upload.safeParse({ file: form?.get("file") });
     if (!parsed.success) throw new StatusError(400, z.prettifyError(parsed.error));
-    const { file, projectId } = parsed.data;
+    const { file } = parsed.data;
     if (file.size === 0 || file.size > MAX_FILE_BYTES) {
       throw new StatusError(400, "That file is empty or too large.");
     }
@@ -44,7 +40,6 @@ uploadRoutes.post("/", tooLarge, (c) =>
       name: file.name.trim().slice(-FILE_NAME_MAX) || "file",
       mediaType,
       bytes,
-      projectId,
     });
   }),
 );

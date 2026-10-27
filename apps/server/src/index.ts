@@ -15,9 +15,8 @@ import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
 import { connectedTools, finishConnect } from "./plugins/connections";
 import { track } from "./chat/events";
-import { readProjectFiles } from "./files/attachments";
 import { uploadRoutes } from "./files/upload";
-import { projectOfChat, rememberInBot, rememberInProject } from "./projects/projects";
+import { projectOfChat, rememberInBot } from "./projects/projects";
 import { botIdentity, projectRules, settingsInProject } from "./projects/rules";
 import {
   appLanguage,
@@ -173,9 +172,7 @@ app.post("/api/chat", (c) =>
         connectedTools(by, inProject?.kind === "bot" ? inProject.plugins : undefined),
       ),
       needs,
-      projectRules: project.then(async (inProject) =>
-        inProject ? projectRules(inProject) + (await readProjectFiles(by, inProject.id)) : "",
-      ),
+      projectRules: project.then((inProject) => projectRules(inProject)),
       persona: project.then((inProject) =>
         inProject?.kind === "bot" ? botIdentity(inProject) : undefined,
       ),
@@ -208,9 +205,8 @@ app.post("/api/chat", (c) =>
           ? undefined
           : async (told) => {
               const inProject = await project;
-              if (inProject?.kind === "bot") return rememberInBot(inProject.id, owner, told);
-              return inProject?.projectOnlyMemory
-                ? rememberInProject(inProject.id, owner, told)
+              return inProject?.kind === "bot"
+                ? rememberInBot(inProject.id, owner, told)
                 : remember(owner, told);
             },
     });

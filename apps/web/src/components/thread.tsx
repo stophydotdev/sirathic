@@ -1,14 +1,11 @@
 "use client";
 
 import { useChatState } from "@/components/chat";
-import { useProjects } from "@/components/projects";
-import { useSessions } from "@/components/sessions";
 import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
 import { UserText } from "@/components/mentions";
-import { ProjectHome } from "@/components/projectHome";
 import { BotTurn } from "@/components/botChat";
 import { BotGreeting, BotHeaderMenu, BotHome, BotTitle, useBot } from "@/components/botHome";
 import { BotLearned } from "@/components/botLearned";
@@ -165,11 +162,6 @@ const IncognitoToggle: FC = () => {
 
 const ThreadBody: FC = () => {
   const t = useT();
-  const chat = useChatState();
-  const session = useSessions((s) => s.sessions?.find((found) => found.id === chat?.id));
-  const changeSession = useSessions((s) => s.change);
-  const projectId = session ? session.projectId : chat?.projectId;
-  const project = useProjects((s) => s.projects?.find((found) => found.id === projectId));
   const bot = useBot();
 
   return (
@@ -194,17 +186,6 @@ const ThreadBody: FC = () => {
               menuSide="top"
               bot={!!bot}
               compact
-              project={
-                project && chat
-                  ? {
-                      id: project.id,
-                      name: project.name,
-                      icon: project.icon,
-                      leaveLabel: t("Remove from project"),
-                      onLeave: () => void changeSession(chat.id, { projectId: null }),
-                    }
-                  : undefined
-              }
             />
             <Caution />
           </div>
@@ -225,10 +206,8 @@ const Caution: FC = () => {
 
 const EmptyState: FC = () => {
   const t = useT();
-  const projectId = useChatState()?.projectId;
   const bot = useBot();
   if (bot) return <BotHome bot={bot} />;
-  if (projectId) return <ProjectHome id={projectId} />;
   return (
     <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
       <div className="absolute top-3 end-4">

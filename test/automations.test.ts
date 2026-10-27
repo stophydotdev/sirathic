@@ -168,7 +168,7 @@ test("a run that fails still saves an unread chat with the reason and ends the o
   expect(automationRow.nextRunAt).toBeNull();
   expect(automationRow.lastRunAt).not.toBeNull();
   expect(savedChats).toHaveLength(1);
-  const [, owner, title, messages, unread, , savedFor] = savedChats[0];
+  const [, owner, title, messages, unread, savedFor] = savedChats[0];
   expect([owner, title, unread, savedFor]).toEqual(["user-a", "Eid reminder", true, automationId]);
   expect(
     JSON.parse(String(messages)).map(
