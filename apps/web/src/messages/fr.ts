@@ -47,6 +47,7 @@ export default {
   Medium: "Moyen",
   High: "Élevé",
   "Ran code": "Code exécuté",
+  "Research report": "Rapport de recherche",
   Model: "Modèle",
   "Stop response (Esc)": "Arrêter la réponse (Échap)",
   Submit: "Envoyer",

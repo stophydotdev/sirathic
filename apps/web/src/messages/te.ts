@@ -45,6 +45,7 @@ export default {
   Medium: "మధ్యస్థం",
   High: "ఎక్కువ",
   "Ran code": "కోడ్ రన్ చేసింది",
+  "Research report": "పరిశోధన నివేదిక",
   Model: "మోడల్",
   "Stop response (Esc)": "జవాబును ఆపండి (Esc)",
   Submit: "పంపండి",

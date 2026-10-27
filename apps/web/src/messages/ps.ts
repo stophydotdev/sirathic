@@ -46,6 +46,7 @@ export default {
   Medium: "منځنی",
   High: "لوړ",
   "Ran code": "کوډ چلول شو",
+  "Research report": "د څیړنې راپور",
   Model: "ماډل",
   "Stop response (Esc)": "ځواب ودروئ (Esc)",
   Submit: "لېږل",

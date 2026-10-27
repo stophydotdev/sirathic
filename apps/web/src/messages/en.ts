@@ -53,6 +53,7 @@ export const MESSAGES = [
   "Medium",
   "High",
   "Ran code",
+  "Research report",
   "Model",
   "Ask Sirathic",
   "Stop response (Esc)",

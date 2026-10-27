@@ -47,6 +47,7 @@ export default {
   Medium: "Орто",
   High: "Жогору",
   "Ran code": "Код иштетилди",
+  "Research report": "Изилдөө отчету",
   Model: "Модель",
   "Stop response (Esc)": "Жоопту токтотуу (Esc)",
   Submit: "Жөнөтүү",

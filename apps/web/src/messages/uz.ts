@@ -47,6 +47,7 @@ export default {
   Medium: "Ўрта",
   High: "Юқори",
   "Ran code": "Код ишга туширилди",
+  "Research report": "Тадқиқот ҳисоботи",
   Model: "Модел",
   "Stop response (Esc)": "Жавобни тўхтатиш (Esc)",
   Submit: "Юбориш",

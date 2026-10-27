@@ -47,6 +47,7 @@ export default {
   Medium: "Katamtaman",
   High: "Mataas",
   "Ran code": "Pinatakbo ang code",
+  "Research report": "Ulat ng pananaliksik",
   Model: "Modelo",
   "Stop response (Esc)": "Ihinto ang sagot (Esc)",
   Submit: "Ipadala",

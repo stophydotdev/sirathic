@@ -1,4 +1,5 @@
 import { expect, mock, test } from "bun:test";
+import { z } from "zod";
 import { fileIdOf, formatSize, shownFiles } from "../apps/server/src/shared/files";
 import { mediaTypeOf } from "../apps/server/src/files/sniff";
 
@@ -17,18 +18,33 @@ mock.module(`${src}/account/auth.ts`, () => ({
 mock.module(`${src}/files/storage.ts`, () => ({
   storage: { bytes: async () => new TextEncoder().encode("salam") },
 }));
+const saved: { by: string; name: string; mediaType: string; text: string }[] = [];
 mock.module(`${src}/files/store.ts`, () => ({
   fileId: { safeParse: (value: string) => ({ success: true, data: value }) },
+  fileName: z.string(),
   fileOf: async (id: string, by: string) =>
     id === fileA && by === "user-a"
       ? { key: "user-a/file", name: "notes.txt", mediaType: "text/plain" }
       : undefined,
-  saveFile: async () => {
-    throw new Error("an oversized upload must never be saved");
+  saveFile: async (by: string, upload: { name: string; mediaType: string; bytes: Uint8Array }) => {
+    saved.push({
+      by,
+      name: upload.name,
+      mediaType: upload.mediaType,
+      text: new TextDecoder().decode(upload.bytes),
+    });
+    return {
+      id: fileA,
+      name: upload.name,
+      mediaType: upload.mediaType,
+      size: upload.bytes.length,
+      createdAt: 0,
+    };
   },
 }));
 
 const { uploadRoutes } = await import(`${src}/files/upload.ts`);
+const { fileTools, sandboxFiles } = await import(`${src}/chat/fileTools.ts`);
 
 test("an upload over the limit with no content-length is refused before the body is read", async () => {
   const chunk = new Uint8Array(1024 * 1024);
@@ -51,6 +67,7 @@ test("an upload over the limit with no content-length is refused before the body
   expect(response.status).toBe(400);
   expect(await response.json()).toEqual({ error: "That file is too large." });
   expect(pulled).toBeLessThan(20);
+  expect(saved).toEqual([]);
 });
 
 const get = (user: string) =>
@@ -150,4 +167,110 @@ test("binary data that is no known type is refused", () => {
       mediaTypeOf,
     ),
   ).toEqual([undefined, undefined, undefined]);
+});
+
+const call = { toolCallId: "call", messages: [] };
+
+const asked = { owner: "user-a", incognito: false, research: false, sandbox: undefined };
+
+test("a text file the model writes is saved to the library under its name", async () => {
+  saved.length = 0;
+  const tools = fileTools(asked);
+  const result = await tools.create_text_file.execute?.(
+    { name: "study-plan.md", content: "# Week 1\nLearn Ar-Rahman." },
+    call,
+  );
+  expect(saved).toEqual([
+    {
+      by: "user-a",
+      name: "study-plan.md",
+      mediaType: "text/plain",
+      text: "# Week 1\nLearn Ar-Rahman.",
+    },
+  ]);
+  expect(result).toMatchObject({ files: [{ name: "study-plan.md", mediaType: "text/plain" }] });
+});
+
+test("an incognito chat saves no file and tells the model why", async () => {
+  saved.length = 0;
+  const tools = fileTools({ ...asked, incognito: true });
+  const attempt = tools.create_text_file.execute?.({ name: "plan.txt", content: "x" }, call);
+  await expect(attempt).rejects.toThrow("this chat is incognito");
+  expect(saved).toEqual([]);
+});
+
+test("Research offers the report tool and the sandbox offers share_files", () => {
+  const names = (options: Partial<typeof asked> & { sandbox?: ReturnType<typeof sandboxFiles> }) =>
+    Object.keys(fileTools({ ...asked, ...options }));
+  expect(names({})).toEqual(["create_text_file"]);
+  expect(names({ research: true })).toEqual(["create_text_file", "create_research_report"]);
+  expect(names({ sandbox: sandboxFiles() })).toEqual(["create_text_file", "share_files"]);
+});
+
+const sandboxApi = (files: Record<string, { filename: string; text: string; size?: number }>) => {
+  const real = globalThis.fetch;
+  globalThis.fetch = Object.assign(
+    async (input: string | Request | URL) => {
+      const [, ref, content] = /\/files\/(file_\w+)(\/content)?$/u.exec(String(input)) ?? [];
+      const file = ref === undefined ? undefined : files[ref];
+      if (!file) return new Response("missing", { status: 404 });
+      return content
+        ? new Response(file.text)
+        : Response.json({ filename: file.filename, size_bytes: file.size ?? file.text.length });
+    },
+    { preconnect: real.preconnect },
+  );
+  return () => {
+    globalThis.fetch = real;
+  };
+};
+
+const afterSandbox = async (ids: string[]) => {
+  const sandbox = sandboxFiles();
+  const { writable, readable } = sandbox.transform()({ tools: {}, stopStream: () => {} });
+  const writer = writable.getWriter();
+  void writer.write({
+    type: "tool-result",
+    toolCallId: "code",
+    toolName: "code_execution",
+    input: {},
+    output: { content: ids.map((file_id) => ({ file_id })) },
+    providerExecuted: true,
+  });
+  void writer.write({
+    type: "tool-call",
+    toolCallId: "call",
+    toolName: "share_files",
+    input: {},
+  });
+  void readable.pipeTo(new WritableStream());
+  return fileTools({ ...asked, sandbox }).share_files;
+};
+
+test("share_files saves the newest sandbox file with each requested name", async () => {
+  saved.length = 0;
+  const restore = sandboxApi({
+    file_old: { filename: "zakat.csv", text: "old" },
+    file_new: { filename: "zakat.csv", text: "5000,0.00" },
+    file_other: { filename: "chart.png", text: "not asked for" },
+  });
+  const share = await afterSandbox(["file_old", "file_new", "file_other"]);
+  const result = await share.execute?.({ files: ["Zakat.csv"] }, call);
+  restore();
+  expect(saved).toEqual([
+    { by: "user-a", name: "zakat.csv", mediaType: "text/plain", text: "5000,0.00" },
+  ]);
+  expect(result).toMatchObject({ files: [{ name: "zakat.csv" }], errors: [] });
+});
+
+test("share_files refuses a sandbox file over the size limit", async () => {
+  saved.length = 0;
+  const restore = sandboxApi({
+    file_big: { filename: "big.csv", text: "x", size: 11 * 1024 * 1024 },
+  });
+  const share = await afterSandbox(["file_big"]);
+  const attempt = share.execute?.({ files: ["big.csv"] }, call);
+  await expect(attempt).rejects.toThrow("big.csv is over 10.0 MB");
+  restore();
+  expect(saved).toEqual([]);
 });

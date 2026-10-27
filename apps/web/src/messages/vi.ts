@@ -46,6 +46,7 @@ export default {
   Medium: "Trung bình",
   High: "Cao",
   "Ran code": "Đã chạy mã",
+  "Research report": "Báo cáo nghiên cứu",
   Model: "Mô hình",
   "Stop response (Esc)": "Dừng trả lời (Esc)",
   Submit: "Gửi",

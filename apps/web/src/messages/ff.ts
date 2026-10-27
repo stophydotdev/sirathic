@@ -46,6 +46,7 @@ export default {
   Medium: "Hakkunde",
   High: "Toowɗo",
   "Ran code": "Koodu wurtii",
+  "Research report": "Tinndinoore ɗaɓɓitaande",
   Model: "Model",
   "Stop response (Esc)": "Daru jaabawol (Esc)",
   Submit: "Neldu",

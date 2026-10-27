@@ -46,6 +46,7 @@ export default {
   Medium: "मध्यम",
   High: "अधिक",
   "Ran code": "कोड चलाया",
+  "Research report": "शोध रिपोर्ट",
   Model: "मॉडल",
   "Stop response (Esc)": "जवाब रोकें (Esc)",
   Submit: "भेजें",

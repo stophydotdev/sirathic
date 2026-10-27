@@ -1,6 +1,7 @@
 "use client";
 
 import { describeSchedule } from "@/components/automationText";
+import { FILE_TOOLS } from "@/components/fileCards";
 import { type Translate, useLocale, useT } from "@/components/i18n";
 import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
@@ -16,6 +17,7 @@ const CARD_TOOLS = new Set([
   "list_routines",
   "set_bot_job",
   "clarifying_questions",
+  ...FILE_TOOLS,
 ]);
 
 export const isCardTool = (name: string) => CARD_TOOLS.has(currentToolName(name));

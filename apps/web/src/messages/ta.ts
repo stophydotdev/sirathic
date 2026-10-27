@@ -47,6 +47,7 @@ export default {
   Medium: "நடுத்தரம்",
   High: "அதிகம்",
   "Ran code": "குறியீடு இயக்கப்பட்டது",
+  "Research report": "ஆராய்ச்சி அறிக்கை",
   Model: "மாடல்",
   "Stop response (Esc)": "பதிலை நிறுத்து (Esc)",
   Submit: "அனுப்பு",

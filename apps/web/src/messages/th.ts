@@ -45,6 +45,7 @@ export default {
   Medium: "กลาง",
   High: "สูง",
   "Ran code": "รันโค้ด",
+  "Research report": "รายงานการวิจัย",
   Model: "โมเดล",
   "Stop response (Esc)": "หยุดคำตอบ (Esc)",
   Submit: "ส่ง",

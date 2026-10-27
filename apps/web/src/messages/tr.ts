@@ -47,6 +47,7 @@ export default {
   Medium: "Orta",
   High: "Yüksek",
   "Ran code": "Kod çalıştırıldı",
+  "Research report": "Araştırma raporu",
   Model: "Model",
   "Stop response (Esc)": "Yanıtı durdur (Esc)",
   Submit: "Gönder",

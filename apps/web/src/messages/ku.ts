@@ -46,6 +46,7 @@ export default {
   Medium: "مامناوەند",
   High: "بەرز",
   "Ran code": "کۆد جێبەجێکرا",
+  "Research report": "ڕاپۆرتی لێکۆڵینەوە",
   Model: "مۆدێل",
   "Stop response (Esc)": "وەستاندنی وەڵام (Esc)",
   Submit: "ناردن",

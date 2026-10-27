@@ -46,6 +46,7 @@ export default {
   Medium: "Sedang",
   High: "Tinggi",
   "Ran code": "Kode dijalankan",
+  "Research report": "Laporan riset",
   Model: "Model",
   "Stop response (Esc)": "Hentikan jawaban (Esc)",
   Submit: "Kirim",

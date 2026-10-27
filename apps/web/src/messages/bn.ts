@@ -46,6 +46,7 @@ export default {
   Medium: "মাঝারি",
   High: "বেশি",
   "Ran code": "কোড চালিয়েছে",
+  "Research report": "গবেষণা প্রতিবেদন",
   Model: "মডেল",
   "Stop response (Esc)": "উত্তর থামান (Esc)",
   Submit: "পাঠান",

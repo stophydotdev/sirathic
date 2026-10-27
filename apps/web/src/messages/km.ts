@@ -45,6 +45,7 @@ export default {
   Medium: "មធ្យម",
   High: "ខ្ពស់",
   "Ran code": "បានដំណើរការកូដ",
+  "Research report": "របាយការណ៍ស្រាវជ្រាវ",
   Model: "ម៉ូដែល",
   "Stop response (Esc)": "បញ្ឈប់ចម្លើយ (Esc)",
   Submit: "ផ្ញើ",

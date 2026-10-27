@@ -47,6 +47,7 @@ export default {
   Medium: "ئوتتۇرا",
   High: "يۇقىرى",
   "Ran code": "كود ئىجرا قىلدى",
+  "Research report": "تەتقىقات دوكلاتى",
   Model: "مودېل",
   "Stop response (Esc)": "جاۋابنى توختىتىش (Esc)",
   Submit: "يوللاش",

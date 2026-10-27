@@ -46,6 +46,7 @@ export default {
   Medium: "Среднее",
   High: "Высокое",
   "Ran code": "Код выполнен",
+  "Research report": "Исследовательский отчёт",
   Model: "Модель",
   "Stop response (Esc)": "Остановить ответ (Esc)",
   Submit: "Отправить",

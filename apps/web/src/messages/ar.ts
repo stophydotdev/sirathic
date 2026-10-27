@@ -46,6 +46,7 @@ export default {
   Medium: "متوسط",
   High: "مرتفع",
   "Ran code": "تنفيذ كود",
+  "Research report": "تقرير بحثي",
   Model: "النموذج",
   "Stop response (Esc)": "إيقاف الإجابة (Esc)",
   Submit: "إرسال",

@@ -46,6 +46,7 @@ export default {
   Medium: "متوسط",
   High: "زیاد",
   "Ran code": "اجرای کد",
+  "Research report": "گزارش پژوهشی",
   Model: "مدل",
   "Stop response (Esc)": "توقف پاسخ (Esc)",
   Submit: "ارسال",

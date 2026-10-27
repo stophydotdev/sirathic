@@ -46,6 +46,7 @@ export default {
   Medium: "中",
   High: "高",
   "Ran code": "コードを実行",
+  "Research report": "リサーチレポート",
   Model: "モデル",
   "Stop response (Esc)": "回答を停止（Esc）",
   Submit: "送信",

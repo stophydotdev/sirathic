@@ -5,6 +5,7 @@ import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
 import { AutomationCard } from "@/components/automationCard";
 import { ConfirmCard } from "@/components/confirmCard";
+import { FILE_TOOLS, FileCards } from "@/components/fileCards";
 import { AskCard } from "@/components/questionCard";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
@@ -53,7 +54,9 @@ const researchByType = groupPartByType({
 });
 
 const research: typeof researchByType = (part, context) =>
-  part.type === "tool-call" && part.approval ? [] : researchByType(part, context);
+  part.type === "tool-call" && (part.approval || FILE_TOOLS.includes(part.toolName))
+    ? []
+    : researchByType(part, context);
 
 const answerState = (status: MessageStatus["type"] | undefined) =>
   status === "running" ? "streaming" : status === "incomplete" ? "error" : "complete";
@@ -126,6 +129,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
             }
           }}
         </MessagePrimitive.GroupedParts>
+        <FileCards />
         <ReplyError />
       </StreamingResponse>
 

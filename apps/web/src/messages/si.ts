@@ -46,6 +46,7 @@ export default {
   Medium: "මධ්‍යම",
   High: "ඉහළ",
   "Ran code": "කේතය ක්‍රියාත්මක කළා",
+  "Research report": "පර්යේෂණ වාර්තාව",
   Model: "මාදිලිය",
   "Stop response (Esc)": "පිළිතුර නවත්වන්න (Esc)",
   Submit: "යවන්න",

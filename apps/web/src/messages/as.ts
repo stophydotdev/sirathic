@@ -46,6 +46,7 @@ export default {
   Medium: "মধ্যম",
   High: "বেছি",
   "Ran code": "ক'ড চলালে",
+  "Research report": "গৱেষণা প্ৰতিবেদন",
   Model: "মডেল",
   "Stop response (Esc)": "উত্তৰ ৰখাওক (Esc)",
   Submit: "পঠাওক",

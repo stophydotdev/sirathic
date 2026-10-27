@@ -46,6 +46,7 @@ export default {
   Medium: "ഇടത്തരം",
   High: "ഉയർന്നത്",
   "Ran code": "കോഡ് പ്രവർത്തിപ്പിച്ചു",
+  "Research report": "ഗവേഷണ റിപ്പോർട്ട്",
   Model: "മോഡൽ",
   "Stop response (Esc)": "മറുപടി നിർത്തുക (Esc)",
   Submit: "അയയ്ക്കുക",

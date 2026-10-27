@@ -46,6 +46,7 @@ export default {
   Medium: "Средњи",
   High: "Висок",
   "Ran code": "Покренут код",
+  "Research report": "Истраживачки извештај",
   Model: "Модел",
   "Stop response (Esc)": "Заустави одговор (Esc)",
   Submit: "Пошаљи",
