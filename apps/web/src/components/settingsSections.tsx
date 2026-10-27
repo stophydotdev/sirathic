@@ -229,8 +229,8 @@ export const AppearanceSection: FC = () => {
 };
 
 export const BehaviorSection: FC = () => {
-  const mode = useChatOptions((s) => s.mode);
-  const setMode = useChatOptions((s) => s.setMode);
+  const mode = useChatOptions((s) => s.defaultMode);
+  const setMode = useChatOptions((s) => s.setDefaultMode);
   const keys = useKeyNames();
   const t = useT();
 

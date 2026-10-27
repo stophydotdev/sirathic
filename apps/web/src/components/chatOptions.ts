@@ -31,34 +31,41 @@ export const MODE_DETAILS = {
 
 export const useChatOptions = create<{
   mode: Mode;
+  defaultMode: Mode;
   incognito: boolean;
   override: Override | undefined;
   loaded: boolean;
   load: () => void;
   setMode: (next: Mode) => void;
+  setDefaultMode: (next: Mode) => void;
   setIncognito: (on: boolean) => void;
   setOverride: (next: Override) => void;
   takeOverride: () => Override | undefined;
 }>()((set, get) => {
   const persist = () => {
-    const { mode } = get();
-    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify({ mode }));
+    const { defaultMode } = get();
+    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify({ mode: defaultMode }));
   };
   return {
     mode: "quick",
+    defaultMode: "quick",
     incognito: false,
     override: undefined,
     loaded: false,
-    load: () =>
+    load: () => {
+      const { mode } = read();
       set({
-        ...read(),
+        mode,
+        defaultMode: mode,
         incognito:
           new URLSearchParams(globalThis.location?.search).has("incognito") ||
           usePreferences.getState().incognitoByDefault,
         loaded: true,
-      }),
-    setMode: (next) => {
-      set({ mode: next });
+      });
+    },
+    setMode: (next) => set({ mode: next }),
+    setDefaultMode: (next) => {
+      set({ mode: next, defaultMode: next });
       persist();
     },
     setIncognito: (on) => set({ incognito: on }),

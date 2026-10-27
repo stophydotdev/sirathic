@@ -21,10 +21,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import { useAttachmentSrc } from "@/lib/hooks/useAttachmentSrc";
@@ -337,38 +338,39 @@ const AddMenu: FC<{ side: "top" | "bottom"; modes: boolean }> = ({ side, modes }
         <DropdownMenuTrigger className={iconButton} aria-label={t("Add files or tools")}>
           <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          side={side}
-          align="start"
-          className={modes ? cn(menuBox, "w-72") : menuBox}
-        >
+        <DropdownMenuContent side={side} align="start" className={menuBox}>
+          {modes && (
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className={menuItem}>
+                {MODE_ICONS[mode]}
+                <span className="flex-1">{t("Mode")}</span>
+                <span className="text-muted-foreground text-xs">{t(MODE_DETAILS[mode].name)}</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className={cn(menuBox, "w-72")}>
+                <DropdownMenuRadioGroup
+                  value={mode}
+                  onValueChange={(value) => setMode(modeSchema.parse(value))}
+                >
+                  {MODES.map((name) => (
+                    <DropdownMenuRadioItem key={name} value={name} className="py-2">
+                      {MODE_ICONS[name]}
+                      <span className="flex flex-col">
+                        <span>{t(MODE_DETAILS[name].name)}</span>
+                        <span className="text-muted-foreground text-xs">
+                          {t(MODE_DETAILS[name].description)}
+                        </span>
+                      </span>
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          )}
           <DropdownMenuItem onSelect={() => upload.current?.click()} className={menuItem}>
             <HugeiconsIcon icon={Attachment01Icon} className="size-4" />
             {t("Upload a file")}
           </DropdownMenuItem>
           <RecentFiles />
-          {modes && (
-            <>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>{t("Mode")}</DropdownMenuLabel>
-              <DropdownMenuRadioGroup
-                value={mode}
-                onValueChange={(value) => setMode(modeSchema.parse(value))}
-              >
-                {MODES.map((name) => (
-                  <DropdownMenuRadioItem key={name} value={name} className="py-2">
-                    {MODE_ICONS[name]}
-                    <span className="flex flex-col">
-                      <span>{t(MODE_DETAILS[name].name)}</span>
-                      <span className="text-muted-foreground text-xs">
-                        {t(MODE_DETAILS[name].description)}
-                      </span>
-                    </span>
-                  </DropdownMenuRadioItem>
-                ))}
-              </DropdownMenuRadioGroup>
-            </>
-          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </>
