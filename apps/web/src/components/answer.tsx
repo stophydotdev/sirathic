@@ -9,7 +9,7 @@ import { useProjects } from "@/components/projects";
 import { AskCard } from "@/components/questionCard";
 import { Favicon } from "@/components/favicon";
 import { MarkdownText } from "@/components/markdownText";
-import { citedSourcesOf, SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
+import { SourcesContext, siteName, sourcesOf, turnsOf } from "@/components/sources";
 import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
 import type { Source } from "@sirathic/server/sources";
@@ -37,7 +37,7 @@ export const Reply: FC = () => {
 
   return (
     <SourcesContext value={new Map(sources.map((s) => [s.url, s]))}>
-      <Answer sources={sources} cited={citedSourcesOf(content)} />
+      <Answer sources={sources} />
     </SourcesContext>
   );
 };
@@ -70,7 +70,7 @@ const startOf = (messageId: string) => {
   return started;
 };
 
-const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) => {
+const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const aui = useAui();
   const state = useAuiState((s) => answerState(s.message.status?.type));
   const messageId = useAuiState((s) => s.message.id);
@@ -85,7 +85,7 @@ const Answer: FC<{ sources: Source[]; cited: Source[] }> = ({ sources, cited }) 
         status={state}
         onCopy={copy}
         onRetry={() => aui.message().reload()}
-        sources={cited.map(citationOf)}
+        sources={sources.map(citationOf)}
         feedback={feedback}
         onFeedbackChange={(value) => (value === "down" ? setReporting(true) : rate(value))}
         actions={
