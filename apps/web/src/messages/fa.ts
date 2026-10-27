@@ -181,8 +181,8 @@ export default {
   "Searched:": "جستجو شد:",
   "No links": "پیوندی نیست",
   "View more": "نمایش بیشتر",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic ممکن است اشتباه کند. منابع را بررسی کنید و دربارهٔ وضعیت خودتان از یک عالم بپرسید.",
+  "Sirathic can make mistakes. Check the sources.":
+    "Sirathic ممکن است اشتباه کند. منابع را بررسی کنید.",
   "What's wrong with this answer?": "این پاسخ چه اشکالی دارد؟",
   "A verse or hadith is wrong": "یک آیه یا حدیث اشتباه است",
   "A school's view is wrong": "نظر یک مذهب اشتباه است",

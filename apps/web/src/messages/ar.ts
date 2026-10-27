@@ -179,8 +179,7 @@ export default {
   "Searched:": "تم البحث عن:",
   "No links": "لا توجد روابط",
   "View more": "عرض المزيد",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "قد يخطئ Sirathic. راجع المصادر، واسأل عالمًا عن حالتك الخاصة.",
+  "Sirathic can make mistakes. Check the sources.": "قد يخطئ Sirathic. راجع المصادر.",
   "What's wrong with this answer?": "ما الخطأ في هذه الإجابة؟",
   "A verse or hadith is wrong": "آية أو حديث خاطئ",
   "A school's view is wrong": "رأي أحد المذاهب خاطئ",

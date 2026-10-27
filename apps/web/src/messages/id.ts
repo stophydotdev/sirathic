@@ -181,8 +181,7 @@ export default {
   "Searched:": "Dicari:",
   "No links": "Tidak ada tautan",
   "View more": "Lihat lainnya",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic bisa salah. Periksa sumbernya, dan tanyakan kasus Anda kepada ulama.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic bisa salah. Periksa sumbernya.",
   "What's wrong with this answer?": "Apa yang salah dengan jawaban ini?",
   "A verse or hadith is wrong": "Ayat atau hadis salah",
   "A school's view is wrong": "Pendapat sebuah mazhab salah",

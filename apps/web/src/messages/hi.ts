@@ -179,8 +179,7 @@ export default {
   "Searched:": "खोजा गया:",
   "No links": "कोई लिंक नहीं",
   "View more": "और देखें",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic गलत हो सकता है। स्रोत देखें, और अपने मामले के बारे में किसी आलिम से पूछें।",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic गलत हो सकता है। स्रोत देखें।",
   "What's wrong with this answer?": "इस जवाब में क्या गलत है?",
   "A verse or hadith is wrong": "कोई आयत या हदीस गलत है",
   "A school's view is wrong": "किसी मज़हब की राय गलत है",

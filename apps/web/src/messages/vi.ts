@@ -182,8 +182,7 @@ export default {
   "Searched:": "Đã tìm:",
   "No links": "Không có liên kết",
   "View more": "Xem thêm",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic có thể sai. Hãy kiểm tra nguồn, và hỏi một học giả về trường hợp của bạn.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic có thể sai. Hãy kiểm tra nguồn.",
   "What's wrong with this answer?": "Câu trả lời này sai ở đâu?",
   "A verse or hadith is wrong": "Một câu kinh hoặc hadith bị sai",
   "A school's view is wrong": "Quan điểm của một trường phái bị sai",

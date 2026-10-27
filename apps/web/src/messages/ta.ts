@@ -182,8 +182,7 @@ export default {
   "Searched:": "தேடியவை:",
   "No links": "இணைப்புகள் இல்லை",
   "View more": "மேலும் காண்க",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic தவறாக இருக்கலாம். ஆதாரங்களைச் சரிபாருங்கள், உங்கள் சொந்த விஷயம் குறித்து ஒரு அறிஞரிடம் கேளுங்கள்.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic தவறாக இருக்கலாம். ஆதாரங்களைச் சரிபாருங்கள்.",
   "What's wrong with this answer?": "இந்தப் பதிலில் என்ன தவறு?",
   "A verse or hadith is wrong": "ஒரு வசனம் அல்லது ஹதீஸ் தவறு",
   "A school's view is wrong": "ஒரு மத்ஹபின் கருத்து தவறு",

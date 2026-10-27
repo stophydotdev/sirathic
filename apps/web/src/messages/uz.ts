@@ -184,8 +184,8 @@ export default {
   "Searched:": "Қидирилди:",
   "No links": "Ҳавола йўқ",
   "View more": "Яна кўриш",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic хато қилиши мумкин. Манбаларни текширинг ва ўз ҳолатингиз ҳақида олимдан сўранг.",
+  "Sirathic can make mistakes. Check the sources.":
+    "Sirathic хато қилиши мумкин. Манбаларни текширинг.",
   "What's wrong with this answer?": "Бу жавобда нима хато?",
   "A verse or hadith is wrong": "Оят ёки ҳадис хато",
   "A school's view is wrong": "Мазҳаб фикри хато",

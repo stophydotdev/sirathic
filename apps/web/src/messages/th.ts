@@ -176,8 +176,7 @@ export default {
   "Searched:": "ค้นหา:",
   "No links": "ไม่มีลิงก์",
   "View more": "ดูเพิ่มเติม",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic อาจผิดพลาดได้ ตรวจสอบแหล่งที่มา และถามผู้รู้เกี่ยวกับกรณีของคุณเอง",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic อาจผิดพลาดได้ ตรวจสอบแหล่งที่มา",
   "What's wrong with this answer?": "คำตอบนี้ผิดตรงไหน",
   "A verse or hadith is wrong": "อายะฮ์หรือหะดีษผิด",
   "A school's view is wrong": "ทัศนะของมัซฮับผิด",

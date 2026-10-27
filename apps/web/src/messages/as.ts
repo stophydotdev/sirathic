@@ -178,8 +178,7 @@ export default {
   "Searched:": "বিচৰা হ'ল:",
   "No links": "কোনো লিংক নাই",
   "View more": "আৰু চাওক",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic ভুল হ'ব পাৰে। উৎসসমূহ চাওক, আৰু আপোনাৰ নিজৰ কথাৰ বিষয়ে এজন আলিমক সোধক।",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic ভুল হ'ব পাৰে। উৎসসমূহ চাওক।",
   "What's wrong with this answer?": "এই উত্তৰত কি ভুল আছে?",
   "A verse or hadith is wrong": "এটা আয়াত বা হাদীছ ভুল",
   "A school's view is wrong": "এটা মাযহাবৰ মত ভুল",

@@ -187,8 +187,8 @@ export default {
   "Searched:": "Recherches :",
   "No links": "Aucun lien",
   "View more": "Voir plus",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic peut se tromper. Vérifiez les sources et demandez à un savant pour votre cas.",
+  "Sirathic can make mistakes. Check the sources.":
+    "Sirathic peut se tromper. Vérifiez les sources.",
   "What's wrong with this answer?": "Qu'est-ce qui ne va pas dans cette réponse ?",
   "A verse or hadith is wrong": "Un verset ou un hadith est faux",
   "A school's view is wrong": "L'avis d'une école est faux",

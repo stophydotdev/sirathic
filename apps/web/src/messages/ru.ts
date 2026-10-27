@@ -181,8 +181,8 @@ export default {
   "Searched:": "Искали:",
   "No links": "Нет ссылок",
   "View more": "Показать ещё",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic может ошибаться. Проверяйте источники, а по своему случаю спросите учёного.",
+  "Sirathic can make mistakes. Check the sources.":
+    "Sirathic может ошибаться. Проверяйте источники.",
   "What's wrong with this answer?": "Что не так с этим ответом?",
   "A verse or hadith is wrong": "Аят или хадис неверен",
   "A school's view is wrong": "Мнение мазхаба передано неверно",

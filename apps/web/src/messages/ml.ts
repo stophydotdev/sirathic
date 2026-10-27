@@ -181,8 +181,7 @@ export default {
   "Searched:": "തിരഞ്ഞത്:",
   "No links": "ലിങ്കുകളില്ല",
   "View more": "കൂടുതൽ കാണുക",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic തെറ്റാകാം. ഉറവിടങ്ങൾ പരിശോധിക്കുക, നിങ്ങളുടെ സ്വന്തം കാര്യത്തിൽ ഒരു പണ്ഡിതനോട് ചോദിക്കുക.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic തെറ്റാകാം. ഉറവിടങ്ങൾ പരിശോധിക്കുക.",
   "What's wrong with this answer?": "ഈ ഉത്തരത്തിൽ എന്താണ് തെറ്റ്?",
   "A verse or hadith is wrong": "ഒരു ആയത്ത് അല്ലെങ്കിൽ ഹദീസ് തെറ്റാണ്",
   "A school's view is wrong": "ഒരു മദ്ഹബിന്റെ അഭിപ്രായം തെറ്റാണ്",

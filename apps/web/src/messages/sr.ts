@@ -183,8 +183,7 @@ export default {
   "Searched:": "Претражено:",
   "No links": "Нема линкова",
   "View more": "Прикажи више",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic може погрешити. Проверите изворе и питајте учењака о свом случају.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic може погрешити. Проверите изворе.",
   "What's wrong with this answer?": "Шта није у реду са овим одговором?",
   "A verse or hadith is wrong": "Ајет или хадис је погрешан",
   "A school's view is wrong": "Став мезхеба је погрешан",

@@ -184,8 +184,8 @@ export default {
   "Searched:": "検索語：",
   "No links": "リンクはありません",
   "View more": "もっと見る",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic は間違えることがあります。出典を確認し、ご自身のケースについては学者に相談してください。",
+  "Sirathic can make mistakes. Check the sources.":
+    "Sirathic は間違えることがあります。出典を確認してください。",
   "What's wrong with this answer?": "この回答のどこが間違っていますか？",
   "A verse or hadith is wrong": "クルアーンの節やハディースが間違っている",
   "A school's view is wrong": "学派の見解が間違っている",

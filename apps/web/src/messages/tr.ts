@@ -183,8 +183,8 @@ export default {
   "Searched:": "Arananlar:",
   "No links": "Bağlantı yok",
   "View more": "Daha fazla göster",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic yanılabilir. Kaynakları kontrol edin ve kendi durumunuz için bir âlime danışın.",
+  "Sirathic can make mistakes. Check the sources.":
+    "Sirathic yanılabilir. Kaynakları kontrol edin.",
   "What's wrong with this answer?": "Bu cevapta yanlış olan ne?",
   "A verse or hadith is wrong": "Bir ayet veya hadis yanlış",
   "A school's view is wrong": "Bir mezhebin görüşü yanlış",

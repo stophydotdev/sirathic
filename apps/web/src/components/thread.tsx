@@ -307,7 +307,7 @@ const Caution: FC = () => {
   const t = useT();
   return (
     <p className="text-muted-foreground mt-2 text-center text-xs">
-      {t("Sirathic can be wrong. Check the sources, and ask a scholar about your own case.")}
+      {t("Sirathic can make mistakes. Check the sources.")}
     </p>
   );
 };

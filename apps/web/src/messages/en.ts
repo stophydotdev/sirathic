@@ -181,7 +181,7 @@ export const MESSAGES = [
   "Searched:",
   "No links",
   "View more",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.",
+  "Sirathic can make mistakes. Check the sources.",
   "What's wrong with this answer?",
   "A verse or hadith is wrong",
   "A school's view is wrong",

@@ -185,8 +185,8 @@ export default {
   "Searched:": "Hinanap:",
   "No links": "Walang link",
   "View more": "Tingnan pa",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Maaaring magkamali ang Sirathic. Suriin ang mga sanggunian, at magtanong sa isang iskolar tungkol sa iyong sitwasyon.",
+  "Sirathic can make mistakes. Check the sources.":
+    "Maaaring magkamali ang Sirathic. Suriin ang mga sanggunian.",
   "What's wrong with this answer?": "Ano ang mali sa sagot na ito?",
   "A verse or hadith is wrong": "Mali ang isang talata o hadith",
   "A school's view is wrong": "Mali ang pananaw ng isang paaralan",

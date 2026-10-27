@@ -183,8 +183,8 @@ export default {
   "Searched:": "ئىزدەلگىنى:",
   "No links": "ئۇلانما يوق",
   "View more": "تېخىمۇ كۆپ كۆرۈش",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic خاتالىشىشى مۇمكىن. مەنبەلەرنى تەكشۈرۈڭ، ئۆز ئەھۋالىڭىز توغرىسىدا بىر ئالىمدىن سوراڭ.",
+  "Sirathic can make mistakes. Check the sources.":
+    "Sirathic خاتالىشىشى مۇمكىن. مەنبەلەرنى تەكشۈرۈڭ.",
   "What's wrong with this answer?": "بۇ جاۋابتا نېمە خاتا؟",
   "A verse or hadith is wrong": "بىر ئايەت ياكى ھەدىس خاتا",
   "A school's view is wrong": "بىر مەزھەبنىڭ قارىشى خاتا",

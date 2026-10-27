@@ -178,8 +178,7 @@ export default {
   "Searched:": "খোঁজা হয়েছে:",
   "No links": "কোনো লিংক নেই",
   "View more": "আরও দেখুন",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic ভুল করতে পারে। উৎসগুলো দেখুন, আর নিজের বিষয়ে একজন আলেমকে জিজ্ঞেস করুন।",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic ভুল করতে পারে। উৎসগুলো দেখুন।",
   "What's wrong with this answer?": "এই উত্তরে কী ভুল আছে?",
   "A verse or hadith is wrong": "একটি আয়াত বা হাদিস ভুল",
   "A school's view is wrong": "একটি মাযহাবের মত ভুল",

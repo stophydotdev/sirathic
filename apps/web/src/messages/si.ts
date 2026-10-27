@@ -178,8 +178,7 @@ export default {
   "Searched:": "සෙව්වේ:",
   "No links": "සබැඳි නැත",
   "View more": "තවත් බලන්න",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic වැරදි විය හැක. මූලාශ්‍ර පරීක්ෂා කරන්න, ඔබේම කාරණය ගැන විද්වතෙකුගෙන් අසන්න.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic වැරදි විය හැක. මූලාශ්‍ර පරීක්ෂා කරන්න.",
   "What's wrong with this answer?": "මෙම පිළිතුරේ ඇති වරද කුමක්ද?",
   "A verse or hadith is wrong": "ආයතයක් හෝ හදීසයක් වැරදියි",
   "A school's view is wrong": "මද්හබයක මතය වැරදියි",

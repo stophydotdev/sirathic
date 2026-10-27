@@ -177,8 +177,7 @@ export default {
   "Searched:": "వెతికినవి:",
   "No links": "లింకులు లేవు",
   "View more": "మరిన్ని చూడండి",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic తప్పు కావచ్చు. ఆధారాలను చూడండి, మీ సొంత విషయం గురించి ఒక పండితుడిని అడగండి.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic తప్పు కావచ్చు. ఆధారాలను చూడండి.",
   "What's wrong with this answer?": "ఈ సమాధానంలో ఏమి తప్పు?",
   "A verse or hadith is wrong": "ఒక ఆయత్ లేదా హదీస్ తప్పు",
   "A school's view is wrong": "ఒక మజ్‌హబ్ అభిప్రాయం తప్పు",

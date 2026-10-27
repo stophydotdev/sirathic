@@ -176,8 +176,7 @@ export default {
   "Searched:": "搜索词：",
   "No links": "没有链接",
   "View more": "查看更多",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic 可能会出错。请核对来源，并就你自己的情况请教学者。",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic 可能会出错。请核对来源。",
   "What's wrong with this answer?": "这个回答哪里有问题？",
   "A verse or hadith is wrong": "经文或圣训有误",
   "A school's view is wrong": "某个教法学派的观点有误",

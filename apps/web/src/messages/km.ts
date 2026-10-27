@@ -178,8 +178,7 @@ export default {
   "Searched:": "បានស្វែងរក៖",
   "No links": "គ្មានតំណ",
   "View more": "មើលបន្ថែម",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic អាចខុស។ សូមពិនិត្យប្រភព ហើយសួរអ្នកប្រាជ្ញអំពីករណីរបស់អ្នក។",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic អាចខុស។ សូមពិនិត្យប្រភព។",
   "What's wrong with this answer?": "តើចម្លើយនេះខុសត្រង់ណា?",
   "A verse or hadith is wrong": "អាយ៉ាត់ ឬហាឌីសខុស",
   "A school's view is wrong": "ទស្សនៈរបស់មាហ្សហាប់ខុស",

@@ -182,8 +182,7 @@ export default {
   "Searched:": "گەڕاوە بۆ:",
   "No links": "هیچ بەستەرێک نییە",
   "View more": "زیاتر ببینە",
-  "Sirathic can be wrong. Check the sources, and ask a scholar about your own case.":
-    "Sirathic دەکرێت هەڵە بکات. سەرچاوەکان بپشکنە، و دەربارەی دۆخی خۆت لە زانایەک بپرسە.",
+  "Sirathic can make mistakes. Check the sources.": "Sirathic دەکرێت هەڵە بکات. سەرچاوەکان بپشکنە.",
   "What's wrong with this answer?": "چی هەڵەیە لەم وەڵامەدا؟",
   "A verse or hadith is wrong": "ئایەتێک یان فەرموودەیەک هەڵەیە",
   "A school's view is wrong": "بۆچوونی مەزهەبێک هەڵەیە",
