@@ -20,7 +20,7 @@ import {
 import { pageText } from "./compact";
 import { searchAll, searchInput } from "./search";
 
-const PAGE_CHARS = 8_000;
+const PAGE_CHARS = 25_000;
 
 export const CLARIFYING = "clarifying_questions";
 

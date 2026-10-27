@@ -29,9 +29,9 @@ import { bestPieces, fiqhBlock, hadithBlock, pagesBlock, pageText, quranBlock } 
 import { cleanSearch } from "./searchQuery";
 
 const RESULT_CHARS = 2_000;
-const QUESTION_CHARS = 400;
-const TAFSIR_CHARS = 500;
-const FATWA_CHARS = 1_500;
+const QUESTION_CHARS = 600;
+const TAFSIR_CHARS = 1_500;
+const FATWA_CHARS = 3_000;
 
 const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news"] as const;
 
@@ -40,17 +40,18 @@ type SearchSource = (typeof SEARCH_SOURCES)[number];
 const TIMES = ["pastWeek", "pastMonth", "pastYear"] as const;
 
 const SEARCH_LIMITS = {
-  quran: 2,
-  hadith: 3,
-  fatwa: 5,
-  fiqh: 2,
-  web: 5,
+  quran: 6,
+  hadith: 8,
+  fatwa: 8,
+  fiqh: 3,
+  web: 8,
   news: 8,
 } satisfies Record<SearchSource, number>;
 
 const ISLAMIC_SOURCES: ReadonlySet<SearchSource> = new Set(["quran", "hadith", "fatwa", "fiqh"]);
 const WEB_BESIDE_ISLAMIC = 4;
-const LISTED_PER_QUERY = 10;
+const LISTED_PER_QUERY = 20;
+const WEB_LISTED_PER_QUERY = 10;
 
 export const searchInput = z.object({
   queries: z
@@ -62,7 +63,7 @@ export const searchInput = z.object({
     ),
   arabic: z
     .array(z.string().trim().min(2).max(120))
-    .max(2)
+    .max(3)
     .optional()
     .describe(
       "Arabic keyword queries for the fiqh books and Arabic fatwa sites, in the exact terms the classical books use for the issue, not modern phrasing",
@@ -158,8 +159,8 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
   const results = cited.map((hadith) => ({
     citation: hadith.citation,
     ref: hadithTitle(hadith),
-    english: clip(hadith.english, 450),
-    arabic: clip(hadith.textAr, hadith.english ? 180 : 350),
+    english: clip(hadith.english, RESULT_CHARS),
+    arabic: clip(hadith.textAr, RESULT_CHARS),
     grade: gradeOf(hadith),
   }));
   return {
@@ -168,15 +169,7 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
       ...ranked.slice(SEARCH_LIMITS.hadith).flatMap((hadith) => hadithSource(hadith) ?? []),
     ],
     results,
-    text: hadithBlock(
-      cited.map((hadith) => ({
-        citation: hadith.citation,
-        ref: hadithTitle(hadith),
-        english: clip(hadith.english, RESULT_CHARS),
-        arabic: hadith.textAr,
-        grade: gradeOf(hadith),
-      })),
-    ),
+    text: hadithBlock(results),
   };
 };
 
@@ -319,7 +312,7 @@ const searchWeb = async (
   limit: number,
 ) => {
   const found = await unlessAllFail(
-    queries.map((query) => webSearch({ query, sites, time, limit: LISTED_PER_QUERY })),
+    queries.map((query) => webSearch({ query, sites, time, limit: WEB_LISTED_PER_QUERY })),
   );
   const hits = interleave(
     found.map((list) => list.filter((hit) => !textBlocked(hit.url))),
