@@ -93,6 +93,7 @@ export const Composer: FC<{
   menuSide: "top" | "bottom";
   rotate?: boolean;
   bot?: boolean;
+  compact?: boolean;
   project?: {
     id: string;
     name: string;
@@ -100,7 +101,7 @@ export const Composer: FC<{
     leaveLabel: string;
     onLeave: (text: string) => void;
   };
-}> = ({ placeholder, menuSide, rotate = false, bot = false, project }) => {
+}> = ({ placeholder, menuSide, rotate = false, bot = false, compact = false, project }) => {
   const aui = useAui();
   const text = useAuiState((s) => s.composer.text);
   const setMode = useChatOptions((s) => s.setMode);
@@ -121,6 +122,21 @@ export const Composer: FC<{
   const ask = useSignIn((s) => s.ask);
   const shown = useRotatingPlaceholder(placeholder, rotate && text === "");
   const t = useT();
+  const hasAttachments = useAuiState((s) => s.composer.attachments.length > 0);
+  const editor = useRef<HTMLDivElement>(null);
+  const [wrapped, setWrapped] = useState(false);
+  if (wrapped && text === "") setWrapped(false);
+  useEffect(() => {
+    const box = editor.current;
+    if (!box) return;
+    const observer = new ResizeObserver(() => {
+      if (box.offsetHeight > Number.parseFloat(getComputedStyle(box).lineHeight) * 1.5)
+        setWrapped(true);
+    });
+    observer.observe(box);
+    return () => observer.disconnect();
+  }, []);
+  const row = compact && !wrapped && !hasAttachments && project === undefined;
 
   const command = /^\/[^\s]*$/u.test(text) ? text : undefined;
   const composer = () => aui.thread().composer();
@@ -186,91 +202,106 @@ export const Composer: FC<{
       <div className="relative w-full">
         <ComposerPrimitive.Root
           className={cn(
-            "bg-card flex w-full flex-col border",
-            "border-foreground/10 rounded-[20px]",
+            "bg-card border-foreground/10 flex w-full flex-wrap items-center border",
+            compact ? "min-h-12 gap-x-1 rounded-4xl p-1.5 md:min-h-13 md:p-2" : "rounded-[20px]",
           )}
         >
           <AuiIf condition={(s) => s.composer.attachments.length > 0}>
-            <div className="flex flex-wrap gap-2 px-4 pt-4">
+            <div
+              className={cn(
+                "order-first flex basis-full flex-wrap gap-2",
+                compact ? "px-2 pt-2 pb-1" : "px-4 pt-4",
+              )}
+            >
               <ComposerPrimitive.Attachments>
                 {() => <AttachmentPreview />}
               </ComposerPrimitive.Attachments>
             </div>
           </AuiIf>
 
-          <LexicalComposerInput
-            data-composer
-            autoFocus={finePointer}
-            placeholder={shown}
-            formatter={mentionFormatter}
-            directiveChip={MentionChip}
-            onKeyDownCapture={onKeyDownCapture}
+          <div
             className={cn(
-              "relative max-h-60 min-h-[42px] w-full px-5 pt-3.5 text-base",
-              "leading-6",
+              "min-w-0",
+              row ? "flex-1 px-1.5" : "-order-1 basis-full",
+              !row && (compact ? "px-2.5 pt-1.5 pb-1" : "px-5 pt-3.5"),
             )}
           >
-            <LinkPlugin />
-            <MentionSpace />
-          </LexicalComposerInput>
+            <LexicalComposerInput
+              ref={editor}
+              data-composer
+              autoFocus={finePointer}
+              placeholder={shown}
+              formatter={mentionFormatter}
+              directiveChip={MentionChip}
+              onKeyDownCapture={onKeyDownCapture}
+              className={cn("relative max-h-60 w-full text-base leading-6", !compact && "min-h-7")}
+            >
+              <LinkPlugin />
+              <MentionSpace />
+            </LexicalComposerInput>
+          </div>
 
-          <div className="flex items-center justify-between gap-2 px-3 pt-2.5 pb-3">
-            <div className="flex min-w-0 items-center gap-1.5">
-              <AddMenu side={menuSide} modes={!bot} />
-              {project && (
-                <span className="border-foreground/15 flex h-8 min-w-0 items-center gap-1.5 rounded-full border ps-2.5 pe-1 text-sm font-medium">
-                  <ProjectIcon
-                    icon={project.icon}
-                    className="text-muted-foreground size-4 shrink-0"
-                  />
-                  <Link
-                    href={`/project/${project.id}`}
-                    title={t("Open project")}
-                    className="max-w-48 min-w-6 truncate hover:underline"
-                  >
-                    {project.name}
-                  </Link>
-                  <button
-                    type="button"
-                    aria-label={project.leaveLabel}
-                    title={project.leaveLabel}
-                    onClick={() => project.onLeave(text)}
-                    className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-6 items-center justify-center rounded-full"
-                  >
-                    <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
-                  </button>
-                </span>
-              )}
-            </div>
-
-            <div className="flex items-center gap-1">
-              <ModelPicker side={menuSide} />
-              <AuiIf condition={(s) => s.thread.isRunning}>
-                <ComposerPrimitive.Cancel
-                  className={primaryButton}
-                  aria-label={t("Stop response (Esc)")}
-                  title={t("Stop response (Esc)")}
+          <div
+            className={cn(
+              "flex min-w-0 items-center gap-1.5",
+              row && "-order-1",
+              !compact && "ps-3 pt-2.5 pb-3",
+            )}
+          >
+            <AddMenu side={menuSide} modes={!bot} />
+            {project && (
+              <span className="border-foreground/15 flex h-8 min-w-0 items-center gap-1.5 rounded-full border ps-2.5 pe-1 text-sm font-medium">
+                <ProjectIcon
+                  icon={project.icon}
+                  className="text-muted-foreground size-4 shrink-0"
+                />
+                <Link
+                  href={`/project/${project.id}`}
+                  title={t("Open project")}
+                  className="max-w-48 min-w-6 truncate hover:underline"
                 >
-                  <span className="size-2.5 rounded-xs bg-current" />
-                </ComposerPrimitive.Cancel>
-              </AuiIf>
-              <AuiIf condition={(s) => !s.thread.isRunning}>
-                {signedOut ? (
-                  <button
-                    type="button"
-                    onClick={() => ask(text)}
-                    className={primaryButton}
-                    aria-label={t("Submit")}
-                  >
-                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
-                  </button>
-                ) : (
-                  <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
-                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
-                  </ComposerPrimitive.Send>
-                )}
-              </AuiIf>
-            </div>
+                  {project.name}
+                </Link>
+                <button
+                  type="button"
+                  aria-label={project.leaveLabel}
+                  title={project.leaveLabel}
+                  onClick={() => project.onLeave(text)}
+                  className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-6 items-center justify-center rounded-full"
+                >
+                  <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
+                </button>
+              </span>
+            )}
+          </div>
+
+          <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>
+            <ModelPicker side={menuSide} />
+            <AuiIf condition={(s) => s.thread.isRunning}>
+              <ComposerPrimitive.Cancel
+                className={primaryButton}
+                aria-label={t("Stop response (Esc)")}
+                title={t("Stop response (Esc)")}
+              >
+                <span className="size-2.5 rounded-xs bg-current" />
+              </ComposerPrimitive.Cancel>
+            </AuiIf>
+            <AuiIf condition={(s) => !s.thread.isRunning}>
+              {signedOut ? (
+                <button
+                  type="button"
+                  onClick={() => ask(text)}
+                  className={primaryButton}
+                  aria-label={t("Submit")}
+                >
+                  <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
+                </button>
+              ) : (
+                <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
+                  <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
+                </ComposerPrimitive.Send>
+              )}
+            </AuiIf>
           </div>
         </ComposerPrimitive.Root>
 

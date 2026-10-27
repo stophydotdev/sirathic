@@ -282,9 +282,11 @@
 
 [data-composer] .aui-lexical-placeholder {
   position: absolute;
-  top: 0.875rem;
-  inset-inline-start: 1.25rem;
+  inset: 0;
+  overflow: hidden;
   color: var(--color-muted-foreground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
   pointer-events: none;
 }
 

@@ -289,6 +289,7 @@ const ThreadBody: FC = () => {
               placeholder={bot ? t("Message {name}", { name: bot.name }) : t("Ask a follow-up")}
               menuSide="top"
               bot={!!bot}
+              compact
               project={
                 project && chat
                   ? {
