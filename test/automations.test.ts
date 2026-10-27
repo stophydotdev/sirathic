@@ -9,14 +9,22 @@ import {
 } from "../apps/server/src/automations/schedule";
 
 const automationId = "11111111-1111-4111-8111-111111111111";
-const dueAt = "2026-10-26T09:00:00.000Z";
+const dueAt = new Date(Date.now() - 60_000).toISOString();
 
-type StoredAutomation = { nextRunAt: string | null; enabled: boolean; lastRunAt: string | null };
+type StoredAutomation = {
+  nextRunAt: string | null;
+  enabled: boolean;
+  lastRunAt: string | null;
+  failures: number;
+  plan: Schedule;
+};
 
 const automationRow: StoredAutomation = {
   nextRunAt: dueAt,
   enabled: true,
   lastRunAt: null,
+  failures: 0,
+  plan: { kind: "once", date: "2026-10-26", time: "09:00" },
 };
 const botId = "22222222-2222-4222-8222-222222222222";
 let botRoutine = false;
@@ -36,7 +44,7 @@ const fakeDb = drizzle(
                 botRoutine ? botId : null,
                 botRoutine ? "Morning verse" : "Eid reminder",
                 botRoutine ? "One new verse each morning" : "Remind me of the Eid sunnahs",
-                { kind: "once", date: "2026-10-26", time: "09:00" },
+                automationRow.plan,
                 "UTC",
                 true,
                 automationRow.nextRunAt,
@@ -46,19 +54,20 @@ const fakeDb = drizzle(
                 null,
                 "research",
                 "app",
+                automationRow.failures,
               ],
             ]
           : [],
       };
     }
-    if (sql.startsWith('update "automations" set "enabled"')) {
-      const [enabled, nextRunAt] = params;
-      Object.assign(automationRow, { enabled, nextRunAt });
+    if (sql.startsWith('update "automations" set')) {
+      for (const [, column, index] of (sql.split(" where ")[0] ?? "").matchAll(
+        /"(\w+)" = \$(\d+)/g,
+      )) {
+        const field = column.replace(/_(\w)/g, (_, letter: string) => letter.toUpperCase());
+        Object.assign(automationRow, { [field]: params[Number(index) - 1] });
+      }
       return { rows: [[automationId]] };
-    }
-    if (sql.startsWith('update "automations" set "last_run_at"')) {
-      automationRow.lastRunAt = String(params[0]);
-      return { rows: [] };
     }
     if (sql.startsWith('select "id", "email"')) {
       return { rows: [["user-a", "a@example.com", null, null, null]] };
@@ -90,6 +99,7 @@ const fakeDb = drizzle(
             null,
             "quick",
             "app",
+            0,
           ],
         ],
       };
@@ -158,6 +168,53 @@ test("a run that fails still saves an unread chat with the reason and ends the o
       "This run did not finish. You've used today's 30 Noor answers. They come back tomorrow.",
     ],
   ]);
+});
+
+const runDueQuietly = async () => {
+  const logged = console.error;
+  console.error = () => {};
+  await runDue();
+  console.error = logged;
+};
+
+const lastSavedText = () => {
+  const messages: ChatMessage[] = JSON.parse(String(savedChats.at(-1)?.[3]));
+  return messages.at(-1)?.parts.flatMap((part) => (part.type === "text" ? [part.text] : []));
+};
+
+test("a failing routine posts its first failure, stays quiet on the second and pauses on the third", async () => {
+  Object.assign(automationRow, {
+    plan: { kind: "daily", time: "09:00" },
+    enabled: true,
+    failures: 0,
+  });
+  answersToday = 31;
+  savedChats.length = 0;
+  const runOnce = async () => {
+    automationRow.nextRunAt = dueAt;
+    await runDueQuietly();
+    return [savedChats.length, automationRow.failures, automationRow.enabled];
+  };
+
+  expect([await runOnce(), await runOnce(), await runOnce()]).toEqual([
+    [1, 1, true],
+    [1, 2, true],
+    [2, 3, false],
+  ]);
+  expect(lastSavedText()).toEqual([
+    "Paused after 3 failed runs in a row. Turn it back on in Automations.",
+  ]);
+  expect(automationRow.nextRunAt).toBeNull();
+});
+
+test("a run that works resets the failure count", async () => {
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 2 });
+  answersToday = 1;
+
+  await runDueQuietly();
+
+  expect(automationRow.failures).toBe(0);
+  expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
 });
 
 const next = (plan: Schedule, zone: string, after: string) =>
@@ -342,6 +399,7 @@ test("a bot routine run sends the model only its brief and appends to the bot's 
   answersToday = 1;
   Object.assign(automationRow, { enabled: true, nextRunAt: dueAt });
   savedChats.length = 0;
+  modelInputs.length = 0;
 
   await runDue();
 

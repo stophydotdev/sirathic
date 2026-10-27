@@ -103,6 +103,7 @@ export async function updateAutomation(
     .update(automations)
     .set({
       ...changed,
+      ...(changed.enabled && { failures: 0 }),
       nextRunAt: changed.enabled ? upcoming(changed.schedule, changed.timezone) : null,
     })
     .where(owned(id, by))

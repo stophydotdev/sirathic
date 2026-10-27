@@ -22,6 +22,14 @@ import { nextRun, schedule } from "./schedule";
 const TICK_MS = 60_000;
 const BATCH = 5;
 const RUN_TIMEOUT_MS = 10 * 60_000;
+const PAUSE_AFTER = 3;
+
+const failureNote = (failedInARow: number, reason: string) =>
+  failedInARow >= PAUSE_AFTER
+    ? `Paused after ${PAUSE_AFTER} failed runs in a row. Turn it back on in Automations.`
+    : failedInARow === 1
+      ? `This run did not finish. ${reason}`
+      : undefined;
 
 async function ownerOf(id: string): Promise<User> {
   const [row] = await db
@@ -174,6 +182,7 @@ async function runAutomation({
   prompt,
   projectId,
   mode,
+  failures,
 }: typeof automations.$inferSelect) {
   const runMode = modeSchema.catch("quick").parse(mode);
   const bot = projectId ? await botOf(projectId, owner) : undefined;
@@ -200,21 +209,32 @@ async function runAutomation({
         ],
       }
     : asked;
-  const answered = await answerPrompt(owner, [briefed], sessionId, projectId, runMode).catch(
+  const outcome = await answerPrompt(owner, [briefed], sessionId, projectId, runMode).then(
+    (answered) => ({ kind: "answered", answered }) as const,
     (err: Error) => {
       console.error(`automation ${id} not answered: ${reasonOf(err)}`);
-      return [
-        asked,
-        textMessage("assistant", `This run did not finish. ${reasonOf(err)}`, runMode),
-      ];
+      return { kind: "failed", reason: reasonOf(err) } as const;
     },
   );
+  const failedInARow = outcome.kind === "failed" ? failures + 1 : 0;
+  const note = outcome.kind === "failed" ? failureNote(failedInARow, outcome.reason) : undefined;
+  const answered =
+    outcome.kind === "answered"
+      ? outcome.answered
+      : note === undefined
+        ? undefined
+        : [asked, textMessage("assistant", note, runMode)];
+  const finished = {
+    lastRunAt: new Date(),
+    failures: failedInARow,
+    ...(failedInARow >= PAUSE_AFTER && { enabled: false, nextRunAt: null }),
+  };
   const messages = [
     ...earlier,
-    ...answered.map((message) => (message.id === asked.id ? asked : message)),
+    ...(answered ?? []).map((message) => (message.id === asked.id ? asked : message)),
   ];
-  if (bot && isSkip(textOf(messages.at(-1)))) {
-    await db.update(automations).set({ lastRunAt: new Date() }).where(eq(automations.id, id));
+  if (!answered || (bot && isSkip(textOf(messages.at(-1))))) {
+    await db.update(automations).set(finished).where(eq(automations.id, id));
     return;
   }
   if (bot) {
@@ -234,7 +254,7 @@ async function runAutomation({
       projectId,
     });
   }
-  await db.update(automations).set({ lastRunAt: new Date() }).where(eq(automations.id, id));
+  await db.update(automations).set(finished).where(eq(automations.id, id));
 }
 
 export async function runNow(id: string, by: string) {
