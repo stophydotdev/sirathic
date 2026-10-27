@@ -9,8 +9,6 @@ import { siteHost } from "../web/url";
 
 const ROWS_PER_PAGE = 3;
 
-const EVERY_WORD = { anyWord: false };
-
 const onSites = (sites: string[]) => {
   const hosts = sites.map((site) => site.replaceAll(".", "\\.")).join("|");
   return sql`${fatwas.url} ~* ${`^https?://([^/]+\\.)?(${hosts})(/|$)`}`;
@@ -26,7 +24,7 @@ export const fatwaSearch = async (input: z.input<typeof fatwaSearchInput>) => {
   const { query, sites, limit } = fatwaSearchInput.parse(input);
   const filter = sites.length === 0 ? sql`true` : onSites(sites);
   const ids = await hybridIds(SEARCHABLE.fatwas, query, limit * ROWS_PER_PAGE, {
-    ...EVERY_WORD,
+    topUp: true,
     filter,
   });
   if (ids.length === 0) return { fatwas: [] };

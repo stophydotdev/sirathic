@@ -61,12 +61,12 @@ export const hybridIds = async (
   limit: number,
   {
     filter = sql`true`,
-    anyWord = true,
+    topUp = false,
     rareWords = false,
     maxDistance,
   }: {
     filter?: SQL;
-    anyWord?: boolean;
+    topUp?: boolean;
     rareWords?: boolean;
     maxDistance?: number;
   } = {},
@@ -74,32 +74,40 @@ export const hybridIds = async (
   const plain = query.replaceAll(ARABIC_MARKS, "");
   const [vector, rare] = await Promise.all([
     embedQuery(embedder, query).then((values) => JSON.stringify(values)),
-    rareWords ? rareWordScore(table, query) : undefined,
+    rareWords || topUp ? rareWordScore(table, query) : undefined,
   ]);
   const distance = sql`${embedding} <=> ${vector}::halfvec`;
-  const keyword = !rareWords
-    ? sql`select ${table.id} as id, row_number() over (order by ts_rank_cd(${table.search}, tsq) desc) as rank
-      from ${table}, query
-      where ${table.search} @@ tsq and ${filter}
-      order by ts_rank_cd(${table.search}, tsq) desc
-      limit ${POOL}`
-    : rare
+  const exact = sql`select ${table.id} as id, row_number() over (order by ts_rank_cd(${table.search}, every_word) desc) as rank
+      from ${table}, words
+      where ${table.search} @@ every_word and ${filter}
+      order by ts_rank_cd(${table.search}, every_word) desc
+      limit ${POOL}`;
+  const keyword = rareWords
+    ? rare
       ? sql`select ${table.id} as id, row_number() over (order by ${rare.score} desc, ${distance}) as rank
       from ${table}
       where (${rare.required}) and ${filter}
       order by ${rare.score} desc, ${distance}
       limit ${POOL}`
-      : sql`select ${table.id} as id, 1::bigint as rank from ${table} where false`;
+      : sql`select ${table.id} as id, 1::bigint as rank from ${table} where false`
+    : rare
+      ? sql`with exact as (${exact}),
+      more as (
+        select ${table.id} as id, row_number() over (order by ${rare.score} desc) as rank
+        from ${table}
+        where (select count(*) from exact) < ${POOL} and (${rare.required}) and ${filter}
+        order by ${rare.score} desc
+        limit ${POOL}
+      )
+      select id, rank from exact
+      union all
+      select id, rank + (select count(*) from exact) from more where id not in (select id from exact)`
+      : exact;
   const rows = await db.transaction(async (tx) => {
     await tx.execute(sql`set local hnsw.iterative_scan = relaxed_order`);
     return tx.execute(sql`
     with words as (
       select plainto_tsquery('english', ${plain}) as every_word
-    ),
-    query as (
-      select case when ${!anyWord} or exists (select 1 from ${table}, words where ${table.search} @@ every_word and ${filter})
-        then every_word else replace(every_word::text, '&', '|')::tsquery end as tsq
-      from words
     ),
     keyword as (${keyword}),
     meaning as (
