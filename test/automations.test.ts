@@ -217,6 +217,18 @@ test("a run that works resets the failure count", async () => {
   expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
 });
 
+test("a run missed by more than an hour is skipped and the next one is scheduled", async () => {
+  const missedAt = new Date(Date.now() - 2 * 60 * 60_000).toISOString();
+  Object.assign(automationRow, { enabled: true, nextRunAt: missedAt });
+  savedChats.length = 0;
+  modelInputs.length = 0;
+
+  await runDueQuietly();
+
+  expect([savedChats, modelInputs]).toEqual([[], []]);
+  expect(Date.parse(String(automationRow.nextRunAt))).toBeGreaterThan(Date.now());
+});
+
 const next = (plan: Schedule, zone: string, after: string) =>
   nextRun(plan, zone, new Date(after))?.toISOString();
 

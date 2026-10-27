@@ -23,6 +23,7 @@ const TICK_MS = 60_000;
 const BATCH = 5;
 const RUN_TIMEOUT_MS = 10 * 60_000;
 const PAUSE_AFTER = 3;
+const MISSED_AFTER_MS = 60 * 60_000;
 
 const failureNote = (failedInARow: number, reason: string) =>
   failedInARow >= PAUSE_AFTER
@@ -278,7 +279,7 @@ async function claimAndRun(due: typeof automations.$inferSelect) {
     .set({ nextRunAt: next ?? null, enabled: next !== undefined })
     .where(and(eq(automations.id, due.id), eq(automations.nextRunAt, due.nextRunAt)))
     .returning({ id: automations.id });
-  if (!claimed) return;
+  if (!claimed || Date.now() - due.nextRunAt.getTime() > MISSED_AFTER_MS) return;
   await runAutomation(due).catch((err: Error) => {
     console.error(`automation ${due.id} not run: ${reasonOf(err)}`);
   });
