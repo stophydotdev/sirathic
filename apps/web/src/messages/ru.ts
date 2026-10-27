@@ -37,6 +37,7 @@ export default {
   Low: "Низкое",
   Medium: "Среднее",
   High: "Высокое",
+  "Ran code": "Код выполнен",
   Model: "Модель",
   "Stop response (Esc)": "Остановить ответ (Esc)",
   Submit: "Отправить",

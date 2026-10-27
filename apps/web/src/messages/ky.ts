@@ -38,6 +38,7 @@ export default {
   Low: "Төмөн",
   Medium: "Орто",
   High: "Жогору",
+  "Ran code": "Код иштетилди",
   Model: "Модель",
   "Stop response (Esc)": "Жоопту токтотуу (Esc)",
   Submit: "Жөнөтүү",

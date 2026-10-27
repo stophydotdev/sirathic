@@ -37,6 +37,7 @@ export default {
   Low: "কম",
   Medium: "মাঝারি",
   High: "বেশি",
+  "Ran code": "কোড চালিয়েছে",
   Model: "মডেল",
   "Stop response (Esc)": "উত্তর থামান (Esc)",
   Submit: "পাঠান",

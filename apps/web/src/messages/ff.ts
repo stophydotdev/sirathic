@@ -37,6 +37,7 @@ export default {
   Low: "Leeso",
   Medium: "Hakkunde",
   High: "Toowɗo",
+  "Ran code": "Koodu wurtii",
   Model: "Model",
   "Stop response (Esc)": "Daru jaabawol (Esc)",
   Submit: "Neldu",

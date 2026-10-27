@@ -37,6 +37,7 @@ export default {
   Low: "Низак",
   Medium: "Средњи",
   High: "Висок",
+  "Ran code": "Покренут код",
   Model: "Модел",
   "Stop response (Esc)": "Заустави одговор (Esc)",
   Submit: "Пошаљи",

@@ -12,6 +12,7 @@ import { type ChatMessage, sentMessage } from "../apps/server/src/shared/message
 import { shortenEarlierResults } from "../apps/server/src/chat/history";
 import { keepAlive } from "../apps/server/src/chat/keepAlive";
 import { clientOf } from "../apps/server/src/chat/client";
+import { codeTools } from "../apps/server/src/chat/codeTools";
 import { toolFailure } from "../apps/server/src/chat/events";
 import { recentTurns } from "../apps/server/src/bots/tools";
 import { findInChat } from "../apps/server/src/bots/chatSearch";
@@ -439,4 +440,9 @@ test("a saved chat sent back with the old tool names reaches the agent under the
     { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
     { type: "text", text: "Done." },
   ]);
+});
+
+test("the code sandbox is offered to Noor and to no other model", () => {
+  expect(Object.keys(codeTools("sirathic-noor-1-flash"))).toEqual(["code_execution"]);
+  expect(Object.keys(codeTools("gpt-6-luna"))).toEqual([]);
 });

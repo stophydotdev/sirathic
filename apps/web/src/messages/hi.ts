@@ -37,6 +37,7 @@ export default {
   Low: "कम",
   Medium: "मध्यम",
   High: "अधिक",
+  "Ran code": "कोड चलाया",
   Model: "मॉडल",
   "Stop response (Esc)": "जवाब रोकें (Esc)",
   Submit: "भेजें",

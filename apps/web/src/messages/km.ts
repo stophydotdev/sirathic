@@ -36,6 +36,7 @@ export default {
   Low: "ទាប",
   Medium: "មធ្យម",
   High: "ខ្ពស់",
+  "Ran code": "បានដំណើរការកូដ",
   Model: "ម៉ូដែល",
   "Stop response (Esc)": "បញ្ឈប់ចម្លើយ (Esc)",
   Submit: "ផ្ញើ",

@@ -38,6 +38,7 @@ export default {
   Low: "Паст",
   Medium: "Ўрта",
   High: "Юқори",
+  "Ran code": "Код ишга туширилди",
   Model: "Модел",
   "Stop response (Esc)": "Жавобни тўхтатиш (Esc)",
   Submit: "Юбориш",

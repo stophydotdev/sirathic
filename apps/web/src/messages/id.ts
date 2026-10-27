@@ -37,6 +37,7 @@ export default {
   Low: "Rendah",
   Medium: "Sedang",
   High: "Tinggi",
+  "Ran code": "Kode dijalankan",
   Model: "Model",
   "Stop response (Esc)": "Hentikan jawaban (Esc)",
   Submit: "Kirim",

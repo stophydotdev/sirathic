@@ -37,6 +37,7 @@ export default {
   Low: "低",
   Medium: "中",
   High: "高",
+  "Ran code": "コードを実行",
   Model: "モデル",
   "Stop response (Esc)": "回答を停止（Esc）",
   Submit: "送信",

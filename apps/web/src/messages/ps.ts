@@ -37,6 +37,7 @@ export default {
   Low: "ټیټ",
   Medium: "منځنی",
   High: "لوړ",
+  "Ran code": "کوډ چلول شو",
   Model: "ماډل",
   "Stop response (Esc)": "ځواب ودروئ (Esc)",
   Submit: "لېږل",

@@ -38,6 +38,7 @@ export default {
   Low: "Mababa",
   Medium: "Katamtaman",
   High: "Mataas",
+  "Ran code": "Pinatakbo ang code",
   Model: "Modelo",
   "Stop response (Esc)": "Ihinto ang sagot (Esc)",
   Submit: "Ipadala",

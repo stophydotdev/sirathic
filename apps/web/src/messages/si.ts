@@ -37,6 +37,7 @@ export default {
   Low: "අඩු",
   Medium: "මධ්‍යම",
   High: "ඉහළ",
+  "Ran code": "කේතය ක්‍රියාත්මක කළා",
   Model: "මාදිලිය",
   "Stop response (Esc)": "පිළිතුර නවත්වන්න (Esc)",
   Submit: "යවන්න",

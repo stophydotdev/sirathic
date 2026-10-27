@@ -38,6 +38,7 @@ export default {
   Low: "Faible",
   Medium: "Moyen",
   High: "Élevé",
+  "Ran code": "Code exécuté",
   Model: "Modèle",
   "Stop response (Esc)": "Arrêter la réponse (Échap)",
   Submit: "Envoyer",

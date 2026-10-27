@@ -37,6 +37,7 @@ export default {
   Low: "نزم",
   Medium: "مامناوەند",
   High: "بەرز",
+  "Ran code": "کۆد جێبەجێکرا",
   Model: "مۆدێل",
   "Stop response (Esc)": "وەستاندنی وەڵام (Esc)",
   Submit: "ناردن",

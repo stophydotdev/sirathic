@@ -37,6 +37,7 @@ export default {
   Low: "منخفض",
   Medium: "متوسط",
   High: "مرتفع",
+  "Ran code": "تنفيذ كود",
   Model: "النموذج",
   "Stop response (Esc)": "إيقاف الإجابة (Esc)",
   Submit: "إرسال",

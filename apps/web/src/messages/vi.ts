@@ -37,6 +37,7 @@ export default {
   Low: "Thấp",
   Medium: "Trung bình",
   High: "Cao",
+  "Ran code": "Đã chạy mã",
   Model: "Mô hình",
   "Stop response (Esc)": "Dừng trả lời (Esc)",
   Submit: "Gửi",

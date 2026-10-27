@@ -38,6 +38,7 @@ export default {
   Low: "Aşağı",
   Medium: "Orta",
   High: "Yüksək",
+  "Ran code": "Kod icra etdi",
   Model: "Model",
   "Stop response (Esc)": "Cavabı dayandır (Esc)",
   Submit: "Göndər",

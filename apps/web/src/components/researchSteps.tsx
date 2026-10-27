@@ -28,6 +28,7 @@ import {
   Loading03Icon,
   Note01Icon,
   Search01Icon,
+  SourceCodeIcon,
   SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { type FC, type ReactNode, useEffect, useState } from "react";
@@ -68,6 +69,7 @@ const summaryOf = (
     0,
   );
   const pages = steps.filter((step) => step.kind === "browse").length;
+  const ranCode = steps.some((step) => step.kind === "code");
   const verses = steps.flatMap((step) => (step.kind === "verses" ? [step.title] : []));
   const tools = steps.flatMap((step) =>
     step.kind === "tool" ? (TOOLS.get(step.tool)?.done(t) ?? []) : [],
@@ -82,6 +84,7 @@ const summaryOf = (
     ...(pages > 0
       ? [pages === 1 ? t("Browsed 1 page") : t("Browsed {count} pages", { count: pages })]
       : []),
+    ...(ranCode ? [t("Ran code")] : []),
     ...(verses.length > 0 ? [`${t("Read")} ${verses.join(", ")}`] : []),
     ...new Set([...tools, ...plugins]),
   ].join(" · ");
@@ -371,6 +374,29 @@ const SearchesRow: FC<{
   );
 };
 
+const CodeRow: FC<{ code: string; active: boolean }> = ({ code, active }) => {
+  const [open, setOpen] = useState(false);
+  const t = useT();
+  return (
+    <div className="flex min-w-0 flex-col gap-2">
+      <button
+        type="button"
+        disabled={!code}
+        onClick={() => setOpen(!open)}
+        className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 text-start text-sm transition-colors"
+      >
+        <HugeiconsIcon icon={SourceCodeIcon} className="text-foreground/70 size-4 shrink-0" />
+        <span className={cn("shrink-0", active && "shimmer")}>{t("Ran code")}</span>
+      </button>
+      {open && (
+        <pre className="border-border/50 bg-muted/30 ms-6 max-h-64 overflow-auto rounded-lg border p-3 text-xs leading-relaxed">
+          {code}
+        </pre>
+      )}
+    </div>
+  );
+};
+
 const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = ({
   step,
   active,
@@ -406,6 +432,8 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
           {t("Read")}
         </Row>
       );
+    case "code":
+      return <CodeRow code={step.code} active={active} />;
     case "plugin":
       return <PluginRow plugin={step.plugin} calls={step.calls} active={active} />;
     case "tool": {

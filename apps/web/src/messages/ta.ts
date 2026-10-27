@@ -38,6 +38,7 @@ export default {
   Low: "குறைவு",
   Medium: "நடுத்தரம்",
   High: "அதிகம்",
+  "Ran code": "குறியீடு இயக்கப்பட்டது",
   Model: "மாடல்",
   "Stop response (Esc)": "பதிலை நிறுத்து (Esc)",
   Submit: "அனுப்பு",

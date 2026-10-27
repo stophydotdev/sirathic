@@ -38,6 +38,7 @@ export default {
   Low: "تۆۋەن",
   Medium: "ئوتتۇرا",
   High: "يۇقىرى",
+  "Ran code": "كود ئىجرا قىلدى",
   Model: "مودېل",
   "Stop response (Esc)": "جاۋابنى توختىتىش (Esc)",
   Submit: "يوللاش",

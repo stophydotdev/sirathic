@@ -36,6 +36,7 @@ export default {
   Low: "低",
   Medium: "中",
   High: "高",
+  "Ran code": "运行了代码",
   Model: "模型",
   "Stop response (Esc)": "停止回答（Esc）",
   Submit: "发送",

@@ -40,6 +40,16 @@ const fetchResult = z.object({
   pages: z.array(z.object({ url: z.string(), error: z.string().optional() })),
 });
 const queryArgs = z.object({ query: z.string() });
+const codeArgs = z
+  .union([
+    z
+      .object({ type: z.literal("programmatic-tool-call"), code: z.string() })
+      .transform((input) => input.code),
+    z
+      .object({ type: z.literal("bash_code_execution"), command: z.string() })
+      .transform((input) => input.command),
+  ])
+  .catch("");
 const LEGACY_SEARCHES = new Set([
   "quranSearch",
   "hadithSearch",
@@ -58,6 +68,7 @@ export type ResearchStep =
   | { kind: "searches"; queries: string[]; results: Read[]; done: boolean }
   | { kind: "browse"; url: string; failed: boolean }
   | { kind: "verses"; title: string; url: string }
+  | { kind: "code"; code: string }
   | { kind: "tool"; tool: string; detail: string }
   | { kind: "plugin"; plugin: string; calls: PluginCall[] };
 
@@ -198,6 +209,10 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
       for (const url of urls) {
         steps.push({ kind: "browse", url, failed: part.isError === true || unread.has(url) });
       }
+      return;
+    }
+    if (part.toolName === "code_execution") {
+      steps.push({ kind: "code", code: codeArgs.parse(part.args) });
       return;
     }
     if (part.toolName === "quranGet") {

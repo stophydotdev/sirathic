@@ -37,6 +37,7 @@ export default {
   Low: "কম",
   Medium: "মধ্যম",
   High: "বেছি",
+  "Ran code": "ক'ড চলালে",
   Model: "মডেল",
   "Stop response (Esc)": "উত্তৰ ৰখাওক (Esc)",
   Submit: "পঠাওক",

@@ -36,6 +36,7 @@ export default {
   Low: "ต่ำ",
   Medium: "กลาง",
   High: "สูง",
+  "Ran code": "รันโค้ด",
   Model: "โมเดล",
   "Stop response (Esc)": "หยุดคำตอบ (Esc)",
   Submit: "ส่ง",

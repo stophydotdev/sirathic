@@ -37,6 +37,7 @@ export default {
   Low: "Bajo",
   Medium: "Medio",
   High: "Alto",
+  "Ran code": "Código ejecutado",
   Model: "Modelo",
   "Stop response (Esc)": "Detener la respuesta (Esc)",
   Submit: "Enviar",
