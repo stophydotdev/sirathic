@@ -5,6 +5,7 @@ import { useAccount } from "@/components/account";
 import { MakerIcon } from "@/components/makerIcon";
 import { ModelMenuContent } from "@/components/settings";
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdownMenu";
+import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import type { ComponentProps, FC } from "react";
@@ -24,9 +25,14 @@ export const ModelPicker: FC<Pick<ComponentProps<typeof ModelMenuContent>, "side
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-muted flex h-8 items-center gap-1.5 rounded-full px-2.5 text-sm font-[470] transition-colors sm:px-3">
+      <DropdownMenuTrigger
+        aria-label={current?.name ?? t("Model")}
+        className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-muted flex h-8 items-center gap-1.5 rounded-full px-2.5 text-sm font-[470] transition-colors sm:px-3"
+      >
         {current && <MakerIcon maker={current.maker} className="size-4 shrink-0" />}
-        <span className="hidden max-w-40 truncate sm:inline">{current?.name ?? t("Model")}</span>
+        <span className={cn("max-w-40 truncate", current && "hidden sm:inline")}>
+          {current?.name ?? t("Model")}
+        </span>
         <HugeiconsIcon icon={ArrowDown01Icon} className="size-3.5" />
       </DropdownMenuTrigger>
       <ModelMenuContent side={side} />
