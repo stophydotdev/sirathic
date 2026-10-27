@@ -276,9 +276,6 @@ export default {
     "Акысыз исламий жооп берүү системасы. Жооптор Куранга, ишенимдүүлүк даражасы көрсөтүлгөн хадистерге жана аалымдардын өкүмдөрүнө таянат жана булактарын көрсөтөт.",
   Privacy: "Купуялык",
   Terms: "Шарттар",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic сизди аккаунтта кармоо үчүн гана зарыл cookie файлдарын колдонот.",
-  "Got it": "Түшүндүм",
   "Build and manage Wix sites": "Wix сайттарын түзүп, башкарыңыз",
   "Build and run automations": "Автоматташтырууларды түзүп, иштетиңиз",
   "Build campaigns and read reports": "Кампанияларды түзүп, отчетторду окуңуз",

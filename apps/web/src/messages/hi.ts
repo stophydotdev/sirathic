@@ -272,9 +272,6 @@ export default {
     "मुफ़्त इस्लामी उत्तर इंजन। जवाब क़ुरआन, दर्जे के साथ हदीसों और विद्वानों के फ़तवों पर आधारित होते हैं, और अपने स्रोत बताते हैं।",
   Privacy: "गोपनीयता",
   Terms: "शर्तें",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic आपको साइन इन रखने के लिए केवल ज़रूरी कुकीज़ का इस्तेमाल करता है।",
-  "Got it": "ठीक है",
   "Build and manage Wix sites": "Wix साइट बनाएँ और संभालें",
   "Build and run automations": "ऑटोमेशन बनाएँ और चलाएँ",
   "Build campaigns and read reports": "कैंपेन बनाएँ और रिपोर्ट पढ़ें",

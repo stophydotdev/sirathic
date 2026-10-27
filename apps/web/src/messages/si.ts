@@ -270,9 +270,6 @@ export default {
     "නොමිලේ ලබාදෙන ඉස්ලාමීය පිළිතුරු එන්ජිම. පිළිතුරු කුර්ආනය, තත්ත්වය සඳහන් හදීස් සහ විද්වතුන්ගේ තීන්දු මත පදනම් වන අතර ඒවායේ මූලාශ්‍ර සඳහන් කරයි.",
   Privacy: "රහස්‍යතාව",
   Terms: "නියමයන්",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic ඔබව පුරනය වී තබා ගැනීමට අත්‍යවශ්‍ය කුකී පමණක් භාවිත කරයි.",
-  "Got it": "තේරුණා",
   "Build and manage Wix sites": "Wix අඩවි සාදා කළමනාකරණය කරන්න",
   "Build and run automations": "ස්වයංක්‍රීයකරණ සාදා ක්‍රියාත්මක කරන්න",
   "Build campaigns and read reports": "ප්‍රචාරණ සාදා වාර්තා කියවන්න",

@@ -274,9 +274,6 @@ export default {
     "موتور پاسخ‌گویی اسلامی رایگان. پاسخ‌ها بر پایهٔ قرآن، احادیث همراه با درجهٔ اعتبار و فتاوای علما است و منابع خود را ذکر می‌کند.",
   Privacy: "حریم خصوصی",
   Terms: "شرایط",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic فقط از کوکی‌های ضروری برای وارد نگه داشتن شما استفاده می‌کند.",
-  "Got it": "متوجه شدم",
   "Build and manage Wix sites": "سایت‌های Wix را بسازید و مدیریت کنید",
   "Build and run automations": "خودکارسازی‌ها را بسازید و اجرا کنید",
   "Build campaigns and read reports": "کمپین بسازید و گزارش‌ها را بخوانید",

@@ -268,9 +268,6 @@ export default {
     "เครื่องมือตอบคำถามเกี่ยวกับอิสลามที่ใช้ฟรี คำตอบมาจากอัลกุรอาน หะดีษพร้อมระดับความถูกต้อง และคำวินิจฉัยของนักวิชาการ พร้อมระบุแหล่งที่มา",
   Privacy: "ความเป็นส่วนตัว",
   Terms: "ข้อกำหนด",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic ใช้เฉพาะคุกกี้ที่จำเป็นเพื่อให้คุณยังคงลงชื่อเข้าใช้อยู่",
-  "Got it": "เข้าใจแล้ว",
   "Build and manage Wix sites": "สร้างและจัดการเว็บไซต์ Wix",
   "Build and run automations": "สร้างและรันระบบอัตโนมัติ",
   "Build campaigns and read reports": "สร้างแคมเปญและอ่านรายงาน",

@@ -277,9 +277,6 @@ export default {
     "Pulsuz İslami cavab sistemi. Cavablar Qurana, səhihlik dərəcəsi göstərilmiş hədislərə və alimlərin hökmlərinə əsaslanır və mənbələrini göstərir.",
   Privacy: "Məxfilik",
   Terms: "Şərtlər",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic yalnız sizi daxil olmuş saxlamaq üçün zəruri kukilərdən istifadə edir.",
-  "Got it": "Aydındır",
   "Build and manage Wix sites": "Wix saytlarını yaradın və idarə edin",
   "Build and run automations": "Avtomatlaşdırmalar yaradın və işə salın",
   "Build campaigns and read reports": "Kampaniyalar yaradın və hesabatları oxuyun",

@@ -274,9 +274,6 @@ export default {
     "Бесплатная исламская система ответов. Ответы опираются на Коран, хадисы с оценкой достоверности и мнения учёных и указывают свои источники.",
   Privacy: "Конфиденциальность",
   Terms: "Условия",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic использует только необходимые файлы cookie, чтобы вы оставались в системе.",
-  "Got it": "Понятно",
   "Build and manage Wix sites": "Создавайте сайты Wix и управляйте ими",
   "Build and run automations": "Создавайте и запускайте автоматизации",
   "Build campaigns and read reports": "Создавайте кампании и читайте отчёты",

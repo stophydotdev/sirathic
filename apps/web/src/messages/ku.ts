@@ -276,9 +276,6 @@ export default {
     "بزوێنەری وەڵامی ئیسلامی بەخۆڕایی. وەڵامەکان لە قورئان، فەرموودەکان لەگەڵ پلەی دروستییان و ڕای زانایانەوە دێن و سەرچاوەکانیان دەڵێن.",
   Privacy: "تایبەتمەندی",
   Terms: "مەرجەکان",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic تەنها کووکیی پێویست بەکاردەهێنێت بۆ ئەوەی لە ژوورەوە بمێنیتەوە.",
-  "Got it": "تێگەیشتم",
   "Build and manage Wix sites": "ماڵپەڕەکانی Wix دروست بکە و بەڕێوەیان ببە",
   "Build and run automations": "ئۆتۆماتکردنەکان دروست بکە و کارایان بکە",
   "Build campaigns and read reports": "کەمپەین دروست بکە و ڕاپۆرتەکان بخوێنەوە",

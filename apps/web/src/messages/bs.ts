@@ -275,9 +275,6 @@ export default {
     "Besplatni islamski sistem odgovora. Odgovori se oslanjaju na Kur'an, hadise s ocjenom vjerodostojnosti i stavove učenjaka i navode svoje izvore.",
   Privacy: "Privatnost",
   Terms: "Uslovi",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic koristi samo neophodne kolačiće da vas drži prijavljenim.",
-  "Got it": "Razumijem",
   "Build and manage Wix sites": "Izgradite i upravljajte Wix stranicama",
   "Build and run automations": "Izgradite i pokrenite automatizacije",
   "Build campaigns and read reports": "Izgradite kampanje i čitajte izvještaje",

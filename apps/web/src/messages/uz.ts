@@ -278,9 +278,6 @@ export default {
     "Бепул исломий жавоблар тизими. Жавоблар Қуръон, саҳиҳлик даражаси кўрсатилган ҳадислар ва уламолар ҳукмларига асосланади ва манбаларини кўрсатади.",
   Privacy: "Махфийлик",
   Terms: "Шартлар",
-  "Sirathic uses only essential cookies to keep you signed in.":
-    "Sirathic сизни тизимда сақлаш учун фақат зарур cookie файлларидан фойдаланади.",
-  "Got it": "Тушунарли",
   "Build and manage Wix sites": "Wix сайтларини яратинг ва бошқаринг",
   "Build and run automations": "Автоматлаштиришларни яратинг ва ишга туширинг",
   "Build campaigns and read reports": "Кампаниялар яратинг ва ҳисоботларни ўқинг",
