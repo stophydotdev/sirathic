@@ -191,7 +191,15 @@ test("every tool the prompt files name is a real tool", () => {
     ...Object.keys(skillTools("o")),
     ...Object.keys(pluginTools("o", "/c/test")),
     ...Object.keys(memoryTools(undefined)),
-    ...Object.keys(fileTools({ owner: "o", incognito: false, research: true, sandbox: undefined })),
+    ...Object.keys(
+      fileTools({
+        owner: "o",
+        incognito: false,
+        research: true,
+        sandbox: undefined,
+        link: (text) => text,
+      }),
+    ),
     ...Object.keys(codeTools("sirathic-noor-1-flash")),
     LOAD_SKILL,
     CLARIFYING,

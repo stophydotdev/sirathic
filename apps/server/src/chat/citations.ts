@@ -86,7 +86,7 @@ export function citations(history: UIMessage[]) {
     return byUrl.get(`https://quran.com/${last.surah}/${last.from}`) ?? number;
   };
 
-  const link = (text: string, before: string) =>
+  const link = (text: string, before = "") =>
     text
       .replace(NATIVE, (_, space: string, payload: string) => {
         const number = byUrl.get(payload.trim());
@@ -139,5 +139,5 @@ export function citations(history: UIMessage[]) {
     };
   }
 
-  return { add, numberOf: (url: string) => byUrl.get(url), transform };
+  return { add, link, numberOf: (url: string) => byUrl.get(url), transform };
 }

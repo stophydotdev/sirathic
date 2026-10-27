@@ -284,6 +284,7 @@ export function chatResponse({
             incognito: owner === undefined,
             research: mode === "research",
             sandbox: noorModel(modelName) !== undefined ? sandbox : undefined,
+            link: sources.link,
           })),
         ...connectors.tools,
       };

@@ -45,6 +45,7 @@ mock.module(`${src}/files/store.ts`, () => ({
 
 const { uploadRoutes } = await import(`${src}/files/upload.ts`);
 const { fileTools, sandboxFiles } = await import(`${src}/chat/fileTools.ts`);
+const { citations } = await import(`${src}/chat/citations.ts`);
 
 test("an upload over the limit with no content-length is refused before the body is read", async () => {
   const chunk = new Uint8Array(1024 * 1024);
@@ -171,7 +172,13 @@ test("binary data that is no known type is refused", () => {
 
 const call = { toolCallId: "call", messages: [] };
 
-const asked = { owner: "user-a", incognito: false, research: false, sandbox: undefined };
+const asked = {
+  owner: "user-a",
+  incognito: false,
+  research: false,
+  sandbox: undefined,
+  link: (text: string) => text,
+};
 
 test("a text file the model writes is saved to the library under its name", async () => {
   saved.length = 0;
@@ -189,6 +196,20 @@ test("a text file the model writes is saved to the library under its name", asyn
     },
   ]);
   expect(result).toMatchObject({ files: [{ name: "study-plan.md", mediaType: "text/plain" }] });
+});
+
+test("a research report links its [n] numbers to the sources found in the chat", async () => {
+  saved.length = 0;
+  const sources = citations([]);
+  sources.add("https://islamqa.info/en/answers/1");
+  const tools = fileTools({ ...asked, research: true, link: sources.link });
+  await tools.create_research_report?.execute?.(
+    { title: "Zakat on gold", content: "Gold jewelry is zakatable [1]." },
+    call,
+  );
+  expect(saved.map(({ text }) => text)).toEqual([
+    "Gold jewelry is zakatable [1](https://islamqa.info/en/answers/1).",
+  ]);
 });
 
 test("an incognito chat saves no file and tells the model why", async () => {
