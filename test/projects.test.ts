@@ -6,47 +6,11 @@ import { fallenOut } from "../apps/server/src/bots/summary";
 import { BOT_HISTORY, recentTurns } from "../apps/server/src/bots/tools";
 import { taughtNote } from "../apps/server/src/bots/notes";
 import { reviewed } from "../apps/server/src/bots/review";
-import { projectRules, settingsInProject } from "../apps/server/src/projects/rules";
+import { settingsInProject } from "../apps/server/src/projects/rules";
 import { projectUpdate } from "../apps/server/src/projects/projects";
 import { afterReview, isMemorized } from "../apps/server/src/bots/study";
 import { changedFacts, matchingFacts } from "../apps/server/src/account/memory";
 import { containsLink } from "../apps/server/src/shared/projects";
-
-test("a bot keeps to its job, and a bot with no job sets one first", () => {
-  const coach = {
-    name: "Ramadan Coach",
-    title: "fasting guide",
-    instructions: "Daily tips.",
-    kind: "bot",
-  } as const;
-  expect(projectRules(coach)).toContain('You are "Ramadan Coach", fasting guide');
-  expect(projectRules(coach)).toContain("Daily tips.");
-  expect(projectRules(undefined)).toBe("");
-  const fresh = { name: "New bot", title: "", instructions: "", kind: "bot" } as const;
-  expect(projectRules(fresh)).toContain("set_bot_job");
-  expect(projectRules(fresh, false)).not.toContain("set_bot_job");
-  for (const bot of [coach, fresh]) {
-    expect(projectRules(bot)).toContain("Do things only when they tell you to.");
-    expect(projectRules(bot)).not.toContain("offer one routine");
-  }
-});
-
-test("a routine post keeps the bot's voice without the look-it-up line", () => {
-  const coach = {
-    name: "Ramadan Coach",
-    title: "fasting guide",
-    instructions: "Daily tips.",
-    kind: "bot",
-  } as const;
-  const fresh = { ...coach, instructions: "" };
-  for (const bot of [coach, fresh]) {
-    const live = projectRules(bot);
-    const routine = projectRules(bot, false);
-    expect([live, routine].map((rules) => rules.includes("a warm friend"))).toEqual([true, true]);
-    expect([live, routine].map((rules) => rules.includes("Let me check"))).toEqual([true, false]);
-    expect([live, routine].map((rules) => rules.includes("SKIP"))).toEqual([false, true]);
-  }
-});
 
 test("a bot's own memory replaces the main memory and the default keeps it", () => {
   const settings = { madhab: "hanafi", memory: ["Lives in Kigali"] };
@@ -202,16 +166,7 @@ test.each([
   expect(profileRejection(text)).toContain(reason);
 });
 
-test("a live bot sees its profile and a bot without a live turn does not", () => {
-  const bot = {
-    name: "Hifz",
-    title: "",
-    instructions: "Help me memorize.",
-    kind: "bot",
-    profile: [{ text: "Now on 111", source: "guessed", at: Date.UTC(2026, 9, 26) }],
-  } as const;
-  expect(projectRules(bot)).toContain("- Now on 111 (guessed, 2026-10-26)");
-  expect(projectRules(bot, false)).not.toContain("Now on 111");
+test("a profile fact over the character limit is rejected", () => {
   expect(
     projectUpdate.safeParse({ profile: [{ text: "x".repeat(201), source: "said", at: 1 }] })
       .success,
@@ -255,19 +210,6 @@ test("a review changes the note only when it says so with a valid new note", () 
     note: "Use simple English.",
     reason: "uses simpler words",
   });
-});
-
-test("a bot's note reaches its live rules and never its background rules", () => {
-  const tutor = {
-    name: "Tutor",
-    title: "",
-    instructions: "Teach me.",
-    kind: "bot",
-    note: "Keep answers short.",
-  } as const;
-  expect(projectRules(tutor)).toContain("Keep answers short.");
-  expect(projectRules(tutor, false)).not.toContain("Keep answers short.");
-  expect(projectRules({ ...tutor, note: "" })).not.toContain("teach them");
 });
 
 const chatOf = (messages: number) =>

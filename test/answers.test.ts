@@ -1,74 +1,184 @@
 import { expect, test } from "bun:test";
+import { readdirSync, readFileSync } from "node:fs";
 import { MockLanguageModelV4 } from "ai/test";
 import { tool } from "ai";
 import { z } from "zod";
-import type { Mode } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
-import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
+import { fill } from "../apps/server/src/chat/prompts/build";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
 import { answerAgent } from "../apps/server/src/chat/response";
 import { routineTools } from "../apps/server/src/automations/tools";
-import { CHECK_FIRST } from "../apps/server/src/projects/rules";
+import { memoryTools } from "../apps/server/src/account/memory";
+import { botTools } from "../apps/server/src/bots/tools";
+import { codeTools } from "../apps/server/src/chat/codeTools";
+import { fileTools } from "../apps/server/src/chat/fileTools";
+import { LOAD_SKILL, loadSkill } from "../apps/server/src/chat/skills/builtIn";
+import { CLARIFYING, sirathicTools } from "../apps/server/src/chat/tools";
+import { pluginTools } from "../apps/server/src/plugins/tools";
+import { skillTools } from "../apps/server/src/skills/tools";
 import server from "../apps/server/src/index";
 import {
   answerWith,
   chatTurn,
+  noInput,
   type ModelCall,
+  promptFor,
   scriptedModel,
   toolNames,
   usage,
 } from "./answerHelpers";
 
-const SITUATIONAL = ["<copyright_restrictions>", "<mathematical_expressions>"];
+test("a prompt slot with no value throws, and a value is never read as a slot", () => {
+  expect(() => fill("Hello {name}", {})).toThrow("{name}");
+  expect(fill("{a} and {a}", { a: "{b}" })).toBe("{b} and {b}");
+});
+
+const COACH = { name: "Coach", title: "prayer guide", instructions: "Daily tips." };
 
 test.each([
-  ["what is tawakkul", []],
-  ["zakat on gold nisab", ["<mathematical_expressions>"]],
-  ["lyrics of tala al badru", ["<copyright_restrictions>"]],
-  ["write a khutbah on patience", ["<copyright_restrictions>"]],
-])("%s gets the situational rules %p", (question, sections) => {
-  const rules = answerRules(DEFAULT_SETTINGS, question, "quick");
-  expect(SITUATIONAL.filter((tag) => rules.includes(tag))).toEqual(sections);
+  ["a quick chat", {}, ["<quick>", "### Answer Format"], ["<research>", "<bot>", "<routine>"]],
+  [
+    "a research chat",
+    { mode: "research" },
+    ["<research>", "### Answer Format"],
+    ["<quick>", "<bot>", "<routine>"],
+  ],
+  [
+    "a bot chat",
+    { project: COACH },
+    ["<bot>", "Daily tips."],
+    ["<quick>", "<routine>", "### Answer Format"],
+  ],
+  [
+    "a bot routine",
+    { project: COACH, unattended: true },
+    ["<bot>", "<routine>"],
+    ["<quick>", "### Answer Format"],
+  ],
+  [
+    "a routine",
+    { unattended: true },
+    ["<quick>", "<routine>", "### Answer Format"],
+    ["<bot>", "<research>"],
+  ],
+] as const)(
+  "%s builds its prompt from the core and its own files",
+  (_name, overrides, has, lacks) => {
+    const prompt = promptFor(overrides);
+    expect([
+      has.every((part) => prompt.includes(part)),
+      lacks.some((part) => prompt.includes(part)),
+    ]).toEqual([true, false]);
+  },
+);
+
+test("a bot with no job sets one first, and a routine run does not", () => {
+  const fresh = { ...COACH, instructions: "" };
+  expect([
+    promptFor({ project: fresh }).includes("set_bot_job"),
+    promptFor({ project: fresh, unattended: true }).includes("set_bot_job"),
+  ]).toEqual([true, false]);
 });
 
-test("short answers leave out the lesson structure", () => {
-  const question = "is a mortgage halal";
-  expect(answerRules(DEFAULT_SETTINGS, question, "quick")).toContain("<structure>");
+test("a bot's profile and teaching note reach live chats and never routine runs", () => {
+  const bot = {
+    ...COACH,
+    note: "Keep answers short.",
+    profile: [{ text: "Now on 111", source: "guessed", at: Date.UTC(2026, 9, 26) }],
+  } as const;
+  const [live, routine] = [false, true].map((unattended) =>
+    promptFor({ project: bot, unattended }),
+  );
   expect(
-    answerRules({ ...DEFAULT_SETTINGS, answerLength: "short" }, question, "quick"),
-  ).not.toContain("<structure>");
+    [live, routine].map((prompt) => prompt?.includes("- Now on 111 (guessed, 2026-10-26)")),
+  ).toEqual([true, false]);
+  expect([live, routine].map((prompt) => prompt?.includes("Keep answers short."))).toEqual([
+    true,
+    false,
+  ]);
 });
 
-test.each<[Mode, string]>([
-  ["quick", "250 to 400 words"],
-  ["research", "600 to 900 words"],
-])("%s mode gets its own answer length", (mode, length) => {
-  expect(answerRules(DEFAULT_SETTINGS, "is a mortgage halal", mode)).toContain(length);
+const abilities = (offered: Parameters<typeof promptFor>[0]) =>
+  promptFor(offered)
+    .split("<abilities>")[1]
+    ?.split("When something")[0]
+    ?.trim()
+    .split("\n")
+    .slice(1);
+
+test("the abilities list names only what is on in this chat", () => {
+  expect(abilities({})).toEqual(["- None in this run."]);
+  expect(
+    abilities({
+      offered: { code_execution: noInput, search_plugins: noInput },
+      skills: [{ name: "routines", when: "x", text: "" }],
+      remembers: true,
+    }),
+  ).toEqual([
+    "- Set up routines, which are reminders and answers that arrive on a schedule, and change, pause or delete them.",
+    "- Remember what they tell you about themselves, across chats.",
+    "- Do exact calculations, such as zakat, inheritance shares and dates.",
+    "- Find and install plugins that connect other apps.",
+  ]);
 });
 
 test("the prompt lists what the user told Sirathic about themselves", () => {
-  const prompt = searchPrompt(
-    new Date(0),
-    "quick",
-    { ...DEFAULT_SETTINGS, memory: ["is a revert", "studies in the UK"] },
-    undefined,
-  );
+  const prompt = promptFor({
+    settings: { ...DEFAULT_SETTINGS, memory: ["is a revert", "studies in the UK"] },
+  });
   expect(prompt).toContain(
     "What the user has told you about themselves:\n- is a revert\n- studies in the UK",
   );
 });
 
-const identity = (persona: string | undefined) =>
-  searchPrompt(new Date(0), "quick", DEFAULT_SETTINGS, persona).match(/You are [^.]*\./gu);
+test("a bot's prompt names the bot, and a main chat's names Sirathic", () => {
+  expect(promptFor({ project: COACH })).toContain(
+    'When asked about yourself, you are "Coach", prayer guide.',
+  );
+  expect(promptFor()).toContain(
+    "When asked about yourself, you are Sirathic, an Islamic answering engine.",
+  );
+});
 
-test("a bot's system prompt names the bot, and a main chat's names Sirathic", () => {
-  expect(identity('"Hadith Teacher", Daily hadith teacher')).toEqual([
-    `You are "Hadith Teacher", Daily hadith teacher, the user's own bot in Sirathic, an Islamic answering engine.`,
+test("a school's position is given alone to short answers and first to the others", () => {
+  const hanafi = { ...DEFAULT_SETTINGS, madhab: "hanafi" } as const;
+  const [short, full] = [
+    promptFor({ settings: { ...hanafi, answerLength: "short" } }),
+    promptFor({ settings: hanafi }),
+  ];
+  expect(
+    [short, full].map((prompt) => prompt.includes("then note where the other schools differ")),
+  ).toEqual([false, true]);
+  expect(short).toContain("bring in the other schools only when they ask");
+});
+
+const TOOL_WORD = /\b[a-z]+(?:_[a-z]+)+\b/gu;
+
+test("every tool the prompt files name is a real tool", () => {
+  const real = new Set([
+    ...Object.keys(sirathicTools(() => 0)),
+    ...Object.keys(routineTools({ owner: "o", timezone: "UTC" })),
+    ...Object.keys(botTools({ id: "b", owner: "o" })),
+    ...Object.keys(skillTools("o")),
+    ...Object.keys(pluginTools("o")),
+    ...Object.keys(memoryTools(undefined)),
+    ...Object.keys(fileTools({ owner: "o", incognito: false, research: true, sandbox: undefined })),
+    ...Object.keys(codeTools("sirathic-noor-1-flash")),
+    LOAD_SKILL,
+    CLARIFYING,
   ]);
-  expect(identity(undefined)).toEqual([
-    "You are Sirathic, an Islamic answering engine.",
-    "You are Sirathic, an Islamic answering engine.",
-  ]);
+  const dir = new URL("../apps/server/src/chat/prompts/", import.meta.url);
+  const named = readdirSync(dir)
+    .filter((file) => file.endsWith(".md"))
+    .flatMap((file) => {
+      const text = readFileSync(new URL(file, dir), "utf8").replaceAll(
+        /<\/?[a-z_]+>|\{[a-z_]+\}/gu,
+        "",
+      );
+      return (text.match(TOOL_WORD) ?? []).map((word) => ({ file, word }));
+    });
+  expect(named.length).toBeGreaterThan(15);
+  expect(named.filter(({ word }) => !real.has(word))).toEqual([]);
 });
 
 test("an answer keeps calling tools until the model replies, with no step cap", async () => {
@@ -103,9 +213,10 @@ test("an answer keeps calling tools until the model replies, with no step cap", 
     tools: { lookup: tool({ inputSchema: z.object({}), execute: async () => "more rows" }) },
     mode: "quick",
     settings: DEFAULT_SETTINGS,
-    rules: "",
+    instructions: "",
+    mentioned: "",
     firstStep: undefined,
-    persona: undefined,
+    texting: false,
     skills: [],
     loaded: [],
     confirm: () => false,
@@ -149,15 +260,15 @@ test("a chat request with a system message is refused before anything runs", asy
 
 test("a bot's quick reply asks for low effort and nothing else changes", async () => {
   const cases = [
-    { persona: '"Coach"', mode: "quick", effort: "low" },
-    { persona: '"Coach"', mode: "research", effort: "high" },
-    { persona: undefined, mode: "quick", effort: undefined },
+    { texting: true, mode: "quick", effort: "low" },
+    { texting: true, mode: "research", effort: "high" },
+    { texting: false, mode: "quick", effort: undefined },
   ] as const;
   const efforts = await Promise.all(
-    cases.map(async ({ persona, mode }) => {
+    cases.map(async ({ texting, mode }) => {
       const { model, seen } = scriptedModel([]);
       await answerWith(model, {
-        persona,
+        texting,
         mode,
         answerOptions: {
           anthropic: {
@@ -232,90 +343,28 @@ test.each<[string, ModelCall["toolChoice"]]>([
 const HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 
-test("the rules close every step, the forced first search included, and say who sent them", async () => {
-  const { model, seen } = scriptedModel(["search_web"]);
-  await answerWith(model, { firstStep: "search" }).generate({ prompt: "hi" });
-  expect(seen.map((call) => call.prompt.at(-1))).toMatchObject(
-    Array.from({ length: 2 }, () => ({ role: "system", content: `${HEADER}RULES` })),
+const researchSkill = { name: "research", when: "x", text: "Split the question." };
+
+test("the instructions go in once, and the closing rules carry only skills, from the step that has them", async () => {
+  const { model, seen } = scriptedModel(["load_skill", "search_web"], ["research"]);
+  await answerWith(model, {
+    instructions: "CORE",
+    mentioned: "\n\nThe user called @Hadith.",
+    skills: [researchSkill],
+    tools: { search_web: noInput, load_skill: loadSkill([researchSkill]) },
+  }).generate({ prompt: "hi" });
+  expect(seen.map((call) => call.prompt[0])).toMatchObject(
+    Array.from({ length: 3 }, () => ({ role: "system", content: "CORE" })),
   );
-});
-
-const checkingModel = (saysFirst: string) => {
-  const seen: ModelCall[] = [];
-  const model = new MockLanguageModelV4({
-    doGenerate: async (options) => {
-      seen.push(options);
-      const first = seen.length === 1;
-      return {
-        content: first
-          ? [
-              ...(saysFirst ? [{ type: "text" as const, text: saysFirst }] : []),
-              { type: "tool-call" as const, toolCallId: "c1", toolName: "search_web", input: "{}" },
-            ]
-          : [{ type: "text" as const, text: "Done." }],
-        finishReason: { unified: first ? "tool-calls" : "stop", raw: undefined },
-        usage,
-        warnings: [],
-      };
-    },
-  });
-  return { model, seen };
-};
-
-test.each([
-  ["Let me check.", [`${HEADER}RULES${CHECK_FIRST}`, `${HEADER}RULES`]],
-  ["", [`${HEADER}RULES${CHECK_FIRST}`, `${HEADER}RULES${CHECK_FIRST}`]],
-])(
-  "the check line stays until the bot has written something (%p first)",
-  async (saysFirst, rules) => {
-    const { model, seen } = checkingModel(saysFirst);
-    await answerWith(model, { rules: `RULES${CHECK_FIRST}` }).generate({ prompt: "hi" });
-    expect(seen.map((call) => call.prompt.at(-1)?.content)).toEqual(rules);
-  },
-);
-
-test("short answers name a school only from a source, and give the user's school alone", () => {
-  const hanafi = { ...DEFAULT_SETTINGS, madhab: "hanafi" } as const;
-  const short = searchPrompt(new Date(0), "quick", { ...hanafi, answerLength: "short" }, undefined);
-  const full = searchPrompt(new Date(0), "quick", hanafi, undefined);
-  expect(
-    [short, full].map((prompt) => prompt.includes("only from a source in front of you")),
-  ).toEqual([true, false]);
-  expect(
-    [short, full].map((prompt) => prompt.includes("then note where the other schools differ")),
-  ).toEqual([false, true]);
-  expect(short).toContain("bring in the other schools only when they ask");
-});
-
-const STATIC_RULES = [
-  "<citations>",
-  "<islamic_sources>",
-  "<tone>",
-  "<headers>",
-  "<lists_and_paragraphs>",
-  "<summaries_and_conclusions>",
-];
-
-test("the rules that never change per request sit in the system prompt, not the closing rules", () => {
-  const prompt = searchPrompt(new Date(0), "quick", DEFAULT_SETTINGS, undefined);
-  const closing = answerRules(DEFAULT_SETTINGS, "is a mortgage halal", "quick");
-  expect([
-    STATIC_RULES.filter((tag) => prompt.includes(tag)),
-    STATIC_RULES.filter((tag) => closing.includes(tag)),
-  ]).toEqual([STATIC_RULES, []]);
-});
-
-test("short answers leave headers and summaries out of the system prompt", () => {
-  const prompt = searchPrompt(
-    new Date(0),
-    "quick",
-    { ...DEFAULT_SETTINGS, answerLength: "short" },
-    undefined,
-  );
-  expect(STATIC_RULES.filter((tag) => prompt.includes(tag))).toEqual([
-    "<citations>",
-    "<islamic_sources>",
-    "<tone>",
-    "<lists_and_paragraphs>",
+  expect(seen.map((call) => call.prompt.at(-1)?.content)).toEqual([
+    `${HEADER}The user called @Hadith.`,
+    `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
+    `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
   ]);
+});
+
+test("with no skill loaded or called, no closing rules message is sent", async () => {
+  const { model, seen } = scriptedModel([]);
+  await answerWith(model, { skills: [researchSkill] }).generate({ prompt: "hi" });
+  expect(seen[0]?.prompt.map((message) => message.role)).toEqual(["system", "user"]);
 });

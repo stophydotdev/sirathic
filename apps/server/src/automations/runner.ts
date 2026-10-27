@@ -11,7 +11,7 @@ import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
 import { projectOfChat } from "../projects/projects";
-import { botIdentity, projectRules, settingsInProject } from "../projects/rules";
+import { settingsInProject } from "../projects/rules";
 import { reasonOf, StatusError } from "../http";
 import { openSession, saveSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
@@ -159,9 +159,8 @@ async function answerPrompt(
         return DEFAULT_SETTINGS;
       }),
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
-    projectRules: Promise.resolve(projectRules(project, false)),
+    project: Promise.resolve(project),
     userSkills: Promise.resolve([]),
-    persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
     options: {
       answer: answerOptions({
         effort: defaultEffort({ mode: runMode, noor: noorModel(modelName) !== undefined }),

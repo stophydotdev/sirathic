@@ -18,7 +18,7 @@ import { connectedTools, finishConnect } from "./plugins/connections";
 import { track } from "./chat/events";
 import { uploadRoutes } from "./files/upload";
 import { projectOfChat } from "./projects/projects";
-import { botIdentity, projectRules, settingsInProject } from "./projects/rules";
+import { settingsInProject } from "./projects/rules";
 import {
   appLanguage,
   type ChatMessage,
@@ -173,10 +173,7 @@ app.post("/api/chat", (c) =>
       connected: project.then((inProject) =>
         connectedTools(by, inProject?.kind === "bot" ? inProject.plugins : undefined),
       ),
-      projectRules: project.then((inProject) => projectRules(inProject)),
-      persona: project.then((inProject) =>
-        inProject?.kind === "bot" ? botIdentity(inProject) : undefined,
-      ),
+      project,
       userSkills,
       options: {
         answer: answerOptions({

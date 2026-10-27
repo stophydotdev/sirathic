@@ -3,6 +3,7 @@ import { MockLanguageModelV4 } from "ai/test";
 import { z } from "zod";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
+import { instructions } from "../apps/server/src/chat/prompts/build";
 import { answerAgent, chatResponse } from "../apps/server/src/chat/response";
 
 export const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>
@@ -57,9 +58,10 @@ export const answerWith = (
     tools: { search_web: noInput, update_memory: noInput },
     mode: "quick",
     settings: DEFAULT_SETTINGS,
-    rules: "RULES",
+    instructions: "INSTRUCTIONS",
+    mentioned: "",
     firstStep: undefined,
-    persona: undefined,
+    texting: false,
     skills: [],
     loaded: [],
     confirm: () => false,
@@ -109,9 +111,8 @@ export const chatTurn = async (
     abortSignal: new AbortController().signal,
     preferences: Promise.resolve(DEFAULT_SETTINGS),
     connected: Promise.resolve({ tools: {}, close: async () => [] }),
-    projectRules: Promise.resolve(""),
+    project: Promise.resolve(undefined),
     userSkills: Promise.resolve([]),
-    persona: Promise.resolve(undefined),
     title: undefined,
     save: async () => {},
     record: () => {},
@@ -121,3 +122,17 @@ export const chatTurn = async (
   });
   return Object.assign(seen, { body: await response.text() });
 };
+
+export const promptFor = (overrides: Partial<Parameters<typeof instructions>[0]> = {}) =>
+  instructions({
+    now: new Date(0),
+    mode: "quick",
+    settings: DEFAULT_SETTINGS,
+    project: undefined,
+    unattended: false,
+    offered: {},
+    skills: [],
+    remembers: false,
+    toolNotes: [],
+    ...overrides,
+  });

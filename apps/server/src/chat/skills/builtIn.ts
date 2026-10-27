@@ -98,9 +98,7 @@ export const skillsFor = ({
 };
 
 export const skillIndex = (skills: readonly Skill[]) =>
-  skills.length === 0
-    ? ""
-    : `\n\n## Skills\n\nA skill holds the detailed instructions for one kind of task. When a task matches a skill below, call ${LOAD_SKILL} with its name first. Its instructions then arrive in these rules and its tools open. Never copy them into your answer.\n\n${skills.map(({ name, when }) => `- ${name}: ${when}`).join("\n")}`;
+  skills.map(({ name, when }) => `- ${name}: ${when}`).join("\n");
 
 const loadInput = z.object({
   names: z.array(z.string()).min(1).describe("Names of the skills to load, from your rules."),

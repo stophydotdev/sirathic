@@ -19,7 +19,7 @@ import {
 } from "ai";
 import { memoryTools } from "../account/memory";
 import { noorModel } from "../models/noor";
-import { CHECK_FIRST } from "../projects/rules";
+import type { RulesProject } from "../projects/rules";
 import type { ProviderOptions } from "../models/subscription";
 import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
@@ -41,7 +41,7 @@ import { skillTools } from "../skills/tools";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults } from "./history";
-import { answerRules, searchPrompt } from "./prompts/shared";
+import { instructions } from "./prompts/build";
 import {
   closedTools,
   loadedNames,
@@ -49,7 +49,6 @@ import {
   loadSkill,
   LOAD_SKILL,
   type Skill,
-  skillIndex,
   type UserSkill,
   skillsFor,
 } from "./skills/builtIn";
@@ -73,9 +72,10 @@ export function answerAgent({
   tools,
   mode,
   settings,
-  rules,
+  instructions: system,
+  mentioned,
   firstStep,
-  persona,
+  texting,
   skills,
   loaded,
   confirm,
@@ -86,9 +86,10 @@ export function answerAgent({
   tools: ToolSet;
   mode: Mode;
   settings: Settings;
-  rules: string;
+  instructions: string;
+  mentioned: string;
   firstStep: keyof typeof FIRST_STEP | undefined;
-  persona: string | undefined;
+  texting: boolean;
   skills: readonly Skill[];
   loaded: readonly string[];
   confirm: (call: { toolName: string; input: unknown }) => boolean;
@@ -96,12 +97,12 @@ export function answerAgent({
   answerOptions: ProviderOptions;
 }) {
   const options: ProviderOptions =
-    persona !== undefined && mode === "quick"
+    texting && mode === "quick"
       ? { ...answerOptions, anthropic: { ...answerOptions.anthropic, effort: "low" } }
       : answerOptions;
   return new ToolLoopAgent({
     model,
-    instructions: searchPrompt(new Date(), mode, settings, persona),
+    instructions: system,
     tools,
     stopWhen: hasToolCall(CLARIFYING),
     toolApproval: ({ toolCall }) => (confirm(toolCall) ? "user-approval" : undefined),
@@ -110,17 +111,12 @@ export function answerAgent({
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
       const closed = closedTools(skills, open);
       const forcing = stepNumber === 0 ? firstStep : undefined;
+      const skillText = (loadedText(skills, open) + mentioned).trim();
       return {
         messages: [
           ...initialMessages.map(shorten),
           ...responseMessages,
-          {
-            role: "system",
-            content:
-              RULES_HEADER +
-              (steps.some((step) => step.text.trim()) ? rules.replace(CHECK_FIRST, "") : rules) +
-              loadedText(skills, open),
-          },
+          ...(skillText ? [{ role: "system" as const, content: RULES_HEADER + skillText }] : []),
         ],
         activeTools:
           forcing === "skill"
@@ -147,9 +143,8 @@ export function chatResponse({
   abortSignal,
   preferences,
   connected,
-  projectRules,
+  project,
   userSkills,
-  persona,
   options,
   title,
   save,
@@ -171,9 +166,8 @@ export function chatResponse({
   abortSignal: AbortSignal;
   preferences: Promise<Settings>;
   connected: ReturnType<typeof connectedTools>;
-  projectRules: Promise<string>;
+  project: Promise<RulesProject | undefined>;
   userSkills: Promise<UserSkill[]>;
-  persona: Promise<string | undefined>;
   title: Promise<string | undefined> | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
@@ -198,13 +192,6 @@ export function chatResponse({
   const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages, sources.numberOf);
   const tools = sirathicTools(sources.add);
-  const recent = messages
-    .filter((message) => message.role === "user")
-    .slice(-2)
-    .map((message) =>
-      message.parts.map((part) => (part.type === "text" ? part.text : "")).join(" "),
-    )
-    .join(" ");
   const asked = messages.findLast((message) => message.role === "user");
   const pastedUrl = asked?.parts.some(
     (part) => part.type === "text" && URL_IN_TEXT.test(part.text),
@@ -241,15 +228,14 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [preferred, connectors, project, ownSkills, inBot, who] = await Promise.all([
+      const [preferred, connectors, inProject, ownSkills, inBot] = await Promise.all([
         preferences,
         Promise.race([connected, stopped]),
-        projectRules,
+        project,
         userSkills,
         bot,
-        persona,
       ]);
-      const texts = who !== undefined;
+      const texts = inProject !== undefined;
       const builtIn = skillsFor({
         mode,
         texting: texts,
@@ -312,25 +298,33 @@ export function chatResponse({
         tools: offered,
         mode,
         settings,
-        rules:
-          answerRules(settings, recent, mode) +
-          project +
-          (searchable ? SEARCH_OUR_CHAT : "") +
-          skillIndex(builtIn) +
-          ("code_execution" in offered ? CODE_RULES : "") +
-          fileRules(offered) +
-          (writes.length > 0 ? CONFIRM_RULES : "") +
-          skillRules(
-            ownSkills,
-            asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "",
-          ),
+        instructions: instructions({
+          now: new Date(),
+          mode,
+          settings,
+          project: inProject,
+          unattended: unattended === true,
+          offered,
+          skills: builtIn,
+          remembers: owner !== undefined,
+          toolNotes: [
+            "code_execution" in offered ? CODE_RULES : "",
+            fileRules(offered),
+            searchable ? SEARCH_OUR_CHAT : "",
+            writes.length > 0 ? CONFIRM_RULES : "",
+          ],
+        }),
+        mentioned: skillRules(
+          ownSkills,
+          asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "",
+        ),
         firstStep:
           first && !inBot
             ? first === "skill" || noorModel(modelName)
               ? first
               : "anyTool"
             : undefined,
-        persona: who,
+        texting: texts,
         skills: builtIn,
         loaded,
         confirm: (call) => needsApproval(call, new Set(writes)),
