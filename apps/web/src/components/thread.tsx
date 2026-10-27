@@ -431,6 +431,8 @@ const Question: FC = () => {
   );
 };
 
+const ARABIC = /\p{Script=Arabic}/u;
+
 const SourcesPane: FC = () => {
   const messages = useAuiState((s) => s.thread.messages);
   const t = useT();
@@ -494,9 +496,22 @@ const SourcesPane: FC = () => {
                           <span className="text-muted-foreground line-clamp-1 text-xs">
                             {siteName(source.url)}
                           </span>
-                          <span className="line-clamp-2">{source.title}</span>
+                          <span
+                            className={cn(
+                              "line-clamp-2",
+                              ARABIC.test(source.title) && "leading-relaxed",
+                            )}
+                          >
+                            {source.title}
+                          </span>
                           {source.snippet && (
-                            <span dir="auto" className="text-muted-foreground line-clamp-4">
+                            <span
+                              dir="auto"
+                              className={cn(
+                                "text-muted-foreground line-clamp-4",
+                                ARABIC.test(source.snippet) && "leading-loose",
+                              )}
+                            >
                               {source.snippet}
                             </span>
                           )}
