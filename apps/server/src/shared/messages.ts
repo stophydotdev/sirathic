@@ -8,6 +8,17 @@ export const mode = z.enum(MODES);
 
 export type Mode = z.infer<typeof mode>;
 
+export const EFFORTS = ["low", "medium", "high"] as const;
+
+export const effort = z.enum(EFFORTS);
+
+export type Effort = z.infer<typeof effort>;
+
+export const DEFAULT_EFFORT = { quick: "low", research: "high" } as const satisfies Record<
+  Mode,
+  Effort
+>;
+
 export const feedback = z.enum(["up", "down"]);
 
 export const reportReason = z.enum(["quote", "school", "source", "ruling", "other"]);

@@ -14,7 +14,12 @@ import { botIdentity, projectRules, settingsInProject } from "../projects/rules"
 import { reasonOf, StatusError } from "../http";
 import { openSession, saveSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
-import { type ChatMessage, type Mode, mode as modeSchema } from "../shared/messages";
+import {
+  type ChatMessage,
+  DEFAULT_EFFORT,
+  type Mode,
+  mode as modeSchema,
+} from "../shared/messages";
 import { DEFAULT_SETTINGS } from "../shared/settings";
 import { dueItems, progressOf } from "../bots/study";
 import type { User } from "../account/users";
@@ -161,7 +166,7 @@ async function answerPrompt(
     skillRules: Promise.resolve(""),
     persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
     options: {
-      answer: answerOptions({ research: runMode === "research", sessionId }),
+      answer: answerOptions({ effort: DEFAULT_EFFORT[runMode], sessionId }),
     },
     title: undefined,
     save: async (messages) => {

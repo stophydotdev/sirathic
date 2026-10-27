@@ -5,6 +5,7 @@ import { z } from "zod";
 import { StatusError } from "../http";
 import { accessToken, type SubscriptionUser } from "../account/users";
 import { CODEX_API, codexFetch } from "../account/deviceLogin";
+import type { Effort } from "../shared/messages";
 
 export const DEFAULT_MODEL = "gpt-6-luna";
 
@@ -57,17 +58,17 @@ export async function models(user: SubscriptionUser): Promise<Model[]> {
     }));
 }
 
-export const answerOptions = (turn: { research: boolean; sessionId: string }): ProviderOptions => ({
+export const answerOptions = (turn: { effort: Effort; sessionId: string }): ProviderOptions => ({
   openai: {
     store: false,
     include: ["reasoning.encrypted_content"],
     forceReasoning: true,
-    reasoningEffort: turn.research ? "high" : undefined,
+    reasoningEffort: turn.effort,
     promptCacheKey: turn.sessionId,
     textVerbosity: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
   anthropic: {
-    effort: turn.research ? "high" : undefined,
+    effort: turn.effort,
     thinking: { type: "adaptive", display: "summarized" },
   } satisfies AnthropicLanguageModelOptions,
 });

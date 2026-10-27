@@ -19,7 +19,14 @@ import { readProjectFiles } from "./files/attachments";
 import { uploadRoutes } from "./files/upload";
 import { projectOfChat, rememberInBot, rememberInProject } from "./projects/projects";
 import { botIdentity, projectRules, settingsInProject } from "./projects/rules";
-import { appLanguage, type ChatMessage, device, mode } from "./shared/messages";
+import {
+  appLanguage,
+  type ChatMessage,
+  DEFAULT_EFFORT,
+  device,
+  effort,
+  mode,
+} from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./http";
 import { answerOptions, sideOptions } from "./models/subscription";
 import { appRouter } from "./router";
@@ -36,6 +43,7 @@ const chatBody = z.object({
   messages: z.array(z.looseObject({ role: z.enum(["user", "assistant"]) })).min(1),
   model: z.string().min(1).optional(),
   mode: mode.default("quick"),
+  effort: effort.optional().catch(undefined),
   incognito: z.boolean().default(false),
   projectId: z.uuid().optional().catch(undefined),
   trigger: z.enum(["submit-message", "regenerate-message"]).optional().catch(undefined),
@@ -183,7 +191,7 @@ app.post("/api/chat", (c) =>
             }),
       options: {
         answer: answerOptions({
-          research: input.mode === "research",
+          effort: input.effort ?? DEFAULT_EFFORT[input.mode],
           sessionId: input.id,
         }),
       },
