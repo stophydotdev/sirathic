@@ -4,15 +4,21 @@ import { describeSchedule } from "@/components/automationText";
 import { useLocale, useT } from "@/components/i18n";
 import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
+import { currentToolName } from "@sirathic/server/messages";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon, TimeScheduleIcon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useEffect } from "react";
 import { z } from "zod";
 
-const CARD_TOOLS = new Set(["createAutomation", "listAutomations", "setBotJob", "askUser"]);
+const CARD_TOOLS = new Set([
+  "createAutomation",
+  "listAutomations",
+  "setBotJob",
+  "clarifying_questions",
+]);
 
-export const isCardTool = (name: string) => CARD_TOOLS.has(name);
+export const isCardTool = (name: string) => CARD_TOOLS.has(currentToolName(name));
 
 const renamed = z.object({ name: z.string() });
 

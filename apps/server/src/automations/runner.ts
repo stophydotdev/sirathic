@@ -151,6 +151,7 @@ async function answerPrompt(
     messages: conversation,
     mode: runMode,
     abortSignal: AbortSignal.timeout(RUN_TIMEOUT_MS),
+    unattended: true,
     preferences: getSettings(by)
       .then((settings) => settingsInProject(settings, project))
       .catch((err: Error) => {

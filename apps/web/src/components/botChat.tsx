@@ -11,7 +11,7 @@ import { AskCard } from "@/components/questionCard";
 import { ReportMistake } from "@/components/reportMistake";
 import { SourcesContext, sourcesOf } from "@/components/sources";
 import { cn } from "@/lib/utils";
-import { messageMetadata } from "@sirathic/server/messages";
+import { currentToolName, messageMetadata } from "@sirathic/server/messages";
 import {
   AttachmentPrimitive,
   AuiIf,
@@ -47,7 +47,7 @@ type Said =
 const saidOf = (content: ThreadMessage["content"]) =>
   content.flatMap<Said>((part) => {
     if (part.type === "text") return bubblesOf(part.text).map((text) => ({ kind: "text", text }));
-    if (part.type === "tool-call" && (part.toolName === "askUser" || isCardTool(part.toolName))) {
+    if (part.type === "tool-call" && isCardTool(part.toolName)) {
       return [{ kind: "tool", part }];
     }
     return [];
@@ -86,7 +86,7 @@ const Bubble: FC<{ said: Said }> = ({ said }) => {
     );
   }
   const { toolName, args, result } = said.part;
-  if (toolName === "askUser") return <AskCard args={args} />;
+  if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
   return <AutomationCard tool={toolName} result={result} />;
 };
 

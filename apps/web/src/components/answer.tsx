@@ -10,6 +10,7 @@ import { MarkdownText } from "@/components/markdownText";
 import { groupsOf, KIND_NAMES, SourcesContext, siteName, sourcesOf } from "@/components/sources";
 import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
+import { currentToolName } from "@sirathic/server/messages";
 import type { Source } from "@sirathic/server/sources";
 import {
   BranchPickerPrimitive,
@@ -43,6 +44,7 @@ const research = groupPartByType({
   "tool-call:listAutomations": [],
   "tool-call:setBotJob": [],
   "tool-call:askUser": [],
+  "tool-call:clarifying_questions": [],
   "tool-call": ["group-research"],
 });
 
@@ -104,7 +106,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
               case "text":
                 return <MarkdownText />;
               case "tool-call":
-                return part.toolName === "askUser" ? (
+                return currentToolName(part.toolName) === "clarifying_questions" ? (
                   <AskCard args={part.args} />
                 ) : (
                   <AutomationCard tool={part.toolName} result={part.result} />

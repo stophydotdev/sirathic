@@ -45,7 +45,7 @@ import {
   skillIndex,
   skillsFor,
 } from "./skills/builtIn";
-import { type Remember, sirathicTools } from "./tools";
+import { CLARIFYING, clarifyingQuestions, type Remember, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
@@ -98,7 +98,7 @@ export function answerAgent({
     model,
     instructions: searchPrompt(new Date(), mode, settings, persona),
     tools: available,
-    stopWhen: hasToolCall("askUser"),
+    stopWhen: hasToolCall(CLARIFYING),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
@@ -152,6 +152,7 @@ export function chatResponse({
   automate,
   fileOwner,
   settled,
+  unattended,
   bot,
   historyLimit,
   citedEarlier,
@@ -174,6 +175,7 @@ export function chatResponse({
   automate: AutomationScope | undefined;
   fileOwner?: string;
   settled?: () => void;
+  unattended?: true;
   bot?: Promise<BotScope | undefined>;
   historyLimit?: number;
   citedEarlier?: ChatMessage[];
@@ -267,6 +269,7 @@ export function chatResponse({
         ...tools,
         ...(automate && automationTools({ ...automate, projectId: inBot?.id })),
         ...(inBot && botTools(inBot)),
+        ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
         ...(searchable && chatSearchTools(searchable)),
         ...(inBot && studyTools(inBot)),
         ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),

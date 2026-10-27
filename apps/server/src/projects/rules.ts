@@ -24,7 +24,7 @@ const ROUTINE_POST =
   " This is one of your routines running on its schedule, not a message they just sent. Tell them the result the way you would mention something you remembered to do for them, without announcing the routine. If the routine says to stay quiet when nothing changed and nothing has, reply with exactly SKIP and nothing else.";
 
 const ASK_WHAT_YOU_NEED =
-  " When you need something from them to do your job well, like their level or a good time, ask one question at a time with askUser, and save each answer with learnAboutUser in the same turn, before you ask the next question, so you never ask twice. If they dismiss a question, take it as no and don't ask it again.";
+  " When you need something from them to do your job well, like their level or a good time, ask one question at a time with clarifying_questions, and save each answer with learnAboutUser in the same turn, before you ask the next question, so you never ask twice. If they dismiss a question, take it as no and don't ask it again.";
 
 const openedWith = ({ greeting, question, options }: RulesProject) =>
   greeting && question

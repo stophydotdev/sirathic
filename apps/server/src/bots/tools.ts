@@ -8,7 +8,6 @@ import {
   projectName,
   updateProject,
 } from "../projects/projects";
-import { question } from "../shared/messages";
 
 export type BotScope = { id: string; owner: string };
 
@@ -54,12 +53,6 @@ export function botTools({ id, owner }: BotScope) {
           ? "Saved."
           : `Not saved: the profile is full at ${PROFILE_LIMIT} entries. Call learnAboutUser again with replaces set to the exact text of the entry this one updates, or of the least useful one. Entries:\n${added.profile.map((old) => `- ${old.text}`).join("\n")}`;
       },
-    }),
-    askUser: tool({
-      description:
-        "Shows the user one question as a card with two to five short answers to tap and a box for their own answer. Use it when you need them to choose before you can go on, like how often to send a routine or which madhab to follow. Put the question only in the card, not in your text. The card ends your turn, so write what they should read first and call it last, on its own. Their reply comes as their next message.",
-      inputSchema: question,
-      execute: async () => ({ shown: true }),
     }),
   };
 }

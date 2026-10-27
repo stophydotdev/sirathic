@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { simulateReadableStream, tool } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
 import { z } from "zod";
-import type { ChatMessage, Mode } from "../apps/server/src/shared/messages";
+import { type ChatMessage, type Mode, sentMessage } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { answerRules, searchPrompt } from "../apps/server/src/chat/prompts/shared";
 import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
@@ -364,6 +364,52 @@ test("research mode loads the research skill before anything else, once", async 
     { type: "auto" },
   ]);
   expect(systemTexts(again)?.at(-1)).toContain("This is research mode.");
+});
+
+test("the question tool is offered in research mode only, and never in an unattended run", async () => {
+  const loaded: ChatMessage[] = [
+    said("1", "user", "what is zakat"),
+    {
+      id: "2",
+      role: "assistant",
+      parts: [
+        {
+          type: "dynamic-tool",
+          toolName: "load_skill",
+          toolCallId: "c1",
+          state: "output-available",
+          input: { names: ["research"] },
+          output: "Loaded research.",
+        },
+      ],
+    },
+    said("3", "user", "Hanafi"),
+  ];
+  const offered = async (overrides: Partial<Parameters<typeof chatTurn>[0]>) => {
+    const [call] = await chatTurn({ messages: loaded, ...overrides });
+    return toolNames(call)?.includes("clarifying_questions");
+  };
+  expect([
+    await offered({ mode: "research" }),
+    await offered({ mode: "quick" }),
+    await offered({ mode: "research", unattended: true }),
+  ]).toEqual([true, false, false]);
+});
+
+test("a saved question card from before the rename replays as clarifying_questions", () => {
+  const sent = sentMessage.parse({
+    role: "assistant",
+    parts: [
+      {
+        type: "tool-askUser",
+        toolCallId: "c1",
+        state: "output-available",
+        input: { question: "Which school?", options: ["Hanafi", "Shafi'i"] },
+        output: { shown: true },
+      },
+    ],
+  });
+  expect(sent.parts.map((part) => part.type)).toEqual(["tool-clarifying_questions"]);
 });
 
 const HEADER =

@@ -5,6 +5,7 @@ import { quranGet, quranGetInput } from "@sirathic/core/tools/quranGet";
 import { webFetch } from "@sirathic/core/tools/webFetch";
 import { tool } from "ai";
 import { z } from "zod";
+import { question } from "../shared/messages";
 import { MEMORY_LIMIT, memoryFact, type settingsUpdate, told } from "../shared/settings";
 import {
   type Cite,
@@ -20,6 +21,19 @@ import { pageText } from "./compact";
 import { searchAll, searchInput } from "./search";
 
 const PAGE_CHARS = 8_000;
+
+export const CLARIFYING = "clarifying_questions";
+
+export const clarifyingQuestions = tool({
+  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. Call it before you search or answer when the answer depends on something only the user can tell you:
+- the question has a subjective word, like best, good or top;
+- it is a personal decision, like a marriage, a purchase, a career or a case of their own;
+- the scope is open: which madhab, their situation, a budget, a place or their level;
+- the question has several valid readings.
+Skip it when the question has one factual answer, like how wudu is done or what a word means, or when the user already gave the scope. Ask at most one question per turn. If the user skips or dismisses it, never ask it again and answer with what you have. Put the question only in the card, not in your text. The card ends your turn, so write what they should read first and call it last, on its own. Their reply comes as their next message.`,
+  inputSchema: question,
+  execute: async () => ({ shown: true }),
+});
 
 export type Remember = (input: z.output<typeof told>) => Promise<z.output<typeof settingsUpdate>>;
 
