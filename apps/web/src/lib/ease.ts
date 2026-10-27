@@ -1,4 +1,6 @@
 export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+export const APPEAR =
+  "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 duration-300";
 export const SPRING_PRESS = {
   type: "spring",
   stiffness: 500,

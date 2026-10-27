@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { APPEAR } from "@/lib/ease";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Add01Icon,
@@ -232,6 +233,7 @@ export const SessionRow: FC<{
             onFocus={(event) => event.preventDefault()}
             className={cn(
               "group/session hover:bg-muted flex items-center gap-0.5 rounded-[12px] pe-2",
+              APPEAR,
               current && "bg-muted",
             )}
           >

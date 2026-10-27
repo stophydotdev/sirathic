@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
+import { APPEAR } from "@/lib/ease";
 import type { MessageKey } from "@/messages/en";
 import {
   FILE_ACCEPT,
@@ -321,6 +322,7 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
         )}
         <div
           className={cn(
+            APPEAR,
             view === "grid"
               ? "grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 lg:grid-cols-4"
               : "flex flex-col",
