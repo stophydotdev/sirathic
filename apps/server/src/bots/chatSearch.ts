@@ -1,18 +1,24 @@
 import { tool } from "ai";
 import { z } from "zod";
+import { unlinked } from "../chat/citations";
 import { messagesOf } from "../chat/sessions";
 import type { ChatMessage } from "../shared/messages";
 import type { BotScope } from "./tools";
 
 const MAX_MATCHES = 4;
 const SNIPPET_CHARS = 240;
+
+export const SEARCH_OUR_CHAT =
+  " Older turns of this chat drop out of your view, and short notes on them come first. When they ask about something said earlier that you can no longer see, use searchOurChat to find it.";
 const MIN_WORD = 3;
 
 export const textOf = (message: ChatMessage) =>
-  message.parts
-    .map((part) => (part.type === "text" ? part.text : ""))
-    .join("")
-    .trim();
+  unlinked(
+    message.parts
+      .map((part) => (part.type === "text" ? part.text : ""))
+      .join("")
+      .trim(),
+  );
 
 const wordsOf = (text: string) =>
   text

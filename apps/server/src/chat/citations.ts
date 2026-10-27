@@ -1,7 +1,20 @@
 import type { StreamTextTransform, TextStreamPart, ToolSet, UIMessage } from "ai";
+import type { ChatMessage } from "../shared/messages";
 
 const LINKED = /\[(\d+)\]\(([^)\s]+)\)/g;
 const CITATION = /( ?)\[(\d+)\](?:\(([^)\s]+)\))?/g;
+
+export const unlinked = (text: string) => text.replace(LINKED, "[$1]");
+
+export const withBareCitations = (message: ChatMessage): ChatMessage =>
+  message.role === "assistant"
+    ? {
+        ...message,
+        parts: message.parts.map((part) =>
+          part.type === "text" ? { ...part, text: unlinked(part.text) } : part,
+        ),
+      }
+    : message;
 const NATIVE = /( ?)\ue200cite\ue202([^\ue201]*)\ue201/g;
 const PRIVATE_USE = /[\ue000-\uf8ff]/g;
 const UNFINISHED = /^\[\d*(\](\([^)\s]*)?)?$/;
@@ -83,7 +96,7 @@ export function citations(history: UIMessage[]) {
       .replace(
         CITATION,
         (_, space: string, raw: string, url: string | undefined, offset: number, whole: string) => {
-          const written = url === undefined ? Number(raw) : byUrl.get(url);
+          const written = url === undefined ? Number(raw) : (byUrl.get(url) ?? Number(raw));
           const number =
             written === undefined
               ? undefined

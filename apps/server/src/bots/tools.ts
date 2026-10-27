@@ -12,13 +12,17 @@ import { question } from "../shared/messages";
 
 export type BotScope = { id: string; owner: string };
 
-export const BOT_HISTORY = 24;
+export const BOT_HISTORY = 40;
+
+const CHUNK_SHARE = 0.6;
 
 export const recentTurns = <Message extends { role: string }>(
   messages: Message[],
   limit: number,
 ) => {
-  const recent = messages.slice(-limit);
+  const chunk = Math.ceil(limit * CHUNK_SHARE);
+  const cut = messages.length <= limit ? 0 : Math.ceil((messages.length - limit) / chunk) * chunk;
+  const recent = messages.slice(cut);
   const firstAsked = recent.findIndex((message) => message.role === "user");
   return firstAsked > 0 ? recent.slice(firstAsked) : recent;
 };
@@ -53,7 +57,7 @@ export function botTools({ id, owner }: BotScope) {
     }),
     askUser: tool({
       description:
-        "Shows the user one question as a card with two to five short answers to tap and a box for their own answer. Use it when you need them to choose before you can go on, like how often to send a routine or which madhab to follow. Put the question only in the card, not in your text. Their reply comes as their next message.",
+        "Shows the user one question as a card with two to five short answers to tap and a box for their own answer. Use it when you need them to choose before you can go on, like how often to send a routine or which madhab to follow. Put the question only in the card, not in your text. The card ends your turn, so write what they should read first and call it last, on its own. Their reply comes as their next message.",
       inputSchema: question,
       execute: async () => ({ shown: true }),
     }),

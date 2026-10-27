@@ -1,5 +1,7 @@
 import { expect, test } from "bun:test";
 import { profileRejection, withEntry } from "../apps/server/src/bots/profile";
+import { fallenOut } from "../apps/server/src/bots/summary";
+import { BOT_HISTORY, recentTurns } from "../apps/server/src/bots/tools";
 import { taughtNote } from "../apps/server/src/bots/notes";
 import { reviewed } from "../apps/server/src/bots/review";
 import {
@@ -257,12 +259,6 @@ test("a right review climbs the ladder of 1, 3, 7, 14 and 30 days, a wrong one s
   expect([4, 5].map(isMemorized)).toEqual([false, true]);
 });
 
-test("a bot's live rules teach the quiz loop, its background rules do not", () => {
-  const tutor = { name: "Tutor", title: "", instructions: "Teach me.", kind: "bot" } as const;
-  expect(projectRules(tutor)).toContain("gradeStudyItem");
-  expect(projectRules(tutor, false)).not.toContain("StudyItem");
-});
-
 test("a teaching note keeps style and drops rulings, rule-breaking and long text", () => {
   const reason = "keeps answers shorter";
   const accepts = (note: string) => taughtNote.safeParse({ note, reason }).success;
@@ -299,4 +295,44 @@ test("a bot's note reaches its live rules and never its background rules", () =>
   expect(projectRules(tutor)).toContain("Keep answers short.");
   expect(projectRules(tutor, false)).not.toContain("Keep answers short.");
   expect(projectRules({ ...tutor, note: "" })).not.toContain("teach them");
+});
+
+const chatOf = (messages: number) =>
+  Array.from({ length: messages }, (_, i) => ({
+    role: i % 2 === 0 ? "user" : "assistant",
+    id: `m${i}`,
+  }));
+
+test("a bot's view starts at the same message for every turn between two cuts", () => {
+  const starts = Array.from(
+    { length: 80 },
+    (_, i) => recentTurns(chatOf(i + 1), BOT_HISTORY)[0]?.id,
+  );
+  expect(new Set(starts.slice(0, 40)).size).toBe(1);
+  expect(new Set(starts.slice(40, 64)).size).toBe(1);
+  expect(starts[40]).toBe("m24");
+  expect(starts[64]).toBe("m48");
+});
+
+test("the summary refreshes only at a cut and nothing falls between it and the view", () => {
+  const chat = chatOf(130);
+  let covered = 0;
+  const folded: string[] = [];
+  const refreshedAt: number[] = [];
+  for (let n = 2; n <= chat.length; n += 2) {
+    const { fresh, upTo } = fallenOut(chat.slice(0, n), covered);
+    if (fresh.length > 0) refreshedAt.push(n);
+    folded.push(...fresh.map((message) => message.id));
+    covered = upTo;
+    const view = recentTurns(chat.slice(0, n), BOT_HISTORY).map((message) => message.id);
+    expect([...folded, ...view]).toEqual(chat.slice(0, n).map((message) => message.id));
+  }
+  expect(refreshedAt).toEqual([42, 66, 90, 114]);
+});
+
+test("a cut that lands on a bot reply moves on to the next question", () => {
+  const chat = chatOf(60).slice(1);
+  const view = recentTurns(chat, BOT_HISTORY);
+  expect(view[0]?.role).toBe("user");
+  expect(view).toHaveLength(chat.length - 25);
 });

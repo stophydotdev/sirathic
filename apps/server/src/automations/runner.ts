@@ -9,7 +9,7 @@ import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
 import { projectOfChat } from "../projects/projects";
-import { projectRules, settingsInProject } from "../projects/rules";
+import { botIdentity, projectRules, settingsInProject } from "../projects/rules";
 import { reasonOf, StatusError } from "../http";
 import { openSession, saveSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
@@ -133,7 +133,7 @@ async function answerPrompt(
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
     projectRules: Promise.resolve(projectRules(project, false)),
     skillRules: Promise.resolve(""),
-    texting: Promise.resolve(project?.kind === "bot"),
+    persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
     options: {
       answer: answerOptions({ research: runMode === "research", sessionId }),
       side: sideOptions,
