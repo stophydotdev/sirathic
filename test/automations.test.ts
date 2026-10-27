@@ -162,7 +162,9 @@ const { routineCall, routineTools } = await import("../apps/server/src/automatio
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;
   console.error = () => {};
+  modelError = "529: overloaded";
   await runDue();
+  modelError = undefined;
   console.error = logged;
 
   expect(automationRow.enabled).toBe(false);
@@ -181,11 +183,7 @@ test("a run that fails still saves an unread chat with the reason and ends the o
     ),
   ).toEqual([
     ["user", "research", "Remind me of the Eid sunnahs"],
-    [
-      "assistant",
-      "research",
-      "This run did not finish. You've used today's 30 Noor answers. They come back tomorrow.",
-    ],
+    ["assistant", "research", "This run did not finish. 529: overloaded"],
   ]);
 });
 
@@ -207,7 +205,6 @@ test("a failing routine posts its first failure, stays quiet on the second and p
     enabled: true,
     failures: 0,
   });
-  answersToday = 31;
   savedChats.length = 0;
   const runOnce = async () => {
     automationRow.nextRunAt = dueAt;
@@ -215,7 +212,11 @@ test("a failing routine posts its first failure, stays quiet on the second and p
     return [savedChats.length, automationRow.failures, automationRow.enabled];
   };
 
-  expect([await runOnce(), await runOnce(), await runOnce()]).toEqual([
+  modelError = "529: overloaded";
+  const runs = [await runOnce(), await runOnce(), await runOnce()];
+  modelError = undefined;
+
+  expect(runs).toEqual([
     [1, 1, true],
     [1, 2, true],
     [2, 3, false],
@@ -224,6 +225,40 @@ test("a failing routine posts its first failure, stays quiet on the second and p
     "Paused after 3 failed runs in a row. Turn it back on in Automations.",
   ]);
   expect(automationRow.nextRunAt).toBeNull();
+});
+
+test("a sign-in failure is told every time and never counts toward pausing", async () => {
+  Object.assign(automationRow, {
+    plan: { kind: "daily", time: "09:00" },
+    enabled: true,
+    failures: 1,
+  });
+  savedChats.length = 0;
+  modelError = "your ChatGPT sign-in ended, sign in again";
+  const runOnce = async () => {
+    automationRow.nextRunAt = dueAt;
+    await runDueQuietly();
+  };
+
+  await runOnce();
+  await runOnce();
+  await runOnce();
+  modelError = undefined;
+
+  expect([savedChats.length, automationRow.failures, automationRow.enabled]).toEqual([3, 1, true]);
+  expect(lastSavedText()).toEqual([
+    "This run did not finish. your ChatGPT sign-in ended, sign in again",
+  ]);
+});
+
+test("a routine runs even when the user has spent the day's Noor answers in chat", async () => {
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 0 });
+  answersToday = 31;
+
+  await runDueQuietly();
+
+  expect(automationRow.failures).toBe(0);
+  expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
 });
 
 test("a run that works resets the failure count", async () => {

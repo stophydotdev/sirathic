@@ -3,7 +3,7 @@ import { automations, chatSessions, projects, users } from "@sirathic/db/schema"
 import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
 import { and, asc, eq, lte } from "drizzle-orm";
 import { toUser } from "../account/auth";
-import { countNoorAnswer, pickModels } from "../models/pick";
+import { pickModels } from "../models/pick";
 import { BOT_HISTORY } from "../bots/tools";
 import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
@@ -29,6 +29,7 @@ const BATCH = 5;
 const RUN_TIMEOUT_MS = 10 * 60_000;
 const PAUSE_AFTER = 3;
 const MISSED_AFTER_MS = 60 * 60_000;
+const SIGN_IN_FAILURE = /^(401|403)\b|sign-in ended/u;
 
 const failureNote = (failedInARow: number, reason: string) =>
   failedInARow >= PAUSE_AFTER
@@ -145,7 +146,6 @@ async function answerPrompt(
 ) {
   const user = await ownerOf(by);
   const { modelName, models } = pickModels(user, undefined);
-  await countNoorAnswer(by, modelName);
   const project = await projectOfChat(sessionId, by, inProject ?? undefined);
   let answered: ChatMessage[] = [];
   const response = chatResponse({
@@ -239,11 +239,18 @@ async function runAutomation({
     (answered) => ({ kind: "answered", answered }) as const,
     (err: Error) => {
       console.error(`automation ${id} not answered: ${reasonOf(err)}`);
-      return { kind: "failed", reason: reasonOf(err) } as const;
+      const reason = reasonOf(err);
+      return { kind: SIGN_IN_FAILURE.test(reason) ? "signedOut" : "failed", reason } as const;
     },
   );
-  const failedInARow = outcome.kind === "failed" ? failures + 1 : 0;
-  const note = outcome.kind === "failed" ? failureNote(failedInARow, outcome.reason) : undefined;
+  const failedInARow =
+    outcome.kind === "failed" ? failures + 1 : outcome.kind === "answered" ? 0 : failures;
+  const note =
+    outcome.kind === "answered"
+      ? undefined
+      : outcome.kind === "signedOut"
+        ? `This run did not finish. ${outcome.reason}`
+        : failureNote(failedInARow, outcome.reason);
   const answered =
     outcome.kind === "answered"
       ? outcome.answered
