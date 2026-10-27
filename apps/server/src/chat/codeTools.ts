@@ -1,4 +1,5 @@
 import { anthropic } from "@ai-sdk/anthropic";
+import type { ToolSet } from "ai";
 import { noorModel } from "../models/noor";
 
 export const CODE_RULES = `
@@ -9,5 +10,5 @@ You have a code sandbox, code_execution, for exact calculation. Any zakat, inher
 - Write one complete script per call that prints every final value. Do not make test calls.
 - The sandbox has no internet. Pass it the figures you already have.`;
 
-export const codeTools = (modelName: string) =>
+export const codeTools = (modelName: string): ToolSet =>
   noorModel(modelName) ? { code_execution: anthropic.tools.codeExecution_20260120() } : {};

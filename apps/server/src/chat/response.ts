@@ -29,7 +29,9 @@ import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { citations, withBareCitations } from "./citations";
+import { CODE_RULES, codeTools } from "./codeTools";
 import { CONFIRM_RULES, needsApproval, writingTools } from "./confirm";
+import { fileRules, fileTools, sandboxFiles } from "./fileTools";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
 import { reasonOf } from "../http";
@@ -275,6 +277,7 @@ export function chatResponse({
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
       const searchable = inBot && visible.length < messages.length ? inBot : undefined;
+      const sandbox = sandboxFiles();
       const offered = {
         ...tools,
         ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
@@ -291,6 +294,15 @@ export function chatResponse({
         ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
         ...(searchable && chatSearchTools(searchable)),
         ...(inBot && studyTools(inBot)),
+        ...(!inBot && fileOwner !== undefined && codeTools(modelName)),
+        ...(!inBot &&
+          fileOwner !== undefined &&
+          fileTools({
+            owner: fileOwner,
+            incognito: owner === undefined,
+            research: mode === "research",
+            sandbox: noorModel(modelName) !== undefined ? sandbox : undefined,
+          })),
         ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
         ...connectors.tools,
       };
@@ -305,6 +317,8 @@ export function chatResponse({
           project +
           (searchable ? SEARCH_OUR_CHAT : "") +
           skillIndex(builtIn) +
+          ("code_execution" in offered ? CODE_RULES : "") +
+          fileRules(offered) +
           (writes.length > 0 ? CONFIRM_RULES : "") +
           skillRules(
             ownSkills,
@@ -331,7 +345,11 @@ export function chatResponse({
         ],
         originalMessages: messages,
         abortSignal,
-        experimental_transform: [sources.transform(), smoothStream({ chunking: "word" })],
+        experimental_transform: [
+          sources.transform(),
+          sandbox.transform(),
+          smoothStream({ chunking: "word" }),
+        ],
         onEnd: ({ outcome, finishReason }) => {
           ended = { outcome, finishReason };
         },
