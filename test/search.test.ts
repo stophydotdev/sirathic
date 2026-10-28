@@ -9,6 +9,8 @@ import { withoutStopwords } from "@sirathic/core/search/arabic";
 import { onePerAnswer } from "@sirathic/core/search/onePerAnswer";
 import { SEARCHABLE } from "@sirathic/core/search/searchable";
 import { hadithLink } from "@sirathic/core/tools/hadithLinks";
+import { clean } from "../scripts/fatwaPages";
+import { SITES } from "../scripts/fatwaSites";
 
 test("keyword queries drop Arabic stopwords and keep every other word as written", () => {
   expect(withoutStopwords("حكم تعجيل الزكاة قبل الحول في المال")).toBe(
@@ -241,4 +243,54 @@ test("a result far behind one query's best gets no votes from that query", () =>
     (item) => item.id,
   );
   expect([near.map(({ id }) => id), far.map(({ id }) => id)]).toEqual([["s1", "b", "s2"], ["x"]]);
+});
+
+const parsedBy = (name: string, markdown: string, html: string, url: string) =>
+  SITES.find((site) => site.source.name === name)?.parse(markdown, html, url);
+
+test("a short fatwa with a question and an answer is kept, a short page without one is not", () => {
+  const url = "https://al-fatawa.com/en/fatwa/22868/one-who-trusted-prayer-valid";
+  const dialogue = parsedBy(
+    "al-fatawa.com",
+    "# Is his prayer valid?\n\nThe questioner : Is the prayer of the one who is trusted valid?\n\nThe Shaykh : Yes, exactly.",
+    "",
+    url,
+  );
+  const unmarked = parsedBy("al-fatawa.com", "# A video\n\nWatch it on Vimeo.", "", url);
+  expect([dialogue?.question, dialogue?.answer, unmarked]).toEqual([
+    "The questioner : Is the prayer of the one who is trusted valid?",
+    "Yes, exactly.",
+    undefined,
+  ]);
+});
+
+test("an islamqa.org answer without a # line takes its title from the page", () => {
+  const fatwa = parsedBy(
+    "islamqa.org",
+    "From\n\nAnswered by\n\nShaykh Ebrahim Salejee\n\n**Q:** Is share trading permissible?\n\n**A:** It is, if the company deals in halal.\n\n**Original Source Link**",
+    "<title>Share Trading: Halal or Haram? - IslamQA</title>",
+    "https://islamqa.org/hanafi/muftionline/45693/share-trading-halal-or-haram/",
+  );
+  expect([fatwa?.title, fatwa?.answeredBy]).toEqual([
+    "Share Trading: Halal or Haram?",
+    "Shaykh Ebrahim Salejee",
+  ]);
+});
+
+test("a saved fatwa keeps its text and drops the page around it", () => {
+  const alFatawa = clean(
+    "Machine translationRead the Arabic original\n\nThe Shaykh : It has no basis.\n\nSource alathar.net\n\nThe Arabic text is copied verbatim from the original source, without any edits.\n\n## Similar fatwas\n\n- Another fatwa",
+  );
+  const darAlifta = parsedBy(
+    "dar-alifta.org",
+    `# حكم الوفاء بالنذر\n\n${"يجب الوفاء بالنذر إذا كان في طاعة. ".repeat(14)}\n\nوالله سبحانه وتعالى أعلم.\n\nاقرأ أيضا :\n\nما حكم الحج عن كبير السن؟\n\nالفجر\n5 :31`,
+    "",
+    "https://www.dar-alifta.org/ar/fatwa/details/12911/nazr",
+  )?.answer;
+  const amja = clean("- AR (العربية)\n\\-- EN (English)\n\n| **رقم الفتوى:** | 3882 |");
+  expect([alFatawa, darAlifta?.endsWith("والله سبحانه وتعالى أعلم."), amja]).toEqual([
+    "The Shaykh : It has no basis.",
+    true,
+    "| **رقم الفتوى:** | 3882 |",
+  ]);
 });

@@ -53,6 +53,18 @@ export const pageHtml = async (url: string) => {
   return html;
 };
 
+export const mappedUrls = async (url: string, page = 1): Promise<string[]> => {
+  const { data, creditsUsed } = await stophy.web.map({ url, page });
+  const host = new URL(url).hostname;
+  spent.set(host, creditsSpent(host) + creditsUsed);
+  const found = data.results.flatMap((result) =>
+    result.url && !result.url.endsWith(".xml")
+      ? [result.url.replaceAll(/%[0-9A-F]{2}/gu, (escape) => escape.toLowerCase())]
+      : [],
+  );
+  return page < (data.totalPages ?? 1) ? [...found, ...(await mappedUrls(url, page + 1))] : found;
+};
+
 const LOC = /<loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/loc>/gu;
 
 export const sitemapUrls = async (url: string, site: Site): Promise<string[]> => {
@@ -111,15 +123,40 @@ export const listedUrls = async (site: Site): Promise<string[]> => {
   return [...pages];
 };
 
-export const clean = (markdown: string) =>
-  markdown
+const PAGE_LINES = [
+  /^Machine translationRead the Arabic original$/u,
+  /^The Arabic text is copied verbatim from the original source, without any edits\.$/u,
+  /^Source [a-z0-9.-]+\.[a-z]{2,}$/iu,
+  /^[>[\s]*Click to expand\.\.\.$/u,
+  /^Share this:$/u,
+  /^\\?-+ (AR \(العربية\)|EN \(English\))$/u,
+  /^#+$/u,
+  /^[A-Z][a-z]+day, [A-Z][a-z]{2}\. \d{2}, \d{4} \| .+ GMT$/u,
+  /^Session (didn't start yet|is running|is over)[!.]?$/u,
+  /^submit your question now$/u,
+  /^\**DISCLAIMER$/u,
+  /^\*+Views expressed by hosts\/guests on this program/u,
+];
+
+const PAGE_TAIL =
+  /^(## (Similar|Related) [Ff]atwas|#{0,4} ?\d+ Comments?|#### Leave a Reply)\s*$/mu;
+
+export const clean = (markdown: string) => {
+  const linked = markdown
     .replaceAll(/\[[^\]]*\]\([^)]*\/categor(?:y|ies)\/[^)]*\)/gu, "")
     .replaceAll(/!\[[^\]]*\]\([^)]*\)/gu, "")
     .replaceAll(/\[([^\]]*)\]\([^)]*\)/gu, "$1")
     .replaceAll(/\\([[\]])/gu, "$1")
+    .replaceAll("​", "");
+  const tail = PAGE_TAIL.exec(linked);
+  return (tail ? linked.slice(0, tail.index) : linked)
+    .split("\n")
+    .filter((line) => !PAGE_LINES.some((page) => page.test(line.trim())))
+    .join("\n")
     .replaceAll(/^\s*(\* \* \*|Table Of Contents)\s*$/gmu, "")
     .replaceAll(/\n{3,}/gu, "\n\n")
     .trim();
+};
 
 export const between = (text: string, from: RegExp, to?: RegExp) => {
   const start = from.exec(text);
@@ -187,27 +224,33 @@ const firstPart = (title: string | undefined) =>
       ?.trim()) ||
   undefined;
 
-const pageTitle = (markdown: string, html: string) =>
+export const pageTitle = (markdown: string, html: string) =>
   titleOf(markdown) ??
   firstPart(/<meta[^>]+property="og:title"[^>]+content="([^"]+)"/u.exec(html)?.[1]) ??
   firstPart(/<title[^>]*>([^<]+)<\/title>/iu.exec(html)?.[1]) ??
   /^## (.+)$/mu.exec(markdown)?.[1]?.trim();
 
-const ANSWER_MARK = /^\**Answer\**\s*:?\**\s*$|\**Answer\**\s*:\**/mu;
+export const ANSWER_MARK = /^\**Answer\**\s*:?\**\s*$|\**Answer\**\s*:\**/mu;
 
 const article = (
   markdown: string,
   html: string,
   url: string,
-  { answerMark = ANSWER_MARK, headline }: Pick<ArticleSite, "answerMark" | "headline"> = {},
+  {
+    answerMark = ANSWER_MARK,
+    headline,
+    end,
+  }: Pick<ArticleSite, "answerMark" | "headline" | "end"> = {},
 ): Fatwa | undefined => {
   const title = decode(headline?.exec(html)?.[1]?.trim() ?? "") || pageTitle(markdown, html);
-  const body = markdown
+  const ended = end?.exec(markdown);
+  const body = (ended ? markdown.slice(0, ended.index) : markdown)
     .replace(/^# .+$/mu, "")
     .replace(/(\n+>[^\n]*)+\s*$/u, "")
     .trim();
-  if (!title || body.length < 400) return undefined;
   const split = answerMark.exec(body);
+  const answer = split ? body.slice(split.index + split[0].length).trim() : body;
+  if (!title || !answer || (body.length < 400 && !split)) return undefined;
   const { hostname, pathname } = new URL(url);
   return {
     id: `${hostname.replace(/^www\./u, "")}:${pathname}`,
@@ -220,7 +263,7 @@ const article = (
           .replace(/^[\s\S]*?\**Question( Summary)?\**\s*:?\**\s*/u, "")
           .trim() || undefined
       : undefined,
-    answer: split ? body.slice(split.index + split[0].length).trim() : body,
+    answer,
     publishedAt: publishedOf(html),
   };
 };
@@ -237,6 +280,7 @@ type ArticleSite = {
   follow?: RegExp;
   answerMark?: RegExp;
   headline?: RegExp;
+  end?: RegExp;
   parallel?: number;
   delayMs?: number;
   school?: Fatwa["school"];
@@ -255,6 +299,7 @@ export const articleSite = ({
   follow = WRITING_SITEMAP,
   answerMark,
   headline,
+  end,
   parallel = 2,
   delayMs,
   school,
@@ -276,7 +321,7 @@ export const articleSite = ({
   parallel,
   delayMs,
   parse: (markdown, html, pageUrl) => {
-    const found = article(markdown, html, pageUrl, { answerMark, headline });
+    const found = article(markdown, html, pageUrl, { answerMark, headline, end });
     return (
       found && {
         ...found,
