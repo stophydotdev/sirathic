@@ -221,7 +221,8 @@ function providerFor(owner: string, connector: string, server: Server, stored: S
     clientMetadata: server.tokenAuth
       ? { ...CLIENT_METADATA, token_endpoint_auth_method: server.tokenAuth }
       : CLIENT_METADATA,
-    clientInformation: () => (server.googleScopes ? GOOGLE_CLIENT : secrets.client),
+    clientInformation: () =>
+      server.googleScopes ? { ...secrets.client, ...GOOGLE_CLIENT } : secrets.client,
     saveClientInformation: (client) => save({ client }),
     isClientInformationDynamicallyRegistered: () => !server.googleScopes,
     tokens: () => secrets.tokens,
