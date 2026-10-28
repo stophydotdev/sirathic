@@ -1,45 +1,39 @@
-import {
-  duas,
-  EMBEDDING,
-  fatwas,
-  fiqhPassages,
-  hadiths,
-  REDDIT_EMBEDDING_DIMENSIONS,
-  redditThreads,
-  verses,
-} from "@sirathic/db/schema";
+import { SEARCHABLE } from "@sirathic/core/search/searchable";
+import { EMBEDDING, REDDIT_EMBEDDING_DIMENSIONS, redditThreads } from "@sirathic/db/schema";
 import { sql } from "drizzle-orm";
 
-const FULL = EMBEDDING.dimensions;
+const { verses, hadiths, duas, fiqhPassages, fatwas } = SEARCHABLE;
 
 export const EMBEDDED = {
   verses: {
-    table: verses,
-    text: sql<string>`${verses.textEn}`,
-    dimensions: FULL,
+    ...verses,
+    text: sql<string>`${verses.table.textEn}`,
+    dimensions: verses.embedder.dimensions,
   },
   hadiths: {
-    table: hadiths,
-    text: sql<string>`coalesce(${hadiths.textEn}, ${hadiths.textArClean})`,
-    dimensions: FULL,
+    ...hadiths,
+    text: sql<string>`coalesce(${hadiths.table.textEn}, ${hadiths.table.textArClean})`,
+    dimensions: hadiths.embedder.dimensions,
   },
   duas: {
-    table: duas,
-    text: sql<string>`concat_ws(' ', array_to_string(${duas.occasions}, ', '), ${duas.title}, ${duas.textEn}, ${duas.textArClean})`,
-    dimensions: FULL,
+    ...duas,
+    text: sql<string>`concat_ws(' ', array_to_string(${duas.table.occasions}, ', '), ${duas.table.title}, ${duas.table.textEn}, ${duas.table.textArClean})`,
+    dimensions: duas.embedder.dimensions,
   },
   fiqhPassages: {
-    table: fiqhPassages,
-    text: sql<string>`left(${fiqhPassages.textArClean}, 8000)`,
-    dimensions: FULL,
+    ...fiqhPassages,
+    text: sql<string>`left(${fiqhPassages.table.textArClean}, 8000)`,
+    dimensions: fiqhPassages.embedder.dimensions,
   },
   fatwas: {
-    table: fatwas,
-    text: sql<string>`concat_ws(' ', ${fatwas.title}, left(coalesce(${fatwas.question}, ${fatwas.answer}), 1500))`,
-    dimensions: FULL,
+    ...fatwas,
+    text: sql<string>`concat_ws(' ', ${fatwas.table.title}, left(coalesce(${fatwas.table.question}, ${fatwas.table.answer}), 1500))`,
+    dimensions: fatwas.embedder.dimensions,
   },
   redditThreads: {
     table: redditThreads,
+    embedding: redditThreads.embedding,
+    embedder: EMBEDDING,
     text: sql<string>`concat_ws(' ', ${redditThreads.title}, left(${redditThreads.question}, 1500))`,
     dimensions: REDDIT_EMBEDDING_DIMENSIONS,
   },

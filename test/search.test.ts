@@ -5,6 +5,7 @@ import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { publicUrl } from "@sirathic/core/web/url";
 import { withoutStopwords } from "@sirathic/core/search/arabic";
 import { onePerAnswer } from "@sirathic/core/search/onePerAnswer";
+import { SEARCHABLE } from "@sirathic/core/search/searchable";
 import { hadithLink } from "@sirathic/core/tools/hadithLinks";
 
 test("keyword queries drop Arabic stopwords and keep every other word as written", () => {
@@ -183,4 +184,11 @@ test("fiqh chunks from the same page become one passage, in the order found", ()
     ["a", "أول\nثان"],
     ["b", "آخر"],
   ]);
+});
+
+test("every searchable table's vector column is as wide as its embedder's vectors", () => {
+  const mismatched = Object.entries(SEARCHABLE).flatMap(([name, { embedding, embedder }]) =>
+    embedding.getSQLType() === `halfvec(${embedder.dimensions})` ? [] : [name],
+  );
+  expect(mismatched).toEqual([]);
 });

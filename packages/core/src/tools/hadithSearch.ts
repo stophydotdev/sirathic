@@ -1,6 +1,6 @@
-import { hadiths } from "@sirathic/db/schema";
 import { z } from "zod";
 import { hybridIds } from "../search/hybridSearch";
+import { SEARCHABLE } from "../search/searchable";
 import { hadithsByIds } from "./hadithGet";
 
 export const hadithSearchInput = z.object({
@@ -11,6 +11,8 @@ export const hadithSearchInput = z.object({
 export const hadithSearch = async (input: z.input<typeof hadithSearchInput>) => {
   const { query, limit } = hadithSearchInput.parse(input);
   return {
-    hadiths: await hadithsByIds(await hybridIds(hadiths, query, limit, { rareWords: true })),
+    hadiths: await hadithsByIds(
+      await hybridIds(SEARCHABLE.hadiths, query, limit, { rareWords: true }),
+    ),
   };
 };

@@ -2,6 +2,8 @@ const PLACEHOLDERS = {
   DATABASE_URL: "postgres://test@127.0.0.1/test",
   REDIS_URL: "redis://127.0.0.1:6379",
   OPENAI_API_KEY: "test",
+  CLOUDFLARE_ACCOUNT_ID: "test",
+  CLOUDFLARE_AI_TOKEN: "test",
   NEON_AI_GATEWAY_TOKEN: "test",
   NEON_AI_GATEWAY_BASE_URL: "https://gateway.invalid",
   STOPHY_API_KEY: "test",

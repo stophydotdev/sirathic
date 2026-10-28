@@ -3,6 +3,7 @@ import { fatwas } from "@sirathic/db/schema";
 import { inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { hybridIds } from "../search/hybridSearch";
+import { SEARCHABLE } from "../search/searchable";
 import { onePerAnswer } from "../search/onePerAnswer";
 import { siteHost } from "../web/url";
 
@@ -24,7 +25,10 @@ export const fatwaSearchInput = z.object({
 export const fatwaSearch = async (input: z.input<typeof fatwaSearchInput>) => {
   const { query, sites, limit } = fatwaSearchInput.parse(input);
   const filter = sites.length === 0 ? sql`true` : onSites(sites);
-  const ids = await hybridIds(fatwas, query, limit * ROWS_PER_PAGE, { ...EVERY_WORD, filter });
+  const ids = await hybridIds(SEARCHABLE.fatwas, query, limit * ROWS_PER_PAGE, {
+    ...EVERY_WORD,
+    filter,
+  });
   if (ids.length === 0) return { fatwas: [] };
   const rows = await db
     .select({

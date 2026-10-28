@@ -6,6 +6,8 @@ export const env = createEnv({
     DATABASE_URL: z.url(),
     REDIS_URL: z.url(),
     OPENAI_API_KEY: z.string(),
+    CLOUDFLARE_ACCOUNT_ID: z.string(),
+    CLOUDFLARE_AI_TOKEN: z.string(),
     STOPHY_API_KEY: z.string(),
     NEON_AI_GATEWAY_TOKEN: z.string(),
     NEON_AI_GATEWAY_BASE_URL: z.url(),
