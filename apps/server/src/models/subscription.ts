@@ -97,6 +97,9 @@ export const sideOptions: ProviderOptions = {
     forceReasoning: true,
     reasoningEffort: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
+  anthropic: {
+    thinking: { type: "disabled" },
+  } satisfies AnthropicLanguageModelOptions,
 };
 
 const USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
