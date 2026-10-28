@@ -25,6 +25,7 @@
   },
   "include": [
     "../../test/web.test.ts",
+    "../server/src/chat/skills/md.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

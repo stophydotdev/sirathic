@@ -27,24 +27,25 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconArrowUpRight,
-  IconChevronRight,
-  IconCopy,
-  IconDeviceDesktop,
-  IconDownload,
-  IconFileText,
-  IconHelpCircle,
-  IconLogout,
-  IconMessageCircle,
-  IconMoon,
-  IconSettings,
-  IconShieldLock,
-  IconSpy,
-  IconSun,
-  IconUserCircle,
-  IconX,
-} from "@tabler/icons-react";
+  ArrowRight01Icon,
+  ArrowUpRight01Icon,
+  Cancel01Icon,
+  ComputerIcon,
+  Copy01Icon,
+  Download04Icon,
+  File02Icon,
+  HelpCircleIcon,
+  IncognitoIcon,
+  Logout03Icon,
+  Message01Icon,
+  Moon02Icon,
+  SecurityLockIcon,
+  Settings02Icon,
+  Sun03Icon,
+  UserCircleIcon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { Dialog } from "radix-ui";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
@@ -194,7 +195,7 @@ export const SignInDialog: FC = () => {
             aria-label={t("Close")}
             className="text-muted-foreground hover:text-foreground absolute top-3 end-3 flex size-7 items-center justify-center rounded-full"
           >
-            <IconX className="size-4" />
+            <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
           </Dialog.Close>
           <Mark size={26} color="currentColor" />
           <Dialog.Title className="text-[17px] font-medium tracking-[-0.01em] text-balance">
@@ -211,7 +212,7 @@ export const SignInDialog: FC = () => {
                 className={cn(button, primary)}
               >
                 {t("Open ChatGPT")}
-                <IconArrowUpRight className="size-4" />
+                <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
               </a>
               <span className="text-muted-foreground inline-flex items-center gap-2 text-xs">
                 <span className="bg-super ring-super/20 size-1.5 rounded-full ring-3" />
@@ -331,7 +332,7 @@ const CopyCode: FC<{ code: string }> = ({ code }) => {
       onClick={copy}
       className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-xs"
     >
-      <IconCopy className="size-3.5" />
+      <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
       {copied ? t("Copied") : t("Copy code")}
     </button>
   );
@@ -340,9 +341,9 @@ const CopyCode: FC<{ code: string }> = ({ code }) => {
 const shortcut = "text-muted-foreground ms-auto ps-3 text-xs";
 
 const THEME_ICONS = {
-  dark: <IconMoon className="size-4" />,
-  light: <IconSun className="size-4" />,
-  system: <IconDeviceDesktop className="size-4" />,
+  dark: <HugeiconsIcon icon={Moon02Icon} className="size-4" />,
+  light: <HugeiconsIcon icon={Sun03Icon} className="size-4" />,
+  system: <HugeiconsIcon icon={ComputerIcon} className="size-4" />,
 } satisfies Record<(typeof THEMES)[number], ReactNode>;
 
 const row =
@@ -373,9 +374,11 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
         }}
         className={cn(row, collapsed && "justify-center px-0")}
       >
-        <IconUserCircle className="size-6 shrink-0 stroke-[1.5]" />
+        <HugeiconsIcon icon={UserCircleIcon} className="size-6 shrink-0 stroke-[1.5]" />
         {!collapsed && <span className="flex-1">{t("Sign In")}</span>}
-        {!collapsed && <IconChevronRight className="text-super size-3.5 rtl:rotate-180" />}
+        {!collapsed && (
+          <HugeiconsIcon icon={ArrowRight01Icon} className="text-super size-3.5 rtl:rotate-180" />
+        )}
       </button>
     );
   }
@@ -425,7 +428,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
           onCheckedChange={setIncognito}
           onSelect={(event) => event.preventDefault()}
         >
-          <IconSpy className="size-4" />
+          <HugeiconsIcon icon={IncognitoIcon} className="size-4" />
           {t("Incognito")}
           <span className={shortcut}>Ctrl ;</span>
         </DropdownMenuCheckboxItem>
@@ -435,19 +438,19 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
             openSettings(true);
           }}
         >
-          <IconSettings className="size-4" />
+          <HugeiconsIcon icon={Settings02Icon} className="size-4" />
           {t("All settings")}
           <span className={shortcut}>Ctrl Shift ,</span>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/download" onClick={onDone}>
-            <IconDownload className="size-4" />
+            <HugeiconsIcon icon={Download04Icon} className="size-4" />
             {t("Download")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <IconMoon className="size-4" />
+            <HugeiconsIcon icon={Moon02Icon} className="size-4" />
             <span className="flex flex-col">
               {t("Appearance")}
               <span className="text-muted-foreground text-xs">{t(THEME_NAMES[theme])}</span>
@@ -476,25 +479,25 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
         </DropdownMenuSub>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <IconHelpCircle className="size-4" />
+            <HugeiconsIcon icon={HelpCircleIcon} className="size-4" />
             {t("Help")}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="w-40">
             <DropdownMenuItem asChild>
               <a href={`mailto:${CONTACT}`}>
-                <IconMessageCircle className="size-4" />
+                <HugeiconsIcon icon={Message01Icon} className="size-4" />
                 {t("Contact")}
               </a>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/privacy" onClick={onDone}>
-                <IconShieldLock className="size-4" />
+                <HugeiconsIcon icon={SecurityLockIcon} className="size-4" />
                 {t("Privacy")}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/terms" onClick={onDone}>
-                <IconFileText className="size-4" />
+                <HugeiconsIcon icon={File02Icon} className="size-4" />
                 {t("Terms")}
               </Link>
             </DropdownMenuItem>
@@ -502,7 +505,7 @@ export const AccountRow: FC<{ collapsed?: boolean; onDone?: () => void }> = ({
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void signOut()}>
-          <IconLogout className="size-4" />
+          <HugeiconsIcon icon={Logout03Icon} className="size-4" />
           {t("Sign out")}
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -21,18 +21,3 @@ export const Favicon: FC<{
     />
   );
 };
-
-export const FaviconStack: FC<{ urls: readonly string[] }> = ({ urls }) => {
-  return (
-    <span className="flex items-center">
-      {urls.slice(0, 3).map((url, i) => (
-        <Favicon
-          key={url}
-          url={url}
-          size={14}
-          className={cn("ring-background ring-2", i > 0 && "-ms-[5px]")}
-        />
-      ))}
-    </span>
-  );
-};

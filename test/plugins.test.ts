@@ -1,8 +1,40 @@
-import { expect, test } from "bun:test";
+import { expect, mock, test } from "bun:test";
+import { drizzle } from "drizzle-orm/pg-proxy";
+import { z } from "zod";
+import { writingTools } from "../apps/server/src/chat/confirm";
+import { seal } from "../apps/server/src/account/vault";
 import { isPrivateAddress, publicUrl } from "../apps/server/src/plugins/address";
 import { type ConnectorId, popularOf, toolName } from "../apps/server/src/plugins/catalog";
-import { FORGET, withUpdate } from "../apps/server/src/plugins/connections";
 import { mentionedSkills } from "../apps/server/src/skills/mentions";
+
+const connectionRow = ["exa", null, null, await seal("{}")];
+const savedLists = new Map<string, string>();
+mock.module("@sirathic/core/cache", () => ({
+  cacheFor:
+    <Value>({ namespace, schema }: { namespace: string; schema: z.ZodType<Value> }) =>
+    async (id: string, fetchValue: () => Promise<Value>) => {
+      const key = `${namespace}:${id}`;
+      const kept = savedLists.get(key);
+      if (kept !== undefined) return schema.parse(JSON.parse(kept));
+      const value = await fetchValue();
+      savedLists.set(key, JSON.stringify(value));
+      return value;
+    },
+  dropCached: async (namespace: string, id: string) => void savedLists.delete(`${namespace}:${id}`),
+}));
+const selects: string[] = [];
+mock.module("@sirathic/db", () => ({
+  db: drizzle(
+    async (sql) => {
+      if (sql.startsWith("select")) selects.push(sql);
+      return { rows: [connectionRow] };
+    },
+    { casing: "snake_case" },
+  ),
+}));
+const { connectedTools, disconnect, listConnections, FORGET, withUpdate } =
+  await import("../apps/server/src/plugins/connections");
+const { matchingPlugins, notConnected } = await import("../apps/server/src/plugins/tools");
 
 test.each([
   "127.0.0.1",
@@ -112,4 +144,149 @@ test("emails and longer words are not skill calls", () => {
 
 test("a name whose lowercase form is longer is still found", () => {
   expect(namesIn("@İman nedir?")).toEqual(["İman"]);
+});
+
+const listed = (id: string, name: string, category: string, connected: boolean) => ({
+  id,
+  name,
+  category,
+  url: "https://example.com",
+  connected,
+  popular: false,
+});
+
+test("a plugin search ranks by shared words, says what is installed, and never offers a custom plugin", () => {
+  const found = matchingPlugins(
+    [
+      listed("notion", "Notion", "productivity", false),
+      listed("calendly", "Calendly", "productivity", false),
+      listed("googlecalendar", "Google Calendar", "productivity", true),
+      listed("custom-ab12cd34", "My calendar", "custom", true),
+    ],
+    "calendar events meetings",
+  );
+  expect(found).toEqual([
+    {
+      id: "googlecalendar",
+      name: "Google Calendar",
+      does: "See your calendars and events",
+      installed: true,
+    },
+    {
+      id: "calendly",
+      name: "Calendly",
+      does: "Check availability and book meetings",
+      installed: false,
+    },
+  ]);
+});
+
+const rpc = z.object({
+  id: z.number().optional(),
+  method: z.string(),
+  params: z.object({ protocolVersion: z.string().optional() }).optional(),
+});
+const serverSaw: string[] = [];
+let callsFail = false;
+const serverTools = [
+  {
+    name: "search",
+    description: "Finds pages",
+    inputSchema: { type: "object", properties: { q: { type: "string" } } },
+    annotations: { readOnlyHint: true },
+  },
+  { name: "post", description: "Posts a page", inputSchema: { type: "object", properties: {} } },
+];
+
+const resultOf = (method: string, protocolVersion: string | undefined) =>
+  method === "initialize"
+    ? { protocolVersion, capabilities: { tools: {} }, serverInfo: { name: "stub", version: "1" } }
+    : method === "tools/list"
+      ? { tools: serverTools }
+      : { content: [{ type: "text", text: "found" }] };
+
+globalThis.fetch = Object.assign(
+  async (_url: Parameters<typeof fetch>[0], init?: RequestInit) => {
+    if (init?.method !== "POST") return new Response(null, { status: 405 });
+    const { id, method, params } = rpc.parse(JSON.parse(String(init.body)));
+    serverSaw.push(method);
+    if (id === undefined) return new Response(null, { status: 202 });
+    if (callsFail && method === "tools/call") {
+      return Response.json({ jsonrpc: "2.0", id, error: { code: -32000, message: "gone" } });
+    }
+    return Response.json({
+      jsonrpc: "2.0",
+      id,
+      result: resultOf(method, params?.protocolVersion),
+    });
+  },
+  { preconnect: () => {} },
+);
+
+test("a plugin's tools come from the saved list and its server is reached only when a tool is called", async () => {
+  const first = await connectedTools("owner");
+  await first.close();
+  expect(serverSaw).toContain("tools/list");
+
+  serverSaw.length = 0;
+  const second = await connectedTools("owner");
+  expect(serverSaw).toEqual([]);
+  expect(Object.keys(second.tools)).toEqual(["exa_search", "exa_post"]);
+  expect(writingTools(second.tools)).toEqual(["exa_post"]);
+
+  const found = await second.tools.exa_search?.execute?.(
+    { q: "wudu" },
+    { toolCallId: "call", messages: [], context: {} },
+  );
+  expect(found).toMatchObject({ content: [{ type: "text", text: "found" }] });
+  expect(serverSaw).toContain("initialize");
+  expect(serverSaw).toContain("tools/call");
+  expect(serverSaw).not.toContain("tools/list");
+  await second.close();
+});
+
+test("a plugin's connection row is read once for a minute and again after a disconnect", async () => {
+  selects.length = 0;
+  await (await connectedTools("owner-2")).close();
+  await (await connectedTools("owner-2")).close();
+  expect(selects).toHaveLength(1);
+  await disconnect("owner-2", "exa");
+  await (await connectedTools("owner-2")).close();
+  expect(selects).toHaveLength(2);
+});
+
+test("a failed tool call drops the saved list and the next answer lists the tools again", async () => {
+  const call = { toolCallId: "call", messages: [], context: {} };
+  await (await connectedTools("owner-3")).close();
+  serverSaw.length = 0;
+
+  const failing = await connectedTools("owner-3");
+  callsFail = true;
+  await expect(failing.tools.exa_search?.execute?.({ q: "wudu" }, call)).rejects.toThrow("gone");
+  callsFail = false;
+  await failing.close();
+  expect(serverSaw).not.toContain("tools/list");
+
+  serverSaw.length = 0;
+  await (await connectedTools("owner-3")).close();
+  expect(serverSaw).toContain("tools/list");
+});
+
+test("the plugin list is read once for a minute and again after a disconnect", async () => {
+  selects.length = 0;
+  await listConnections("owner-4");
+  await listConnections("owner-4");
+  expect(selects).toHaveLength(2);
+  await disconnect("owner-4", "exa");
+  await listConnections("owner-4");
+  expect(selects).toHaveLength(4);
+});
+
+test("a failed install tells the model the real reason, without URLs or secrets, and no promise to retry", () => {
+  const err = new Error(
+    "Gmail sign-in failed: invalid_grant from https://oauth2.example.com/token?code=abc with client_secret=s3cr3t for this app.",
+  );
+  expect(notConnected(err)).toBe(
+    "Not connected: Gmail sign-in failed: invalid_grant from with for this app. Tell the user it did not connect and why, in plain words. Do not say whose side failed or promise to retry.",
+  );
 });

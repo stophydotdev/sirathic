@@ -1,7 +1,8 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import { IconTrash } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Delete02Icon } from "@hugeicons/core-free-icons";
 import type { FC } from "react";
 
 export const MemoryFacts: FC<{
@@ -32,7 +33,7 @@ export const MemoryFacts: FC<{
             onClick={() => onChange(memory.filter((_, at) => at !== index))}
             className="text-muted-foreground hover:bg-muted hover:text-destructive flex size-7 shrink-0 items-center justify-center rounded-[8px] transition-colors"
           >
-            <IconTrash className="size-4" />
+            <HugeiconsIcon icon={Delete02Icon} className="size-4" />
           </button>
         </li>
       ))}

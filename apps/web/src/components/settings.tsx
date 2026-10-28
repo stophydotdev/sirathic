@@ -13,18 +13,18 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  IconAdjustmentsHorizontal,
-  IconBrush,
-  IconCheck,
-  IconChevronLeft,
-  IconChevronRight,
-  IconClick,
-  IconDatabase,
-  IconUser,
-  IconX,
-  type TablerIcon,
-} from "@tabler/icons-react";
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  Cancel01Icon,
+  Cursor01Icon,
+  Database01Icon,
+  PaintBrush01Icon,
+  SlidersHorizontalIcon,
+  Tick02Icon,
+  UserIcon,
+} from "@hugeicons/core-free-icons";
 import { Dialog } from "radix-ui";
 import { type FC } from "react";
 import { create } from "zustand";
@@ -34,19 +34,24 @@ const SECTIONS = ["account", "appearance", "behavior", "customize", "data"] as c
 type Section = (typeof SECTIONS)[number];
 
 const SECTION_DETAILS = {
-  account: { name: "Account", group: "General", icon: IconUser, Body: AccountSection },
-  appearance: { name: "Appearance", group: "General", icon: IconBrush, Body: AppearanceSection },
-  behavior: { name: "Behavior", group: "General", icon: IconClick, Body: BehaviorSection },
+  account: { name: "Account", group: "General", icon: UserIcon, Body: AccountSection },
+  appearance: {
+    name: "Appearance",
+    group: "General",
+    icon: PaintBrush01Icon,
+    Body: AppearanceSection,
+  },
+  behavior: { name: "Behavior", group: "General", icon: Cursor01Icon, Body: BehaviorSection },
   customize: {
     name: "Customize",
     group: "Sirathic",
-    icon: IconAdjustmentsHorizontal,
+    icon: SlidersHorizontalIcon,
     Body: CustomizeSection,
   },
   data: {
     name: "Data controls",
     group: "Data and information",
-    icon: IconDatabase,
+    icon: Database01Icon,
     Body: DataSection,
   },
 } satisfies Record<
@@ -54,7 +59,7 @@ const SECTION_DETAILS = {
   {
     name: MessageKey;
     group: MessageKey;
-    icon: TablerIcon;
+    icon: IconSvgElement;
     Body: FC;
   }
 >;
@@ -116,7 +121,7 @@ export const SettingsDialog: FC = () => {
             <div className="flex items-center justify-between ps-2.5 md:hidden">
               <span className="text-[15px] font-semibold">{t("Settings")}</span>
               <Dialog.Close aria-label={t("Close")} className={closeButton}>
-                <IconX className="size-4" />
+                <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
               </Dialog.Close>
             </div>
             {GROUPS.map((group) => (
@@ -137,9 +142,12 @@ export const SettingsDialog: FC = () => {
                         item === section && "md:bg-muted",
                       )}
                     >
-                      <Icon className="size-4 shrink-0" />
+                      <HugeiconsIcon icon={Icon} className="size-4 shrink-0" />
                       <span className="flex-1">{t(label)}</span>
-                      <IconChevronRight className="text-muted-foreground size-4 md:hidden rtl:rotate-180" />
+                      <HugeiconsIcon
+                        icon={ArrowRight01Icon}
+                        className="text-muted-foreground size-4 md:hidden rtl:rotate-180"
+                      />
                     </button>
                   );
                 })}
@@ -155,11 +163,11 @@ export const SettingsDialog: FC = () => {
                 onClick={list}
                 className={cn(closeButton, "md:hidden")}
               >
-                <IconChevronLeft className="size-4 rtl:rotate-180" />
+                <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4 rtl:rotate-180" />
               </button>
               <Dialog.Title className="flex-1 text-[15px] font-semibold">{t(name)}</Dialog.Title>
               <Dialog.Close aria-label={t("Close")} className={closeButton}>
-                <IconX className="size-4" />
+                <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
               </Dialog.Close>
             </div>
             <div className="flex-1 overflow-y-auto px-5 pb-8">
@@ -213,7 +221,7 @@ export const ModelMenuContent: FC<{
                 <span className="text-muted-foreground text-xs">{t(description)}</span>
               )}
             </span>
-            {chosen === model.slug && <IconCheck className="size-4" />}
+            {chosen === model.slug && <HugeiconsIcon icon={Tick02Icon} className="size-4" />}
           </DropdownMenuItem>
         );
       })}

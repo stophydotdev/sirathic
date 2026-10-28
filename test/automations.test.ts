@@ -1,6 +1,7 @@
 import { expect, mock, test } from "bun:test";
 import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
+import type { z } from "zod";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import {
   nextRun,
@@ -156,19 +157,21 @@ mock.module("../apps/server/src/chat/response", () => ({
 }));
 
 const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
-const { automationTools } = await import("../apps/server/src/automations/tools");
+const { routineCall, routineTools } = await import("../apps/server/src/automations/tools");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;
   console.error = () => {};
+  modelError = "529: overloaded";
   await runDue();
+  modelError = undefined;
   console.error = logged;
 
   expect(automationRow.enabled).toBe(false);
   expect(automationRow.nextRunAt).toBeNull();
   expect(automationRow.lastRunAt).not.toBeNull();
   expect(savedChats).toHaveLength(1);
-  const [, owner, title, messages, unread, , savedFor] = savedChats[0];
+  const [, owner, title, messages, unread, savedFor] = savedChats[0];
   expect([owner, title, unread, savedFor]).toEqual(["user-a", "Eid reminder", true, automationId]);
   expect(
     JSON.parse(String(messages)).map(
@@ -180,11 +183,7 @@ test("a run that fails still saves an unread chat with the reason and ends the o
     ),
   ).toEqual([
     ["user", "research", "Remind me of the Eid sunnahs"],
-    [
-      "assistant",
-      "research",
-      "This run did not finish. You've used today's 30 Noor answers. They come back tomorrow.",
-    ],
+    ["assistant", "research", "This run did not finish. 529: overloaded"],
   ]);
 });
 
@@ -206,7 +205,6 @@ test("a failing routine posts its first failure, stays quiet on the second and p
     enabled: true,
     failures: 0,
   });
-  answersToday = 31;
   savedChats.length = 0;
   const runOnce = async () => {
     automationRow.nextRunAt = dueAt;
@@ -214,7 +212,11 @@ test("a failing routine posts its first failure, stays quiet on the second and p
     return [savedChats.length, automationRow.failures, automationRow.enabled];
   };
 
-  expect([await runOnce(), await runOnce(), await runOnce()]).toEqual([
+  modelError = "529: overloaded";
+  const runs = [await runOnce(), await runOnce(), await runOnce()];
+  modelError = undefined;
+
+  expect(runs).toEqual([
     [1, 1, true],
     [1, 2, true],
     [2, 3, false],
@@ -223,6 +225,40 @@ test("a failing routine posts its first failure, stays quiet on the second and p
     "Paused after 3 failed runs in a row. Turn it back on in Automations.",
   ]);
   expect(automationRow.nextRunAt).toBeNull();
+});
+
+test("a sign-in failure is told every time and never counts toward pausing", async () => {
+  Object.assign(automationRow, {
+    plan: { kind: "daily", time: "09:00" },
+    enabled: true,
+    failures: 1,
+  });
+  savedChats.length = 0;
+  modelError = "your ChatGPT sign-in ended, sign in again";
+  const runOnce = async () => {
+    automationRow.nextRunAt = dueAt;
+    await runDueQuietly();
+  };
+
+  await runOnce();
+  await runOnce();
+  await runOnce();
+  modelError = undefined;
+
+  expect([savedChats.length, automationRow.failures, automationRow.enabled]).toEqual([3, 1, true]);
+  expect(lastSavedText()).toEqual([
+    "This run did not finish. your ChatGPT sign-in ended, sign in again",
+  ]);
+});
+
+test("a routine runs even when the user has spent the day's Noor answers in chat", async () => {
+  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 0 });
+  answersToday = 31;
+
+  await runDueQuietly();
+
+  expect(automationRow.failures).toBe(0);
+  expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
 });
 
 test("a run that works resets the failure count", async () => {
@@ -362,9 +398,10 @@ test("schedules with an impossible date, a repeated day or a bad zone are reject
 });
 
 test("Noor creates a weekly reminder in the person's time zone with In app notification", async () => {
-  const tools = automationTools({ owner: "user-a", timezone: "Asia/Tokyo" });
-  const created = await tools.createAutomation.execute?.(
+  const tools = routineTools({ owner: "user-a", timezone: "Asia/Tokyo" });
+  const created = await tools.update_routine.execute?.(
     {
+      action: "create",
       name: "Read Surah al-Kahf",
       prompt: "Remind me to read Surah al-Kahf.",
       schedule: { kind: "weekly", days: [5], time: "08:00" },
@@ -463,4 +500,17 @@ test("a bot routine run sends the model only its brief, numbers citations after 
   expect(saved).toHaveLength(66);
   expect(saved.at(-2)?.parts).toEqual([{ type: "text", text: "One new verse each morning" }]);
   expect(saved.at(-1)?.id).toBe("reply-1");
+});
+
+const issues = (call: z.input<typeof routineCall>) =>
+  routineCall.safeParse(call).error?.issues.map((issue) => issue.message);
+
+test("a routine call missing what its action needs is rejected before the user is asked to confirm", () => {
+  const id = "33333333-3333-4333-8333-333333333333";
+  expect(issues({ action: "create", name: "Eid reminder" })).toEqual([
+    "prompt is required to create",
+    "schedule is required to create",
+  ]);
+  expect(issues({ action: "delete", id })).toEqual(["name is required to delete"]);
+  expect(issues({ action: "pause", id })).toBeUndefined();
 });

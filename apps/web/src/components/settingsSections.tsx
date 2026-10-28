@@ -12,7 +12,8 @@ import { useSignIn } from "@/components/signIn";
 import { useKeyNames } from "@/lib/keys";
 import { cn } from "@/lib/utils";
 import { MODES } from "@sirathic/server/messages";
-import { IconAlertCircle, IconUser } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { AlertCircleIcon, UserIcon } from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 
 const chosenLocale = (): "auto" | Locale =>
@@ -38,6 +39,7 @@ const LOCALE_NAMES = {
   az: "Azərbaycanca",
   bs: "Bosanski",
   sr: "Српски",
+  sl: "Slovenščina",
   uz: "Ўзбекча",
   ky: "Кыргызча",
   id: "Bahasa Indonesia",
@@ -59,6 +61,7 @@ const LOCALE_NAMES = {
   ta: "தமிழ்",
   si: "සිංහල",
   ff: "Fulfulde",
+  sw: "Kiswahili",
 } satisfies Record<Locale, string>;
 const interfaceLanguageName = (t: Translate) => (code: "auto" | Locale) =>
   code === "auto" ? t("Same as my browser") : LOCALE_NAMES[code];
@@ -101,7 +104,7 @@ export const AccountSection: FC = () => {
               />
             ) : (
               <span className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-full">
-                <IconUser className="size-4" />
+                <HugeiconsIcon icon={UserIcon} className="size-4" />
               </span>
             )}
             <div className="flex min-w-0 flex-1 flex-col">
@@ -139,7 +142,7 @@ export const AccountSection: FC = () => {
       </Group>
       {modelsError && (
         <p className="text-destructive mt-3 flex items-center gap-1.5 text-xs">
-          <IconAlertCircle className="size-3.5 shrink-0" />
+          <HugeiconsIcon icon={AlertCircleIcon} className="size-3.5 shrink-0" />
           {modelsError}
         </p>
       )}
@@ -228,8 +231,8 @@ export const AppearanceSection: FC = () => {
 };
 
 export const BehaviorSection: FC = () => {
-  const mode = useChatOptions((s) => s.mode);
-  const setMode = useChatOptions((s) => s.setMode);
+  const mode = useChatOptions((s) => s.defaultMode);
+  const setMode = useChatOptions((s) => s.setDefaultMode);
   const keys = useKeyNames();
   const t = useT();
 

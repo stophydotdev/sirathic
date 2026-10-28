@@ -2,7 +2,6 @@
 
 import { saveDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
-import { MoveToProject } from "@/components/moveToProject";
 import { findSessions, type Session, useSessions } from "@/components/sessions";
 import {
   DropdownMenu,
@@ -12,19 +11,20 @@ import {
 } from "@/components/ui/dropdownMenu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconDots,
-  IconExternalLink,
-  IconMail,
-  IconMailOpened,
-  IconPencil,
-  IconPin,
-  IconPinnedOff,
-  IconPlus,
-  IconSearch,
-  IconSpy,
-  IconTrash,
-} from "@tabler/icons-react";
+  Add01Icon,
+  Delete02Icon,
+  IncognitoIcon,
+  LinkSquare02Icon,
+  Mail01Icon,
+  MailOpen01Icon,
+  MoreHorizontalIcon,
+  PencilEdit02Icon,
+  PinIcon,
+  PinOffIcon,
+  Search01Icon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
@@ -159,17 +159,17 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
             className,
           )}
         >
-          <IconDots className="size-3.5" />
+          <HugeiconsIcon icon={MoreHorizontalIcon} className="size-3.5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-64 rounded-[16px] p-1.5">
           <DropdownMenuItem asChild className={menuItem}>
             <a href={`/c/${session.id}`} target="_blank" rel="noreferrer">
-              <IconExternalLink className={menuIcon} />
+              <HugeiconsIcon icon={LinkSquare02Icon} className={menuIcon} />
               {t("Open in new tab")}
             </a>
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setRenaming(true)} className={menuItem}>
-            <IconPencil className={menuIcon} />
+            <HugeiconsIcon icon={PencilEdit02Icon} className={menuIcon} />
             {t("Rename")}
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -177,9 +177,9 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
             className={menuItem}
           >
             {session.pinned ? (
-              <IconPinnedOff className={menuIcon} />
+              <HugeiconsIcon icon={PinOffIcon} className={menuIcon} />
             ) : (
-              <IconPin className={menuIcon} />
+              <HugeiconsIcon icon={PinIcon} className={menuIcon} />
             )}
             {session.pinned ? t("Unpin") : t("Pin")}
           </DropdownMenuItem>
@@ -188,19 +188,18 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
             className={menuItem}
           >
             {session.unread ? (
-              <IconMailOpened className={menuIcon} />
+              <HugeiconsIcon icon={MailOpen01Icon} className={menuIcon} />
             ) : (
-              <IconMail className={menuIcon} />
+              <HugeiconsIcon icon={Mail01Icon} className={menuIcon} />
             )}
             {session.unread ? t("Mark as read") : t("Mark as unread")}
           </DropdownMenuItem>
-          <MoveToProject session={session} />
           <DropdownMenuItem
             variant="destructive"
             onSelect={() => setDeleting(true)}
             className={menuItem}
           >
-            <IconTrash className="size-[18px]" />
+            <HugeiconsIcon icon={Delete02Icon} className="size-[18px]" />
             {t("Delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -214,8 +213,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
 export const SessionRow: FC<{
   session: Session;
   onOpen?: () => void;
-  nested?: boolean;
-}> = ({ session, onOpen, nested }) => {
+}> = ({ session, onOpen }) => {
   const pathname = usePathname();
   const change = useSessions((s) => s.change);
   const t = useT();
@@ -239,7 +237,6 @@ export const SessionRow: FC<{
               onClick={onOpen}
               className={cn(
                 "text-foreground min-w-0 flex-1 truncate px-2.5 py-2 text-sm group-hover/session:[text-overflow:clip]",
-                nested && "ps-[34px]",
                 session.unread && "font-[560]",
               )}
             >
@@ -255,9 +252,9 @@ export const SessionRow: FC<{
               className="text-muted-foreground hover:bg-muted hover:text-foreground hidden size-5 shrink-0 items-center justify-center rounded-md group-focus-within/session:flex group-hover/session:flex group-has-[[data-state=open]]/session:flex pointer-coarse:flex"
             >
               {session.pinned ? (
-                <IconPinnedOff className="size-3.5" />
+                <HugeiconsIcon icon={PinOffIcon} className="size-3.5" />
               ) : (
-                <IconPin className="size-3.5" />
+                <HugeiconsIcon icon={PinIcon} className="size-3.5" />
               )}
             </button>
             <SessionMenu
@@ -322,7 +319,7 @@ export const SearchDialog: FC<{
       ? [
           {
             key: "ask",
-            icon: <IconSearch className="size-4" />,
+            icon: <HugeiconsIcon icon={Search01Icon} className="size-4" />,
             label: t("Ask Sirathic"),
             hint: asked,
             run: () => {
@@ -334,13 +331,13 @@ export const SearchDialog: FC<{
       : []),
     {
       key: "new",
-      icon: <IconPlus className="size-4" />,
+      icon: <HugeiconsIcon icon={Add01Icon} className="size-4" />,
       label: t("New chat"),
       run: () => window.location.assign("/"),
     },
     {
       key: "incognito",
-      icon: <IconSpy className="size-4" />,
+      icon: <HugeiconsIcon icon={IncognitoIcon} className="size-4" />,
       label: t("New incognito chat"),
       run: () => window.location.assign("/?incognito"),
     },
@@ -388,7 +385,7 @@ export const SearchDialog: FC<{
         >
           <Dialog.Title className="sr-only">{t("Search chats")}</Dialog.Title>
           <div className="border-border/50 flex h-14 items-center gap-3 border-b px-5">
-            <IconSearch className="text-muted-foreground size-4" />
+            <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-4" />
             <input
               value={query}
               onChange={(event) => {

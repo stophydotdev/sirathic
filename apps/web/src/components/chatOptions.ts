@@ -2,12 +2,18 @@ import type { MessageKey } from "@/messages/en";
 import { z } from "zod";
 import { create } from "zustand";
 import { usePreferences } from "@/components/preferences";
-import { type Mode, mode as modeSchema } from "@sirathic/server/messages";
+import {
+  type Effort,
+  effort as effortSchema,
+  type Mode,
+  mode as modeSchema,
+} from "@sirathic/server/messages";
 
 const STORAGE_KEY = "sirathicChatOptions";
 
 const saved = z.object({
   mode: modeSchema.catch("quick"),
+  effort: effortSchema.optional().catch(undefined),
 });
 
 type Override = { mode?: Mode; model?: string };
@@ -31,34 +37,49 @@ export const MODE_DETAILS = {
 
 export const useChatOptions = create<{
   mode: Mode;
+  defaultMode: Mode;
+  effort: Effort | undefined;
   incognito: boolean;
   override: Override | undefined;
   loaded: boolean;
   load: () => void;
   setMode: (next: Mode) => void;
+  setDefaultMode: (next: Mode) => void;
+  setEffort: (next: Effort | undefined) => void;
   setIncognito: (on: boolean) => void;
   setOverride: (next: Override) => void;
   takeOverride: () => Override | undefined;
 }>()((set, get) => {
   const persist = () => {
-    const { mode } = get();
-    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify({ mode }));
+    const { defaultMode, effort } = get();
+    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify({ mode: defaultMode, effort }));
   };
   return {
     mode: "quick",
+    defaultMode: "quick",
+    effort: undefined,
     incognito: false,
     override: undefined,
     loaded: false,
-    load: () =>
+    load: () => {
+      const { mode, effort } = read();
       set({
-        ...read(),
+        mode,
+        defaultMode: mode,
+        effort,
         incognito:
           new URLSearchParams(globalThis.location?.search).has("incognito") ||
           usePreferences.getState().incognitoByDefault,
         loaded: true,
-      }),
-    setMode: (next) => {
-      set({ mode: next });
+      });
+    },
+    setMode: (next) => set({ mode: next }),
+    setDefaultMode: (next) => {
+      set({ mode: next, defaultMode: next });
+      persist();
+    },
+    setEffort: (next) => {
+      set({ effort: next });
       persist();
     },
     setIncognito: (on) => set({ incognito: on }),

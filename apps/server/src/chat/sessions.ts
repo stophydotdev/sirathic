@@ -1,16 +1,18 @@
 import { db } from "@sirathic/db";
 import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
-import { type AnyColumn, and, desc, eq, ilike, lt, sql } from "drizzle-orm";
+import { type AnyColumn, and, desc, eq, gt, ilike, lt, sql } from "drizzle-orm";
 import { z } from "zod";
-import { projectId, requireProject } from "../projects/projects";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "../shared/messages";
 import { StatusError } from "../http";
+import { isAnswering } from "./answers";
 
 const TITLE_CHARS = 80;
 const PREVIEW_CHARS = 90;
 const RECENT_LIMIT = 50;
 const LIKE_SPECIAL = /[\\%_]/gu;
+const ASK_CHARS = 140;
+const ASKS_PER_CHAT = 3;
 
 export const sessionId = z.uuid();
 
@@ -19,11 +21,10 @@ export const sessionUpdate = z
     title: z.string().trim().min(1).max(TITLE_CHARS).optional(),
     pinned: z.boolean().optional(),
     unread: z.boolean().optional(),
-    projectId: projectId.nullable().optional(),
   })
   .refine(
     (update) => Object.values(update).some((value) => value !== undefined),
-    "send a title, pinned, unread or projectId",
+    "send a title, pinned or unread",
   );
 
 export const feedbackInput = z.object({
@@ -54,8 +55,22 @@ export const messageSchemas = {
 
 const owned = (id: string, by: string) => and(eq(chatSessions.id, id), eq(chatSessions.owner, by));
 
-export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
-  db
+const asked = z.array(z.string());
+
+export const recentAsks = async (by: string, since: Date, chats: number) => {
+  const rows = await db
+    .select({
+      asks: sql`coalesce((select json_agg(left(part->>'text', ${ASK_CHARS})) from jsonb_array_elements(${chatSessions.messages}) as message, jsonb_array_elements(message->'parts') as part where message->>'role' = 'user' and part->>'type' = 'text'), '[]'::json)`,
+    })
+    .from(chatSessions)
+    .where(and(eq(chatSessions.owner, by), gt(chatSessions.updatedAt, since)))
+    .orderBy(desc(chatSessions.updatedAt))
+    .limit(chats);
+  return rows.flatMap(({ asks }) => asked.parse(asks).slice(-ASKS_PER_CHAT));
+};
+
+export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT) => {
+  const rows = await db
     .select({
       id: chatSessions.id,
       title: chatSessions.title,
@@ -79,6 +94,8 @@ export const listSessions = (by: string, query = "", limit = RECENT_LIMIT) =>
     )
     .orderBy(desc(chatSessions.pinned), desc(chatSessions.updatedAt))
     .limit(limit);
+  return rows.map((row) => Object.assign(row, { working: isAnswering(by, row.id) }));
+};
 
 async function storedMessages(id: string, by: string) {
   const [row] = await db
@@ -152,7 +169,6 @@ export async function updateSession(
   by: string,
   update: z.output<typeof sessionUpdate>,
 ) {
-  if (update.projectId) await requireProject(update.projectId, by);
   const [row] = await db
     .update(chatSessions)
     .set({ ...update, updatedAt: keepUpdatedAt })
@@ -162,7 +178,6 @@ export async function updateSession(
       title: chatSessions.title,
       pinned: chatSessions.pinned,
       unread: chatSessions.unread,
-      projectId: chatSessions.projectId,
     });
   if (!row) throw new StatusError(404, "no such session");
   return row;

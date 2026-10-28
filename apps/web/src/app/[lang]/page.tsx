@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Chat } from "@/components/chat";
+import { NewChat } from "@/components/newChat";
 import { alternatesOf, SITE } from "@/lib/seo";
 
 export const metadata: Metadata = { alternates: alternatesOf("") };
@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: STRUCTURED_DATA }} />
-      <Chat />
+      <NewChat />
     </>
   );
 }

@@ -1,10 +1,11 @@
 import type { ThreadMessage } from "@assistant-ui/react";
 import { CONNECTOR_IDS } from "@sirathic/server/catalog";
+import { currentToolName } from "@sirathic/server/messages";
 import { z } from "zod";
 
 type Part = ThreadMessage["content"][number];
 
-const SEARCH_SOURCES = ["quran", "hadith", "fiqh", "fatwa", "web", "news"] as const;
+const SEARCH_SOURCES = ["quran", "hadith", "fiqh", "fatwa", "web", "news", "duas"] as const;
 export type SearchSource = (typeof SEARCH_SOURCES)[number];
 
 const searchArgs = z
@@ -21,6 +22,7 @@ const searchOutput = z.object({
       fatwa: z.array(z.object({ title: z.string(), site: z.string() })).catch([]),
       web: z.array(page).catch([]),
       news: z.array(page).catch([]),
+      duas: z.array(z.object({ title: z.string() })).catch([]),
     })
     .partial(),
   sources: z.array(page).catch([]),
@@ -31,8 +33,24 @@ const quranArgs = z.object({
   from: z.number().optional(),
   to: z.number().optional(),
 });
-const urlArgs = z.object({ url: z.string() });
+const fetchArgs = z.union([
+  z.object({ urls: z.array(z.string()) }),
+  z.object({ url: z.string() }).transform(({ url }) => ({ urls: [url] })),
+]);
+const fetchResult = z.object({
+  pages: z.array(z.object({ url: z.string(), error: z.string().optional() })),
+});
 const queryArgs = z.object({ query: z.string() });
+const codeArgs = z
+  .union([
+    z
+      .object({ type: z.literal("programmatic-tool-call"), code: z.string() })
+      .transform((input) => input.code),
+    z
+      .object({ type: z.literal("bash_code_execution"), command: z.string() })
+      .transform((input) => input.command),
+  ])
+  .catch("");
 const LEGACY_SEARCHES = new Set([
   "quranSearch",
   "hadithSearch",
@@ -51,6 +69,7 @@ export type ResearchStep =
   | { kind: "searches"; queries: string[]; results: Read[]; done: boolean }
   | { kind: "browse"; url: string; failed: boolean }
   | { kind: "verses"; title: string; url: string }
+  | { kind: "code"; code: string }
   | { kind: "tool"; tool: string; detail: string }
   | { kind: "plugin"; plugin: string; calls: PluginCall[] };
 
@@ -150,6 +169,7 @@ function readsOf({ results, sources }: z.infer<typeof searchOutput>): Read[] {
       detail: hostOf(url),
       url,
     })),
+    ...(results.duas ?? []).map(({ title }): Read => ({ source: "duas", title })),
   ];
 }
 
@@ -163,7 +183,8 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
       return;
     }
     if (part.type !== "tool-call") return;
-    if (part.toolName === "search" || LEGACY_SEARCHES.has(part.toolName)) {
+    const toolName = currentToolName(part.toolName);
+    if (toolName === "search_web" || LEGACY_SEARCHES.has(toolName)) {
       const { queries = [], arabic = [] } = searchArgs.safeParse(part.args).data ?? {};
       const legacy = queryArgs.safeParse(part.args).data?.query;
       const asked = legacy ? [legacy] : [...queries, ...arabic];
@@ -180,12 +201,23 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
       }
       return;
     }
-    if (part.toolName === "webFetch") {
-      const url = urlArgs.safeParse(part.args).data?.url;
-      if (url) steps.push({ kind: "browse", url, failed: part.isError === true });
+    if (toolName === "fetch_url") {
+      const { urls = [] } = fetchArgs.safeParse(part.args).data ?? {};
+      const unread = new Set(
+        (fetchResult.safeParse(part.result).data?.pages ?? []).flatMap((entry) =>
+          entry.error ? [entry.url] : [],
+        ),
+      );
+      for (const url of urls) {
+        steps.push({ kind: "browse", url, failed: part.isError === true || unread.has(url) });
+      }
       return;
     }
-    if (part.toolName === "quranGet") {
+    if (part.toolName === "code_execution") {
+      steps.push({ kind: "code", code: codeArgs.parse(part.args) });
+      return;
+    }
+    if (toolName === "get_verses") {
       const verses = quranArgs.safeParse(part.args).data;
       if (!verses) return;
       const from = verses.from ?? 1;
@@ -211,7 +243,7 @@ export function researchOf(parts: readonly Part[], thinkingLive: boolean) {
     }
     steps.push({
       kind: "tool",
-      tool: part.toolName,
+      tool: toolName,
       detail: queryArgs.safeParse(part.args).data?.query ?? "",
     });
   });

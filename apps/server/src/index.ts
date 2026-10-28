@@ -8,34 +8,42 @@ import { startScheduler } from "./automations/runner";
 import { timezone } from "./automations/schedule";
 import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
-import { countNoorAnswer, pickModels } from "./models/pick";
-import { chatResponse, neededTools } from "./chat/response";
+import { pickModels, reserveNoorAnswer } from "./models/pick";
+import { chatResponse } from "./chat/response";
 import { reviewEvery } from "./bots/review";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
 import { connectedTools, finishConnect } from "./plugins/connections";
 import { track } from "./chat/events";
-import { readProjectFiles } from "./files/attachments";
 import { uploadRoutes } from "./files/upload";
-import { projectOfChat, rememberInBot, rememberInProject } from "./projects/projects";
-import { botIdentity, projectRules, settingsInProject } from "./projects/rules";
-import { appLanguage, type ChatMessage, device, mode } from "./shared/messages";
+import { projectOfChat } from "./projects/projects";
+import { settingsInProject } from "./projects/rules";
+import {
+  appLanguage,
+  type ChatMessage,
+  DEFAULT_EFFORT,
+  device,
+  effort,
+  mode,
+  sentMessage,
+} from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./http";
-import { answerOptions, sideOptions } from "./models/subscription";
+import { sideOptions } from "./models/subscription";
 import { appRouter } from "./router";
 import { createContext } from "./trpc";
-import { getSettings, remember } from "./account/settings";
+import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
 import { messageSchemas, saveSession, sessionId, titleSession } from "./chat/sessions";
-import { skillRules } from "./skills/skills";
+import { listSkills } from "./skills/skills";
 
 const IDLE_TIMEOUT_SECONDS = 255;
 
 const chatBody = z.object({
   id: sessionId,
-  messages: z.array(z.looseObject({ role: z.enum(["user", "assistant"]) })).min(1),
+  messages: z.array(sentMessage).min(1),
   model: z.string().min(1).optional(),
   mode: mode.default("quick"),
+  effort: effort.optional().catch(undefined),
   incognito: z.boolean().default(false),
   projectId: z.uuid().optional().catch(undefined),
   trigger: z.enum(["submit-message", "regenerate-message"]).optional().catch(undefined),
@@ -69,7 +77,7 @@ app.post("/api/chat", (c) =>
     });
     const owner = input.incognito ? undefined : by;
     const { modelName, models } = pickModels(user, input.model);
-    await countNoorAnswer(by, modelName);
+    const release = await reserveNoorAnswer(by, modelName);
     const asked = validated.findLast((message) => message.role === "user");
     track(
       {
@@ -118,6 +126,13 @@ app.post("/api/chat", (c) =>
           inProject?.kind === "bot" && reviewEvery({ user, botId: inProject.id, messages }),
       );
     };
+    const userSkills =
+      owner === undefined
+        ? Promise.resolve([])
+        : listSkills(owner).catch((err: Error) => {
+            console.error(`skills not read: ${reasonOf(err)}`);
+            return [];
+          });
     const saved = save(validated);
     saved.catch((err: Error) => {
       console.error(`session not saved: ${reasonOf(err)}`);
@@ -134,13 +149,6 @@ app.post("/api/chat", (c) =>
             console.error(`title not set: ${reasonOf(err)}`);
             return undefined;
           });
-    const needs = project.then((inProject) =>
-      neededTools(
-        validated,
-        inProject?.kind === "bot" ? inProject.instructions : "",
-        input.language,
-      ),
-    );
     const answer = startAnswer(by, input.id);
     return chatResponse({
       models,
@@ -149,6 +157,7 @@ app.post("/api/chat", (c) =>
       mode: input.mode,
       abortSignal: answer.signal,
       settled: answer.settled,
+      release,
       bot:
         owner === undefined
           ? undefined
@@ -164,30 +173,9 @@ app.post("/api/chat", (c) =>
       connected: project.then((inProject) =>
         connectedTools(by, inProject?.kind === "bot" ? inProject.plugins : undefined),
       ),
-      needs,
-      projectRules: project.then(async (inProject) =>
-        inProject ? projectRules(inProject) + (await readProjectFiles(by, inProject.id)) : "",
-      ),
-      persona: project.then((inProject) =>
-        inProject?.kind === "bot" ? botIdentity(inProject) : undefined,
-      ),
-      skillRules:
-        owner === undefined
-          ? Promise.resolve("")
-          : skillRules(
-              owner,
-              asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "",
-            ).catch((err: Error) => {
-              console.error(`skills not read: ${reasonOf(err)}`);
-              return "";
-            }),
-      options: {
-        answer: answerOptions({
-          research: input.mode === "research",
-          sessionId: input.id,
-        }),
-        side: sideOptions,
-      },
+      project,
+      userSkills,
+      turn: { effort: input.effort ?? DEFAULT_EFFORT[input.mode], sessionId: input.id },
       title,
       save: (messages) => save(messages).then(() => learn(messages)),
       record: (event) => track(event, owner),
@@ -196,16 +184,7 @@ app.post("/api/chat", (c) =>
         owner === undefined || input.timezone === undefined
           ? undefined
           : { owner, timezone: input.timezone },
-      remember:
-        owner === undefined
-          ? undefined
-          : async (told) => {
-              const inProject = await project;
-              if (inProject?.kind === "bot") return rememberInBot(inProject.id, owner, told);
-              return inProject?.projectOnlyMemory
-                ? rememberInProject(inProject.id, owner, told)
-                : remember(owner, told);
-            },
+      owner,
     });
   }),
 );
@@ -214,14 +193,19 @@ app.route("/api/files", uploadRoutes);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 
+const SAME_SITE_PATH = /^\/(?![/\\])/u;
+
 app.get("/api/connectors/callback", async (c) => {
   const user = await userFor(c.req.raw.headers);
-  if (user) {
-    await finishConnect(user.id, c.req.query()).catch((err: Error) => {
-      console.error(`connector not connected: ${reasonOf(err)}`);
-    });
-  }
-  return c.redirect(new URL("/plugins", env.SITE_URL).href);
+  const back = user
+    ? await finishConnect(user.id, c.req.query()).catch((err: Error) => {
+        console.error(`connector not connected: ${reasonOf(err)}`);
+        return undefined;
+      })
+    : undefined;
+  return c.redirect(
+    new URL(back && SAME_SITE_PATH.test(back) ? back : "/plugins", env.SITE_URL).href,
+  );
 });
 
 app.use(

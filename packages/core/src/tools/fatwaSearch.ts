@@ -1,22 +1,30 @@
 import { db } from "@sirathic/db";
 import { fatwas } from "@sirathic/db/schema";
-import { inArray } from "drizzle-orm";
+import { inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { hybridIds } from "../search/hybridSearch";
 import { onePerAnswer } from "../search/onePerAnswer";
+import { siteHost } from "../web/url";
 
 const ROWS_PER_PAGE = 3;
 
 const EVERY_WORD = { anyWord: false };
 
+const onSites = (sites: string[]) => {
+  const hosts = sites.map((site) => site.replaceAll(".", "\\.")).join("|");
+  return sql`${fatwas.url} ~* ${`^https?://([^/]+\\.)?(${hosts})(/|$)`}`;
+};
+
 export const fatwaSearchInput = z.object({
   query: z.string().trim().min(1),
+  sites: z.array(siteHost).max(5).default([]),
   limit: z.number().int().min(1).max(20).default(6),
 });
 
 export const fatwaSearch = async (input: z.input<typeof fatwaSearchInput>) => {
-  const { query, limit } = fatwaSearchInput.parse(input);
-  const ids = await hybridIds(fatwas, query, limit * ROWS_PER_PAGE, EVERY_WORD);
+  const { query, sites, limit } = fatwaSearchInput.parse(input);
+  const filter = sites.length === 0 ? sql`true` : onSites(sites);
+  const ids = await hybridIds(fatwas, query, limit * ROWS_PER_PAGE, { ...EVERY_WORD, filter });
   if (ids.length === 0) return { fatwas: [] };
   const rows = await db
     .select({

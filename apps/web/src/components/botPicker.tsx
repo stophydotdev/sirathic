@@ -1,39 +1,25 @@
 "use client";
 
-import { BOT_TINTS, BotIconMark, tintOf } from "@/components/botAvatar";
-import { BOT_ICON_FILES } from "@/components/botIconFiles";
+import { BOT_TINTS, tintOf } from "@/components/botAvatar";
 import { useT } from "@/components/i18n";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { BODIES, bodyOf, pathOf } from "@/lib/blob/shape";
 import { cn } from "@/lib/utils";
-import { BOT_COLORS, BOT_ICONS } from "@sirathic/server/projects";
+import { BOT_COLORS, BOT_BODIES } from "@sirathic/server/projects";
 import type { FC } from "react";
 
-const CREDIT_URL = "https://www.flaticon.com/free-icons/muslim";
-
-const authors = [
-  ...new Set(Object.values(BOT_ICON_FILES).flatMap(({ author }) => (author ? [author] : []))),
-].join(", ");
-
-type PickerProps = {
+export const BotPickerPanel: FC<{
   color: string | null;
-  icon: string | null;
+  body: string | null;
+  seed: string;
   onColor: (color: (typeof BOT_COLORS)[number]) => void;
-  onIcon: (icon: (typeof BOT_ICONS)[number]) => void;
-};
-
-export const BotPickerPanel: FC<PickerProps & { className?: string }> = ({
-  color,
-  icon,
-  onColor,
-  onIcon,
-  className,
-}) => {
+  onBody: (body: (typeof BOT_BODIES)[number]) => void;
+}> = ({ color, body, seed, onColor, onBody }) => {
   const t = useT();
   const active = tintOf(color);
-  const activeIcon = icon ?? "star";
+  const current = bodyOf(body, seed);
 
   return (
-    <div className={cn("@container flex flex-col gap-3", className)}>
+    <div className="flex flex-col gap-3">
       <div role="radiogroup" aria-label={t("Color")} className="flex justify-between">
         {BOT_COLORS.map((name) => (
           <button
@@ -53,46 +39,30 @@ export const BotPickerPanel: FC<PickerProps & { className?: string }> = ({
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-5 gap-1.5 @xs:grid-cols-10">
-        {BOT_ICONS.map((name) => (
+      <div role="radiogroup" aria-label={t("Edit bot avatar")} className="grid grid-cols-8 gap-1.5">
+        {BOT_BODIES.map((name) => (
           <button
             key={name}
             type="button"
-            aria-pressed={activeIcon === name}
+            role="radio"
+            aria-checked={BODIES[name] === current}
             aria-label={name}
-            onClick={() => onIcon(name)}
+            onClick={() => onBody(name)}
             className={cn(
-              "text-muted-foreground bg-foreground/5 hover:bg-muted flex aspect-square items-center justify-center rounded-lg",
-              activeIcon === name && cn("bg-foreground/15", active.text),
+              "hover:bg-muted flex aspect-square items-center justify-center rounded-lg",
+              active.text,
+              BODIES[name] === current && "bg-foreground/15",
             )}
           >
-            <BotIconMark icon={name} className="size-3/5" />
+            <svg aria-hidden viewBox="-115 -115 230 230" className="size-3/5">
+              <path
+                d={pathOf({ radii: BODIES[name], rot: 0, cx: 0, cy: 0 }, 100)}
+                fill="currentColor"
+              />
+            </svg>
           </button>
         ))}
       </div>
-      <a
-        href={CREDIT_URL}
-        target="_blank"
-        rel="noreferrer"
-        title={authors}
-        className="text-muted-foreground hover:text-foreground text-xs"
-      >
-        {t("Icons from Flaticon")}
-      </a>
     </div>
-  );
-};
-
-export const BotPicker: FC<PickerProps> = (props) => {
-  const t = useT();
-  return (
-    <Popover>
-      <PopoverTrigger className="border-foreground/15 hover:bg-muted flex h-8 items-center rounded-full border px-3 text-sm font-medium">
-        {t("Edit bot avatar")}
-      </PopoverTrigger>
-      <PopoverContent onOpenAutoFocus={(event) => event.preventDefault()} className="z-70 w-80 p-3">
-        <BotPickerPanel {...props} />
-      </PopoverContent>
-    </Popover>
   );
 };

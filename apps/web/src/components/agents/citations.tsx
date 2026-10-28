@@ -1,9 +1,8 @@
 "use client";
 
-import { IconExternalLink, IconWorld } from "@tabler/icons-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Globe02Icon, LinkSquare02Icon } from "@hugeicons/core-free-icons";
 import { type ReactNode, useId } from "react";
-import { EASE_OUT, SPRING_LAYOUT } from "@/lib/ease";
 import { useFavicon } from "@/lib/hooks/useFavicon";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +12,7 @@ export interface CitationItem {
   domain?: ReactNode;
   url?: string;
   icon?: ReactNode;
+  group?: string;
 }
 
 export interface CitationListProps {
@@ -63,7 +63,7 @@ function CitationFavicon({
           className="size-4 rounded-sm object-contain"
         />
       ) : (
-        <IconWorld className="size-3.5" />
+        <HugeiconsIcon icon={Globe02Icon} className="size-3.5" />
       )}
     </span>
   );
@@ -111,7 +111,10 @@ function CitationRow({
           {index}
         </span>
         {citation.url ? (
-          <IconExternalLink className="size-3.5 text-muted-foreground/40 transition-colors group-hover/citation:text-muted-foreground" />
+          <HugeiconsIcon
+            icon={LinkSquare02Icon}
+            className="size-3.5 text-muted-foreground/40 transition-colors group-hover/citation:text-muted-foreground"
+          />
         ) : null}
       </span>
     </>
@@ -132,34 +135,19 @@ function CitationRow({
 }
 
 export function CitationList({ citations, idPrefix, className }: CitationListProps) {
-  const reduce = useReducedMotion() ?? false;
   const baseId = useId();
   const resolvedPrefix = idPrefix ?? `citation-list-${baseId.replace(/:/g, "")}`;
 
   return (
     <div className={cn("grid gap-0.5", className)}>
-      <AnimatePresence mode="popLayout">
-        {citations.map((citation, index) => (
-          <motion.div
-            layout="position"
-            key={citation.id}
-            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -3 }}
-            transition={
-              reduce
-                ? { duration: 0 }
-                : {
-                    opacity: { duration: 0.18, ease: EASE_OUT },
-                    y: SPRING_LAYOUT,
-                    layout: SPRING_LAYOUT,
-                  }
-            }
-          >
-            <CitationRow citation={citation} index={index + 1} idPrefix={resolvedPrefix} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      {citations.map((citation, index) => (
+        <div key={citation.id}>
+          {citation.group && citation.group !== citations[index - 1]?.group && (
+            <p className="text-foreground px-2 pt-3 pb-1 text-xs font-medium">{citation.group}</p>
+          )}
+          <CitationRow citation={citation} index={index + 1} idPrefix={resolvedPrefix} />
+        </div>
+      ))}
     </div>
   );
 }

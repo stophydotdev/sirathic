@@ -5,7 +5,8 @@ import { cn } from "cn";
 import { DayPicker, getDefaultClassNames, type DayButton, type Locale } from "react-day-picker";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { IconChevronDown, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowDown01Icon, ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 
 function Calendar({
   className,
@@ -124,17 +125,31 @@ function Calendar({
         Chevron: ({ className: iconClass, orientation, ...iconProps }) => {
           if (orientation === "left") {
             return (
-              <IconChevronLeft className={cn("cn-rtl-flip size-4", iconClass)} {...iconProps} />
+              <HugeiconsIcon
+                icon={ArrowLeft01Icon}
+                className={cn("cn-rtl-flip size-4", iconClass)}
+                {...iconProps}
+              />
             );
           }
 
           if (orientation === "right") {
             return (
-              <IconChevronRight className={cn("cn-rtl-flip size-4", iconClass)} {...iconProps} />
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                className={cn("cn-rtl-flip size-4", iconClass)}
+                {...iconProps}
+              />
             );
           }
 
-          return <IconChevronDown className={cn("size-4", iconClass)} {...iconProps} />;
+          return (
+            <HugeiconsIcon
+              icon={ArrowDown01Icon}
+              className={cn("size-4", iconClass)}
+              {...iconProps}
+            />
+          );
         },
         DayButton: ({ ...dayProps }) => <CalendarDayButton locale={locale} {...dayProps} />,
         WeekNumber: ({ children, ...cellProps }) => {

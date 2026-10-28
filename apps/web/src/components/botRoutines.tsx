@@ -5,13 +5,14 @@ import { useLocale, useT } from "@/components/i18n";
 import { modalButton } from "@/components/sessionMenu";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconArrowLeft,
-  IconChevronRight,
-  IconClock,
-  IconPlayerPause,
-  IconPlayerPlay,
-} from "@tabler/icons-react";
+  ArrowLeft02Icon,
+  ArrowRight01Icon,
+  Clock01Icon,
+  PauseIcon,
+  PlayIcon,
+} from "@hugeicons/core-free-icons";
 import { type FC, type ReactNode, useCallback, useEffect, useState } from "react";
 
 export const useRoutines = (botId: string | undefined) => {
@@ -30,18 +31,21 @@ export const useRoutines = (botId: string | undefined) => {
   return { routines, refresh };
 };
 
-export const RoutineList: FC<{ routines: Automation[]; onOpen: (id: string) => void }> = ({
-  routines,
-  onOpen,
-}) => {
+export const RoutineList: FC<{
+  routines: Automation[];
+  onOpen: (id: string) => void;
+  onCreate: () => void;
+}> = ({ routines, onOpen, onCreate }) => {
   const t = useT();
   const locale = useLocale();
 
   return (
-    <section className="flex flex-col gap-1">
+    <section className="bg-card flex flex-col gap-1 rounded-xl p-4">
       <h3 className="mb-1 text-sm font-medium">{t("Routines")}</h3>
       {routines.length === 0 && (
-        <p className="text-muted-foreground text-[13px]">{t("No routines yet")}</p>
+        <p className="text-muted-foreground py-3 text-center text-sm">
+          {t("Routines are recurring tasks this bot runs on a schedule.")}
+        </p>
       )}
       {routines.map((routine) => (
         <button
@@ -50,22 +54,32 @@ export const RoutineList: FC<{ routines: Automation[]; onOpen: (id: string) => v
           onClick={() => onOpen(routine.id)}
           className="hover:bg-muted -mx-2 flex items-center gap-3 rounded-[10px] px-2 py-2 text-start"
         >
-          <IconClock className="text-muted-foreground size-4.5 shrink-0" />
+          <HugeiconsIcon icon={Clock01Icon} className="text-muted-foreground size-4.5 shrink-0" />
           <span className="flex min-w-0 flex-1 flex-col">
             <span className="truncate text-sm font-medium">{routine.name}</span>
             <span className="text-muted-foreground flex items-center gap-1.5 text-[13px]">
               <span className="truncate">{describeSchedule(t, locale, routine.schedule)}</span>
               {!routine.enabled && (
                 <span className="flex shrink-0 items-center gap-1">
-                  <IconPlayerPause className="size-3.5" />
+                  <HugeiconsIcon icon={PauseIcon} className="size-3.5" />
                   {t("Paused")}
                 </span>
               )}
             </span>
           </span>
-          <IconChevronRight className="text-muted-foreground size-4 shrink-0 rtl:rotate-180" />
+          <HugeiconsIcon
+            icon={ArrowRight01Icon}
+            className="text-muted-foreground size-4 shrink-0 rtl:rotate-180"
+          />
         </button>
       ))}
+      <button
+        type="button"
+        onClick={onCreate}
+        className="border-border hover:bg-foreground/5 mt-2 self-center rounded-xl border px-4 py-2 text-sm"
+      >
+        {t("Create routine")}
+      </button>
     </section>
   );
 };
@@ -108,7 +122,7 @@ export const RoutineDetail: FC<{
           aria-label={t("Back")}
           className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full"
         >
-          <IconArrowLeft className="size-4.5 rtl:rotate-180" />
+          <HugeiconsIcon icon={ArrowLeft02Icon} className="size-4.5 rtl:rotate-180" />
         </button>
         <h3 className="min-w-0 truncate text-[15px] font-[550]">{routine.name}</h3>
       </div>
@@ -116,7 +130,7 @@ export const RoutineDetail: FC<{
         <Row label={t("Schedule")}>{describeSchedule(t, locale, routine.schedule)}</Row>
         <Row label={t("Status")}>
           <span className="inline-flex items-center gap-1.5">
-            {!routine.enabled && <IconPlayerPause className="size-3.5" />}
+            {!routine.enabled && <HugeiconsIcon icon={PauseIcon} className="size-3.5" />}
             {routine.enabled ? t("Active") : t("Paused")}
           </span>
         </Row>
@@ -170,9 +184,9 @@ export const RoutineDetail: FC<{
             className={cn(modalButton, "gap-1.5")}
           >
             {routine.enabled ? (
-              <IconPlayerPause className="size-4" />
+              <HugeiconsIcon icon={PauseIcon} className="size-4" />
             ) : (
-              <IconPlayerPlay className="size-4" />
+              <HugeiconsIcon icon={PlayIcon} className="size-4" />
             )}
             {routine.enabled ? t("Pause") : t("Resume")}
           </button>

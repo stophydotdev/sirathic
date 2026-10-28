@@ -6,6 +6,7 @@ import { Favicon } from "@/components/favicon";
 import { type Translate, useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
 import { catalogIcon, rootDomain } from "@/components/mentionIcon";
+import { type Plugin, useOwnLists } from "@/components/ownLists";
 import { PluginTabs } from "@/components/pluginTabs";
 import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
 import { useSignIn } from "@/components/signIn";
@@ -13,11 +14,10 @@ import { SkillsTab } from "@/components/skillsTab";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { type Category, CONNECTORS } from "@sirathic/server/catalog";
-import { IconCheck, IconSearch } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Search01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { Dialog } from "radix-ui";
 import { type FC, type ReactNode, useEffect, useState } from "react";
-
-type Plugin = Awaited<ReturnType<typeof api.connectors.list.query>>[number];
 
 const CATEGORY_NAMES = {
   productivity: "Productivity",
@@ -41,7 +41,10 @@ const PluginIcon: FC<{ plugin: Plugin }> = ({ plugin }) => (
   <span className="bg-muted relative grid size-9 shrink-0 place-items-center rounded-[10px]">
     <Favicon url={`https://${rootDomain(plugin.url)}`} src={catalogIcon(plugin.url)} size={28} />
     {plugin.connected && (
-      <IconCheck className="bg-foreground text-background absolute -end-1 -bottom-1 size-4 rounded-full p-0.5" />
+      <HugeiconsIcon
+        icon={Tick02Icon}
+        className="bg-foreground text-background absolute -end-1 -bottom-1 size-4 rounded-full p-0.5"
+      />
     )}
   </span>
 );
@@ -191,8 +194,7 @@ const Section: FC<{
 const PluginList: FC = () => {
   const signedIn = useAccount((s) => s.status?.signedIn);
   const ask = useSignIn((s) => s.ask);
-  const [plugins, setPlugins] = useState<Plugin[]>();
-  const [version, setVersion] = useState(0);
+  const { plugins, loaded, load, reload } = useOwnLists();
   const [query, setQuery] = useState("");
   const [busy, setBusy] = useState<string>();
   const [failed, setFailed] = useState(false);
@@ -202,20 +204,8 @@ const PluginList: FC = () => {
   const t = useT();
 
   useEffect(() => {
-    if (!signedIn) return;
-    let live = true;
-    api.connectors.list.query().then(
-      (found) => {
-        if (live) setPlugins(found);
-      },
-      () => {
-        if (live) setPlugins([]);
-      },
-    );
-    return () => {
-      live = false;
-    };
-  }, [signedIn, version]);
+    if (signedIn) void load();
+  }, [signedIn, load]);
 
   const toggle = async (plugin: Plugin) => {
     setBusy(plugin.id);
@@ -230,7 +220,7 @@ const PluginList: FC = () => {
           return;
         }
       }
-      setVersion((current) => current + 1);
+      await reload();
     } catch {
       setFailed(true);
     } finally {
@@ -241,7 +231,7 @@ const PluginList: FC = () => {
   const request = (plugin: Plugin) =>
     plugin.connected && plugin.category === "custom" ? setRemoving(plugin) : void toggle(plugin);
 
-  const shown = (plugins ?? []).filter((plugin) =>
+  const shown = plugins.filter((plugin) =>
     plugin.name.toLowerCase().includes(query.trim().toLowerCase()),
   );
   const render = (plugin: Plugin) => (
@@ -262,7 +252,7 @@ const PluginList: FC = () => {
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <PluginTabs tab="plugins" />
         <label className="bg-muted/60 order-last flex h-9 w-full items-center gap-2 rounded-full px-3 sm:order-none sm:w-64">
-          <IconSearch className="text-muted-foreground size-4 shrink-0" />
+          <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-4 shrink-0" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -289,7 +279,7 @@ const PluginList: FC = () => {
           {t("That plugin could not connect. Check the address and try again.")}
         </p>
       )}
-      {plugins && shown.length === 0 && (
+      {loaded && shown.length === 0 && (
         <p className="text-muted-foreground text-sm">{t("No plugins match your search.")}</p>
       )}
       <Section
@@ -311,7 +301,7 @@ const PluginList: FC = () => {
         />
       ))}
       <PluginCard
-        plugin={plugins?.find((plugin) => plugin.id === opened)}
+        plugin={plugins.find((plugin) => plugin.id === opened)}
         busy={busy === opened}
         onClose={() => setOpened(undefined)}
         onToggle={request}
@@ -324,11 +314,7 @@ const PluginList: FC = () => {
         }}
         onClose={() => setRemoving(undefined)}
       />
-      <CustomPlugin
-        open={adding}
-        onOpenChange={setAdding}
-        onAdded={() => setVersion((current) => current + 1)}
-      />
+      <CustomPlugin open={adding} onOpenChange={setAdding} onAdded={() => void reload()} />
     </>
   );
 };

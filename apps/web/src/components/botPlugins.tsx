@@ -1,19 +1,19 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import { loadMentionTargets, usePlugins } from "@/components/mentions";
 import { MentionIcon } from "@/components/mentionIcon";
+import { useOwnLists } from "@/components/ownLists";
 import { useProjects } from "@/components/projects";
 import { cn } from "@/lib/utils";
 import { type FC, useEffect } from "react";
 
 export const BotPlugins: FC<{ id: string; allowed: string[] | null }> = ({ id, allowed }) => {
-  const plugins = usePlugins().filter((plugin) => plugin.connected);
+  const plugins = useOwnLists((s) => s.plugins).filter((plugin) => plugin.connected);
   const change = useProjects((s) => s.change);
   const t = useT();
 
   useEffect(() => {
-    void loadMentionTargets();
+    void useOwnLists.getState().load();
   }, []);
 
   if (plugins.length === 0) return null;
@@ -26,7 +26,7 @@ export const BotPlugins: FC<{ id: string; allowed: string[] | null }> = ({ id, a
     });
 
   return (
-    <section className="flex flex-col gap-1">
+    <section className="bg-card flex flex-col gap-1 rounded-xl p-4">
       <h3 className="text-sm font-medium">{t("Plugins")}</h3>
       <p className="text-muted-foreground mb-1 text-[13px]">{t("Plugins this bot can use.")}</p>
       {plugins.map((plugin) => {

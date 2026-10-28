@@ -5,6 +5,7 @@ import type { Model } from "./subscription";
 
 const anthropic = createAnthropic({ apiKey: env.ANTHROPIC_API_KEY });
 
+const CACHED_HOUR = { anthropic: { cacheControl: { type: "ephemeral", ttl: "1h" } } };
 const CACHED = { anthropic: { cacheControl: { type: "ephemeral" } } };
 
 const cacheMarks: LanguageModelMiddleware = {
@@ -16,7 +17,10 @@ const cacheMarks: LanguageModelMiddleware = {
         index === 0 || index === beforeRules
           ? {
               ...message,
-              providerOptions: { ...message.providerOptions, ...CACHED },
+              providerOptions: {
+                ...message.providerOptions,
+                ...(index === 0 ? CACHED_HOUR : CACHED),
+              },
             }
           : message,
       ),

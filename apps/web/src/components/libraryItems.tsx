@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/dropdownMenu";
 import type { api } from "@/lib/trpc";
 import { type FileKind, formatSize, kindOf } from "@sirathic/server/files";
-import { IconDots, IconFileText, IconFileTypePdf, IconPhoto } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { File02Icon, Image01Icon, MoreHorizontalIcon, Pdf01Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import type { FC } from "react";
 
@@ -18,17 +19,16 @@ export type LibraryFile = Awaited<ReturnType<typeof api.files.list.query>>[numbe
 export const fileHref = (file: { id: string }) => `/api/files/${file.id}`;
 
 const KIND_ICONS = {
-  image: IconPhoto,
-  pdf: IconFileTypePdf,
-  text: IconFileText,
-} satisfies Record<FileKind, typeof IconPhoto>;
+  image: Image01Icon,
+  pdf: Pdf01Icon,
+  text: File02Icon,
+} satisfies Record<FileKind, typeof Image01Icon>;
 
 export const FileKindIcon: FC<{ mediaType: string; className?: string }> = ({
   mediaType,
   className,
 }) => {
-  const Icon = KIND_ICONS[kindOf(mediaType)];
-  return <Icon className={className} />;
+  return <HugeiconsIcon icon={KIND_ICONS[kindOf(mediaType)]} className={className} />;
 };
 
 const Thumb: FC<{ file: LibraryFile; sizes: string }> = ({ file, sizes }) =>
@@ -63,7 +63,7 @@ const FileMenu: FC<Omit<ItemProps, "onOpen">> = ({ file, onRename, onDelete }) =
         aria-label={t("File actions")}
         className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 flex size-8 shrink-0 items-center justify-center rounded-full transition-colors"
       >
-        <IconDots className="size-4.5" />
+        <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
         <DropdownMenuItem asChild>

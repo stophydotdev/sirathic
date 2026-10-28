@@ -1,13 +1,12 @@
 "use client";
 
 import { useT } from "@/components/i18n";
+import type { Skill } from "@/components/ownLists";
 import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, useState } from "react";
-
-export type Skill = Awaited<ReturnType<typeof api.skills.list.query>>[number];
 
 const field =
   "border-border placeholder:text-muted-foreground focus:border-foreground/30 rounded-[10px] border bg-transparent px-3 text-sm outline-none";

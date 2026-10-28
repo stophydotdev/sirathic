@@ -1,15 +1,20 @@
 import {
   auth,
+  type CallToolResult,
   createMCPClient,
+  type MCPClient,
   type OAuthClientMetadata,
   type OAuthClientProvider,
 } from "@ai-sdk/mcp";
+import { cacheFor, dropCached } from "@sirathic/core/cache";
 import { db } from "@sirathic/db";
 import { connections } from "@sirathic/db/schema";
 import { env } from "@sirathic/env/server";
+import type { Tool } from "ai";
 import { and, count, eq } from "drizzle-orm";
 import { z } from "zod";
 import { reasonOf, StatusError } from "../http";
+import { ownerCache } from "../account/ownerCache";
 import { seal, unseal } from "../account/vault";
 import { publicUrl } from "./address";
 import {
@@ -26,8 +31,54 @@ import {
 const REDIRECT_URL = new URL("/api/connectors/callback", env.SITE_URL).href;
 const CONNECT_TIMEOUT_MS = 10_000;
 const ANSWER_CONNECT_MS = 3_000;
+const TOOLS_FRESH_MS = 6 * 60 * 60_000;
+
+type Listed = Tool<unknown, CallToolResult>;
+
+const TOOLS_NAMESPACE = "mcpTools";
+
+const savedTools = z.object({
+  tools: z.array(
+    z.object({
+      name: z.string(),
+      title: z.string().optional(),
+      description: z.string().optional(),
+      inputSchema: z.looseObject({
+        type: z.unknown().optional(),
+        properties: z.looseObject({}).optional(),
+      }),
+      annotations: z
+        .looseObject({
+          title: z.string().optional(),
+          readOnlyHint: z.boolean().optional(),
+          destructiveHint: z.boolean().optional(),
+          idempotentHint: z.boolean().optional(),
+          openWorldHint: z.boolean().optional(),
+        })
+        .optional(),
+      _meta: z.record(z.string(), z.unknown()).optional(),
+    }),
+  ),
+});
+
+const savedToolLists = cacheFor({
+  namespace: TOOLS_NAMESPACE,
+  schema: savedTools,
+  freshMs: TOOLS_FRESH_MS,
+  keepMs: TOOLS_FRESH_MS,
+});
+
+const toolsFromSaved = createMCPClient({
+  transport: { start: async () => {}, send: async () => {}, close: async () => {} },
+  initialInitializeResult: {
+    protocolVersion: "2025-06-18",
+    capabilities: { tools: {} },
+    serverInfo: { name: "saved-tools", version: "1" },
+  },
+});
 
 const GOOGLE_CLIENT = {
+  issuer: "https://accounts.google.com",
   client_id: env.GOOGLE_CLIENT_ID,
   client_secret: env.GOOGLE_CLIENT_SECRET,
 };
@@ -68,6 +119,7 @@ const storedSecrets = z.object({
     .optional(),
   verifier: z.string().optional(),
   state: z.string().optional(),
+  returnTo: z.string().optional(),
 });
 
 type Secrets = z.infer<typeof storedSecrets>;
@@ -103,6 +155,14 @@ export const customInput = z.object({
   url: z.string().trim().max(500),
 });
 
+const connectedRows = ownerCache<Awaited<ReturnType<typeof loadConnectedRows>>>();
+const connectionLists = ownerCache<Awaited<ReturnType<typeof loadConnections>>>();
+
+const forgetOwner = (owner: string) => {
+  connectedRows.clear(owner);
+  connectionLists.clear(owner);
+};
+
 const owned = (owner: string, connector: string) =>
   and(eq(connections.owner, owner), eq(connections.connector, connector));
 
@@ -131,7 +191,7 @@ async function serverOf(owner: string, id: string): Promise<Server> {
 
 const unsealed = async (sealed: string) => storedSecrets.parse(JSON.parse(await unseal(sealed)));
 
-async function storedFor(owner: string, connector: string) {
+async function storedFor(owner: string, connector: string): Promise<Secrets> {
   const [row] = await db
     .select({ secrets: connections.secrets })
     .from(connections)
@@ -145,6 +205,7 @@ async function store(owner: string, connector: string, secrets: Secrets, connect
     .insert(connections)
     .values({ owner, connector, ...row })
     .onConflictDoUpdate({ target: [connections.owner, connections.connector], set: row });
+  forgetOwner(owner);
 }
 
 function providerFor(owner: string, connector: string, server: Server, stored: Secrets) {
@@ -185,7 +246,10 @@ function providerFor(owner: string, connector: string, server: Server, stored: S
   return { provider, authorizationUrl: () => authorizationUrl };
 }
 
-export async function listConnections(owner: string) {
+export const listConnections = (owner: string) =>
+  connectionLists.get(owner, () => loadConnections(owner));
+
+async function loadConnections(owner: string) {
   const [rows, counts] = await Promise.all([
     db
       .select({
@@ -245,13 +309,16 @@ const opensWithoutSignIn = (url: string) =>
     () => false,
   );
 
-export async function connect(owner: string, id: string) {
+export async function connect(owner: string, id: string, returnTo = "/plugins") {
   const server = await serverOf(owner, id);
   if (server.open || (!isCatalog(id) && (await opensWithoutSignIn(server.url)))) {
     await store(owner, id, {}, true);
     return { status: "connected" as const };
   }
-  const { provider, authorizationUrl } = providerFor(owner, id, server, await storedFor(owner, id));
+  const { provider, authorizationUrl } = providerFor(owner, id, server, {
+    ...(await storedFor(owner, id)),
+    returnTo,
+  });
   const result = await auth(provider, {
     serverUrl: server.url,
     scope: server.googleScopes?.join(" "),
@@ -274,6 +341,7 @@ export async function addCustom(owner: string, input: z.output<typeof customInpu
     url: url.href,
     secrets: await seal(JSON.stringify({})),
   });
+  forgetOwner(owner);
   return connect(owner, id).catch(async (err: Error) => {
     await disconnect(owner, id);
     throw err;
@@ -283,49 +351,87 @@ export async function addCustom(owner: string, input: z.output<typeof customInpu
 export async function finishConnect(owner: string, query: Record<string, string>) {
   const { state, code, iss } = callbackQuery.parse(query);
   const connector = pluginId.parse(state.split(".")[0]);
-  if (!code) return;
+  if (!code) return undefined;
   const server = await serverOf(owner, connector);
-  const { provider } = providerFor(owner, connector, server, await storedFor(owner, connector));
+  const stored = await storedFor(owner, connector);
+  const { provider } = providerFor(owner, connector, server, stored);
   await auth(provider, {
     serverUrl: server.url,
     authorizationCode: code,
     callbackState: state,
     callbackIssuer: iss,
   });
+  return stored.returnTo;
 }
 
 export async function disconnect(owner: string, connector: string) {
+  await dropCached(TOOLS_NAMESPACE, `${owner}:${connector}`);
   await db.delete(connections).where(owned(owner, connector));
+  forgetOwner(owner);
 }
 
-async function openConnector(
-  owner: string,
-  row: { connector: string; name: string | null; url: string | null; secrets: string },
-) {
+const toolArguments = z.record(z.string(), z.unknown());
+
+type ConnectionRow = {
+  connector: string;
+  name: string | null;
+  url: string | null;
+  secrets: string;
+};
+
+async function openClient(owner: string, row: ConnectionRow, signal: AbortSignal) {
   const server = await serverFrom(row);
   const stored = await unsealed(row.secrets);
   const authProvider = stored.tokens
     ? providerFor(owner, row.connector, server, stored).provider
     : undefined;
-  const signal = AbortSignal.timeout(ANSWER_CONNECT_MS);
-  const client = await createMCPClient({
+  return createMCPClient({
     transport: { type: "http", url: server.url, authProvider },
     initializationOptions: { signal },
   });
-  try {
-    const definitions = await client.listTools({ options: { signal } });
-    const tools = Object.entries(client.toolsFromDefinitions(definitions)).map(
-      ([name, tool]) => [toolName(row.connector, name), tool] as const,
-    );
-    return { client, tools };
-  } catch (err) {
-    await client.close();
-    throw err;
-  }
 }
 
-export async function connectedTools(owner: string, only?: readonly string[] | null) {
-  const rows = await db
+async function connectorTools(owner: string, row: ConnectionRow) {
+  const key = `${owner}:${row.connector}`;
+  let client: Promise<MCPClient> | undefined;
+  const open = (signal: AbortSignal) => (client ??= openClient(owner, row, signal));
+  const list = async () => {
+    const signal = AbortSignal.timeout(ANSWER_CONNECT_MS);
+    const connected = await open(signal);
+    try {
+      return await connected.listTools({ options: { signal } });
+    } catch (err) {
+      await connected.close();
+      throw err;
+    }
+  };
+  const lazy = (name: string, listed: Listed): Listed => ({
+    ...listed,
+    execute: async (args, options) => {
+      const connected = await open(AbortSignal.timeout(CONNECT_TIMEOUT_MS));
+      return connected
+        .callTool({
+          name,
+          arguments: toolArguments.parse(args),
+          options: { signal: options.abortSignal },
+        })
+        .catch(async (err: Error) => {
+          if (!options.abortSignal?.aborted) await dropCached(TOOLS_NAMESPACE, key);
+          throw err;
+        });
+    },
+  });
+  const listed = (await toolsFromSaved).toolsFromDefinitions(await savedToolLists(key, list));
+  return {
+    tools: Object.entries(listed).map(
+      ([name, entry]) => [toolName(row.connector, name), lazy(name, entry)] as const,
+    ),
+    close: async () => void (await client?.then((connected) => connected.close())),
+  };
+}
+
+const loadConnectedRows = async (owner: string) =>
+  db
     .select({
       connector: connections.connector,
       name: connections.name,
@@ -333,7 +439,11 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
       secrets: connections.secrets,
     })
     .from(connections)
-    .where(and(eq(connections.owner, owner), eq(connections.connected, true)))
+    .where(and(eq(connections.owner, owner), eq(connections.connected, true)));
+
+export async function connectedTools(owner: string, only?: readonly string[] | null) {
+  const rows = await connectedRows
+    .get(owner, () => loadConnectedRows(owner))
     .catch((err: Error) => {
       console.error(`connectors not loaded: ${reasonOf(err)}`);
       return [];
@@ -341,7 +451,7 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
   const allowed = only ? rows.filter((row) => only.includes(row.connector)) : rows;
   const opened = await Promise.all(
     allowed.map((row) =>
-      openConnector(owner, row).catch((err: Error) => {
+      connectorTools(owner, row).catch((err: Error) => {
         console.warn(`${row.connector} tools skipped: ${reasonOf(err)}`);
         return undefined;
       }),
@@ -350,6 +460,6 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
   const ready = opened.filter((connector) => connector !== undefined);
   return {
     tools: Object.fromEntries(ready.flatMap(({ tools }) => tools)),
-    close: () => Promise.allSettled(ready.map(({ client }) => client.close())),
+    close: () => Promise.allSettled(ready.map(({ close }) => close())),
   };
 }

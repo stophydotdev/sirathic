@@ -7,8 +7,15 @@ import {
   hour12Of,
   hour24Of,
 } from "../apps/web/src/components/automationText";
+import { rehypeBareCitations } from "../apps/web/src/components/citations";
 import { botGroups } from "../apps/web/src/components/botGroups";
+import { bubblesOf } from "../apps/web/src/components/botBubbles";
+import { stampText } from "../apps/web/src/components/botStamp";
+import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
+import { refreshing } from "../apps/web/src/lib/refreshing";
+import { blobMotion } from "../apps/web/src/lib/blob/engine";
+import { BODIES, bodyOf } from "../apps/web/src/lib/blob/shape";
 
 test("a link keeps its path and drops the trailing period and question mark", () => {
   expect(splitLinks("What does https://a.org/x/y say? Also see https://b.info/en/82536.")).toEqual([
@@ -89,6 +96,21 @@ test("calls in a row to one plugin become one step with readable titles and thei
   ]);
 });
 
+const stepsFor = (names: [string, string]) =>
+  researchOf(
+    [
+      { ...call(names[0], {}, "done"), args: { queries: ["wudu"] } },
+      call(names[1], { url: "https://islamqa.info/en/answers/1" }, "done"),
+    ],
+    false,
+  );
+
+test("a chat saved with the old search and fetch tool names shows the same steps as a new one", () => {
+  const old = stepsFor(["search", "webFetch"]);
+  expect(old).toEqual(stepsFor(["search_web", "fetch_url"]));
+  expect(old.map((step) => step.kind)).toEqual(["searches", "browse"]);
+});
+
 test("the 12 hour clock maps midnight and noon to 12 and back to 24 hour time", () => {
   const cases = [
     { hour: 0, twelve: 12, pm: false },
@@ -151,4 +173,141 @@ test("only the first six unpinned bots show and the rest are counted", () => {
     "f",
   ]);
   expect(more).toBe(2);
+});
+
+test("a fetch of several pages gives one step per page and marks the ones that failed", () => {
+  const steps = researchOf(
+    [
+      {
+        type: "tool-call",
+        toolCallId: "f1",
+        toolName: "fetch_url",
+        args: { urls: ["https://a.org/1", "https://b.org/2"] },
+        argsText: "",
+        result: {
+          pages: [{ url: "https://a.org/1" }, { url: "https://b.org/2", error: "no text" }],
+        },
+      },
+    ],
+    false,
+  );
+  expect(steps).toEqual([
+    { kind: "browse", url: "https://a.org/1", failed: false },
+    { kind: "browse", url: "https://b.org/2", failed: true },
+  ]);
+});
+
+const localIso = (day: number, hour: number) => new Date(2026, 9, day, hour, 5).toISOString();
+
+test("a bot's last message shows the time today, yesterday, then the date", () => {
+  const now = new Date(2026, 9, 27, 15, 0);
+  expect(
+    [localIso(27, 9), localIso(26, 23), localIso(10, 9)].map((iso) => whenOf("en", iso, now)),
+  ).toEqual(["9:05 AM", "yesterday", "10/10"]);
+});
+
+const atOctober = (day: number, hour: number, minute: number) =>
+  new Date(2026, 9, day, hour, minute).getTime();
+
+test("a chat stamp says today or yesterday with the time, and older days by date", () => {
+  const now = atOctober(27, 19, 20);
+  expect(
+    [atOctober(27, 18, 37), atOctober(26, 23, 5), atOctober(20, 9, 0)].map((time) =>
+      stampText("en", time, now).replaceAll(/\s/gu, " "),
+    ),
+  ).toEqual(["today 6:37 PM", "yesterday 11:05 PM", "Oct 20, 2026 9:00 AM"]);
+});
+
+test("a bot reply splits into a bubble per paragraph, but headings, lists and tables stay with the bubble they follow and code blocks stay whole", () => {
+  const reply = [
+    "Here is the guide.",
+    "## Wudu",
+    "1. Intend\n2. Wash",
+    "| Breaks | Notes |\n| - | - |\n| Sleep | Deep |",
+    "Source: Quran.com",
+    "```\ncode\n\nmore\n```",
+  ].join("\n\n");
+  expect(bubblesOf(reply)).toEqual([
+    "Here is the guide.\n\n## Wudu\n\n1. Intend\n2. Wash\n\n| Breaks | Notes |\n| - | - |\n| Sleep | Deep |",
+    "Source: Quran.com",
+    "```\ncode\n\nmore\n```",
+  ]);
+});
+
+test("components that ask together share one request and a list refreshed after a write is never replaced by an older answer", async () => {
+  const requests = [
+    Promise.withResolvers<string>(),
+    Promise.withResolvers<string>(),
+    Promise.withResolvers<string>(),
+  ];
+  let asked = 0;
+  const shown: string[] = [];
+  const list = refreshing(
+    async () => requests[asked++]?.promise,
+    (value) => void shown.push(value),
+  );
+
+  const first = Promise.all([list.join(), list.join()]);
+  expect(asked).toBe(1);
+
+  const afterWrite = list.fresh();
+  expect(asked).toBe(2);
+  requests[1]?.resolve("after the write");
+  await afterWrite;
+  requests[0]?.resolve("before the write");
+  await first;
+  expect(shown).toEqual(["after the write"]);
+
+  void list.join();
+  expect(asked).toBe(3);
+});
+
+type Tree = Parameters<ReturnType<typeof rehypeBareCitations>>[0];
+
+const sentence = (start: string): Tree => {
+  const url = "https://example.com/a";
+  return {
+    type: "root",
+    children: [
+      {
+        type: "element",
+        tagName: "p",
+        properties: {},
+        children: [
+          { type: "text", value: start },
+          {
+            type: "element",
+            tagName: "a",
+            properties: { href: url, dataUrls: [url] },
+            children: [],
+          },
+          { type: "text", value: ". It is not shared by all." },
+        ],
+      },
+    ],
+  };
+};
+
+test("a hidden citation takes the space before it, so the period stays against the word", () => {
+  const tree = sentence("That is the Hanafi view ");
+  rehypeBareCitations()(tree);
+  expect(tree).toEqual(sentence("That is the Hanafi view"));
+});
+
+test("a bot's chosen shape wins, an old icon name falls back to the shape its id picks", () => {
+  expect(bodyOf("drop", "4b1f")).toBe(BODIES.drop);
+  expect(bodyOf("star", "4b1f")).toBe(bodyOf(null, "4b1f"));
+  expect(Object.values(BODIES)).toContain(bodyOf(null, "4b1f"));
+});
+
+test("the shine hides while the bot thinks and comes back after the done burst", () => {
+  const motion = blobMotion(BODIES.circle, "ready");
+  motion.set("thinking", 0);
+  expect(motion.frame(1).shine).toBeNull();
+  motion.set("done", 1);
+  expect(motion.frame(1.5).shine).toBeNull();
+  expect(motion.still(2)).toBe(false);
+  motion.frame(3.5);
+  expect(motion.frame(4.5).shine?.opacity).toBe(0.85);
+  expect(motion.still(4.5)).toBe(true);
 });

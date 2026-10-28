@@ -11,6 +11,7 @@ export const LOCALES = [
   "az",
   "bs",
   "sr",
+  "sl",
   "uz",
   "ky",
   "id",
@@ -32,6 +33,7 @@ export const LOCALES = [
   "ta",
   "si",
   "ff",
+  "sw",
 ] as const;
 
 export type Locale = (typeof LOCALES)[number];

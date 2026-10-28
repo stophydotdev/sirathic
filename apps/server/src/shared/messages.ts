@@ -8,6 +8,17 @@ export const mode = z.enum(MODES);
 
 export type Mode = z.infer<typeof mode>;
 
+export const EFFORTS = ["low", "medium", "high"] as const;
+
+export const effort = z.enum(EFFORTS);
+
+export type Effort = z.infer<typeof effort>;
+
+export const DEFAULT_EFFORT = { quick: "high", research: "high" } as const satisfies Record<
+  Mode,
+  Effort
+>;
+
 export const feedback = z.enum(["up", "down"]);
 
 export const reportReason = z.enum(["quote", "school", "source", "ruling", "other"]);
@@ -47,6 +58,75 @@ export const chatData = {
   related: z.object({ questions: z.array(z.string()) }),
   title: z.object({ title: z.string() }),
 };
+
+const RENAMED_TOOLS = new Map([
+  ["search", "search_web"],
+  ["webFetch", "fetch_url"],
+  ["askUser", "clarifying_questions"],
+  ["remember", "update_memory"],
+  ["learnAboutUser", "update_memory"],
+  ["createAutomation", "update_routine"],
+  ["listAutomations", "list_routines"],
+  ["quranGet", "get_verses"],
+  ["duaSearch", "search_duas"],
+  ["setBotJob", "set_bot_job"],
+]);
+
+export const currentToolName = (name: string) => RENAMED_TOOLS.get(name) ?? name;
+
+const oldPageRead = z.looseObject({
+  type: z.literal("tool-webFetch"),
+  input: z.looseObject({ url: z.string() }).optional(),
+  output: z.looseObject({ sources: z.array(z.unknown()) }).optional(),
+});
+
+const oldCall = <Input extends z.ZodType>(
+  name: string,
+  oldInput: Input,
+  convert: (input: z.output<Input>) => object,
+) =>
+  z
+    .looseObject({ type: z.literal(`tool-${name}`), input: oldInput.optional() })
+    .transform(({ input, ...part }) => ({
+      ...part,
+      type: `tool-${currentToolName(name)}`,
+      ...(input && { input: convert(input) }),
+    }));
+
+const sentPart = z.union([
+  oldCall("createAutomation", z.looseObject({}), (input) => ({ action: "create", ...input })),
+  oldCall(
+    "remember",
+    z.object({ fact: z.string().nullish(), replaces: z.string().nullish() }),
+    ({ fact, replaces }) => ({ write: fact ?? undefined, forget: replaces ?? undefined }),
+  ),
+  oldCall(
+    "learnAboutUser",
+    z.object({ text: z.string(), replaces: z.string().nullish() }),
+    ({ text, replaces }) => ({ write: text, forget: replaces ?? undefined }),
+  ),
+  oldPageRead.transform(({ input, output, ...part }) => {
+    const { sources, ...page } = output ?? { sources: [] };
+    return {
+      ...part,
+      type: "tool-fetch_url",
+      ...(input && { input: { urls: [input.url] } }),
+      ...(output && { output: { pages: [page], sources } }),
+    };
+  }),
+  z.looseObject({
+    type: z
+      .string()
+      .transform((type) =>
+        type.startsWith("tool-") ? `tool-${currentToolName(type.slice(5))}` : type,
+      ),
+  }),
+]);
+
+export const sentMessage = z.looseObject({
+  role: z.enum(["user", "assistant"]),
+  parts: z.array(sentPart),
+});
 
 export type ChatTools = InferUITools<ReturnType<typeof sirathicTools>>;
 

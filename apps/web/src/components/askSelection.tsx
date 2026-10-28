@@ -2,6 +2,7 @@
 
 import { saveDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
+import { useStartChat } from "@/components/newChat";
 import { type FC, useEffect, useState } from "react";
 
 const MAX_CHARS = 1_000;
@@ -38,6 +39,7 @@ const pickedText = (): Picked | undefined => {
 };
 
 export const AskSelection: FC = () => {
+  const startChat = useStartChat();
   const t = useT();
   const [picked, setPicked] = useState<Picked>();
 
@@ -56,7 +58,7 @@ export const AskSelection: FC = () => {
 
   const ask = () => {
     saveDraft(`${quoted}\n`);
-    window.location.assign("/");
+    startChat();
   };
 
   const copy = () => {

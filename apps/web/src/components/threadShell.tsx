@@ -6,8 +6,10 @@ import { useChatOptions } from "@/components/chatOptions";
 import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Mark } from "@/components/logo";
-import { ProjectList } from "@/components/projectNav";
+import { useProjects } from "@/components/projects";
+import { useBot } from "@/components/botHome";
 import { BotList } from "@/components/botNav";
+import { BotPanel } from "@/components/botSettings";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
@@ -16,18 +18,20 @@ import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AskSelection } from "@/components/askSelection";
+import { useStartChat } from "@/components/newChat";
 import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
 import { useKeyNames, withMod } from "@/lib/keys";
 import { cn } from "@/lib/utils";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconAt,
-  IconChevronDown,
-  IconLibrary,
-  IconLayoutSidebar,
-  IconMenu2,
-  IconPlus,
-  IconSearch,
-} from "@tabler/icons-react";
+  Add01Icon,
+  ArrowDown01Icon,
+  AtIcon,
+  LibraryIcon,
+  Menu01Icon,
+  Search01Icon,
+  SidebarLeftIcon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
@@ -39,13 +43,15 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const [searching, setSearching] = useState(false);
   const keys = useKeyNames();
   const unseenRuns = useUnseenRuns(useAccount((s) => s.status?.signedIn));
+  const bot = useBot();
+  const startChat = useStartChat();
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (!withMod(event)) return;
       if (event.code === "KeyI" && !event.shiftKey) {
         event.preventDefault();
-        window.location.assign("/");
+        startChat();
       } else if (event.code === "KeyK" && !event.shiftKey) {
         event.preventDefault();
         setSearching(true);
@@ -101,7 +107,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               onClick={() => setSearching(true)}
               className="text-muted-foreground hover:text-foreground size-8 rounded-full"
             >
-              <IconSearch className="size-4" />
+              <HugeiconsIcon icon={Search01Icon} className="size-4" />
             </TooltipIconButton>
           )}
           <TooltipIconButton
@@ -123,7 +129,8 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
                 <Mark size={20} color="currentColor" />
               </span>
             )}
-            <IconLayoutSidebar
+            <HugeiconsIcon
+              icon={SidebarLeftIcon}
               className={cn(
                 "size-4",
                 collapsed && "hidden group-hover/toggle:block group-focus-visible/toggle:block",
@@ -135,11 +142,11 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
         <nav
           className={cn(
             "flex flex-1 flex-col gap-0.5 px-2",
-            collapsed ? "overflow-hidden" : "overflow-y-auto",
+            collapsed ? "overflow-hidden" : "scroll-fade overflow-y-auto",
           )}
         >
           <NewButton className={cn(navRow, "group/new")}>
-            <IconPlus className="size-4.5 shrink-0" />
+            <HugeiconsIcon icon={Add01Icon} className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("New")}</span>}
             {!collapsed && (
               <kbd className="text-muted-foreground font-sans text-xs opacity-0 group-hover/new:opacity-100 group-focus-visible/new:opacity-100 pointer-coarse:hidden">
@@ -148,7 +155,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             )}
           </NewButton>
           <NavLink href="/library" className={navRow}>
-            <IconLibrary className="size-4.5 shrink-0" />
+            <HugeiconsIcon icon={LibraryIcon} className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("Library")}</span>}
           </NavLink>
           <NavLink href="/automations" className={navRow}>
@@ -156,11 +163,10 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             {!collapsed && <span className="flex-1">{t("Automations")}</span>}
           </NavLink>
           <NavLink href="/plugins" className={navRow}>
-            <IconAt className="size-4.5 shrink-0" />
+            <HugeiconsIcon icon={AtIcon} className="size-4.5 shrink-0" />
             {!collapsed && <span className="flex-1">{t("Plugins")}</span>}
           </NavLink>
           {!collapsed && <BotList />}
-          {!collapsed && <ProjectList />}
           {!collapsed && <Recents onSeeAll={() => setSearching(true)} />}
         </nav>
         <div className="shrink-0 p-2">
@@ -173,7 +179,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="bg-background/70 size-8">
               <span className="relative">
-                <IconMenu2 className="size-4" />
+                <HugeiconsIcon icon={Menu01Icon} className="size-4" />
                 {unseenRuns && <UnseenDot />}
               </span>
               <span className="sr-only">{t("Open menu")}</span>
@@ -184,13 +190,13 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           <SheetTitle className="flex h-14 shrink-0 items-center px-4">
             <Mark size={20} color="currentColor" />
           </SheetTitle>
-          <nav className="flex flex-col gap-0.5 overflow-y-auto px-2">
+          <nav className="scroll-fade flex flex-col gap-0.5 overflow-y-auto px-2">
             <NewButton className={mobileRow} onDone={() => setMobileOpen(false)}>
-              <IconPlus className="size-4 shrink-0" />
+              <HugeiconsIcon icon={Add01Icon} className="size-4 shrink-0" />
               <span>{t("New")}</span>
             </NewButton>
             <NavLink href="/library" className={mobileRow} onDone={() => setMobileOpen(false)}>
-              <IconLibrary className="size-4 shrink-0" />
+              <HugeiconsIcon icon={LibraryIcon} className="size-4 shrink-0" />
               <span>{t("Library")}</span>
             </NavLink>
             <NavLink href="/automations" className={mobileRow} onDone={() => setMobileOpen(false)}>
@@ -198,7 +204,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               <span>{t("Automations")}</span>
             </NavLink>
             <NavLink href="/plugins" className={mobileRow} onDone={() => setMobileOpen(false)}>
-              <IconAt className="size-4 shrink-0" />
+              <HugeiconsIcon icon={AtIcon} className="size-4 shrink-0" />
               <span>{t("Plugins")}</span>
             </NavLink>
             <button
@@ -209,11 +215,10 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               }}
               className={cn("hover:bg-muted flex items-center rounded-md text-start", mobileRow)}
             >
-              <IconSearch className="size-4 shrink-0" />
+              <HugeiconsIcon icon={Search01Icon} className="size-4 shrink-0" />
               <span>{t("Search chats")}</span>
             </button>
             <BotList onDone={() => setMobileOpen(false)} />
-            <ProjectList onDone={() => setMobileOpen(false)} />
             <Recents
               onDone={() => setMobileOpen(false)}
               onSeeAll={() => {
@@ -229,6 +234,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       </Sheet>
 
       <div className="min-w-0 flex-1 overflow-hidden print:overflow-visible">{children}</div>
+      {bot && <BotPanel bot={bot} />}
       <SettingsDialog />
       <SearchDialog open={searching} onOpenChange={setSearching} />
       <ShortcutsSheet />
@@ -241,15 +247,24 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 type RowProps = { className: string; children: ReactNode; onDone?: () => void };
 
 const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
+  const startChat = useStartChat();
   return (
     <Button
       variant="ghost"
       asChild
       className={cn("hover:bg-muted justify-start font-normal", className)}
     >
-      <a href="/" onClick={onDone}>
+      <Link
+        href="/"
+        onClick={(event) => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
+          event.preventDefault();
+          startChat();
+          onDone?.();
+        }}
+      >
         {children}
-      </a>
+      </Link>
     </Button>
   );
 };
@@ -272,7 +287,11 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
   const sessions = useSessions((s) => s.sessions);
   const t = useT();
   const [open, setOpen] = useState(true);
-  const chats = sessions?.filter((session) => !session.projectId) ?? [];
+  const bots = useProjects((s) => s.bots);
+  const chats =
+    sessions?.filter((session) =>
+      bots ? !bots.some((bot) => bot.id === session.projectId) : !session.projectId,
+    ) ?? [];
   const ordered = [
     ...chats.filter((session) => session.pinned),
     ...chats.filter((session) => !session.pinned),
@@ -288,9 +307,10 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
         className="group/chats text-muted-foreground hover:text-foreground flex items-center justify-between px-2.5 pt-6 pb-1 text-sm"
       >
         {t("Chats")}
-        <IconChevronDown
+        <HugeiconsIcon
+          icon={ArrowDown01Icon}
           className={cn(
-            "size-4 opacity-0 transition-opacity group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 pointer-coarse:opacity-100",
+            "size-4 opacity-0 group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 pointer-coarse:opacity-100",
             !open && "-rotate-90 opacity-100",
           )}
         />

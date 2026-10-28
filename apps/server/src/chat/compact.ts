@@ -1,4 +1,5 @@
 import { arabicTokens } from "@sirathic/core/search/arabic";
+import type { duaSearch } from "@sirathic/core/tools/duaSearch";
 
 const VOWEL_MARKS = /[ؐ-ًؚ-ٰٟۖ-ۭـ]/gu;
 
@@ -142,7 +143,6 @@ const block = (title: string, entries: string[]) =>
 type Verse = {
   citation: number | null;
   ref: string;
-  arabic: string;
   english: string;
   tafsir: string | null;
 };
@@ -151,12 +151,7 @@ export const quranBlock = (verses: Verse[]) =>
   block(
     "quran",
     verses.map((verse) =>
-      [
-        cited(verse.citation, verse.ref),
-        verse.arabic,
-        verse.english,
-        verse.tafsir && `Tafsir: ${verse.tafsir}`,
-      ]
+      [cited(verse.citation, verse.ref), verse.english, verse.tafsir && `Tafsir: ${verse.tafsir}`]
         .filter((line) => line)
         .join("\n"),
     ),
@@ -205,6 +200,25 @@ export const fiqhBlock = (passages: Passage[]) =>
           `${passage.work}, ${passage.author} (${passage.school}), vol ${passage.volume} p ${passage.page}${passage.heading ? `: ${passage.heading}` : ""}`,
         ),
         passage.text && unvowel(passage.text),
+      ]
+        .filter((line) => line)
+        .join("\n"),
+    ),
+  );
+
+type Dua = Awaited<ReturnType<typeof duaSearch>>["duas"][number];
+
+export const duaBlock = (duas: Dua[]) =>
+  block(
+    "duas",
+    duas.map((dua) =>
+      [
+        cited(null, dua.grade ? `${dua.title} (${dua.grade})` : dua.title),
+        dua.textAr,
+        dua.textEn,
+        dua.explanation,
+        dua.attribution && `Source: ${dua.attribution}`,
+        dua.hadithId && `Hadith: ${dua.hadithId}`,
       ]
         .filter((line) => line)
         .join("\n"),

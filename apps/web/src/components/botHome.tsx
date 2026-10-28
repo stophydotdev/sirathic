@@ -2,22 +2,16 @@
 
 import { useAccount } from "@/components/account";
 import { BotAvatar } from "@/components/botAvatar";
-import { BotSettings } from "@/components/botSettings";
-import { BotSwitcher } from "@/components/botSwitcher";
+import { BotMenu } from "@/components/botMenu";
+import { useBotPanel } from "@/components/botSettings";
 import { useChatState } from "@/components/chat";
 import { Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
-import { DeleteProjectDialog } from "@/components/projectMenu";
 import { type Project, useProjects } from "@/components/projects";
 import { QuestionCard, useFirstReply } from "@/components/questionCard";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdownMenu";
-import { IconDots, IconTrash } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+import type { BlobState } from "@/lib/blob/states";
+import { useAuiState } from "@assistant-ui/react";
+import { currentToolName } from "@sirathic/server/messages";
 import { type FC, useEffect, useState } from "react";
 
 const STARTER_REPLIES = [
@@ -35,66 +29,73 @@ export const useBot = () => {
   return useProjects((s) => s.bots?.find((bot) => bot.id === projectId));
 };
 
+const useBotState = () =>
+  useAuiState((s): BlobState => {
+    const last = s.thread.messages.at(-1);
+    if (last?.role !== "assistant") return s.thread.isRunning ? "thinking" : "ready";
+    if (last.status?.type === "incomplete" && last.status.reason === "error") return "failed";
+    if (last.status?.type === "incomplete" && last.status.reason === "cancelled") return "stopped";
+    const open = last.content.filter(
+      (part) => part.type === "tool-call" && part.result === undefined,
+    );
+    const asking = open.some(
+      (part) =>
+        part.type === "tool-call" &&
+        ((part.approval !== undefined &&
+          part.approval.approved === undefined &&
+          part.approval.resolution === undefined) ||
+          currentToolName(part.toolName) === "clarifying_questions"),
+    );
+    if (asking) return "asking";
+    if (!s.thread.isRunning) return "ready";
+    if (
+      open.some(
+        (part) => part.type === "tool-call" && currentToolName(part.toolName) === "search_web",
+      )
+    )
+      return "searching";
+    if (open.length > 0) return "working";
+    return last.content.at(-1)?.type === "text" ? "writing" : "thinking";
+  });
+
 export const BotTitle: FC = () => {
   const bot = useBot();
-  const router = useRouter();
-  const [editing, setEditing] = useState<{ kind: "settings" } | { kind: "new"; name: string }>();
+  const state = useBotState();
+  const open = useBotPanel((s) => s.open);
+  const setOpen = useBotPanel((s) => s.setOpen);
   const t = useT();
   if (!bot) return null;
-  const close = () => setEditing(undefined);
   return (
-    <>
-      <BotSwitcher current={bot.id} onCreate={(name) => setEditing({ kind: "new", name })}>
-        <button
-          type="button"
-          onClick={() => setEditing({ kind: "settings" })}
-          title={t("Settings")}
-          className="text-muted-foreground hover:bg-muted hover:text-foreground flex h-8 min-w-0 shrink-0 items-center gap-1 rounded-xl px-2.5 text-sm font-medium"
-        >
-          <BotAvatar color={bot.color} icon={bot.symbol} className="size-5" />
-          <span className="max-w-40 truncate max-sm:hidden">{bot.name}</span>
-        </button>
-      </BotSwitcher>
-      {editing?.kind === "settings" && <BotSettings bot={bot} onClose={close} />}
-      {editing?.kind === "new" && (
-        <BotSettings
-          suggestedName={editing.name}
-          onClose={close}
-          onCreated={(created) => {
-            close();
-            router.push(`/bot/${created.id}`);
-          }}
-        />
-      )}
-    </>
+    <button
+      type="button"
+      aria-pressed={open}
+      onClick={() => setOpen(!open)}
+      title={t("Settings")}
+      className="bg-muted hover:bg-foreground/10 flex h-8 min-w-0 items-center gap-2 rounded-xl px-2.5 text-sm font-medium"
+    >
+      <BotAvatar
+        color={bot.color}
+        body={bot.symbol}
+        seed={bot.id}
+        state={state}
+        className="size-5"
+      />
+      <span className="max-w-40 truncate">{bot.name}</span>
+    </button>
   );
 };
 
 export const BotHeaderMenu: FC = () => {
   const bot = useBot();
-  const [deleting, setDeleting] = useState(false);
-  const t = useT();
+  const [open, setOpen] = useState(false);
   if (!bot) return null;
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          aria-label={t("More actions")}
-          className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 flex size-8 shrink-0 items-center justify-center rounded-xl"
-        >
-          <IconDots className="size-4" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-44">
-          <DropdownMenuItem variant="destructive" onSelect={() => setDeleting(true)}>
-            <IconTrash className="size-4" />
-            {t("Delete bot")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      {deleting && (
-        <DeleteProjectDialog id={bot.id} name={bot.name} bot onClose={() => setDeleting(false)} />
-      )}
-    </>
+    <BotMenu
+      bot={bot}
+      open={open}
+      onOpenChange={setOpen}
+      className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 flex size-8 shrink-0 items-center justify-center rounded-xl"
+    />
   );
 };
 
@@ -111,8 +112,12 @@ export const BotGreeting: FC = () => {
             "Assalamu alaikum. What do you want me around for? Anything concrete, or more of a study companion?",
           )}
       </p>
-      {bot.question && bot.options ? (
-        <QuestionCard question={bot.question} options={bot.options} reply={reply} />
+      {bot.options ? (
+        <QuestionCard
+          question={bot.question ?? t("What should I focus on?")}
+          options={bot.options}
+          reply={reply}
+        />
       ) : (
         (!bot.instructions || reply !== undefined) && (
           <QuestionCard
@@ -153,11 +158,14 @@ export const BotHome: FC<{ bot: Project }> = ({ bot }) => {
           <BotGreeting />
         </div>
         <div className="bg-background sticky bottom-0 mx-auto w-full max-w-182 pt-4 pb-3">
-          <div className="-mx-3">
-            <Composer placeholder={t("Message {name}", { name: bot.name })} menuSide="top" bot />
-          </div>
+          <Composer
+            placeholder={t("Message {name}", { name: bot.name })}
+            menuSide="top"
+            bot
+            compact
+          />
           <p className="text-muted-foreground mt-2 text-center text-xs">
-            {t("Sirathic can be wrong. Check the sources, and ask a scholar about your own case.")}
+            {t("Sirathic can make mistakes. Check the sources.")}
           </p>
         </div>
       </div>

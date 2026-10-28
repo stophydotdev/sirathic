@@ -1,20 +1,33 @@
 import type { AnthropicLanguageModelOptions } from "@ai-sdk/anthropic";
 import { createOpenAI, type OpenAILanguageModelResponsesOptions } from "@ai-sdk/openai";
 import type { streamText } from "ai";
+import { cacheFor } from "@sirathic/core/cache";
 import { z } from "zod";
 import { StatusError } from "../http";
 import { accessToken, type SubscriptionUser } from "../account/users";
 import { CODEX_API, codexFetch } from "../account/deviceLogin";
+import type { Effort } from "../shared/messages";
 
 export const DEFAULT_MODEL = "gpt-6-luna";
 
 export type ProviderOptions = NonNullable<Parameters<typeof streamText>[0]["providerOptions"]>;
 
-export type Model = {
-  slug: string;
-  name: string;
-  maker: "sirathic" | "openai" | "anthropic" | "deepseek" | "zhipu" | "qwen" | "xiaomi";
-};
+const listedModel = z.object({
+  slug: z.string(),
+  name: z.string(),
+  maker: z.enum(["sirathic", "openai", "anthropic", "deepseek", "zhipu", "qwen", "xiaomi"]),
+});
+
+export type Model = z.infer<typeof listedModel>;
+
+const HOUR_MS = 3_600_000;
+
+const chatgptModels = cacheFor({
+  namespace: "chatgpt-models:v1",
+  schema: z.array(listedModel),
+  freshMs: HOUR_MS,
+  keepMs: 24 * HOUR_MS,
+});
 
 const modelsResponse = z.object({
   models: z.array(
@@ -39,7 +52,9 @@ export const chatModel = (user: SubscriptionUser, slug = DEFAULT_MODEL) =>
     fetch: codexFor(user),
   }).responses(slug);
 
-export async function models(user: SubscriptionUser): Promise<Model[]> {
+export const models = (user: SubscriptionUser) => chatgptModels(user.id, () => listModels(user));
+
+async function listModels(user: SubscriptionUser): Promise<Model[]> {
   const res = await codexFor(user)("models");
   if (!res.ok) {
     throw new StatusError(
@@ -57,17 +72,17 @@ export async function models(user: SubscriptionUser): Promise<Model[]> {
     }));
 }
 
-export const answerOptions = (turn: { research: boolean; sessionId: string }): ProviderOptions => ({
+export const answerOptions = (turn: { effort: Effort; sessionId: string }): ProviderOptions => ({
   openai: {
     store: false,
     include: ["reasoning.encrypted_content"],
     forceReasoning: true,
-    reasoningEffort: turn.research ? "high" : undefined,
+    reasoningEffort: turn.effort,
     promptCacheKey: turn.sessionId,
     textVerbosity: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
   anthropic: {
-    effort: turn.research ? "high" : undefined,
+    effort: turn.effort,
     thinking: { type: "adaptive", display: "summarized" },
   } satisfies AnthropicLanguageModelOptions,
 });

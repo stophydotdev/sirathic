@@ -3,18 +3,22 @@ import { automations, chatSessions, projects, users } from "@sirathic/db/schema"
 import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
 import { and, asc, eq, lte } from "drizzle-orm";
 import { toUser } from "../account/auth";
-import { answerOptions, sideOptions } from "../models/subscription";
-import { countNoorAnswer, pickModels } from "../models/pick";
+import { pickModels } from "../models/pick";
 import { BOT_HISTORY } from "../bots/tools";
 import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
 import { projectOfChat } from "../projects/projects";
-import { botIdentity, projectRules, settingsInProject } from "../projects/rules";
+import { settingsInProject } from "../projects/rules";
 import { reasonOf, StatusError } from "../http";
 import { openSession, saveSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
-import { type ChatMessage, type Mode, mode as modeSchema } from "../shared/messages";
+import {
+  type ChatMessage,
+  DEFAULT_EFFORT,
+  type Mode,
+  mode as modeSchema,
+} from "../shared/messages";
 import { DEFAULT_SETTINGS } from "../shared/settings";
 import { dueItems, progressOf } from "../bots/study";
 import type { User } from "../account/users";
@@ -25,6 +29,7 @@ const BATCH = 5;
 const RUN_TIMEOUT_MS = 10 * 60_000;
 const PAUSE_AFTER = 3;
 const MISSED_AFTER_MS = 60 * 60_000;
+const SIGN_IN_FAILURE = /^(401|403)\b|sign-in ended/u;
 
 const failureNote = (failedInARow: number, reason: string) =>
   failedInARow >= PAUSE_AFTER
@@ -141,7 +146,6 @@ async function answerPrompt(
 ) {
   const user = await ownerOf(by);
   const { modelName, models } = pickModels(user, undefined);
-  await countNoorAnswer(by, modelName);
   const project = await projectOfChat(sessionId, by, inProject ?? undefined);
   let answered: ChatMessage[] = [];
   const response = chatResponse({
@@ -150,6 +154,7 @@ async function answerPrompt(
     messages: conversation,
     mode: runMode,
     abortSignal: AbortSignal.timeout(RUN_TIMEOUT_MS),
+    unattended: true,
     preferences: getSettings(by)
       .then((settings) => settingsInProject(settings, project))
       .catch((err: Error) => {
@@ -157,19 +162,18 @@ async function answerPrompt(
         return DEFAULT_SETTINGS;
       }),
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
-    projectRules: Promise.resolve(projectRules(project, false)),
-    skillRules: Promise.resolve(""),
-    persona: Promise.resolve(project?.kind === "bot" ? botIdentity(project) : undefined),
-    options: {
-      answer: answerOptions({ research: runMode === "research", sessionId }),
-      side: sideOptions,
+    project: Promise.resolve(project),
+    userSkills: Promise.resolve([]),
+    turn: {
+      effort: project?.kind === "bot" ? "high" : DEFAULT_EFFORT[runMode],
+      sessionId,
     },
     title: undefined,
     save: async (messages) => {
       answered = messages;
     },
     record: (event) => track(event, by),
-    remember: undefined,
+    owner: undefined,
     automate: undefined,
     historyLimit: inProject ? BOT_HISTORY : undefined,
     citedEarlier: earlier,
@@ -224,15 +228,29 @@ async function runAutomation({
         ],
       }
     : asked;
-  const outcome = await answerPrompt(owner, [briefed], earlier, sessionId, projectId, runMode).then(
+  const outcome = await answerPrompt(
+    owner,
+    [briefed],
+    earlier,
+    sessionId,
+    bot ? projectId : null,
+    runMode,
+  ).then(
     (answered) => ({ kind: "answered", answered }) as const,
     (err: Error) => {
       console.error(`automation ${id} not answered: ${reasonOf(err)}`);
-      return { kind: "failed", reason: reasonOf(err) } as const;
+      const reason = reasonOf(err);
+      return { kind: SIGN_IN_FAILURE.test(reason) ? "signedOut" : "failed", reason } as const;
     },
   );
-  const failedInARow = outcome.kind === "failed" ? failures + 1 : 0;
-  const note = outcome.kind === "failed" ? failureNote(failedInARow, outcome.reason) : undefined;
+  const failedInARow =
+    outcome.kind === "failed" ? failures + 1 : outcome.kind === "answered" ? 0 : failures;
+  const note =
+    outcome.kind === "answered"
+      ? undefined
+      : outcome.kind === "signedOut"
+        ? `This run did not finish. ${outcome.reason}`
+        : failureNote(failedInARow, outcome.reason);
   const answered =
     outcome.kind === "answered"
       ? outcome.answered
@@ -266,7 +284,6 @@ async function runAutomation({
       messages,
       unread: true,
       automationId: id,
-      projectId,
     });
   }
   await db.update(automations).set(finished).where(eq(automations.id, id));

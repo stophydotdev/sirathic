@@ -1,26 +1,18 @@
 "use client";
 
 import { useChatState } from "@/components/chat";
-import { useProjects } from "@/components/projects";
-import { useSessions } from "@/components/sessions";
 import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
-import { ExportMenu } from "@/components/exportChat";
-import { Favicon, FaviconStack } from "@/components/favicon";
-import { siteName, turnsOf } from "@/components/sources";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
-import { SirathicIcon } from "@/components/makerIcon";
 import { UserText } from "@/components/mentions";
-import { ProjectHome } from "@/components/projectHome";
 import { BotTurn } from "@/components/botChat";
 import { BotGreeting, BotHeaderMenu, BotHome, BotTitle, useBot } from "@/components/botHome";
 import { BotLearned } from "@/components/botLearned";
 import { ThreadKeys } from "@/components/shortcuts";
-import { ThreadImages } from "@/components/threadMedia";
 import { ThreadShell } from "@/components/threadShell";
+import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
-import type { MessageKey } from "@/messages/en";
 import {
   ActionBarPrimitive,
   AttachmentPrimitive,
@@ -30,49 +22,24 @@ import {
   ThreadPrimitive,
   useAuiState,
 } from "@assistant-ui/react";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconArrowDown,
-  IconCheck,
-  IconChevronRight,
-  IconCopy,
-  IconPencil,
-  IconPhoto,
-  IconPlus,
-  IconShare,
-  IconSpy,
-  IconWorld,
-} from "@tabler/icons-react";
-import { type FC, memo, type ReactNode, useEffect, useState } from "react";
+  Add01Icon,
+  ArrowDown02Icon,
+  Copy01Icon,
+  IncognitoIcon,
+  PencilEdit02Icon,
+  Share08Icon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
+import { type FC, memo, type ReactNode, useState } from "react";
 import { z } from "zod";
-import { create } from "zustand";
-import { Reply, ThreadLinks } from "@/components/answer";
+import { Reply } from "@/components/answer";
 
 const iconButton =
   "text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-40";
 
-const TABS = [
-  { id: "answer", name: "Answer", Icon: SirathicIcon },
-  { id: "links", name: "Links", Icon: IconWorld },
-  { id: "images", name: "Images", Icon: IconPhoto },
-] as const satisfies readonly {
-  id: string;
-  name: MessageKey;
-  Icon: FC<{ className?: string }>;
-}[];
-
-type Tab = (typeof TABS)[number]["id"];
-
-const useThreadTab = create<{ tab: Tab; open: (tab: Tab) => void }>()((set) => ({
-  tab: "answer",
-  open: (tab) => set({ tab }),
-}));
-
 const ThreadImpl: FC = () => {
-  const threadId = useAuiState((s) => s.threads.mainThreadId);
-  useEffect(() => {
-    useThreadTab.getState().open("answer");
-  }, [threadId]);
-
   return (
     <ThreadShell>
       <ThreadKeys />
@@ -83,7 +50,7 @@ const ThreadImpl: FC = () => {
 
         <AuiIf condition={(s) => s.thread.messages.length > 0}>
           <ThreadPrimitive.Viewport className="flex grow flex-col overflow-y-auto print:overflow-visible">
-            <TabBar />
+            <TopBar />
             <ThreadBody />
           </ThreadPrimitive.Viewport>
         </AuiIf>
@@ -102,87 +69,40 @@ export const EmptyThread: FC = () => (
   </main>
 );
 
-const TurnRow: FC<{
-  children: ReactNode;
-  aside?: ReactNode;
-  layout?: "aside" | "column" | "edge";
-}> = ({ children, aside, layout = "aside" }) => {
-  if (layout === "edge") return children;
-  if (layout === "column") return <div className="mx-auto w-full max-w-182">{children}</div>;
-  return (
-    <div className="mx-auto grid w-full max-w-[720px] xl:max-w-none xl:grid-cols-[minmax(0,720px)_320px] xl:justify-between xl:ps-[35px]">
-      <div className="min-w-0">{children}</div>
-      {aside && (
-        <aside className="hidden xl:block">
-          <div className="sticky top-14 pt-4">{aside}</div>
-        </aside>
-      )}
-    </div>
-  );
-};
+const TurnRow: FC<{ children: ReactNode; layout?: "column" | "edge" }> = ({
+  children,
+  layout = "column",
+}) => (layout === "edge" ? children : <div className="mx-auto w-full max-w-182">{children}</div>);
 
-const TabBar: FC = () => {
-  const tab = useThreadTab((s) => s.tab);
-  const open = useThreadTab((s) => s.open);
+const TopBar: FC = () => {
   const bot = useBot();
   const t = useT();
 
   return (
     <div
       className={cn(
-        "bg-background sticky top-0 z-20 pe-6 ps-14 print:hidden",
+        "bg-background after:from-background sticky top-0 z-20 pe-6 ps-14 after:pointer-events-none after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-linear-to-b after:to-transparent print:hidden",
         bot ? "lg:ps-4" : "lg:ps-6",
-        bot
-          ? "after:from-background after:pointer-events-none after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-linear-to-b after:to-transparent"
-          : "border-border/50 border-b",
       )}
     >
       <div className="absolute top-0 end-4 flex h-14 items-center">
         {bot ? <BotHeaderMenu /> : <HeaderActions />}
       </div>
-      <TurnRow layout={bot ? "edge" : "aside"}>
+      <TurnRow layout={bot ? "edge" : "column"}>
         <div className="flex h-14 items-center gap-4">
           <a href="/" aria-label={t("New chat")} className={cn(iconButton, "lg:hidden")}>
-            <IconPlus className="size-4.5" />
+            <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
           </a>
           <BotTitle />
-          {!bot && (
-            <div role="tablist" className="flex h-full gap-5">
-              {TABS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={tab === item.id}
-                  onClick={() => open(item.id)}
-                  className={cn(
-                    "-mb-px flex items-center gap-1.5 border-b-2 text-sm font-[470] transition-colors",
-                    tab === item.id
-                      ? "border-foreground text-foreground"
-                      : "text-muted-foreground hover:text-foreground border-transparent",
-                  )}
-                >
-                  <item.Icon className="size-4" />
-                  <span className="max-sm:sr-only">{t(item.name)}</span>
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </TurnRow>
     </div>
   );
 };
 
-const timeOf = z.object({ createdAt: z.number() });
-
 const HeaderActions: FC = () => {
   const chat = useChatState();
   const t = useT();
-  const createdAt = useAuiState((s) => {
-    const last = s.thread.messages.findLast((message) => message.role === "assistant");
-    return timeOf.safeParse(last?.metadata.custom).data?.createdAt;
-  });
   const [copied, setCopied] = useState(false);
 
   const share = () => {
@@ -195,21 +115,7 @@ const HeaderActions: FC = () => {
 
   return (
     <div className="flex items-center gap-2">
-      {createdAt !== undefined && (
-        <span className="text-muted-foreground hidden text-xs tabular-nums sm:inline">
-          {new Date(createdAt).toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit",
-          })}
-        </span>
-      )}
       <IncognitoToggle />
-      <ExportMenu
-        onPrint={() => {
-          useThreadTab.getState().open("answer");
-          setTimeout(() => window.print(), 100);
-        }}
-      />
       <button
         type="button"
         onClick={share}
@@ -217,7 +123,11 @@ const HeaderActions: FC = () => {
         title={t("Copy a link to this chat")}
         className="bg-foreground/10 hover:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
       >
-        {copied ? <IconCheck className="size-4" /> : <IconShare className="size-4" />}
+        <Swap
+          swapped={copied}
+          from={<HugeiconsIcon icon={Share08Icon} className="size-4" />}
+          to={<HugeiconsIcon icon={Tick02Icon} className="size-4" />}
+        />
         <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
       </button>
     </div>
@@ -244,28 +154,20 @@ const IncognitoToggle: FC = () => {
         incognito && "bg-super/15 text-super hover:text-super",
       )}
     >
-      <IconSpy className="size-4" />
+      <HugeiconsIcon icon={IncognitoIcon} className="size-4" />
       {incognito && t("Incognito")}
     </button>
   );
 };
 
 const ThreadBody: FC = () => {
-  const tab = useThreadTab((s) => s.tab);
   const t = useT();
-  const chat = useChatState();
-  const session = useSessions((s) => s.sessions?.find((found) => found.id === chat?.id));
-  const changeSession = useSessions((s) => s.change);
-  const projectId = session ? session.projectId : chat?.projectId;
-  const project = useProjects((s) => s.projects?.find((found) => found.id === projectId));
   const bot = useBot();
-  if (!bot && tab === "links") return <ThreadLinks />;
-  if (!bot && tab === "images") return <ThreadImages />;
 
   return (
     <>
-      <div className="px-6">
-        <TurnRow aside={bot ? undefined : <SourcesPane />} layout={bot ? "column" : "aside"}>
+      <div className="px-6 pb-8">
+        <TurnRow>
           <BotGreeting />
           <ThreadPrimitive.Messages>
             {() => (bot ? <BotTurn /> : <Turn />)}
@@ -274,26 +176,16 @@ const ThreadBody: FC = () => {
         </TurnRow>
       </div>
       <ThreadPrimitive.ViewportFooter className="bg-background sticky bottom-0 mt-auto px-6 pb-3 print:hidden">
-        <TurnRow layout={bot ? "column" : "aside"}>
-          <div className={cn("relative", bot && "-mx-3")}>
+        <TurnRow>
+          <div className="relative">
             <ThreadPrimitive.ScrollToBottom className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible">
-              <IconArrowDown className="size-4" />
+              <HugeiconsIcon icon={ArrowDown02Icon} className="size-4" />
             </ThreadPrimitive.ScrollToBottom>
             <Composer
               placeholder={bot ? t("Message {name}", { name: bot.name }) : t("Ask a follow-up")}
               menuSide="top"
               bot={!!bot}
-              project={
-                project && chat
-                  ? {
-                      id: project.id,
-                      name: project.name,
-                      icon: project.icon,
-                      leaveLabel: t("Remove from project"),
-                      onLeave: () => void changeSession(chat.id, { projectId: null }),
-                    }
-                  : undefined
-              }
+              compact
             />
             <Caution />
           </div>
@@ -307,17 +199,15 @@ const Caution: FC = () => {
   const t = useT();
   return (
     <p className="text-muted-foreground mt-2 text-center text-xs">
-      {t("Sirathic can be wrong. Check the sources, and ask a scholar about your own case.")}
+      {t("Sirathic can make mistakes. Check the sources.")}
     </p>
   );
 };
 
 const EmptyState: FC = () => {
   const t = useT();
-  const projectId = useChatState()?.projectId;
   const bot = useBot();
   if (bot) return <BotHome bot={bot} />;
-  if (projectId) return <ProjectHome id={projectId} />;
   return (
     <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
       <div className="absolute top-3 end-4">
@@ -363,18 +253,18 @@ const Question: FC = () => {
     <>
       <AuiIf condition={(s) => !s.message.composer.isEditing}>
         <div className="flex w-full items-start justify-end gap-1 pt-8 pb-6">
-          <ActionBarPrimitive.Root className="mt-2.5 flex opacity-0 transition-opacity group-focus-within/message:opacity-100 group-hover/message:opacity-100 pointer-coarse:mt-1.5 pointer-coarse:opacity-100 print:hidden">
+          <ActionBarPrimitive.Root className="mt-2.5 flex opacity-0 group-focus-within/message:opacity-100 group-hover/message:opacity-100 pointer-coarse:mt-1.5 pointer-coarse:opacity-100 print:hidden">
             <ActionBarPrimitive.Edit
               className={cn(iconButton, "size-6 pointer-coarse:size-9")}
               aria-label={t("Edit query")}
             >
-              <IconPencil className="size-3" />
+              <HugeiconsIcon icon={PencilEdit02Icon} className="size-3" />
             </ActionBarPrimitive.Edit>
             <ActionBarPrimitive.Copy
               className={cn(iconButton, "size-6 pointer-coarse:size-9")}
               aria-label={t("Copy query")}
             >
-              <IconCopy className="size-3" />
+              <HugeiconsIcon icon={Copy01Icon} className="size-3" />
             </ActionBarPrimitive.Copy>
           </ActionBarPrimitive.Root>
           <div className="flex max-w-[90%] min-w-0 flex-col items-end gap-2">
@@ -423,75 +313,5 @@ const Question: FC = () => {
         </ComposerPrimitive.Root>
       </AuiIf>
     </>
-  );
-};
-
-const SourcesPane: FC = () => {
-  const messages = useAuiState((s) => s.thread.messages);
-  const t = useT();
-  const [chosen, setChosen] = useState<boolean>();
-  const open = chosen ?? true;
-  const turns = turnsOf(messages).filter((turn) => turn.sources.length > 0);
-  const urls = [...new Set(turns.flatMap((turn) => turn.sources.map((s) => s.url)))];
-  if (urls.length === 0) return null;
-
-  return (
-    <div className="bg-card border-foreground/8 overflow-hidden rounded-xl border">
-      <button
-        type="button"
-        onClick={() => setChosen(!open)}
-        className="flex w-full items-center gap-2 py-3 pe-2 ps-3"
-      >
-        <span className="text-muted-foreground flex-1 text-start text-sm">{t("Sources")}</span>
-        {!open && <FaviconStack urls={urls} />}
-        <span className="text-muted-foreground flex items-center gap-1 text-sm tabular-nums">
-          {!open && urls.length}
-          <IconChevronRight
-            className={cn(
-              "size-4 transition-transform rtl:rotate-180",
-              open && "rotate-90 rtl:rotate-90",
-            )}
-          />
-        </span>
-      </button>
-      {open && (
-        <div className="flex max-h-[min(28rem,calc(100dvh-12rem))] flex-col gap-1 overflow-y-auto px-2 pb-2">
-          {turns.map((turn) => (
-            <section key={turn.id} className="flex flex-col gap-1">
-              {turns.length > 1 && (
-                <p className="text-muted-foreground truncate px-2 pt-2 text-xs">
-                  Results for “{turn.question}”
-                </p>
-              )}
-              {turn.sources.map((source) => (
-                <a
-                  key={source.url}
-                  href={source.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:bg-muted flex gap-2 rounded-xl p-2 text-sm"
-                >
-                  <Favicon url={source.url} size={16} className="mt-0.5" />
-                  <span className="flex min-w-0 flex-col">
-                    <span className="text-muted-foreground line-clamp-1 text-xs">
-                      {siteName(source.url)}
-                    </span>
-                    <span className="line-clamp-2">{source.title}</span>
-                    {source.snippet && (
-                      <span dir="auto" className="text-muted-foreground line-clamp-4">
-                        {source.snippet}
-                      </span>
-                    )}
-                    {source.credit && (
-                      <span className="text-muted-foreground text-xs">{source.credit}</span>
-                    )}
-                  </span>
-                </a>
-              ))}
-            </section>
-          ))}
-        </div>
-      )}
-    </div>
   );
 };

@@ -15,19 +15,22 @@ import {
 import { RecentFiles } from "@/components/libraryRecent";
 import { popoverHeading, popoverIcon, popoverPanel, popoverRow } from "@/components/popover";
 import { ModelPicker } from "@/components/modelPicker";
-import { ProjectIcon } from "@/components/projectIcon";
 import { useSignIn } from "@/components/signIn";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import { useAttachmentSrc } from "@/lib/hooks/useAttachmentSrc";
 import { type Mode, MODES, mode as modeSchema } from "@sirathic/server/messages";
+import { EffortPicker } from "@/components/effortPicker";
+import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
 import {
@@ -38,19 +41,17 @@ import {
   useAuiState,
 } from "@assistant-ui/react";
 import { LexicalComposerInput } from "@assistant-ui/react-lexical";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  IconArrowUp,
-  IconChevronDown,
-  IconFile,
-  IconPaperclip,
-  IconPlus,
-  IconSearch,
-  IconSquare,
-  IconTelescope,
-  IconX,
-} from "@tabler/icons-react";
+  Add01Icon,
+  ArrowUp02Icon,
+  Attachment01Icon,
+  Cancel01Icon,
+  File01Icon,
+  Search01Icon,
+  Telescope01Icon,
+} from "@hugeicons/core-free-icons";
 import Image from "next/image";
-import Link from "next/link";
 import { type FC, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
 const ROTATING = [
@@ -68,8 +69,8 @@ const primaryButton =
   "bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-foreground/15 disabled:text-background flex size-8 shrink-0 items-center justify-center rounded-full transition-colors";
 
 export const MODE_ICONS = {
-  quick: <IconSearch className="size-4" />,
-  research: <IconTelescope className="size-4" />,
+  quick: <HugeiconsIcon icon={Search01Icon} className="size-4" />,
+  research: <HugeiconsIcon icon={Telescope01Icon} className="size-4" />,
 } satisfies Record<Mode, ReactNode>;
 
 function useRotatingPlaceholder(first: string, rotate: boolean) {
@@ -92,16 +93,11 @@ export const Composer: FC<{
   menuSide: "top" | "bottom";
   rotate?: boolean;
   bot?: boolean;
-  project?: {
-    id: string;
-    name: string;
-    icon: string | null;
-    leaveLabel: string;
-    onLeave: (text: string) => void;
-  };
-}> = ({ placeholder, menuSide, rotate = false, bot = false, project }) => {
+  compact?: boolean;
+}> = ({ placeholder, menuSide, rotate = false, bot = false, compact = false }) => {
   const aui = useAui();
   const text = useAuiState((s) => s.composer.text);
+  const running = useAuiState((s) => s.thread.isRunning);
   const setMode = useChatOptions((s) => s.setMode);
   useEffect(() => {
     const draft = takeDraft();
@@ -120,6 +116,21 @@ export const Composer: FC<{
   const ask = useSignIn((s) => s.ask);
   const shown = useRotatingPlaceholder(placeholder, rotate && text === "");
   const t = useT();
+  const hasAttachments = useAuiState((s) => s.composer.attachments.length > 0);
+  const editor = useRef<HTMLDivElement>(null);
+  const [wrapped, setWrapped] = useState(false);
+  if (wrapped && text === "") setWrapped(false);
+  useEffect(() => {
+    const box = editor.current;
+    if (!box) return;
+    const observer = new ResizeObserver(() => {
+      if (box.offsetHeight > Number.parseFloat(getComputedStyle(box).lineHeight) * 1.5)
+        setWrapped(true);
+    });
+    observer.observe(box);
+    return () => observer.disconnect();
+  }, []);
+  const row = compact && !wrapped && !hasAttachments;
 
   const command = /^\/[^\s]*$/u.test(text) ? text : undefined;
   const composer = () => aui.thread().composer();
@@ -185,95 +196,86 @@ export const Composer: FC<{
       <div className="relative w-full">
         <ComposerPrimitive.Root
           className={cn(
-            "bg-card flex w-full flex-col border",
-            bot ? "border-foreground/6 rounded-3xl" : "border-foreground/10 rounded-[20px]",
+            "bg-card border-foreground/10 flex w-full flex-wrap items-center border",
+            compact ? "min-h-12 gap-x-1 rounded-4xl p-1.5 md:min-h-13 md:p-2" : "rounded-[20px]",
           )}
         >
           <AuiIf condition={(s) => s.composer.attachments.length > 0}>
-            <div className="flex flex-wrap gap-2 px-4 pt-4">
+            <div
+              className={cn(
+                "order-first flex basis-full flex-wrap gap-2",
+                compact ? "px-2 pt-2 pb-1" : "px-4 pt-4",
+              )}
+            >
               <ComposerPrimitive.Attachments>
                 {() => <AttachmentPreview />}
               </ComposerPrimitive.Attachments>
             </div>
           </AuiIf>
 
-          <LexicalComposerInput
-            data-composer
-            autoFocus={finePointer}
-            placeholder={shown}
-            formatter={mentionFormatter}
-            directiveChip={MentionChip}
-            onKeyDownCapture={onKeyDownCapture}
+          <div
             className={cn(
-              "relative max-h-60 min-h-[42px] w-full px-5 pt-3.5 text-base",
-              bot ? "leading-7" : "leading-6",
+              "min-w-0",
+              row ? "flex-1 px-1.5" : "-order-1 basis-full",
+              !row && (compact ? "px-2.5 pt-1.5 pb-1" : "px-5 pt-3.5"),
             )}
           >
-            <LinkPlugin />
-            <MentionSpace />
-          </LexicalComposerInput>
+            <LexicalComposerInput
+              ref={editor}
+              data-composer
+              autoFocus={finePointer}
+              placeholder={shown}
+              formatter={mentionFormatter}
+              directiveChip={MentionChip}
+              onKeyDownCapture={onKeyDownCapture}
+              className={cn("relative max-h-60 w-full text-base leading-6", !compact && "min-h-7")}
+            >
+              <LinkPlugin />
+              <MentionSpace />
+            </LexicalComposerInput>
+          </div>
 
-          <div className="flex items-center justify-between gap-2 px-3 pt-2.5 pb-3">
-            <div className="flex min-w-0 items-center gap-1.5">
-              <AddMenu side={menuSide} size={bot ? "size-10" : "size-8"} />
-              {project && (
-                <span className="border-foreground/15 flex h-8 min-w-0 items-center gap-1.5 rounded-full border ps-2.5 pe-1 text-sm font-medium">
-                  <ProjectIcon
-                    icon={project.icon}
-                    className="text-muted-foreground size-4 shrink-0"
-                  />
-                  <Link
-                    href={`/project/${project.id}`}
-                    title={t("Open project")}
-                    className="max-w-48 min-w-6 truncate hover:underline"
-                  >
-                    {project.name}
-                  </Link>
-                  <button
-                    type="button"
-                    aria-label={project.leaveLabel}
-                    title={project.leaveLabel}
-                    onClick={() => project.onLeave(text)}
-                    className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-6 items-center justify-center rounded-full"
-                  >
-                    <IconX className="size-3.5" />
-                  </button>
-                </span>
-              )}
-              {!bot && <ModeMenu side={menuSide} />}
-            </div>
+          <div
+            className={cn(
+              "flex min-w-0 items-center gap-1.5",
+              row && "-order-1",
+              !compact && "ps-3 pt-2.5 pb-3",
+            )}
+          >
+            <AddMenu side={menuSide} modes={!bot} />
+          </div>
 
-            <div className="flex items-center gap-1">
-              <ModelPicker side={menuSide} />
-              <AuiIf condition={(s) => s.thread.isRunning}>
-                <ComposerPrimitive.Cancel
-                  className={cn(primaryButton, bot && "size-10")}
-                  aria-label={t("Stop response (Esc)")}
-                  title={t("Stop response (Esc)")}
-                >
-                  <IconSquare className="size-3 fill-current" />
-                </ComposerPrimitive.Cancel>
-              </AuiIf>
-              <AuiIf condition={(s) => !s.thread.isRunning}>
-                {signedOut ? (
+          <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>
+            <ModelPicker side={menuSide} />
+            {!bot && <EffortPicker side={menuSide} />}
+            <Swap
+              swapped={running}
+              from={
+                signedOut ? (
                   <button
                     type="button"
                     onClick={() => ask(text)}
-                    className={cn(primaryButton, bot && "size-10")}
+                    className={primaryButton}
                     aria-label={t("Submit")}
                   >
-                    <IconArrowUp className="size-4" />
+                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
                   </button>
                 ) : (
-                  <ComposerPrimitive.Send
-                    className={cn(primaryButton, bot && "size-10")}
-                    aria-label={t("Submit")}
-                  >
-                    <IconArrowUp className="size-4" />
+                  <ComposerPrimitive.Send className={primaryButton} aria-label={t("Submit")}>
+                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
                   </ComposerPrimitive.Send>
-                )}
-              </AuiIf>
-            </div>
+                )
+              }
+              to={
+                <ComposerPrimitive.Cancel
+                  className={primaryButton}
+                  aria-label={t("Stop response (Esc)")}
+                  title={t("Stop response (Esc)")}
+                >
+                  <span className="size-2.5 rounded-xs bg-current" />
+                </ComposerPrimitive.Cancel>
+              }
+            />
           </div>
         </ComposerPrimitive.Root>
 
@@ -328,61 +330,55 @@ export const menuBox = "border-foreground/6 w-52 rounded-2xl border p-1.5";
 
 export const menuItem = "h-8 gap-2 rounded-lg px-2";
 
-const AddMenu: FC<{ side: "top" | "bottom"; size: "size-8" | "size-10" }> = ({ side, size }) => {
+const AddMenu: FC<{ side: "top" | "bottom"; modes: boolean }> = ({ side, modes }) => {
   const upload = useRef<HTMLButtonElement>(null);
+  const mode = useChatOptions((s) => s.mode);
+  const setMode = useChatOptions((s) => s.setMode);
   const t = useT();
 
   return (
     <>
       <ComposerPrimitive.AddAttachment ref={upload} className="hidden" />
       <DropdownMenu>
-        <DropdownMenuTrigger className={cn(iconButton, size)} aria-label={t("Add files or tools")}>
-          <IconPlus className="size-4.5" />
+        <DropdownMenuTrigger className={iconButton} aria-label={t("Add files or tools")}>
+          <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
         </DropdownMenuTrigger>
         <DropdownMenuContent side={side} align="start" className={menuBox}>
+          {modes && (
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className={menuItem}>
+                {MODE_ICONS[mode]}
+                <span className="flex-1">{t("Mode")}</span>
+                <span className="text-muted-foreground text-xs">{t(MODE_DETAILS[mode].name)}</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className={cn(menuBox, "w-72")}>
+                <DropdownMenuRadioGroup
+                  value={mode}
+                  onValueChange={(value) => setMode(modeSchema.parse(value))}
+                >
+                  {MODES.map((name) => (
+                    <DropdownMenuRadioItem key={name} value={name} className="py-2">
+                      {MODE_ICONS[name]}
+                      <span className="flex flex-col">
+                        <span>{t(MODE_DETAILS[name].name)}</span>
+                        <span className="text-muted-foreground text-xs">
+                          {t(MODE_DETAILS[name].description)}
+                        </span>
+                      </span>
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          )}
           <DropdownMenuItem onSelect={() => upload.current?.click()} className={menuItem}>
-            <IconPaperclip className="size-4" />
+            <HugeiconsIcon icon={Attachment01Icon} className="size-4" />
             {t("Upload a file")}
           </DropdownMenuItem>
           <RecentFiles />
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
-};
-
-const ModeMenu: FC<{ side: "top" | "bottom" }> = ({ side }) => {
-  const mode = useChatOptions((s) => s.mode);
-  const setMode = useChatOptions((s) => s.setMode);
-  const t = useT();
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="border-border bg-foreground/5 hover:bg-foreground/10 flex h-8 shrink-0 items-center gap-1.5 rounded-full border pe-2.5 ps-2 text-sm transition-colors">
-        {MODE_ICONS[mode]}
-        {t(MODE_DETAILS[mode].name)}
-        <IconChevronDown className="text-muted-foreground size-3.5" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent side={side} align="start" className="w-72">
-        <DropdownMenuLabel>{t("Mode")}</DropdownMenuLabel>
-        <DropdownMenuRadioGroup
-          value={mode}
-          onValueChange={(value) => setMode(modeSchema.parse(value))}
-        >
-          {MODES.map((name) => (
-            <DropdownMenuRadioItem key={name} value={name} className="py-2">
-              {MODE_ICONS[name]}
-              <span className="flex flex-col">
-                <span>{t(MODE_DETAILS[name].name)}</span>
-                <span className="text-muted-foreground text-xs">
-                  {t(MODE_DETAILS[name].description)}
-                </span>
-              </span>
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 };
 
@@ -403,7 +399,7 @@ export const AttachmentChip: FC = () => {
             className="object-cover"
           />
         ) : (
-          <IconFile className="size-4" />
+          <HugeiconsIcon icon={File01Icon} className="size-4" />
         )}
       </div>
       <p className="min-w-0 truncate text-sm leading-5">
@@ -417,8 +413,8 @@ const AttachmentPreview: FC = () => {
   return (
     <AttachmentPrimitive.Root className="group/attachment relative">
       <AttachmentChip />
-      <AttachmentPrimitive.Remove className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-1.5 -end-1.5 flex size-5 items-center justify-center rounded-full border opacity-0 transition-opacity group-hover/attachment:opacity-100 pointer-coarse:opacity-100">
-        <IconX className="size-3" />
+      <AttachmentPrimitive.Remove className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-1.5 -end-1.5 flex size-5 items-center justify-center rounded-full border opacity-0 group-hover/attachment:opacity-100 pointer-coarse:opacity-100">
+        <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
       </AttachmentPrimitive.Remove>
     </AttachmentPrimitive.Root>
   );

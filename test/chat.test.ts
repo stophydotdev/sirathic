@@ -1,4 +1,4 @@
-import { expect, test } from "bun:test";
+import { expect, mock, test } from "bun:test";
 import { citations, withBareCitations } from "../apps/server/src/chat/citations";
 import {
   bestPieces,
@@ -8,10 +8,11 @@ import {
   unvowel,
 } from "../apps/server/src/chat/compact";
 import { convertToModelMessages } from "ai";
-import type { ChatMessage } from "../apps/server/src/shared/messages";
+import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
 import { shortenEarlierResults } from "../apps/server/src/chat/history";
 import { keepAlive } from "../apps/server/src/chat/keepAlive";
 import { clientOf } from "../apps/server/src/chat/client";
+import { codeTools } from "../apps/server/src/chat/codeTools";
 import { toolFailure } from "../apps/server/src/chat/events";
 import { recentTurns } from "../apps/server/src/bots/tools";
 import { findInChat } from "../apps/server/src/bots/chatSearch";
@@ -123,7 +124,7 @@ test("unvowel drops vowel marks but keeps letters, hamzas and digits", () => {
   expect(unvowel("إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ ٣")).toBe("إنما الأعمال بالنيات ٣");
 });
 
-test("every verse keeps its Arabic, and hadith Arabic is unvowelled", () => {
+test("a verse reaches the model as its translation, and hadith Arabic is unvowelled", () => {
   const verse = {
     citation: 1,
     arabic: "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا",
@@ -134,8 +135,9 @@ test("every verse keeps its Arabic, and hadith Arabic is unvowelled", () => {
     { ...verse, ref: "Quran 94:5 (Ash-Sharh)" },
     { ...verse, citation: 2, ref: "Quran 94:6 (Ash-Sharh)" },
   ]);
-  expect(verses.match(/فَإِنَّ/gu)).toHaveLength(2);
-  expect(verses).toContain("[2] Quran 94:6 (Ash-Sharh)");
+  expect(verses).toBe(
+    "## quran\n[1] Quran 94:5 (Ash-Sharh)\nFor indeed, with hardship will be ease.\n[2] Quran 94:6 (Ash-Sharh)\nFor indeed, with hardship will be ease.",
+  );
 
   const hadith = hadithBlock([
     {
@@ -200,7 +202,7 @@ test("a long text keeps the pieces that carry the query words, in page order", (
 });
 
 const searched = (toolCallId: string): ChatMessage["parts"][number] => ({
-  type: "tool-search",
+  type: "tool-search_web",
   toolCallId,
   state: "output-available",
   input: { queries: ["what breaks wudu"], sources: ["fatwa"] },
@@ -393,4 +395,100 @@ test("chat search finds earlier messages with dates, best match first, and skips
     snippet: "Today's hadith: actions are judged by intentions.",
   });
   expect(findInChat(chat, "zakat")).toEqual([]);
+});
+
+test("a saved chat sent back with the old tool names reaches the agent under the new ones", () => {
+  const sent = sentMessage.parse({
+    role: "assistant",
+    parts: [
+      { type: "tool-search", toolCallId: "c1", state: "input-available", input: {} },
+      {
+        type: "tool-webFetch",
+        toolCallId: "c2",
+        state: "output-available",
+        input: { url: "https://islamqa.info/en/answers/1" },
+        output: {
+          url: "https://islamqa.info/en/answers/1",
+          title: "Wudu",
+          markdown: "Text",
+          citation: 1,
+          sources: [{ url: "https://islamqa.info/en/answers/1", title: "Wudu", snippet: "" }],
+        },
+      },
+      { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
+      { type: "tool-duaSearch", toolCallId: "c4", state: "input-available", input: {} },
+      { type: "tool-setBotJob", toolCallId: "c5", state: "input-available", input: {} },
+      { type: "text", text: "Done." },
+    ],
+  });
+  expect(sent.parts).toEqual([
+    { type: "tool-search_web", toolCallId: "c1", state: "input-available", input: {} },
+    {
+      type: "tool-fetch_url",
+      toolCallId: "c2",
+      state: "output-available",
+      input: { urls: ["https://islamqa.info/en/answers/1"] },
+      output: {
+        pages: [
+          {
+            url: "https://islamqa.info/en/answers/1",
+            title: "Wudu",
+            markdown: "Text",
+            citation: 1,
+          },
+        ],
+        sources: [{ url: "https://islamqa.info/en/answers/1", title: "Wudu", snippet: "" }],
+      },
+    },
+    { type: "tool-get_verses", toolCallId: "c3", state: "input-available", input: {} },
+    { type: "tool-search_duas", toolCallId: "c4", state: "input-available", input: {} },
+    { type: "tool-set_bot_job", toolCallId: "c5", state: "input-available", input: {} },
+    { type: "text", text: "Done." },
+  ]);
+});
+
+test("the code sandbox is offered to Noor and to no other model", () => {
+  expect(Object.keys(codeTools("sirathic-noor-1-flash"))).toEqual(["code_execution"]);
+  expect(Object.keys(codeTools("gpt-6-luna"))).toEqual([]);
+});
+
+const used = new Map<string, number>();
+const cache = await import("@sirathic/core/cache");
+mock.module("@sirathic/core/cache", () => ({
+  ...cache,
+  countUp: async (key: string) => used.set(key, (used.get(key) ?? 0) + 1).get(key) ?? 0,
+  countDown: async (key: string) => used.set(key, (used.get(key) ?? 0) - 1).get(key) ?? 0,
+}));
+const { reserveNoorAnswer } = await import("../apps/server/src/models/pick");
+const NOOR_MODEL = "sirathic-noor-1-flash";
+
+test("an answer that did not complete gives its daily Noor slot back", async () => {
+  const done = await Promise.all(
+    Array.from({ length: 29 }, () => reserveNoorAnswer("a", NOOR_MODEL)),
+  );
+  await Promise.all(done.map((finish) => finish(true)));
+
+  const failed = await reserveNoorAnswer("a", NOOR_MODEL);
+  await failed(false);
+  const retried = await reserveNoorAnswer("a", NOOR_MODEL);
+  await retried(true);
+
+  await expect(reserveNoorAnswer("a", NOOR_MODEL)).rejects.toThrow("30 Noor answers");
+});
+
+test("answers started together cannot pass the daily Noor cap, and a refusal leaves the count alone", async () => {
+  await Promise.all(Array.from({ length: 29 }, () => reserveNoorAnswer("b", NOOR_MODEL)));
+
+  const together = await Promise.allSettled([
+    reserveNoorAnswer("b", NOOR_MODEL),
+    reserveNoorAnswer("b", NOOR_MODEL),
+  ]);
+
+  expect(together.map(({ status }) => status)).toEqual(["fulfilled", "rejected"]);
+  expect([...used].filter(([key]) => key.includes(":b:")).map(([, count]) => count)).toEqual([30]);
+});
+
+test("a model that is not Noor has no daily cap", async () => {
+  await Promise.all(Array.from({ length: 31 }, () => reserveNoorAnswer("c", "gpt-6-luna")));
+  expect([...used.keys()].some((key) => key.includes(":c:"))).toBe(false);
 });

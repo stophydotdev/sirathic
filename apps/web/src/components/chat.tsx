@@ -25,7 +25,11 @@ import {
   SimpleTextAttachmentAdapter,
 } from "@assistant-ui/react";
 import { useAISDKRuntime } from "@assistant-ui/react-ai-sdk";
-import { DefaultChatTransport, validateUIMessages } from "ai";
+import {
+  DefaultChatTransport,
+  lastAssistantMessageIsCompleteWithApprovalResponses,
+  validateUIMessages,
+} from "ai";
 import { createContext, type FC, useContext, useEffect, useState } from "react";
 import { z } from "zod";
 
@@ -99,6 +103,7 @@ const transportIn = (projectId: string | undefined) =>
         mode: useProjects.getState().bots?.some((bot) => bot.id === projectId)
           ? "quick"
           : (override?.mode ?? options.mode),
+        effort: options.effort,
         incognito: options.incognito,
         projectId,
         device: deviceOf(),
@@ -184,6 +189,7 @@ const liveChat = (
     id,
     messages,
     transport: transportIn(projectId),
+    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses,
     onData: (part) => {
       if (part.type === "data-title") void useSessions.getState().refresh();
     },

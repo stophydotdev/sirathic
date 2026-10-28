@@ -4,6 +4,7 @@ export const webSearchResult = z.object({
   url: z.string(),
   title: z.string(),
   description: z.string(),
+  markdown: z.string().optional(),
 });
 
 export const webFetchResult = z.object({

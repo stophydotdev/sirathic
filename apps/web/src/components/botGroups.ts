@@ -7,6 +7,9 @@ type BotGroup<Bot> =
 
 export const SIDEBAR_LIMIT = 6;
 
+export const botLabel = (bot: { name: string; title: string }) =>
+  bot.title ? `${bot.name} · ${bot.title}` : bot.name;
+
 export const sectionNames = (bots: Grouped[]) =>
   [...new Set(bots.flatMap((bot) => (bot.section ? [bot.section] : [])))].toSorted((a, b) =>
     a.localeCompare(b),

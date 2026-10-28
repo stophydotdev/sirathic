@@ -2,27 +2,18 @@ import { db } from "@sirathic/db";
 import { chatSessions, projects } from "@sirathic/db/schema";
 import { type AnyColumn, and, count, eq, sql } from "drizzle-orm";
 import { z } from "zod";
-import {
-  PROFILE_CHARS,
-  PROFILE_LIMIT,
-  type ProfileEntry,
-  profileEntry,
-  profileRejection,
-  withEntry,
-} from "../bots/profile";
+import { PROFILE_LIMIT, profileEntry } from "../bots/profile";
 import { pluginId } from "../plugins/catalog";
-import { projectRemembered } from "./rules";
+import { ownerCache } from "../account/ownerCache";
 import { StatusError } from "../http";
-import { remember, updateSettings } from "../account/settings";
 import {
   BOT_COLORS,
-  BOT_ICONS,
-  PROJECT_ICONS,
+  BOT_BODIES,
   PROJECT_NAME_MAX,
   SECTION_NAME_MAX,
   containsLink,
 } from "../shared/projects";
-import { MEMORY_CHARS, MEMORY_LIMIT, type told } from "../shared/settings";
+import { MEMORY_CHARS, MEMORY_LIMIT } from "../shared/settings";
 
 const MAX_PROJECTS = 50;
 const MAX_BOT_PLUGINS = 100;
@@ -41,32 +32,28 @@ export const botTitle = z.string().trim().max(PROJECT_NAME_MAX);
 export const projectInput = z.object({
   name: projectName,
   instructions: projectInstructions.default(""),
-  projectOnlyMemory: z.boolean().default(false),
-  kind: z.enum(["project", "bot"]).default("project"),
   title: botTitle.default(""),
   color: z.enum(BOT_COLORS).optional(),
-  symbol: z.enum(BOT_ICONS).optional(),
+  symbol: z.enum(BOT_BODIES).optional(),
 });
 
 export const projectUpdate = z
   .object({
     name: projectName.optional(),
-    icon: z.enum(PROJECT_ICONS).nullable().optional(),
     color: z.enum(BOT_COLORS).optional(),
-    symbol: z.enum(BOT_ICONS).nullable().optional(),
+    symbol: z.enum(BOT_BODIES).nullable().optional(),
     title: botTitle.optional(),
     pinned: z.boolean().optional(),
     section: z.string().trim().min(1).max(SECTION_NAME_MAX).nullable().optional(),
     hidden: z.boolean().optional(),
     plugins: z.array(pluginId).max(MAX_BOT_PLUGINS).nullable().optional(),
     instructions: projectInstructions.optional(),
-    projectOnlyMemory: z.boolean().optional(),
     memory: z.array(z.string().trim().min(1).max(MEMORY_CHARS)).max(MEMORY_LIMIT).optional(),
     profile: z.array(profileEntry).max(PROFILE_LIMIT).optional(),
   })
   .refine(
     (update) => Object.values(update).some((value) => value !== undefined),
-    "send a name, icon, instructions, memory choice, remembered facts or a bot setting",
+    "send a name, instructions, remembered facts or a bot setting",
   );
 
 const millis = (column: AnyColumn) => sql<number>`(extract(epoch from ${column}) * 1000)::float8`;
@@ -97,28 +84,43 @@ const projectColumns = {
 
 const owned = (id: string, by: string) => and(eq(projects.id, id), eq(projects.owner, by));
 
+const ownedBots = (by: string) => and(eq(projects.owner, by), eq(projects.kind, "bot"));
+
+const loadBot = async (id: string, by: string) => {
+  const [project] = await db
+    .select(projectColumns)
+    .from(projects)
+    .where(and(owned(id, by), eq(projects.kind, "bot")));
+  return project;
+};
+
+const bots = ownerCache<Awaited<ReturnType<typeof loadBot>>>();
+
+const botKey = (id: string, by: string) => `${by}:${id}`;
+
+export const forgetBot = (id: string, by: string) => bots.clear(botKey(id, by));
+
 export const listProjects = (by: string) =>
   db
     .select(projectColumns)
     .from(projects)
-    .where(eq(projects.owner, by))
+    .where(ownedBots(by))
     .orderBy(sql`lower(${projects.name})`);
 
 export async function createProject(by: string, input: z.output<typeof projectInput>) {
-  const [{ total }] = await db
-    .select({ total: count() })
-    .from(projects)
-    .where(eq(projects.owner, by));
+  const [{ total }] = await db.select({ total: count() }).from(projects).where(ownedBots(by));
   if (total >= MAX_PROJECTS) {
     throw new StatusError(400, `You can have at most ${MAX_PROJECTS} projects.`);
   }
-  const bot = input.kind === "bot" && {
-    projectOnlyMemory: true,
-    color: input.color ?? BOT_COLORS[Math.floor(Math.random() * BOT_COLORS.length)],
-  };
   const [created] = await db
     .insert(projects)
-    .values({ owner: by, ...input, ...bot })
+    .values({
+      owner: by,
+      ...input,
+      kind: "bot",
+      projectOnlyMemory: true,
+      color: input.color ?? BOT_COLORS[Math.floor(Math.random() * BOT_COLORS.length)],
+    })
     .returning(projectColumns);
   return created;
 }
@@ -133,6 +135,7 @@ export async function saveOpener(
     .set(opener)
     .where(owned(id, by))
     .returning(projectColumns);
+  forgetBot(id, by);
   if (!row) throw new StatusError(404, "no such project");
   return row;
 }
@@ -147,13 +150,18 @@ export async function updateProject(
     .set(update)
     .where(owned(id, by))
     .returning(projectColumns);
+  forgetBot(id, by);
   if (!row) throw new StatusError(404, "no such project");
   return row;
 }
 
 export async function removeProject(id: string, by: string) {
-  const [row] = await db.delete(projects).where(owned(id, by)).returning({ id: projects.id });
-  if (!row) throw new StatusError(404, "no such project");
+  await requireProject(id, by);
+  await db
+    .delete(chatSessions)
+    .where(and(eq(chatSessions.projectId, id), eq(chatSessions.owner, by)));
+  await db.delete(projects).where(owned(id, by));
+  forgetBot(id, by);
   return { deleted: true };
 }
 
@@ -169,51 +177,20 @@ export async function projectOfChat(chatId: string, by: string, requested: strin
     .where(and(eq(chatSessions.id, chatId), eq(chatSessions.owner, by)));
   const id = existing ? existing.projectId : requested;
   if (!id) return undefined;
-  const [project] = await db.select(projectColumns).from(projects).where(owned(id, by));
-  return project;
+  return bots.get(botKey(id, by), () => loadBot(id, by));
 }
 
-export async function rememberInProject(id: string, by: string, input: z.output<typeof told>) {
-  const [row] = await db.select({ memory: projects.memory }).from(projects).where(owned(id, by));
-  if (!row) throw new StatusError(404, "no such project");
-  const { memory, preferences } = projectRemembered(row.memory, input);
-  await Promise.all([
-    memory && db.update(projects).set({ memory }).where(owned(id, by)),
-    Object.keys(preferences).length > 0 && updateSettings(by, preferences),
-  ]);
-  return { ...preferences, ...(memory && { memory }) };
-}
-
-export async function addProfileEntry(
-  id: string,
-  by: string,
-  entry: ProfileEntry,
-  replaces: string | null,
-) {
+export async function profileOf(id: string, by: string) {
   const [row] = await db.select({ profile: projects.profile }).from(projects).where(owned(id, by));
   if (!row) throw new StatusError(404, "no such project");
-  const profile = withEntry(row.profile, entry, replaces);
-  if (!profile) return { kind: "full", profile: row.profile } as const;
-  await db.update(projects).set({ profile }).where(owned(id, by));
-  return { kind: "saved", profile } as const;
+  return row.profile;
 }
 
-export async function rememberInBot(
-  id: string,
-  by: string,
-  { fact, replaces, ...preferences }: z.output<typeof told>,
-) {
-  const kept = fact?.trim().slice(0, PROFILE_CHARS);
-  const entry = kept && !profileRejection(kept) ? kept : undefined;
-  const saved = await remember(by, { ...preferences, fact: null, replaces: null });
-  if (!entry) return saved;
-  const added = await addProfileEntry(
-    id,
-    by,
-    { text: entry, source: "said", at: Date.now() },
-    replaces,
+export async function setProfile(id: string, by: string, facts: readonly string[]) {
+  const known = new Map((await profileOf(id, by)).map((entry) => [entry.text, entry]));
+  const profile = facts.map(
+    (text) => known.get(text) ?? { text, source: "said" as const, at: Date.now() },
   );
-  return added.kind === "full"
-    ? { ...saved, memory: added.profile.map((old) => old.text) }
-    : { ...saved, fact: entry };
+  await db.update(projects).set({ profile }).where(owned(id, by));
+  forgetBot(id, by);
 }

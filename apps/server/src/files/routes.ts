@@ -4,9 +4,7 @@ import { fileId, fileName, listFiles, removeFile, renameFile } from "./store";
 
 export const fileRoutes = {
   files: t.router({
-    list: signedIn
-      .input(z.object({ projectId: z.uuid().optional() }).optional())
-      .query(({ ctx, input }) => listFiles(ctx.owner, input?.projectId)),
+    list: signedIn.query(({ ctx }) => listFiles(ctx.owner)),
     rename: signedIn
       .input(z.object({ id: fileId, name: fileName }))
       .mutation(({ ctx, input }) => renameFile(input.id, ctx.owner, input.name)),

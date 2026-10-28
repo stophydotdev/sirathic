@@ -24,11 +24,18 @@ import {
   Suspense,
   useContext,
 } from "react";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { z } from "zod";
 
 import { TooltipIconButton } from "@/components/tooltipIconButton";
-import { hidePendingCitation, rehypeCitations, rehypeVerses } from "@/components/citations";
+import {
+  hidePendingCitation,
+  rehypeBareCitations,
+  rehypeCitations,
+  rehypeVerses,
+} from "@/components/citations";
+import { Swap } from "@/components/swap";
 import { Favicon } from "@/components/favicon";
 import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
@@ -46,13 +53,18 @@ const closeOpenBold = (text: string) => {
   return trimmed.endsWith("**") ? trimmed.slice(0, -2) : `${trimmed}**`;
 };
 
-const MarkdownTextImpl: FC = () => (
+const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => (
   <MarkdownTextPrimitive
     remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]}
-    rehypePlugins={[rehypeKatex, rehypeCitations, rehypeVerses]}
+    rehypePlugins={[
+      rehypeKatex,
+      rehypeCitations,
+      rehypeVerses,
+      ...(citations ? [] : [rehypeBareCitations]),
+    ]}
     preprocess={(text) => withMathDelimiters(closeOpenBold(hidePendingCitation(text)))}
     className="aui-md"
-    components={components}
+    components={citations ? components : withoutCitations}
   />
 );
 
@@ -86,8 +98,11 @@ const CodeHeader: FC<CodeHeaderProps> = ({ language, code }) => {
         {language}
       </span>
       <TooltipIconButton tooltip={t("Copy")} onClick={onCopy}>
-        {!isCopied && <IconCopy />}
-        {isCopied && <IconCheck />}
+        <Swap
+          swapped={isCopied}
+          from={<HugeiconsIcon icon={Copy01Icon} />}
+          to={<HugeiconsIcon icon={Tick02Icon} />}
+        />
       </TooltipIconButton>
     </div>
   );
@@ -107,8 +122,9 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           href={first}
           target="_blank"
           rel="noreferrer"
-          className="bg-muted text-muted-foreground! hover:text-foreground! relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-full px-2 py-[2.5px] align-middle text-[13px] leading-[15px] font-medium! no-underline! transition-colors"
+          className="bg-muted text-muted-foreground! hover:text-foreground! relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-full py-[2.5px] ps-1 pe-2 align-middle text-[13px] leading-[15px] font-medium! no-underline! transition-colors"
         >
+          <Favicon url={first} size={12} />
           <span className="truncate">{name.charAt(0).toUpperCase() + name.slice(1)}</span>
           {more.length > 0 && <span>+{more.length}</span>}
         </a>
@@ -284,3 +300,8 @@ const Figure: FC<{ node?: Element; children?: ReactNode }> = ({ node, children }
 };
 
 const components = { ...memoized, a: Anchor, figure: Figure };
+
+const BareAnchor: FC<ComponentProps<"a"> & { node?: Element }> = (props) =>
+  citedUrls.safeParse(props.node?.properties.dataUrls).success ? null : <Anchor {...props} />;
+
+const withoutCitations = { ...components, a: BareAnchor };

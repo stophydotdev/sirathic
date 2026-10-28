@@ -135,6 +135,7 @@ export const CONNECTORS = {
     category: "productivity",
     description: "Manage tasks and projects",
     url: "https://ai.todoist.net/mcp",
+    icon: "https://www.todoist.com/static/apple-touch-icon.png",
   },
   canva: {
     name: "Canva",
@@ -245,6 +246,7 @@ export const CONNECTORS = {
     category: "automation",
     description: "Run actions in thousands of apps",
     url: "https://mcp.pipedream.net/v2",
+    icon: "https://pipedream.com/assets/favicon.svg",
   },
   typefully: {
     name: "Typefully",

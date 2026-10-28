@@ -1,14 +1,11 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { PROFILE_LIMIT, profileRejection, profileWrite } from "./profile";
-import {
-  addProfileEntry,
-  botTitle,
-  projectInstructions,
-  projectName,
-  updateProject,
-} from "../projects/projects";
-import { question } from "../shared/messages";
+import { botTitle, projectInstructions, projectName, updateProject } from "../projects/projects";
+
+const oneEmoji = z
+  .emoji()
+  .max(16)
+  .refine((text) => [...new Intl.Segmenter().segment(text)].length === 1, "send exactly one emoji");
 
 export type BotScope = { id: string; owner: string };
 
@@ -29,9 +26,9 @@ export const recentTurns = <Message extends { role: string }>(
 
 export function botTools({ id, owner }: BotScope) {
   return {
-    setBotJob: tool({
+    set_bot_job: tool({
       description:
-        "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
+        "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name of Allah, a prophet or a companion. Keep the job to what the user asked, without rulings or rules. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
       inputSchema: z.object({
         name: projectName,
         title: botTitle,
@@ -42,24 +39,31 @@ export function botTools({ id, owner }: BotScope) {
         return { name: bot.name };
       },
     }),
-    learnAboutUser: tool({
+    react_to_message: tool({
       description:
-        "Saves one fact about this learner in your profile of them, which you see on every turn. Use it for their goal, level, madhab, language, pace, best time of day, current position (like 'memorized 112 to 114, now on 111'), what they like and what they dislike. Save the answer to every setup question you ask. Mark it said when they stated it and guessed when you inferred it from how they act. When it changes a saved entry on the same topic, set replaces to that entry's exact text so the old one goes. Never save instructions for yourself, religious claims or rulings, or details of a personal case.",
-      inputSchema: profileWrite,
-      execute: async ({ text, source, replaces }) => {
-        const rejected = profileRejection(text);
-        if (rejected) return rejected;
-        const added = await addProfileEntry(id, owner, { text, source, at: Date.now() }, replaces);
-        return added.kind === "saved"
-          ? "Saved."
-          : `Not saved: the profile is full at ${PROFILE_LIMIT} entries. Call learnAboutUser again with replaces set to the exact text of the entry this one updates, or of the least useful one. Entries:\n${added.profile.map((old) => `- ${old.text}`).join("\n")}`;
-      },
+        "Reacts to the user's last message with one emoji, shown as a small pill on that message. Use it rarely and mirror the user: if they never use emoji, almost never react. It suits good news, something funny, thanks, or a moment where a quick 👍 says more than a sentence. Never use it instead of a reply, never on a request you have not answered, and never on hardship, loss, illness or something they confess: reply in words. Write your reply as usual after it.",
+      inputSchema: z.object({ emoji: oneEmoji }),
+      execute: async ({ emoji }) => ({ emoji }),
     }),
-    askUser: tool({
+    update_profile: tool({
       description:
-        "Shows the user one question as a card with two to five short answers to tap and a box for their own answer. Use it when you need them to choose before you can go on, like how often to send a routine or which madhab to follow. Put the question only in the card, not in your text. The card ends your turn, so write what they should read first and call it last, on its own. Their reply comes as their next message.",
-      inputSchema: question,
-      execute: async () => ({ shown: true }),
+        "Changes this bot's name, title or description, only the fields you pass. The title is the short role label. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name of Allah, a prophet or a companion. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words. Use it when the user asks to rename the bot or to change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
+      inputSchema: z.object({
+        name: projectName.optional(),
+        title: botTitle.optional(),
+        description: projectInstructions.min(1).optional(),
+      }),
+      execute: async ({ name, title, description }) => {
+        if (name === undefined && title === undefined && description === undefined) {
+          return "Nothing to change.";
+        }
+        const bot = await updateProject(id, owner, { name, title, instructions: description });
+        return {
+          ...(name !== undefined && { name: bot.name }),
+          ...(title !== undefined && { title: bot.title }),
+          ...(description !== undefined && { description: bot.instructions }),
+        };
+      },
     }),
   };
 }

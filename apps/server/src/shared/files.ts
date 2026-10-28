@@ -1,8 +1,16 @@
+import { z } from "zod";
+
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
 export const MAX_FILES_PER_USER = 200;
 export const FILE_NAME_MAX = 200;
 export const FILE_ACCEPT =
   "image/png,image/jpeg,image/gif,image/webp,application/pdf,text/plain,.txt,.md,.csv,.json";
+
+export const savedFiles = z.object({
+  files: z.array(
+    z.object({ id: z.uuid(), name: z.string(), mediaType: z.string(), size: z.number() }),
+  ),
+});
 
 export type FileKind = "image" | "pdf" | "text";
 

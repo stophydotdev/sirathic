@@ -14,7 +14,8 @@ import {
 import { cn } from "@/lib/utils";
 import { api } from "@/lib/trpc";
 import { useAui } from "@assistant-ui/react";
-import { IconBooks, IconFiles } from "@tabler/icons-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Books01Icon, Files02Icon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useEffect, useState } from "react";
 
@@ -48,7 +49,7 @@ export const RecentFiles: FC = () => {
   return (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger className={menuItem}>
-        <IconFiles className="size-4" />
+        <HugeiconsIcon icon={Files02Icon} className="size-4" />
         {t("Recent files")}
       </DropdownMenuSubTrigger>
       <DropdownMenuSubContent className={cn(menuBox, "w-72")}>
@@ -66,7 +67,7 @@ export const RecentFiles: FC = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className={menuItem}>
           <Link href="/library">
-            <IconBooks className="size-4" />
+            <HugeiconsIcon icon={Books01Icon} className="size-4" />
             {t("Library")}
           </Link>
         </DropdownMenuItem>

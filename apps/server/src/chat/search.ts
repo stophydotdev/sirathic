@@ -1,3 +1,4 @@
+import { duaSearch } from "@sirathic/core/tools/duaSearch";
 import { fatwaSearch } from "@sirathic/core/tools/fatwaSearch";
 import { fiqhSearch } from "@sirathic/core/tools/fiqhSearch";
 import { hadithSearch } from "@sirathic/core/tools/hadithSearch";
@@ -5,6 +6,7 @@ import { newsSearch } from "@sirathic/core/tools/newsSearch";
 import { quranSearch } from "@sirathic/core/tools/quranSearch";
 import { webFetch } from "@sirathic/core/tools/webFetch";
 import { webSearch } from "@sirathic/core/tools/webSearch";
+import { hostOf, isOnSite } from "@sirathic/core/web/url";
 import { z } from "zod";
 import { reasonOf } from "../http";
 import type { Source } from "../shared/sources";
@@ -24,39 +26,56 @@ import {
   type Verse,
   verseSource,
 } from "./cite";
-import { bestPieces, fiqhBlock, hadithBlock, pagesBlock, pageText, quranBlock } from "./compact";
+import {
+  bestPieces,
+  duaBlock,
+  fiqhBlock,
+  hadithBlock,
+  pagesBlock,
+  pageText,
+  quranBlock,
+} from "./compact";
+import { relevant } from "./relevance";
+import { cleanSearch } from "./searchQuery";
 
 const RESULT_CHARS = 2_000;
-const QUESTION_CHARS = 400;
-const TAFSIR_CHARS = 500;
-const FATWA_CHARS = 1_500;
+const QUESTION_CHARS = 600;
+const TAFSIR_CHARS = 1_500;
+const TAFSIR_VERSES = 2;
+const HEAD_CHARS = 300;
+const FATWA_CHARS = 3_000;
 
-const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news"] as const;
+const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news", "duas"] as const;
 
 type SearchSource = (typeof SEARCH_SOURCES)[number];
 
+const TIMES = ["pastWeek", "pastMonth", "pastYear"] as const;
+
 const SEARCH_LIMITS = {
-  quran: 2,
-  hadith: 3,
-  fatwa: 5,
-  fiqh: 2,
-  web: 5,
+  quran: 6,
+  hadith: 8,
+  fatwa: 8,
+  fiqh: 3,
+  web: 8,
   news: 8,
+  duas: 5,
 } satisfies Record<SearchSource, number>;
 
-const ISLAMIC_SOURCES: ReadonlySet<SearchSource> = new Set(["quran", "hadith", "fatwa", "fiqh"]);
-const WEB_BESIDE_ISLAMIC = 4;
-const LISTED_PER_QUERY = 10;
+const LISTED_PER_QUERY = 20;
+const WEB_LISTED_PER_QUERY = 10;
+const WEB_READ_PER_QUERY = 5;
 
 export const searchInput = z.object({
   queries: z
     .array(z.string().trim().min(2).max(120))
     .min(1)
     .max(3)
-    .describe("1 to 3 keyword queries, each from a different angle"),
+    .describe(
+      'Short keyword queries, at most 3, covering what matters most to the answer instead of every detail. Preferred: ["zakat on gold jewelry"]. Not: ["Do I have to pay zakat on my gold jewelry?"]',
+    ),
   arabic: z
     .array(z.string().trim().min(2).max(120))
-    .max(2)
+    .max(3)
     .optional()
     .describe(
       "Arabic keyword queries for the fiqh books and Arabic fatwa sites, in the exact terms the classical books use for the issue, not modern phrasing",
@@ -65,11 +84,23 @@ export const searchInput = z.object({
     .array(z.enum(SEARCH_SOURCES))
     .min(1)
     .describe(
-      "quran, hadith, fatwa and fiqh for Islamic questions; web or news for everything else",
+      "quran for verses and their tafsir, hadith for hadith and their grades, fatwa for rulings from scholars and fatwa sites, fiqh for the classical books (use it with arabic queries when the schools may differ), web for history, comparisons and everything outside Islamic questions, news for current events, duas for duas and adhkar for an occasion or need",
     ),
+  sites: z
+    .array(z.string().trim().max(100))
+    .max(5)
+    .optional()
+    .describe(
+      'Domains to limit web and fatwa results to, such as ["islamqa.info"]. Use it when the user names a site.',
+    ),
+  time: z
+    .enum(TIMES)
+    .optional()
+    .describe("Only web and news results from the past week, month or year"),
 });
 
 type TafsirGroup = Awaited<ReturnType<typeof quranSearch>>["tafsirEn"][number];
+type Time = z.infer<typeof searchInput>["time"];
 type Searched = { results: unknown[]; sources: Source[]; text: string };
 
 const siteOf = (url: string) => URL.parse(url)?.hostname.replace(/^www\./u, "") ?? url;
@@ -112,16 +143,21 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
     Number.POSITIVE_INFINITY,
   );
   const tafsir = found.flatMap((result) => result.tafsirEn);
-  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.quran), verseSource);
-  const results = cited.map((verse) => ({
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    ranked.slice(0, SEARCH_LIMITS.quran),
+    (verse) => `Quran ${verse.surah}:${verse.ayah}\n${clip(verse.textEn, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, verseSource);
+  const results = cited.map((verse, index) => ({
     citation: verse.citation,
     ref: `Quran ${verse.surah}:${verse.ayah} (${verse.surahName})`,
     arabic: verse.textAr,
     english: verse.textEn,
-    tafsir: clip(tafsirFor(tafsir, verse), TAFSIR_CHARS),
+    tafsir: index < TAFSIR_VERSES ? clip(tafsirFor(tafsir, verse), TAFSIR_CHARS) : "",
   }));
   return {
-    sources: [...sources, ...ranked.slice(SEARCH_LIMITS.quran).map(verseSource)],
+    sources: [...sources, ...[...dropped, ...ranked.slice(SEARCH_LIMITS.quran)].map(verseSource)],
     results,
     text: quranBlock(results),
   };
@@ -136,30 +172,41 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
     (hadith) => hadith.id,
     Number.POSITIVE_INFINITY,
   );
-  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.hadith), hadithSource);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    ranked.slice(0, SEARCH_LIMITS.hadith),
+    (hadith) => `${hadithTitle(hadith)}\n${clip(hadith.english, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, hadithSource);
   const results = cited.map((hadith) => ({
     citation: hadith.citation,
     ref: hadithTitle(hadith),
-    english: clip(hadith.english, 450),
-    arabic: clip(hadith.textAr, hadith.english ? 180 : 350),
+    english: clip(hadith.english, RESULT_CHARS),
+    arabic: clip(hadith.textAr, RESULT_CHARS),
     grade: gradeOf(hadith),
   }));
   return {
     sources: [
       ...sources,
-      ...ranked.slice(SEARCH_LIMITS.hadith).flatMap((hadith) => hadithSource(hadith) ?? []),
+      ...[...dropped, ...ranked.slice(SEARCH_LIMITS.hadith)].flatMap(
+        (hadith) => hadithSource(hadith) ?? [],
+      ),
     ],
     results,
-    text: hadithBlock(
-      cited.map((hadith) => ({
-        citation: hadith.citation,
-        ref: hadithTitle(hadith),
-        english: clip(hadith.english, RESULT_CHARS),
-        arabic: hadith.textAr,
-        grade: gradeOf(hadith),
-      })),
-    ),
+    text: hadithBlock(results),
   };
+};
+
+const searchDuas = async (queries: string[]) => {
+  const found = await Promise.all(
+    queries.map((query) => duaSearch({ query, limit: SEARCH_LIMITS.duas })),
+  );
+  const duas = interleave(
+    found.map((result) => result.duas),
+    (dua) => dua.id,
+    SEARCH_LIMITS.duas,
+  );
+  return { results: duas, sources: [], text: duaBlock(duas) };
 };
 
 const FIQH_SCHOOLS = [
@@ -170,7 +217,22 @@ const FIQH_SCHOOLS = [
   ["comparative", 1],
 ] as const;
 
-const searchFiqh = async (cite: Cite, queries: string[]) => {
+type FiqhHit = Awaited<ReturnType<typeof fiqhSearch>>["passages"][number];
+
+export const onePerPage = (passages: readonly FiqhHit[]) => {
+  const pages = new Map<string, { first: FiqhHit; texts: string[] }>();
+  for (const passage of passages) {
+    const key = passage.url ?? passage.id;
+    const texts = pages.get(key)?.texts ?? [];
+    if (texts.length === 0) pages.set(key, { first: passage, texts });
+    texts.push(clip(passage.textAr, RESULT_CHARS) ?? "");
+  }
+  return [...pages.values()].map(({ first, texts }) =>
+    Object.assign(first, { textAr: texts.join("\n") }),
+  );
+};
+
+const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
   const bySchool = await Promise.all(
     FIQH_SCHOOLS.map(async ([school, limit]) =>
       interleave(
@@ -182,7 +244,21 @@ const searchFiqh = async (cite: Cite, queries: string[]) => {
       ),
     ),
   );
-  const { cited, sources } = numbered(cite, bySchool.flat(), fiqhSource);
+  const onSites = onePerPage(
+    bySchool
+      .flat()
+      .filter(
+        ({ url }) =>
+          sites.length === 0 || (url !== null && sites.some((site) => isOnSite(hostOf(url), site))),
+      ),
+  );
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    onSites,
+    (passage) =>
+      `${passage.work} (${passage.school})${passage.heading ? `: ${passage.heading}` : ""}\n${clip(passage.textAr, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, fiqhSource);
   const results = cited.map((passage) => ({
     citation: passage.citation,
     work: passage.work,
@@ -191,17 +267,23 @@ const searchFiqh = async (cite: Cite, queries: string[]) => {
     volume: passage.volume,
     page: passage.page,
     heading: passage.heading,
-    text: clip(passage.textAr, RESULT_CHARS),
+    text: passage.textAr,
   }));
-  return { sources, results, text: fiqhBlock(results) };
+  return {
+    sources: [...sources, ...dropped.flatMap((passage) => fiqhSource(passage) ?? [])],
+    results,
+    text: fiqhBlock(results),
+  };
 };
+
+const extract = (markdown: string, queries: readonly string[]) =>
+  bestPieces(pageText(markdown, Number.POSITIVE_INFINITY), queries, RESULT_CHARS);
 
 const readPages = async (hits: Hit[], queries: readonly string[]) => {
   const read = await Promise.all(
     hits.map((hit) =>
       webFetch({ url: hit.url }).then(
-        (page) =>
-          bestPieces(pageText(page.markdown, Number.POSITIVE_INFINITY), queries, RESULT_CHARS),
+        (page) => extract(page.markdown, queries),
         () => undefined,
       ),
     ),
@@ -233,16 +315,21 @@ const citedPages = (
   };
 };
 
-const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
+const searchFatwa = async (cite: Cite, queries: string[], sites: string[]) => {
   const found = await Promise.all(
-    [...queries, ...arabic].map((query) => fatwaSearch({ query, limit: LISTED_PER_QUERY })),
+    queries.map((query) => fatwaSearch({ query, sites, limit: LISTED_PER_QUERY })),
   );
   const ranked = interleave(
     found.map((result) => result.fatwas),
     (fatwa) => fatwa.url,
     Number.POSITIVE_INFINITY,
   );
-  const { cited, sources } = numbered(cite, ranked.slice(0, SEARCH_LIMITS.fatwa), fatwaSource);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    ranked.slice(0, SEARCH_LIMITS.fatwa),
+    (fatwa) => `${fatwa.title}\n${clip(fatwa.question ?? fatwa.summary, HEAD_CHARS)}`,
+  );
+  const { cited, sources } = numbered(cite, kept, fatwaSource);
   const results = cited.map((fatwa) => {
     const head = pageText(
       [
@@ -261,19 +348,14 @@ const searchFatwa = async (cite: Cite, queries: string[], arabic: string[]) => {
       date: fatwa.publishedAt?.toISOString().slice(0, 10) ?? null,
       text: [
         head,
-        room > 0 &&
-          bestPieces(
-            pageText(fatwa.answer, Number.POSITIVE_INFINITY),
-            [...queries, ...arabic],
-            room,
-          ),
+        room > 0 && bestPieces(pageText(fatwa.answer, Number.POSITIVE_INFINITY), queries, room),
       ]
         .filter(Boolean)
         .join("\n\n"),
     };
   });
   return {
-    sources: [...sources, ...ranked.slice(SEARCH_LIMITS.fatwa).map(fatwaSource)],
+    sources: [...sources, ...[...dropped, ...ranked.slice(SEARCH_LIMITS.fatwa)].map(fatwaSource)],
     results,
     text: pagesBlock("fatwa", results),
   };
@@ -287,9 +369,20 @@ const unlessAllFail = async <Value>(runs: Promise<Value>[]) => {
   return done;
 };
 
-const searchWeb = async (cite: Cite, queries: string[], limit: number) => {
+const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: Time) => {
   const found = await unlessAllFail(
-    queries.map((query) => webSearch({ query, limit: LISTED_PER_QUERY })),
+    queries.map((query) =>
+      webSearch({
+        query,
+        sites,
+        time,
+        limit: WEB_LISTED_PER_QUERY,
+        read: Math.min(WEB_READ_PER_QUERY, Math.ceil(SEARCH_LIMITS.web / queries.length)),
+      }),
+    ),
+  );
+  const scraped = new Map(
+    found.flat().flatMap((hit) => (hit.markdown ? [[hit.url, hit.markdown]] : [])),
   );
   const hits = interleave(
     found.map((list) => list.filter((hit) => !textBlocked(hit.url))),
@@ -300,19 +393,35 @@ const searchWeb = async (cite: Cite, queries: string[], limit: number) => {
     title: hit.title,
     description: hit.description ?? "",
   }));
-  const read = hits.slice(0, limit);
-  const pages = citedPages(cite, read, await readPages(read, queries));
+  const read = hits.slice(0, SEARCH_LIMITS.web);
+  const fetched = await readPages(
+    read.filter((hit) => !scraped.has(hit.url)),
+    queries,
+  );
+  const passages = new Map([
+    ...read.flatMap((hit) => {
+      const markdown = scraped.get(hit.url);
+      return markdown ? [[hit.url, extract(markdown, queries)] as const] : [];
+    }),
+    ...fetched,
+  ]);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    read,
+    (hit) => `${hit.title}\n${clip(passages.get(hit.url) ?? hit.description, HEAD_CHARS)}`,
+  );
+  const pages = citedPages(cite, kept, passages);
   return {
     ...pages,
-    sources: [...pages.sources, ...hits.slice(limit).map(hitSource)],
+    sources: [...pages.sources, ...[...dropped, ...hits.slice(SEARCH_LIMITS.web)].map(hitSource)],
     text: pagesBlock("web", pages.results),
   };
 };
 
-const searchNews = async (cite: Cite, queries: string[]) => {
+const searchNews = async (cite: Cite, queries: string[], time: Time) => {
   const found = await unlessAllFail(
     queries.map((query) =>
-      newsSearch({ query, limit: SEARCH_LIMITS.news }).then((result) => result.articles),
+      newsSearch({ query, time, limit: SEARCH_LIMITS.news }).then((result) => result.articles),
     ),
   );
   const articles = interleave(
@@ -334,21 +443,26 @@ const searchNews = async (cite: Cite, queries: string[]) => {
   return { ...pages, text: pagesBlock("news", pages.results) };
 };
 
-export const searchAll = async (
-  cite: Cite,
-  { queries, arabic = [], sources }: z.infer<typeof searchInput>,
-) => {
-  const chosen = [...new Set(sources)];
-  const webPages = chosen.some((name) => ISLAMIC_SOURCES.has(name))
-    ? WEB_BESIDE_ISLAMIC
-    : SEARCH_LIMITS.web;
+export const searchAll = async (cite: Cite, input: z.infer<typeof searchInput>) => {
+  const { queries, arabic, sites, notes } = cleanSearch({
+    queries: input.queries,
+    arabic: input.arabic ?? [],
+    sites: input.sites ?? [],
+  });
+  if (queries.length === 0 && arabic.length === 0) {
+    return { results: {}, sources: [], text: `Nothing was searched. ${notes.join(" ")}` };
+  }
+  const { time } = input;
+  const chosen = [...new Set(input.sources)];
+  const both = [...new Set([...queries, ...arabic])];
   const runs = {
     quran: () => searchQuran(cite, queries),
-    hadith: () => searchHadith(cite, [...queries, ...arabic]),
-    fatwa: () => searchFatwa(cite, queries, arabic),
-    fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries),
-    web: () => searchWeb(cite, queries, webPages),
-    news: () => searchNews(cite, queries),
+    hadith: () => searchHadith(cite, both),
+    fatwa: () => searchFatwa(cite, both, sites),
+    fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, sites),
+    web: () => searchWeb(cite, queries, sites, time),
+    news: () => searchNews(cite, queries, time),
+    duas: () => searchDuas(both),
   } satisfies Record<SearchSource, () => Promise<Searched>>;
   const done = await Promise.all(
     chosen.map(async (name) => {
@@ -371,6 +485,7 @@ export const searchAll = async (
       failed.length > 0
         ? `Search failed for ${failed.join(", ")}. Those results are missing, not empty.`
         : "",
+      ...notes,
     ]
       .filter((text) => text)
       .join("\n\n"),

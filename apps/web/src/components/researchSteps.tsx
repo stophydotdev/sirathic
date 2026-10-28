@@ -15,29 +15,29 @@ import {
 import { type Translate, useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  IconBook,
-  IconBookmark,
-  IconBulb,
-  IconChevronRight,
-  IconFileDescription,
-  IconFileText,
-  IconHeart,
-  IconLoader2,
-  IconScale,
-  IconSearch,
-  IconSparkles,
-  IconWorld,
-  type TablerIcon,
-} from "@tabler/icons-react";
+  ArrowRight01Icon,
+  Book02Icon,
+  Bookmark02Icon,
+  BulbIcon,
+  FavouriteIcon,
+  File02Icon,
+  Globe02Icon,
+  JusticeScale01Icon,
+  Loading03Icon,
+  Note01Icon,
+  Search01Icon,
+  SourceCodeIcon,
+  SparklesIcon,
+} from "@hugeicons/core-free-icons";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 
 type Part = ThreadMessage["content"][number];
 
 const REVEAL_MS = 400;
 const COUNT_MS = 300;
-const appear =
-  "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 duration-300";
+const LIVE_TITLES = 4;
 
 function useElapsed(startedAt: number, running: boolean) {
   const [now, setNow] = useState(() => performance.now());
@@ -69,6 +69,7 @@ const summaryOf = (
     0,
   );
   const pages = steps.filter((step) => step.kind === "browse").length;
+  const ranCode = steps.some((step) => step.kind === "code");
   const verses = steps.flatMap((step) => (step.kind === "verses" ? [step.title] : []));
   const tools = steps.flatMap((step) =>
     step.kind === "tool" ? (TOOLS.get(step.tool)?.done(t) ?? []) : [],
@@ -83,6 +84,7 @@ const summaryOf = (
     ...(pages > 0
       ? [pages === 1 ? t("Browsed 1 page") : t("Browsed {count} pages", { count: pages })]
       : []),
+    ...(ranCode ? [t("Ran code")] : []),
     ...(verses.length > 0 ? [`${t("Read")} ${verses.join(", ")}`] : []),
     ...new Set([...tools, ...plugins]),
   ].join(" · ");
@@ -91,7 +93,8 @@ const summaryOf = (
 const THINKING: ResearchStep = { kind: "think", text: "", live: true };
 
 const isResearch = (part: Part) =>
-  part.type === "reasoning" || (part.type === "tool-call" && !isCardTool(part.toolName));
+  part.type === "reasoning" ||
+  (part.type === "tool-call" && !isCardTool(part.toolName) && !part.approval);
 
 export const Research: FC<{ indices: readonly number[]; startedAt: number }> = ({
   indices,
@@ -141,9 +144,10 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
           <StepRow key={i} step={step} active={busy && i === rows.length - 1} animate={busy} />
         ))}
       {busy ? (
-        <div className={cn("text-muted-foreground flex h-6 items-center gap-2 text-sm", appear)}>
-          <IconLoader2
-            stroke={1.5}
+        <div className="text-muted-foreground flex h-6 items-center gap-2 text-sm">
+          <HugeiconsIcon
+            icon={Loading03Icon}
+
             className="text-foreground/70 size-4 shrink-0 motion-safe:animate-spin"
           />
           <span className="shimmer tabular-nums">
@@ -164,7 +168,8 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
           </span>
           {summary && <span className="text-muted-foreground/70 truncate">· {summary}</span>}
           {!streaming && steps.length > 0 && (
-            <IconChevronRight
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
               className={cn("size-3.5 shrink-0 transition-transform", open && "rotate-90")}
             />
           )}
@@ -175,15 +180,15 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
 };
 
 const Row: FC<{
-  Icon: TablerIcon;
+  Icon: IconSvgElement;
   active?: boolean;
   code?: string;
   href?: string;
   aside?: ReactNode;
   children: ReactNode;
 }> = ({ Icon, active, code, href, aside, children }) => (
-  <div className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", appear)}>
-    <Icon stroke={1.5} className="text-foreground/70 size-4 shrink-0" />
+  <div className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm">
+    <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
     <span className={cn(code ? "shrink-0" : "min-w-0 truncate", active && "shimmer")}>
       {children}
     </span>
@@ -213,9 +218,7 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
   const target = usePluginTargets()(plugin);
   return (
     <div className="flex min-w-0 flex-col gap-2">
-      <div
-        className={cn("text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm", appear)}
-      >
+      <div className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm">
         <MentionIcon target={target} />
         <span className={cn("shrink-0", active && "shimmer")}>
           {t("Used {name} plugin", { name: target.name })}
@@ -227,10 +230,7 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
       {calls.map((call, i) => (
         <div
           key={i}
-          className={cn(
-            "text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm",
-            appear,
-          )}
+          className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm"
         >
           <MentionIcon target={target} />
           <span className="shrink-0">
@@ -246,36 +246,45 @@ const PluginRow: FC<{ plugin: string; calls: PluginCall[]; active: boolean }> = 
 };
 
 const READ_ICONS = {
-  quran: IconBook,
-  hadith: IconFileText,
-  fiqh: IconScale,
-  fatwa: IconFileDescription,
-  web: IconWorld,
-  news: IconWorld,
-} satisfies Record<SearchSource, TablerIcon>;
+  quran: Book02Icon,
+  hadith: File02Icon,
+  fiqh: JusticeScale01Icon,
+  fatwa: Note01Icon,
+  web: Globe02Icon,
+  news: Globe02Icon,
+  duas: FavouriteIcon,
+} satisfies Record<SearchSource, IconSvgElement>;
 
 const TOOLS = new Map<
   string,
   {
-    Icon: TablerIcon;
+    Icon: IconSvgElement;
     label: (t: Translate, detail: string) => string;
     done: (t: Translate) => string;
   }
 >([
   [
-    "duaSearch",
+    "search_duas",
     {
-      Icon: IconHeart,
+      Icon: FavouriteIcon,
       label: (t, d) => t("Finding duas for {detail}", { detail: d }),
       done: (t) => t("Found duas"),
     },
   ],
   [
-    "remember",
+    "update_memory",
     {
-      Icon: IconBookmark,
+      Icon: Bookmark02Icon,
       label: (t) => t("Saved to your preferences"),
       done: (t) => t("Saved to your preferences"),
+    },
+  ],
+  [
+    "load_skill",
+    {
+      Icon: Book02Icon,
+      label: (t) => t("Skills"),
+      done: (t) => t("Skills"),
     },
   ],
 ]);
@@ -307,6 +316,7 @@ const SearchesRow: FC<{
   const [open, setOpen] = useState(false);
   const t = useT();
   const count = useCountUp(queries.length, animate && !done);
+  const listed = open ? results : animate && done ? results.slice(0, LIVE_TITLES) : [];
   const sites = new Map<string, string>();
   for (const read of results) {
     if (read.url) sites.set(URL.parse(read.url)?.hostname ?? read.url, read.url);
@@ -317,12 +327,9 @@ const SearchesRow: FC<{
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className={cn(
-          "text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 text-start text-sm transition-colors",
-          appear,
-        )}
+        className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 text-start text-sm transition-colors"
       >
-        <IconSearch stroke={1.5} className="text-foreground/70 size-4 shrink-0" />
+        <HugeiconsIcon icon={Search01Icon} className="text-foreground/70 size-4 shrink-0" />
         <span className={cn("shrink-0 tabular-nums", active && "shimmer")}>
           {count === 1 ? t("Ran 1 search") : t("Ran {count} searches", { count })}
         </span>
@@ -343,29 +350,51 @@ const SearchesRow: FC<{
             key={query}
             className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm"
           >
-            <IconSearch stroke={1.5} className="text-foreground/50 size-3.5 shrink-0" />
+            <HugeiconsIcon icon={Search01Icon} className="text-foreground/50 size-3.5 shrink-0" />
             <span className="min-w-0 truncate">{query}</span>
           </span>
         ))}
-      {open &&
-        results.map((read, i) => {
-          const Icon = READ_ICONS[read.source];
-          return (
-            <a
-              key={`${read.source}-${i}`}
-              href={read.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm font-normal! no-underline! transition-colors"
-            >
-              <Icon stroke={1.5} className="text-foreground/70 size-4 shrink-0" />
-              <span className="min-w-0 truncate">{read.title}</span>
-              {read.detail && (
-                <span className="text-muted-foreground/70 shrink-0">· {read.detail}</span>
-              )}
-            </a>
-          );
-        })}
+      {listed.map((read, i) => {
+        const Icon = READ_ICONS[read.source];
+        return (
+          <a
+            key={`${read.source}-${i}`}
+            href={read.url}
+            target="_blank"
+            rel="noreferrer"
+            className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 ps-6 text-sm font-normal! no-underline! transition-colors"
+          >
+            <HugeiconsIcon icon={Icon} className="text-foreground/70 size-4 shrink-0" />
+            <span className="min-w-0 truncate">{read.title}</span>
+            {read.detail && (
+              <span className="text-muted-foreground/70 shrink-0">· {read.detail}</span>
+            )}
+          </a>
+        );
+      })}
+    </div>
+  );
+};
+
+const CodeRow: FC<{ code: string; active: boolean }> = ({ code, active }) => {
+  const [open, setOpen] = useState(false);
+  const t = useT();
+  return (
+    <div className="flex min-w-0 flex-col gap-2">
+      <button
+        type="button"
+        disabled={!code}
+        onClick={() => setOpen(!open)}
+        className="text-muted-foreground hover:text-foreground flex h-6 min-w-0 items-center gap-2 text-start text-sm transition-colors"
+      >
+        <HugeiconsIcon icon={SourceCodeIcon} className="text-foreground/70 size-4 shrink-0" />
+        <span className={cn("shrink-0", active && "shimmer")}>{t("Ran code")}</span>
+      </button>
+      {open && (
+        <pre className="border-border/50 bg-muted/30 ms-6 max-h-64 overflow-auto rounded-lg border p-3 text-xs leading-relaxed">
+          {code}
+        </pre>
+      )}
     </div>
   );
 };
@@ -379,7 +408,7 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
   switch (step.kind) {
     case "think":
       return (
-        <Row key={step.text} Icon={IconBulb} active={active}>
+        <Row key={step.text} Icon={BulbIcon} active={active}>
           {step.text || t("Thinking")}
         </Row>
       );
@@ -395,22 +424,24 @@ const StepRow: FC<{ step: ResearchStep; active: boolean; animate: boolean }> = (
       );
     case "browse":
       return (
-        <Row Icon={IconWorld} active={active} code={pageOf(step.url)} href={step.url}>
+        <Row Icon={Globe02Icon} active={active} code={pageOf(step.url)} href={step.url}>
           {step.failed ? t("Couldn't open") : t("Browsed")}
         </Row>
       );
     case "verses":
       return (
-        <Row Icon={IconBook} active={active} code={step.title} href={step.url}>
+        <Row Icon={Book02Icon} active={active} code={step.title} href={step.url}>
           {t("Read")}
         </Row>
       );
+    case "code":
+      return <CodeRow code={step.code} active={active} />;
     case "plugin":
       return <PluginRow plugin={step.plugin} calls={step.calls} active={active} />;
     case "tool": {
       const tool = TOOLS.get(step.tool);
       return (
-        <Row Icon={tool?.Icon ?? IconSparkles} active={active}>
+        <Row Icon={tool?.Icon ?? SparklesIcon} active={active}>
           {tool ? tool.label(t, step.detail) : step.tool}
         </Row>
       );

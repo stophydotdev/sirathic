@@ -2,12 +2,19 @@
 
 import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
-import { IconCheck, IconCopy, IconRotate, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Copy01Icon,
+  RotateClockwiseIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
+import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
-import { AgentDisclosure } from "@/components/agents/agentDisclosure";
-import { EASE_OUT, SPRING_PRESS } from "@/lib/ease";
+import { SPRING_PRESS } from "@/lib/ease";
+import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 
 type StreamingResponseStatus = "streaming" | "complete" | "error";
@@ -89,7 +96,6 @@ export function StreamingResponse({
   contentClassName,
   actionsClassName,
 }: StreamingResponseProps) {
-  const reduce = useReducedMotion() ?? false;
   const t = useT();
   const baseId = useId();
   const [copied, setCopied] = useState(false);
@@ -150,75 +156,71 @@ export function StreamingResponse({
         {children}
       </div>
 
-      <AnimatePresence initial={false}>
-        {shouldShowActions ? (
-          <motion.div
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reduce ? 0.12 : 0.22, ease: EASE_OUT }}
-            className="mt-3 print:hidden"
-          >
-            <div className={cn("flex items-center gap-0.5", actionsClassName)}>
-              {canCopy ? (
-                <ResponseAction label={copied ? "Copied" : "Copy response"} onClick={handleCopy}>
-                  {copied ? <IconCheck className="size-3.5" /> : <IconCopy className="size-3.5" />}
-                </ResponseAction>
-              ) : null}
-              {complete ? (
-                <>
-                  <ResponseAction
-                    label="Helpful"
-                    active={currentFeedback === "up"}
-                    onClick={() => setFeedback("up")}
-                  >
-                    <IconThumbUp className="size-3.5" />
-                  </ResponseAction>
-                  <ResponseAction
-                    label="Not helpful"
-                    active={currentFeedback === "down"}
-                    onClick={() => setFeedback("down")}
-                  >
-                    <IconThumbDown className="size-3.5" />
-                  </ResponseAction>
-                </>
-              ) : null}
-              {onRetry ? (
-                <ResponseAction label="Retry response" onClick={onRetry}>
-                  <IconRotate className="size-3.5" />
-                </ResponseAction>
-              ) : null}
-              {actions}
-              {hasSources ? (
-                <button
-                  type="button"
-                  aria-expanded={currentSourcesOpen}
-                  aria-controls={sourcesContentId}
-                  onClick={() => setSourcesOpen(!currentSourcesOpen)}
-                  className="bg-muted text-foreground hover:bg-foreground/10 focus-visible:ring-ring ms-1 inline-flex h-[31px] items-center gap-1.5 rounded-full ps-1 pe-2.5 text-sm outline-none transition-colors focus-visible:ring-2"
-                >
-                  <CitationStack citations={sources} />
-                  <span className="tabular-nums">
-                    {sources.length === 1
-                      ? t("1 source")
-                      : t("{count} sources", { count: sources.length })}
-                  </span>
-                </button>
-              ) : null}
-            </div>
-
-            {hasSources ? (
-              <AgentDisclosure id={sourcesContentId} open={currentSourcesOpen}>
-                <CitationList
-                  citations={sources}
-                  idPrefix={resolvedSourcePrefix}
-                  className="mt-2 rounded-xl bg-muted p-2"
+      {shouldShowActions ? (
+        <div className="mt-3 print:hidden">
+          <div className={cn("flex items-center gap-0.5", actionsClassName)}>
+            {canCopy ? (
+              <ResponseAction label={copied ? "Copied" : "Copy response"} onClick={handleCopy}>
+                <Swap
+                  swapped={copied}
+                  from={<HugeiconsIcon icon={Copy01Icon} className="size-3.5" />}
+                  to={<HugeiconsIcon icon={Tick02Icon} className="size-3.5" />}
                 />
-              </AgentDisclosure>
+              </ResponseAction>
             ) : null}
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+            {complete ? (
+              <>
+                <ResponseAction
+                  label="Helpful"
+                  active={currentFeedback === "up"}
+                  onClick={() => setFeedback("up")}
+                >
+                  <HugeiconsIcon icon={ThumbsUpIcon} className="size-3.5" />
+                </ResponseAction>
+                <ResponseAction
+                  label="Not helpful"
+                  active={currentFeedback === "down"}
+                  onClick={() => setFeedback("down")}
+                >
+                  <HugeiconsIcon icon={ThumbsDownIcon} className="size-3.5" />
+                </ResponseAction>
+              </>
+            ) : null}
+            {onRetry ? (
+              <ResponseAction label="Retry response" onClick={onRetry}>
+                <HugeiconsIcon icon={RotateClockwiseIcon} className="size-3.5" />
+              </ResponseAction>
+            ) : null}
+            {actions}
+            {hasSources ? (
+              <button
+                type="button"
+                aria-expanded={currentSourcesOpen}
+                aria-controls={sourcesContentId}
+                onClick={() => setSourcesOpen(!currentSourcesOpen)}
+                className="bg-muted text-foreground hover:bg-foreground/10 focus-visible:ring-ring ms-1 inline-flex h-[31px] items-center gap-1.5 rounded-full ps-1 pe-2.5 text-sm outline-none transition-colors focus-visible:ring-2"
+              >
+                <CitationStack citations={sources} />
+                <span className="tabular-nums">
+                  {sources.length === 1
+                    ? t("1 source")
+                    : t("{count} sources", { count: sources.length })}
+                </span>
+              </button>
+            ) : null}
+          </div>
+
+          {hasSources ? (
+            <div id={sourcesContentId} hidden={!currentSourcesOpen}>
+              <CitationList
+                citations={sources}
+                idPrefix={resolvedSourcePrefix}
+                className="mt-2 rounded-xl bg-muted p-2"
+              />
+            </div>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }
