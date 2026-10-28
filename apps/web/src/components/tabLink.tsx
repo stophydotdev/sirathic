@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { type FC, type ReactNode, useLayoutEffect, useRef } from "react";
+import { type FC, type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export const tabClass = (active: boolean) =>
   cn(
@@ -116,6 +116,60 @@ export const TabPill: FC<{ className?: string; name?: string }> = ({ className, 
       )}
     />
   );
+};
+
+export const TabBar: FC<{ className?: string; children: ReactNode }> = ({
+  className,
+  children,
+}) => {
+  const bar = useRef<HTMLDivElement>(null);
+  const [away, setAway] = useState(false);
+
+  useEffect(() => {
+    let scroller = bar.current?.parentElement;
+    while (scroller && !/auto|scroll/.test(getComputedStyle(scroller).overflowY)) {
+      scroller = scroller.parentElement;
+    }
+    if (!scroller) return;
+    const page = scroller;
+    let last = page.scrollTop;
+    const onScroll = () => {
+      const top = page.scrollTop;
+      if (Math.abs(top - last) < 6) return;
+      setAway(top > last && top > 120);
+      last = top;
+    };
+    page.addEventListener("scroll", onScroll, { passive: true });
+    return () => page.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div
+      ref={bar}
+      className={cn(
+        "bg-background sticky top-14 z-20 -mt-3 mb-3 py-3 transition-transform duration-300 ease-out-quint motion-reduce:transition-none lg:top-0",
+        away && "-translate-y-24",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const useTabSlide = <Tab extends string>(tabs: readonly Tab[], tab: Tab) => {
+  const [seen, setSeen] = useState({ tab, slide: "" });
+  if (seen.tab !== tab) {
+    const forward = tabs.indexOf(tab) > tabs.indexOf(seen.tab);
+    setSeen({
+      tab,
+      slide: cn(
+        "animate-in duration-300 ease-out-quint motion-reduce:animate-none",
+        forward ? "slide-in-from-end-8" : "slide-in-from-start-8",
+      ),
+    });
+  }
+  return seen.tab === tab ? seen.slide : "";
 };
 
 export const TabLink: FC<{ href: string; active: boolean; children: ReactNode }> = ({

@@ -15,7 +15,7 @@ import {
   modalPrimaryButton,
 } from "@/components/sessionMenu";
 import { useSignIn } from "@/components/signIn";
-import { tabClass } from "@/components/tabLink";
+import { TabBar, TabPill, tabClass, useTabSlide } from "@/components/tabLink";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,7 +41,9 @@ type Run = Awaited<ReturnType<typeof api.automations.runs.query>>[number];
 
 type Editing = { automation: Automation | undefined; draft: Draft };
 
-type Tab = "automations" | "runs" | "ideas";
+const TABS = ["automations", "runs", "ideas"] as const;
+
+type Tab = (typeof TABS)[number];
 
 const Tabs: FC<{ tab: Tab; onChange: (tab: Tab) => void }> = ({ tab, onChange }) => {
   const t = useT();
@@ -51,7 +53,8 @@ const Tabs: FC<{ tab: Tab; onChange: (tab: Tab) => void }> = ({ tab, onChange })
     ["ideas", t("Ideas")],
   ] as const;
   return (
-    <div role="tablist" className="flex flex-1 items-center gap-1">
+    <div role="tablist" className="relative flex flex-1 items-center gap-1">
+      <TabPill />
       {entries.map(([id, label]) => (
         <button
           key={id}
@@ -197,6 +200,7 @@ export const Automations: FC = () => {
   const signedIn = useAccount((s) => s.status?.signedIn);
   const ask = useSignIn((s) => s.ask);
   const [tab, setTab] = useState<Tab>("automations");
+  const slide = useTabSlide(TABS, tab);
   const [automations, setAutomations] = useState<Automation[]>();
   const [runs, setRuns] = useState<Run[]>([]);
   const [editing, setEditing] = useState<Editing>();
@@ -265,7 +269,7 @@ export const Automations: FC = () => {
   return (
     <div className="h-full overflow-y-auto">
       <div className="mx-auto w-full max-w-5xl px-6 pt-16 pb-16 lg:pt-10">
-        <div className="mb-6 flex flex-wrap items-center gap-3">
+        <TabBar className="flex flex-wrap items-center gap-3">
           <Tabs tab={tab} onChange={setTab} />
           <button
             type="button"
@@ -274,29 +278,43 @@ export const Automations: FC = () => {
           >
             {t("New automation")}
           </button>
+        </TabBar>
+        <div key={tab} className={slide}>
+          {signedIn === false && (
+            <>
+              <div className="border-border mb-8 flex items-center gap-3 rounded-2xl border py-2 ps-4 pe-2">
+                <p className="text-muted-foreground flex-1 text-sm">
+                  {t("Sign in to create automations.")}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => ask()}
+                  className="bg-muted hover:bg-foreground/10 h-9 rounded-full px-4 text-sm font-medium transition-colors"
+                >
+                  {t("Sign in")}
+                </button>
+              </div>
+              {tab !== "runs" && <AutomationIdeas onAdd={create} />}
+            </>
+          )}
+          {signedIn && tab === "runs" && <RunsList runs={runs} />}
+          {signedIn && tab === "ideas" && <AutomationIdeas onAdd={create} />}
+          {signedIn && tab === "automations" && (
+            <>
+              <div className="max-w-2xl">
+                {automations?.map((automation) => (
+                  <AutomationRow
+                    key={automation.id}
+                    automation={automation}
+                    busy={busy === automation.id}
+                    {...actionsFor(automation)}
+                  />
+                ))}
+              </div>
+              {automations?.length === 0 && <AutomationIdeas onAdd={create} />}
+            </>
+          )}
         </div>
-        {signedIn === false && (
-          <button type="button" onClick={() => ask()} className="text-sm underline">
-            {t("Sign in to create automations.")}
-          </button>
-        )}
-        {signedIn && tab === "runs" && <RunsList runs={runs} />}
-        {signedIn && tab === "ideas" && <AutomationIdeas onAdd={create} />}
-        {signedIn && tab === "automations" && (
-          <>
-            <div className="max-w-2xl">
-              {automations?.map((automation) => (
-                <AutomationRow
-                  key={automation.id}
-                  automation={automation}
-                  busy={busy === automation.id}
-                  {...actionsFor(automation)}
-                />
-              ))}
-            </div>
-            {automations?.length === 0 && <AutomationIdeas onAdd={create} />}
-          </>
-        )}
         {editing && (
           <AutomationEditor
             key={editing.automation?.id ?? "new"}
