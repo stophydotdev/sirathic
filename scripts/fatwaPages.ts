@@ -147,7 +147,7 @@ const PAGE_LINES = [
 ];
 
 const PAGE_TAIL =
-  /^(## (Similar|Related) [Ff]atwas|#{0,4} ?\d+ Comments?|#### Leave a Reply)\s*$/mu;
+  /^(## (Similar|Related) [Ff]atwas|#{0,4} ?\d+ Comments?|#### Leave a Reply|(Previous|Next) article)\s*$/mu;
 
 export const clean = (markdown: string) => {
   const linked = markdown
