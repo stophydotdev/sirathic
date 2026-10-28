@@ -45,6 +45,9 @@ export default {
   Low: "低",
   Medium: "中",
   High: "高",
+  "Extra high": "超高",
+  Max: "最大",
+  "{level} effort": "思考の深さ：{level}",
   "Ran code": "コードを実行",
   "Saved skill": "スキルを保存しました",
   "Deleted skill": "スキルを削除しました",
@@ -146,7 +149,6 @@ export default {
   Detailed: "詳しく",
   "Settings sections": "設定の項目",
   "No chat models available": "利用できるモデルがありません",
-  "Longer answers that explain more": "より長く、詳しく説明します",
   "Open ChatGPT": "ChatGPT を開く",
   "Waiting for approval": "承認を待っています",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -347,6 +349,7 @@ export default {
   "Social media": "ソーシャルメディア",
   "Design and websites": "デザインとウェブサイト",
   Connect: "接続",
+  "Connect {name}?": "{name} に接続しますか？",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "プラグインは Sirathic ではなく、ほかの会社が作っています。接続する前に、プラグインが何を見られるか確認してください。",
   "No plugins match your search.": "検索に一致するプラグインはありません。",

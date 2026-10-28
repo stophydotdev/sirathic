@@ -46,6 +46,9 @@ export default {
   Low: "குறைவு",
   Medium: "நடுத்தரம்",
   High: "அதிகம்",
+  "Extra high": "மிக அதிகம்",
+  Max: "அதிகபட்சம்",
+  "{level} effort": "முயற்சி: {level}",
   "Ran code": "குறியீடு இயக்கப்பட்டது",
   "Saved skill": "திறன் சேமிக்கப்பட்டது",
   "Deleted skill": "திறன் நீக்கப்பட்டது",
@@ -146,7 +149,6 @@ export default {
   Detailed: "விரிவாக",
   "Settings sections": "அமைப்புப் பிரிவுகள்",
   "No chat models available": "மாடல்கள் எதுவும் இல்லை",
-  "Longer answers that explain more": "கூடுதலாக விளக்கும் நீண்ட பதில்கள்",
   "Open ChatGPT": "ChatGPT-ஐத் திற",
   "Waiting for approval": "ஒப்புதலுக்காகக் காத்திருக்கிறது",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -344,6 +346,7 @@ export default {
   "Social media": "சமூக ஊடகம்",
   "Design and websites": "வடிவமைப்பும் இணையதளங்களும்",
   Connect: "இணை",
+  "Connect {name}?": "{name} ஐ இணைக்கவா?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "செருகுநிரல்களை Sirathic அல்ல, பிற நிறுவனங்களே உருவாக்குகின்றன. இணைப்பதற்கு முன் செருகுநிரல் எதைப் பார்க்க முடியும் என்பதைச் சரிபாருங்கள்.",
   "No plugins match your search.": "உங்கள் தேடலுக்குப் பொருந்தும் செருகுநிரல் இல்லை.",

@@ -2,7 +2,6 @@ import { useOwnLists } from "@/components/ownLists";
 import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { api } from "@/lib/trpc";
-import type { PlainKey } from "@/components/locales";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -10,10 +9,6 @@ export type Status = Awaited<ReturnType<typeof api.account.status.query>>;
 export type Model = Awaited<ReturnType<typeof api.account.models.query>>[number];
 
 type Models = { list: Model[]; error?: string };
-
-export const MODEL_DESCRIPTIONS = new Map<string, PlainKey>([
-  ["sirathic-noor-1-flash", "Longer answers that explain more"],
-]);
 
 const loadModels = (): Promise<Models> =>
   api.account.models.query().then(

@@ -46,6 +46,9 @@ export default {
   Low: "Mababa",
   Medium: "Katamtaman",
   High: "Mataas",
+  "Extra high": "Napakataas",
+  Max: "Pinakamataas",
+  "{level} effort": "Pagsisikap: {level}",
   "Ran code": "Pinatakbo ang code",
   "Saved skill": "Na-save ang skill",
   "Deleted skill": "Binura ang skill",
@@ -147,7 +150,6 @@ export default {
   Detailed: "Detalyado",
   "Settings sections": "Mga seksiyon ng setting",
   "No chat models available": "Walang available na modelo",
-  "Longer answers that explain more": "Mas mahabang sagot na mas maraming paliwanag",
   "Open ChatGPT": "Buksan ang ChatGPT",
   "Waiting for approval": "Naghihintay ng pag-apruba",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -349,6 +351,7 @@ export default {
   "Social media": "Social media",
   "Design and websites": "Disenyo at mga website",
   Connect: "Ikonekta",
+  "Connect {name}?": "Ikonekta ang {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "Ang mga plugin ay gawa ng ibang kumpanya, hindi ng Sirathic. Tingnan kung ano ang makikita ng plugin bago mo ito ikonekta.",
   "No plugins match your search.": "Walang plugin na tumutugma sa iyong paghahanap.",

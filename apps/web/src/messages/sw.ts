@@ -60,6 +60,9 @@ export default {
   Low: "Chini",
   Medium: "Wastani",
   High: "Juu",
+  "Extra high": "Juu sana",
+  Max: "Upeo",
+  "{level} effort": "Juhudi: {level}",
   "Ran code": "Imeendesha msimbo",
   "Saved skill": "Ujuzi umehifadhiwa",
   "Deleted skill": "Ujuzi umefutwa",
@@ -162,7 +165,6 @@ export default {
   Detailed: "Kwa kina",
   "Settings sections": "Sehemu za mipangilio",
   "No chat models available": "Hakuna modeli za gumzo zinazopatikana",
-  "Longer answers that explain more": "Majibu marefu yanayoeleza zaidi",
   "Open ChatGPT": "Fungua ChatGPT",
   "Waiting for approval": "Inasubiri idhini",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -343,6 +345,7 @@ export default {
   "Social media": "Mitandao ya kijamii",
   "Design and websites": "Usanifu na tovuti",
   Connect: "Unganisha",
+  "Connect {name}?": "Unganisha {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "Programu jalizi hutengenezwa na kampuni nyingine, si Sirathic. Angalia kile ambacho programu jalizi inaweza kuona kabla ya kuiunganisha.",
   "No plugins match your search.": "Hakuna programu jalizi zinazolingana na utafutaji wako.",

@@ -1,7 +1,10 @@
 "use client";
 
-import { MODEL_DESCRIPTIONS, useAccount } from "@/components/account";
+import { useAccount, useCurrentModel } from "@/components/account";
+import { EffortPicker } from "@/components/effortPicker";
+import { Fold } from "@/components/fold";
 import { useT } from "@/components/i18n";
+import { TabPill } from "@/components/tabLink";
 import { MakerIcon } from "@/components/makerIcon";
 import { CustomizeSection } from "@/components/settingsCustomize";
 import { DataSection } from "@/components/settingsData";
@@ -26,7 +29,7 @@ import {
   UserIcon,
 } from "@hugeicons/core-free-icons";
 import { Dialog } from "radix-ui";
-import { type FC } from "react";
+import { type FC, Fragment, useState } from "react";
 import { create } from "zustand";
 
 const SECTIONS = ["account", "appearance", "behavior", "customize", "data"] as const;
@@ -105,16 +108,16 @@ export const SettingsDialog: FC = () => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Portal>
-        <Dialog.Overlay className="bg-background/70 fixed inset-0 z-50 backdrop-blur-[4px]" />
+        <Dialog.Overlay className="dim bg-background/70 fixed inset-0 z-50 backdrop-blur-[4px]" />
         <Dialog.Content
           aria-describedby={undefined}
           onCloseAutoFocus={(event) => event.preventDefault()}
-          className="bg-popover border-foreground/6 fixed inset-x-0 bottom-0 z-50 flex h-[calc(100dvh-3rem)] flex-col overflow-hidden rounded-t-[20px] border outline-none md:inset-x-auto md:top-1/2 md:bottom-auto md:left-1/2 md:h-[640px] md:max-h-[calc(100dvh-2rem)] md:w-[1000px] md:max-w-[calc(100vw-2rem)] md:-translate-x-1/2 md:-translate-y-1/2 md:flex-row md:rounded-[16px]"
+          className="pop bg-popover border-foreground/6 fixed inset-x-0 bottom-0 z-50 flex h-[calc(100dvh-3rem)] flex-col overflow-hidden rounded-t-[20px] border outline-none md:inset-x-auto md:top-1/2 md:bottom-auto md:left-1/2 md:h-[640px] md:max-h-[calc(100dvh-2rem)] md:w-[1000px] md:max-w-[calc(100vw-2rem)] md:-translate-x-1/2 md:-translate-y-1/2 md:flex-row md:rounded-[16px]"
         >
           <nav
             aria-label={t("Settings sections")}
             className={cn(
-              "border-foreground/6 min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto p-2.5 md:flex md:w-[200px] md:flex-none md:border-e",
+              "border-foreground/6 relative min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto p-2.5 md:flex md:w-[200px] md:flex-none md:border-e",
               listing ? "flex" : "hidden",
             )}
           >
@@ -124,6 +127,7 @@ export const SettingsDialog: FC = () => {
                 <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
               </Dialog.Close>
             </div>
+            <TabPill className="rounded-[10px] max-md:hidden" />
             {GROUPS.map((group) => (
               <div key={group} className="flex flex-col gap-0.5">
                 <span className="text-muted-foreground/70 px-2.5 pt-3 pb-1 text-[13px]">
@@ -136,11 +140,9 @@ export const SettingsDialog: FC = () => {
                       key={item}
                       type="button"
                       aria-current={!listing && item === section ? "page" : undefined}
+                      data-active={item === section || undefined}
                       onClick={() => show(item)}
-                      className={cn(
-                        "hover:bg-muted flex h-12 items-center gap-2.5 rounded-[10px] px-2.5 text-start text-base md:h-8 md:text-sm",
-                        item === section && "md:bg-muted",
-                      )}
+                      className="hover:bg-muted relative flex h-12 items-center gap-2.5 rounded-[10px] px-2.5 text-start text-base md:h-8 md:text-sm"
                     >
                       <HugeiconsIcon icon={Icon} className="size-4 shrink-0" />
                       <span className="flex-1">{t(label)}</span>
@@ -180,51 +182,98 @@ export const SettingsDialog: FC = () => {
   );
 };
 
-export const ModelMenuContent: FC<{
-  side?: "top" | "bottom";
-}> = ({ side }) => {
-  const status = useAccount((s) => s.status);
+const ModelList: FC = () => {
   const models = useAccount((s) => s.models);
   const chosen = useAccount((s) => s.chosen);
   const choose = useAccount((s) => s.choose);
   const t = useT();
+  const groups = [
+    { label: t("Sirathic"), models: models.filter((model) => model.maker === "sirathic") },
+    {
+      label: t("From your ChatGPT account"),
+      models: models.filter((model) => model.maker !== "sirathic"),
+    },
+  ].filter((group) => group.models.length > 0);
 
   return (
-    <DropdownMenuContent
-      align="end"
-      side={side}
-      avoidCollisions={side === undefined}
-      className="ring-foreground/7 max-h-[min(405px,var(--radix-dropdown-menu-content-available-height))] w-70 rounded-[12px] p-1"
-    >
-      {status?.signedIn && status.via === "chatgpt" && (
-        <DropdownMenuLabel className="text-muted-foreground px-2 pt-1.5 pb-1 text-xs font-normal">
-          {t("From your ChatGPT account")}
-        </DropdownMenuLabel>
-      )}
+    <>
       {models.length === 0 && (
         <DropdownMenuItem disabled className={modelRow}>
           {t("No chat models available")}
         </DropdownMenuItem>
       )}
-      {models.map((model) => {
-        const description = MODEL_DESCRIPTIONS.get(model.slug);
-        return (
-          <DropdownMenuItem
-            key={model.slug}
-            onSelect={() => choose(model.slug)}
-            className={cn(modelRow, description && "h-auto items-start")}
-          >
-            <MakerIcon maker={model.maker} className={cn("size-4", description && "mt-0.5")} />
-            <span className="flex min-w-0 flex-1 flex-col">
-              <span className="truncate">{model.name}</span>
-              {description && (
-                <span className="text-muted-foreground text-xs">{t(description)}</span>
-              )}
-            </span>
-            {chosen === model.slug && <HugeiconsIcon icon={Tick02Icon} className="size-4" />}
-          </DropdownMenuItem>
-        );
-      })}
-    </DropdownMenuContent>
+      {groups.map((group) => (
+        <Fragment key={group.label}>
+          {groups.length > 1 && (
+            <DropdownMenuLabel className="text-muted-foreground px-2 pt-1.5 pb-1 text-xs font-normal">
+              {group.label}
+            </DropdownMenuLabel>
+          )}
+          {group.models.map((model) => (
+            <DropdownMenuItem
+              key={model.slug}
+              onSelect={() => choose(model.slug)}
+              className={cn(modelRow, "h-7.5 min-h-0! py-0")}
+            >
+              <span className="min-w-0 flex-1 truncate">{model.name}</span>
+              {chosen === model.slug && <HugeiconsIcon icon={Tick02Icon} className="size-4" />}
+            </DropdownMenuItem>
+          ))}
+        </Fragment>
+      ))}
+    </>
   );
 };
+
+const ModelFold: FC = () => {
+  const current = useCurrentModel();
+  const [open, setOpen] = useState(false);
+  const t = useT();
+
+  return (
+    <>
+      <DropdownMenuItem
+        aria-expanded={open}
+        onSelect={(event) => {
+          event.preventDefault();
+          setOpen(!open);
+        }}
+        className={modelRow}
+      >
+        {current && <MakerIcon maker={current.maker} className="size-4" />}
+        <span className="flex-1">{t("Model")}</span>
+        <span className="text-muted-foreground min-w-0 truncate">{current?.name}</span>
+        <HugeiconsIcon
+          icon={ArrowRight01Icon}
+          className={cn(
+            "text-muted-foreground size-4 transition-transform duration-300 ease-out-quint rtl:rotate-180 motion-reduce:transition-none",
+            open && "rotate-90 rtl:rotate-90",
+          )}
+        />
+      </DropdownMenuItem>
+      <Fold open={open}>
+        <ModelList />
+      </Fold>
+    </>
+  );
+};
+
+export const ModelMenuContent: FC<{
+  side?: "top" | "bottom";
+  effort: boolean;
+}> = ({ side, effort }) => (
+  <DropdownMenuContent
+    align="end"
+    side={side}
+    className="ring-foreground/7 max-h-[min(405px,var(--radix-dropdown-menu-content-available-height))] w-70 rounded-[12px] p-1"
+  >
+    {effort ? (
+      <>
+        <ModelFold />
+        <EffortPicker />
+      </>
+    ) : (
+      <ModelList />
+    )}
+  </DropdownMenuContent>
+);

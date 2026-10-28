@@ -45,6 +45,9 @@ export default {
   Low: "අඩු",
   Medium: "මධ්‍යම",
   High: "ඉහළ",
+  "Extra high": "ඉතා ඉහළ",
+  Max: "උපරිම",
+  "{level} effort": "{level} උත්සාහය",
   "Ran code": "කේතය ක්‍රියාත්මක කළා",
   "Saved skill": "කුසලතාව සුරැකිණි",
   "Deleted skill": "කුසලතාව මැකුවා",
@@ -144,7 +147,6 @@ export default {
   Detailed: "විස්තරාත්මක",
   "Settings sections": "සැකසුම් කොටස්",
   "No chat models available": "මාදිලි කිසිවක් නැත",
-  "Longer answers that explain more": "වැඩිපුර පැහැදිලි කරන දිගු පිළිතුරු",
   "Open ChatGPT": "ChatGPT විවෘත කරන්න",
   "Waiting for approval": "අනුමැතිය සඳහා රැඳී සිටී",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -339,6 +341,7 @@ export default {
   "Social media": "සමාජ මාධ්‍ය",
   "Design and websites": "නිර්මාණ සහ වෙබ් අඩවි",
   Connect: "සම්බන්ධ කරන්න",
+  "Connect {name}?": "{name} සම්බන්ධ කරන්නද?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "ප්ලගින සාදන්නේ වෙනත් සමාගම්, Sirathic නොවේ. සම්බන්ධ කිරීමට පෙර ප්ලගිනයකට බැලිය හැකි දේ පරීක්ෂා කරන්න.",
   "No plugins match your search.": "ඔබේ සෙවුමට ගැළපෙන ප්ලගින නැත.",

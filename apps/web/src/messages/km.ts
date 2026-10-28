@@ -44,6 +44,9 @@ export default {
   Low: "ទាប",
   Medium: "មធ្យម",
   High: "ខ្ពស់",
+  "Extra high": "ខ្ពស់ខ្លាំង",
+  Max: "អតិបរមា",
+  "{level} effort": "ការខិតខំ៖ {level}",
   "Ran code": "បានដំណើរការកូដ",
   "Saved skill": "បានរក្សាទុកជំនាញ",
   "Deleted skill": "បានលុបជំនាញ",
@@ -144,7 +147,6 @@ export default {
   Detailed: "លម្អិត",
   "Settings sections": "ផ្នែកការកំណត់",
   "No chat models available": "គ្មានម៉ូដែលអាចប្រើបាន",
-  "Longer answers that explain more": "ចម្លើយវែងជាង ដែលពន្យល់ច្រើនជាង",
   "Open ChatGPT": "បើក ChatGPT",
   "Waiting for approval": "កំពុងរង់ចាំការអនុម័ត",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -339,6 +341,7 @@ export default {
   "Social media": "បណ្ដាញសង្គម",
   "Design and websites": "ការរចនា និងគេហទំព័រ",
   Connect: "ភ្ជាប់",
+  "Connect {name}?": "ភ្ជាប់ {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "កម្មវិធីជំនួយត្រូវបានបង្កើតដោយក្រុមហ៊ុនផ្សេង មិនមែន Sirathic ទេ។ សូមពិនិត្យមើលអ្វីដែលកម្មវិធីជំនួយអាចមើលឃើញ មុនពេលភ្ជាប់។",
   "No plugins match your search.": "គ្មានកម្មវិធីជំនួយត្រូវនឹងការស្វែងរករបស់អ្នកទេ។",

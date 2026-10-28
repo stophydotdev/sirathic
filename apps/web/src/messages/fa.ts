@@ -45,6 +45,9 @@ export default {
   Low: "کم",
   Medium: "متوسط",
   High: "زیاد",
+  "Extra high": "خیلی زیاد",
+  Max: "حداکثر",
+  "{level} effort": "تلاش {level}",
   "Ran code": "اجرای کد",
   "Saved skill": "مهارت ذخیره شد",
   "Deleted skill": "مهارت حذف شد",
@@ -146,7 +149,6 @@ export default {
   Detailed: "مفصل",
   "Settings sections": "بخش‌های تنظیمات",
   "No chat models available": "مدلی در دسترس نیست",
-  "Longer answers that explain more": "پاسخ‌های بلندتر با توضیح بیشتر",
   "Open ChatGPT": "باز کردن ChatGPT",
   "Waiting for approval": "در انتظار تأیید",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -343,6 +345,7 @@ export default {
   "Social media": "شبکه‌های اجتماعی",
   "Design and websites": "طراحی و وب‌سایت",
   Connect: "اتصال",
+  "Connect {name}?": "{name} متصل شود؟",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "افزونه‌ها را شرکت‌های دیگر می‌سازند، نه Sirathic. پیش از اتصال، بررسی کنید افزونه چه چیزهایی را می‌تواند ببیند.",
   "No plugins match your search.": "هیچ افزونه‌ای با جستجوی شما مطابقت ندارد.",

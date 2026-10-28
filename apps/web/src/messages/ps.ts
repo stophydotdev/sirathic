@@ -45,6 +45,9 @@ export default {
   Low: "ټیټ",
   Medium: "منځنی",
   High: "لوړ",
+  "Extra high": "ډېر لوړ",
+  Max: "اعظمي",
+  "{level} effort": "هڅه: {level}",
   "Ran code": "کوډ چلول شو",
   "Saved skill": "مهارت خوندي شو",
   "Deleted skill": "مهارت ړنګ شو",
@@ -146,7 +149,6 @@ export default {
   Detailed: "مفصل",
   "Settings sections": "د امستنو برخې",
   "No chat models available": "هېڅ ماډل شتون نه لري",
-  "Longer answers that explain more": "اوږده ځوابونه چې ډېر وضاحت ورکوي",
   "Open ChatGPT": "ChatGPT پرانیزئ",
   "Waiting for approval": "د تایید انتظار",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -342,6 +344,7 @@ export default {
   "Social media": "ټولنیزې رسنۍ",
   "Design and websites": "ډیزاین او وېب پاڼې",
   Connect: "نښلول",
+  "Connect {name}?": "{name} ونښلول شي؟",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "پلګینونه نورې شرکتونه جوړوي، نه Sirathic. مخکې له دې چې یې ونښلوئ، وګورئ چې پلګین څه لیدلی شي.",
   "No plugins match your search.": "ستاسو له لټون سره هېڅ پلګین نه ټکرېږي.",

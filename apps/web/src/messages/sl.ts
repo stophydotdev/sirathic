@@ -60,6 +60,9 @@ export default {
   Low: "Nizek",
   Medium: "Srednji",
   High: "Visok",
+  "Extra high": "Zelo visok",
+  Max: "Največji",
+  "{level} effort": "{level} napor",
   "Ran code": "Zagnana koda",
   "Saved skill": "Spretnost shranjena",
   "Deleted skill": "Spretnost izbrisana",
@@ -162,7 +165,6 @@ export default {
   Detailed: "Podrobno",
   "Settings sections": "Razdelki nastavitev",
   "No chat models available": "Ni razpoložljivih modelov",
-  "Longer answers that explain more": "Daljši odgovori, ki več pojasnijo",
   "Open ChatGPT": "Odpri ChatGPT",
   "Waiting for approval": "Čakanje na odobritev",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -345,6 +347,7 @@ export default {
   "Social media": "Družbena omrežja",
   "Design and websites": "Oblikovanje in spletne strani",
   Connect: "Poveži",
+  "Connect {name}?": "Povežem {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "Vtičnike izdelujejo druga podjetja, ne Sirathic. Preden vtičnik povežete, preverite, kaj lahko vidi.",
   "No plugins match your search.": "Noben vtičnik ne ustreza vašemu iskanju.",
