@@ -57,7 +57,7 @@ export const answerWith = (
     model,
     tools: { search_web: noInput, update_memory: noInput },
     settings: DEFAULT_SETTINGS,
-    instructions: "INSTRUCTIONS",
+    instructions: [{ role: "system", content: "INSTRUCTIONS" }],
     mentioned: "",
     firstStep: undefined,
     skills: [],
@@ -135,4 +135,6 @@ export const promptFor = (overrides: Partial<Parameters<typeof instructions>[0]>
     remembers: false,
     toolNotes: [],
     ...overrides,
-  });
+  })
+    .map(({ content }) => content)
+    .join("");
