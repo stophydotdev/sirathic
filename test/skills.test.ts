@@ -5,6 +5,12 @@ import { type ChatMessage, sentMessage } from "../apps/server/src/shared/message
 import { needsApproval, writingTools } from "../apps/server/src/chat/confirm";
 import { matchingPlugins } from "../apps/server/src/plugins/tools";
 import {
+  matchingEndpoints,
+  STOPHY_LINK,
+  withCitations,
+  withoutAiAnswers,
+} from "../apps/server/src/chat/stophyTools";
+import {
   loadSkill,
   loadedText,
   skillIndex,
@@ -307,4 +313,127 @@ test("with no query the plugin list is the whole catalog, installed first, witho
     ["notion", false],
     ["todoist", false],
   ]);
+});
+
+const endpoint = (id: string, summary: string) => ({
+  id,
+  title: id,
+  summary,
+  bestWhen: null,
+  method: "POST" as const,
+  path: `/v1/${id.replaceAll(".", "/")}`,
+  credits: 1,
+  keyless: false,
+  cacheTtlSeconds: 0,
+  example: null,
+});
+
+test("a Stophy search ranks the rare word first, keeps to a named source, reads any other category as words, and lists the sources when nothing matches", () => {
+  const catalog = {
+    sources: [
+      { id: "google", name: "Google", summary: "Search Google" },
+      { id: "youtube", name: "YouTube", summary: "Search videos" },
+    ],
+    endpoints: [
+      endpoint("google.ads.search", "Scrape ads from the Google ads library"),
+      endpoint("google.news", "Scrape news from the web"),
+      endpoint("google.flights", "Scrape Google Flights results with prices and times"),
+      endpoint("youtube.transcript", "Scrape a YouTube video's transcript"),
+    ],
+  } satisfies Parameters<typeof matchingEndpoints>[0];
+  expect([
+    matchingEndpoints(catalog, { query: "flights from London to Jeddah" }).endpoints[0]?.id,
+    matchingEndpoints(catalog, { category: "YouTube" }).endpoints.map(({ id }) => id),
+    matchingEndpoints(catalog, { query: "flights to Jeddah", category: "travel" }).endpoints[0]?.id,
+    matchingEndpoints(catalog, { query: "halal restaurants" }),
+  ]).toEqual([
+    "google.flights",
+    ["youtube.transcript"],
+    "google.flights",
+    { endpoints: [], sources: catalog.sources },
+  ]);
+});
+
+test("Stophy results get a citation and a source for each page link, not for images", () => {
+  const cited: string[] = [];
+  const cite = (url: string) => cited.push(url);
+  const places = withCitations(
+    cite,
+    {
+      results: [
+        {
+          name: "Tahin",
+          address: "10 Kirkgate, Leeds",
+          imageUrl: "https://example.com/tahin.jpg",
+          placeUrl: "https://www.google.com/maps?cid=1",
+        },
+        { name: "No link" },
+      ],
+    },
+    "Google Maps Search",
+  );
+  const flights = withCitations(
+    cite,
+    { url: "https://www.google.com/travel/flights/search?tfs=1", results: [{ price: 599 }] },
+    "Google Flights",
+  );
+  const video = withCitations(
+    cite,
+    { title: "The AI bubble", videoUrl: "https://www.youtube.com/watch?v=MgngwkPAuqQ" },
+    "YouTube Transcript",
+  );
+  expect([places.data, [...places.sources, ...flights.sources, ...video.sources]]).toEqual([
+    {
+      results: [
+        {
+          citation: 1,
+          name: "Tahin",
+          address: "10 Kirkgate, Leeds",
+          imageUrl: "https://example.com/tahin.jpg",
+          placeUrl: "https://www.google.com/maps?cid=1",
+        },
+        { name: "No link" },
+      ],
+    },
+    [
+      { url: "https://www.google.com/maps?cid=1", title: "Tahin", snippet: "10 Kirkgate, Leeds" },
+      {
+        url: "https://www.google.com/travel/flights/search?tfs=1",
+        title: "Google Flights",
+        snippet: "",
+      },
+      { url: "https://www.youtube.com/watch?v=MgngwkPAuqQ", title: "The AI bubble", snippet: "" },
+    ],
+  ]);
+});
+
+test("Stophy sources of AI answers are left out of the catalog, with their endpoints", () => {
+  const found = {
+    sources: [
+      { id: "google", name: "Google", summary: "Search Google", kind: "site" },
+      { id: "askbot", name: "Askbot", summary: "Ask a bot", kind: "aiAnswers" },
+    ],
+    endpoints: [endpoint("google.flights", "Flights"), endpoint("askbot.answer", "An answer")],
+  };
+  const kept = withoutAiAnswers(found);
+  expect([kept.sources.map(({ id }) => id), kept.endpoints.map(({ id }) => id)]).toEqual([
+    ["google"],
+    ["google.flights"],
+  ]);
+});
+
+test("links to the sites the Stophy skill names are known, and other pages are not", () => {
+  expect(
+    [
+      "https://youtu.be/MgngwkPAuqQ",
+      "https://www.linkedin.com/jobs/view/1",
+      "https://uk.indeed.com/viewjob?jk=1",
+      "https://www.ebay.co.uk/itm/1",
+      "https://maps.google.com/?cid=1",
+      "https://www.google.com/maps/place/Leeds",
+      "https://apps.apple.com/app/id1",
+      "https://islamqa.info/en/answers/1",
+      "https://www.netflix.com/title/1",
+    ].map((url) => STOPHY_LINK.test(url)),
+  ).toEqual([true, true, true, true, true, true, true, false, false]);
 });

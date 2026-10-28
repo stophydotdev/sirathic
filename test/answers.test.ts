@@ -344,6 +344,22 @@ test.each<[string, ModelCall["toolChoice"]]>([
   },
 );
 
+test("a YouTube link on Noor lets the model pick its first tool, so it can load Stophy", async () => {
+  const [first] = await chatTurn({
+    modelName: "sirathic-noor-1-flash",
+    messages: [
+      {
+        id: "1",
+        role: "user",
+        parts: [
+          { type: "text", text: "what does https://www.youtube.com/watch?v=MgngwkPAuqQ say" },
+        ],
+      },
+    ],
+  });
+  expect(first?.toolChoice).toEqual({ type: "required" });
+});
+
 const HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 

@@ -20,7 +20,7 @@ export const notConnected = (err: Error) =>
 
 type Listed = { id: string; name: string; category: string; connected: boolean };
 
-const wordsOf = (text: string) =>
+export const wordsOf = (text: string) =>
   text
     .toLowerCase()
     .split(/[^\p{L}\p{N}]+/u)
