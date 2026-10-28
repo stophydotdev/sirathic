@@ -446,6 +446,7 @@ export function chatResponse({
           words: text.split(/\s+/).filter(Boolean).length,
           inputTokens: usage?.inputTokens,
           cachedInputTokens: usage?.inputTokenDetails.cacheReadTokens,
+          cacheWriteTokens: usage?.inputTokenDetails.cacheWriteTokens,
           outputTokens: usage?.outputTokens,
           reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
         },
