@@ -15,10 +15,9 @@ const INSTRUCTION =
   /\b(ignore|disregard|forget|always|override|pretend|jailbreak|instructions?|from now on|act as|system prompt|you (must|should|will))\b/i;
 
 const RELIGIOUS_CLAIM =
-  /\b(halal|haram|permissible|impermissible|forbidden|obligatory|fatwa|ruling|is a sin|is allowed|is not allowed|is prohibited)\b/i;
+  /\b(is|are|isn't|aren't)\s+(not\s+)?(halal|haram|permissible|impermissible|forbidden|obligatory|allowed|prohibited|a sin)\b|\b(fatwa|ruling)\s+(says|is)\b/i;
 
-const PRIVATE_MATTER =
-  /\b(sins?|sinned|sinful|zina|adultery|fornication|relapsed?|addict\w*|depress\w*|divorc\w*|abus\w*|diagnos\w*|cancer)\b/i;
+const SIN = /\b(sins?|sinned|sinful|zina|adultery|fornication|relapsed?|addict\w*)\b/i;
 
 export const profileRejection = (text: string) => {
   if (INSTRUCTION.test(text) || containsLink(text)) {
@@ -27,8 +26,8 @@ export const profileRejection = (text: string) => {
   if (RELIGIOUS_CLAIM.test(text)) {
     return "Not saved: the profile never holds religious claims or rulings, only facts about the learner.";
   }
-  if (PRIVATE_MATTER.test(text)) {
-    return "Not saved: the profile never holds a sin, a struggle with worship, or health or family trouble. Tell them kindly it was not saved.";
+  if (SIN.test(text)) {
+    return "Not saved: the profile never holds a sin, even one they shared. Tell them kindly it was not saved.";
   }
   return undefined;
 };

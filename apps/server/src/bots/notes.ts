@@ -14,7 +14,7 @@ const INSTRUCTS_AROUND_RULES =
   /\b(ignore|disregard|forget|override|bypass|jailbreak|pretend)\b|system\s*prompt|developer\s*(message|prompt)|\b(previous|above|earlier|prior)\s+(instructions|rules)|you\s+are\s+now|\bact\s+as\b|\bnew\s+rules\b/iu;
 
 const MAKES_RELIGIOUS_CLAIM =
-  /\p{Script=Arabic}|\b(haram|halal|makruh|mustahabb|wajib|fard|fatwa|ruling|permissible|forbidden|obligatory|sinful)\b|\b(allah|the prophet|prophet muhammad|quran|hadith)\s+(says?|said|commands?|tells?|narrated|ordered)\b|\bnarrated\b|\bit\s+is\s+a\s+sin\b/iu;
+  /\b(haram|halal|makruh|mustahabb|wajib|fard|fatwa|ruling|permissible|forbidden|obligatory|sinful)\b|\b(allah|the prophet|prophet muhammad|quran|hadith)\s+(says?|said|commands?|tells?|narrated|ordered)\b|\bnarrated\b|\bit\s+is\s+a\s+sin\b|(?<!\p{L})(?:ال|و|ف|ب)?(?:حرام|حلال|مكروه|مستحب|واجب|فرض|فتوى|بدعة)(?!\p{L})|(?:قال|يقول)\s+(?:الله|النبي|رسول الله)/iu;
 
 const teachingOnly = (text: string) =>
   !INSTRUCTS_AROUND_RULES.test(text) && !MAKES_RELIGIOUS_CLAIM.test(text) && !containsLink(text);
