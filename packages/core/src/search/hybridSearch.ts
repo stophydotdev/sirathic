@@ -1,18 +1,29 @@
 import { db } from "@sirathic/db";
-import { type SQL, sql } from "drizzle-orm";
+import { getTableName, type SQL, sql } from "drizzle-orm";
 import { z } from "zod";
+import { cacheFor, dataVersion } from "../cache";
 import { arabicForms, withoutStopwords } from "./arabic";
 import { embedQuery } from "./embedding";
 import type { Searchable } from "./searchable";
 import { countWhere, tableSize } from "./wordCounts";
 
 const POOL = 40;
+const WEEK_MS = 7 * 24 * 60 * 60_000;
 const RRF_K = 60;
 const COMMON_SHARE = 0.08;
 const ARABIC = /\p{Script=Arabic}/u;
 const ARABIC_MARKS = /[ً-ٰٟـ]/gu;
 
 const ranked = z.array(z.object({ id: z.string(), distance: z.number() }));
+
+const idsCache = cacheFor({
+  namespace: "search-ids:v1",
+  schema: ranked,
+  freshMs: WEEK_MS,
+  keepMs: WEEK_MS,
+});
+
+export type Filter = { where: SQL; key: string };
 
 const wordQuery = (word: string) =>
   ARABIC.test(word)
@@ -55,21 +66,23 @@ const rareWordScore = async (table: Searchable["table"], query: string) => {
   };
 };
 
-export const hybridIds = async (
+type Options = {
+  filter?: Filter;
+  topUp?: boolean;
+  rareWords?: boolean;
+  maxDistance?: number;
+};
+
+const searchIds = async (
   { table, embedding, embedder }: Searchable,
   query: string,
   limit: number,
   {
-    filter = sql`true`,
+    filter: { where: filter } = { where: sql`true`, key: "" },
     topUp = false,
     rareWords = false,
     maxDistance,
-  }: {
-    filter?: SQL;
-    topUp?: boolean;
-    rareWords?: boolean;
-    maxDistance?: number;
-  } = {},
+  }: Options,
 ) => {
   const plain = query.replaceAll(ARABIC_MARKS, "");
   const [vector, rare] = await Promise.all([
@@ -129,4 +142,19 @@ export const hybridIds = async (
   `);
   });
   return ranked.parse(rows);
+};
+
+export const hybridIds = async (
+  source: Searchable,
+  query: string,
+  limit: number,
+  options: Options = {},
+) => {
+  const { filter, topUp, rareWords, maxDistance } = options;
+  const flags = [filter?.key, topUp, rareWords, maxDistance].join("|");
+  const text = query.trim().replaceAll(/\s+/gu, " ").toLowerCase();
+  return idsCache(
+    `${await dataVersion()}:${getTableName(source.table)}:${source.embedder.model}:${limit}:${flags}:${text}`,
+    () => searchIds(source, query, limit, options),
+  );
 };
