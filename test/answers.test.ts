@@ -275,7 +275,7 @@ test("an answer thinks at the effort the client asks for", async () => {
   const efforts = await Promise.all(
     (["low", "max"] as const).map(async (effort) => {
       const { model, seen } = scriptedModel([]);
-      await answerWith(model, { turn: { effort, sessionId: "chat" } }).generate({
+      await answerWith(model, { turn: { effort, sessionId: "chat", by: "user" } }).generate({
         prompt: "hi",
       });
       const options = seen[0]?.providerOptions;
@@ -293,7 +293,7 @@ test("quick and research both think at high when the user picks nothing", async 
     MODES.map(async (mode) => {
       const { model, seen } = scriptedModel([]);
       await answerWith(model, {
-        turn: { effort: DEFAULT_EFFORT[mode], sessionId: "chat" },
+        turn: { effort: DEFAULT_EFFORT[mode], sessionId: "chat", by: "user" },
       }).generate({ prompt: "hi" });
       return seen[0]?.providerOptions?.anthropic?.effort;
     }),

@@ -178,6 +178,15 @@ export async function identityOf(tokens: DeviceTokens) {
   };
 }
 
+const cacheKeyed = z.object({ prompt_cache_key: z.string().optional() });
+
+const cacheKeyOf = (body: RequestInit["body"]) => {
+  const text = z.string().safeParse(body);
+  return text.success
+    ? cacheKeyed.safeParse(JSON.parse(text.data)).data?.prompt_cache_key
+    : undefined;
+};
+
 export const codexFetch = (
   credentials: () => Promise<{ accessToken: string; accountId: string }>,
 ) =>
@@ -191,6 +200,8 @@ export const codexFetch = (
       headers.set("chatgpt-account-id", accountId);
       headers.set("openai-beta", "responses=experimental");
       headers.set("originator", ORIGINATOR);
+      const cacheKey = cacheKeyOf(init?.body);
+      if (cacheKey) headers.set("session-id", cacheKey);
       return fetch(url, { ...init, headers });
     },
     { preconnect: fetch.preconnect },

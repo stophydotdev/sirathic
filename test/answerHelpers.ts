@@ -64,7 +64,7 @@ export const answerWith = (
     loaded: [],
     confirm: () => false,
     shorten: (message) => message,
-    turn: { effort: "high", sessionId: "chat" },
+    turn: { effort: "high", sessionId: "chat", by: "user" },
     ...overrides,
   });
 
@@ -98,7 +98,7 @@ export const chatTurn = async (
   });
   const response = chatResponse({
     models: { model, small: model },
-    turn: { effort: "high", sessionId: "chat" },
+    turn: { effort: "high", sessionId: "chat", by: "user" },
     modelName: "test",
     messages: [
       { id: "1", role: "user", parts: [{ type: "text", text: "what is zakat" }] },
