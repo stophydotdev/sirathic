@@ -1,4 +1,4 @@
-import { expect, test } from "bun:test";
+import { expect, mock, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import { APICallError, simulateReadableStream } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
@@ -425,10 +425,10 @@ test("the skill list is always in the rules, and a chat with no skills has none"
 });
 
 test.each([
-  ["completes", { stream: simulateReadableStream({ chunks: answered }) }, true],
-  ["fails", undefined, false],
-])("an answer that %s tells the daily cap so", async (_, stream, completed) => {
-  const finished: boolean[] = [];
+  ["completes", { stream: simulateReadableStream({ chunks: answered }) }, 6],
+  ["fails", undefined, 0],
+])("an answer that %s reports what it cost in counted tokens", async (_, stream, cost) => {
+  const spent: number[] = [];
   const model = new MockLanguageModelV4({
     doStream: async () => {
       if (!stream)
@@ -443,9 +443,72 @@ test.each([
     },
   });
 
-  await chatTurn({ models: { model, small: model }, release: (done) => finished.push(done) });
+  await chatTurn({ models: { model, small: model }, spend: (counted) => spent.push(counted) });
 
-  expect(finished).toEqual([completed]);
+  expect(spent).toEqual([cost]);
+});
+
+const stored = new Map<string, { total: number; endsAt: number }>();
+const cache = await import("@sirathic/core/cache");
+mock.module("@sirathic/core/cache", () => ({
+  ...cache,
+  countUpBy: async (key: string, amount: number, keepSeconds: number) => {
+    const entry = stored.get(key) ?? { total: 0, endsAt: Date.now() + keepSeconds * 1000 };
+    stored.set(key, { ...entry, total: entry.total + amount });
+    return entry.total + amount;
+  },
+  countOf: async (key: string) => {
+    const entry = stored.get(key);
+    return { total: entry?.total ?? 0, leftMs: entry ? entry.endsAt - Date.now() : -2 };
+  },
+}));
+const { checkNoorUsage, countedTokens, noorUsage, spendNoor } =
+  await import("../apps/server/src/models/usage");
+const NOOR_MODEL = "sirathic-noor-1-flash";
+
+const usageOf = (inputTokens: number) => ({
+  inputTokens,
+  inputTokenDetails: {
+    noCacheTokens: 1000,
+    cacheReadTokens: inputTokens - 4000,
+    cacheWriteTokens: 3000,
+  },
+  outputTokens: 200,
+  outputTokenDetails: { textTokens: 200, reasoningTokens: undefined },
+  totalTokens: inputTokens + 200,
+});
+
+test("a Noor call counts tokens by what they cost, and a prompt over 100K costs five times as much", () => {
+  const hourWrites = {
+    anthropic: { usage: { cache_creation: { ephemeral_1h_input_tokens: 1000 } } },
+  };
+  expect([
+    countedTokens(usageOf(10_000), hourWrites),
+    countedTokens(usageOf(10_000), undefined),
+    countedTokens(usageOf(104_000), hourWrites),
+  ]).toEqual([1000 + 2000 * 1.25 + 1000 * 2 + 600 + 1000, 1000 + 3750 + 600 + 1000, 5 * 16500]);
+});
+
+test("Noor stops at 1.5M counted tokens in 5 hours, says when it resets, and other models are not counted", async () => {
+  spendNoor("a", NOOR_MODEL)?.(1_000_000);
+  await checkNoorUsage({ by: "a", modelName: NOOR_MODEL, offerGpt: false });
+  spendNoor("a", NOOR_MODEL)?.(500_000);
+  await Bun.sleep(0);
+  expect([
+    (await noorUsage("a")).map(({ usedPercent }) => Math.round(usedPercent)),
+    spendNoor("a", "gpt-6-luna"),
+  ]).toEqual([[100, 33], undefined]);
+  await expect(
+    checkNoorUsage({ by: "a", modelName: NOOR_MODEL, timeZone: "Asia/Dhaka", offerGpt: false }),
+  ).rejects.toThrow(/^You've used Noor's limit for now\. It resets at [^.]+\.$/u);
+  await checkNoorUsage({ by: "a", modelName: "gpt-6-luna", offerGpt: false });
+});
+
+test("a full week names the week, and someone not on ChatGPT is told how to keep asking", async () => {
+  stored.set("noor-usage:604800:b", { total: 4_600_000, endsAt: Date.now() + 86_400_000 });
+  await expect(checkNoorUsage({ by: "b", modelName: NOOR_MODEL, offerGpt: true })).rejects.toThrow(
+    /^You've used this week's Noor limit\. It resets .+\. Sign in with ChatGPT to keep asking with GPT\.$/u,
+  );
 });
 
 test("a page Stophy reads with its own endpoint points the model at stophy_call", () => {

@@ -8,7 +8,8 @@ import { startScheduler } from "./automations/runner";
 import { timezone } from "./shared/settings";
 import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
-import { pickModels, reserveNoorAnswer } from "./models/pick";
+import { pickModels } from "./models/pick";
+import { checkNoorUsage, spendNoor } from "./models/usage";
 import { chatResponse } from "./chat/response";
 import { reviewEvery } from "./bots/review";
 import { chatTitle } from "./chat/title";
@@ -77,7 +78,12 @@ app.post("/api/chat", (c) =>
     });
     const owner = input.incognito ? undefined : by;
     const { modelName, models } = pickModels(user, input.model);
-    const release = await reserveNoorAnswer(by, modelName);
+    await checkNoorUsage({
+      by,
+      modelName,
+      timeZone: input.timezone,
+      offerGpt: user.via !== "chatgpt",
+    });
     const asked = validated.findLast((message) => message.role === "user");
     track(
       {
@@ -157,7 +163,7 @@ app.post("/api/chat", (c) =>
       mode: input.mode,
       abortSignal: answer.signal,
       settled: answer.settled,
-      release,
+      spend: spendNoor(by, modelName),
       bot:
         owner === undefined
           ? undefined

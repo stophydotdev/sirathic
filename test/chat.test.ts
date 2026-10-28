@@ -1,4 +1,4 @@
-import { expect, mock, test } from "bun:test";
+import { expect, test } from "bun:test";
 import { citations, withBareCitations } from "../apps/server/src/chat/citations";
 import {
   bestPieces,
@@ -463,45 +463,4 @@ test("a saved chat sent back with the old tool names reaches the agent under the
 test("the code sandbox is offered to Noor and to no other model", () => {
   expect(Object.keys(codeTools("sirathic-noor-1-flash"))).toEqual(["code_execution"]);
   expect(Object.keys(codeTools("gpt-6-luna"))).toEqual([]);
-});
-
-const used = new Map<string, number>();
-const cache = await import("@sirathic/core/cache");
-mock.module("@sirathic/core/cache", () => ({
-  ...cache,
-  countUp: async (key: string) => used.set(key, (used.get(key) ?? 0) + 1).get(key) ?? 0,
-  countDown: async (key: string) => used.set(key, (used.get(key) ?? 0) - 1).get(key) ?? 0,
-}));
-const { reserveNoorAnswer } = await import("../apps/server/src/models/pick");
-const NOOR_MODEL = "sirathic-noor-1-flash";
-
-test("an answer that did not complete gives its daily Noor slot back", async () => {
-  const done = await Promise.all(
-    Array.from({ length: 29 }, () => reserveNoorAnswer("a", NOOR_MODEL)),
-  );
-  await Promise.all(done.map((finish) => finish(true)));
-
-  const failed = await reserveNoorAnswer("a", NOOR_MODEL);
-  await failed(false);
-  const retried = await reserveNoorAnswer("a", NOOR_MODEL);
-  await retried(true);
-
-  await expect(reserveNoorAnswer("a", NOOR_MODEL)).rejects.toThrow("30 Noor answers");
-});
-
-test("answers started together cannot pass the daily Noor cap, and a refusal leaves the count alone", async () => {
-  await Promise.all(Array.from({ length: 29 }, () => reserveNoorAnswer("b", NOOR_MODEL)));
-
-  const together = await Promise.allSettled([
-    reserveNoorAnswer("b", NOOR_MODEL),
-    reserveNoorAnswer("b", NOOR_MODEL),
-  ]);
-
-  expect(together.map(({ status }) => status)).toEqual(["fulfilled", "rejected"]);
-  expect([...used].filter(([key]) => key.includes(":b:")).map(([, count]) => count)).toEqual([30]);
-});
-
-test("a model that is not Noor has no daily cap", async () => {
-  await Promise.all(Array.from({ length: 31 }, () => reserveNoorAnswer("c", "gpt-6-luna")));
-  expect([...used.keys()].some((key) => key.includes(":c:"))).toBe(false);
 });

@@ -1,5 +1,6 @@
 import { NOOR_MODELS } from "../models/noor";
 import { DEFAULT_MODEL, models, usage } from "../models/subscription";
+import { noorUsage } from "../models/usage";
 import { settingsUpdate } from "../shared/settings";
 import { z } from "zod";
 import { StatusError } from "../http";
@@ -55,7 +56,13 @@ export const accountRoutes = {
       .mutation(async ({ ctx, input }) =>
         signOutDevice(ctx.owner, await sessionOf(ctx.headers), input.id),
       ),
-    usage: signedIn.query(({ ctx }) => (ctx.user.via === "chatgpt" ? usage(ctx.user) : null)),
+    usage: signedIn.query(async ({ ctx }) => {
+      const [noor, chatgpt] = await Promise.all([
+        noorUsage(ctx.owner),
+        ctx.user.via === "chatgpt" ? usage(ctx.user).catch(() => null) : null,
+      ]);
+      return { noor, chatgpt };
+    }),
     export: signedIn.query(({ ctx }) => exportData(ctx.owner)),
     delete: signedIn.mutation(({ ctx }) => deleteAccount(ctx.owner)),
   }),

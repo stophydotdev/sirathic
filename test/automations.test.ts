@@ -113,8 +113,11 @@ const fakeDb = drizzle(
 
 mock.module("@sirathic/db", () => ({ db: fakeDb }));
 const cache = await import("@sirathic/core/cache");
-let answersToday = 31;
-mock.module("@sirathic/core/cache", () => ({ ...cache, countUp: async () => answersToday }));
+let usedTokens = 25_000_000;
+mock.module("@sirathic/core/cache", () => ({
+  ...cache,
+  countOf: async () => ({ total: usedTokens, leftMs: 60_000 }),
+}));
 const response = await import("../apps/server/src/chat/response");
 const modelInputs: ChatMessage[][] = [];
 const citedInputs: (ChatMessage[] | undefined)[] = [];
@@ -247,9 +250,9 @@ test("a sign-in failure is told every time and never counts toward pausing", asy
   ]);
 });
 
-test("a routine runs even when the user has spent the day's Noor answers in chat", async () => {
+test("a routine runs even when the user has used Noor's limit in chat", async () => {
   Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 0 });
-  answersToday = 31;
+  usedTokens = 25_000_000;
 
   await runDueQuietly();
 
@@ -259,7 +262,7 @@ test("a routine runs even when the user has spent the day's Noor answers in chat
 
 test("a run that works resets the failure count", async () => {
   Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 2 });
-  answersToday = 1;
+  usedTokens = 0;
 
   await runDueQuietly();
 
@@ -469,7 +472,7 @@ test("a bot routine run sends the model only its brief, numbers citations after 
   const earlier = Array.from({ length: 32 }, (_, index) => post(index + 1)).flat();
   storedBotChat = earlier;
   botRoutine = true;
-  answersToday = 1;
+  usedTokens = 0;
   Object.assign(automationRow, { enabled: true, nextRunAt: dueAt });
   savedChats.length = 0;
   modelInputs.length = 0;
