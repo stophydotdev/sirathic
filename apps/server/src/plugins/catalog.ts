@@ -89,6 +89,7 @@ export const CONNECTORS = {
     category: "search",
     description: "Get live, structured web data",
     url: "https://mcp.stophy.dev/mcp",
+    builtIn: true,
   },
   gmail: {
     name: "Gmail",
@@ -433,6 +434,7 @@ export const CONNECTORS = {
     description: string;
     url: string;
     open?: true;
+    builtIn?: true;
     tokenAuth?: "none" | "client_secret_post";
     icon?: string;
     googleScopes?: readonly string[];
@@ -450,6 +452,8 @@ export const popularOf = (counts: readonly { connector: string; users: number }[
       .slice(0, POPULAR_SIZE)
       .map((row) => row.connector),
   );
+
+export const BUILT_IN = CONNECTOR_IDS.filter((id) => "builtIn" in CONNECTORS[id]);
 
 export const toolName = (connector: string, name: string) =>
   `${connector}_${name}`.replaceAll(/[^\w-]/gu, "_").slice(0, TOOL_NAME_LIMIT);

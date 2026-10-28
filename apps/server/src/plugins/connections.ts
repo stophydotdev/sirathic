@@ -18,6 +18,7 @@ import { ownerCache } from "../account/ownerCache";
 import { seal, unseal } from "../account/vault";
 import { publicUrl } from "./address";
 import {
+  BUILT_IN,
   CONNECTOR_IDS,
   CONNECTORS,
   type ConnectorId,
@@ -278,6 +279,7 @@ async function loadConnections(owner: string) {
             category: "custom" as const,
             url: row.url,
             connected: row.connected,
+            builtIn: false,
             popular: false,
           },
         ]
@@ -288,7 +290,8 @@ async function loadConnections(owner: string) {
     name: CONNECTORS[id].name,
     category: CONNECTORS[id].category,
     url: CONNECTORS[id].url,
-    connected: connected.has(id),
+    connected: connected.has(id) || BUILT_IN.includes(id),
+    builtIn: BUILT_IN.includes(id),
     popular: popular.has(id),
   }));
   return [...custom, ...catalog];
@@ -373,15 +376,20 @@ export async function disconnect(owner: string, connector: string) {
 
 const toolArguments = z.record(z.string(), z.unknown());
 
-type ConnectionRow = {
-  connector: string;
-  name: string | null;
-  url: string | null;
-  secrets: string;
-};
+type ConnectionRow =
+  | { kind: "own"; connector: string; name: string | null; url: string | null; secrets: string }
+  | { kind: "ours"; connector: string; name: null; url: null };
+
+const OUR_STOPHY = { authorization: `Bearer ${env.STOPHY_API_KEY}` };
 
 async function openClient(owner: string, row: ConnectionRow, signal: AbortSignal) {
   const server = await serverFrom(row);
+  if (row.kind === "ours") {
+    return createMCPClient({
+      transport: { type: "http", url: server.url, headers: OUR_STOPHY },
+      initializationOptions: { signal },
+    });
+  }
   const stored = await unsealed(row.secrets);
   const authProvider = stored.tokens
     ? providerFor(owner, row.connector, server, stored).provider
@@ -431,8 +439,8 @@ async function connectorTools(owner: string, row: ConnectionRow) {
   };
 }
 
-const loadConnectedRows = async (owner: string) =>
-  db
+const loadConnectedRows = async (owner: string): Promise<ConnectionRow[]> => {
+  const rows = await db
     .select({
       connector: connections.connector,
       name: connections.name,
@@ -441,6 +449,16 @@ const loadConnectedRows = async (owner: string) =>
     })
     .from(connections)
     .where(and(eq(connections.owner, owner), eq(connections.connected, true)));
+  return [
+    ...rows.map((row) => ({ kind: "own" as const, ...row })),
+    ...BUILT_IN.filter((id) => !rows.some((row) => row.connector === id)).map((connector) => ({
+      kind: "ours" as const,
+      connector,
+      name: null,
+      url: null,
+    })),
+  ];
+};
 
 export async function connectedTools(owner: string, only?: readonly string[] | null) {
   const rows = await connectedRows
