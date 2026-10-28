@@ -83,7 +83,7 @@ Before ending your turn, reflect on what new facts you learned about the user. I
       execute: async (change) => {
         if (!scope) throw new Error("Not saved: this chat is incognito, so nothing is remembered.");
         if (change.write === undefined && change.forget === undefined) return "Nothing to save.";
-        if (change.write && scope.kind === "bot") {
+        if (change.write) {
           const rejected = profileRejection(change.write);
           if (rejected) return rejected;
         }
