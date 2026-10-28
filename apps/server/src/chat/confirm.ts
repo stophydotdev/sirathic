@@ -31,6 +31,9 @@ const ACTIONS = [
 
 export type ActionKind = (typeof ACTIONS)[number]["kind"];
 
+const WIPE_OUT =
+  /(?:^|[^a-z])(?:drop\s+(?:table|database|schema|view|index|column)|truncate|delete\s+from)(?=$|[^a-z])/iu;
+
 const spelledOut = z
   .object({
     action: z.string().catch(""),
@@ -45,10 +48,11 @@ type Call = { toolName: string; input: unknown };
 export const actionOf = ({ toolName, input }: Call) => {
   const { action, command, sql, sql_statements } = spelledOut.parse(input);
   if (CONFIRMED_DELETES.get(toolName)?.includes(action)) return "delete";
-  const spelled = [toolName, action, command, sql, ...sql_statements]
+  const spelled = [toolName, action, command.split("{")[0]]
     .join(" ")
     .replaceAll(/(\p{Ll})(\p{Lu})/gu, "$1 $2");
-  return ACTIONS.find(({ words }) => words.test(spelled))?.kind;
+  const named = ACTIONS.find(({ words }) => words.test(spelled))?.kind;
+  return named ?? (WIPE_OUT.test([sql, ...sql_statements].join(" ")) ? "delete" : undefined);
 };
 
 const confirmedDelete = ({ toolName, input }: Call) =>

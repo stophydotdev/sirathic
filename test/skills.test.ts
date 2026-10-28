@@ -141,6 +141,8 @@ test.each([
   ["googlecalendar_delete_event", { eventId: "e1" }, false],
   ["neon_run_sql", { sql: "select count(*) from users" }, false],
   ["neon_run_sql", { sql: "DROP TABLE users" }, true],
+  ["posthog_exec", { command: 'call query-run {"event":"post_created"}' }, false],
+  ["posthog_exec", { command: 'call funnel-get {"steps":["signup","drop_off"]}' }, false],
   ["neon_run_sql_transaction", { sql_statements: ["select 1", "DELETE FROM users"] }, true],
   ["custom_sendEmail", { to: "a@b.c" }, true],
   ["custom_manage_mail", { action: "send", to: "a@b.c" }, true],
