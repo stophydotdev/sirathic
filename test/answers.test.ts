@@ -403,6 +403,16 @@ test("each step sends the step before it unchanged, so the provider can reuse it
   ).toEqual(seen.slice(0, -1).map((call) => call.prompt));
 });
 
+test("a third identical tool call in one reply is refused", async () => {
+  const { model, seen } = scriptedModel(["search_web", "search_web", "search_web"]);
+  await answerWith(model, {}).generate({ prompt: "hi" });
+  const outputs = seen
+    .at(-1)
+    ?.prompt.flatMap((message) => (message.role === "tool" ? message.content : []))
+    .flatMap((part) => (part.type === "tool-result" ? [part.output.type] : []));
+  expect(outputs).toEqual(["text", "text", "error-text"]);
+});
+
 test("the skill list is always in the rules, and a chat with no skills has none", async () => {
   const withSkills = scriptedModel([]);
   await answerWith(withSkills.model, { skills: [researchSkill] }).generate({ prompt: "hi" });
