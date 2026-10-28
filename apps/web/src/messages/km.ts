@@ -477,7 +477,6 @@ export default {
     "មិនទាន់មានអ្វីរក្សាទុកនៅឡើយទេ។ Sirathic រក្សាទុកព័ត៌មានស្ថិតស្ថេរដែលអ្នកចែករំលែកក្នុងការជជែក។",
   "Delete everything Sirathic remembers? This can't be undone.":
     "លុបអ្វីៗទាំងអស់ដែល Sirathic ចងចាំឬ? មិនអាចត្រឡប់វិញបានទេ។",
-  "Your automations": "ស្វ័យប្រវត្តិកម្មរបស់អ្នក",
   "Pick new icon": "ជ្រើសរើសរូបតំណាងថ្មី",
   Folder: "ថត",
   "A project name cannot contain a link.": "ឈ្មោះគម្រោងមិនអាចមានតំណភ្ជាប់បានទេ។",
@@ -529,7 +528,6 @@ export default {
   "Automation resumed": "បានបន្តស្វ័យប្រវត្តិកម្ម",
   "Automation deleted": "បានលុបស្វ័យប្រវត្តិកម្ម",
   "Automation created": "បានបង្កើតស្វ័យប្រវត្តិកម្ម",
-  "No automations yet": "មិនទាន់មានស្វ័យប្រវត្តិកម្មនៅឡើយ",
   None: "គ្មាន",
   "Finished. Open to read the answer.": "បានបញ្ចប់។ បើកដើម្បីអានចម្លើយ។",
   "New automation answers": "ចម្លើយថ្មីពីស្វ័យប្រវត្តិកម្ម",

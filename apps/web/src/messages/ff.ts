@@ -481,7 +481,6 @@ export default {
     "Alaa ko danndaa tawo. Sirathic ena danndoo ko meeɗaa jooɗii ko hollataa nder yeewtere.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Momtu ko Sirathic siftorii fof? Ɗum waawaa artireede.",
-  "Your automations": "Otomatik maa",
   "Pick new icon": "Suɓtu maande hesere",
   Folder: "Fiilde",
   "A project name cannot contain a link.": "Innde gollal waawaa wondude e jokkorgol.",
@@ -533,7 +532,6 @@ export default {
   "Automation resumed": "Otomatik fuɗɗitaama",
   "Automation deleted": "Otomatik momtaama",
   "Automation created": "Otomatik waɗaama",
-  "No automations yet": "Walaa otomatik tawo",
   None: "Walaa",
   "Finished. Open to read the answer.": "Timmii. Uddit ngam tar jawaabu.",
   "New automation answers": "Jawaabuuji otomatik kesum",

@@ -484,7 +484,6 @@ export default {
     "Belum ada yang tersimpan. Sirathic menyimpan fakta tetap yang Anda bagikan dalam obrolan.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Hapus semua yang diingat Sirathic? Tindakan ini tidak dapat dibatalkan.",
-  "Your automations": "Otomatisasi Anda",
   "Pick new icon": "Pilih ikon baru",
   Folder: "Folder",
   "A project name cannot contain a link.": "Nama proyek tidak boleh berisi tautan.",
@@ -536,7 +535,6 @@ export default {
   "Automation resumed": "Otomatisasi dilanjutkan",
   "Automation deleted": "Otomatisasi dihapus",
   "Automation created": "Otomatisasi dibuat",
-  "No automations yet": "Belum ada otomatisasi",
   None: "Tidak ada",
   "Finished. Open to read the answer.": "Selesai. Buka untuk membaca jawabannya.",
   "New automation answers": "Jawaban otomatisasi baru",

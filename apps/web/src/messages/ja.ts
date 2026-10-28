@@ -485,7 +485,6 @@ export default {
     "まだ何も保存されていません。Sirathic は、チャットで共有された長く役立つ情報を保存します。",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic が覚えていることをすべて削除しますか？元に戻せません。",
-  "Your automations": "あなたの自動化",
   "Pick new icon": "新しいアイコンを選択",
   Folder: "フォルダ",
   "A project name cannot contain a link.": "プロジェクト名にはリンクを含められません。",
@@ -537,7 +536,6 @@ export default {
   "Automation resumed": "オートメーションを再開しました",
   "Automation deleted": "オートメーションを削除しました",
   "Automation created": "自動化を作成しました",
-  "No automations yet": "自動化はまだありません",
   None: "なし",
   "Finished. Open to read the answer.": "完了しました。開いて回答を読む。",
   "New automation answers": "自動化の新しい回答",

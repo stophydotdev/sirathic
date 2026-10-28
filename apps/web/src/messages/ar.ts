@@ -478,7 +478,6 @@ export default {
     "لم يُحفظ شيء بعد. يحفظ Sirathic المعلومات الدائمة التي تشاركها في المحادثة.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "هل تريد حذف كل ما يتذكره Sirathic؟ لا يمكن التراجع عن ذلك.",
-  "Your automations": "أتمتتك",
   "Pick new icon": "اختيار أيقونة جديدة",
   Folder: "مجلد",
   "A project name cannot contain a link.": "لا يمكن أن يحتوي اسم المشروع على رابط.",
@@ -530,7 +529,6 @@ export default {
   "Automation resumed": "تم استئناف الأتمتة",
   "Automation deleted": "تم حذف الأتمتة",
   "Automation created": "تم إنشاء الأتمتة",
-  "No automations yet": "لا توجد أتمتة بعد",
   None: "بدون",
   "Finished. Open to read the answer.": "انتهى. افتح لقراءة الإجابة.",
   "New automation answers": "إجابات أتمتة جديدة",

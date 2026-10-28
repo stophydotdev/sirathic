@@ -482,7 +482,6 @@ export default {
     "ഇതുവരെ ഒന്നും സൂക്ഷിച്ചിട്ടില്ല. ചാറ്റിൽ നിങ്ങൾ പങ്കിടുന്ന സ്ഥിരമായ വിവരങ്ങൾ Sirathic സൂക്ഷിക്കുന്നു.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic ഓർക്കുന്നതെല്ലാം ഇല്ലാതാക്കണോ? ഇത് തിരിച്ചെടുക്കാനാവില്ല.",
-  "Your automations": "നിങ്ങളുടെ ഓട്ടോമേഷനുകൾ",
   "Pick new icon": "പുതിയ ഐക്കൺ തിരഞ്ഞെടുക്കുക",
   Folder: "ഫോൾഡർ",
   "A project name cannot contain a link.": "പ്രോജക്റ്റിന്റെ പേരിൽ ലിങ്ക് പാടില്ല.",
@@ -534,7 +533,6 @@ export default {
   "Automation resumed": "ഓട്ടോമേഷൻ പുനരാരംഭിച്ചു",
   "Automation deleted": "ഓട്ടോമേഷൻ ഇല്ലാതാക്കി",
   "Automation created": "ഓട്ടോമേഷൻ സൃഷ്ടിച്ചു",
-  "No automations yet": "ഇതുവരെ ഓട്ടോമേഷനുകളില്ല",
   None: "ഒന്നുമില്ല",
   "Finished. Open to read the answer.": "പൂർത്തിയായി. ഉത്തരം വായിക്കാൻ തുറക്കുക.",
   "New automation answers": "ഓട്ടോമേഷനുകളുടെ പുതിയ ഉത്തരങ്ങൾ",

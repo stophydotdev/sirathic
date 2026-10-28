@@ -485,7 +485,6 @@ export default {
     "Henüz kaydedilmiş bir şey yok. Sirathic, bir sohbette paylaştığınız kalıcı bilgileri kaydeder.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic'in hatırladığı her şey silinsin mi? Bu işlem geri alınamaz.",
-  "Your automations": "Otomasyonlarınız",
   "Pick new icon": "Yeni simge seç",
   Folder: "Klasör",
   "A project name cannot contain a link.": "Proje adı bağlantı içeremez.",
@@ -537,7 +536,6 @@ export default {
   "Automation resumed": "Otomasyon sürdürüldü",
   "Automation deleted": "Otomasyon silindi",
   "Automation created": "Otomasyon oluşturuldu",
-  "No automations yet": "Henüz otomasyon yok",
   None: "Hiçbiri",
   "Finished. Open to read the answer.": "Bitti. Yanıtı okumak için aç.",
   "New automation answers": "Otomasyonlardan yeni yanıtlar",

@@ -484,7 +484,6 @@ export default {
     "هێشتا هیچ پاشەکەوت نەکراوە. Sirathic ئەو زانیارییە بەردەوامانە پاشەکەوت دەکات کە لە گفتوگۆدا هاوبەشیان دەکەیت.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "هەموو ئەوەی Sirathic بیری دێت بسڕدرێتەوە؟ ناگەڕێتەوە.",
-  "Your automations": "ئۆتۆماتکردنەکانت",
   "Pick new icon": "هەڵبژاردنی ئایکۆنی نوێ",
   Folder: "فۆڵدەر",
   "A project name cannot contain a link.": "ناوی پڕۆژە ناتوانێت بەستەری تێدا بێت.",
@@ -536,7 +535,6 @@ export default {
   "Automation resumed": "ئۆتۆماتکردن دەستی پێکردەوە",
   "Automation deleted": "ئۆتۆماتکردن سڕایەوە",
   "Automation created": "ئۆتۆماتکردن دروستکرا",
-  "No automations yet": "هێشتا هیچ ئۆتۆماتکردنێک نییە",
   None: "هیچ",
   "Finished. Open to read the answer.": "تەواو بوو. بیکەرەوە بۆ خوێندنەوەی وەڵام.",
   "New automation answers": "وەڵامی نوێی ئۆتۆماتکردن",

@@ -482,7 +482,6 @@ export default {
     "Chưa lưu gì cả. Sirathic lưu những thông tin lâu dài bạn chia sẻ trong cuộc trò chuyện.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Xóa mọi thứ Sirathic nhớ? Thao tác này không thể hoàn tác.",
-  "Your automations": "Tự động hóa của bạn",
   "Pick new icon": "Chọn biểu tượng mới",
   Folder: "Thư mục",
   "A project name cannot contain a link.": "Tên dự án không được chứa liên kết.",
@@ -534,7 +533,6 @@ export default {
   "Automation resumed": "Đã tiếp tục tự động hóa",
   "Automation deleted": "Đã xóa tự động hóa",
   "Automation created": "Đã tạo tự động hóa",
-  "No automations yet": "Chưa có tự động hóa nào",
   None: "Không",
   "Finished. Open to read the answer.": "Đã xong. Mở để đọc câu trả lời.",
   "New automation answers": "Câu trả lời mới từ tự động hóa",

@@ -483,7 +483,6 @@ export default {
     "Још ништа није сачувано. Sirathic чува трајне чињенице које поделите у разговору.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Избрисати све што Sirathic памти? Ово не може да се поништи.",
-  "Your automations": "Ваше аутоматизације",
   "Pick new icon": "Одабери нову иконицу",
   Folder: "Фолдер",
   "A project name cannot contain a link.": "Назив пројекта не може садржати линк.",
@@ -535,7 +534,6 @@ export default {
   "Automation resumed": "Аутоматизација је настављена",
   "Automation deleted": "Аутоматизација је избрисана",
   "Automation created": "Аутоматизација је направљена",
-  "No automations yet": "Још нема аутоматизација",
   None: "Ништа",
   "Finished. Open to read the answer.": "Готово. Отвори да прочиташ одговор.",
   "New automation answers": "Нови одговори аутоматизација",

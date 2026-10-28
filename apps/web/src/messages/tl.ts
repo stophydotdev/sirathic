@@ -489,7 +489,6 @@ export default {
     "Wala pang naka-save. Sine-save ng Sirathic ang mga pangmatagalang katotohanang ibinabahagi mo sa chat.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Burahin ang lahat ng naaalala ng Sirathic? Hindi na ito maibabalik.",
-  "Your automations": "Mga automation mo",
   "Pick new icon": "Pumili ng bagong icon",
   Folder: "Folder",
   "A project name cannot contain a link.": "Hindi puwedeng may link ang pangalan ng proyekto.",
@@ -541,7 +540,6 @@ export default {
   "Automation resumed": "Itinuloy ang automation",
   "Automation deleted": "Nabura ang automation",
   "Automation created": "Nagawa ang automation",
-  "No automations yet": "Wala pang automation",
   None: "Wala",
   "Finished. Open to read the answer.": "Tapos na. Buksan para basahin ang sagot.",
   "New automation answers": "Mga bagong sagot ng automation",

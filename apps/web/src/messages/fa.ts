@@ -482,7 +482,6 @@ export default {
     "هنوز چیزی ذخیره نشده است. Sirathic اطلاعات ماندگاری را که در گفتگو به اشتراک می‌گذارید ذخیره می‌کند.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "هر آنچه Sirathic به یاد دارد حذف شود؟ این کار بازگشت‌پذیر نیست.",
-  "Your automations": "خودکارسازی‌های شما",
   "Pick new icon": "انتخاب نماد جدید",
   Folder: "پوشه",
   "A project name cannot contain a link.": "نام پروژه نمی‌تواند پیوند داشته باشد.",
@@ -534,7 +533,6 @@ export default {
   "Automation resumed": "خودکارسازی ادامه یافت",
   "Automation deleted": "خودکارسازی حذف شد",
   "Automation created": "خودکارسازی ساخته شد",
-  "No automations yet": "هنوز خودکارسازی‌ای نیست",
   None: "هیچ‌کدام",
   "Finished. Open to read the answer.": "تمام شد. برای خواندن پاسخ باز کنید.",
   "New automation answers": "پاسخ‌های تازهٔ خودکارسازی",

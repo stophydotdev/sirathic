@@ -489,7 +489,6 @@ export default {
     "Ҳали ҳеч нарса сақланмаган. Sirathic суҳбатда улашган доимий фактларингизни сақлайди.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic эслаб қолган ҳамма нарса ўчирилсинми? Буни қайтариб бўлмайди.",
-  "Your automations": "Автоматлаштиришларингиз",
   "Pick new icon": "Янги белги танлаш",
   Folder: "Папка",
   "A project name cannot contain a link.": "Лойиҳа номида ҳавола бўлиши мумкин эмас.",
@@ -541,7 +540,6 @@ export default {
   "Automation resumed": "Автоматлаштириш давом эттирилди",
   "Automation deleted": "Автоматлаштириш ўчирилди",
   "Automation created": "Автоматлаштириш яратилди",
-  "No automations yet": "Ҳозирча автоматлаштириш йўқ",
   None: "Йўқ",
   "Finished. Open to read the answer.": "Тайёр. Жавобни ўқиш учун очинг.",
   "New automation answers": "Автоматлаштиришнинг янги жавоблари",

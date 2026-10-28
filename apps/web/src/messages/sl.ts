@@ -484,7 +484,6 @@ export default {
     "Še nič ni shranjeno. Sirathic shrani trajna dejstva, ki jih delite v pogovoru.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Izbrisati vse, kar si Sirathic zapomni? Tega ni mogoče razveljaviti.",
-  "Your automations": "Vaše avtomatizacije",
   "Pick new icon": "Izberi novo ikono",
   Folder: "Mapa",
   "A project name cannot contain a link.": "Ime projekta ne sme vsebovati povezave.",
@@ -536,7 +535,6 @@ export default {
   "Automation resumed": "Avtomatizacija nadaljevana",
   "Automation deleted": "Avtomatizacija izbrisana",
   "Automation created": "Avtomatizacija ustvarjena",
-  "No automations yet": "Še ni avtomatizacij",
   None: "Brez",
   "Finished. Open to read the answer.": "Končano. Odprite za branje odgovora.",
   "New automation answers": "Novi odgovori avtomatizacij",

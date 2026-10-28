@@ -483,7 +483,6 @@ export default {
     "Hakuna kilichohifadhiwa bado. Sirathic huhifadhi mambo ya kudumu unayoshiriki kwenye gumzo.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Futa kila kitu ambacho Sirathic inakumbuka? Hatua hii haiwezi kutenduliwa.",
-  "Your automations": "Kazi zako otomatiki",
   "Pick new icon": "Chagua aikoni mpya",
   Folder: "Folda",
   "A project name cannot contain a link.": "Jina la mradi haliwezi kuwa na kiungo.",
@@ -535,7 +534,6 @@ export default {
   "Automation resumed": "Kazi otomatiki imeendelezwa",
   "Automation deleted": "Kazi otomatiki imefutwa",
   "Automation created": "Kazi otomatiki imeundwa",
-  "No automations yet": "Hakuna kazi otomatiki bado",
   None: "Hakuna",
   "Finished. Open to read the answer.": "Imekamilika. Fungua ili usome jibu.",
   "New automation answers": "Majibu mapya ya kazi otomatiki",

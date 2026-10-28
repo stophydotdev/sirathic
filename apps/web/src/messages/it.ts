@@ -486,7 +486,6 @@ export default {
     "Ancora nulla di salvato. Sirathic salva le informazioni durature che condividi in una chat.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Eliminare tutto ciò che Sirathic ricorda? L'azione è irreversibile.",
-  "Your automations": "Le tue automazioni",
   "Pick new icon": "Scegli una nuova icona",
   Folder: "Cartella",
   "A project name cannot contain a link.": "Il nome di un progetto non può contenere un link.",
@@ -538,7 +537,6 @@ export default {
   "Automation resumed": "Automazione ripresa",
   "Automation deleted": "Automazione eliminata",
   "Automation created": "Automazione creata",
-  "No automations yet": "Ancora nessuna automazione",
   None: "Nessuna",
   "Finished. Open to read the answer.": "Fatto. Apri per leggere la risposta.",
   "New automation answers": "Nuove risposte delle automazioni",
