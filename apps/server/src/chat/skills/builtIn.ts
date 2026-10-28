@@ -4,6 +4,7 @@ import type { Mode } from "../../shared/messages";
 import { CODE_RULES } from "../codeTools";
 import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
+import { STOPHY_LINK } from "../stophyTools";
 import documentReview from "./documentReview.md" with { type: "text" };
 import jobSearch from "./jobSearch.md" with { type: "text" };
 import noConnector from "./noConnector.md" with { type: "text" };
@@ -50,6 +51,26 @@ const PLUGIN_RULES =
 
 const appTools = (plugins: ToolSet, apps: readonly string[]) =>
   Object.keys(plugins).filter((name) => apps.some((app) => name.startsWith(`${app}_`)));
+
+const APP_SKILLS = new Map([
+  ["gmail", ["send_on_behalf"]],
+  ["googlecalendar", ["scheduling"]],
+]);
+
+export const openedBy = (
+  asked: string,
+  apps: readonly { id: string; name: string; connected: boolean }[],
+) => {
+  const named = apps.filter(
+    ({ name, connected }) => connected && asked.toLowerCase().includes(name.toLowerCase()),
+  );
+  return [
+    ...(STOPHY_LINK.test(asked) ? ["stophy"] : []),
+    ...(named.length > 0
+      ? ["plugins", ...named.flatMap(({ id }) => APP_SKILLS.get(id) ?? [])]
+      : []),
+  ];
+};
 
 const whenOf = ({ instructions }: UserSkill) =>
   (instructions.split(/(?<=[.!?])\s/u)[0] ?? instructions).slice(0, WHEN_CHARS);
