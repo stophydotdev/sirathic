@@ -505,7 +505,7 @@ test("a bot routine run sends the model only its brief, numbers citations after 
 const issues = (call: z.input<typeof routineCall>) =>
   routineCall.safeParse(call).error?.issues.map((issue) => issue.message);
 
-test("a routine call missing what its action needs is rejected before the user is asked to confirm", () => {
+test("a routine call missing what its action needs is rejected", () => {
   const id = "33333333-3333-4333-8333-333333333333";
   expect(issues({ action: "create", name: "Eid reminder" })).toEqual([
     "prompt is required to create",
