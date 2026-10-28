@@ -56,6 +56,7 @@ const ToggleButton: FC<{
   primary?: boolean;
 }> = ({ plugin, busy, onToggle, primary }) => {
   const t = useT();
+  if (plugin.builtIn) return null;
   return (
     <button
       type="button"

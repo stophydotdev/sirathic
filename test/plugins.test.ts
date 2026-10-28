@@ -223,7 +223,7 @@ globalThis.fetch = Object.assign(
   { preconnect: () => {} },
 );
 
-test("a plugin's tools come from the saved list and its server is reached only when a tool is called", async () => {
+test("a plugin's tools, and the built-in Stophy ones, come from the saved list and a server is reached only when a tool is called", async () => {
   const first = await connectedTools("owner");
   await first.close();
   expect(serverSaw).toContain("tools/list");
@@ -231,8 +231,13 @@ test("a plugin's tools come from the saved list and its server is reached only w
   serverSaw.length = 0;
   const second = await connectedTools("owner");
   expect(serverSaw).toEqual([]);
-  expect(Object.keys(second.tools)).toEqual(["exa_search", "exa_post"]);
-  expect(writingTools(second.tools)).toEqual(["exa_post"]);
+  expect(Object.keys(second.tools)).toEqual([
+    "exa_search",
+    "exa_post",
+    "stophy_search",
+    "stophy_post",
+  ]);
+  expect(writingTools(second.tools)).toEqual(["exa_post", "stophy_post"]);
 
   const found = await second.tools.exa_search?.execute?.(
     { q: "wudu" },
