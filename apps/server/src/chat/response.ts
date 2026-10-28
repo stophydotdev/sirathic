@@ -92,7 +92,7 @@ export function answerAgent({
   model: LanguageModel;
   tools: ToolSet;
   settings: Settings;
-  instructions: string;
+  instructions: ReturnType<typeof instructions>;
   mentioned: string;
   firstStep: keyof typeof FIRST_STEP | undefined;
   skills: readonly Skill[];

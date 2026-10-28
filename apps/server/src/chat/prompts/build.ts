@@ -14,6 +14,8 @@ import routine from "./routine.md" with { type: "text" };
 
 const MODES = { quick, research } as const satisfies Record<Mode, string>;
 
+const PROMPT_PARTS = core.split(/(?=## Ad-hoc Instructions)/u);
+
 const SCHOOLS = {
   hanafi: "Hanafi",
   maliki: "Maliki",
@@ -187,7 +189,7 @@ export const instructions = ({
     remembers,
     connectedApps,
   });
-  return fill(core, {
+  const slots = {
     identity: project ? botIdentity(project) : "Sirathic, an Islamic answering engine",
     abilities: abilities.length > 0 ? abilities.join("\n") : "- None in this run.",
     tool_notes: toolNotes
@@ -202,5 +204,6 @@ export const instructions = ({
       .join("\n\n"),
     date: dateLine(now, timezone ?? "UTC"),
     personalization: personalization(settings),
-  });
+  };
+  return PROMPT_PARTS.map((part) => ({ role: "system" as const, content: fill(part, slots) }));
 };

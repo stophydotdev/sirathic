@@ -380,7 +380,7 @@ const INDEX = "Skills you can load with load_skill:\n- research: x";
 test("the instructions go in once, and the rules after the question carry the unloaded skills, loaded skills and @-calls", async () => {
   const { model, seen } = scriptedModel(["load_skill", "search_web"], ["research"]);
   await answerWith(model, {
-    instructions: "CORE",
+    instructions: [{ role: "system", content: "CORE" }],
     mentioned: "\n\nThe user called @Hadith.",
     skills: [researchSkill],
     tools: { search_web: noInput, load_skill: loadSkill([researchSkill]) },
