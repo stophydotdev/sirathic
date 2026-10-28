@@ -10,20 +10,34 @@ const CACHED = { anthropic: { cacheControl: { type: "ephemeral" } } };
 
 const cacheMarks: LanguageModelMiddleware = {
   transformParams: async ({ params }) => {
-    const beforeRules = params.prompt.findLastIndex((message) => message.role !== "system");
+    const asked = params.prompt.findLastIndex((message) => message.role === "user");
+    const latest = params.prompt.findLastIndex((message) => message.role !== "system");
+    const oneShot =
+      !params.tools?.length &&
+      params.prompt.every((message, index) => message.role === "system" || index === asked);
+    const markOf = (role: string, index: number) =>
+      index === 0 && role === "system"
+        ? CACHED_HOUR
+        : oneShot
+          ? undefined
+          : index === asked
+            ? CACHED_HOUR
+            : index === latest
+              ? CACHED
+              : undefined;
     return {
       ...params,
-      prompt: params.prompt.map((message, index) =>
-        index === 0 || index === beforeRules
-          ? {
-              ...message,
-              providerOptions: {
-                ...message.providerOptions,
-                ...(index === 0 ? CACHED_HOUR : CACHED),
-              },
-            }
-          : message,
+      tools: params.tools?.map((tool, index, all) =>
+        index === all.length - 1 && tool.type === "function"
+          ? { ...tool, providerOptions: { ...tool.providerOptions, ...CACHED_HOUR } }
+          : tool,
       ),
+      prompt: params.prompt.map((message, index) => {
+        const mark = markOf(message.role, index);
+        return mark
+          ? { ...message, providerOptions: { ...message.providerOptions, ...mark } }
+          : message;
+      }),
     };
   },
 };
