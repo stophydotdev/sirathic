@@ -21,6 +21,8 @@ import { AskSelection } from "@/components/askSelection";
 import { useStartChat } from "@/components/newChat";
 import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
 import { useKeyNames, withMod } from "@/lib/keys";
+import { Fold } from "@/components/fold";
+import { TabPill } from "@/components/tabLink";
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -75,17 +77,15 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const navRow = cn(
-    "h-10 gap-2.75 rounded-lg px-2.5 text-base has-[>svg]:px-2.5",
-    collapsed && "w-10 justify-center px-0 has-[>svg]:px-0",
-  );
+  const navRow = "h-10 gap-2.75 overflow-hidden rounded-lg px-2.5 text-base has-[>svg]:px-2.5";
+  const label = "min-w-0 flex-1 overflow-hidden whitespace-nowrap";
   const mobileRow = "h-8 gap-2 rounded-md px-2.5 text-sm";
 
   return (
     <div className="relative flex h-full w-full overflow-hidden print:h-auto print:overflow-visible">
       <aside
         className={cn(
-          "group/sidebar bg-background border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-200 lg:flex print:hidden",
+          "group/sidebar bg-background border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-300 ease-out-quint lg:flex motion-reduce:transition-none print:hidden",
           collapsed ? "w-14" : "w-64",
         )}
       >
@@ -141,33 +141,40 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 
         <nav
           className={cn(
-            "flex flex-1 flex-col gap-0.5 px-2",
+            "relative flex flex-1 flex-col gap-0.5 px-2",
             collapsed ? "overflow-hidden" : "scroll-fade overflow-y-auto",
           )}
         >
+          <TabPill name="sidebar" className="rounded-xl" />
           <NewButton className={cn(navRow, "group/new")}>
             <HugeiconsIcon icon={Add01Icon} className="size-4.5 shrink-0" />
-            {!collapsed && <span className="flex-1">{t("New")}</span>}
-            {!collapsed && (
-              <kbd className="text-muted-foreground font-sans text-xs opacity-0 group-hover/new:opacity-100 group-focus-visible/new:opacity-100 pointer-coarse:hidden">
-                {keys.mod} I
-              </kbd>
-            )}
+            <span className={label}>{t("New")}</span>
+            <kbd className="text-muted-foreground font-sans text-xs opacity-0 group-hover/new:opacity-100 group-focus-visible/new:opacity-100 pointer-coarse:hidden">
+              {keys.mod} I
+            </kbd>
           </NewButton>
           <NavLink href="/library" className={navRow}>
             <HugeiconsIcon icon={LibraryIcon} className="size-4.5 shrink-0" />
-            {!collapsed && <span className="flex-1">{t("Library")}</span>}
+            <span className={label}>{t("Library")}</span>
           </NavLink>
           <NavLink href="/automations" className={navRow}>
             <AutomationsIcon unseen={unseenRuns} className="size-4.5" />
-            {!collapsed && <span className="flex-1">{t("Automations")}</span>}
+            <span className={label}>{t("Automations")}</span>
           </NavLink>
           <NavLink href="/plugins" className={navRow}>
             <HugeiconsIcon icon={AtIcon} className="size-4.5 shrink-0" />
-            {!collapsed && <span className="flex-1">{t("Plugins")}</span>}
+            <span className={label}>{t("Plugins")}</span>
           </NavLink>
-          {!collapsed && <BotList />}
-          {!collapsed && <Recents onSeeAll={() => setSearching(true)} />}
+          <div
+            inert={collapsed}
+            className={cn(
+              "flex flex-col gap-0.5 transition-[opacity,visibility] duration-300 ease-out-quint motion-reduce:transition-none",
+              collapsed && "invisible opacity-0",
+            )}
+          >
+            <BotList />
+            <Recents onSeeAll={() => setSearching(true)} />
+          </div>
         </nav>
         <div className="shrink-0 p-2">
           <AccountRow collapsed={collapsed} />
@@ -190,7 +197,8 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
           <SheetTitle className="flex h-14 shrink-0 items-center px-4">
             <Mark size={20} color="currentColor" />
           </SheetTitle>
-          <nav className="scroll-fade flex flex-col gap-0.5 overflow-y-auto px-2">
+          <nav className="scroll-fade relative flex flex-col gap-0.5 overflow-y-auto px-2">
+            <TabPill className="rounded-xl" />
             <NewButton className={mobileRow} onDone={() => setMobileOpen(false)}>
               <HugeiconsIcon icon={Add01Icon} className="size-4 shrink-0" />
               <span>{t("New")}</span>
@@ -252,7 +260,7 @@ const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
     <Button
       variant="ghost"
       asChild
-      className={cn("hover:bg-muted justify-start font-normal", className)}
+      className={cn("hover:bg-muted dark:hover:bg-muted justify-start font-normal", className)}
     >
       <Link
         href="/"
@@ -273,7 +281,7 @@ const NavLink: FC<RowProps & { href: string }> = ({ href, className, children, o
   <Button
     variant="ghost"
     asChild
-    className={cn("hover:bg-muted justify-start font-normal", className)}
+    className={cn("hover:bg-muted dark:hover:bg-muted justify-start font-normal", className)}
   >
     <Link href={href} onClick={onDone}>
       {children}
@@ -304,31 +312,34 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
         type="button"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
-        className="group/chats text-muted-foreground hover:text-foreground flex items-center justify-between px-2.5 pt-6 pb-1 text-sm"
+        className="group/chats text-muted-foreground hover:text-foreground flex items-center justify-between px-2.5 pt-6 pb-1 text-sm transition-colors"
       >
         {t("Chats")}
         <HugeiconsIcon
           icon={ArrowDown01Icon}
           className={cn(
-            "size-4 opacity-0 group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 pointer-coarse:opacity-100",
+            "size-4 opacity-0 transition-transform duration-300 ease-out-quint group-hover/sidebar:opacity-100 group-focus-visible/chats:opacity-100 motion-reduce:transition-none pointer-coarse:opacity-100",
             !open && "-rotate-90 opacity-100",
           )}
         />
       </button>
-      {open && sessions !== undefined && chats.length === 0 && (
-        <p className="text-muted-foreground/70 px-2.5 py-1.5 text-sm">{t("No chats yet")}</p>
-      )}
-      {open &&
-        shown.map((session) => <SessionRow key={session.id} session={session} onOpen={onDone} />)}
-      {open && ordered.length > RECENT_LIMIT && (
-        <button
-          type="button"
-          onClick={onSeeAll}
-          className="text-muted-foreground hover:bg-muted hover:text-foreground rounded-[12px] px-2.5 py-2 text-start text-sm font-[550]"
-        >
-          {t("See all")}
-        </button>
-      )}
+      <Fold open={open} className="gap-0.5">
+        {sessions !== undefined && chats.length === 0 && (
+          <p className="text-muted-foreground/70 px-2.5 py-1.5 text-sm">{t("No chats yet")}</p>
+        )}
+        {shown.map((session) => (
+          <SessionRow key={session.id} session={session} onOpen={onDone} />
+        ))}
+        {ordered.length > RECENT_LIMIT && (
+          <button
+            type="button"
+            onClick={onSeeAll}
+            className="text-muted-foreground hover:bg-muted hover:text-foreground rounded-[12px] px-2.5 py-2 text-start text-sm font-[550] transition-colors"
+          >
+            {t("See all")}
+          </button>
+        )}
+      </Fold>
     </>
   );
 };

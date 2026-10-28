@@ -31,7 +31,7 @@ import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "react";
 
 const panel =
-  "bg-background ring-foreground/7 fixed top-1/2 left-1/2 z-[60] flex w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-[20px] shadow-lg ring-1 outline-none ring-inset";
+  "pop bg-background ring-foreground/7 fixed top-1/2 left-1/2 z-[60] flex w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-[20px] shadow-lg ring-1 outline-none ring-inset";
 export const modalButton =
   "border-border hover:bg-muted flex h-8 items-center justify-center rounded-[8px] border px-3 text-sm font-[470] transition-colors";
 export const modalPrimaryButton =
@@ -47,7 +47,7 @@ export const Modal: FC<{
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60] bg-black/60" />
+        <Dialog.Overlay className="dim fixed inset-0 z-[60] bg-black/60" />
         <Dialog.Content
           aria-describedby={undefined}
           onCloseAutoFocus={(event) => event.preventDefault()}
@@ -66,6 +66,16 @@ const RenameDialog: FC<{
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }> = ({ session, open, onOpenChange }) => {
+  const t = useT();
+
+  return (
+    <Modal open={open} onOpenChange={onOpenChange} title={t("Rename chat")}>
+      <RenameForm session={session} onDone={() => onOpenChange(false)} />
+    </Modal>
+  );
+};
+
+const RenameForm: FC<{ session: Session; onDone: () => void }> = ({ session, onDone }) => {
   const change = useSessions((s) => s.change);
   const [title, setTitle] = useState(session.title);
   const t = useT();
@@ -76,29 +86,27 @@ const RenameDialog: FC<{
     if (trimmed && trimmed !== session.title) {
       void change(session.id, { title: trimmed });
     }
-    onOpenChange(false);
+    onDone();
   };
 
   return (
-    <Modal open={open} onOpenChange={onOpenChange} title={t("Rename chat")}>
-      <form onSubmit={submit} className="flex flex-col gap-4">
-        <input
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          maxLength={80}
-          autoFocus
-          className="border-border focus-visible:border-foreground/30 h-9 w-full rounded-[8px] border bg-transparent px-3 text-sm outline-none"
-        />
-        <div className="flex justify-end gap-2">
-          <Dialog.Close type="button" className={modalButton}>
-            {t("Cancel")}
-          </Dialog.Close>
-          <button type="submit" className={modalPrimaryButton}>
-            {t("Save")}
-          </button>
-        </div>
-      </form>
-    </Modal>
+    <form onSubmit={submit} className="flex flex-col gap-4">
+      <input
+        value={title}
+        onChange={(event) => setTitle(event.target.value)}
+        maxLength={80}
+        autoFocus
+        className="border-border focus-visible:border-foreground/30 h-9 w-full rounded-[8px] border bg-transparent px-3 text-sm outline-none"
+      />
+      <div className="flex justify-end gap-2">
+        <Dialog.Close type="button" className={modalButton}>
+          {t("Cancel")}
+        </Dialog.Close>
+        <button type="submit" className={modalPrimaryButton}>
+          {t("Save")}
+        </button>
+      </div>
+    </form>
   );
 };
 
@@ -204,7 +212,7 @@ const SessionMenu: FC<{ session: Session; className?: string }> = ({ session, cl
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {renaming && <RenameDialog session={session} open={renaming} onOpenChange={setRenaming} />}
+      <RenameDialog session={session} open={renaming} onOpenChange={setRenaming} />
       <DeleteDialog session={session} open={deleting} onOpenChange={setDeleting} />
     </>
   );
@@ -227,10 +235,9 @@ export const SessionRow: FC<{
           <div
             onPointerDownCapture={() => setTitleShown(false)}
             onFocus={(event) => event.preventDefault()}
-            className={cn(
-              "group/session hover:bg-muted flex items-center gap-0.5 rounded-[12px] pe-2",
-              current && "bg-muted",
-            )}
+            data-row
+            data-active={current || undefined}
+            className="group/session hover:bg-muted relative flex items-center gap-0.5 rounded-[12px] pe-2 transition-colors"
           >
             <Link
               href={`/c/${session.id}`}

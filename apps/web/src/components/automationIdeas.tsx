@@ -141,7 +141,7 @@ export const AutomationIdeas: FC<{ onAdd: (draft: Draft) => void }> = ({ onAdd }
             {templates.map(({ icon: Icon, name, prompt, schedule }) => (
               <div
                 key={name}
-                className="hover:bg-muted/50 flex min-h-16 min-w-0 items-center gap-3 rounded-xl p-2"
+                className="rise hover:bg-muted/50 flex min-h-16 min-w-0 items-center gap-3 rounded-xl p-2"
               >
                 <span
                   className={cn(

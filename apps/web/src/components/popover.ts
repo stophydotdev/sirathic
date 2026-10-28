@@ -1,5 +1,5 @@
 export const popoverPanel =
-  "bg-card border-foreground/10 flex flex-col rounded-2xl border p-1.5 shadow-lg";
+  "bg-card border-foreground/10 flex flex-col rounded-2xl border p-1.5 shadow-lg animate-in fade-in-0 zoom-in-95 duration-300 ease-out-quint motion-reduce:animate-none";
 
 export const popoverHeading = "text-muted-foreground flex h-6 items-center px-2 text-xs";
 

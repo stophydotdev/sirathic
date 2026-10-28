@@ -180,7 +180,7 @@ export const SignInDialog: FC = () => {
       }}
     >
       <Dialog.Portal>
-        <Dialog.Overlay className="bg-background/70 fixed inset-0 z-[60] backdrop-blur-[4px]" />
+        <Dialog.Overlay className="dim bg-background/70 fixed inset-0 z-[60] backdrop-blur-[4px]" />
         <Dialog.Content
           ref={content}
           aria-describedby={undefined}
@@ -189,7 +189,7 @@ export const SignInDialog: FC = () => {
             content.current?.focus();
           }}
           onCloseAutoFocus={(event) => event.preventDefault()}
-          className="bg-background border-border fixed top-1/2 left-1/2 z-[60] flex w-[360px] max-w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5 rounded-[14px] border px-[26px] pt-[34px] pb-[22px] text-center outline-none"
+          className="pop bg-background border-border fixed top-1/2 left-1/2 z-[60] flex w-[360px] max-w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-5 rounded-[14px] border px-[26px] pt-[34px] pb-[22px] text-center outline-none"
         >
           <Dialog.Close
             aria-label={t("Close")}

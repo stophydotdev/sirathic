@@ -68,11 +68,11 @@ export const BotSwitcher: FC<{
   return (
     <Dialog.Root open={open} onOpenChange={close}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-60 bg-black/60" />
+        <Dialog.Overlay className="dim fixed inset-0 z-60 bg-black/60" />
         <Dialog.Content
           aria-describedby={undefined}
           onCloseAutoFocus={(event) => event.preventDefault()}
-          className="bg-card ring-foreground/7 fixed start-1/2 top-16 z-60 flex w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 flex-col rounded-2xl shadow-lg ring-1 outline-none ring-inset rtl:translate-x-1/2"
+          className="pop bg-card ring-foreground/7 fixed start-1/2 top-16 z-60 flex w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 flex-col rounded-2xl shadow-lg ring-1 outline-none ring-inset rtl:translate-x-1/2"
         >
           <Dialog.Title className="sr-only">{t("Search or create bots")}</Dialog.Title>
           <div className="flex h-12 items-center gap-3 px-4">
