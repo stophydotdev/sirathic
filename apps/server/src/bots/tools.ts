@@ -28,7 +28,7 @@ export function botTools({ id, owner }: BotScope) {
   return {
     set_bot_job: tool({
       description:
-        "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name of Allah, a prophet or a companion. Keep the job to what the user asked, without rulings, rules or limits. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
+        "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. Keep the job to what the user asked, without rulings, rules or limits. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
       inputSchema: z.object({
         name: projectName,
         title: botTitle,
@@ -47,7 +47,7 @@ export function botTools({ id, owner }: BotScope) {
     }),
     update_profile: tool({
       description:
-        "Changes this bot's name, title or description. Only the fields you pass change. The title is a short role label beside the name. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name of Allah, a prophet or a companion. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Use it when the user asks to rename the bot or to change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
+        "Changes this bot's name, title or description. Only the fields you pass change. The title is a short role label beside the name. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Use it when the user asks to rename the bot or to change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
       inputSchema: z.object({
         name: projectName.optional(),
         title: botTitle.optional(),
