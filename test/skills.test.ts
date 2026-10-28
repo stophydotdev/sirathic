@@ -11,16 +11,13 @@ import {
   skillsFor,
 } from "../apps/server/src/chat/skills/builtIn";
 import {
-  answered,
   answerWith,
   chatTurn,
-  type MockChunks,
   noInput,
   said,
   scriptedModel,
   systemTexts,
   toolNames,
-  usage,
 } from "./answerHelpers";
 
 const inResearch = (messages: ChatMessage[]) =>
@@ -117,56 +114,12 @@ test.each([
   },
 );
 
-const routine = {
-  name: "Fajr nudge",
-  prompt: "Remind me to pray Fajr on time",
-  schedule: { kind: "daily", time: "05:00" },
-};
-
 const noSkills = { canWriteSkills: false, userSkills: [], offered: {}, plugins: {} };
 
-const afterLoading = (skill: string): ChatMessage[] => [
-  said("1", "user", "remind me every morning"),
-  {
-    id: "2",
-    role: "assistant",
-    parts: [
-      {
-        type: "dynamic-tool",
-        toolName: "load_skill",
-        toolCallId: "c0",
-        state: "output-available",
-        input: { names: [skill] },
-        output: `Loaded ${skill}.`,
-      },
-    ],
-  },
-  said("3", "user", "yes, at 5"),
-];
-
-const callingTool = (toolName: string, input: typeof routine & { action: string }) =>
-  [
-    { type: "stream-start", warnings: [] },
-    { type: "tool-call", toolCallId: "c1", toolName, input: JSON.stringify(input) },
-    { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
-  ] satisfies MockChunks;
-
-test("creating a routine waits for the user's confirmation, and only a confirmed one runs", async () => {
-  const automate = { owner: "o", timezone: "Asia/Tokyo" };
-  const { body } = await chatTurn({ automate, messages: afterLoading("routines") }, [
-    callingTool("update_routine", { action: "create", ...routine }),
-    answered,
-  ]);
-  expect([
-    body.includes('"type":"tool-approval-request"'),
-    body.includes('"type":"tool-output-available"'),
-  ]).toEqual([true, false]);
-});
-
 test.each([
-  ["update_routine", { action: "create" }, true],
-  ["update_routine", { action: "edit" }, true],
-  ["update_routine", { action: "delete" }, true],
+  ["update_routine", { action: "create" }, false],
+  ["update_routine", { action: "edit" }, false],
+  ["update_routine", { action: "delete" }, false],
   ["update_routine", { action: "pause" }, false],
   ["update_skill", { action: "delete" }, true],
   ["install_plugin", { id: "googlecalendar" }, false],

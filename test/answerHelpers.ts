@@ -9,7 +9,7 @@ import { answerAgent, chatResponse } from "../apps/server/src/chat/response";
 export const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>
   ({ id, role, parts: [{ type: "text", text }], metadata: { createdAt } }) satisfies ChatMessage;
 
-export const usage = {
+const usage = {
   inputTokens: { total: 1, noCache: 1, cacheRead: 0, cacheWrite: 0 },
   outputTokens: { total: 1, text: 1, reasoning: 0 },
 };
