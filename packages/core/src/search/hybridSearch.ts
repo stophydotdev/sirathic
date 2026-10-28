@@ -118,6 +118,7 @@ const searchIds = async (
       : exact;
   const rows = await db.transaction(async (tx) => {
     await tx.execute(sql`set local hnsw.iterative_scan = relaxed_order`);
+    await tx.execute(sql`set local enable_seqscan = off`);
     return tx.execute(sql`
     with words as (
       select plainto_tsquery('english', ${plain}) as every_word
