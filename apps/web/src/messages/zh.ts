@@ -693,4 +693,13 @@ export default {
   "Searching Stophy for {detail}": "在 Stophy 中搜索：{detail}",
   "Read from Stophy": "已从 Stophy 读取",
   "Checking Stophy…": "正在查看 Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "你已用完当前的 Noor 限额。{time} 重置。",
+  "You've used this week's Noor limit. It resets {time}.":
+    "你已用完本周的 Noor 限额。{time} 重置。",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "你已用掉当前 Noor 限额的 {percent}%。{time} 重置。",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "你已用掉本周 Noor 限额的 {percent}%。{time} 重置。",
+  "Sign in with ChatGPT to keep asking with GPT.": "使用 ChatGPT 登录，继续用 GPT 提问。",
 } satisfies Messages;

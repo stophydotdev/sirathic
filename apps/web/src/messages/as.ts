@@ -697,4 +697,13 @@ export default {
   "Searching Stophy for {detail}": "{detail}ৰ বাবে Stophyত বিচাৰি আছে",
   "Read from Stophy": "Stophyৰ পৰা পঢ়া হ'ল",
   "Checking Stophy…": "Stophy চাই আছে…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "আপুনি এতিয়াৰ বাবে Noor ৰ সীমা ব্যৱহাৰ কৰিলে। {time}ত ৰিছেট হ'ব।",
+  "You've used this week's Noor limit. It resets {time}.":
+    "আপুনি এই সপ্তাহৰ Noor সীমা ব্যৱহাৰ কৰিলে। {time}ত ৰিছেট হ'ব।",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "আপুনি এতিয়াৰ বাবে Noor ৰ সীমাৰ {percent}% ব্যৱহাৰ কৰিছে। {time}ত ৰিছেট হ'ব।",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "আপুনি এই সপ্তাহৰ Noor সীমাৰ {percent}% ব্যৱহাৰ কৰিছে। {time}ত ৰিছেট হ'ব।",
+  "Sign in with ChatGPT to keep asking with GPT.": "GPT ৰে সুধি থাকিবলৈ ChatGPT ৰে ছাইন ইন কৰক।",
 } satisfies Messages;

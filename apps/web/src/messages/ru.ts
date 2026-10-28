@@ -709,4 +709,14 @@ export default {
   "Searching Stophy for {detail}": "Поиск в Stophy: {detail}",
   "Read from Stophy": "Прочитано в Stophy",
   "Checking Stophy…": "Проверяю Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "Вы пока исчерпали лимит Noor. Сброс {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "Вы исчерпали недельный лимит Noor. Сброс {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "Вы использовали {percent}% текущего лимита Noor. Сброс {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "Вы использовали {percent}% недельного лимита Noor. Сброс {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "Войдите через ChatGPT, чтобы продолжить спрашивать с GPT.",
 } satisfies Messages;

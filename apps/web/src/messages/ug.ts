@@ -712,4 +712,14 @@ export default {
   "Searching Stophy for {detail}": "Stophy دىن ئىزدەۋاتىدۇ: {detail}",
   "Read from Stophy": "Stophy دىن ئوقۇلدى",
   "Checking Stophy…": "Stophy نى تەكشۈرۈۋاتىدۇ…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "ھازىرچە Noor چېكىنى ئىشلىتىپ بولدىڭىز. {time} قايتا تەڭشىلىدۇ.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "بۇ ھەپتىلىك Noor چېكىنى ئىشلىتىپ بولدىڭىز. {time} قايتا تەڭشىلىدۇ.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "ھازىرچە Noor چېكىنىڭ {percent}% نى ئىشلەتتىڭىز. {time} قايتا تەڭشىلىدۇ.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "ھەپتىلىك Noor چېكىنىڭ {percent}% نى ئىشلەتتىڭىز. {time} قايتا تەڭشىلىدۇ.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "GPT ئارقىلىق داۋاملىق سوراش ئۈچۈن ChatGPT بىلەن كىرىڭ.",
 } satisfies Messages;

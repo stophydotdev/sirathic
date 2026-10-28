@@ -707,4 +707,13 @@ export default {
   "Searching Stophy for {detail}": "Ena yiyloo e Stophy ngam {detail}",
   "Read from Stophy": "Janngaama e Stophy",
   "Checking Stophy…": "Ena ƴeewa Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "A huutorii keerol Noor jooni. Hesɗitinoo {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "A huutorii keerol Noor yontere ndee. Hesɗitinoo {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "A huutorii {percent}% keerol Noor jooni. Hesɗitinoo {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "A huutorii {percent}% keerol Noor yontere ndee. Hesɗitinoo {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.": "Seŋo e ChatGPT ngam jokkude naamnde e GPT.",
 } satisfies Messages;

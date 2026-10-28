@@ -704,4 +704,14 @@ export default {
   "Searching Stophy for {detail}": "Đang tìm trên Stophy cho {detail}",
   "Read from Stophy": "Đã đọc từ Stophy",
   "Checking Stophy…": "Đang kiểm tra Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "Bạn đã dùng hết giới hạn Noor hiện tại. Đặt lại {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "Bạn đã dùng hết giới hạn Noor tuần này. Đặt lại {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "Bạn đã dùng {percent}% giới hạn Noor hiện tại. Đặt lại {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "Bạn đã dùng {percent}% giới hạn Noor tuần này. Đặt lại {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "Đăng nhập bằng ChatGPT để tiếp tục hỏi với GPT.",
 } satisfies Messages;

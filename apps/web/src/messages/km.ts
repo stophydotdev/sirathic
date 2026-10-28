@@ -697,4 +697,13 @@ export default {
   "Searching Stophy for {detail}": "កំពុងស្វែងរកក្នុង Stophy សម្រាប់ {detail}",
   "Read from Stophy": "បានអានពី Stophy",
   "Checking Stophy…": "កំពុងពិនិត្យ Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "អ្នកបានប្រើដែនកំណត់ Noor សម្រាប់ពេលនេះអស់ហើយ។ កំណត់ឡើងវិញ {time}។",
+  "You've used this week's Noor limit. It resets {time}.":
+    "អ្នកបានប្រើដែនកំណត់ Noor ប្រចាំសប្តាហ៍នេះអស់ហើយ។ កំណត់ឡើងវិញ {time}។",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "អ្នកបានប្រើ {percent}% នៃដែនកំណត់ Noor សម្រាប់ពេលនេះ។ កំណត់ឡើងវិញ {time}។",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "អ្នកបានប្រើ {percent}% នៃដែនកំណត់ Noor ប្រចាំសប្តាហ៍នេះ។ កំណត់ឡើងវិញ {time}។",
+  "Sign in with ChatGPT to keep asking with GPT.": "ចូលដោយ ChatGPT ដើម្បីបន្តសួរជាមួយ GPT។",
 } satisfies Messages;

@@ -699,4 +699,13 @@ export default {
   "Searching Stophy for {detail}": "{detail} සඳහා Stophy හි සොයමින්",
   "Read from Stophy": "Stophy වෙතින් කියවූවා",
   "Checking Stophy…": "Stophy පරීක්ෂා කරමින්…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "ඔබ දැනට Noor සීමාව භාවිත කර අවසන්. {time} නැවත සකසයි.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "ඔබ මෙම සතියේ Noor සීමාව භාවිත කර අවසන්. {time} නැවත සකසයි.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "ඔබ දැනට Noor සීමාවෙන් {percent}% භාවිත කර ඇත. {time} නැවත සකසයි.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "ඔබ මෙම සතියේ Noor සීමාවෙන් {percent}% භාවිත කර ඇත. {time} නැවත සකසයි.",
+  "Sign in with ChatGPT to keep asking with GPT.": "GPT සමඟ දිගටම විමසීමට ChatGPT සමඟ පුරනය වන්න.",
 } satisfies Messages;

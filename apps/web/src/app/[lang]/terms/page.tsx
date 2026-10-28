@@ -39,8 +39,8 @@ export default async function TermsPage({ params }: PageProps<"/[lang]/terms">) 
 
       <h2>Fair use</h2>
       <p>
-        Sirathic is free, so some answers have a daily limit, such as 30 Noor answers a day. Please
-        don't:
+        Sirathic is free, so Noor answers have a limit every 5 hours and every week. You can see
+        yours in Settings. Please don't:
       </p>
       <ul>
         <li>break the law or use Sirathic to harm anyone</li>

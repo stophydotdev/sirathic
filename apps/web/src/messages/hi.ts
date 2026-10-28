@@ -700,4 +700,13 @@ export default {
   "Searching Stophy for {detail}": "{detail} के लिए Stophy पर खोज रहे हैं",
   "Read from Stophy": "Stophy से पढ़ा",
   "Checking Stophy…": "Stophy देख रहा है…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "अभी के लिए आपने Noor की सीमा इस्तेमाल कर ली है। {time} पर रीसेट होगा।",
+  "You've used this week's Noor limit. It resets {time}.":
+    "आपने इस हफ़्ते की Noor सीमा इस्तेमाल कर ली है। {time} पर रीसेट होगा।",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "अभी के लिए आपने Noor की सीमा का {percent}% इस्तेमाल किया है। {time} पर रीसेट होगा।",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "आपने इस हफ़्ते की Noor सीमा का {percent}% इस्तेमाल किया है। {time} पर रीसेट होगा।",
+  "Sign in with ChatGPT to keep asking with GPT.": "GPT से पूछते रहने के लिए ChatGPT से साइन इन करें।",
 } satisfies Messages;

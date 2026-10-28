@@ -705,4 +705,14 @@ export default {
   "Searching Stophy for {detail}": "Претрага на Stophy: {detail}",
   "Read from Stophy": "Прочитано са Stophy",
   "Checking Stophy…": "Проверава Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "За сада сте искористили Noor лимит. Ресетује се {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "Искористили сте недељни Noor лимит. Ресетује се {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "За сада сте искористили {percent}% Noor лимита. Ресетује се {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "Искористили сте {percent}% недељног Noor лимита. Ресетује се {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "Пријавите се преко ChatGPT-а да наставите да питате са GPT-ом.",
 } satisfies Messages;
