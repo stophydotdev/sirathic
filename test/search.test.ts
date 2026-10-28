@@ -288,9 +288,13 @@ test("a saved fatwa keeps its text and drops the page around it", () => {
     "https://www.dar-alifta.org/ar/fatwa/details/12911/nazr",
   )?.answer;
   const amja = clean("- AR (العربية)\n\\-- EN (English)\n\n| **رقم الفتوى:** | 3882 |");
-  expect([alFatawa, darAlifta?.endsWith("والله سبحانه وتعالى أعلم."), amja]).toEqual([
+  const wordpress = clean(
+    "There is no harm in changing it.\n\nPrevious article\n\n#### Another ruling\n\nNext article",
+  );
+  expect([alFatawa, darAlifta?.endsWith("والله سبحانه وتعالى أعلم."), amja, wordpress]).toEqual([
     "The Shaykh : It has no basis.",
     true,
     "| **رقم الفتوى:** | 3882 |",
+    "There is no harm in changing it.",
   ]);
 });

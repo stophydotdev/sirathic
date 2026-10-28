@@ -379,8 +379,9 @@ export const SITES: Site[] = [
     name: "en.tohed.com",
     url: "https://en.tohed.com",
     credit: "Tohed",
-    sitemaps: ["https://en.tohed.com/sitemap.php"],
-    page: /^https:\/\/en\.tohed\.com\/threads\/.+/u,
+    sitemaps: ["https://en.tohed.com/wp-sitemap.xml"],
+    follow: /posts-post/u,
+    page: /^https:\/\/en\.tohed\.com\/[^/]+\/$/u,
     answeredBy: by("Tohed"),
   }),
   articleSite({
