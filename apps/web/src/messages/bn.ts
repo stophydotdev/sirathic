@@ -479,7 +479,6 @@ export default {
     "এখনও কিছু সংরক্ষিত হয়নি। আপনি চ্যাটে যে স্থায়ী তথ্য শেয়ার করেন, Sirathic তা সংরক্ষণ করে।",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic যা মনে রেখেছে সব মুছবেন? এটি ফেরানো যাবে না।",
-  "Your automations": "আপনার অটোমেশন",
   "Pick new icon": "নতুন আইকন বেছে নিন",
   Folder: "ফোল্ডার",
   "A project name cannot contain a link.": "প্রজেক্টের নামে লিংক থাকতে পারবে না।",
@@ -531,7 +530,6 @@ export default {
   "Automation resumed": "অটোমেশন আবার চালু হয়েছে",
   "Automation deleted": "অটোমেশন মুছে ফেলা হয়েছে",
   "Automation created": "অটোমেশন তৈরি হয়েছে",
-  "No automations yet": "এখনও কোনো অটোমেশন নেই",
   None: "কিছু না",
   "Finished. Open to read the answer.": "শেষ হয়েছে। উত্তর পড়তে খুলুন।",
   "New automation answers": "নতুন অটোমেশনের উত্তর",

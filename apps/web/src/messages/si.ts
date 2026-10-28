@@ -477,7 +477,6 @@ export default {
     "තවම කිසිවක් සුරැකී නැත. ඔබ කතාබසක බෙදාගන්නා ස්ථිර කරුණු Sirathic සුරකියි.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic මතක තබාගන්නා සියල්ල මකන්නද? මෙය ආපසු හැරවිය නොහැක.",
-  "Your automations": "ඔබේ ස්වයංක්‍රීයකරණ",
   "Pick new icon": "නව නිරූපකයක් තෝරන්න",
   Folder: "ෆෝල්ඩරය",
   "A project name cannot contain a link.": "ව්‍යාපෘතියේ නමෙහි සබැඳියක් තිබිය නොහැක.",
@@ -529,7 +528,6 @@ export default {
   "Automation resumed": "ස්වයංක්‍රීයකරණය නැවත ආරම්භ කළා",
   "Automation deleted": "ස්වයංක්‍රීයකරණය මකා දැමුවා",
   "Automation created": "ස්වයංක්‍රීයකරණය සාදා ඇත",
-  "No automations yet": "තවම ස්වයංක්‍රීයකරණ නැත",
   None: "කිසිවක් නැත",
   "Finished. Open to read the answer.": "අවසන්. පිළිතුර කියවීමට විවෘත කරන්න.",
   "New automation answers": "ස්වයංක්‍රීයකරණවල නව පිළිතුරු",

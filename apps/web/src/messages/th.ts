@@ -474,7 +474,6 @@ export default {
     "ยังไม่มีอะไรที่บันทึกไว้ Sirathic จะบันทึกข้อมูลถาวรที่คุณแชร์ในแชท",
   "Delete everything Sirathic remembers? This can't be undone.":
     "ลบทุกอย่างที่ Sirathic จำไว้ไหม การดำเนินการนี้ย้อนกลับไม่ได้",
-  "Your automations": "ระบบอัตโนมัติของคุณ",
   "Pick new icon": "เลือกไอคอนใหม่",
   Folder: "โฟลเดอร์",
   "A project name cannot contain a link.": "ชื่อโปรเจกต์ต้องไม่มีลิงก์",
@@ -526,7 +525,6 @@ export default {
   "Automation resumed": "ระบบอัตโนมัติทำงานต่อแล้ว",
   "Automation deleted": "ลบระบบอัตโนมัติแล้ว",
   "Automation created": "สร้างระบบอัตโนมัติแล้ว",
-  "No automations yet": "ยังไม่มีระบบอัตโนมัติ",
   None: "ไม่มี",
   "Finished. Open to read the answer.": "เสร็จแล้ว เปิดเพื่ออ่านคำตอบ",
   "New automation answers": "คำตอบใหม่จากระบบอัตโนมัติ",

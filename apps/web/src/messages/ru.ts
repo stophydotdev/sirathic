@@ -483,7 +483,6 @@ export default {
     "Пока ничего не сохранено. Sirathic сохраняет долгосрочные факты, которыми вы делитесь в чате.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Удалить всё, что помнит Sirathic? Это нельзя отменить.",
-  "Your automations": "Ваши автоматизации",
   "Pick new icon": "Выбрать новый значок",
   Folder: "Папка",
   "A project name cannot contain a link.": "Название проекта не может содержать ссылку.",
@@ -535,7 +534,6 @@ export default {
   "Automation resumed": "Автоматизация возобновлена",
   "Automation deleted": "Автоматизация удалена",
   "Automation created": "Автоматизация создана",
-  "No automations yet": "Автоматизаций пока нет",
   None: "Нет",
   "Finished. Open to read the answer.": "Готово. Откройте, чтобы прочитать ответ.",
   "New automation answers": "Новые ответы автоматизаций",

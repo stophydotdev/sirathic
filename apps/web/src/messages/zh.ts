@@ -474,7 +474,6 @@ export default {
     "还没有保存任何内容。Sirathic 会保存你在对话中分享的长期信息。",
   "Delete everything Sirathic remembers? This can't be undone.":
     "删除 Sirathic 记住的所有内容？此操作无法撤销。",
-  "Your automations": "你的自动化",
   "Pick new icon": "选择新图标",
   Folder: "文件夹",
   "A project name cannot contain a link.": "项目名称不能包含链接。",
@@ -526,7 +525,6 @@ export default {
   "Automation resumed": "自动化已恢复",
   "Automation deleted": "自动化已删除",
   "Automation created": "已创建自动化",
-  "No automations yet": "还没有自动化",
   None: "无",
   "Finished. Open to read the answer.": "已完成。打开查看回答。",
   "New automation answers": "自动化有新回答",

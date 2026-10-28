@@ -482,7 +482,6 @@ export default {
     "تر اوسه هېڅ خوندي شوي نه دي. Sirathic هغه پایښت لرونکي معلومات خوندي کوي چې تاسو په خبرو اترو کې شریکوئ.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "هرڅه چې Sirathic یې په یاد لري ړنګ شي؟ دا بېرته نه راګرځي.",
-  "Your automations": "ستاسو اتومات کارونه",
   "Pick new icon": "نوی انځورنیم غوره کړئ",
   Folder: "پوښۍ",
   "A project name cannot contain a link.": "د پروژې په نوم کې لینک نشي کېدای.",
@@ -534,7 +533,6 @@ export default {
   "Automation resumed": "اتومات کار بیا پیل شو",
   "Automation deleted": "اتومات کار ړنګ شو",
   "Automation created": "اتومات کار جوړ شو",
-  "No automations yet": "تر اوسه هېڅ اتومات کار نشته",
   None: "هېڅ",
   "Finished. Open to read the answer.": "بشپړ شو. ځواب لوستلو لپاره یې پرانیزئ.",
   "New automation answers": "د اتومات کارونو نوي ځوابونه",

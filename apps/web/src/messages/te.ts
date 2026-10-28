@@ -476,7 +476,6 @@ export default {
     "ఇంకా ఏదీ సేవ్ కాలేదు. మీరు చాట్‌లో పంచుకునే శాశ్వత విషయాలను Sirathic సేవ్ చేస్తుంది.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic గుర్తుంచుకున్నదంతా తొలగించాలా? దీన్ని రద్దు చేయలేరు.",
-  "Your automations": "మీ ఆటోమేషన్‌లు",
   "Pick new icon": "కొత్త ఐకాన్‌ను ఎంచుకోండి",
   Folder: "ఫోల్డర్",
   "A project name cannot contain a link.": "ప్రాజెక్ట్ పేరులో లింక్ ఉండకూడదు.",
@@ -528,7 +527,6 @@ export default {
   "Automation resumed": "ఆటోమేషన్ మళ్లీ ప్రారంభమైంది",
   "Automation deleted": "ఆటోమేషన్ తొలగించబడింది",
   "Automation created": "ఆటోమేషన్ సృష్టించబడింది",
-  "No automations yet": "ఇంకా ఆటోమేషన్‌లు లేవు",
   None: "ఏదీ కాదు",
   "Finished. Open to read the answer.": "పూర్తైంది. సమాధానం చదవడానికి తెరవండి.",
   "New automation answers": "ఆటోమేషన్‌ల కొత్త సమాధానాలు",

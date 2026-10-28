@@ -490,7 +490,6 @@ export default {
     "Rien d'enregistré pour l'instant. Sirathic retient les informations durables que vous partagez dans une discussion.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Supprimer tout ce dont Sirathic se souvient ? Cette action est irréversible.",
-  "Your automations": "Vos automatisations",
   "Pick new icon": "Choisir une nouvelle icône",
   Folder: "Dossier",
   "A project name cannot contain a link.": "Le nom d'un projet ne peut pas contenir de lien.",
@@ -543,7 +542,6 @@ export default {
   "Automation resumed": "Automatisation reprise",
   "Automation deleted": "Automatisation supprimée",
   "Automation created": "Automatisation créée",
-  "No automations yet": "Aucune automatisation pour l'instant",
   None: "Aucune",
   "Finished. Open to read the answer.": "Terminé. Ouvrez pour lire la réponse.",
   "New automation answers": "Nouvelles réponses d'automatisations",

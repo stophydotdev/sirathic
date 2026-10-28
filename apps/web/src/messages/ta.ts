@@ -483,7 +483,6 @@ export default {
     "இன்னும் எதுவும் சேமிக்கப்படவில்லை. நீங்கள் உரையாடலில் பகிரும் நிலையான தகவல்களை Sirathic சேமிக்கிறது.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic நினைவில் வைத்திருக்கும் அனைத்தையும் நீக்கவா? இதைத் திரும்பப் பெற முடியாது.",
-  "Your automations": "உங்கள் தானியக்கங்கள்",
   "Pick new icon": "புதிய ஐகானைத் தேர்ந்தெடு",
   Folder: "கோப்புறை",
   "A project name cannot contain a link.": "திட்டத்தின் பெயரில் இணைப்பு இருக்கக் கூடாது.",
@@ -536,7 +535,6 @@ export default {
   "Automation resumed": "தானியக்கம் மீண்டும் தொடங்கியது",
   "Automation deleted": "தானியக்கம் நீக்கப்பட்டது",
   "Automation created": "தானியக்கம் உருவாக்கப்பட்டது",
-  "No automations yet": "இன்னும் தானியக்கங்கள் இல்லை",
   None: "எதுவுமில்லை",
   "Finished. Open to read the answer.": "முடிந்தது. பதிலைப் படிக்கத் திற.",
   "New automation answers": "தானியக்கங்களின் புதிய பதில்கள்",

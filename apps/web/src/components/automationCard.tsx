@@ -91,7 +91,6 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
   const t = useT();
   const made = row.safeParse(result).data;
   const change = changed.safeParse(result).data;
-  const listed = z.array(row).safeParse(result).data;
   const bot = renamed.safeParse(result).data;
   const name = currentToolName(tool);
   if ((name === "set_bot_job" || name === "update_profile") && bot)
@@ -118,22 +117,6 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
     );
   }
   if (name === "install_plugin") return <PluginCard result={result} />;
-  if (name === "list_routines" && listed) {
-    return (
-      <div className="border-border my-3 flex flex-col gap-2.5 rounded-[12px] border p-3 print:hidden">
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-muted-foreground text-xs">{t("Your automations")}</span>
-          <OpenLink />
-        </div>
-        {listed.length === 0 && (
-          <span className="text-muted-foreground text-sm">{t("No automations yet")}</span>
-        )}
-        {listed.map((automation) => (
-          <RowLine key={automation.id} automation={automation} />
-        ))}
-      </div>
-    );
-  }
   return null;
 };
 

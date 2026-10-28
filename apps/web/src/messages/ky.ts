@@ -487,7 +487,6 @@ export default {
     "Азырынча эч нерсе сакталган жок. Sirathic маектерде бөлүшкөн туруктуу фактыларыңызды сактайт.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic эстеп калган нерселердин баары өчүрүлсүнбү? Муну кайтаруу мүмкүн эмес.",
-  "Your automations": "Сиздин автоматташтыруулар",
   "Pick new icon": "Жаңы сөлөкөт тандоо",
   Folder: "Папка",
   "A project name cannot contain a link.": "Долбоордун атында шилтеме болбошу керек.",
@@ -539,7 +538,6 @@ export default {
   "Automation resumed": "Автоматташтыруу улантылды",
   "Automation deleted": "Автоматташтыруу өчүрүлдү",
   "Automation created": "Автоматташтыруу түзүлдү",
-  "No automations yet": "Азырынча автоматташтыруу жок",
   None: "Жок",
   "Finished. Open to read the answer.": "Бүттү. Жоопту окуу үчүн ачыңыз.",
   "New automation answers": "Автоматташтыруунун жаңы жооптору",

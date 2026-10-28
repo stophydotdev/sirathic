@@ -487,7 +487,6 @@ export default {
     "تېخى ھېچ نېمە ساقلانمىدى. Sirathic سۆھبەتتە ئورتاقلاشقان مەڭگۈلۈك ئۇچۇرلىرىڭىزنى ساقلايدۇ.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic ئېسىدە تۇتقانلىرىنىڭ ھەممىسى ئۆچۈرۈلسۇنمۇ؟ بۇنى ئەسلىگە كەلتۈرگىلى بولمايدۇ.",
-  "Your automations": "ئاپتوماتلاشتۇرۇشلىرىڭىز",
   "Pick new icon": "يېڭى سىنبەلگە تاللاش",
   Folder: "ھۆججەت قىسقۇچ",
   "A project name cannot contain a link.": "تۈر نامىدا ئۇلانما بولماسلىقى كېرەك.",
@@ -539,7 +538,6 @@ export default {
   "Automation resumed": "ئاپتوماتلاشتۇرۇش داۋاملاشتۇرۇلدى",
   "Automation deleted": "ئاپتوماتلاشتۇرۇش ئۆچۈرۈلدى",
   "Automation created": "ئاپتوماتلاشتۇرۇش قۇرۇلدى",
-  "No automations yet": "ھازىرچە ئاپتوماتلاشتۇرۇش يوق",
   None: "يوق",
   "Finished. Open to read the answer.": "تامام. جاۋابنى ئوقۇش ئۈچۈن ئېچىڭ.",
   "New automation answers": "ئاپتوماتلاشتۇرۇشنىڭ يېڭى جاۋابلىرى",

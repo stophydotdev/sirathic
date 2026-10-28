@@ -487,7 +487,6 @@ export default {
     "Hələ heç nə saxlanmayıb. Sirathic söhbətdə paylaşdığınız daimi faktları saxlayır.",
   "Delete everything Sirathic remembers? This can't be undone.":
     "Sirathic-in yadda saxladığı hər şey silinsin? Bunu geri qaytarmaq olmaz.",
-  "Your automations": "Avtomatlaşdırmalarınız",
   "Pick new icon": "Yeni ikon seç",
   Folder: "Qovluq",
   "A project name cannot contain a link.": "Layihə adında keçid ola bilməz.",
@@ -539,7 +538,6 @@ export default {
   "Automation resumed": "Avtomatlaşdırma davam etdirildi",
   "Automation deleted": "Avtomatlaşdırma silindi",
   "Automation created": "Avtomatlaşdırma yaradıldı",
-  "No automations yet": "Hələ avtomatlaşdırma yoxdur",
   None: "Heç biri",
   "Finished. Open to read the answer.": "Bitdi. Cavabı oxumaq üçün aç.",
   "New automation answers": "Yeni avtomatlaşdırma cavabları",
