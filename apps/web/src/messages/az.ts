@@ -634,9 +634,10 @@ export default {
   "New automation answers": "Yeni avtomatlaşdırma cavabları",
   "Running now. The answer will show up in Runs.":
     "İndi işləyir. Cavab İcralar bölməsində görünəcək.",
-  "Search, read and draft your email": "E-poçtunuzu axtarın, oxuyun və qaralama yazın",
-  "See your calendars and events": "Təqvimlərinizi və tədbirlərinizi görün",
-  "Search and read your files": "Fayllarınızı axtarın və oxuyun",
+  "Search, read, draft and send your email":
+    "E-poçtunuzu axtarın, oxuyun, qaralama yazın və göndərin",
+  "See and change your calendar events": "Təqvim tədbirlərinizi görün və dəyişin",
+  "Search, read and add files": "Faylları axtarın, oxuyun və əlavə edin",
   Bots: "Botlar",
   "New bot": "Yeni bot",
   "What should this bot do?": "Bu bot nə etməlidir?",

@@ -629,9 +629,9 @@ export default {
   "New automation answers": "Jawaabuuji otomatik kesum",
   "Running now. The answer will show up in Runs.":
     "Ina wurtina jooni. Jaabawol ngol maa feeñ e Wurtin.",
-  "Search, read and draft your email": "Yiylo, jangu e winndu daftaruuji iimeel maa",
-  "See your calendars and events": "Yiy kalandaaji e huunde maa",
-  "Search and read your files": "Yiylo e jangu fiile maa",
+  "Search, read, draft and send your email": "Yiylo, jangu, winndu daftaruuji e neldu iimeel maa",
+  "See and change your calendar events": "Yiy e waylu huunde kalandaa maa",
+  "Search, read and add files": "Yiylo, jangu e beydu fiile",
   Bots: "Bot-ji",
   "New bot": "Bot keso",
   "What should this bot do?": "Ko bot o waɗata?",

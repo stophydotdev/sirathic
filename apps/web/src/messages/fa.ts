@@ -628,9 +628,10 @@ export default {
   "Finished. Open to read the answer.": "تمام شد. برای خواندن پاسخ باز کنید.",
   "New automation answers": "پاسخ‌های تازهٔ خودکارسازی",
   "Running now. The answer will show up in Runs.": "در حال اجرا. پاسخ در اجراها نمایش داده می‌شود.",
-  "Search, read and draft your email": "ایمیل خود را جستجو کنید، بخوانید و پیش‌نویس کنید",
-  "See your calendars and events": "تقویم‌ها و رویدادهای خود را ببینید",
-  "Search and read your files": "فایل‌های خود را جستجو کنید و بخوانید",
+  "Search, read, draft and send your email":
+    "ایمیل خود را جستجو کنید، بخوانید، پیش‌نویس کنید و بفرستید",
+  "See and change your calendar events": "رویدادهای تقویم خود را ببینید و تغییر دهید",
+  "Search, read and add files": "فایل‌ها را جستجو کنید، بخوانید و اضافه کنید",
   Bots: "بات‌ها",
   "New bot": "بات جدید",
   "What should this bot do?": "این بات چه کاری انجام دهد؟",

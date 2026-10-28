@@ -633,9 +633,9 @@ export default {
   "New automation answers": "Nuove risposte delle automazioni",
   "Running now. The answer will show up in Runs.":
     "Esecuzione in corso. La risposta apparirà in Esecuzioni.",
-  "Search, read and draft your email": "Cerca, leggi e scrivi bozze delle tue email",
-  "See your calendars and events": "Consulta i tuoi calendari ed eventi",
-  "Search and read your files": "Cerca e leggi i tuoi file",
+  "Search, read, draft and send your email": "Cerca, leggi, scrivi bozze e invia le tue email",
+  "See and change your calendar events": "Consulta e modifica gli eventi del tuo calendario",
+  "Search, read and add files": "Cerca, leggi e aggiungi file",
   Bots: "Bot",
   "New bot": "Nuovo bot",
   "What should this bot do?": "Che cosa deve fare questo bot?",

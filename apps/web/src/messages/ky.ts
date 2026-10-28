@@ -634,9 +634,10 @@ export default {
   "Finished. Open to read the answer.": "Бүттү. Жоопту окуу үчүн ачыңыз.",
   "New automation answers": "Автоматташтыруунун жаңы жооптору",
   "Running now. The answer will show up in Runs.": "Азыр иштеп жатат. Жооп Иштетүүлөрдө көрүнөт.",
-  "Search, read and draft your email": "Электрондук катыңызды издеңиз, окуңуз жана долбоор жазыңыз",
-  "See your calendars and events": "Календарларыңызды жана иш-чараларыңызды көрүңүз",
-  "Search and read your files": "Файлдарыңызды издеп, окуңуз",
+  "Search, read, draft and send your email":
+    "Электрондук катыңызды издеңиз, окуңуз, долбоор жазыңыз жана жөнөтүңүз",
+  "See and change your calendar events": "Календардагы иш-чараларыңызды көрүңүз жана өзгөртүңүз",
+  "Search, read and add files": "Файлдарды издеңиз, окуңуз жана кошуңуз",
   Bots: "Боттор",
   "New bot": "Жаңы бот",
   "What should this bot do?": "Бул бот эмне кылышы керек?",

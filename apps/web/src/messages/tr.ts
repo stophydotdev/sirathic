@@ -632,9 +632,10 @@ export default {
   "New automation answers": "Otomasyonlardan yeni yanıtlar",
   "Running now. The answer will show up in Runs.":
     "Şimdi çalışıyor. Yanıt Çalıştırmalar'da görünecek.",
-  "Search, read and draft your email": "E-postalarınızı arayın, okuyun ve taslak yazın",
-  "See your calendars and events": "Takvimlerinizi ve etkinliklerinizi görün",
-  "Search and read your files": "Dosyalarınızı arayın ve okuyun",
+  "Search, read, draft and send your email":
+    "E-postalarınızı arayın, okuyun, taslak yazın ve gönderin",
+  "See and change your calendar events": "Takvim etkinliklerinizi görün ve değiştirin",
+  "Search, read and add files": "Dosyaları arayın, okuyun ve ekleyin",
   Bots: "Botlar",
   "New bot": "Yeni bot",
   "What should this bot do?": "Bu bot ne yapmalı?",

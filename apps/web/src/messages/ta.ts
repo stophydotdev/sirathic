@@ -629,9 +629,10 @@ export default {
   "Finished. Open to read the answer.": "முடிந்தது. பதிலைப் படிக்கத் திற.",
   "New automation answers": "தானியக்கங்களின் புதிய பதில்கள்",
   "Running now. The answer will show up in Runs.": "இப்போது இயங்குகிறது. பதில் இயக்கங்களில் தோன்றும்.",
-  "Search, read and draft your email": "உங்கள் மின்னஞ்சலைத் தேடுங்கள், படியுங்கள், வரைவு எழுதுங்கள்",
-  "See your calendars and events": "உங்கள் நாட்காட்டிகளையும் நிகழ்வுகளையும் பாருங்கள்",
-  "Search and read your files": "உங்கள் கோப்புகளைத் தேடிப் படியுங்கள்",
+  "Search, read, draft and send your email":
+    "உங்கள் மின்னஞ்சலைத் தேடுங்கள், படியுங்கள், வரைவு எழுதுங்கள், அனுப்புங்கள்",
+  "See and change your calendar events": "உங்கள் நாட்காட்டி நிகழ்வுகளைப் பார்த்து மாற்றுங்கள்",
+  "Search, read and add files": "கோப்புகளைத் தேடுங்கள், படியுங்கள், சேர்க்குங்கள்",
   Bots: "பாட்கள்",
   "New bot": "புதிய பாட்",
   "What should this bot do?": "இந்த பாட் என்ன செய்ய வேண்டும்?",

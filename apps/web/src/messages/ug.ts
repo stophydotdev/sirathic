@@ -635,9 +635,9 @@ export default {
   "New automation answers": "ئاپتوماتلاشتۇرۇشنىڭ يېڭى جاۋابلىرى",
   "Running now. The answer will show up in Runs.":
     "ھازىر ئىجرا بولۇۋاتىدۇ. جاۋاب ئىجرالاردا كۆرۈنىدۇ.",
-  "Search, read and draft your email": "ئېلخېتىڭىزنى ئىزدەڭ، ئوقۇڭ ۋە لايىھە يېزىڭ",
-  "See your calendars and events": "كالېندار ۋە پائالىيەتلىرىڭىزنى كۆرۈڭ",
-  "Search and read your files": "ھۆججەتلىرىڭىزنى ئىزدەڭ ۋە ئوقۇڭ",
+  "Search, read, draft and send your email": "ئېلخېتىڭىزنى ئىزدەڭ، ئوقۇڭ، لايىھە يېزىڭ ۋە ئەۋەتىڭ",
+  "See and change your calendar events": "كالېندار پائالىيەتلىرىڭىزنى كۆرۈڭ ۋە ئۆزگەرتىڭ",
+  "Search, read and add files": "ھۆججەتلەرنى ئىزدەڭ، ئوقۇڭ ۋە قوشۇڭ",
   Bots: "بوتلار",
   "New bot": "يېڭى بوت",
   "What should this bot do?": "بۇ بوت نېمە قىلىشى كېرەك؟",
