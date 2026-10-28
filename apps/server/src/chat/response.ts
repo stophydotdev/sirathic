@@ -117,11 +117,14 @@ export function answerAgent({
       const index =
         loadable.length > 0 ? `Skills you can load with load_skill:\n${skillIndex(loadable)}` : "";
       const skillText = (index + loadedText(skills, open) + mentioned).trim();
+      const earlier = initialMessages.map(shorten);
+      const asked = earlier.findLastIndex((message) => message.role === "user") + 1;
       return {
         messages: [
-          ...initialMessages.map(shorten),
-          ...responseMessages,
+          ...earlier.slice(0, asked),
           ...(skillText ? [{ role: "system" as const, content: RULES_HEADER + skillText }] : []),
+          ...earlier.slice(asked),
+          ...responseMessages,
         ],
         activeTools: Object.keys(tools).filter((name) => !closed.has(name)),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),

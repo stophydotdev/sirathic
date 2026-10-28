@@ -24,6 +24,7 @@ import {
   type ModelCall,
   promptFor,
   scriptedModel,
+  systemTexts,
   toolNames,
 } from "./answerHelpers";
 
@@ -376,7 +377,7 @@ const HEADER =
 const researchSkill = { name: "research", when: "x", text: "Split the question." };
 const INDEX = "Skills you can load with load_skill:\n- research: x";
 
-test("the instructions go in once, and the closing rules carry the unloaded skills, loaded skills and @-calls", async () => {
+test("the instructions go in once, and the rules after the question carry the unloaded skills, loaded skills and @-calls", async () => {
   const { model, seen } = scriptedModel(["load_skill", "search_web"], ["research"]);
   await answerWith(model, {
     instructions: "CORE",
@@ -387,14 +388,22 @@ test("the instructions go in once, and the closing rules carry the unloaded skil
   expect(seen.map((call) => call.prompt[0])).toMatchObject(
     Array.from({ length: 3 }, () => ({ role: "system", content: "CORE" })),
   );
-  expect(seen.map((call) => call.prompt.at(-1)?.content)).toEqual([
+  expect(seen.map((call) => systemTexts(call)?.at(-1))).toEqual([
     `${HEADER}${INDEX}\n\nThe user called @Hadith.`,
     `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
     `${HEADER}## Skill: research\n\nSplit the question.\n\nThe user called @Hadith.`,
   ]);
 });
 
-test("the skill list is always in the closing rules, and a chat with no skills has none", async () => {
+test("each step sends the step before it unchanged, so the provider can reuse its cache", async () => {
+  const { model, seen } = scriptedModel(["search_web", "search_web"]);
+  await answerWith(model, { skills: [researchSkill] }).generate({ prompt: "hi" });
+  expect(
+    seen.slice(1).map((call, index) => call.prompt.slice(0, seen[index]?.prompt.length)),
+  ).toEqual(seen.slice(0, -1).map((call) => call.prompt));
+});
+
+test("the skill list is always in the rules, and a chat with no skills has none", async () => {
   const withSkills = scriptedModel([]);
   await answerWith(withSkills.model, { skills: [researchSkill] }).generate({ prompt: "hi" });
   const without = scriptedModel([]);
