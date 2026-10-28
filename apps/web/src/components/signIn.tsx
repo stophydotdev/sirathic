@@ -33,7 +33,6 @@ import {
   ArrowUpRight01Icon,
   Cancel01Icon,
   ComputerIcon,
-  Copy01Icon,
   Download04Icon,
   File02Icon,
   HelpCircleIcon,
@@ -91,8 +90,8 @@ type Step =
 const START: Step = { kind: "start" };
 
 const TITLES = {
-  start: "Assalamu alaikum. Sign in to start asking.",
-  asking: "Assalamu alaikum. Sign in to start asking.",
+  start: "Sign in to Sirathic",
+  asking: "Sign in to Sirathic",
   code: "Enter this code on ChatGPT",
   expired: "Code expired",
   failed: "Sign-in didn't work",
@@ -132,6 +131,7 @@ export const SignInDialog: FC = () => {
   const draft = useSignIn((s) => s.draft);
   const content = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState<Step>(START);
+  const [help, setHelp] = useState(false);
   const t = useT();
 
   const getCode = () => {
@@ -176,11 +176,14 @@ export const SignInDialog: FC = () => {
       open={open}
       onOpenChange={(next) => {
         setOpen(next);
-        if (!next) setStep(START);
+        if (!next) {
+          setStep(START);
+          setHelp(false);
+        }
       }}
     >
       <Dialog.Portal>
-        <Dialog.Overlay className="dim bg-background/70 fixed inset-0 z-[60] backdrop-blur-[4px]" />
+        <Dialog.Overlay className="dim fixed inset-0 z-[60] bg-black/60" />
         <Dialog.Content
           ref={content}
           aria-describedby={undefined}
@@ -204,37 +207,33 @@ export const SignInDialog: FC = () => {
           {step.kind === "code" ? (
             <>
               <CodeCells code={step.userCode} />
-              <CopyCode code={step.userCode} />
               <a
                 href={step.verificationUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() =>
+                  void navigator.clipboard.writeText(step.userCode).catch(() => undefined)
+                }
                 className={cn(button, primary)}
               >
-                {t("Open ChatGPT")}
+                {t("Copy code and open ChatGPT")}
                 <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
               </a>
               <span className="text-muted-foreground inline-flex items-center gap-2 text-xs">
                 <span className="bg-super ring-super/20 size-1.5 rounded-full ring-3" />
-                {t("Waiting for approval")}
+                {t("Waiting for you to approve it on ChatGPT")}
               </span>
-              <p className="text-muted-foreground border-border w-full border-t pt-3.5 text-xs leading-normal">
-                {t(
-                  "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.",
-                )}
-              </p>
-              <button
-                type="button"
-                onClick={() =>
-                  continueWithGoogle(draft).catch((err: Error) =>
-                    setStep({ kind: "failed", message: err.message }),
-                  )
-                }
-                className={cn(button, secondary)}
-              >
-                <GoogleIcon className="size-4" />
-                {t("Continue with Google")}
-              </button>
+              {help ? (
+                <p className="text-muted-foreground border-border w-full border-t pt-3.5 text-xs leading-normal">
+                  {t(
+                    "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.",
+                  )}
+                </p>
+              ) : (
+                <button type="button" onClick={() => setHelp(true)} className="text-super text-xs">
+                  {t("Code not accepted?")}
+                </button>
+              )}
             </>
           ) : (
             <>
@@ -243,15 +242,9 @@ export const SignInDialog: FC = () => {
               )}
               {step.kind === "start" || step.kind === "asking" ? (
                 <div className="flex w-full flex-col items-center gap-2">
-                  <button
-                    type="button"
-                    disabled={step.kind === "asking"}
-                    onClick={getCode}
-                    className={cn(button, primary, "disabled:opacity-60")}
-                  >
-                    <OpenAIIcon className="size-4" />
-                    {t("Continue with ChatGPT")}
-                  </button>
+                  <p className="text-muted-foreground -mt-3 mb-1 text-sm">
+                    {t("Islamic answering engine.")} {t("Free.")}
+                  </p>
                   <button
                     type="button"
                     onClick={() =>
@@ -259,13 +252,22 @@ export const SignInDialog: FC = () => {
                         setStep({ kind: "failed", message: err.message }),
                       )
                     }
-                    className={cn(button, secondary)}
+                    className={cn(button, primary)}
                   >
                     <GoogleIcon className="size-4" />
                     {t("Continue with Google")}
                   </button>
+                  <button
+                    type="button"
+                    disabled={step.kind === "asking"}
+                    onClick={getCode}
+                    className={cn(button, secondary, "disabled:opacity-60")}
+                  >
+                    <OpenAIIcon className="size-4" />
+                    {t("Continue with ChatGPT")}
+                  </button>
                   <p className="text-muted-foreground text-xs">
-                    {t("Use your ChatGPT plan for GPT models")}
+                    {t("ChatGPT lets you answer with GPT models on your own plan.")}
                   </p>
                 </div>
               ) : (
@@ -276,11 +278,6 @@ export const SignInDialog: FC = () => {
                 >
                   {step.kind === "expired" ? t("Get a new code") : t("Try again")}
                 </button>
-              )}
-              {draft && (
-                <p className="text-muted-foreground/70 border-border w-full border-t pt-3.5 text-[11.5px] leading-normal">
-                  {t("Your question stays in the box while you sign in.")}
-                </p>
               )}
             </>
           )}
@@ -311,32 +308,6 @@ const CodeCells: FC<{ code: string }> = ({ code }) => (
     )}
   </div>
 );
-
-const CopyCode: FC<{ code: string }> = ({ code }) => {
-  const [copied, setCopied] = useState(false);
-  const t = useT();
-
-  const copy = async () => {
-    const done = await navigator.clipboard.writeText(code).then(
-      () => true,
-      () => false,
-    );
-    if (!done) return;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={copy}
-      className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-xs"
-    >
-      <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
-      {copied ? t("Copied") : t("Copy code")}
-    </button>
-  );
-};
 
 const shortcut = "text-muted-foreground ms-auto ps-3 text-xs";
 
