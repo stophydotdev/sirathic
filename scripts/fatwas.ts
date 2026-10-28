@@ -18,6 +18,16 @@ import {
 import { SITES } from "./fatwaSites";
 
 const DRY = process.argv.includes("--dry");
+const PARSER = Bun.hash(
+  (
+    await Promise.all(
+      ["fatwaPages.ts", "fatwaSites.ts"].map((file) =>
+        Bun.file(`${import.meta.dir}/${file}`).text(),
+      ),
+    )
+  ).join(""),
+).toString(16);
+const SKIPPED_DIR = `${RAW_DIR}-skipped/${PARSER}`;
 const SAMPLES = process.argv.filter((arg) => arg.startsWith("https://"));
 const LIMIT = Number(process.argv.find((arg) => arg.startsWith("--limit="))?.slice(8) ?? Infinity);
 const ONLY = process.argv
@@ -131,7 +141,16 @@ const crawl = async (site: Site) => {
       await db.select({ url: fatwas.url }).from(fatwas).where(eq(fatwas.source, site.source.name))
     ).map((row) => row.url),
   );
-  const queue = urls.filter((url) => !stored.has(url));
+  await mkdir(SKIPPED_DIR, { recursive: true });
+  const skippedFile = `${SKIPPED_DIR}/${site.source.name}.txt`;
+  const known = new Set(
+    (await Bun.file(skippedFile).exists())
+      ? (await Bun.file(skippedFile).text()).split("\n").filter(Boolean)
+      : [],
+  );
+  if (known.size > 0)
+    console.log(`${site.source.name}: ${known.size} pages skipped, they did not parse before`);
+  const queue = urls.filter((url) => !stored.has(url) && !known.has(url));
   let saved = 0;
   let skipped = 0;
   let failed = 0;
@@ -140,6 +159,7 @@ const crawl = async (site: Site) => {
     const rows = batch;
     batch = [];
     if (rows.length > 0) await db.insert(fatwas).values(rows).onConflictDoNothing();
+    if (skipped > 0) await Bun.write(skippedFile, [...known].join("\n"));
     saved += rows.length;
     console.log(
       `${site.source.name}: ${saved} saved, ${skipped} not parsed, ${failed} failed, ${queue.length} left`,
@@ -156,6 +176,7 @@ const crawl = async (site: Site) => {
     if (rows) batch.push(...rows);
     else {
       skipped++;
+      known.add(url);
       console.warn(`not parsed: ${url}`);
     }
     if (batch.length >= BATCH_SIZE) await flush();
