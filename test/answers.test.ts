@@ -12,7 +12,7 @@ import { botTools } from "../apps/server/src/bots/tools";
 import { codeTools } from "../apps/server/src/chat/codeTools";
 import { fileTools } from "../apps/server/src/chat/fileTools";
 import { LOAD_SKILL, loadSkill } from "../apps/server/src/chat/skills/builtIn";
-import { CLARIFYING, sirathicTools } from "../apps/server/src/chat/tools";
+import { CLARIFYING, routedToStophy, sirathicTools } from "../apps/server/src/chat/tools";
 import { pluginTools } from "../apps/server/src/plugins/tools";
 import { skillTools } from "../apps/server/src/skills/tools";
 import server from "../apps/server/src/index";
@@ -426,4 +426,14 @@ test.each([
   await chatTurn({ models: { model, small: model }, release: (done) => finished.push(done) });
 
   expect(finished).toEqual([completed]);
+});
+
+test("a page Stophy reads with its own endpoint points the model at stophy_call", () => {
+  expect(
+    routedToStophy(
+      "Fetching https://www.reddit.com/r/islam/comments/1/x/ failed: url: this is a Reddit post. Call reddit.post (redditPost in MCP) with postUrl set to this address for structured data",
+    ),
+  ).toBe(
+    "Fetching https://www.reddit.com/r/islam/comments/1/x/ failed: url: this is a Reddit post. Load the stophy skill, then call stophy_call with id reddit.post and postUrl set to this address for structured data",
+  );
 });
