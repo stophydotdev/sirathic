@@ -68,6 +68,7 @@ const citationOf = (source: Source) => ({
   domain: siteName(source.url),
   url: source.url,
   icon: <Favicon url={source.url} size={16} />,
+  snippet: source.snippet,
 });
 
 const startTimes = new Map<string, number>();

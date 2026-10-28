@@ -6,6 +6,7 @@ import { AttachmentChip, Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
 import { UserText } from "@/components/mentions";
+import { useOpenSources } from "@/components/openSources";
 import { BotTurn } from "@/components/botChat";
 import { BotGreeting, BotHeaderMenu, BotHome, BotTitle, useBot } from "@/components/botHome";
 import { BotLearned } from "@/components/botLearned";
@@ -43,7 +44,7 @@ const ThreadImpl: FC = () => {
   return (
     <ThreadShell>
       <ThreadKeys />
-      <ThreadPrimitive.Root className="bg-background text-foreground flex h-full flex-col print:h-auto">
+      <ThreadPrimitive.Root className="bg-background text-foreground @container flex h-full flex-col print:h-auto">
         <AuiIf condition={(s) => s.thread.messages.length === 0}>
           <EmptyState />
         </AuiIf>
@@ -163,10 +164,15 @@ const IncognitoToggle: FC = () => {
 const ThreadBody: FC = () => {
   const t = useT();
   const bot = useBot();
+  const sourcesOpen = useOpenSources((s) => s.id !== undefined);
+  const shifted = cn(
+    "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
+    sourcesOpen && "@3xl:pe-90",
+  );
 
   return (
     <>
-      <div className="px-6 pb-8">
+      <div className={cn("px-6 pb-8", shifted)}>
         <TurnRow>
           <BotGreeting />
           <ThreadPrimitive.Messages>
@@ -175,7 +181,9 @@ const ThreadBody: FC = () => {
           <BotLearned />
         </TurnRow>
       </div>
-      <ThreadPrimitive.ViewportFooter className="bg-background sticky bottom-0 mt-auto px-6 pb-3 print:hidden">
+      <ThreadPrimitive.ViewportFooter
+        className={cn("bg-background sticky bottom-0 mt-auto px-6 pb-3 print:hidden", shifted)}
+      >
         <TurnRow>
           <div className="relative">
             <ThreadPrimitive.ScrollToBottom
