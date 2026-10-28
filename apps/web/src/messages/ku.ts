@@ -709,4 +709,14 @@ export default {
   "Searching Stophy for {detail}": "گەڕان لە Stophy بۆ {detail}",
   "Read from Stophy": "لە Stophy خوێندرایەوە",
   "Checking Stophy…": "پشکنینی Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "بۆ ئێستا سنووری Noor ت بەکارهێنا. دووبارە دەستپێدەکاتەوە {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "سنووری هەفتانەی Noor ت بەکارهێنا. دووبارە دەستپێدەکاتەوە {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "بۆ ئێستا {percent}% ی سنووری Noor ت بەکارهێناوە. دووبارە دەستپێدەکاتەوە {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "{percent}% ی سنووری هەفتانەی Noor ت بەکارهێناوە. دووبارە دەستپێدەکاتەوە {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "بە ChatGPT بچۆ ژوورەوە بۆ ئەوەی بە GPT پرسیار بکەیت.",
 } satisfies Messages;

@@ -706,4 +706,14 @@ export default {
   "Searching Stophy for {detail}": "د {detail} لپاره په Stophy کې لټون",
   "Read from Stophy": "له Stophy څخه ولوستل شو",
   "Checking Stophy…": "Stophy ګوري…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "تاسو د اوس لپاره د Noor حد کارولی. بیا تنظیمیږي {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "تاسو د دې اونۍ د Noor حد کارولی. بیا تنظیمیږي {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "تاسو د اوس لپاره د Noor د حد {percent}% کارولی. بیا تنظیمیږي {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "تاسو د دې اونۍ د Noor د حد {percent}% کارولی. بیا تنظیمیږي {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "د GPT سره د پوښتنو د دوام لپاره په ChatGPT ننوځئ.",
 } satisfies Messages;

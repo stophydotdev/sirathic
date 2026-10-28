@@ -706,4 +706,13 @@ export default {
   "Searching Stophy for {detail}": "{detail}-க்காக Stophy-இல் தேடுகிறது",
   "Read from Stophy": "Stophy-இலிருந்து படிக்கப்பட்டது",
   "Checking Stophy…": "Stophy-ஐச் சரிபார்க்கிறது…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "இப்போதைக்கு Noor வரம்பைப் பயன்படுத்திவிட்டீர்கள். {time}க்கு மீட்டமையும்.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "இந்த வாரத்தின் Noor வரம்பைப் பயன்படுத்திவிட்டீர்கள். {time}க்கு மீட்டமையும்.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "இப்போதைக்கு Noor வரம்பில் {percent}% பயன்படுத்தியுள்ளீர்கள். {time}க்கு மீட்டமையும்.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "இந்த வாரத்தின் Noor வரம்பில் {percent}% பயன்படுத்தியுள்ளீர்கள். {time}க்கு மீட்டமையும்.",
+  "Sign in with ChatGPT to keep asking with GPT.": "GPT மூலம் தொடர்ந்து கேட்க ChatGPT மூலம் உள்நுழையவும்.",
 } satisfies Messages;

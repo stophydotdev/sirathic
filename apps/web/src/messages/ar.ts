@@ -701,4 +701,13 @@ export default {
   "Searching Stophy for {detail}": "البحث في Stophy عن {detail}",
   "Read from Stophy": "تمت القراءة من Stophy",
   "Checking Stophy…": "يتحقق من Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "لقد استخدمت حد Noor الحالي. يُعاد الضبط {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "لقد استخدمت حد Noor لهذا الأسبوع. يُعاد الضبط {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "استخدمت {percent}% من حد Noor الحالي. يُعاد الضبط {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "استخدمت {percent}% من حد Noor لهذا الأسبوع. يُعاد الضبط {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.": "سجّل الدخول عبر ChatGPT لتواصل السؤال مع GPT.",
 } satisfies Messages;

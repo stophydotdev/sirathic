@@ -693,4 +693,13 @@ export default {
   "Searching Stophy for {detail}": "กำลังค้นหาใน Stophy สำหรับ {detail}",
   "Read from Stophy": "อ่านจาก Stophy แล้ว",
   "Checking Stophy…": "กำลังตรวจสอบ Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "คุณใช้ขีดจำกัดของ Noor ไปหมดแล้วในตอนนี้ รีเซ็ต {time}",
+  "You've used this week's Noor limit. It resets {time}.":
+    "คุณใช้ขีดจำกัดรายสัปดาห์ของ Noor หมดแล้ว รีเซ็ต {time}",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "คุณใช้ขีดจำกัดของ Noor ในตอนนี้ไปแล้ว {percent}% รีเซ็ต {time}",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "คุณใช้ขีดจำกัดรายสัปดาห์ของ Noor ไปแล้ว {percent}% รีเซ็ต {time}",
+  "Sign in with ChatGPT to keep asking with GPT.": "ลงชื่อเข้าใช้ด้วย ChatGPT เพื่อถามต่อด้วย GPT",
 } satisfies Messages;

@@ -706,4 +706,14 @@ export default {
   "Searching Stophy for {detail}": "Stophyで検索しています：{detail}",
   "Read from Stophy": "Stophyから読み込みました",
   "Checking Stophy…": "Stophyを確認中…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "現在の Noor の上限に達しました。{time}にリセットされます。",
+  "You've used this week's Noor limit. It resets {time}.":
+    "今週の Noor の上限に達しました。{time}にリセットされます。",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "現在の Noor の上限の {percent}% を使用しました。{time}にリセット。",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "今週の Noor の上限の {percent}% を使用しました。{time}にリセット。",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "GPT で質問を続けるには ChatGPT でサインインしてください。",
 } satisfies Messages;

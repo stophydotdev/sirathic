@@ -3,7 +3,7 @@
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { takeDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
-import { useAccount } from "@/components/account";
+import { useAccount, useCurrentModel } from "@/components/account";
 import {
   type Choice,
   LinkPlugin,
@@ -15,6 +15,7 @@ import {
 import { RecentFiles } from "@/components/libraryRecent";
 import { popoverHeading, popoverIcon, popoverPanel, popoverRow } from "@/components/popover";
 import { ModelPicker } from "@/components/modelPicker";
+import { NoorLimitLine } from "@/components/noorLimit";
 import { useSignIn } from "@/components/signIn";
 import {
   DropdownMenu,
@@ -112,6 +113,7 @@ export const Composer: FC<{
   }
   const signedOut = useAccount((s) => s.status?.signedIn === false);
   const signedIn = useAccount((s) => s.status?.signedIn === true);
+  const noor = useCurrentModel()?.maker === "sirathic";
   const ask = useSignIn((s) => s.ask);
   const shown = useRotatingPlaceholder(placeholder, rotate && text === "");
   const t = useT();
@@ -193,6 +195,7 @@ export const Composer: FC<{
   return (
     <ComposerPrimitive.TriggerPopoverRoot>
       <div className="relative w-full">
+        {signedIn && noor && <NoorLimitLine running={running} />}
         <ComposerPrimitive.Root
           className={cn(
             "bg-card border-foreground/10 flex w-full flex-wrap items-center border",

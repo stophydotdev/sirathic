@@ -152,7 +152,7 @@ export const AccountSection: FC = () => {
       </Group>
       {status?.signedIn === true && (
         <>
-          {status.via === "chatgpt" && <UsageGroup />}
+          <UsageGroup />
           <DevicesGroup />
           <Group>
             <DeleteAccountRow />

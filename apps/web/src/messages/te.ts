@@ -695,4 +695,13 @@ export default {
   "Searching Stophy for {detail}": "{detail} కోసం Stophyలో వెతుకుతోంది",
   "Read from Stophy": "Stophy నుండి చదివింది",
   "Checking Stophy…": "Stophy చూస్తోంది…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "ప్రస్తుతానికి Noor పరిమితిని వాడేశారు. {time}కి రీసెట్ అవుతుంది.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "ఈ వారపు Noor పరిమితిని వాడేశారు. {time}కి రీసెట్ అవుతుంది.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "ప్రస్తుతానికి Noor పరిమితిలో {percent}% వాడారు. {time}కి రీసెట్ అవుతుంది.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "ఈ వారపు Noor పరిమితిలో {percent}% వాడారు. {time}కి రీసెట్ అవుతుంది.",
+  "Sign in with ChatGPT to keep asking with GPT.": "GPTతో అడుగుతూనే ఉండటానికి ChatGPTతో సైన్ ఇన్ చేయండి.",
 } satisfies Messages;

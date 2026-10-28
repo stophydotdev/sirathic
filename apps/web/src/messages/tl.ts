@@ -713,4 +713,14 @@ export default {
   "Searching Stophy for {detail}": "Naghahanap sa Stophy para sa {detail}",
   "Read from Stophy": "Binasa mula sa Stophy",
   "Checking Stophy…": "Tinitingnan ang Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "Nagamit mo na ang limit ng Noor sa ngayon. Magre-reset {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "Nagamit mo na ang lingguhang limit ng Noor. Magre-reset {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "Nagamit mo na ang {percent}% ng limit ng Noor sa ngayon. Magre-reset {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "Nagamit mo na ang {percent}% ng lingguhang limit ng Noor. Magre-reset {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "Mag-sign in gamit ang ChatGPT para patuloy na magtanong gamit ang GPT.",
 } satisfies Messages;

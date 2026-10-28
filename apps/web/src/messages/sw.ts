@@ -707,4 +707,14 @@ export default {
   "Searching Stophy for {detail}": "Inatafuta kwenye Stophy: {detail}",
   "Read from Stophy": "Imesomwa kutoka Stophy",
   "Checking Stophy…": "Inakagua Stophy…",
+  "You've used Noor's limit for now. It resets at {time}.":
+    "Umetumia kikomo cha Noor kwa sasa. Huwekwa upya {time}.",
+  "You've used this week's Noor limit. It resets {time}.":
+    "Umetumia kikomo cha wiki hii cha Noor. Huwekwa upya {time}.",
+  "You've used {percent}% of Noor's limit for now. Resets {time}.":
+    "Umetumia {percent}% ya kikomo cha Noor kwa sasa. Huwekwa upya {time}.",
+  "You've used {percent}% of this week's Noor limit. Resets {time}.":
+    "Umetumia {percent}% ya kikomo cha wiki hii cha Noor. Huwekwa upya {time}.",
+  "Sign in with ChatGPT to keep asking with GPT.":
+    "Ingia kwa ChatGPT ili uendelee kuuliza kwa GPT.",
 } satisfies Messages;
