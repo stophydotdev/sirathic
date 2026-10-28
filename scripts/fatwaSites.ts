@@ -1,5 +1,6 @@
 import { FATWA_MIRRORS } from "./catalog";
 import {
+  ANSWER_MARK,
   amjaFatwas,
   articleSite,
   between,
@@ -9,11 +10,12 @@ import {
   fatwaIslamFatwas,
   headingLine,
   ISLAMQA_ANSWER,
+  mappedUrls,
+  pageTitle,
   plainText,
   publishedOf,
   schoolOf,
   type Site,
-  titleOf,
   VERSION,
 } from "./fatwaPages";
 
@@ -32,7 +34,7 @@ export const SITES: Site[] = [
     parallel: 32,
     parse: (markdown, html, url) => {
       const [, lang, number] = ISLAMQA_ANSWER.exec(url) ?? [];
-      const title = titleOf(markdown);
+      const title = pageTitle(markdown, html);
       const answerLabel = /<h2[^>]*>([^<]+)<hr/u.exec(html)?.[1];
       const summaryLabel = /<h2 class="[^"]*tw-text-secondary[^"]*">([^<]+)<\/h2>/u.exec(html)?.[1];
       const sourceLabel = /<h2>([^<]+?)(?:<!-- -->)?:\s*<\/h2><p data-sut="fatwa-source"/u.exec(
@@ -110,7 +112,7 @@ export const SITES: Site[] = [
     ),
     parallel: 32,
     parse: (markdown, html, url) => {
-      const title = titleOf(markdown);
+      const title = pageTitle(markdown, html);
       const scholar = /Answered by\s*\n+\s*(.+)/u.exec(markdown)?.[1]?.trim();
       const from = /<meta[^>]+property="article:section"[^>]+content="([^"]+)"/u.exec(html)?.[1];
       const body = between(
@@ -313,14 +315,6 @@ export const SITES: Site[] = [
     page: /^https:\/\/islamicorigins\.com\/.+/u,
   }),
   articleSite({
-    name: "hadithoftheday.com",
-    url: "https://hadithoftheday.com",
-    credit: "Hadith of the Day",
-    sitemaps: ["https://hadithoftheday.com/wp-sitemap.xml"],
-    follow: /posts-post/u,
-    page: /^https:\/\/hadithoftheday\.com\/[^/]+\/?$/u,
-  }),
-  articleSite({
     name: "islamicfinanceguru.com",
     url: "https://www.islamicfinanceguru.com",
     credit: "Islamic Finance Guru",
@@ -359,13 +353,6 @@ export const SITES: Site[] = [
     page: /^https:\/\/www\.virtualmosque\.com\/.+/u,
   }),
   articleSite({
-    name: "productivemuslim.com",
-    url: "https://productivemuslim.com",
-    credit: "ProductiveMuslim (community blog)",
-    sitemaps: ["https://productivemuslim.com/sitemap-index.xml"],
-    page: /^https:\/\/productivemuslim\.com\/(?!blog\/|reading-list\/).+/u,
-  }),
-  articleSite({
     name: "aboutislam.net",
     url: "https://aboutislam.net",
     credit: "AboutIslam",
@@ -383,6 +370,8 @@ export const SITES: Site[] = [
       "https://www.dar-alifta.org/ar/sitemap.xml",
     ],
     page: /^https:\/\/www\.dar-alifta\.org\/(en|ar)\/fatwa\/details\/\d+/iu,
+    answerMark: new RegExp(`${ANSWER_MARK.source}|^#+ Answer\\s*$`, "mu"),
+    end: /^اقرأ أيضا ?:\s*$/mu,
     parallel: 4,
     answeredBy: by("Dar al-Ifta al-Misriyyah"),
   }),
@@ -398,8 +387,8 @@ export const SITES: Site[] = [
     name: "fiqh.islamonline.net",
     url: "https://fiqh.islamonline.net",
     credit: "IslamOnline Fiqh",
-    sitemaps: ["https://fiqh.islamonline.net/sitemap_index.xml"],
-    follow: /^post-sitemap\d*\.xml$/u,
+    sitemaps: [],
+    discover: () => mappedUrls("https://fiqh.islamonline.net"),
     page: /^https:\/\/fiqh\.islamonline\.net\/.+/u,
     parallel: 4,
     delayMs: 500,
@@ -413,6 +402,7 @@ export const SITES: Site[] = [
     sitemaps: ["https://al-fatawa.com/sitemap.xml"],
     follow: /^sitemap-en-(?!pages)/u,
     page: /^https:\/\/al-fatawa\.com\/en\/fatwa\/\d+\/.+/u,
+    answerMark: new RegExp(`${ANSWER_MARK.source}|^The Shaykh\\s*:`, "mu"),
     parallel: 4,
   }),
   articleSite({
