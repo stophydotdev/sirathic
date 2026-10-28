@@ -290,7 +290,7 @@ const Question: FC = () => {
                 </MessagePrimitive.Attachments>
               </div>
             </AuiIf>
-            <div className="bg-foreground/3 max-w-full overflow-x-auto rounded-2xl px-4 py-2 text-[15px] leading-[22.5px] wrap-break-word whitespace-pre-wrap">
+            <div className="bg-bubble max-w-full overflow-x-auto rounded-2xl px-4 py-2 text-[15px] leading-[22.5px] wrap-break-word whitespace-pre-wrap">
               <MessagePrimitive.Parts
                 components={{
                   Text: UserText,

@@ -4,7 +4,13 @@ import { useAccount } from "@/components/account";
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { type Translate, useT } from "@/components/i18n";
 import { LOCALE_COOKIE, LOCALES, type Locale } from "@/components/locales";
-import { ANSWER_FONTS, THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
+import {
+  ANSWER_FONTS,
+  PALETTES,
+  THEME_NAMES,
+  THEMES,
+  usePreferences,
+} from "@/components/preferences";
 import { useSettings } from "@/components/settings";
 import { Choice, control, Group, Row, Segmented } from "@/components/settingsControls";
 import { DeleteAccountRow, DevicesGroup } from "@/components/settingsDevices";
@@ -164,6 +170,7 @@ export const AccountSection: FC = () => {
 };
 
 type Theme = (typeof THEMES)[number];
+type Palette = (typeof PALETTES)[number];
 
 const SKETCH_TONES = {
   light: { page: "bg-white", side: "bg-[#f4f4f4]", line: "bg-[#d9d9d9]" },
@@ -229,6 +236,66 @@ const ThemePictures: FC<{ value: Theme; onChange: (next: Theme) => void }> = ({
   );
 };
 
+const PALETTE_NAMES = {
+  sirathic: "Sirathic",
+  grove: "Grove",
+  ocean: "Ocean",
+  ember: "Ember",
+  iris: "Iris",
+  rose: "Rose",
+} satisfies Record<Palette, MessageKey>;
+
+const PalettePictures: FC<{ value: Palette; onChange: (next: Palette) => void }> = ({
+  value,
+  onChange,
+}) => {
+  const t = useT();
+  return (
+    <div
+      role="radiogroup"
+      aria-label={t("Colors")}
+      className="grid w-full grid-cols-3 gap-2.5 md:w-80"
+    >
+      {PALETTES.map((palette) => (
+        <button
+          key={palette}
+          type="button"
+          role="radio"
+          aria-checked={palette === value}
+          onClick={() => onChange(palette)}
+          className={cn(
+            "flex flex-col items-center gap-1.5 rounded-[10px] border py-2.5 transition-colors",
+            palette === value
+              ? "border-foreground/60 ring-foreground/60 ring-1"
+              : "border-foreground/10 hover:border-foreground/30",
+          )}
+        >
+          <span className="ring-foreground/15 flex size-10 overflow-hidden rounded-full ring-1">
+            {(["light", "dark"] as const).map((mode) => (
+              <span
+                key={mode}
+                data-mode={mode}
+                data-palette={palette}
+                className="bg-background relative flex-1"
+              >
+                <span className="bg-super absolute start-0.5 top-2.5 size-3.5 rounded-full blur-xs" />
+              </span>
+            ))}
+          </span>
+          <span
+            className={cn(
+              "text-[13px]",
+              palette === value ? "text-foreground" : "text-muted-foreground",
+            )}
+          >
+            {t(PALETTE_NAMES[palette])}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+};
+
 const FONT_NAMES = { sans: "Sans", serif: "Serif" } satisfies Record<
   (typeof ANSWER_FONTS)[number],
   MessageKey
@@ -237,6 +304,7 @@ const FONT_NAMES = { sans: "Sans", serif: "Serif" } satisfies Record<
 export const AppearanceSection: FC = () => {
   const theme = usePreferences((s) => s.theme);
   const answerFont = usePreferences((s) => s.answerFont);
+  const palette = usePreferences((s) => s.palette);
   const change = usePreferences((s) => s.change);
   const t = useT();
 
@@ -244,6 +312,9 @@ export const AppearanceSection: FC = () => {
     <Group>
       <Row label={t("Theme")}>
         <ThemePictures value={theme} onChange={(next) => change({ theme: next })} />
+      </Row>
+      <Row label={t("Colors")}>
+        <PalettePictures value={palette} onChange={(next) => change({ palette: next })} />
       </Row>
       <Row label={t("Answer font")} hint={t("How answers look")}>
         <Segmented

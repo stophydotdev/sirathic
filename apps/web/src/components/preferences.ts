@@ -8,6 +8,8 @@ export const THEMES = ["dark", "light", "system"] as const;
 
 export const ANSWER_FONTS = ["sans", "serif"] as const;
 
+export const PALETTES = ["sirathic", "grove", "ocean", "ember", "iris", "rose"] as const;
+
 export const THEME_NAMES = {
   dark: "Dark",
   light: "Light",
@@ -20,19 +22,21 @@ const saved = z.object({
   routineAlerts: z.boolean().catch(true),
   answerAlerts: z.boolean().catch(true),
   answerFont: z.enum(ANSWER_FONTS).catch("sans"),
+  palette: z.enum(PALETTES).catch("sirathic"),
 });
 
 type Preferences = z.infer<typeof saved>;
 
 const DEFAULTS: Preferences = saved.parse({});
 
-export const themeScript = `try{var p=JSON.parse(localStorage.getItem("${STORAGE_KEY}")||"{}"),t=p.theme||"dark";document.documentElement.classList.toggle("dark",t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches))}catch(e){}`;
+export const themeScript = `try{var p=JSON.parse(localStorage.getItem("${STORAGE_KEY}")||"{}"),t=p.theme||"dark",d=document.documentElement;d.classList.toggle("dark",t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches));d.dataset.palette=p.palette||"sirathic"}catch(e){}`;
 
 const systemDark = () => globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ?? true;
 
-function applyTheme({ theme }: Preferences) {
+function applyTheme({ theme, palette }: Preferences) {
   const dark = theme === "dark" || (theme === "system" && systemDark());
   document.documentElement.classList.toggle("dark", dark);
+  document.documentElement.dataset.palette = palette;
 }
 
 export const usePreferences = create<
