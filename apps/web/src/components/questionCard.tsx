@@ -4,7 +4,7 @@ import { useT } from "@/components/i18n";
 import { ANSWER_MAX, question } from "@sirathic/server/messages";
 import { type ThreadMessage, useAui, useAuiState } from "@assistant-ui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Cancel01Icon, CancelCircleIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 
 const textOf = (message: ThreadMessage | undefined) =>
@@ -20,80 +20,73 @@ export const QuestionCard: FC<{
   const [dismissed, setDismissed] = useState(false);
   const [own, setOwn] = useState("");
   const t = useT();
-  const closed = dismissed || reply !== undefined;
-  const answer = !dismissed && reply && reply.length <= ANSWER_MAX ? reply : undefined;
+  if (dismissed || reply !== undefined) {
+    return (
+      <div className="my-2 flex flex-col items-start gap-1">
+        <p className="bot-bubble">{asked}</p>
+        {dismissed && <span className="text-muted-foreground px-4 text-sm">{t("Dismissed")}</span>}
+      </div>
+    );
+  }
 
   return (
     <div className="bot-card">
       <div className="flex items-start justify-between gap-2">
         <p className="min-w-0 flex-1 py-px text-base leading-snug">{asked}</p>
-        {closed ? (
-          <span className="bg-foreground/8 text-muted-foreground flex h-8 max-w-1/2 min-w-28 shrink-0 items-center justify-center gap-1 self-center rounded-full px-2.5 text-sm leading-snug font-semibold">
-            {answer ? (
-              <HugeiconsIcon icon={CheckmarkCircle02Icon} className="size-4.5 shrink-0" />
-            ) : (
-              <HugeiconsIcon icon={CancelCircleIcon} className="size-4.5 shrink-0" />
-            )}
-            <span className="truncate">{answer ?? t("Dismissed")}</span>
-          </span>
-        ) : (
-          <button
-            type="button"
-            aria-label={t("Close")}
-            onClick={() => setDismissed(true)}
-            className="text-muted-foreground hover:bg-foreground/8 hover:text-foreground -me-1 rounded-full p-1"
-          >
-            <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
-          </button>
-        )}
+        <button
+          type="button"
+          aria-label={t("Close")}
+          onClick={() => setDismissed(true)}
+          className="text-muted-foreground hover:bg-foreground/8 hover:text-foreground -me-1 rounded-full p-1"
+        >
+          <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+        </button>
       </div>
-      {!closed && (
-        <div className="mt-3 flex flex-col gap-3">
-          <div className="border-foreground/10 divide-foreground/10 flex flex-col divide-y overflow-hidden rounded-xl border">
-            {options.map((option, index) => (
-              <button
-                key={option}
-                type="button"
-                disabled={running}
-                onClick={() => aui.thread().append(option)}
-                className="hover:bg-foreground/8 flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-start text-base leading-snug disabled:opacity-50"
-              >
-                <span className="bg-foreground/10 text-muted-foreground inline-flex size-5 shrink-0 items-center justify-center rounded-md text-xs">
-                  {String.fromCharCode(65 + index)}
-                </span>
-                <span className="min-w-0 flex-1">{option}</span>
-              </button>
-            ))}
-          </div>
-          <form
-            className="bg-background flex items-center gap-2 rounded-xl ps-4 pe-1.5"
-            onSubmit={(event) => {
-              event.preventDefault();
-              const text = own.trim();
-              if (!text || running) return;
-              aui.thread().append(text);
-              setOwn("");
-            }}
-          >
-            <input
-              value={own}
-              onChange={(event) => setOwn(event.target.value)}
-              maxLength={ANSWER_MAX}
-              placeholder={t("Type your own answer")}
-              className="placeholder:text-muted-foreground h-11 min-w-0 flex-1 bg-transparent text-base outline-none"
-            />
-            {own.trim() && (
-              <button
-                type="submit"
-                disabled={running}
-                className="bg-foreground text-background h-8 shrink-0 rounded-full px-3 text-sm font-medium disabled:opacity-50"
-              >
-                {t("Submit")}
-              </button>
-            )}
-          </form>
+      <div className="mt-3 flex flex-col gap-3">
+        <div className="border-foreground/10 divide-foreground/10 flex flex-col divide-y overflow-hidden rounded-xl border">
+          {options.map((option, index) => (
+            <button
+              key={option}
+              type="button"
+              disabled={running}
+              onClick={() => aui.thread().append(option)}
+              className="hover:bg-foreground/8 flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-start text-base leading-snug disabled:opacity-50"
+            >
+              <span className="bg-foreground/10 text-muted-foreground inline-flex size-5 shrink-0 items-center justify-center rounded-md text-xs">
+                {String.fromCharCode(65 + index)}
+              </span>
+              <span className="min-w-0 flex-1">{option}</span>
+            </button>
+          ))}
         </div>
-      )}
+        <form
+          className="bg-background flex items-center gap-2 rounded-xl ps-4 pe-1.5"
+          onSubmit={(event) => {
+            event.preventDefault();
+            const text = own.trim();
+            if (!text || running) return;
+            aui.thread().append(text);
+            setOwn("");
+          }}
+        >
+          <input
+            value={own}
+            onChange={(event) => setOwn(event.target.value)}
+            maxLength={ANSWER_MAX}
+            placeholder={t("Type your own answer")}
+            className="placeholder:text-muted-foreground h-11 min-w-0 flex-1 bg-transparent text-base outline-none"
+          />
+          {own.trim() && (
+            <button
+              type="submit"
+              disabled={running}
+              className="bg-foreground text-background h-8 shrink-0 rounded-full px-3 text-sm font-medium disabled:opacity-50"
+            >
+              {t("Submit")}
+            </button>
+          )}
+        </form>
+      </div>
     </div>
   );
 };
