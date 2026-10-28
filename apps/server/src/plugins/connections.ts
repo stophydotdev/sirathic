@@ -352,16 +352,16 @@ export async function addCustom(owner: string, input: z.output<typeof customInpu
 export async function finishConnect(owner: string, query: Record<string, string>) {
   const { state, code, iss } = callbackQuery.parse(query);
   const connector = pluginId.parse(state.split(".")[0]);
-  if (!code) return undefined;
-  const server = await serverOf(owner, connector);
   const stored = await storedFor(owner, connector);
+  if (!code) return stored.returnTo;
+  const server = await serverOf(owner, connector);
   const { provider } = providerFor(owner, connector, server, stored);
   await auth(provider, {
     serverUrl: server.url,
     authorizationCode: code,
     callbackState: state,
     callbackIssuer: iss,
-  });
+  }).catch((err: Error) => console.error(`connector not connected: ${reasonOf(err)}`));
   return stored.returnTo;
 }
 
