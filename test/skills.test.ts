@@ -12,6 +12,7 @@ import {
 } from "../apps/server/src/chat/stophyTools";
 import {
   closedTools,
+  openedBy,
   loadSkill,
   loadedText,
   skillIndex,
@@ -475,4 +476,15 @@ test("links to the sites the Stophy skill names are known, and other pages are n
       "https://www.netflix.com/title/1",
     ].map((url) => STOPHY_LINK.test(url)),
   ).toEqual([true, true, true, true, true, true, true, false, false]);
+});
+
+test("a link or a connected app named in the message opens its skill from the first step", () => {
+  const apps = [
+    { id: "gmail", name: "Gmail", connected: true },
+    { id: "notion", name: "Notion", connected: false },
+  ];
+  expect(openedBy("what does https://www.youtube.com/watch?v=abc say?", apps)).toEqual(["stophy"]);
+  expect(openedBy("check my gmail for the invoice", apps)).toEqual(["plugins", "send_on_behalf"]);
+  expect(openedBy("find my notes in Notion", apps)).toEqual([]);
+  expect(openedBy("what is the ruling on witr?", apps)).toEqual([]);
 });

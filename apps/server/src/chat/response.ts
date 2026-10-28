@@ -54,6 +54,7 @@ import {
   loadedText,
   loadSkill,
   LOAD_SKILL,
+  openedBy,
   type Skill,
   skillIndex,
   type UserSkill,
@@ -354,6 +355,7 @@ export function chatResponse({
           ),
         ),
         ...(mode === "research" ? RESEARCH_OPENS : []),
+        ...openedBy(askedText, plugins),
       ];
       const writes = unattended ? [] : writingTools(connectors.tools);
       const agent = answerAgent({
