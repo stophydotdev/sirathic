@@ -24,12 +24,21 @@ test("a bot's own memory replaces the main memory and the default keeps it", () 
 });
 
 test("a bot name with a link is caught and a plain name is not", () => {
+  expect(["http://localhost", "www.example.com", "visit example.com"].map(containsLink)).toEqual([
+    true,
+    true,
+    true,
+  ]);
   expect(
-    ["http://localhost", "www.example.com", "visit example.com", "notes.pdf"].map(containsLink),
-  ).toEqual([true, true, true, true]);
-  expect(
-    ["Fiqh notes", "Ramadan 2026", "Q&A, e.g. salah", "Version 1.2"].map(containsLink),
-  ).toEqual([false, false, false, false]);
+    [
+      "Fiqh notes",
+      "Ramadan 2026",
+      "Q&A, e.g. salah",
+      "Version 1.2",
+      "Node.js study",
+      "notes.pdf",
+    ].map(containsLink),
+  ).toEqual([false, false, false, false, false, false]);
 });
 
 const botId = "22222222-2222-4222-8222-222222222222";
@@ -224,6 +233,9 @@ test.each([
   "Follows Hanafi rulings",
   "Is diabetic, so asks about fasting",
   "Is divorced",
+  "Always prays Fajr at the masjid",
+  "Wants instructions in simple English",
+  "Works as a Node.js developer",
 ])("profile text %p states a fact about the learner and is accepted", (text) => {
   expect(profileRejection(text)).toBeUndefined();
 });
