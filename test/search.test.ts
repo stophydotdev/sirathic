@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { nearBest, nearFused, withinChars } from "../apps/server/src/chat/cut";
 import { fuse } from "../apps/server/src/chat/fuse";
 import { needsSources, relevant } from "../apps/server/src/chat/relevance";
 import { onePerPage } from "../apps/server/src/chat/search";
@@ -175,6 +176,7 @@ test("fiqh chunks from the same page become one passage, in the order found", ()
     deathYearAh: 600,
     volume: 1,
     heading: null,
+    distance: 0,
   };
   const merged = onePerPage([
     { ...chunk, id: "a", page: 5, url: "https://shamela.ws/book/1#1:5", textAr: "أول" },
@@ -204,4 +206,38 @@ test("a result two queries both found beats one only a single query ranked first
       (id) => id,
     ),
   ).toEqual(["b", "a", "c"]);
+});
+
+test("results far behind the best one are cut, but a school's own best stays", () => {
+  const items = [
+    { id: "a", distance: 0.3 },
+    { id: "b", distance: 0.34 },
+    { id: "c", distance: 0.5 },
+    { id: "d", distance: 0.9 },
+  ];
+  expect(nearBest(items, (item) => item.id === "d").map(({ id }) => id)).toEqual(["a", "b", "d"]);
+});
+
+test("results stop at the character budget, and the first one always fits", () => {
+  const { fits, over } = withinChars(["aaaa", "bb", "cc"], (text) => text.length, 3);
+  expect({ fits, over }).toEqual({ fits: ["aaaa"], over: ["bb", "cc"] });
+});
+
+test("a result far behind one query's best gets no votes from that query", () => {
+  const { near, far } = nearFused(
+    [
+      [
+        { id: "s1", distance: 0.3 },
+        { id: "s2", distance: 0.31 },
+      ],
+      [
+        { id: "b", distance: 0.3 },
+        { id: "s1", distance: 0.9 },
+        { id: "s2", distance: 0.9 },
+        { id: "x", distance: 0.95 },
+      ],
+    ],
+    (item) => item.id,
+  );
+  expect([near.map(({ id }) => id), far.map(({ id }) => id)]).toEqual([["s1", "b", "s2"], ["x"]]);
 });

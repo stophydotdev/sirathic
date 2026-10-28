@@ -16,6 +16,12 @@ export const fiqhSearchInput = z.object({
 export const fiqhSearch = async (input: z.input<typeof fiqhSearchInput>) => {
   const { query, school, limit } = fiqhSearchInput.parse(input);
   const filter = school === undefined ? sql`true` : sql`${fiqhPassages.school} = ${school}`;
-  const ids = await hybridIds(SEARCHABLE.fiqhPassages, query, limit, { filter, rareWords: true });
-  return { passages: await passagesByIds(ids) };
+  const hits = await hybridIds(SEARCHABLE.fiqhPassages, query, limit, { filter, rareWords: true });
+  const distances = new Map(hits.map(({ id, distance }) => [id, distance]));
+  const found = await passagesByIds(hits.map(({ id }) => id));
+  return {
+    passages: found.map((passage) =>
+      Object.assign(passage, { distance: distances.get(passage.id) ?? Number.POSITIVE_INFINITY }),
+    ),
+  };
 };

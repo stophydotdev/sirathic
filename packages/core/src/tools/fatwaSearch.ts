@@ -23,11 +23,11 @@ export const fatwaSearchInput = z.object({
 export const fatwaSearch = async (input: z.input<typeof fatwaSearchInput>) => {
   const { query, sites, limit } = fatwaSearchInput.parse(input);
   const filter = sites.length === 0 ? sql`true` : onSites(sites);
-  const ids = await hybridIds(SEARCHABLE.fatwas, query, limit * ROWS_PER_PAGE, {
+  const hits = await hybridIds(SEARCHABLE.fatwas, query, limit * ROWS_PER_PAGE, {
     topUp: true,
     filter,
   });
-  if (ids.length === 0) return { fatwas: [] };
+  if (hits.length === 0) return { fatwas: [] };
   const rows = await db
     .select({
       id: fatwas.id,
@@ -41,8 +41,16 @@ export const fatwaSearch = async (input: z.input<typeof fatwaSearchInput>) => {
       publishedAt: fatwas.publishedAt,
     })
     .from(fatwas)
-    .where(inArray(fatwas.id, ids));
+    .where(
+      inArray(
+        fatwas.id,
+        hits.map(({ id }) => id),
+      ),
+    );
   const byId = new Map(rows.map((row) => [row.id, row]));
-  const ranked = ids.flatMap((id) => byId.get(id) ?? []);
+  const ranked = hits.flatMap(({ id, distance }) => {
+    const row = byId.get(id);
+    return row === undefined ? [] : [{ ...row, distance }];
+  });
   return { fatwas: onePerAnswer(ranked).slice(0, limit) };
 };

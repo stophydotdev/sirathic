@@ -1,6 +1,6 @@
 import type { fatwaSearch } from "@sirathic/core/tools/fatwaSearch";
 import type { fiqhSearch } from "@sirathic/core/tools/fiqhSearch";
-import type { hadithSearch } from "@sirathic/core/tools/hadithSearch";
+import type { hadithsByIds } from "@sirathic/core/tools/hadithGet";
 import type { quranSearch } from "@sirathic/core/tools/quranSearch";
 import type { Source } from "../shared/sources";
 
@@ -8,7 +8,7 @@ const SNIPPET_CHARS = 300;
 
 export type Cite = (url: string) => number;
 export type Verse = Awaited<ReturnType<typeof quranSearch>>["verses"][number];
-type Hadith = Awaited<ReturnType<typeof hadithSearch>>["hadiths"][number];
+type Hadith = Awaited<ReturnType<typeof hadithsByIds>>[number];
 type Fatwa = Awaited<ReturnType<typeof fatwaSearch>>["fatwas"][number];
 type FiqhPassage = Awaited<ReturnType<typeof fiqhSearch>>["passages"][number];
 export type Hit = { url: string; title: string; description: string };
