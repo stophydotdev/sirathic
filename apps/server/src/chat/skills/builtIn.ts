@@ -150,7 +150,7 @@ const loadInput = z.object({
 export const loadSkill = (skills: readonly Skill[]) =>
   tool({
     description:
-      "Loads skills from the list in your rules. Their instructions join your rules for the rest of this chat, and the tools they use open. Call it before you start a task a skill covers.",
+      "Loads skills from the list in your rules. Their instructions join your rules for the rest of this chat, and their tools open on your next step, so call it on its own first.",
     inputSchema: loadInput,
     execute: ({ names }) => {
       const missing = names.filter((name) => !skills.some((skill) => skill.name === name));
