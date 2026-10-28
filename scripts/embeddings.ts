@@ -1,5 +1,4 @@
 import { SEARCHABLE } from "@sirathic/core/search/searchable";
-import { EMBEDDING, REDDIT_EMBEDDING_DIMENSIONS, redditThreads } from "@sirathic/db/schema";
 import { sql } from "drizzle-orm";
 
 const { verses, hadiths, duas, fiqhPassages, fatwas } = SEARCHABLE;
@@ -29,12 +28,5 @@ export const EMBEDDED = {
     ...fatwas,
     text: sql<string>`concat_ws(' ', ${fatwas.table.title}, left(coalesce(${fatwas.table.question}, ${fatwas.table.answer}), 1500))`,
     dimensions: fatwas.embedder.dimensions,
-  },
-  redditThreads: {
-    table: redditThreads,
-    embedding: redditThreads.embedding,
-    embedder: EMBEDDING,
-    text: sql<string>`concat_ws(' ', ${redditThreads.title}, left(${redditThreads.question}, 1500))`,
-    dimensions: REDDIT_EMBEDDING_DIMENSIONS,
   },
 } as const;
