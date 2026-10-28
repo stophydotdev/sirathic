@@ -67,7 +67,7 @@ export function pluginTools(owner: string, returnTo: string) {
     }),
     install_plugin: tool({
       description:
-        "Installs a plugin from the catalog by its id from search_plugins, when the user asks for it or their request needs it. Say in one line what the plugin could read, like their calendar or notes. Most plugins then need the user to sign in on the card that follows, so tell them to finish there and that the plugin's tools arrive on their next message.",
+        "Installs a plugin from the catalog by its id from search_plugins, when the user asks for it or their request needs it. The card that follows handles sign-in, so don't describe it.",
       inputSchema: z.object({ id: connectorId }),
       execute: async ({ id }) => ({
         id,
