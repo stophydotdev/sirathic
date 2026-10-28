@@ -4,6 +4,7 @@ import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
+  Cancel01Icon,
   Copy01Icon,
   RotateClockwiseIcon,
   ThumbsDownIcon,
@@ -11,9 +12,10 @@ import {
   Tick02Icon,
 } from "@hugeicons/core-free-icons";
 import { motion, useReducedMotion } from "motion/react";
+import { Dialog } from "radix-ui";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
-import { Fold } from "@/components/fold";
+import { useOpenSources } from "@/components/openSources";
 import { SPRING_PRESS } from "@/lib/ease";
 import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
@@ -28,9 +30,6 @@ export interface StreamingResponseProps {
   onCopy?: () => void | Promise<void>;
   onRetry?: () => void;
   sources?: CitationItem[];
-  sourcesOpen?: boolean;
-  defaultSourcesOpen?: boolean;
-  onSourcesOpenChange?: (open: boolean) => void;
   sourceIdPrefix?: string;
   feedback?: StreamingResponseFeedback;
   defaultFeedback?: StreamingResponseFeedback;
@@ -83,9 +82,6 @@ export function StreamingResponse({
   onCopy,
   onRetry,
   sources = [],
-  sourcesOpen,
-  defaultSourcesOpen = false,
-  onSourcesOpenChange,
   sourceIdPrefix,
   feedback,
   defaultFeedback = null,
@@ -102,10 +98,9 @@ export function StreamingResponse({
   const [copied, setCopied] = useState(false);
   const [internalFeedback, setInternalFeedback] =
     useState<StreamingResponseFeedback>(defaultFeedback);
-  const [internalSourcesOpen, setInternalSourcesOpen] = useState(defaultSourcesOpen);
   const copyTimer = useRef<number | undefined>(undefined);
   const currentFeedback = feedback ?? internalFeedback;
-  const currentSourcesOpen = sourcesOpen ?? internalSourcesOpen;
+  const currentSourcesOpen = useOpenSources((s) => s.id === baseId);
   const streaming = status === "streaming";
   const complete = status === "complete";
   const canCopy = Boolean(copyText || onCopy);
@@ -118,8 +113,9 @@ export function StreamingResponse({
   useEffect(
     () => () => {
       if (copyTimer.current) window.clearTimeout(copyTimer.current);
+      if (useOpenSources.getState().id === baseId) useOpenSources.setState({ id: undefined });
     },
-    [],
+    [baseId],
   );
 
   const handleCopy = useCallback(async () => {
@@ -137,13 +133,8 @@ export function StreamingResponse({
     onFeedbackChange?.(value);
   };
 
-  const setSourcesOpen = useCallback(
-    (next: boolean) => {
-      if (sourcesOpen === undefined) setInternalSourcesOpen(next);
-      onSourcesOpenChange?.(next);
-    },
-    [onSourcesOpenChange, sourcesOpen],
-  );
+  const setSourcesOpen = (next: boolean) =>
+    useOpenSources.setState({ id: next ? baseId : undefined });
 
   return (
     <div data-state={status} aria-busy={streaming} className={cn("w-full", className)}>
@@ -212,13 +203,36 @@ export function StreamingResponse({
           </div>
 
           {hasSources ? (
-            <Fold id={sourcesContentId} open={currentSourcesOpen}>
-              <CitationList
-                citations={sources}
-                idPrefix={resolvedSourcePrefix}
-                className="mt-2 rounded-xl bg-muted p-2"
-              />
-            </Fold>
+            <Dialog.Root open={currentSourcesOpen} onOpenChange={setSourcesOpen} modal={false}>
+              <Dialog.Portal>
+                <Dialog.Content
+                  id={sourcesContentId}
+                  aria-describedby={undefined}
+                  onOpenAutoFocus={(event) => event.preventDefault()}
+                  onCloseAutoFocus={(event) => event.preventDefault()}
+                  onInteractOutside={(event) => event.preventDefault()}
+                  className="pop bg-card ring-foreground/7 fixed end-2 top-16 z-30 flex max-h-3/4 w-80 origin-top-right flex-col rounded-2xl shadow-lg ring-1 outline-none ring-inset md:end-4 rtl:origin-top-left"
+                >
+                  <div className="flex h-12 shrink-0 items-center justify-between ps-4 pe-2">
+                    <Dialog.Title className="text-sm font-medium">
+                      {t("Sources")}{" "}
+                      <span className="text-muted-foreground tabular-nums">{sources.length}</span>
+                    </Dialog.Title>
+                    <Dialog.Close
+                      aria-label={t("Close")}
+                      className="text-muted-foreground hover:bg-muted hover:text-foreground grid size-8 place-items-center rounded-full transition-colors"
+                    >
+                      <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+                    </Dialog.Close>
+                  </div>
+                  <CitationList
+                    citations={sources}
+                    idPrefix={resolvedSourcePrefix}
+                    className="min-h-0 overflow-y-auto px-2 pb-2"
+                  />
+                </Dialog.Content>
+              </Dialog.Portal>
+            </Dialog.Root>
           ) : null}
         </div>
       ) : null}

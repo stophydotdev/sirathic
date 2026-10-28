@@ -1,8 +1,9 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Globe02Icon, LinkSquare02Icon } from "@hugeicons/core-free-icons";
-import { type ReactNode, useId } from "react";
+import { Globe02Icon } from "@hugeicons/core-free-icons";
+import { type ReactNode, useId, useState } from "react";
+import { useT } from "@/components/i18n";
 import { useFavicon } from "@/lib/hooks/useFavicon";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ export interface CitationItem {
   url?: string;
   icon?: ReactNode;
   group?: string;
+  snippet?: string;
 }
 
 export interface CitationListProps {
@@ -95,32 +97,25 @@ function CitationRow({
 }) {
   const content = (
     <>
-      <CitationFavicon url={citation.url} icon={citation.icon} />
-      <span className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-0.5">
-        <span className="truncate text-sm font-medium text-foreground/80 transition-colors group-hover/citation:text-foreground">
-          {citation.title}
-        </span>
-        {citation.domain ? (
-          <span className="min-w-0 truncate text-xs text-muted-foreground/60">
-            {citation.domain}
-          </span>
-        ) : null}
-      </span>
-      <span className="flex shrink-0 items-center gap-1.5">
-        <span className="grid size-5 place-items-center rounded-md bg-foreground/[0.05] text-[10px] font-semibold tabular-nums text-muted-foreground">
+      <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <CitationFavicon url={citation.url} icon={citation.icon} className="size-4" />
+        <span className="min-w-0 truncate">{citation.domain}</span>
+        <span className="ms-auto grid size-5 shrink-0 place-items-center rounded-md bg-foreground/[0.05] text-[10px] font-semibold tabular-nums">
           {index}
         </span>
-        {citation.url ? (
-          <HugeiconsIcon
-            icon={LinkSquare02Icon}
-            className="size-3.5 text-muted-foreground/40 transition-colors group-hover/citation:text-muted-foreground"
-          />
-        ) : null}
       </span>
+      <span className="line-clamp-2 text-sm text-foreground/85 transition-colors group-hover/citation:text-foreground">
+        {citation.title}
+      </span>
+      {citation.snippet ? (
+        <span className="line-clamp-2 text-xs leading-5 text-muted-foreground">
+          {citation.snippet}
+        </span>
+      ) : null}
     </>
   );
   const className =
-    "group/citation flex items-center gap-2 rounded-md px-1.5 py-1 outline-none focus-visible:ring-2 focus-visible:ring-ring";
+    "group/citation flex flex-col gap-0.5 rounded-lg px-2 py-2 outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring";
   const id = citationTargetId(idPrefix, citation.id);
 
   return citation.url ? (
@@ -134,13 +129,17 @@ function CitationRow({
   );
 }
 
+const PAGE = 20;
+
 export function CitationList({ citations, idPrefix, className }: CitationListProps) {
   const baseId = useId();
   const resolvedPrefix = idPrefix ?? `citation-list-${baseId.replace(/:/g, "")}`;
+  const [shown, setShown] = useState(PAGE);
+  const t = useT();
 
   return (
-    <div className={cn("grid gap-0.5", className)}>
-      {citations.map((citation, index) => (
+    <div className={cn("grid content-start gap-0.5", className)}>
+      {citations.slice(0, shown).map((citation, index) => (
         <div key={citation.id}>
           {citation.group && citation.group !== citations[index - 1]?.group && (
             <p className="text-foreground px-2 pt-3 pb-1 text-xs font-medium">{citation.group}</p>
@@ -148,6 +147,15 @@ export function CitationList({ citations, idPrefix, className }: CitationListPro
           <CitationRow citation={citation} index={index + 1} idPrefix={resolvedPrefix} />
         </div>
       ))}
+      {shown < citations.length ? (
+        <button
+          type="button"
+          onClick={() => setShown(shown + PAGE)}
+          className="bg-muted hover:bg-foreground/10 mx-2 mt-1 h-8 shrink-0 rounded-lg text-sm transition-colors"
+        >
+          {t("Show more")}
+        </button>
+      ) : null}
     </div>
   );
 }
