@@ -63,6 +63,8 @@ import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
+const SAME_CALLS = 2;
+const STALLED_MS = 120_000;
 const RESEARCH_OPENS = ["research", "calculate", "files"];
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
@@ -102,11 +104,37 @@ export function answerAgent({
   turn: Turn;
 }) {
   const options = answerOptions(turn);
+  const repeats = new Map<string, number>();
+  const gated = Object.fromEntries(
+    Object.entries(tools).map(([name, entry]) => {
+      const { execute } = entry;
+      return [
+        name,
+        execute === undefined
+          ? entry
+          : {
+              ...entry,
+              execute: (...call: Parameters<typeof execute>) => {
+                const key = `${name} ${JSON.stringify(call[0])}`;
+                const times = (repeats.get(key) ?? 0) + 1;
+                repeats.set(key, times);
+                if (times > SAME_CALLS) {
+                  throw new Error(
+                    `You already called ${name} with this input ${SAME_CALLS} times in this reply. Use those results or change the input.`,
+                  );
+                }
+                return execute(...call);
+              },
+            },
+      ];
+    }),
+  );
   return new ToolLoopAgent({
     model,
     instructions: system,
-    tools,
+    tools: gated,
     stopWhen: [hasToolCall(CLARIFYING), isStepCount(STEP_CAP)],
+    timeout: { chunkMs: STALLED_MS },
     toolApproval: ({ toolCall }) => (confirm(toolCall) ? "user-approval" : undefined),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
