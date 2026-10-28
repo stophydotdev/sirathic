@@ -75,7 +75,7 @@ export const searchInput = z.object({
     .min(1)
     .max(3)
     .describe(
-      'Short keyword queries, at most 3, covering what matters most to the answer instead of every detail. Preferred: ["zakat on gold jewelry"]. Not: ["Do I have to pay zakat on my gold jewelry?"]',
+      "An array of keyword-based search queries. Each query should be short, as longer queries may reduce performance. Provide at most 3 queries, prioritizing the questions most important to the answer instead of decomposing every part.",
     ),
   arabic: z
     .array(z.string().trim().min(2).max(120))

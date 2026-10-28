@@ -70,7 +70,6 @@ const RULES_HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
 
 const FIRST_STEP = {
-  search: { type: "tool", toolName: "search_web" },
   fetch: { type: "tool", toolName: "fetch_url" },
   anyTool: "required",
 } as const;
@@ -331,7 +330,12 @@ export function chatResponse({
           toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
         }),
         mentioned: skillRules(ownSkills, askedText),
-        firstStep: opening && !inBot ? (noorModel(modelName) ? opening : "anyTool") : undefined,
+        firstStep:
+          opening && !inBot
+            ? opening === "fetch" && noorModel(modelName)
+              ? "fetch"
+              : "anyTool"
+            : undefined,
         inBot: inBot !== undefined,
         skills: builtIn,
         loaded,

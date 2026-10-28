@@ -53,21 +53,21 @@ export function pluginTools(owner: string, returnTo: string) {
   return {
     search_plugins: tool({
       description:
-        "Searches or lists the plugin catalog, the apps and services Sirathic can connect to, like a calendar, notes or email. Returns each plugin with its id, what it does and whether the user already has it installed. Use it when the user asks for a capability you have no tool for, whether a plugin exists, or what they can connect.",
+        "Search the plugins the user could install (or already has): the apps and services Sirathic can connect to, like a calendar, notes or email. Results come back ranked by relevance, each with its id, install state and what it does. Use this to discover a capability you have no tool for, or to check whether a plugin is installed. Using an app the user has already connected needs no search. This is read-only and never needs the user's permission.",
       inputSchema: z.object({
         query: z
           .string()
           .trim()
           .optional()
           .describe(
-            "What the user wants to do, like calendar or notes. Leave it out to list every plugin, installed first, such as when they ask what you can connect to or what is installed.",
+            "Optional. What you're looking for, like calendar or notes. Results come back ranked by relevance. Omit to list the whole catalog.",
           ),
       }),
       execute: async ({ query }) => matchingPlugins(await listConnections(owner), query),
     }),
     install_plugin: tool({
       description:
-        "Installs a plugin from the catalog by its id from search_plugins, when the user asks for it or their request needs it. The card that follows handles sign-in, so don't describe it.",
+        "Install a plugin by its id from search_plugins, when the user asks for it or their request needs it. If the plugin needs authentication, its connect card is shown to the user automatically, so don't describe it. Finish unrelated work, then end your turn. New tools become available on your next message.",
       inputSchema: z.object({ id: connectorId }),
       execute: async ({ id }) => ({
         id,

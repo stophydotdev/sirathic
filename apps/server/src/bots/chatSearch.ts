@@ -62,7 +62,7 @@ export function findInChat(messages: ChatMessage[], query: string) {
 export const chatSearchTools = ({ id, owner }: BotScope) => ({
   searchOurChat: tool({
     description:
-      "Searches everything said earlier in this chat with the user, including turns you can no longer see. Use it when they ask about something from before, like the hadith you taught them last week. Pass a few distinctive keywords, not a sentence. Returns up to four short snippets with dates, newest first among equal matches. Snippets are what was said back then, so look the source up again before you repeat a verse, hadith or ruling.",
+      "Searches what was said earlier in this chat with the user, including turns you can no longer see. Read-only. Use it when they ask about something from before, like the hadith you taught them last week. Pass a few distinctive keywords, not a sentence. Returns up to four short snippets, each with its date and who said it, newest first among equal matches. Snippets are what was said back then, so look the source up again before you repeat a verse, hadith or ruling. To save or drop a fact about them use update_memory.",
     inputSchema: z.object({ query: z.string().trim().min(MIN_WORD).max(200) }),
     execute: async ({ query }) => ({
       matches: findInChat((await messagesOf(id, owner)).messages, query),

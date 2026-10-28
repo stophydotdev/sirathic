@@ -31,11 +31,10 @@ const LANGUAGES = {
 } as const;
 
 const LENGTHS = {
-  default: "Match the length to the question; the mode below sets the range.",
-  short:
-    "The user has specified they want short answers: the direct answer and the one or two sources it rests on.",
+  default: "Match the length to the question.",
+  short: "The user has specified they want short answers.",
   detailed:
-    "The user has specified they want detailed answers: the evidence, each school's position and the reasoning behind it.",
+    "The user has specified they want longer answers. Goal: Teach the concept thoroughly. Assume the user wants to understand why and how, not just what.",
 } as const;
 
 export const fill = (template: string, slots: Readonly<Record<string, string>>) =>
@@ -52,9 +51,10 @@ const quote = (showArabic: boolean) =>
 
 ${VERSE_QUOTE}
 
-A hadith: the Arabic, the translation, then the reference, in a > quote:
+A hadith: the translation, then the reference, in a > quote. The quote may include the Arabic first:
 
 > إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ
+>
 > "Actions are only by intentions." (Sahih al-Bukhari 1)[5]`
     : `The translation, then the reference, in a > quote, without the Arabic:
 
@@ -105,7 +105,7 @@ const background = ({
 const personalization = (settings: Settings) => {
   const lines = background(settings);
   return lines.length > 0
-    ? `\nUse the user's background below to shape your answers and searches; don't contradict it, and don't make up facts about them.\n\n<user_background>\n${lines.join("\n")}\n</user_background>`
+    ? `\nThe user's personalization data, their interests, priorities, style, and facts about past conversations that may help with continuity, is provided below inside <user_background> tags. Augment it with search_user_memories, when you have it, wherever it matters, as this is high level data only. Use all this information to improve the quality of your responses and tool usage:\n- Remember the user's stated preferences and apply them consistently when responding or using tools.\n- Maintain continuity with the user's past discussions.\n- Incorporate known facts about the user's interests and background into your responses and tool usage when relevant.\n- Be careful not to contradict or forget this information unless the user explicitly updates or removes it.\n- Do not make up new facts about the user.\n\n<user_background>\n${lines.join("\n")}\n</user_background>`
     : "";
 };
 

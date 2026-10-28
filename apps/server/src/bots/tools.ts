@@ -41,13 +41,13 @@ export function botTools({ id, owner }: BotScope) {
     }),
     react_to_message: tool({
       description:
-        "Reacts to the user's last message with one emoji, shown as a small pill on that message. Use it rarely and mirror the user: if they never use emoji, almost never react. It suits good news, something funny, thanks, or a moment where a quick 👍 says more than a sentence. Never use it instead of a reply, never on a request you have not answered, and never on hardship, loss, illness or something they confess: reply in words. Write your reply as usual after it.",
+        "Reacts to the user's last message with a single emoji, shown as a small pill on that message. Use it rarely and mirror the user: if they don't use emoji, almost never react. It suits something funny, good news, or a moment where a quick 👍 beats a sentence, never a request you haven't answered and never just to seem friendly. Never on hardship, loss, illness or something they confess: reply in words. When a reply would be overkill, the reaction can be your whole reply.",
       inputSchema: z.object({ emoji: oneEmoji }),
       execute: async ({ emoji }) => ({ emoji }),
     }),
     update_profile: tool({
       description:
-        "Changes this bot's name, title or description, only the fields you pass. The title is the short role label. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name of Allah, a prophet or a companion. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Use it when the user asks to rename the bot or to change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
+        "Changes this bot's name, title or description. Only the fields you pass change. The title is a short role label beside the name. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name of Allah, a prophet or a companion. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Use it when the user asks to rename the bot or to change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
       inputSchema: z.object({
         name: projectName.optional(),
         title: botTitle.optional(),
