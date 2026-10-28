@@ -85,7 +85,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
     <div className="relative flex h-full w-full overflow-hidden print:h-auto print:overflow-visible">
       <aside
         className={cn(
-          "group/sidebar bg-background border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-300 ease-out-quint lg:flex motion-reduce:transition-none print:hidden",
+          "group/sidebar bg-side border-sidebar-border hidden h-full shrink-0 flex-col overflow-hidden border-e transition-[width] duration-300 ease-out-quint lg:flex motion-reduce:transition-none print:hidden",
           collapsed ? "w-14" : "w-64",
         )}
       >
