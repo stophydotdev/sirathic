@@ -29,9 +29,11 @@ export const needsApproval = (
   writes: ReadonlySet<string>,
 ) => {
   const { action, command, sql, sql_statements } = spelledOut.parse(input);
-  const named = toolName.replaceAll(/(\p{Ll})(\p{Lu})/gu, "$1 $2");
+  const spelled = [toolName, action, command, sql, ...sql_statements]
+    .join(" ")
+    .replaceAll(/(\p{Ll})(\p{Lu})/gu, "$1 $2");
   return (
-    (writes.has(toolName) && SENSITIVE.test([named, command, sql, ...sql_statements].join(" "))) ||
+    (writes.has(toolName) && SENSITIVE.test(spelled)) ||
     (CONFIRMED_ACTIONS.get(toolName)?.includes(action) ?? false)
   );
 };
