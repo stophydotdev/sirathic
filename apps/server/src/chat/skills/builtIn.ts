@@ -35,7 +35,7 @@ type Where = {
 const WHEN_CHARS = 140;
 
 const PLUGIN_RULES =
-  "Find apps with search_plugins and connect one with install_plugin. The tools of the apps the user has connected open with this skill: use them for what the user asks of that app.";
+  "Find apps with search_plugins and connect one with install_plugin. The tools of the apps the user has connected open with this skill: use them for what the user asks of that app. For a command tool like PostHog's exec, read its help once, then run the query.";
 
 const whenOf = ({ instructions }: UserSkill) =>
   (instructions.split(/(?<=[.!?])\s/u)[0] ?? instructions).slice(0, WHEN_CHARS);
