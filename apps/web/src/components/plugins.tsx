@@ -8,6 +8,7 @@ import type { PlainKey } from "@/components/locales";
 import { catalogIcon, rootDomain } from "@/components/mentionIcon";
 import { type Plugin, useOwnLists } from "@/components/ownLists";
 import { PluginTabs } from "@/components/pluginTabs";
+import { TabBar, useTabSlide } from "@/components/tabLink";
 import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
 import { useSignIn } from "@/components/signIn";
 import { SkillsTab } from "@/components/skillsTab";
@@ -36,6 +37,12 @@ const describe = (t: Translate, plugin: Plugin) =>
   plugin.category === "custom" ? rootDomain(plugin.url) : t(CONNECTORS[plugin.id].description);
 
 const byName = (a: Plugin, b: Plugin) => a.name.localeCompare(b.name);
+
+const useLastPlugin = (plugin: Plugin | undefined) => {
+  const [last, setLast] = useState(plugin);
+  if (plugin && plugin !== last) setLast(plugin);
+  return plugin ?? last;
+};
 
 const PluginIcon: FC<{ plugin: Plugin }> = ({ plugin }) => (
   <span className="bg-muted relative grid size-9 shrink-0 place-items-center rounded-[10px]">
@@ -83,7 +90,7 @@ const PluginRow: FC<{
 }> = ({ plugin, busy, onOpen, onToggle }) => {
   const t = useT();
   return (
-    <div className="flex h-16 min-w-0 items-center gap-3">
+    <div className="rise flex h-16 min-w-0 items-center gap-3">
       <button
         type="button"
         onClick={onOpen}
@@ -105,11 +112,12 @@ const PluginCard: FC<{
   busy: boolean;
   onClose: () => void;
   onToggle: (plugin: Plugin) => void;
-}> = ({ plugin, busy, onClose, onToggle }) => {
+}> = ({ plugin: current, busy, onClose, onToggle }) => {
   const t = useT();
+  const plugin = useLastPlugin(current);
   return (
     <Modal
-      open={plugin !== undefined}
+      open={current !== undefined}
       onOpenChange={(open) => {
         if (!open) onClose();
       }}
@@ -146,11 +154,12 @@ const RemovePluginDialog: FC<{
   plugin: Plugin | undefined;
   onConfirm: (plugin: Plugin) => void;
   onClose: () => void;
-}> = ({ plugin, onConfirm, onClose }) => {
+}> = ({ plugin: current, onConfirm, onClose }) => {
   const t = useT();
+  const plugin = useLastPlugin(current);
   return (
     <Modal
-      open={plugin !== undefined}
+      open={current !== undefined}
       onOpenChange={(open) => {
         if (!open) onClose();
       }}
@@ -179,6 +188,42 @@ const RemovePluginDialog: FC<{
   );
 };
 
+const ConnectPluginDialog: FC<{
+  plugin: Plugin | undefined;
+  onConfirm: (plugin: Plugin) => void;
+  onClose: () => void;
+}> = ({ plugin: current, onConfirm, onClose }) => {
+  const t = useT();
+  const plugin = useLastPlugin(current);
+  return (
+    <Modal
+      open={current !== undefined}
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
+      title={plugin ? t("Connect {name}?", { name: plugin.name }) : ""}
+    >
+      {plugin && (
+        <>
+          <p className="text-muted-foreground text-sm">
+            {t(
+              "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.",
+            )}
+          </p>
+          <div className="flex justify-end gap-2">
+            <Dialog.Close type="button" className={modalButton}>
+              {t("Cancel")}
+            </Dialog.Close>
+            <button type="button" onClick={() => onConfirm(plugin)} className={modalPrimaryButton}>
+              {t("Connect")}
+            </button>
+          </div>
+        </>
+      )}
+    </Modal>
+  );
+};
+
 const Section: FC<{
   title: string;
   plugins: Plugin[];
@@ -191,7 +236,7 @@ const Section: FC<{
     </section>
   );
 
-const PluginList: FC = () => {
+const PluginList: FC<{ slide: string }> = ({ slide }) => {
   const signedIn = useAccount((s) => s.status?.signedIn);
   const ask = useSignIn((s) => s.ask);
   const { plugins, loaded, load, reload } = useOwnLists();
@@ -201,6 +246,7 @@ const PluginList: FC = () => {
   const [opened, setOpened] = useState<string>();
   const [adding, setAdding] = useState(false);
   const [removing, setRemoving] = useState<Plugin>();
+  const [connecting, setConnecting] = useState<Plugin>();
   const t = useT();
 
   useEffect(() => {
@@ -240,7 +286,7 @@ const PluginList: FC = () => {
       plugin={plugin}
       busy={busy === plugin.id}
       onOpen={() => setOpened(plugin.id)}
-      onToggle={() => request(plugin)}
+      onToggle={() => (plugin.connected ? request(plugin) : setConnecting(plugin))}
     />
   );
   const categories = Object.entries(CATEGORY_NAMES)
@@ -249,7 +295,7 @@ const PluginList: FC = () => {
 
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-center gap-3">
+      <TabBar className="flex flex-wrap items-center gap-3">
         <PluginTabs tab="plugins" />
         <label className="bg-muted/60 order-last flex h-9 w-full items-center gap-2 rounded-full px-3 sm:order-none sm:w-64">
           <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-4 shrink-0" />
@@ -268,38 +314,40 @@ const PluginList: FC = () => {
         >
           {t("Custom plugin")}
         </button>
-      </div>
-      {signedIn === false && (
-        <button type="button" onClick={() => ask()} className="text-sm underline">
-          {t("Sign in to add plugins.")}
-        </button>
-      )}
-      {failed && (
-        <p className="text-destructive mb-4 text-sm">
-          {t("That plugin could not connect. Check the address and try again.")}
-        </p>
-      )}
-      {loaded && shown.length === 0 && (
-        <p className="text-muted-foreground text-sm">{t("No plugins match your search.")}</p>
-      )}
-      <Section
-        title={t("Popular")}
-        plugins={shown.filter((plugin) => plugin.popular)}
-        render={render}
-      />
-      <Section
-        title={t("Your plugins")}
-        plugins={shown.filter((plugin) => plugin.category === "custom")}
-        render={render}
-      />
-      {categories.map(({ category, name }) => (
+      </TabBar>
+      <div className={slide}>
+        {signedIn === false && (
+          <button type="button" onClick={() => ask()} className="text-sm underline">
+            {t("Sign in to add plugins.")}
+          </button>
+        )}
+        {failed && (
+          <p className="text-destructive mb-4 text-sm">
+            {t("That plugin could not connect. Check the address and try again.")}
+          </p>
+        )}
+        {loaded && shown.length === 0 && (
+          <p className="text-muted-foreground text-sm">{t("No plugins match your search.")}</p>
+        )}
         <Section
-          key={category}
-          title={name}
-          plugins={shown.filter((plugin) => !plugin.popular && plugin.category === category)}
+          title={t("Popular")}
+          plugins={shown.filter((plugin) => plugin.popular)}
           render={render}
         />
-      ))}
+        <Section
+          title={t("Your plugins")}
+          plugins={shown.filter((plugin) => plugin.category === "custom")}
+          render={render}
+        />
+        {categories.map(({ category, name }) => (
+          <Section
+            key={category}
+            title={name}
+            plugins={shown.filter((plugin) => !plugin.popular && plugin.category === category)}
+            render={render}
+          />
+        ))}
+      </div>
       <PluginCard
         plugin={plugins.find((plugin) => plugin.id === opened)}
         busy={busy === opened}
@@ -314,15 +362,28 @@ const PluginList: FC = () => {
         }}
         onClose={() => setRemoving(undefined)}
       />
+      <ConnectPluginDialog
+        plugin={connecting}
+        onConfirm={(plugin) => {
+          setConnecting(undefined);
+          void toggle(plugin);
+        }}
+        onClose={() => setConnecting(undefined)}
+      />
       <CustomPlugin open={adding} onOpenChange={setAdding} onAdded={() => void reload()} />
     </>
   );
 };
 
-export const Plugins: FC<{ tab: "plugins" | "skills" }> = ({ tab }) => (
-  <div className="h-full overflow-y-auto">
-    <div className="mx-auto w-full max-w-5xl px-6 pt-16 pb-16 lg:pt-10">
-      {tab === "skills" ? <SkillsTab /> : <PluginList />}
+const PLUGIN_TABS = ["plugins", "skills"] as const;
+
+export const Plugins: FC<{ tab: (typeof PLUGIN_TABS)[number] }> = ({ tab }) => {
+  const slide = useTabSlide(PLUGIN_TABS, tab);
+  return (
+    <div className="h-full overflow-y-auto">
+      <div className="mx-auto w-full max-w-5xl px-6 pt-16 pb-16 lg:pt-10">
+        {tab === "skills" ? <SkillsTab slide={slide} /> : <PluginList slide={slide} />}
+      </div>
     </div>
-  </div>
-);
+  );
+};

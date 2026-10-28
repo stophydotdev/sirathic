@@ -4,6 +4,7 @@ import { useAccount } from "@/components/account";
 import { useT } from "@/components/i18n";
 import { type Skill, useOwnLists } from "@/components/ownLists";
 import { PluginTabs } from "@/components/pluginTabs";
+import { TabBar } from "@/components/tabLink";
 import { useSignIn } from "@/components/signIn";
 import { SkillEditor } from "@/components/skillEditor";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -12,7 +13,7 @@ import { type FC, useEffect, useState } from "react";
 
 const firstLine = (instructions: string) => instructions.split("\n")[0] ?? "";
 
-export const SkillsTab: FC = () => {
+export const SkillsTab: FC<{ slide: string }> = ({ slide }) => {
   const signedIn = useAccount((s) => s.status?.signedIn);
   const ask = useSignIn((s) => s.ask);
   const { skills, loaded, load, reload } = useOwnLists();
@@ -25,7 +26,7 @@ export const SkillsTab: FC = () => {
 
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-center gap-3">
+      <TabBar className="flex flex-wrap items-center gap-3">
         <PluginTabs tab="skills" />
         <button
           type="button"
@@ -34,36 +35,38 @@ export const SkillsTab: FC = () => {
         >
           {t("New skill")}
         </button>
-      </div>
-      {signedIn === false && (
-        <button type="button" onClick={() => ask()} className="text-sm underline">
-          {t("Sign in to write skills.")}
-        </button>
-      )}
-      {signedIn && loaded && skills.length === 0 && (
-        <p className="text-muted-foreground text-sm">
-          {t("No skills yet. Write one to reuse your own instructions.")}
-        </p>
-      )}
-      <div className="grid gap-x-10 sm:grid-cols-2">
-        {skills.map((skill) => (
-          <button
-            key={skill.id}
-            type="button"
-            onClick={() => setEditing(skill)}
-            className="flex h-16 min-w-0 items-center gap-3 text-start"
-          >
-            <span className="bg-muted grid size-9 shrink-0 place-items-center rounded-[10px]">
-              <HugeiconsIcon icon={MagicWand01Icon} className="size-5" />
-            </span>
-            <span className="flex min-w-0 flex-col">
-              <span className="truncate text-sm font-medium">{skill.name}</span>
-              <span className="text-muted-foreground truncate text-xs">
-                {firstLine(skill.instructions)}
-              </span>
-            </span>
+      </TabBar>
+      <div className={slide}>
+        {signedIn === false && (
+          <button type="button" onClick={() => ask()} className="text-sm underline">
+            {t("Sign in to write skills.")}
           </button>
-        ))}
+        )}
+        {signedIn && loaded && skills.length === 0 && (
+          <p className="text-muted-foreground text-sm">
+            {t("No skills yet. Write one to reuse your own instructions.")}
+          </p>
+        )}
+        <div className="grid gap-x-10 sm:grid-cols-2">
+          {skills.map((skill) => (
+            <button
+              key={skill.id}
+              type="button"
+              onClick={() => setEditing(skill)}
+              className="rise flex h-16 min-w-0 items-center gap-3 text-start"
+            >
+              <span className="bg-muted grid size-9 shrink-0 place-items-center rounded-[10px]">
+                <HugeiconsIcon icon={MagicWand01Icon} className="size-5" />
+              </span>
+              <span className="flex min-w-0 flex-col">
+                <span className="truncate text-sm font-medium">{skill.name}</span>
+                <span className="text-muted-foreground truncate text-xs">
+                  {firstLine(skill.instructions)}
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
       {editing && (
         <SkillEditor

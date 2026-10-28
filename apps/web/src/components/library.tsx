@@ -6,7 +6,7 @@ import { DeleteFileDialog, PreviewDialog, RenameFileDialog } from "@/components/
 import { FileRow, FileTile, type LibraryFile } from "@/components/libraryItems";
 import { uploadToLibrary } from "@/components/libraryUpload";
 import { useSignIn } from "@/components/signIn";
-import { TabLink } from "@/components/tabLink";
+import { TabBar, TabLink, TabPill, useTabSlide } from "@/components/tabLink";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,10 +34,12 @@ import {
   Search01Icon,
   SlidersHorizontalIcon,
 } from "@hugeicons/core-free-icons";
-import { type FC, useEffect, useRef, useState } from "react";
+import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
-export type Tab = "all" | "media" | "files";
+const TABS = ["all", "media", "files"] as const;
+
+export type Tab = (typeof TABS)[number];
 
 const TAB_KINDS = {
   all: ["image", "pdf", "text"],
@@ -67,10 +69,27 @@ const sortName = z.enum(FILE_SORTS);
 const orderName = z.enum(["desc", "asc"]);
 const viewName = z.enum(["grid", "list"]);
 
+const emptyButton =
+  "bg-muted hover:bg-foreground/10 mt-2 h-9 rounded-full px-4 text-sm font-medium transition-colors disabled:opacity-60";
+
+const EmptyBox: FC<{ title: string; hint: string; children: ReactNode }> = ({
+  title,
+  hint,
+  children,
+}) => (
+  <div className="border-foreground/15 flex flex-col items-center gap-2 rounded-3xl border border-dashed px-6 py-16 text-center">
+    <HugeiconsIcon icon={FolderAddIcon} className="size-6" />
+    <p className="text-sm font-[550]">{title}</p>
+    <p className="text-muted-foreground text-sm">{hint}</p>
+    {children}
+  </div>
+);
+
 const Tabs: FC<{ tab: Tab }> = ({ tab }) => {
   const t = useT();
   return (
-    <div role="tablist" className="flex items-center gap-1">
+    <div role="tablist" className="relative flex items-center gap-1">
+      <TabPill />
       <TabLink href="/library" active={tab === "all"}>
         {t("All")}
       </TabLink>
@@ -91,6 +110,7 @@ const uploadButton =
   "bg-foreground text-background h-9 rounded-full px-4 text-sm font-medium transition hover:opacity-85 disabled:opacity-60";
 
 export const Library: FC<{ tab: Tab }> = ({ tab }) => {
+  const slide = useTabSlide(TABS, tab);
   const signedIn = useAccount((s) => s.status?.signedIn);
   const ask = useSignIn((s) => s.ask);
   const [files, setFiles] = useState<LibraryFile[]>();
@@ -175,7 +195,7 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
     >
       <div className="mx-auto w-full max-w-5xl px-6 pt-16 pb-16 lg:pt-10">
         <h1 className="mb-4 text-2xl font-[580]">{t("Library")}</h1>
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <TabBar className="flex flex-wrap items-center justify-between gap-3">
           <Tabs tab={tab} />
           <div className="ms-auto flex items-center gap-2">
             {searching ? (
@@ -273,7 +293,7 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
               </button>
             )}
           </div>
-        </div>
+        </TabBar>
         <input
           ref={picker}
           type="file"
@@ -285,56 +305,60 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
             event.target.value = "";
           }}
         />
-        {signedIn === false && (
-          <button type="button" onClick={() => ask()} className="text-sm underline">
-            {t("Sign in to use your library.")}
-          </button>
-        )}
-        {failed && (
-          <p className="text-destructive mb-4 text-sm">
-            {t("Upload images, PDFs or UTF-8 text files up to 10 MB each.")}
-          </p>
-        )}
-        {files && files.length === 0 && (
-          <div className="border-foreground/15 flex flex-col items-center gap-2 rounded-3xl border border-dashed px-6 py-16 text-center">
-            <HugeiconsIcon icon={FolderAddIcon} className="size-6" />
-            <p className="text-sm font-[550]">{t(empty.title)}</p>
-            <p className="text-muted-foreground text-sm">{t(empty.hint)}</p>
-            <button
-              type="button"
-              disabled={uploading}
-              onClick={() => picker.current?.click()}
-              className="bg-muted hover:bg-foreground/10 mt-2 h-9 rounded-full px-4 text-sm font-medium transition-colors disabled:opacity-60"
+        <div key={tab} className={slide}>
+          {signedIn === false && (
+            <EmptyBox
+              title={t("Sign in to use your library.")}
+              hint={t("Upload files to keep them within reach.")}
             >
-              {uploadLabel}
-            </button>
-          </div>
-        )}
-        {files && files.length > 0 && shown.length === 0 && (
-          <p className="text-muted-foreground text-sm">
-            {query.trim() ? t("No files match your search.") : t(empty.title)}
-          </p>
-        )}
-        <div
-          className={cn(
-            view === "grid"
-              ? "grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 lg:grid-cols-4"
-              : "flex flex-col",
+              <button type="button" onClick={() => ask()} className={emptyButton}>
+                {t("Sign in")}
+              </button>
+            </EmptyBox>
           )}
-        >
-          {shown.map((file) => {
-            const item = {
-              file,
-              onOpen: () => open(file),
-              onRename: () => setRenaming(file),
-              onDelete: () => setDeleting(file),
-            };
-            return view === "grid" ? (
-              <FileTile key={file.id} {...item} />
-            ) : (
-              <FileRow key={file.id} {...item} />
-            );
-          })}
+          {failed && (
+            <p className="text-destructive mb-4 text-sm">
+              {t("Upload images, PDFs or UTF-8 text files up to 10 MB each.")}
+            </p>
+          )}
+          {files && files.length === 0 && (
+            <EmptyBox title={t(empty.title)} hint={t(empty.hint)}>
+              <button
+                type="button"
+                disabled={uploading}
+                onClick={() => picker.current?.click()}
+                className={emptyButton}
+              >
+                {uploadLabel}
+              </button>
+            </EmptyBox>
+          )}
+          {files && files.length > 0 && shown.length === 0 && (
+            <p className="text-muted-foreground text-sm">
+              {query.trim() ? t("No files match your search.") : t(empty.title)}
+            </p>
+          )}
+          <div
+            className={cn(
+              view === "grid"
+                ? "grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 lg:grid-cols-4"
+                : "flex flex-col",
+            )}
+          >
+            {shown.map((file) => {
+              const item = {
+                file,
+                onOpen: () => open(file),
+                onRename: () => setRenaming(file),
+                onDelete: () => setDeleting(file),
+              };
+              return view === "grid" ? (
+                <FileTile key={file.id} {...item} />
+              ) : (
+                <FileRow key={file.id} {...item} />
+              );
+            })}
+          </div>
         </div>
       </div>
       {dragging && (
