@@ -5,7 +5,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { auth, userFor } from "./account/auth";
 import { startScheduler } from "./automations/runner";
-import { timezone } from "./automations/schedule";
+import { timezone } from "./shared/settings";
 import { startAnswer } from "./chat/answers";
 import { refreshSummary } from "./bots/summary";
 import { pickModels, reserveNoorAnswer } from "./models/pick";

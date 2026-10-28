@@ -6,6 +6,8 @@ const STORAGE_KEY = "sirathicPreferences";
 
 export const THEMES = ["dark", "light", "system"] as const;
 
+export const ANSWER_FONTS = ["sans", "serif"] as const;
+
 export const THEME_NAMES = {
   dark: "Dark",
   light: "Light",
@@ -15,6 +17,9 @@ export const THEME_NAMES = {
 const saved = z.object({
   theme: z.enum(THEMES).catch("dark"),
   incognitoByDefault: z.boolean().catch(false),
+  routineAlerts: z.boolean().catch(true),
+  answerAlerts: z.boolean().catch(true),
+  answerFont: z.enum(ANSWER_FONTS).catch("sans"),
 });
 
 type Preferences = z.infer<typeof saved>;
@@ -25,7 +30,7 @@ export const themeScript = `try{var p=JSON.parse(localStorage.getItem("${STORAGE
 
 const systemDark = () => globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ?? true;
 
-function applyTheme(theme: Preferences["theme"]) {
+function applyTheme({ theme }: Preferences) {
   const dark = theme === "dark" || (theme === "system" && systemDark());
   document.documentElement.classList.toggle("dark", dark);
 }
@@ -41,12 +46,12 @@ export const usePreferences = create<
     const raw = globalThis.localStorage?.getItem(STORAGE_KEY);
     const loaded = saved.parse(raw ? JSON.parse(raw) : {});
     set(loaded);
-    applyTheme(loaded.theme);
+    applyTheme(loaded);
   },
   change: (next) => {
     set(next);
-    const { theme, incognitoByDefault } = get();
-    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify({ theme, incognitoByDefault }));
-    applyTheme(theme);
+    const preferences = saved.parse(get());
+    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify(preferences));
+    applyTheme(preferences);
   },
 }));

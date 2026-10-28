@@ -69,8 +69,8 @@ const saveFacts = (scope: MemoryScope, facts: string[]) =>
 
 const listed = (facts: readonly string[]) => facts.map((fact) => `- ${fact}`).join("\n");
 
-export function memoryTools(scope: MemoryScope | undefined) {
-  return {
+export function memoryTools(scope: MemoryScope | undefined, saving: boolean) {
+  const update = {
     update_memory: tool({
       description: `Changes the facts saved about the user, which you see in your rules. write saves a fact (deduped); forget drops one by its exact saved text (find it with search_user_memories), so pair it with a write to correct a fact in the same call. Save without asking and mention it in passing.
 
@@ -104,9 +104,11 @@ Before ending your turn, reflect on what new facts you learned about the user. I
           .join(" ");
       },
     }),
+  };
+  return {
+    ...(saving && update),
     search_user_memories: tool({
-      description:
-        "Searches the facts saved about the user that are not listed in your rules. Read-only. Call it no more than once per user query. To add or drop a fact use update_memory.",
+      description: `Searches the facts saved about the user that are not listed in your rules. Read-only. Call it no more than once per user query.${saving ? " To add or drop a fact use update_memory." : ""}`,
       inputSchema: z.object({
         query: z
           .string()

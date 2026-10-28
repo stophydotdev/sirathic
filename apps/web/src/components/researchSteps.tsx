@@ -16,6 +16,7 @@ import {
   Book02Icon,
   Bookmark02Icon,
   BulbIcon,
+  Clock04Icon,
   FavouriteIcon,
   Globe02Icon,
   Search01Icon,
@@ -63,6 +64,14 @@ const TOOLS = new Map<
     },
   ],
   ["load_skill", { Icon: Book02Icon, label: (t) => t("Skills"), done: (t) => t("Skills") }],
+  [
+    "search_past_chats",
+    {
+      Icon: Clock04Icon,
+      label: (t) => t("Searching your past chats"),
+      done: (t) => t("Searched your past chats"),
+    },
+  ],
   [
     "stophy_search_endpoints",
     {

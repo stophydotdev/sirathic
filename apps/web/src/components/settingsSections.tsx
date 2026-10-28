@@ -4,17 +4,21 @@ import { useAccount } from "@/components/account";
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { type Translate, useT } from "@/components/i18n";
 import { LOCALE_COOKIE, LOCALES, type Locale } from "@/components/locales";
-import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
+import { ANSWER_FONTS, THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
 import { useSettings } from "@/components/settings";
 import { Choice, control, Group, Row, Segmented } from "@/components/settingsControls";
+import { DeleteAccountRow, DevicesGroup } from "@/components/settingsDevices";
+import { UsageGroup } from "@/components/settingsUsage";
 import { useShortcuts } from "@/components/shortcuts";
 import { useSignIn } from "@/components/signIn";
 import { useKeyNames } from "@/lib/keys";
+import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
+import type { MessageKey } from "@/messages/en";
 import { MODES } from "@sirathic/server/messages";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AlertCircleIcon, UserIcon } from "@hugeicons/core-free-icons";
-import { type FC, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 
 const chosenLocale = (): "auto" | Locale =>
   LOCALES.find((code) => document.cookie.split("; ").includes(`${LOCALE_COOKIE}=${code}`)) ??
@@ -140,6 +144,15 @@ export const AccountSection: FC = () => {
       <Group>
         <LanguageRow />
       </Group>
+      {status?.signedIn === true && (
+        <>
+          {status.via === "chatgpt" && <UsageGroup />}
+          <DevicesGroup />
+          <Group>
+            <DeleteAccountRow />
+          </Group>
+        </>
+      )}
       {modelsError && (
         <p className="text-destructive mt-3 flex items-center gap-1.5 text-xs">
           <HugeiconsIcon icon={AlertCircleIcon} className="size-3.5 shrink-0" />
@@ -216,8 +229,14 @@ const ThemePictures: FC<{ value: Theme; onChange: (next: Theme) => void }> = ({
   );
 };
 
+const FONT_NAMES = { sans: "Sans", serif: "Serif" } satisfies Record<
+  (typeof ANSWER_FONTS)[number],
+  MessageKey
+>;
+
 export const AppearanceSection: FC = () => {
   const theme = usePreferences((s) => s.theme);
+  const answerFont = usePreferences((s) => s.answerFont);
   const change = usePreferences((s) => s.change);
   const t = useT();
 
@@ -226,7 +245,46 @@ export const AppearanceSection: FC = () => {
       <Row label={t("Theme")}>
         <ThemePictures value={theme} onChange={(next) => change({ theme: next })} />
       </Row>
+      <Row label={t("Answer font")} hint={t("How answers look")}>
+        <Segmented
+          label={t("Answer font")}
+          value={answerFont}
+          options={ANSWER_FONTS.map((value) => ({ value, label: FONT_NAMES[value] }))}
+          onChange={(next) => change({ answerFont: next })}
+        />
+      </Row>
     </Group>
+  );
+};
+
+const TimezoneRow: FC = () => {
+  const [zone, setZone] = useState<string>();
+  const t = useT();
+
+  useEffect(() => {
+    void api.settings.get.query().then(
+      (loaded) => setZone(loaded.timezone),
+      () => undefined,
+    );
+  }, []);
+
+  if (zone === undefined) return null;
+  const here = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return (
+    <Row label={t("Timezone for routines")} hint={t("Routines run on this clock")}>
+      <Choice
+        label={t("Timezone for routines")}
+        value={zone}
+        options={["", ...Intl.supportedValuesOf("timeZone")]}
+        nameOf={(option) =>
+          option ? option.replaceAll("_", " ") : t("Same as this device ({zone})", { zone: here })
+        }
+        onChange={(next) => {
+          setZone(next);
+          void api.settings.update.mutate({ timezone: next });
+        }}
+      />
+    </Row>
   );
 };
 
@@ -250,6 +308,7 @@ export const BehaviorSection: FC = () => {
             onChange={setMode}
           />
         </Row>
+        <TimezoneRow />
       </Group>
       <Group>
         <Row label={t("Keyboard shortcuts")}>

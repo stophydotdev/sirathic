@@ -13,16 +13,6 @@ const isoDate = z
   .regex(/^\d{4}-\d{2}-\d{2}$/u)
   .refine((date) => new Date(`${date}T00:00:00Z`).toISOString().startsWith(date), "no such date");
 
-const isTimeZone = (zone: string) => {
-  try {
-    return Intl.DateTimeFormat("en", { timeZone: zone }).resolvedOptions().timeZone.length > 0;
-  } catch {
-    return false;
-  }
-};
-
-export const timezone = z.string().refine(isTimeZone, "unknown time zone");
-
 export const schedule = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("once"), date: isoDate, time }),
   z

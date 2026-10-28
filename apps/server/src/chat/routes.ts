@@ -8,7 +8,6 @@ import { track } from "./events";
 import {
   deleteAllSessions,
   deleteSession,
-  exportSessions,
   feedbackInput,
   forkInput,
   forkSession,
@@ -43,7 +42,6 @@ export const chatRoutes = {
     remove: signedIn
       .input(session)
       .mutation(({ ctx, input }) => deleteSession(input.id, ctx.owner)),
-    export: signedIn.query(({ ctx }) => exportSessions(ctx.owner)),
     removeAll: signedIn.mutation(({ ctx }) => deleteAllSessions(ctx.owner)),
     feedback: signedIn
       .input(feedbackInput.safeExtend({ id: sessionId }))

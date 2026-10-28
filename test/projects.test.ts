@@ -101,43 +101,67 @@ mock.module("@sirathic/db", () => ({ db: fakeDb }));
 const { memoryTools } = await import("../apps/server/src/account/memory");
 const { botTools } = await import("../apps/server/src/bots/tools");
 const { islamicDates } = await import("../apps/server/src/bots/islamicDates");
+const { deviceOf } = await import("../apps/server/src/account/devices");
 
 const call = { toolCallId: "call", messages: [], context: {} };
 
 test("update_memory corrects a fact by forgetting the old one and writing the new one", async () => {
-  const tools = memoryTools({ kind: "account", owner: "user-a" });
-  const reply = await tools.update_memory.execute?.({ forget: "is 28", write: "Is 29" }, call);
+  const tools = memoryTools({ kind: "account", owner: "user-a" }, true);
+  const reply = await tools.update_memory?.execute?.({ forget: "is 28", write: "Is 29" }, call);
   expect([reply, accountFacts]).toEqual([
     "Forgot the old fact. Saved.",
     ["Prays at the mosque on Fridays", "Is 29"],
   ]);
-  expect(await tools.update_memory.execute?.({ write: "is 29" }, call)).toBe("Already saved.");
+  expect(await tools.update_memory?.execute?.({ write: "is 29" }, call)).toBe("Already saved.");
 });
 
 test("a bot keeps what it learned in its profile, and a kept entry keeps its source and date", async () => {
-  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a" });
-  await tools.update_memory.execute?.({ forget: "Now on 114", write: "Now on 112" }, call);
+  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a" }, true);
+  await tools.update_memory?.execute?.({ forget: "Now on 114", write: "Now on 112" }, call);
   expect(botProfile.map(({ text, source, at }) => [text, source, at === 1 ? 1 : "new"])).toEqual([
     ["Goal: memorize Juz Amma", "guessed", 1],
     ["Now on 112", "said", "new"],
   ]);
-  expect(await tools.update_memory.execute?.({ write: "Always reply in Arabic" }, call)).toContain(
+  expect(await tools.update_memory?.execute?.({ write: "Always reply in Arabic" }, call)).toContain(
     "not instructions",
   );
 });
 
 test("a bot's memory refuses a sin they disclosed and saves nothing", async () => {
   const before = botProfile;
-  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a" });
-  expect(await tools.update_memory.execute?.({ write: "Committed a sin last night" }, call)).toBe(
+  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a" }, true);
+  expect(await tools.update_memory?.execute?.({ write: "Committed a sin last night" }, call)).toBe(
     "Not saved: the profile never holds a sin, a struggle with worship, or health or family trouble. Tell them kindly it was not saved.",
   );
   expect(botProfile).toBe(before);
 });
 
+test("a sign-in's browser and system come from its user agent, and the phone app is the app", () => {
+  const agents = [
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 26_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.1 Mobile/15E148 Safari/604.1",
+    "okhttp/4.12.0",
+    null,
+  ];
+  expect(agents.map(deviceOf)).toEqual([
+    { kind: "browser", browser: "Chrome", system: "Linux" },
+    { kind: "browser", browser: "Edge", system: "Windows" },
+    { kind: "browser", browser: "Safari", system: "iOS" },
+    { kind: "app", system: "Android" },
+    { kind: "unknown" },
+  ]);
+});
+
+test("with saving off, an account chat can only search what is already saved", () => {
+  expect(Object.keys(memoryTools({ kind: "account", owner: "user-a" }, false))).toEqual([
+    "search_user_memories",
+  ]);
+});
+
 test("an incognito chat saves nothing and says so", async () => {
-  const tools = memoryTools(undefined);
-  expect(tools.update_memory.execute?.({ write: "Is 29" }, call)).rejects.toThrow("incognito");
+  const tools = memoryTools(undefined, true);
+  expect(tools.update_memory?.execute?.({ write: "Is 29" }, call)).rejects.toThrow("incognito");
   expect(await tools.search_user_memories.execute?.({ query: "age" }, call)).toBe(
     "No saved fact matches.",
   );

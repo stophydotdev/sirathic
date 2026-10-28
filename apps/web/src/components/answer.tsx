@@ -27,6 +27,7 @@ import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 import { z } from "zod";
 import { ReportMistake } from "@/components/reportMistake";
+import { usePreferences } from "@/components/preferences";
 import { Research } from "@/components/researchSteps";
 
 export const Reply: FC = () => {
@@ -86,12 +87,14 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const [startedAt] = useState(() => startOf(messageId));
   const { feedback, rate, copy } = useAnswer();
   const [reporting, setReporting] = useState(false);
+  const answerFont = usePreferences((s) => s.answerFont);
   const t = useT();
 
   return (
     <div className="pb-4">
       <StreamingResponse
         status={state}
+        contentClassName={answerFont === "serif" ? "font-serif" : undefined}
         onCopy={copy}
         onRetry={() => aui.message().reload()}
         sources={groupsOf(sources).flatMap((group) =>

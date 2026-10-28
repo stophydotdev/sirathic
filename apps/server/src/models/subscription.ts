@@ -94,3 +94,34 @@ export const sideOptions: ProviderOptions = {
     reasoningEffort: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
 };
+
+const USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
+
+const usageWindow = z
+  .object({ used_percent: z.number(), limit_window_seconds: z.number(), reset_at: z.number() })
+  .nullish();
+
+const usageResponse = z.object({
+  plan_type: z.string(),
+  rate_limit: z.object({ primary_window: usageWindow, secondary_window: usageWindow }).nullish(),
+});
+
+export async function usage(user: SubscriptionUser) {
+  const res = await codexFor(user)(USAGE_URL);
+  if (!res.ok) throw new StatusError(502, `ChatGPT usage answered ${res.status}`);
+  const { plan_type, rate_limit } = usageResponse.parse(await res.json());
+  return {
+    plan: plan_type,
+    windows: [rate_limit?.primary_window, rate_limit?.secondary_window].flatMap((window) =>
+      window
+        ? [
+            {
+              seconds: window.limit_window_seconds,
+              usedPercent: window.used_percent,
+              resetAt: window.reset_at * 1000,
+            },
+          ]
+        : [],
+    ),
+  };
+}

@@ -1,17 +1,30 @@
 import { NOOR_MODELS } from "../models/noor";
-import { DEFAULT_MODEL, models } from "../models/subscription";
+import { DEFAULT_MODEL, models, usage } from "../models/subscription";
 import { settingsUpdate } from "../shared/settings";
+import { z } from "zod";
+import { StatusError } from "../http";
 import { procedure, signedIn, t } from "../trpc";
+import { auth } from "./auth";
+import { deleteAccount, exportData } from "./data";
+import { moveRoutines } from "../automations/store";
+import { listDevices, signOutDevice, signOutOthers } from "./devices";
 import { getSettings, updateSettings } from "./settings";
 
 const isDefault = (model: { slug: string }) => Number(model.slug === DEFAULT_MODEL);
 
+const sessionOf = async (headers: Headers) => {
+  const found = await auth.api.getSession({ headers, query: { disableRefresh: true } });
+  if (!found) throw new StatusError(401, "not signed in");
+  return found.session.id;
+};
+
 export const accountRoutes = {
   settings: t.router({
     get: signedIn.query(({ ctx }) => getSettings(ctx.owner)),
-    update: signedIn
-      .input(settingsUpdate)
-      .mutation(({ ctx, input }) => updateSettings(ctx.owner, input)),
+    update: signedIn.input(settingsUpdate).mutation(async ({ ctx, input }) => {
+      if (input.timezone) await moveRoutines(ctx.owner, input.timezone);
+      return updateSettings(ctx.owner, input);
+    }),
   }),
   account: t.router({
     status: procedure.query(({ ctx }) =>
@@ -31,5 +44,19 @@ export const accountRoutes = {
         ...(ctx.user.via === "chatgpt" ? await models(ctx.user) : []),
       ].toSorted((a, b) => isDefault(b) - isDefault(a));
     }),
+    devices: signedIn.query(async ({ ctx }) =>
+      listDevices(ctx.owner, await sessionOf(ctx.headers)),
+    ),
+    signOutOthers: signedIn.mutation(async ({ ctx }) =>
+      signOutOthers(ctx.owner, await sessionOf(ctx.headers)),
+    ),
+    signOutDevice: signedIn
+      .input(z.object({ id: z.string() }))
+      .mutation(async ({ ctx, input }) =>
+        signOutDevice(ctx.owner, await sessionOf(ctx.headers), input.id),
+      ),
+    usage: signedIn.query(({ ctx }) => (ctx.user.via === "chatgpt" ? usage(ctx.user) : null)),
+    export: signedIn.query(({ ctx }) => exportData(ctx.owner)),
+    delete: signedIn.mutation(({ ctx }) => deleteAccount(ctx.owner)),
   }),
 };

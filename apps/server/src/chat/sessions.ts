@@ -1,7 +1,7 @@
 import { db } from "@sirathic/db";
 import { chatSessions } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
-import { type AnyColumn, and, desc, eq, gt, ilike, lt, sql } from "drizzle-orm";
+import { type AnyColumn, and, desc, eq, gt, ilike, lt, ne, or, sql } from "drizzle-orm";
 import { z } from "zod";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "../shared/messages";
 import { StatusError } from "../http";
@@ -251,6 +251,36 @@ export async function forkSession(
   });
   return { id: forked };
 }
+
+const PAST_CHATS = 5;
+const PAST_ANSWER_CHARS = 400;
+
+const textAt = (index: number) =>
+  sql<string>`coalesce((select string_agg(part->>'text', ' ') from jsonb_array_elements(${chatSessions.messages} -> ${sql.raw(String(index))} -> 'parts') as part where part->>'type' = 'text'), '')`;
+
+export const searchPastChats = (by: string, except: string, query: string) => {
+  const pattern = `%${query.replaceAll(LIKE_SPECIAL, (special) => `\\${special}`)}%`;
+  return db
+    .select({
+      title: chatSessions.title,
+      updatedAt: isoTime(chatSessions.updatedAt),
+      asked: textAt(0),
+      answered: sql<string>`left(${textAt(-1)}, ${PAST_ANSWER_CHARS})`,
+    })
+    .from(chatSessions)
+    .where(
+      and(
+        eq(chatSessions.owner, by),
+        ne(chatSessions.id, except),
+        or(
+          ilike(chatSessions.title, pattern),
+          sql`${chatSessions.messages}::text ilike ${pattern}`,
+        ),
+      ),
+    )
+    .orderBy(desc(chatSessions.updatedAt))
+    .limit(PAST_CHATS);
+};
 
 export const exportSessions = (by: string) =>
   db

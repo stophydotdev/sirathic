@@ -19,6 +19,7 @@ import {
   type UIMessageStreamOutcome,
 } from "ai";
 import { memoryTools } from "../account/memory";
+import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
 import type { RulesProject } from "../projects/rules";
 import { answerOptions } from "../models/subscription";
@@ -254,10 +255,14 @@ export function chatResponse({
       );
       const searchable = inBot && visible.length < messages.length ? inBot : undefined;
       const sandbox = sandboxFiles();
+      const routines = automate && {
+        ...automate,
+        timezone: preferred.timezone || automate.timezone,
+      };
       const available = {
         ...tools,
         ...stophyTools(sources.add),
-        ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
+        ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
@@ -271,9 +276,15 @@ export function chatResponse({
               : inBot
                 ? { kind: "bot", ...inBot }
                 : { kind: "account", owner },
+            inBot !== undefined || preferred.saveMemory,
           )),
         ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
         ...(searchable && chatSearchTools(searchable)),
+        ...(owner !== undefined &&
+          !unattended &&
+          !inBot &&
+          preferred.usePastChats &&
+          pastChatTools(owner, turn.sessionId)),
         ...(inBot && studyTools(inBot)),
         ...(!inBot && fileOwner !== undefined && codeTools(modelName)),
         ...(!inBot &&
@@ -291,7 +302,7 @@ export function chatResponse({
         mode,
         texting: texts,
         inBot: inBot !== undefined,
-        timezone: automate?.timezone,
+        timezone: routines?.timezone,
         canWriteSkills: owner !== undefined && !unattended,
         userSkills: ownSkills,
         offered: available,
@@ -318,14 +329,15 @@ export function chatResponse({
         settings,
         instructions: instructions({
           now: new Date(),
-          timezone: automate?.timezone,
+          timezone: routines?.timezone,
           mode,
           settings,
           project: inProject,
           unattended: unattended === true,
           offered,
           skills: builtIn,
-          remembers: owner !== undefined && !unattended,
+          remembers:
+            owner !== undefined && !unattended && (inBot !== undefined || preferred.saveMemory),
           connectedApps: plugins.flatMap((plugin) => (plugin.connected ? [plugin.name] : [])),
           toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
         }),

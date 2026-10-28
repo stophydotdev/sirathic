@@ -2,10 +2,12 @@
 
 import { useT } from "@/components/i18n";
 import { MemoryFacts } from "@/components/memoryFacts";
+import { ImportMemory } from "@/components/settingsImport";
 import { Modal, modalButton } from "@/components/sessionMenu";
-import { control, Row } from "@/components/settingsControls";
+import { control, Row, Toggle } from "@/components/settingsControls";
 import { cn } from "@/lib/utils";
 import { api } from "@/lib/trpc";
+import type { Settings } from "@sirathic/server/settings";
 import { type FC, useEffect, useState } from "react";
 
 const MemoryList: FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -79,12 +81,60 @@ const MemoryList: FC<{ onClose: () => void }> = ({ onClose }) => {
   );
 };
 
+type Switches = Pick<Settings, "saveMemory" | "usePastChats">;
+
 export const MemoryRow: FC = () => {
   const [open, setOpen] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const [switches, setSwitches] = useState<Switches>();
   const t = useT();
+
+  useEffect(() => {
+    void api.settings.get.query().then(
+      ({ saveMemory, usePastChats }) => setSwitches({ saveMemory, usePastChats }),
+      () => undefined,
+    );
+  }, []);
+
+  const flip = (update: Partial<Switches>) => {
+    setSwitches((current) => current && { ...current, ...update });
+    void api.settings.update.mutate(update);
+  };
 
   return (
     <>
+      {switches && (
+        <>
+          <Row
+            label={t("Save new memories")}
+            hint={t("Sirathic keeps facts from your chats to answer you better")}
+          >
+            <Toggle
+              label={t("Save new memories")}
+              checked={switches.saveMemory}
+              onChange={(saveMemory) => flip({ saveMemory })}
+            />
+          </Row>
+          <Row
+            label={t("Use past chats")}
+            hint={t("Sirathic can look through your earlier chats when it helps")}
+          >
+            <Toggle
+              label={t("Use past chats")}
+              checked={switches.usePastChats}
+              onChange={(usePastChats) => flip({ usePastChats })}
+            />
+          </Row>
+        </>
+      )}
+      <Row label={t("Import memory")} hint={t("Bring what another assistant knows about you")}>
+        <button type="button" onClick={() => setImporting(true)} className={control}>
+          {t("Import")}
+        </button>
+      </Row>
+      <Modal open={importing} onOpenChange={setImporting} title={t("Import memory")}>
+        {importing && <ImportMemory onClose={() => setImporting(false)} />}
+      </Modal>
       <Row
         label={t("Memory from your chats")}
         hint={t("Facts Sirathic saved to answer you better")}

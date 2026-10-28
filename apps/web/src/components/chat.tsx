@@ -1,6 +1,7 @@
 "use client";
 
 import { chosenModel } from "@/components/account";
+import { notify } from "@/components/automationAlerts";
 import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
 import { usePreferences } from "@/components/preferences";
@@ -177,6 +178,17 @@ const waitForSaved = async (chat: LiveChat<ChatMessage>, waitsLeft = SAVED_WAITS
   }
 };
 
+const NOTE_CHARS = 140;
+
+const announceAnswer = (id: string, path: string, message: ChatMessage) => {
+  const watching =
+    document.visibilityState === "visible" && window.location.pathname.endsWith(`/${id}`);
+  if (watching || !usePreferences.getState().answerAlerts) return;
+  const title =
+    useSessions.getState().sessions?.find((session) => session.id === id)?.title ?? "Sirathic";
+  notify(path, title, answerText([message]).slice(0, NOTE_CHARS));
+};
+
 const liveChat = (
   id: string,
   messages: ChatMessage[] | undefined,
@@ -193,7 +205,11 @@ const liveChat = (
     onData: (part) => {
       if (part.type === "data-title") void useSessions.getState().refresh();
     },
-    onFinish: refreshSaved,
+    onFinish: ({ message, isAbort, isError }) => {
+      refreshSaved();
+      if (!isAbort && !isError)
+        announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
+    },
     onError: () => void waitForSaved(created),
   });
   const stopHere = created.stop;
