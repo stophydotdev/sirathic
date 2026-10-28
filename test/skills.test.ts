@@ -48,7 +48,7 @@ test("research mode has the research skill loaded from the start, without a step
     first?.toolChoice,
     systemTexts(first)?.at(-1)?.includes("This is research mode."),
     again?.toolChoice,
-  ]).toEqual([{ type: "tool", toolName: "search_web" }, true, { type: "auto" }]);
+  ]).toEqual([{ type: "required" }, true, { type: "auto" }]);
 });
 
 test("the question tool is offered in research mode only, and never in an unattended run", async () => {

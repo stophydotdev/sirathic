@@ -24,12 +24,15 @@ const PAGE_CHARS = 25_000;
 export const CLARIFYING = "clarifying_questions";
 
 export const clarifyingQuestions = tool({
-  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. Call it before you search or answer when the answer depends on something only the user can tell you:
-- it asks for a pick that depends on the user's own needs, like which one is best for them;
-- it is a personal decision, like a marriage, a purchase, a career or a case of their own;
-- the scope is open: which madhab, their situation, a budget, a place or their level;
-- the question has several valid readings.
-Skip it when the question has one factual answer, like how wudu is done or what a word means, or when the user already gave the scope. Skip it when the answer is what people in general prefer or recommend, which you can search. Skip it too when you can reasonably guess and go ahead. Never use it to ask for the details of a sin, a private matter or a personal case. Ask at most one question per turn. If the user skips or dismisses it, never ask it again and answer with what you have. Put the question only in the card, not in your text. The card ends your turn, so write what they should read first and call it last, on its own. Their reply comes as their next message.`,
+  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. Call it before you search or answer when:
+- a subjective term is present, like best, good or top, and the answer depends on the user's own needs;
+- it is a personal decision, like a marriage, a purchase, an investment or a career;
+- the scope is undefined: which madhab, a budget, a timeframe, their experience level or their region;
+- several valid interpretations exist;
+- a financial question depends on personal context, like whether to invest in something;
+- a skill tells you to ask a certain question.
+Skip it when the question has a single factual answer, like how wudu is done or what a word means, or when the scope is already specified. Skip it when the answer is what people in general prefer or recommend, which you can search. Never use it to ask for the details of a sin or a private matter.
+Use only this tool when clarification is needed. Don't ask clarifying questions in your answer text. Ask one natural question, and make every answer a real option. The card ends your turn. Their reply comes as their next message. A dismissed question is a decline: proceed directly using reasonable defaults, and don't ask it again in any form.`,
   inputSchema: question,
   execute: async () => ({ shown: true }),
 });
@@ -39,7 +42,9 @@ const fetchUrlInput = z.object({
     .array(publicUrl)
     .min(1)
     .max(3)
-    .describe("1 to 3 URLs to read. Prioritize the pages most important to the answer."),
+    .describe(
+      "Up to 3 URLs to navigate to and extract content from. Prioritize the pages most important to the answer.",
+    ),
 });
 
 const readPage = async (cite: Cite, url: string) => {
@@ -69,16 +74,17 @@ const readPage = async (cite: Cite, url: string) => {
 export function sirathicTools(cite: Cite) {
   return {
     search_web: tool({
-      description: `Searches the Quran, hadith, fatwas, fiqh books, the web or news in one call. Returns results with a title, link and snippet, numbered for citing. Works best with short keyword queries, not questions or multi-step reasoning.
+      description: `Searches the Quran, hadith, fatwas, fiqh books, the web and news for current and factual information, returning relevant results with titles, URLs and content snippets, numbered for citing. Use for questions about up-to-date or externally verified information. Works best with short, keyword-focused queries. Complex multi-step reasoning queries are not supported.
 
-Writing queries:
-- Use the conversation to resolve short follow-ups.
-- Put each entity, school or aspect in its own query. Preferred: ["Hanafi witr ruling", "Shafi'i witr ruling"]. Not: ["Hanafi vs Shafi'i witr"].
-- Drop filler words.
-- Never add what the user, the conversation or earlier results did not give: years, hadith numbers, a madhab, scholar names, editions.
-- For time-sensitive topics, write "latest" or "upcoming" instead of guessing a date.
+Best practices:
+- Limit to max 3 queries per request. For multi-part requests, use the query slots to cover distinct entities or aspects.
+- Use conversation history to resolve short or ambiguous follow-ups.
+- For multi-entity questions, use separate single-entity queries: Preferred: ["Hanafi witr ruling", "Shafi'i witr ruling"]. Not: ["Hanafi vs Shafi'i witr"].
+- Keep queries short and focused, and omit filler words. Preferred: ["zakat on gold jewelry"]. Not: ["Do I have to pay zakat on my gold jewelry?"]
+- Do not add identifiers that were not provided by the user, prior conversation, or tool results. This includes years, editions, hadith numbers, a school of fiqh, scholar names, titles and versions.
+- For ambiguous recurring or time-sensitive topics, use neutral freshness terms such as "latest", "next", or "upcoming" instead of assuming a specific event, date, or outcome.
 
-If results are incomplete, conflicting, only snippets, one-sided, or miss a part of the question, search again with a focused query or read the page with fetch_url before answering.`,
+If results are incomplete, conflicting, snippet-level, single-sided, or do not cover a distinct requested part, call search_web again with a focused query or use fetch_url before answering.`,
       inputSchema: searchInput,
       execute: (input) => searchAll(cite, input),
       toModelOutput: ({ output }) => ({
@@ -104,7 +110,7 @@ If results are incomplete, conflicting, only snippets, one-sided, or miss a part
     }),
     fetch_url: tool({
       description:
-        "Reads the title and full text of 1 to 3 pages at once, fetched in parallel. Use it when page-level detail matters, such as exact wording, a specific source, a list or table, or the text of a policy or fatwa, and when snippets are thin or conflicting. Pick the pages most important to the answer and batch them in one call.",
+        "Navigate to URLs and extract their content. Returns the page title and text content for each URL. Use this to read the full content of web pages found via search_web. Use it when page-level details would improve the answer. Prefer fetch_url over answering from snippets when the user asks about a specific URL, source, list, policy, fatwa, article, table, exact wording, or any answer that depends on details likely hidden beyond the snippet. Batch fetch when appropriate. When a user pastes a full URL in the query, you must call fetch_url to retrieve that URL's information.",
       inputSchema: fetchUrlInput,
       execute: async ({ urls }) => {
         const read = await Promise.all(

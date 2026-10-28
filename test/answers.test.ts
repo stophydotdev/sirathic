@@ -291,14 +291,14 @@ test("quick and research both think at high when the user picks nothing", async 
   expect(efforts).toEqual(["high", "high"]);
 });
 
-test("every step of a turn sends the same tools, and the first one forces search", async () => {
+test("every step of a turn sends the same tools, and the first one requires a tool", async () => {
   const { model, seen } = scriptedModel(["search_web", "update_memory"]);
-  await answerWith(model, { firstStep: "search" }).generate({ prompt: "hi" });
+  await answerWith(model, { firstStep: "anyTool" }).generate({ prompt: "hi" });
   expect(seen.map(toolNames)).toEqual(
     Array.from({ length: 3 }, () => ["search_web", "update_memory"]),
   );
   expect(seen.map((call) => call.toolChoice)).toEqual([
-    { type: "tool", toolName: "search_web" },
+    { type: "required" },
     { type: "auto" },
     { type: "auto" },
   ]);
@@ -312,7 +312,7 @@ test("the create tool's description is the same for every time zone", () => {
 });
 
 test.each<[string, ModelCall["toolChoice"]]>([
-  ["sirathic-noor-1-flash", { type: "tool", toolName: "search_web" }],
+  ["sirathic-noor-1-flash", { type: "required" }],
   ["gpt-6-luna", { type: "required" }],
 ])("a first question on %s forces %p first", async (modelName, toolChoice) => {
   const [first] = await chatTurn({

@@ -49,7 +49,7 @@ export type AutomationScope = { owner: string; timezone: string; projectId?: str
 export function routineTools({ owner, timezone, projectId }: AutomationScope) {
   return {
     update_routine: tool({
-      description: `Creates, edits, pauses, resumes or deletes one of the user's routines. A routine is a prompt that runs by itself on a schedule and saves each answer as a chat. Load the routines skill before you use it. edit takes only the fields that change. The prompt says the goal and who it is for, tells the run to reply with exactly SKIP when there is nothing useful, and holds no verse or hadith text and nothing private. Times near a prayer are fixed clock times: ask for the local timetable, never guess them.`,
+      description: `Creates, edits, pauses, resumes or deletes one of the user's routines: saved prompts that run on a schedule, even while the user is away, and save each answer as a chat. Their current routines and ids come from list_routines. Load the routines skill before you create or change one; it has the full recipe. create needs name, prompt and schedule. edit needs id and only the fields to change. pause, resume and delete need id. The prompt is written to your future self as an intent, not a frozen tool recipe: the goal, who it is for, and a line telling the run to reply with exactly SKIP when there is nothing useful. It holds no verse or hadith text and nothing private. Times near a prayer are fixed clock times: ask for the local timetable, never guess them. A change takes effect at once, with no card.`,
       inputSchema: routineCall,
       execute: async (call) => {
         switch (call.action) {
@@ -85,7 +85,7 @@ export function routineTools({ owner, timezone, projectId }: AutomationScope) {
     }),
     list_routines: tool({
       description:
-        "Lists the user's routines with their id, schedule and whether they are paused. Use it when they ask what routines they have, and before you edit, pause, resume or delete one, to get its id.",
+        "Lists the user's routines with their id, saved prompt, schedule and whether they are paused. Use it when they ask what routines they have, and before you edit, pause, resume or delete one: read its saved prompt and edit that text rather than rewriting it from memory.",
       inputSchema: z.object({}),
       execute: () => listAutomations(owner),
     }),
