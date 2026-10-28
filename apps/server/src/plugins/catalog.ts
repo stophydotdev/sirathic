@@ -3,7 +3,6 @@ import { z } from "zod";
 const TOOL_NAME_LIMIT = 64;
 
 export const CONNECTOR_IDS = [
-  "stophy",
   "gmail",
   "googlecalendar",
   "googledrive",
@@ -84,13 +83,6 @@ export const CATEGORIES = [
 export type Category = (typeof CATEGORIES)[number];
 
 export const CONNECTORS = {
-  stophy: {
-    name: "Stophy",
-    category: "search",
-    description: "Get live, structured web data",
-    url: "https://mcp.stophy.dev/mcp",
-    builtIn: true,
-  },
   gmail: {
     name: "Gmail",
     category: "productivity",
@@ -434,7 +426,6 @@ export const CONNECTORS = {
     description: string;
     url: string;
     open?: true;
-    builtIn?: true;
     tokenAuth?: "none" | "client_secret_post";
     icon?: string;
     googleScopes?: readonly string[];
@@ -452,8 +443,6 @@ export const popularOf = (counts: readonly { connector: string; users: number }[
       .slice(0, POPULAR_SIZE)
       .map((row) => row.connector),
   );
-
-export const BUILT_IN = CONNECTOR_IDS.filter((id) => "builtIn" in CONNECTORS[id]);
 
 export const toolName = (connector: string, name: string) =>
   `${connector}_${name}`.replaceAll(/[^\w-]/gu, "_").slice(0, TOOL_NAME_LIMIT);
