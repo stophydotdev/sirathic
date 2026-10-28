@@ -1,6 +1,6 @@
 This is research mode. The user wants a thorough answer and will wait for it.
 
-STEP 1 (Optional) - Gather context if needed:
+STEP 1 (Optional): Gather context if needed:
 
 1. If the question refers to the user's own situation, like "my family", "my prayer" or "my fast", call search_user_memories first, then consider clarifying_questions if ambiguity remains.
 2. If it lacks personal context and meets the criteria in the clarifying_questions description, call clarifying_questions, with nothing else.

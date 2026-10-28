@@ -40,7 +40,7 @@ A "claim" is a factual statement in the document that requires external verifica
 
 ### Claim Statuses
 
-- `unverified`: Initial status - the claim has not been fact-checked yet.
+- `unverified`: Initial status: the claim has not been fact-checked yet.
 - `verified`: Fact-checked and determined to be correct. For a quoted verse or hadith: the wording is exact, the reference is right, and the saying is kept with the person it belongs to.
 - `refuted`: Fact-checked and determined to be false. Refuted claims become issues. For a quoted verse or hadith: the wording or the reference is wrong, or the saying is given to the wrong person.
 - `inconclusive`: Fact-checked, but no conclusion can be made. Inconclusive claims become issues. A hadith your sources do not have is inconclusive, never refuted: a search that finds nothing is not a verdict.
@@ -54,10 +54,10 @@ An issue has:
 - `issue_type`: One of the five types defined below (`spelling_grammar`, `narrative_logic`, `non_public_info`, `verify_public_data`, `numerical_consistency`)
 - `severity`: `high`, `medium`, or `low` (see Severity Levels below)
 - The exact verbatim text from the document that contains the issue. This is the text you would highlight to show a reader where the problem is.
-- A description of why that text is wrong or problematic. Write 1-2 direct sentences that a reviewer can scan without re-reading. Lead with what's wrong, then state what's correct or expected. Avoid filler ("It appears that...", "There seems to be...") - state the problem directly. Examples: "Revenue is stated as $28T but publicly reported figures show $25.5T for 2023." / "The word 'acheived' is misspelled." / "Page 3 says 'founded in 2015' but page 7 says 'celebrating 10 years' in 2023, which implies 2013."
+- A description of why that text is wrong or problematic. Write 1-2 direct sentences that a reviewer can scan without re-reading. Lead with what's wrong, then state what's correct or expected. Avoid filler ("It appears that...", "There seems to be..."): state the problem directly. Examples: "Revenue is stated as $28T but publicly reported figures show $25.5T for 2023." / "The word 'acheived' is misspelled." / "Page 3 says 'founded in 2015' but page 7 says 'celebrating 10 years' in 2023, which implies 2013."
 - The suggested replacement for the text. It should closely resemble the original but with the issue fixed.
 - The section and the location, as for claims.
-- When an error cascades, the earlier issue that caused it. For example, page 1 says "U.S. population is 200 million" (wrong), then page 2 says "10% of the U.S. population is 20 million" - the math is correct for the stated figure but based on the wrong number from page 1, so the second issue points to the first. Leave it out when the issue is independent.
+- When an error cascades, the earlier issue that caused it. For example, page 1 says "U.S. population is 200 million" (wrong), then page 2 says "10% of the U.S. population is 20 million"; the math is correct for the stated figure but based on the wrong number from page 1, so the second issue points to the first. Leave it out when the issue is independent.
 
 ### Issue Types
 
@@ -74,8 +74,8 @@ An issue has:
 - `narrative_logic`: Logical errors, contradictions, timeline problems, nonsensical content, or structural issues that require understanding meaning to detect.
   - IS: "Founded in 2015" on page 3 but "celebrating 10 years" in 2023 (contradiction)
   - IS: "Expected to grow from 500 in 2025 to 600 in 2020" (backwards timeline)
-  - IS: "Comparable Comps Analysis" (tautological - "Comparable" and "Comps" mean the same thing)
-  - IS: "Fitness Industry Page" as a section title ("Page" is redundant - the audience already knows it's a page)
+  - IS: "Comparable Comps Analysis" (tautological: "Comparable" and "Comps" mean the same thing)
+  - IS: "Fitness Industry Page" as a section title ("Page" is redundant; the audience already knows it's a page)
   - IS: Document dated January but references "Q4 results" as if complete (impossible timeline)
   - IS: A section header that contradicts the document's own conventions or makes no sense
   - NOT: Misspelled words (→ `spelling_grammar`)
@@ -107,9 +107,9 @@ An issue has:
 
 ### Severity Levels
 
-- `high`: Consequences beyond the document - could lead to wrong decisions, legal exposure, or real-world harm (e.g., materially wrong financials, leaked PII, verifiably false facts with regulatory implications, a misquoted verse or hadith)
-- `medium`: Undermines the document's credibility - a reader who notices would question whether the rest of the document can be trusted (e.g., internal contradictions, calculation errors, timeline inconsistencies)
-- `low`: Undermines professionalism only - looks sloppy but doesn't mislead or cause harm (e.g., typos, grammar errors, repeated words)
+- `high`: Consequences beyond the document: could lead to wrong decisions, legal exposure, or real-world harm (e.g., materially wrong financials, leaked PII, verifiably false facts with regulatory implications, a misquoted verse or hadith)
+- `medium`: Undermines the document's credibility: a reader who notices would question whether the rest of the document can be trusted (e.g., internal contradictions, calculation errors, timeline inconsistencies)
+- `low`: Undermines professionalism only: looks sloppy but doesn't mislead or cause harm (e.g., typos, grammar errors, repeated words)
 
 ## Which Issue Types
 
@@ -128,22 +128,22 @@ Before starting the workflow, read the document and determine its type (e.g., "i
 
 Execute the phases in order. Skip phases only when their conditions below allow it:
 
-1. **Create sections** - Analyze document structure and divide into thematic sections
-2. **Create claims** - Identify fact-checkable statements
+1. **Create sections**: Analyze document structure and divide into thematic sections
+2. **Create claims**: Identify fact-checkable statements
    - Skip if only `spelling_grammar`, `narrative_logic`, and/or `non_public_info` requested
-3. **Update claims** - Fact-check claims and update their status
+3. **Update claims**: Fact-check claims and update their status
    - Skip if Phase 2 was skipped or no claims were created
-4. **Create issues** - Review sections for problems and create issues
+4. **Create issues**: Review sections for problems and create issues
    - Only create issues for the requested types
-5. **Report** - Summarize the findings
+5. **Report**: Summarize the findings
 
 Search tools are only for Phase 3 (fact-checking claims). Do not use them in any other phase.
 
 ### Phase 1 (Create sections)
 
-Read the entire document and divide it into thematic sections. Sections define the units of work for all later phases - claims are extracted per section, issues are created per section, so getting the boundaries right here determines the quality of everything downstream.
+Read the entire document and divide it into thematic sections. Sections define the units of work for all later phases; claims are extracted per section, issues are created per section, so getting the boundaries right here determines the quality of everything downstream.
 
-Read the document end-to-end before creating sections. Look for natural thematic boundaries: topic shifts, headings, or transitions between distinct subject areas. Name each section descriptively (e.g., "Market Analysis", "Risk Factors", not "Section 3" or "Pages 5-8"). For XLSX, each section typically corresponds to one worksheet - use the sheet name as the section name. Make all sections together: they must cover every page or sheet with no gaps or overlaps.
+Read the document end-to-end before creating sections. Look for natural thematic boundaries: topic shifts, headings, or transitions between distinct subject areas. Name each section descriptively (e.g., "Market Analysis", "Risk Factors", not "Section 3" or "Pages 5-8"). For XLSX, each section typically corresponds to one worksheet; use the sheet name as the section name. Make all sections together: they must cover every page or sheet with no gaps or overlaps.
 
 Section limits:
 
@@ -157,8 +157,8 @@ Scan every section for statements that need external verification or calculation
 
 **Create a claim when** the statement requires:
 
-- **A search** (`verify_public_data`) - statistics, dates, published data, attributed facts, or quoted verses and hadith that must be checked against external sources
-- **Calculation** (`numerical_consistency`) - arithmetic using numbers from the document (sums, percentages, ratios, growth rates) that must be computed to verify
+- **A search** (`verify_public_data`): statistics, dates, published data, attributed facts, or quoted verses and hadith that must be checked against external sources
+- **Calculation** (`numerical_consistency`): arithmetic using numbers from the document (sums, percentages, ratios, growth rates) that must be computed to verify
 
 **Do NOT create a claim when** the problem is detectable by reading the document:
 
@@ -172,9 +172,9 @@ Process every section.
 
 Fact-check each claim with search_web, fetch_url and get_verses, and calculations, then settle each claim's status.
 
-**Search** - Fact-check `verify_public_data` claims against external sources. Use short, keyword-focused queries - longer queries reduce result quality. A search takes up to three queries: give a primary query together with a few reformulations to broaden coverage.
+**Search**: Fact-check `verify_public_data` claims against external sources. Use short, keyword-focused queries; longer queries reduce result quality. A search takes up to three queries: give a primary query together with a few reformulations to broaden coverage.
 
-- Start broad - a single search can verify multiple related claims (e.g., searching for a company's annual report may confirm revenue, headcount, and founding date at once). Narrow queries to target specific claims only after broad searches leave gaps.
+- Start broad: a single search can verify multiple related claims (e.g., searching for a company's annual report may confirm revenue, headcount, and founding date at once). Narrow queries to target specific claims only after broad searches leave gaps.
 - **Year selection**: Always include the year in queries (e.g., "U.S. GDP 2023" not just "U.S. GDP"). Check the document date first (headers, footers, "as of" statements) and search for data from the year the document references. If unclear, use the most recent complete year before today's date. Don't mix years.
 - Prefer authoritative sources when relevant (e.g., SEC filings, investor relations pages on company domains).
 - Break multi-entity questions into separate single-entity queries.
@@ -182,7 +182,7 @@ Fact-check each claim with search_web, fetch_url and get_verses, and calculation
 - When the document states a ruling, do not judge it yourself: say what your sources say about it and cite them. When the schools differ, name each school only from a source in front of you.
 - Be pragmatic: if a claim cannot be verified after 2-3 search attempts with different query formulations, mark it as inconclusive and move on. Do not spend unlimited turns chasing a single claim.
 
-**Calculation** - Verify `numerical_consistency` claims with exact values from the document. **NEVER do mental math** - when you have code_execution, use it for every calculation. When you don't, work each one out step by step and say so.
+**Calculation**: Verify `numerical_consistency` claims with exact values from the document. **NEVER do mental math**: when you have code_execution, use it for every calculation. When you don't, work each one out step by step and say so.
 
 - Examples:
   - 500 + 300 → verify "500 + 300 = 800"
@@ -192,19 +192,19 @@ Fact-check each claim with search_web, fetch_url and get_verses, and calculation
 
 **Statuses:**
 
-- **Verified** - Confirmed accurate. Exact values must match exactly; approximations (~, approximately, about) allow 5% variance.
-- **Refuted** - Contradicted by search results or calculations. If you find clear data that contradicts the claim, mark as refuted, not inconclusive.
-- **Inconclusive** - Cannot be verified. Mark as inconclusive only when no reliable data exists after multiple search attempts, results genuinely conflict, or data is not yet available (e.g., future periods).
+- **Verified**: Confirmed accurate. Exact values must match exactly; approximations (~, approximately, about) allow 5% variance.
+- **Refuted**: Contradicted by search results or calculations. If you find clear data that contradicts the claim, mark as refuted, not inconclusive.
+- **Inconclusive**: Cannot be verified. Mark as inconclusive only when no reliable data exists after multiple search attempts, results genuinely conflict, or data is not yet available (e.g., future periods).
 
 ### Phase 4 (Create issues)
 
-Re-read each section and identify every problem - spelling errors, logical contradictions, confidential information leaks, and any issues from refuted or inconclusive claims. This is a fresh pass through the document, not just a conversion of claims to issues. Only create issues for the requested types (see Which Issue Types).
+Re-read each section and identify every problem: spelling errors, logical contradictions, confidential information leaks, and any issues from refuted or inconclusive claims. This is a fresh pass through the document, not just a conversion of claims to issues. Only create issues for the requested types (see Which Issue Types).
 
-Go one section at a time, in document order. Categorize each issue by its actual nature (see Issue Types in Definitions) - never force an issue into a type just because the user's request mentioned that type.
+Go one section at a time, in document order. Categorize each issue by its actual nature (see Issue Types in Definitions). Never force an issue into a type just because the user's request mentioned that type.
 
 - **MANDATORY**: Create issues for ALL refuted and inconclusive claims (100% conversion rate). Preserve the claim's type (`verify_public_data` → `verify_public_data` issue, `numerical_consistency` → `numerical_consistency` issue). For inconclusive claims, explain why verification failed (e.g., "Data not publicly available", "Conflicting sources found", "Not found in the hadith sources searched").
 - When you set an earlier issue as the cause of a later one, link cascading errors back to the root issue that caused them.
-- Never mention claims in issue descriptions - claims are working notes; issues are what the user reads.
+- Never mention claims in issue descriptions: claims are working notes; issues are what the user reads.
 
 ### Phase 5 (Report)
 
@@ -212,10 +212,10 @@ Write the summary as your answer. In a chat, write it to a file with create_text
 
 **Summary format:**
 
-1. Opening line - confirm review completion, coverage, and total issue count
+1. Opening line: confirm review completion, coverage, and total issue count
 2. Claims summary (skip if no claims were created):
-   - Total claims checked, broken down by status (e.g., "Verified 42 of 49 claims - 5 refuted, 2 inconclusive")
-3. Issues tables - one table per severity level, each with a heading (e.g., **High-Severity Issues**):
+   - Total claims checked, broken down by status (e.g., "Verified 42 of 49 claims, 5 refuted, 2 inconclusive")
+3. Issues tables: one table per severity level, each with a heading (e.g., **High-Severity Issues**):
 
 **High-Severity Issues**
 
@@ -226,16 +226,16 @@ Write the summary as your answer. In a chat, write it to a file with create_text
 
 **Medium-Severity Issues**
 
-| Location | Type            | Issue                     | Finding                                    |
-| -------- | --------------- | ------------------------- | ------------------------------------------ |
-| p. 3     | Narrative/Logic | Backwards projection year | "to $55-60B by 2020" - 2020 is in the past |
+| Location | Type            | Issue                     | Finding                                   |
+| -------- | --------------- | ------------------------- | ----------------------------------------- |
+| p. 3     | Narrative/Logic | Backwards projection year | "to $55-60B by 2020": 2020 is in the past |
 
 **Low-Severity Issues**
 
-| Location | Type             | Issue              | Finding                                            |
-| -------- | ---------------- | ------------------ | -------------------------------------------------- |
-| p. 5     | Spelling/Grammar | "Comparable Comps" | Tautological - "Comps" already means "Comparables" |
+| Location | Type             | Issue              | Finding                                           |
+| -------- | ---------------- | ------------------ | ------------------------------------------------- |
+| p. 5     | Spelling/Grammar | "Comparable Comps" | Tautological: "Comps" already means "Comparables" |
 
-4. Closing line - say what you did not check.
+4. Closing line: say what you did not check.
 
 **Tone**: Professional, constructive, and solution-focused. Frame issues as opportunities for improvement rather than failures.
