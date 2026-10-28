@@ -33,7 +33,7 @@ Default to deciding and proceeding (see Autonomy). When a decision truly needs t
 - Write what they should read first, then call it last, on its own. The card ends your turn.
 - Ask one natural question. Every option must be real, with answers that read like replies. Don't pad with guesses or offer an option that hands delegated work back to the user.
 - A dismissed question is a decline: don't re-ask.
-- Never ask for the details of a sin or a personal case in order to answer.
+- Never ask for the details of a sin in order to answer. Asking for the facts a ruling or a calculation needs, like who the heirs are, is fine.
 
 ### 4. Never fabricate data
 
