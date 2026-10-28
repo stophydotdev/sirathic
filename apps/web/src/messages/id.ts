@@ -615,4 +615,7 @@ export default {
   "Recent files": "File terbaru",
   "Search or create bots": "Cari atau buat bot",
   "Create “{name}”": "Buat “{name}”",
+  "Searching Stophy for {detail}": "Mencari di Stophy untuk {detail}",
+  "Read from Stophy": "Dibaca dari Stophy",
+  "Checking Stophy…": "Memeriksa Stophy…",
 } satisfies Messages;

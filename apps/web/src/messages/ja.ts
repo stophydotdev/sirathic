@@ -614,4 +614,7 @@ export default {
   "Recent files": "最近のファイル",
   "Search or create bots": "ボットを検索または作成",
   "Create “{name}”": "“{name}”を作成",
+  "Searching Stophy for {detail}": "Stophyで検索しています：{detail}",
+  "Read from Stophy": "Stophyから読み込みました",
+  "Checking Stophy…": "Stophyを確認中…",
 } satisfies Messages;

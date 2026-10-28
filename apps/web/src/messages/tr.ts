@@ -615,4 +615,7 @@ export default {
   "Recent files": "Son dosyalar",
   "Search or create bots": "Bot ara veya oluştur",
   "Create “{name}”": "“{name}” oluştur",
+  "Searching Stophy for {detail}": "Stophy'de aranıyor: {detail}",
+  "Read from Stophy": "Stophy'den okundu",
+  "Checking Stophy…": "Stophy kontrol ediliyor…",
 } satisfies Messages;

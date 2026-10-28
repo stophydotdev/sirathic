@@ -617,4 +617,7 @@ export default {
   "Recent files": "Son fayllar",
   "Search or create bots": "Bot axtar və ya yarat",
   "Create “{name}”": "“{name}” yarat",
+  "Searching Stophy for {detail}": "Stophy-də axtarılır: {detail}",
+  "Read from Stophy": "Stophy-dən oxundu",
+  "Checking Stophy…": "Stophy yoxlanılır…",
 } satisfies Messages;

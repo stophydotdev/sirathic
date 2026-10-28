@@ -613,4 +613,7 @@ export default {
   "Recent files": "Fiilaaji sakket",
   "Search or create bots": "Yiylo walla waɗ bot",
   "Create “{name}”": "Waɗ “{name}”",
+  "Searching Stophy for {detail}": "Ena yiyloo e Stophy ngam {detail}",
+  "Read from Stophy": "Janngaama e Stophy",
+  "Checking Stophy…": "Ena ƴeewa Stophy…",
 } satisfies Messages;

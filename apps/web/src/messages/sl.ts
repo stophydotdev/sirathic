@@ -613,4 +613,7 @@ export default {
   "Recent files": "Nedavne datoteke",
   "Search or create bots": "Išči ali ustvari bote",
   "Create “{name}”": "Ustvari „{name}“",
+  "Searching Stophy for {detail}": "Iskanje na Stophyju: {detail}",
+  "Read from Stophy": "Prebrano s Stophyja",
+  "Checking Stophy…": "Preverja Stophy…",
 } satisfies Messages;

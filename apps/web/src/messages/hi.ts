@@ -608,4 +608,7 @@ export default {
   "Recent files": "हाल की फ़ाइलें",
   "Search or create bots": "बॉट खोजें या बनाएँ",
   "Create “{name}”": "“{name}” बनाएँ",
+  "Searching Stophy for {detail}": "{detail} के लिए Stophy पर खोज रहे हैं",
+  "Read from Stophy": "Stophy से पढ़ा",
+  "Checking Stophy…": "Stophy देख रहा है…",
 } satisfies Messages;

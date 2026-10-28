@@ -606,4 +606,7 @@ export default {
   "Recent files": "ឯកសារថ្មីៗ",
   "Search or create bots": "ស្វែងរក ឬបង្កើតបុត",
   "Create “{name}”": "បង្កើត “{name}”",
+  "Searching Stophy for {detail}": "កំពុងស្វែងរកក្នុង Stophy សម្រាប់ {detail}",
+  "Read from Stophy": "បានអានពី Stophy",
+  "Checking Stophy…": "កំពុងពិនិត្យ Stophy…",
 } satisfies Messages;

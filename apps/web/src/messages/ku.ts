@@ -614,4 +614,7 @@ export default {
   "Recent files": "فایلە نوێیەکان",
   "Search or create bots": "بۆت بگەڕێ یان دروستی بکە",
   "Create “{name}”": "“{name}” دروست بکە",
+  "Searching Stophy for {detail}": "گەڕان لە Stophy بۆ {detail}",
+  "Read from Stophy": "لە Stophy خوێندرایەوە",
+  "Checking Stophy…": "پشکنینی Stophy…",
 } satisfies Messages;

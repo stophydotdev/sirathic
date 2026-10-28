@@ -618,4 +618,7 @@ export default {
   "Recent files": "Mga kamakailang file",
   "Search or create bots": "Maghanap o gumawa ng bot",
   "Create “{name}”": "Gumawa ng “{name}”",
+  "Searching Stophy for {detail}": "Naghahanap sa Stophy para sa {detail}",
+  "Read from Stophy": "Binasa mula sa Stophy",
+  "Checking Stophy…": "Tinitingnan ang Stophy…",
 } satisfies Messages;

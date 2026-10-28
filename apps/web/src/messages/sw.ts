@@ -613,4 +613,7 @@ export default {
   "Recent files": "Faili za hivi karibuni",
   "Search or create bots": "Tafuta au unda bot",
   "Create “{name}”": "Unda “{name}”",
+  "Searching Stophy for {detail}": "Inatafuta kwenye Stophy: {detail}",
+  "Read from Stophy": "Imesomwa kutoka Stophy",
+  "Checking Stophy…": "Inakagua Stophy…",
 } satisfies Messages;

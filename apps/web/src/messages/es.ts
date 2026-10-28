@@ -616,4 +616,7 @@ export default {
   "Recent files": "Archivos recientes",
   "Search or create bots": "Busca o crea bots",
   "Create “{name}”": "Crear “{name}”",
+  "Searching Stophy for {detail}": "Buscando {detail} en Stophy",
+  "Read from Stophy": "Leído de Stophy",
+  "Checking Stophy…": "Consultando Stophy…",
 } satisfies Messages;
