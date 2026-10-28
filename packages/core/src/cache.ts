@@ -35,6 +35,19 @@ export const dropKept = async (key: string) => {
   await redis.del(key);
 };
 
+export const countUpBy = async (key: string, amount: number, keepSeconds: number) => {
+  await connected;
+  const total = await redis.incrby(key, amount);
+  if (total === amount || (await redis.pttl(key)) < 0) await redis.expire(key, keepSeconds);
+  return total;
+};
+
+export const countOf = async (key: string) => {
+  await connected;
+  const [total, leftMs] = await Promise.all([redis.get(key), redis.pttl(key)]);
+  return { total: Number(total ?? 0), leftMs };
+};
+
 export const dropCached = async (namespace: string, id: string) => {
   await connected;
   await redis.del(`${namespace}:${id}`).catch(() => undefined);

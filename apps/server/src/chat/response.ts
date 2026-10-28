@@ -21,6 +21,7 @@ import {
 import { memoryTools } from "../account/memory";
 import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
+import { countedTokens } from "../models/usage";
 import type { RulesProject } from "../projects/rules";
 import { answerOptions } from "../models/subscription";
 import type { connectedTools } from "../plugins/connections";
@@ -186,7 +187,7 @@ export function chatResponse({
   automate,
   fileOwner,
   settled,
-  release,
+  spend,
   unattended,
   bot,
   historyLimit,
@@ -209,7 +210,7 @@ export function chatResponse({
   automate: AutomationScope | undefined;
   fileOwner?: string;
   settled?: () => void;
-  release?: (completed: boolean) => void;
+  spend?: (counted: number) => void;
   unattended?: true;
   bot?: Promise<BotScope | undefined>;
   historyLimit?: number;
@@ -223,6 +224,7 @@ export function chatResponse({
   let firstTextMs: number | undefined;
   let httpStatus: number | undefined;
   let usage: LanguageModelUsage | undefined;
+  let counted = 0;
   let text = "";
   const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages);
@@ -403,6 +405,8 @@ export function chatResponse({
         },
         messageMetadata: ({ part }) => {
           if (part.type === "finish") usage = part.totalUsage;
+          if (part.type === "finish-step")
+            counted += countedTokens(part.usage, part.providerMetadata);
           return undefined;
         },
         onError: (error) => {
@@ -454,10 +458,7 @@ export function chatResponse({
     onEnd: ({ messages: answered, outcome }) => {
       void connected.then(({ close }) => close());
       const status = ended?.outcome.status ?? outcome.status;
-      const waiting = answered
-        .at(-1)
-        ?.parts.some((part) => isToolUIPart(part) && part.state === "approval-requested");
-      release?.(status === "completed" && !waiting);
+      spend?.(counted);
       record({
         name: "answer.completed",
         props: {
