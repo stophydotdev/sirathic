@@ -7,6 +7,7 @@ import { fileRules } from "../fileTools";
 import research from "./research.md" with { type: "text" };
 import routines from "./routines.md" with { type: "text" };
 import skillAuthoring from "./skillAuthoring.md" with { type: "text" };
+import stophy from "./stophy.md" with { type: "text" };
 import study from "./study.md" with { type: "text" };
 import writing from "./writing.md" with { type: "text" };
 
@@ -52,6 +53,16 @@ export const skillsFor = ({
 }: Where): Skill[] => {
   const files = fileRules(offered);
   const builtIn = [
+    ...("stophy_call" in offered
+      ? [
+          {
+            name: "stophy",
+            when: "Load when the user links a YouTube, TikTok, Instagram, X, Reddit, Amazon, Airbnb, Booking or Google Maps page, or wants live flights, hotels, products and prices, places, reviews, jobs, homes or apps",
+            text: stophy,
+            tools: ["stophy_search_endpoints", "stophy_call"],
+          },
+        ]
+      : []),
     ...(mode === "research"
       ? [
           {

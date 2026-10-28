@@ -57,6 +57,7 @@ import {
   type UserSkill,
   skillsFor,
 } from "./skills/builtIn";
+import { STOPHY_LINK, stophyTools } from "./stophyTools";
 import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
 
 const KEEPALIVE_MS = 15_000;
@@ -257,6 +258,7 @@ export function chatResponse({
       const sandbox = sandboxFiles();
       const available = {
         ...tools,
+        ...stophyTools(sources.add),
         ...(automate && routineTools({ ...automate, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
@@ -332,7 +334,7 @@ export function chatResponse({
         mentioned: skillRules(ownSkills, askedText),
         firstStep:
           opening && !inBot
-            ? opening === "fetch" && noorModel(modelName)
+            ? opening === "fetch" && noorModel(modelName) && !STOPHY_LINK.test(askedText)
               ? "fetch"
               : "anyTool"
             : undefined,
