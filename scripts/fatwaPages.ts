@@ -67,8 +67,16 @@ export const mappedUrls = async (url: string, page = 1): Promise<string[]> => {
 
 const LOC = /<loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/loc>/gu;
 
+const LATER_PAGE = /[?&]pageno=([2-9]|[1-9]\d+)(&|$)/u;
+
+const direct = async (url: string, stophyError: Error) => {
+  const response = await fetch(url, { signal: AbortSignal.timeout(60_000) }).catch(() => undefined);
+  if (!response?.ok) throw stophyError;
+  return response.text();
+};
+
 export const sitemapUrls = async (url: string, site: Site): Promise<string[]> => {
-  const xml = await get(url);
+  const xml = await get(url).catch((error: Error) => direct(url, error));
   const locs = [...xml.matchAll(LOC)].map(([, loc = ""]) => loc.replaceAll("&amp;", "&"));
   if (!xml.includes("<sitemapindex")) return locs;
   const children = locs.filter((loc) => site.follow?.test(loc.split("/").at(-1) ?? loc) ?? true);
@@ -98,7 +106,7 @@ export const listedUrls = async (site: Site): Promise<string[]> => {
     const visit = async (): Promise<void> => {
       const url = queue.shift();
       if (url === undefined) return;
-      const html = await get(url).catch((error: Error) => {
+      const html = await (LATER_PAGE.test(url) ? pageHtml(url) : get(url)).catch((error: Error) => {
         console.warn(error.message);
         return "";
       });
@@ -355,8 +363,8 @@ export const amjaFatwas = async (lang: "en" | "ar", start = 0): Promise<string[]
   });
   if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
   const { recordsTotal, data } = AMJA_FATWAS.parse(await response.json());
-  const urls = data.map(
-    ({ data: { id, slug } }) => `https://www.amjaonline.org/fatwa/${lang}/${id}/${slug}`,
+  const urls = data.flatMap(({ data: { id, slug } }) =>
+    slug ? [`https://www.amjaonline.org/fatwa/${lang}/${id}/${slug}`] : [],
   );
   if (start + AMJA_PAGE >= recordsTotal) return urls;
   await Bun.sleep(1_000);
