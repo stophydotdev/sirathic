@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { approveAs } from "../apps/web/src/components/approvalVerb";
 import { splitLinks } from "../apps/web/src/components/linkedText";
 import { splitMentions } from "../apps/web/src/components/mentionText";
 import {
@@ -322,4 +323,15 @@ test("imported memory drops bullets, blanks and repeats, and stops at the 20 fac
       Array.from({ length: 19 }, (_, i) => `Fact ${i}`),
     ),
   ).toEqual(["Lives in Leeds"]);
+});
+
+test.each([
+  ["neon_run_sql", { sql: "DROP TABLE test_users" }, "Delete", true],
+  ["update_skill", { action: "delete", name: "Brief" }, "Delete", true],
+  ["stripe_createRefund", { order: "1042" }, "Refund", true],
+  ["stripe_pay_invoice", { id: "in_1" }, "Pay", true],
+  ["slack_post_message", { text: "hi" }, "Post", false],
+  ["todoist_update_task", { id: "1" }, "Confirm", false],
+])("%s asks to %s, and wipe-outs and payments are red", (toolName, args, label, danger) => {
+  expect(approveAs({ toolName, args })).toMatchObject({ label, danger });
 });

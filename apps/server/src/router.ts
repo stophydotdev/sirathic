@@ -3,6 +3,7 @@ import { automationRoutes } from "./automations/routes";
 import { botRoutes } from "./bots/routes";
 import { chatRoutes } from "./chat/routes";
 import { fileRoutes } from "./files/routes";
+import { emailRoutes } from "./plugins/emailRoutes";
 import { pluginRoutes } from "./plugins/routes";
 import { projectRoutes } from "./projects/routes";
 import { skillRoutes } from "./skills/routes";
@@ -15,6 +16,7 @@ export const appRouter = t.router({
   ...automationRoutes,
   ...accountRoutes,
   ...pluginRoutes,
+  ...emailRoutes,
   ...skillRoutes,
   ...fileRoutes,
 });
