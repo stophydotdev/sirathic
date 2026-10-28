@@ -29,6 +29,7 @@ export const fatwaSearch = async (input: z.input<typeof fatwaSearchInput>) => {
   const hits = await hybridIds(SEARCHABLE.fatwas, query, limit * ROWS_PER_PAGE, {
     topUp: true,
     filter,
+    indexOnly: true,
   });
   if (hits.length === 0) return { fatwas: [] };
   const rows = await db
