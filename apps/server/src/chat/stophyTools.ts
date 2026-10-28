@@ -8,6 +8,7 @@ import type { Cite } from "./cite";
 
 const API = "https://api.stophy.dev";
 const MAX_MATCHES = 8;
+const MAX_ROWS = 20;
 const TIMEOUT_MS = 60_000;
 const RESULT_CHARS = 60_000;
 const SNIPPET_CHARS = 300;
@@ -45,8 +46,15 @@ export const withCitations = (cite: Cite, data: z.infer<typeof json>, fallbackTi
   };
   const list = listed.safeParse(data);
   const one = row.safeParse(data);
+  const hidden = list.success ? list.data.results.length - MAX_ROWS : 0;
   const marked = list.success
-    ? { ...cited(list.data), results: list.data.results.map(cited) }
+    ? {
+        ...cited(list.data),
+        results: list.data.results.slice(0, MAX_ROWS).map(cited),
+        ...(hidden > 0 && {
+          more: `${hidden} more results not shown. Narrow the input to see others.`,
+        }),
+      }
     : one.success
       ? cited(one.data)
       : data;

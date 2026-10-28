@@ -430,6 +430,22 @@ test("Stophy results get a citation and a source for each page link, not for ima
   ]);
 });
 
+test("a long Stophy list keeps its first 20 rows, cites only those, and says how many it left out", () => {
+  const cited: string[] = [];
+  const rows = Array.from({ length: 25 }, (_, index) => ({
+    name: `Flight ${index}`,
+    url: `https://example.com/flight/${index}`,
+  }));
+  const { data, sources } = withCitations((url) => cited.push(url), { results: rows }, "Flights");
+  const shown = z.object({ results: z.array(z.object({})), more: z.string() }).parse(data);
+  expect([shown.results.length, sources.length, cited.length, shown.more]).toEqual([
+    20,
+    20,
+    20,
+    "5 more results not shown. Narrow the input to see others.",
+  ]);
+});
+
 test("Stophy sources of AI answers are left out of the catalog, with their endpoints", () => {
   const found = {
     sources: [
