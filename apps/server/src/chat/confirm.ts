@@ -1,7 +1,7 @@
 import type { ToolSet } from "ai";
 import { z } from "zod";
 
-export const CONFIRM_RULES = `Some plugin tools change things outside Sirathic, like sending, posting or creating. Before you call one, look up anything unclear with the plugin's read tools, such as which person, channel or file, so the call names it exactly. Then call it. The user sees the exact call as a card and confirms or cancels it; never ask for confirmation in text. Do not change the call after they confirm it. If they cancel, don't call it again unless they ask.`;
+export const CONFIRM_RULES = `A plugin call that sends, posts, shares, pays or deletes shows the user a card to confirm; other calls run at once. Name exactly who or what it affects, never ask for confirmation in text, and don't repeat a cancelled call.`;
 
 const readOnlyTool = z.object({ annotations: z.object({ readOnlyHint: z.literal(true) }) });
 
@@ -12,12 +12,26 @@ export const writingTools = (tools: ToolSet) =>
 
 const CONFIRMED_ACTIONS = new Map<string, readonly string[]>([["update_skill", ["delete"]]]);
 
-const actionOf = z.object({ action: z.string() });
+const SENSITIVE =
+  /(?:^|[^a-z])(?:delete|remove|destroy|drop|truncate|purge|erase|send|post|publish|reply|forward|invite|share|pay|charge|refund|transfer|payout|cancel)(?=$|[^a-z])/iu;
+
+const spelledOut = z
+  .object({
+    action: z.string().catch(""),
+    command: z.string().catch(""),
+    sql: z.string().catch(""),
+    sql_statements: z.array(z.string()).catch([]),
+  })
+  .catch({ action: "", command: "", sql: "", sql_statements: [] });
 
 export const needsApproval = (
   { toolName, input }: { toolName: string; input: unknown },
   writes: ReadonlySet<string>,
-) =>
-  writes.has(toolName) ||
-  (CONFIRMED_ACTIONS.get(toolName)?.includes(actionOf.safeParse(input).data?.action ?? "") ??
-    false);
+) => {
+  const { action, command, sql, sql_statements } = spelledOut.parse(input);
+  const named = toolName.replaceAll(/(\p{Ll})(\p{Lu})/gu, "$1 $2");
+  return (
+    (writes.has(toolName) && SENSITIVE.test([named, command, sql, ...sql_statements].join(" "))) ||
+    (CONFIRMED_ACTIONS.get(toolName)?.includes(action) ?? false)
+  );
+};
