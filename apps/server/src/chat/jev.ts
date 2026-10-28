@@ -2,7 +2,7 @@ import { env } from "@sirathic/env/server";
 import { z } from "zod";
 
 export const JEV = "typesafeai-jev-1-14-0";
-const WAIT_MS = 5_000;
+const WAIT_MS = 2_000;
 
 type State = string | Readonly<Record<string, string | Readonly<Record<string, string>>>>;
 
