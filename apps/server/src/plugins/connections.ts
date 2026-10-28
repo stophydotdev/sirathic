@@ -6,17 +6,18 @@ import {
   type OAuthClientMetadata,
   type OAuthClientProvider,
 } from "@ai-sdk/mcp";
-import { cacheFor, dropCached } from "@sirathic/core/cache";
+import { cacheFor, dropCached, dropKept, readKept } from "@sirathic/core/cache";
 import { db } from "@sirathic/db";
 import { connections } from "@sirathic/db/schema";
 import { env } from "@sirathic/env/server";
-import type { Tool } from "ai";
+import { type Tool, tool } from "ai";
 import { and, count, eq } from "drizzle-orm";
 import { z } from "zod";
 import { reasonOf, StatusError } from "../http";
 import { ownerCache } from "../account/ownerCache";
 import { seal, unseal } from "../account/vault";
 import { publicUrl } from "./address";
+import { emailEditKey, outgoingEmail } from "./outgoingEmail";
 import {
   CONNECTOR_IDS,
   CONNECTORS,
@@ -32,8 +33,8 @@ const REDIRECT_URL = new URL("/api/connectors/callback", env.SITE_URL).href;
 const CONNECT_TIMEOUT_MS = 10_000;
 const ANSWER_CONNECT_MS = 3_000;
 const TOOLS_FRESH_MS = 6 * 60 * 60_000;
-
 const MISSING_SCOPE = /insufficient authentication scopes/iu;
+
 type Listed = Tool<unknown, CallToolResult>;
 
 const TOOLS_NAMESPACE = "mcpTools";
@@ -374,6 +375,68 @@ export async function disconnect(owner: string, connector: string) {
 
 const toolArguments = z.record(z.string(), z.unknown());
 
+const GMAIL_SEND_URL = "https://gmail.googleapis.com/gmail/v1/users/me/messages/send";
+
+const sentEmail = z.object({ id: z.string(), threadId: z.string() });
+
+const base64 = (text: string) => Buffer.from(text).toString("base64");
+
+export const mimeOf = ({ to, cc, bcc, subject, body }: z.infer<typeof outgoingEmail>) =>
+  [
+    `To: ${to.join(", ")}`,
+    ...(cc?.length ? [`Cc: ${cc.join(", ")}`] : []),
+    ...(bcc?.length ? [`Bcc: ${bcc.join(", ")}`] : []),
+    `Subject: =?UTF-8?B?${base64(subject)}?=`,
+    "MIME-Version: 1.0",
+    "Content-Type: text/plain; charset=UTF-8",
+    "Content-Transfer-Encoding: base64",
+    "",
+    base64(body),
+  ].join("\r\n");
+
+export const emailToSend = async (
+  owner: string,
+  toolCallId: string,
+  asked: z.infer<typeof outgoingEmail>,
+) => {
+  const kept = await readKept(emailEditKey(owner, toolCallId));
+  return kept === null ? asked : outgoingEmail.parse(JSON.parse(kept));
+};
+
+const gmailSendTool = (owner: string, connector: string) =>
+  tool({
+    description:
+      "Send an email from the user's Gmail. They see this exact email on a card and it goes out only when they confirm, so put the whole message in the call. To keep a draft in their mailbox instead, use gmail_create_draft.",
+    inputSchema: outgoingEmail,
+    execute: async (asked, { toolCallId }) => {
+      const email = await emailToSend(owner, toolCallId, asked);
+      const server = CONNECTORS.gmail;
+      const { provider } = providerFor(owner, connector, server, await storedFor(owner, connector));
+      const signedIn = await auth(provider, { serverUrl: server.url });
+      const token = signedIn === "AUTHORIZED" ? (await provider.tokens())?.access_token : undefined;
+      if (!token) {
+        throw new Error(
+          "Not signed in: Gmail needs the user to sign in again. Call install_plugin with id gmail so they can do it on the card, then end your turn.",
+        );
+      }
+      const response = await fetch(GMAIL_SEND_URL, {
+        method: "POST",
+        headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+        body: JSON.stringify({ raw: Buffer.from(mimeOf(email)).toString("base64url") }),
+      });
+      if (!response.ok) throw new Error(`Gmail did not send it: ${await response.text()}`);
+      await dropKept(emailEditKey(owner, toolCallId));
+      return {
+        sent: true,
+        ...sentEmail.parse(await response.json()),
+        to: email.to,
+        cc: email.cc,
+        subject: email.subject,
+        edited: mimeOf(email) !== mimeOf(asked),
+      };
+    },
+  });
+
 type ConnectionRow = {
   connector: string;
   name: string | null;
@@ -419,15 +482,25 @@ async function connectorTools(owner: string, row: ConnectionRow) {
         })
         .catch(async (err: Error) => {
           if (!options.abortSignal?.aborted) await dropCached(TOOLS_NAMESPACE, key);
+          if (MISSING_SCOPE.test(err.message)) {
+            throw new Error(
+              `Needs more access: the user has not allowed this in ${row.connector} yet. Call install_plugin with id ${row.connector} so they can allow it on the card, then end your turn.`,
+            );
+          }
           throw err;
         });
     },
   });
   const listed = (await toolsFromSaved).toolsFromDefinitions(await savedToolLists(key, list));
   return {
-    tools: Object.entries(listed).map(
-      ([name, entry]) => [toolName(row.connector, name), lazy(name, entry)] as const,
-    ),
+    tools: [
+      ...Object.entries(listed).map(
+        ([name, entry]) => [toolName(row.connector, name), lazy(name, entry)] as const,
+      ),
+      ...(row.connector === "gmail"
+        ? [[toolName(row.connector, "send_email"), gmailSendTool(owner, row.connector)] as const]
+        : []),
+    ],
     close: async () => void (await client?.then((connected) => connected.close())),
   };
 }
@@ -465,8 +538,3 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
     close: () => Promise.allSettled(ready.map(({ close }) => close())),
   };
 }
-          if (MISSING_SCOPE.test(err.message)) {
-            throw new Error(
-              `Needs more access: the user has not allowed this in ${row.connector} yet. Call install_plugin with id ${row.connector} so they can allow it on the card, then end your turn.`,
-            );
-          }

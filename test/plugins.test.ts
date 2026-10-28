@@ -5,6 +5,7 @@ import { writingTools } from "../apps/server/src/chat/confirm";
 import { seal } from "../apps/server/src/account/vault";
 import { isPrivateAddress, publicUrl } from "../apps/server/src/plugins/address";
 import { type ConnectorId, popularOf, toolName } from "../apps/server/src/plugins/catalog";
+import { emailEditKey } from "../apps/server/src/plugins/outgoingEmail";
 import { mentionedSkills } from "../apps/server/src/skills/mentions";
 
 const connectionRow = ["exa", null, null, await seal("{}")];
@@ -21,6 +22,9 @@ mock.module("@sirathic/core/cache", () => ({
       return value;
     },
   dropCached: async (namespace: string, id: string) => void savedLists.delete(`${namespace}:${id}`),
+  keepFor: async (key: string, value: string) => void savedLists.set(key, value),
+  readKept: async (key: string) => savedLists.get(key) ?? null,
+  dropKept: async (key: string) => void savedLists.delete(key),
 }));
 const selects: string[] = [];
 mock.module("@sirathic/db", () => ({
@@ -32,8 +36,9 @@ mock.module("@sirathic/db", () => ({
     { casing: "snake_case" },
   ),
 }));
-const { connectedTools, disconnect, listConnections, FORGET, withUpdate } =
+const { connectedTools, disconnect, emailToSend, listConnections, FORGET, mimeOf, withUpdate } =
   await import("../apps/server/src/plugins/connections");
+const { keepFor } = await import("@sirathic/core/cache");
 const { matchingPlugins, notConnected } = await import("../apps/server/src/plugins/tools");
 
 test.each([
@@ -119,6 +124,30 @@ test("forgetting everything leaves nothing stored", () => {
     secrets: {},
     connected: false,
   });
+});
+
+test("an email to send keeps an Arabic subject and body intact", () => {
+  const mime = mimeOf({
+    to: ["a@example.com"],
+    cc: ["b@example.com"],
+    subject: "جزاك الله خيرا",
+    body: "Assalamu alaikum\nبارك الله فيك",
+  });
+  const [headers = "", body = ""] = mime.split("\r\n\r\n");
+  const subject = /Subject: =\?UTF-8\?B\?(.+)\?=/u.exec(headers)?.[1] ?? "";
+  expect(headers).toContain("To: a@example.com\r\nCc: b@example.com");
+  expect(Buffer.from(subject, "base64").toString()).toBe("جزاك الله خيرا");
+  expect(Buffer.from(body, "base64").toString()).toBe("Assalamu alaikum\nبارك الله فيك");
+});
+
+test("an edited email goes out for the person who edited it and that call, and only them", async () => {
+  const asked = { to: ["jane@example.com"], subject: "Iftar", body: "Friday at 7" };
+  const edited = { ...asked, to: ["omar@example.com"], body: "Friday at 8" };
+  await keepFor(emailEditKey("ali", "call1"), JSON.stringify(edited), 600);
+  expect(await emailToSend("sara", "call1", asked)).toEqual(asked);
+  expect(await emailToSend("ali", "call2", asked)).toEqual(asked);
+  expect(await emailToSend("ali", "call1", asked)).toEqual(edited);
+  expect(await emailToSend("ali", "call1", asked)).toEqual(edited);
 });
 
 const skills = [{ name: "Brief" }, { name: "Deep" }, { name: "Deep Dive" }, { name: "İman" }];

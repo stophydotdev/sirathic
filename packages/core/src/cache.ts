@@ -20,6 +20,21 @@ export const countDown = async (key: string) => {
   return redis.decr(key);
 };
 
+export const keepFor = async (key: string, value: string, keepSeconds: number) => {
+  await connected;
+  await redis.set(key, value, "EX", keepSeconds);
+};
+
+export const readKept = async (key: string) => {
+  await connected;
+  return redis.get(key);
+};
+
+export const dropKept = async (key: string) => {
+  await connected;
+  await redis.del(key);
+};
+
 export const dropCached = async (namespace: string, id: string) => {
   await connected;
   await redis.del(`${namespace}:${id}`).catch(() => undefined);
