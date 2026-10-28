@@ -60,7 +60,6 @@ export const answerWith = (
     instructions: "INSTRUCTIONS",
     mentioned: "",
     firstStep: undefined,
-    inBot: false,
     skills: [],
     loaded: [],
     confirm: () => false,

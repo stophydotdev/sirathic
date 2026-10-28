@@ -260,20 +260,13 @@ const ModelFold: FC = () => {
 
 export const ModelMenuContent: FC<{
   side?: "top" | "bottom";
-  effort: boolean;
-}> = ({ side, effort }) => (
+}> = ({ side }) => (
   <DropdownMenuContent
     align="end"
     side={side}
     className="ring-foreground/7 max-h-[min(405px,var(--radix-dropdown-menu-content-available-height))] w-70 rounded-[12px] p-1"
   >
-    {effort ? (
-      <>
-        <ModelFold />
-        <EffortPicker />
-      </>
-    ) : (
-      <ModelList />
-    )}
+    <ModelFold />
+    <EffortPicker />
   </DropdownMenuContent>
 );

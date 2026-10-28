@@ -82,7 +82,6 @@ export function answerAgent({
   instructions: system,
   mentioned,
   firstStep,
-  inBot,
   skills,
   loaded,
   confirm,
@@ -95,14 +94,13 @@ export function answerAgent({
   instructions: string;
   mentioned: string;
   firstStep: keyof typeof FIRST_STEP | undefined;
-  inBot: boolean;
   skills: readonly Skill[];
   loaded: readonly string[];
   confirm: (call: { toolName: string; input: unknown }) => boolean;
   shorten: ReturnType<typeof shortenEarlierResults>;
   turn: Turn;
 }) {
-  const options = answerOptions({ ...turn, effort: inBot ? "high" : turn.effort });
+  const options = answerOptions(turn);
   return new ToolLoopAgent({
     model,
     instructions: system,
@@ -338,7 +336,6 @@ export function chatResponse({
               ? "fetch"
               : "anyTool"
             : undefined,
-        inBot: inBot !== undefined,
         skills: builtIn,
         loaded,
         confirm: (call) => needsApproval(call, new Set(writes)),

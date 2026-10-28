@@ -255,16 +255,11 @@ test("a chat request with a system message is refused before anything runs", asy
   expect(res.status).toBe(400);
 });
 
-test("a bot always thinks at high effort, whatever the client asks for", async () => {
-  const cases = [
-    { inBot: true, effort: "low" },
-    { inBot: true, effort: "medium" },
-    { inBot: false, effort: "low" },
-  ] as const;
+test("an answer thinks at the effort the client asks for", async () => {
   const efforts = await Promise.all(
-    cases.map(async ({ inBot, effort }) => {
+    (["low", "max"] as const).map(async (effort) => {
       const { model, seen } = scriptedModel([]);
-      await answerWith(model, { inBot, turn: { effort, sessionId: "chat" } }).generate({
+      await answerWith(model, { turn: { effort, sessionId: "chat" } }).generate({
         prompt: "hi",
       });
       const options = seen[0]?.providerOptions;
@@ -272,9 +267,8 @@ test("a bot always thinks at high effort, whatever the client asks for", async (
     }),
   );
   expect(efforts).toEqual([
-    ["high", "high"],
-    ["high", "high"],
     ["low", "low"],
+    ["max", "max"],
   ]);
 });
 

@@ -245,7 +245,7 @@ export const Composer: FC<{
           </div>
 
           <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>
-            <ModelPicker side={menuSide} effort={!bot} />
+            <ModelPicker side={menuSide} />
             <Swap
               swapped={running}
               from={
