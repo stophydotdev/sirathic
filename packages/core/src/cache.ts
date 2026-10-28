@@ -81,3 +81,27 @@ export const cacheFor = <Value>({ namespace, schema, freshMs, keepMs }: CacheOpt
     return load(key, fetchValue).catch(() => cached.value);
   };
 };
+
+export const cacheManyFor = <Value>({
+  namespace,
+  schema,
+  keepMs,
+}: Omit<CacheOptions<Value>, "freshMs">) => ({
+  read: async (ids: string[]) => {
+    if (ids.length === 0) return [];
+    await connected;
+    const raw = await redis.mget(...ids.map((id) => `${namespace}:${id}`)).catch(() => []);
+    return ids.map((_, index) => {
+      const item = raw[index];
+      if (item === null || item === undefined) return undefined;
+      const parsed = schema.safeParse(JSON.parse(item));
+      return parsed.success ? parsed.data : undefined;
+    });
+  },
+  write: (entries: [string, Value][]) =>
+    Promise.all(
+      entries.map(([id, value]) =>
+        redis.set(`${namespace}:${id}`, JSON.stringify(value), "PX", keepMs).catch(() => undefined),
+      ),
+    ),
+});

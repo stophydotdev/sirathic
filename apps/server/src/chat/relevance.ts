@@ -1,8 +1,32 @@
-import { yesChances } from "./jev";
+import { cacheManyFor } from "@sirathic/core/cache";
+import { z } from "zod";
+import { JEV, yesChances } from "./jev";
 
 const RELEVANT = 0.3;
 const NEEDS_SOURCES = 0.1;
 const SHORT_MESSAGE_CHARS = 50;
+const WEEK_MS = 7 * 24 * 60 * 60_000;
+
+const scoreCache = cacheManyFor({ namespace: "jev:v1", schema: z.number(), keepMs: WEEK_MS });
+
+const digest = (...parts: string[]) =>
+  new Bun.CryptoHasher("sha256").update(parts.join("\u0000")).digest("hex");
+
+const askJev = async (search: string, heads: string[]) => {
+  const chance = await yesChances(
+    {
+      search,
+      passages: Object.fromEntries(heads.map((text, index) => [`p${index + 1}`, text])),
+    },
+    Object.fromEntries(
+      heads.map((_, index) => [
+        `p${index + 1}`,
+        `Does passage p${index + 1} directly help answer the search?`,
+      ]),
+    ),
+  );
+  return heads.map((_, index) => chance(`p${index + 1}`));
+};
 
 export const relevant = async <Item>(
   search: string,
@@ -11,19 +35,30 @@ export const relevant = async <Item>(
 ) => {
   if (items.length === 0) return { kept: [...items], dropped: [] };
   try {
-    const chance = await yesChances(
-      {
-        search,
-        passages: Object.fromEntries(items.map((item, index) => [`p${index + 1}`, head(item)])),
-      },
-      Object.fromEntries(
-        items.map((_, index) => [
-          `p${index + 1}`,
-          `Does passage p${index + 1} directly help answer the search?`,
-        ]),
-      ),
+    const entries = items.map((item) => {
+      const text = head(item);
+      return { item, text, key: digest(JEV, search, text) };
+    });
+    const known = await scoreCache.read(entries.map(({ key }) => key));
+    const pending = entries.filter((_, index) => known[index] === undefined);
+    const asked =
+      pending.length === 0
+        ? []
+        : await askJev(
+            search,
+            pending.map(({ text }) => text),
+          );
+    const fresh = new Map(pending.map(({ key }, position) => [key, asked[position]]));
+    await scoreCache.write(
+      pending.flatMap(({ key }) => {
+        const score = fresh.get(key);
+        return score === undefined ? [] : [[key, score]];
+      }),
     );
-    const scored = items.map((item, index) => ({ item, score: chance(`p${index + 1}`) }));
+    const scored = entries.map(({ item, key }, index) => ({
+      item,
+      score: known[index] ?? fresh.get(key) ?? 0,
+    }));
     const best = Math.max(...scored.map(({ score }) => score));
     const keeps = ({ score }: { score: number }) => score >= RELEVANT || score === best;
     return {
@@ -43,7 +78,7 @@ export const needsSources = async (message: string) => {
       sources:
         "Does answering this message need looking something up in Islamic sources (Quran, hadith, fiqh books, fatwas)?",
     });
-    return chance("sources") >= NEEDS_SOURCES;
+    return (chance("sources") ?? 0) >= NEEDS_SOURCES;
   } catch (err) {
     console.warn(`search check failed: ${err instanceof Error ? err.message : String(err)}`);
     return true;
