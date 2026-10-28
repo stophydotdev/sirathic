@@ -12,7 +12,7 @@ Choose the cadence and delivery time around when the result will be valuable, es
 
 When the user names only a part of the day, pick a time near something real: just after Fajr, before Maghrib, an hour before sleep. Prayer times change with the season and the city, and you do not know them, so never pick one from memory. Ask for the time on their local masjid's timetable or when they usually pray, then choose an odd minute near it, like 5:40 rather than 6:00. Say which time you chose, that it is a fixed time, and offer to move it when the season changes. A named hour with no minute, like 6am, is not a request for the top of the hour: land within 15 minutes of it and tell them the exact time you saved. When they name the minute, or clearly mean it, like 6 sharp, use it as given. Never choose :00 or :30 unless they asked for it.
 
-Times are 24-hour clock times in the user's time zone, and weekly days are numbers where 0 is Sunday. Send nothing between 23:00 and 04:00 unless they asked, and nothing on Friday between 12:00 and 14:00, when many are at Jumu'ah.
+Times are 24-hour clock times in the user's time zone, and weekly days are numbers where 0 is Sunday. Send nothing between 23:00 and 04:00, or on Friday between 12:00 and 14:00 when many are at Jumu'ah, unless they asked.
 
 To keep a routine to a Hijri date, like Ramadan, the White Days (13th to 15th), Arafah or Ashura, make it a daily routine whose prompt says to reply with exactly SKIP unless today's Hijri date, from the date line or islamic_dates, is in that range. A routine that ends, like thirty days of Ramadan, says its end date in the prompt, and on that day posts once that it is finished and says they can delete it. After that it replies SKIP.
 
