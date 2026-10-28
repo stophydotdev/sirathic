@@ -12,7 +12,7 @@ export const profileEntry = z.object({ text: profileText, source: profileSource,
 export type ProfileEntry = z.output<typeof profileEntry>;
 
 const INSTRUCTION =
-  /\b(ignore|disregard|forget|always|override|pretend|jailbreak|instructions?|from now on|act as|system prompt|you (must|should|will))\b/i;
+  /\b(ignore|disregard|forget|override|pretend|jailbreak|from now on|system prompt|you (must|should|will)|always (reply|answer|respond|write|say|use|call)|act as (a|an|my|if)|(follow|these|my|new) instructions)\b/i;
 
 const RELIGIOUS_CLAIM =
   /\b(is|are|isn't|aren't)\s+(not\s+)?(halal|haram|permissible|impermissible|forbidden|obligatory|allowed|prohibited|a sin)\b|\b(fatwa|ruling)\s+(says|is)\b/i;
