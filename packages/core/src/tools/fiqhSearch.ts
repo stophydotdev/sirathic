@@ -19,7 +19,11 @@ export const fiqhSearch = async (input: z.input<typeof fiqhSearchInput>) => {
     school === undefined
       ? undefined
       : { where: sql`${fiqhPassages.school} = ${school}`, key: `school:${school}` };
-  const hits = await hybridIds(SEARCHABLE.fiqhPassages, query, limit, { filter, rareWords: true });
+  const hits = await hybridIds(SEARCHABLE.fiqhPassages, query, limit, {
+    filter,
+    rareWords: true,
+    indexOnly: true,
+  });
   const distances = new Map(hits.map(({ id, distance }) => [id, distance]));
   const found = await passagesByIds(hits.map(({ id }) => id));
   return {

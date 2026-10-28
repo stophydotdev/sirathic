@@ -71,6 +71,7 @@ type Options = {
   topUp?: boolean;
   rareWords?: boolean;
   maxDistance?: number;
+  indexOnly?: boolean;
 };
 
 const searchIds = async (
@@ -82,6 +83,7 @@ const searchIds = async (
     topUp = false,
     rareWords = false,
     maxDistance,
+    indexOnly = false,
   }: Options,
 ) => {
   const plain = query.replaceAll(ARABIC_MARKS, "");
@@ -118,7 +120,7 @@ const searchIds = async (
       : exact;
   const rows = await db.transaction(async (tx) => {
     await tx.execute(sql`set local hnsw.iterative_scan = relaxed_order`);
-    await tx.execute(sql`set local enable_seqscan = off`);
+    if (indexOnly) await tx.execute(sql`set local enable_seqscan = off`);
     return tx.execute(sql`
     with words as (
       select plainto_tsquery('english', ${plain}) as every_word
