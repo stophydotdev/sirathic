@@ -13,6 +13,7 @@ import {
 import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { type CitationItem, CitationList, CitationStack } from "@/components/agents/citations";
+import { Fold } from "@/components/fold";
 import { SPRING_PRESS } from "@/lib/ease";
 import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
@@ -211,13 +212,13 @@ export function StreamingResponse({
           </div>
 
           {hasSources ? (
-            <div id={sourcesContentId} hidden={!currentSourcesOpen}>
+            <Fold id={sourcesContentId} open={currentSourcesOpen}>
               <CitationList
                 citations={sources}
                 idPrefix={resolvedSourcePrefix}
                 className="mt-2 rounded-xl bg-muted p-2"
               />
-            </div>
+            </Fold>
           ) : null}
         </div>
       ) : null}

@@ -83,7 +83,7 @@ const FileMenu: FC<Omit<ItemProps, "onOpen">> = ({ file, onRename, onDelete }) =
 export const FileTile: FC<ItemProps> = ({ file, onOpen, ...menu }) => {
   const meta = useMeta();
   return (
-    <div className="flex min-w-0 flex-col gap-2">
+    <div className="rise flex min-w-0 flex-col gap-2">
       <button
         type="button"
         onClick={onOpen}
@@ -106,7 +106,7 @@ export const FileTile: FC<ItemProps> = ({ file, onOpen, ...menu }) => {
 export const FileRow: FC<ItemProps> = ({ file, onOpen, ...menu }) => {
   const meta = useMeta();
   return (
-    <div className="border-foreground/10 flex h-16 min-w-0 items-center gap-3 border-b">
+    <div className="rise border-foreground/10 flex h-16 min-w-0 items-center gap-3 border-b">
       <button
         type="button"
         onClick={onOpen}

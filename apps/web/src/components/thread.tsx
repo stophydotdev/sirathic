@@ -178,7 +178,10 @@ const ThreadBody: FC = () => {
       <ThreadPrimitive.ViewportFooter className="bg-background sticky bottom-0 mt-auto px-6 pb-3 print:hidden">
         <TurnRow>
           <div className="relative">
-            <ThreadPrimitive.ScrollToBottom className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible">
+            <ThreadPrimitive.ScrollToBottom
+              behavior="smooth"
+              className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible"
+            >
               <HugeiconsIcon icon={ArrowDown02Icon} className="size-4" />
             </ThreadPrimitive.ScrollToBottom>
             <Composer

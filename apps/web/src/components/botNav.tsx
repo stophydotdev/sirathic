@@ -9,6 +9,7 @@ import { whenOf } from "@/components/botTime";
 import { useLocale, useT } from "@/components/i18n";
 import { type Project, useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
+import { Fold } from "@/components/fold";
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Add01Icon, ArrowDown01Icon } from "@hugeicons/core-free-icons";
@@ -32,9 +33,11 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
         event.preventDefault();
         setMenu(true);
       }}
+      data-row
+      data-active={pathname === href || undefined}
       className={cn(
-        "group/bot hover:bg-muted relative flex items-center rounded-xl",
-        (pathname === href || menu) && "bg-muted",
+        "group/bot hover:bg-muted relative flex items-center rounded-xl transition-colors",
+        menu && "bg-muted",
       )}
     >
       <Link
@@ -91,7 +94,8 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
 
 const WORKING_POLL_MS = 10_000;
 
-const toggleLink = "text-muted-foreground hover:text-foreground ps-2.5 text-start text-xs";
+const toggleLink =
+  "text-muted-foreground hover:text-foreground ps-2.5 text-start text-xs transition-colors";
 
 export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
   const signedIn = useAccount((s) => s.status?.signedIn === true);
@@ -111,7 +115,9 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
 
   if (!signedIn) return null;
 
-  const { groups, more, hidden } = botGroups(bots ?? [], all ? Infinity : SIDEBAR_LIMIT);
+  const { groups, hidden } = botGroups(bots ?? [], Infinity);
+  const limited = botGroups(bots ?? [], SIDEBAR_LIMIT);
+  const kept = new Set(limited.groups.flatMap((group) => group.bots));
 
   return (
     <>
@@ -120,13 +126,13 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           type="button"
           aria-expanded={open}
           onClick={() => setOpen(!open)}
-          className="group/bots hover:text-foreground flex min-w-0 flex-1 items-center gap-1 text-start"
+          className="group/bots hover:text-foreground flex min-w-0 flex-1 items-center gap-1 text-start transition-colors"
         >
           {t("Bots")}
           <HugeiconsIcon
             icon={ArrowDown01Icon}
             className={cn(
-              "size-3.5 opacity-0 group-hover/sidebar:opacity-100 group-focus-visible/bots:opacity-100 pointer-coarse:opacity-100",
+              "size-3.5 opacity-0 transition-transform duration-300 ease-out-quint group-hover/sidebar:opacity-100 group-focus-visible/bots:opacity-100 motion-reduce:transition-none pointer-coarse:opacity-100",
               !open && "-rotate-90 opacity-100",
             )}
           />
@@ -141,13 +147,11 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           <HugeiconsIcon icon={Add01Icon} className="size-3.5" />
         </button>
       </div>
-      {open && (
-        <>
-          {groups.map((group) => (
-            <div
-              key={group.kind === "section" ? `section:${group.name}` : group.kind}
-              className="flex flex-col not-first:pt-2"
-            >
+      <Fold open={open} className="gap-0.5">
+        {groups.map((group, index) => {
+          const extra = group.bots.filter((bot) => !kept.has(bot));
+          const block = (
+            <div className={cn("flex flex-col", index > 0 && "pt-2")}>
               {group.kind === "pinned" && (
                 <p className="text-muted-foreground ps-2.5 pt-1 pb-0.5 text-xs">{t("Pinned")}</p>
               )}
@@ -156,31 +160,52 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
                   {group.name}
                 </p>
               )}
-              {group.bots.map((bot) => (
+              {group.bots
+                .filter((bot) => kept.has(bot))
+                .map((bot) => (
+                  <BotRow key={bot.id} bot={bot} onDone={onDone} />
+                ))}
+              {extra.length > 0 && extra.length < group.bots.length && (
+                <Fold open={all}>
+                  {extra.map((bot) => (
+                    <BotRow key={bot.id} bot={bot} onDone={onDone} />
+                  ))}
+                </Fold>
+              )}
+            </div>
+          );
+          const key = group.kind === "section" ? `section:${group.name}` : group.kind;
+          return extra.length === group.bots.length ? (
+            <Fold key={key} open={all}>
+              {block}
+            </Fold>
+          ) : (
+            <div key={key}>{block}</div>
+          );
+        })}
+        {limited.more > 0 && !all && (
+          <button type="button" onClick={() => setAll(true)} className={toggleLink}>
+            {t("Show more")}
+          </button>
+        )}
+        {hidden.length > 0 && (
+          <>
+            <button
+              type="button"
+              aria-expanded={showHidden}
+              onClick={() => setShowHidden(!showHidden)}
+              className={cn(toggleLink, "pt-2")}
+            >
+              {t("Hidden bots")} ({hidden.length})
+            </button>
+            <Fold open={showHidden} className="gap-0.5">
+              {hidden.map((bot) => (
                 <BotRow key={bot.id} bot={bot} onDone={onDone} />
               ))}
-            </div>
-          ))}
-          {more > 0 && !all && (
-            <button type="button" onClick={() => setAll(true)} className={toggleLink}>
-              {t("Show more")}
-            </button>
-          )}
-          {hidden.length > 0 && (
-            <>
-              <button
-                type="button"
-                aria-expanded={showHidden}
-                onClick={() => setShowHidden(!showHidden)}
-                className={cn(toggleLink, "pt-2")}
-              >
-                {t("Hidden bots")} ({hidden.length})
-              </button>
-              {showHidden && hidden.map((bot) => <BotRow key={bot.id} bot={bot} onDone={onDone} />)}
-            </>
-          )}
-        </>
-      )}
+            </Fold>
+          </>
+        )}
+      </Fold>
       <BotSwitcher open={picking} onOpenChange={setPicking} onDone={onDone} />
     </>
   );
