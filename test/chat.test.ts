@@ -241,9 +241,9 @@ const history: ChatMessage[] = [
   { id: "a2", role: "assistant", parts: [searched("call-2")] },
 ];
 
-const sentOutputs = async (toolCallId: string) => {
-  const shorten = shortenEarlierResults(history, citations(history).numberOf);
-  return (await convertToModelMessages(history))
+const sentOutputs = async (toolCallId: string, chat = history) => {
+  const shorten = shortenEarlierResults(chat);
+  return (await convertToModelMessages(chat))
     .map(shorten)
     .flatMap((message) => (message.role === "tool" ? message.content : []))
     .flatMap((part) =>
@@ -259,6 +259,19 @@ test("an earlier turn's results reach the model as the sources its answer cited"
         "Earlier results, removed to save space. Cited in the answer: [4] Wudu. Search again if you need their full text.",
     },
   ]);
+});
+
+test("an earlier turn's results read the same after a later answer cites one of them", async () => {
+  const later: ChatMessage[] = [
+    ...history.slice(0, 3),
+    {
+      id: "a2",
+      role: "assistant",
+      parts: [{ type: "text", text: "Also bleeding.[5](https://example.com/uncited)" }],
+    },
+    { id: "u3", role: "user", parts: [{ type: "text", text: "and sleep?" }] },
+  ];
+  expect(await sentOutputs("call-1", later)).toEqual(await sentOutputs("call-1"));
 });
 
 test("results after the last question reach the model in full", async () => {

@@ -197,7 +197,7 @@ export function chatResponse({
   let usage: LanguageModelUsage | undefined;
   let text = "";
   const sources = citations([...(citedEarlier ?? []), ...messages]);
-  const shorten = shortenEarlierResults(messages, sources.numberOf);
+  const shorten = shortenEarlierResults(messages);
   const tools = sirathicTools(sources.add);
   const asked = messages.findLast((message) => message.role === "user");
   const askedText =
