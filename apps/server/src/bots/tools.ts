@@ -28,7 +28,7 @@ export function botTools({ id, owner }: BotScope) {
   return {
     set_bot_job: tool({
       description:
-        "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. Keep the job to what the user asked, without rulings, rules or limits. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
+        "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. Keep the job to what the user asked, without rulings, and without limits they did not ask for. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
       inputSchema: z.object({
         name: projectName,
         title: botTitle,
