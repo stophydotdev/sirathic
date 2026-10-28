@@ -607,4 +607,7 @@ export default {
   "Recent files": "الملفات الأخيرة",
   "Search or create bots": "ابحث عن بوت أو أنشئ واحدًا",
   "Create “{name}”": "إنشاء “{name}”",
+  "Searching Stophy for {detail}": "البحث في Stophy عن {detail}",
+  "Read from Stophy": "تمت القراءة من Stophy",
+  "Checking Stophy…": "يتحقق من Stophy…",
 } satisfies Messages;

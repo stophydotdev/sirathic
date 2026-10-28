@@ -619,4 +619,7 @@ export default {
   "Recent files": "Сўнгги файллар",
   "Search or create bots": "Бот қидириш ёки яратиш",
   "Create “{name}”": "“{name}” яратиш",
+  "Searching Stophy for {detail}": "Stophy'da qidirilmoqda: {detail}",
+  "Read from Stophy": "Stophy'dan o'qildi",
+  "Checking Stophy…": "Stophy tekshirilmoqda…",
 } satisfies Messages;

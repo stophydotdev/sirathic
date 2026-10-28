@@ -611,4 +611,7 @@ export default {
   "Recent files": "وروستي فایلونه",
   "Search or create bots": "بوټونه ولټوئ یا یې جوړ کړئ",
   "Create “{name}”": "“{name}” جوړ کړئ",
+  "Searching Stophy for {detail}": "د {detail} لپاره په Stophy کې لټون",
+  "Read from Stophy": "له Stophy څخه ولوستل شو",
+  "Checking Stophy…": "Stophy ګوري…",
 } satisfies Messages;

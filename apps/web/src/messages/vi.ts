@@ -611,4 +611,7 @@ export default {
   "Recent files": "Tệp gần đây",
   "Search or create bots": "Tìm hoặc tạo bot",
   "Create “{name}”": "Tạo “{name}”",
+  "Searching Stophy for {detail}": "Đang tìm trên Stophy cho {detail}",
+  "Read from Stophy": "Đã đọc từ Stophy",
+  "Checking Stophy…": "Đang kiểm tra Stophy…",
 } satisfies Messages;

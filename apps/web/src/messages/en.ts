@@ -565,6 +565,9 @@ export const MESSAGES = [
   "Recent files",
   "Search or create bots",
   "Create “{name}”",
+  "Searching Stophy for {detail}",
+  "Read from Stophy",
+  "Checking Stophy…",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

@@ -287,6 +287,23 @@ const TOOLS = new Map<
       done: (t) => t("Skills"),
     },
   ],
+  [
+    "stophy_search_endpoints",
+    {
+      Icon: Search01Icon,
+      label: (t, d) =>
+        d ? t("Searching Stophy for {detail}", { detail: d }) : t("Checking Stophy…"),
+      done: (t) => t("Read from Stophy"),
+    },
+  ],
+  [
+    "stophy_call",
+    {
+      Icon: Globe02Icon,
+      label: (t) => t("Read from Stophy"),
+      done: (t) => t("Read from Stophy"),
+    },
+  ],
 ]);
 
 const pageOf = (url: string) => {

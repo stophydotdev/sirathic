@@ -603,4 +603,7 @@ export default {
   "Recent files": "最近的文件",
   "Search or create bots": "搜索或创建机器人",
   "Create “{name}”": "创建“{name}”",
+  "Searching Stophy for {detail}": "在 Stophy 中搜索：{detail}",
+  "Read from Stophy": "已从 Stophy 读取",
+  "Checking Stophy…": "正在查看 Stophy…",
 } satisfies Messages;

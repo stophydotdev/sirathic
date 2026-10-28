@@ -613,4 +613,7 @@ export default {
   "Recent files": "சமீபத்திய கோப்புகள்",
   "Search or create bots": "பாட்களைத் தேடவும் அல்லது உருவாக்கவும்",
   "Create “{name}”": "“{name}” உருவாக்கு",
+  "Searching Stophy for {detail}": "{detail}-க்காக Stophy-இல் தேடுகிறது",
+  "Read from Stophy": "Stophy-இலிருந்து படிக்கப்பட்டது",
+  "Checking Stophy…": "Stophy-ஐச் சரிபார்க்கிறது…",
 } satisfies Messages;

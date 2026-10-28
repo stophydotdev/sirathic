@@ -618,4 +618,7 @@ export default {
   "Recent files": "يېقىنقى ھۆججەتلەر",
   "Search or create bots": "بوت ئىزدەش ياكى قۇرۇش",
   "Create “{name}”": "“{name}” قۇرۇش",
+  "Searching Stophy for {detail}": "Stophy دىن ئىزدەۋاتىدۇ: {detail}",
+  "Read from Stophy": "Stophy دىن ئوقۇلدى",
+  "Checking Stophy…": "Stophy نى تەكشۈرۈۋاتىدۇ…",
 } satisfies Messages;

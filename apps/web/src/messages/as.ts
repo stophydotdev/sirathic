@@ -606,4 +606,7 @@ export default {
   "Recent files": "শেহতীয়া ফাইল",
   "Search or create bots": "বট বিচাৰক বা সৃষ্টি কৰক",
   "Create “{name}”": "“{name}” সৃষ্টি কৰক",
+  "Searching Stophy for {detail}": "{detail}ৰ বাবে Stophyত বিচাৰি আছে",
+  "Read from Stophy": "Stophyৰ পৰা পঢ়া হ'ল",
+  "Checking Stophy…": "Stophy চাই আছে…",
 } satisfies Messages;

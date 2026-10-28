@@ -121,6 +121,7 @@ const STEP_LINES = [
   "Reading the page…",
   "Calculating…",
   "Setting it up…",
+  "Checking Stophy…",
 ] as const;
 
 type StepLine = (typeof STEP_LINES)[number];
@@ -144,6 +145,8 @@ const TOOL_LINES = new Map<string, StepLine>([
   ["update_memory", "Setting it up…"],
   ["set_bot_job", "Setting it up…"],
   ["install_plugin", "Setting it up…"],
+  ["stophy_search_endpoints", "Checking Stophy…"],
+  ["stophy_call", "Checking Stophy…"],
 ]);
 
 const searched = z.object({ sources: z.array(z.string()) });

@@ -603,4 +603,7 @@ export default {
   "Recent files": "ไฟล์ล่าสุด",
   "Search or create bots": "ค้นหาหรือสร้างบอท",
   "Create “{name}”": "สร้าง “{name}”",
+  "Searching Stophy for {detail}": "กำลังค้นหาใน Stophy สำหรับ {detail}",
+  "Read from Stophy": "อ่านจาก Stophy แล้ว",
+  "Checking Stophy…": "กำลังตรวจสอบ Stophy…",
 } satisfies Messages;

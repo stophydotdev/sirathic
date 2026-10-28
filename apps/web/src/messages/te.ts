@@ -605,4 +605,7 @@ export default {
   "Recent files": "ఇటీవలి ఫైల్‌లు",
   "Search or create bots": "బాట్‌లను వెతకండి లేదా సృష్టించండి",
   "Create “{name}”": "“{name}” సృష్టించు",
+  "Searching Stophy for {detail}": "{detail} కోసం Stophyలో వెతుకుతోంది",
+  "Read from Stophy": "Stophy నుండి చదివింది",
+  "Checking Stophy…": "Stophy చూస్తోంది…",
 } satisfies Messages;
