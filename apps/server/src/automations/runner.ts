@@ -167,6 +167,7 @@ async function answerPrompt(
     turn: {
       effort: project?.kind === "bot" ? "high" : DEFAULT_EFFORT[runMode],
       sessionId,
+      by,
     },
     title: undefined,
     save: async (messages) => {

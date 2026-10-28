@@ -72,13 +72,17 @@ async function listModels(user: SubscriptionUser): Promise<Model[]> {
     }));
 }
 
-export const answerOptions = (turn: { effort: Effort; sessionId: string }): ProviderOptions => ({
+export const answerOptions = (turn: {
+  effort: Effort;
+  sessionId: string;
+  by: string;
+}): ProviderOptions => ({
   openai: {
     store: false,
     include: ["reasoning.encrypted_content"],
     forceReasoning: true,
     reasoningEffort: turn.effort,
-    promptCacheKey: turn.sessionId,
+    promptCacheKey: turn.by,
     textVerbosity: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
   anthropic: {
