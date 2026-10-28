@@ -40,12 +40,13 @@ import { fuse } from "./fuse";
 import { relevant } from "./relevance";
 import { cleanSearch } from "./searchQuery";
 
-const RESULT_CHARS = 2_000;
-const QUESTION_CHARS = 600;
+const RESULT_CHARS = 500;
+const WEB_CHARS = 2_000;
+const QUESTION_CHARS = 300;
 const TAFSIR_CHARS = 1_500;
 const TAFSIR_VERSES = 2;
 const HEAD_CHARS = 300;
-const FATWA_CHARS = 3_000;
+const FATWA_CHARS = 900;
 
 const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news", "duas"] as const;
 
@@ -63,7 +64,7 @@ const SEARCH_LIMITS = {
 const LISTED_PER_QUERY = 20;
 const POOL_PER_SOURCE = 20;
 const FIQH_PER_SCHOOL = 4;
-const TOTAL_CHARS = 60_000;
+const TOTAL_CHARS = 24_000;
 const BUDGETED = new Set<SearchSource>(["hadith", "fatwa", "fiqh"]);
 const WEB_LISTED_PER_QUERY = 10;
 const WEB_READ_PER_QUERY = 5;
@@ -280,7 +281,7 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[], chars:
 };
 
 const extract = (markdown: string, queries: readonly string[]) =>
-  bestPieces(pageText(markdown, Number.POSITIVE_INFINITY), queries, RESULT_CHARS);
+  bestPieces(pageText(markdown, Number.POSITIVE_INFINITY), queries, WEB_CHARS);
 
 const readPages = async (hits: Hit[], queries: readonly string[]) => {
   const read = await Promise.all(
