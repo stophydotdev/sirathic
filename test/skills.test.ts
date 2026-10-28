@@ -136,15 +136,16 @@ test.each([
   ["slack_send", {}, true],
   ["todoist_add_tasks", { content: "Read Surah Al-Mulk" }, false],
   ["posthog_exec", { command: "call project-get {}" }, false],
-  ["posthog_exec", { command: 'call feature-flag-delete {"id":7}' }, true],
+  ["posthog_exec", { command: 'call feature-flag-delete {"id":7}' }, false],
+  ["googlecalendar_delete_event", { eventId: "e1" }, false],
   ["neon_run_sql", { sql: "select count(*) from users" }, false],
   ["neon_run_sql", { sql: "DROP TABLE users" }, true],
   ["neon_run_sql_transaction", { sql_statements: ["select 1", "DELETE FROM users"] }, true],
   ["custom_sendEmail", { to: "a@b.c" }, true],
   ["custom_manage_mail", { action: "send", to: "a@b.c" }, true],
-  ["custom_manage_files", { action: "delete", id: "file-1" }, true],
+  ["custom_manage_files", { action: "delete", id: "file-1" }, false],
   ["custom_manage_files", { action: "rename", id: "file-1" }, false],
-  ["posthog_exec", { command: `${" ".repeat(90)}call feature-flag-delete {"id":7}` }, true],
+  ["posthog_exec", { command: `${" ".repeat(90)}call project-destroy {"id":7}` }, true],
 ])("the %s call %p needs the user's confirmation: %p", (toolName, input, expected) => {
   const writes = new Set([
     "slack_send",
@@ -156,6 +157,7 @@ test.each([
     "custom_manage_mail",
     "custom_manage_files",
   ]);
+    "googlecalendar_delete_event",
   expect(needsApproval({ toolName, input }, writes)).toBe(expected);
 });
 

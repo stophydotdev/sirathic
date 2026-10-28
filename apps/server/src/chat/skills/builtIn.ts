@@ -136,7 +136,7 @@ export const skillsFor = ({
           {
             name: "plugins",
             when: "Load when the user wants to find or connect an app, or to use one they connected, like their calendar, email, notes or tasks",
-            text: [PLUGIN_RULES, writingTools(plugins).length > 0 ? CONFIRM_RULES : ""]
+            text: [PLUGIN_RULES, !inBot && writingTools(plugins).length > 0 ? CONFIRM_RULES : ""]
               .filter(Boolean)
               .join("\n\n"),
             tools: ["search_plugins", "install_plugin", ...Object.keys(plugins)],
