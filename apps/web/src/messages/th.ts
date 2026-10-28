@@ -44,6 +44,9 @@ export default {
   Low: "ต่ำ",
   Medium: "กลาง",
   High: "สูง",
+  "Extra high": "สูงมาก",
+  Max: "สูงสุด",
+  "{level} effort": "ความพยายาม{level}",
   "Ran code": "รันโค้ด",
   "Saved skill": "บันทึกทักษะแล้ว",
   "Deleted skill": "ลบทักษะแล้ว",
@@ -142,7 +145,6 @@ export default {
   Detailed: "ละเอียด",
   "Settings sections": "หมวดการตั้งค่า",
   "No chat models available": "ไม่มีโมเดลให้ใช้",
-  "Longer answers that explain more": "คำตอบที่ยาวขึ้นและอธิบายมากขึ้น",
   "Open ChatGPT": "เปิด ChatGPT",
   "Waiting for approval": "กำลังรอการอนุมัติ",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -337,6 +339,7 @@ export default {
   "Social media": "โซเชียลมีเดีย",
   "Design and websites": "งานออกแบบและเว็บไซต์",
   Connect: "เชื่อมต่อ",
+  "Connect {name}?": "เชื่อมต่อ {name} ไหม",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "ปลั๊กอินสร้างโดยบริษัทอื่น ไม่ใช่ Sirathic ตรวจสอบว่าปลั๊กอินเห็นอะไรได้บ้างก่อนเชื่อมต่อ",
   "No plugins match your search.": "ไม่มีปลั๊กอินที่ตรงกับการค้นหาของคุณ",

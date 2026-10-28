@@ -45,6 +45,9 @@ export default {
   Low: "نزم",
   Medium: "مامناوەند",
   High: "بەرز",
+  "Extra high": "زۆر بەرز",
+  Max: "زۆرترین",
+  "{level} effort": "هەوڵی {level}",
   "Ran code": "کۆد جێبەجێکرا",
   "Saved skill": "لێهاتووییەکە پاشەکەوت کرا",
   "Deleted skill": "لێهاتووییەکە سڕایەوە",
@@ -146,7 +149,6 @@ export default {
   Detailed: "ورد",
   "Settings sections": "بەشەکانی ڕێکخستن",
   "No chat models available": "هیچ مۆدێلێک بەردەست نییە",
-  "Longer answers that explain more": "وەڵامی درێژتر کە زیاتر ڕوون دەکاتەوە",
   "Open ChatGPT": "کردنەوەی ChatGPT",
   "Waiting for approval": "چاوەڕێی پەسەندکردن",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -344,6 +346,7 @@ export default {
   "Social media": "تۆڕە کۆمەڵایەتییەکان",
   "Design and websites": "دیزاین و ماڵپەڕەکان",
   Connect: "پەیوەستکردن",
+  "Connect {name}?": "{name} پەیوەست بکرێت؟",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "پێوەکراوەکان کۆمپانیای تر دروستیان دەکەن، نەک Sirathic. پێش پەیوەستکردنی پێوەکراو بپشکنە چی دەبینێت.",
   "No plugins match your search.": "هیچ پێوەکراوێک لەگەڵ گەڕانەکەت ناگونجێت.",

@@ -46,6 +46,9 @@ export default {
   Low: "تۆۋەن",
   Medium: "ئوتتۇرا",
   High: "يۇقىرى",
+  "Extra high": "ناھايىتى يۇقىرى",
+  Max: "ئەڭ يۇقىرى",
+  "{level} effort": "{level} تىرىشىش",
   "Ran code": "كود ئىجرا قىلدى",
   "Saved skill": "ماھارەت ساقلاندى",
   "Deleted skill": "ماھارەت ئۆچۈرۈلدى",
@@ -147,7 +150,6 @@ export default {
   Detailed: "تەپسىلىي",
   "Settings sections": "تەڭشەك بۆلەكلىرى",
   "No chat models available": "ئىشلەتكىلى بولىدىغان مودېل يوق",
-  "Longer answers that explain more": "كۆپرەك چۈشەندۈرىدىغان ئۇزۇنراق جاۋابلار",
   "Open ChatGPT": "ChatGPT نى ئېچىش",
   "Waiting for approval": "تەستىق كۈتۈلۈۋاتىدۇ",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -348,6 +350,7 @@ export default {
   "Social media": "ئىجتىمائىي ۋاسىتە",
   "Design and websites": "لايىھە ۋە تور بېكەتلەر",
   Connect: "ئۇلاش",
+  "Connect {name}?": "{name} ئۇلانسۇنمۇ؟",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "قىستۇرمىلارنى Sirathic ئەمەس، باشقا شىركەتلەر ياسايدۇ. قىستۇرمىنى ئۇلاشتىن بۇرۇن ئۇنىڭ نېمىلەرنى كۆرەلەيدىغانلىقىنى تەكشۈرۈڭ.",
   "No plugins match your search.": "ئىزدىشىڭىزگە ماس كېلىدىغان قىستۇرما يوق.",

@@ -45,6 +45,9 @@ export default {
   Low: "Thấp",
   Medium: "Trung bình",
   High: "Cao",
+  "Extra high": "Rất cao",
+  Max: "Tối đa",
+  "{level} effort": "Mức nỗ lực: {level}",
   "Ran code": "Đã chạy mã",
   "Saved skill": "Đã lưu kỹ năng",
   "Deleted skill": "Đã xóa kỹ năng",
@@ -146,7 +149,6 @@ export default {
   Detailed: "Chi tiết",
   "Settings sections": "Các mục cài đặt",
   "No chat models available": "Không có mô hình nào",
-  "Longer answers that explain more": "Câu trả lời dài hơn, giải thích kỹ hơn",
   "Open ChatGPT": "Mở ChatGPT",
   "Waiting for approval": "Đang chờ phê duyệt",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -344,6 +346,7 @@ export default {
   "Social media": "Mạng xã hội",
   "Design and websites": "Thiết kế và trang web",
   Connect: "Kết nối",
+  "Connect {name}?": "Kết nối {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "Tiện ích do các công ty khác tạo ra, không phải Sirathic. Hãy kiểm tra tiện ích xem được gì trước khi kết nối.",
   "No plugins match your search.": "Không có tiện ích nào khớp với tìm kiếm của bạn.",

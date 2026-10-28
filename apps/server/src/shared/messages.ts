@@ -8,7 +8,7 @@ export const mode = z.enum(MODES);
 
 export type Mode = z.infer<typeof mode>;
 
-export const EFFORTS = ["low", "medium", "high"] as const;
+export const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const;
 
 export const effort = z.enum(EFFORTS);
 

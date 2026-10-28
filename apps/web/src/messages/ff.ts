@@ -45,6 +45,9 @@ export default {
   Low: "Leeso",
   Medium: "Hakkunde",
   High: "Toowɗo",
+  "Extra high": "Toowɗo sanne",
+  Max: "Ɓurɗo",
+  "{level} effort": "Tiiɗnaare: {level}",
   "Ran code": "Koodu wurtii",
   "Saved skill": "Anndal danndaama",
   "Deleted skill": "Anndal ittaama",
@@ -146,7 +149,6 @@ export default {
   Detailed: "Ɓeydaaɗo",
   "Settings sections": "Geɗe teelte",
   "No chat models available": "Alaa model heɓoteeɗo",
-  "Longer answers that explain more": "Jaabawuuji juutɗi ɓurɗi firde",
   "Open ChatGPT": "Uddit ChatGPT",
   "Waiting for approval": "Ena sabbii jaɓgol",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -343,6 +345,7 @@ export default {
   "Social media": "Kuutoragol",
   "Design and websites": "Waɗu e sayti",
   Connect: "Jokkondir",
+  "Connect {name}?": "Jokkondir {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "Ɓeydaari ɗin ngaɗi ko kompaañ goɗɗe, wanaa Sirathic. Raaree ko ɓeydaari hawrata yi'ugo adan jokkondirgo.",
   "No plugins match your search.": "Alaa ɓeydaari hawrata e ko yiylaa.",

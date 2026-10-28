@@ -45,6 +45,9 @@ export default {
   Low: "কম",
   Medium: "মাঝারি",
   High: "বেশি",
+  "Extra high": "অনেক বেশি",
+  Max: "সর্বোচ্চ",
+  "{level} effort": "{level} প্রচেষ্টা",
   "Ran code": "কোড চালিয়েছে",
   "Saved skill": "স্কিল সংরক্ষিত হয়েছে",
   "Deleted skill": "স্কিল মুছে ফেলা হয়েছে",
@@ -144,7 +147,6 @@ export default {
   Detailed: "বিস্তারিত",
   "Settings sections": "সেটিংসের অংশ",
   "No chat models available": "কোনো মডেল নেই",
-  "Longer answers that explain more": "আরও ব্যাখ্যাসহ দীর্ঘ উত্তর",
   "Open ChatGPT": "ChatGPT খুলুন",
   "Waiting for approval": "অনুমোদনের অপেক্ষায়",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -340,6 +342,7 @@ export default {
   "Social media": "সোশ্যাল মিডিয়া",
   "Design and websites": "ডিজাইন ও ওয়েবসাইট",
   Connect: "সংযুক্ত করুন",
+  "Connect {name}?": "{name} সংযুক্ত করবেন?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "প্লাগইন অন্য কোম্পানি তৈরি করে, Sirathic নয়। সংযুক্ত করার আগে দেখে নিন প্লাগইন কী দেখতে পারে।",
   "No plugins match your search.": "আপনার খোঁজের সাথে কোনো প্লাগইন মেলেনি।",

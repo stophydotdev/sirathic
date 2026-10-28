@@ -46,6 +46,9 @@ export default {
   Low: "Паст",
   Medium: "Ўрта",
   High: "Юқори",
+  "Extra high": "Жуда юқори",
+  Max: "Максимал",
+  "{level} effort": "{level} саъй-ҳаракат",
   "Ran code": "Код ишга туширилди",
   "Saved skill": "Кўникма сақланди",
   "Deleted skill": "Кўникма ўчирилди",
@@ -147,7 +150,6 @@ export default {
   Detailed: "Батафсил",
   "Settings sections": "Созламалар бўлимлари",
   "No chat models available": "Суҳбат модели мавжуд эмас",
-  "Longer answers that explain more": "Кўпроқ тушунтирадиган узунроқ жавоблар",
   "Open ChatGPT": "ChatGPT'ни очиш",
   "Waiting for approval": "Тасдиқ кутилмоқда",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -349,6 +351,7 @@ export default {
   "Social media": "Ижтимоий тармоқлар",
   "Design and websites": "Дизайн ва веб-сайтлар",
   Connect: "Улаш",
+  "Connect {name}?": "{name} уланадими?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "Плагинларни Sirathic эмас, бошқа компаниялар яратади. Плагинни улашдан олдин у нимани кўра олишини текширинг.",
   "No plugins match your search.": "Қидирувингизга мос плагин йўқ.",

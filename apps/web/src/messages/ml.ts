@@ -45,6 +45,9 @@ export default {
   Low: "കുറവ്",
   Medium: "ഇടത്തരം",
   High: "ഉയർന്നത്",
+  "Extra high": "വളരെ ഉയർന്നത്",
+  Max: "പരമാവധി",
+  "{level} effort": "പരിശ്രമം: {level}",
   "Ran code": "കോഡ് പ്രവർത്തിപ്പിച്ചു",
   "Saved skill": "സ്കിൽ സേവ് ചെയ്തു",
   "Deleted skill": "സ്കിൽ ഇല്ലാതാക്കി",
@@ -146,7 +149,6 @@ export default {
   Detailed: "വിശദമായി",
   "Settings sections": "ക്രമീകരണ വിഭാഗങ്ങൾ",
   "No chat models available": "മോഡലുകളൊന്നും ലഭ്യമല്ല",
-  "Longer answers that explain more": "കൂടുതൽ വിശദീകരിക്കുന്ന നീണ്ട ഉത്തരങ്ങൾ",
   "Open ChatGPT": "ChatGPT തുറക്കുക",
   "Waiting for approval": "അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -343,6 +345,7 @@ export default {
   "Social media": "സോഷ്യൽ മീഡിയ",
   "Design and websites": "ഡിസൈനും വെബ്സൈറ്റുകളും",
   Connect: "ബന്ധിപ്പിക്കുക",
+  "Connect {name}?": "{name} ബന്ധിപ്പിക്കണോ?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "പ്ലഗിനുകൾ നിർമ്മിക്കുന്നത് മറ്റ് കമ്പനികളാണ്, Sirathic അല്ല. ബന്ധിപ്പിക്കുന്നതിന് മുമ്പ് പ്ലഗിന് എന്തൊക്കെ കാണാൻ കഴിയുമെന്ന് പരിശോധിക്കുക.",
   "No plugins match your search.": "നിങ്ങളുടെ തിരയലുമായി പൊരുത്തപ്പെടുന്ന പ്ലഗിനുകളൊന്നുമില്ല.",

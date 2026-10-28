@@ -44,6 +44,9 @@ export default {
   Low: "低",
   Medium: "中",
   High: "高",
+  "Extra high": "超高",
+  Max: "最高",
+  "{level} effort": "推理强度：{level}",
   "Ran code": "运行了代码",
   "Saved skill": "已保存技能",
   "Deleted skill": "已删除技能",
@@ -142,7 +145,6 @@ export default {
   Detailed: "详细",
   "Settings sections": "设置分区",
   "No chat models available": "没有可用的对话模型",
-  "Longer answers that explain more": "更长的回答，解释更充分",
   "Open ChatGPT": "打开 ChatGPT",
   "Waiting for approval": "等待确认",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -337,6 +339,7 @@ export default {
   "Social media": "社交媒体",
   "Design and websites": "设计与网站",
   Connect: "连接",
+  "Connect {name}?": "连接 {name}？",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "插件由其他公司制作，不是 Sirathic。连接前请先查看插件能看到什么。",
   "No plugins match your search.": "没有符合你搜索的插件。",

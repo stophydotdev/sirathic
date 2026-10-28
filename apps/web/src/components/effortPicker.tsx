@@ -1,89 +1,103 @@
 "use client";
 
 import type { MessageKey } from "@/messages/en";
-import { ArrowDown01Icon, DashboardSpeed02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
   DEFAULT_EFFORT,
   EFFORTS,
   type Effort,
   effort as effortSchema,
 } from "@sirathic/server/messages";
-import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
-import type { FC } from "react";
+import { Slider } from "radix-ui";
+import { type FC, useRef, useState } from "react";
 import { useChatOptions } from "@/components/chatOptions";
 import { useT } from "@/components/i18n";
-import { composerControl } from "@/components/modelPicker";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdownMenu";
+import { DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdownMenu";
+import { cn } from "@/lib/utils";
 
 const EFFORT_NAMES = {
   low: "Low",
   medium: "Medium",
   high: "High",
+  xhigh: "Extra high",
+  max: "Max",
 } satisfies Record<Effort, MessageKey>;
 
-export const EffortPicker: FC<{ side?: "top" | "bottom" }> = ({ side }) => {
-  const t = useT();
+const useEffort = () => {
   const mode = useChatOptions((s) => s.mode);
   const chosen = useChatOptions((s) => s.effort);
-  const setEffort = useChatOptions((s) => s.setEffort);
   const fallback = DEFAULT_EFFORT[mode];
-  const current = chosen ?? fallback;
+  return { current: chosen ?? fallback, fallback };
+};
+
+export const useEffortName = () => {
+  const t = useT();
+  return t(EFFORT_NAMES[useEffort().current]);
+};
+
+export const EffortPicker: FC = () => {
+  const t = useT();
+  const { current, fallback } = useEffort();
+  const setEffort = useChatOptions((s) => s.setEffort);
+  const thumb = useRef<HTMLSpanElement>(null);
+  const [moved, setMoved] = useState(false);
+  const index = EFFORTS.indexOf(current);
+  const name = t(EFFORT_NAMES[current]);
+  const [before, after] = t("{level} effort", { level: "{level}" }).split("{level}");
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        aria-label={`${t("Effort")}: ${t(EFFORT_NAMES[current])}`}
-        className={composerControl}
+    <>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        onSelect={(event) => event.preventDefault()}
+        onFocus={() => thumb.current?.focus()}
+        className="cursor-default flex-col items-stretch gap-2.5 p-1.5 focus:bg-transparent"
       >
-        <HugeiconsIcon icon={DashboardSpeed02Icon} className="text-muted-foreground size-4" />
-        <span className="hidden sm:inline">{t(EFFORT_NAMES[current])}</span>
-        <HugeiconsIcon
-          icon={ArrowDown01Icon}
-          strokeWidth={2.25}
-          className="text-muted-foreground size-3.5"
-        />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="start"
-        side={side}
-        avoidCollisions={side === undefined}
-        className="w-auto min-w-40 p-1"
-      >
-        <DropdownMenuLabel className="text-muted-foreground px-2 pt-1.5 pb-1 text-xs font-medium">
-          {t("Effort")}
-        </DropdownMenuLabel>
-        <DropdownMenuRadioGroup
-          value={current}
-          onValueChange={(value) => {
-            const next = effortSchema.parse(value);
-            setEffort(next === fallback ? undefined : next);
-          }}
-        >
-          {EFFORTS.map((level) => (
-            <DropdownMenuPrimitive.RadioItem
-              key={level}
-              value={level}
-              className="text-foreground data-[state=checked]:bg-foreground/8 data-highlighted:bg-accent data-highlighted:text-accent-foreground flex min-h-8 cursor-pointer items-center rounded-sm px-2 py-1 text-base outline-none select-none sm:min-h-7 sm:text-sm"
-            >
-              <span className="flex min-w-0 items-center gap-1">
-                <span className="min-w-0 truncate">{t(EFFORT_NAMES[level])}</span>
-                {level === fallback && (
-                  <span className="border-input bg-background dark:bg-input/32 text-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-sm border px-0.75 text-xs leading-none font-medium sm:h-4 sm:min-w-4">
-                    {t("Default")}
-                  </span>
+        <p className="text-foreground text-center text-sm font-semibold">
+          {before}
+          <span className="text-super">{name}</span>
+          {after}
+        </p>
+        <div className="border-input rounded-full border p-1">
+          <Slider.Root
+            value={[index]}
+            max={EFFORTS.length - 1}
+            step={1}
+            onValueChange={([next]) => {
+              const level = effortSchema.parse(EFFORTS[next]);
+              setMoved(true);
+              setEffort(level === fallback ? undefined : level);
+            }}
+            className={cn(
+              "relative flex h-8 cursor-pointer touch-none items-center select-none",
+              moved &&
+                "*:transition-all *:duration-200 *:ease-out-quint motion-reduce:*:transition-none",
+            )}
+          >
+            <span
+              className="bg-super absolute inset-y-0 start-0 rounded-full"
+              style={{ width: `calc((100% - 2rem) * ${index} / ${EFFORTS.length - 1} + 2rem)` }}
+            />
+            {EFFORTS.map((level, at) => (
+              <span
+                key={level}
+                className={cn(
+                  "absolute top-1/2 -ms-0.75 -mt-0.75 size-1.5 rounded-full",
+                  at < index ? "bg-white/45" : "bg-foreground/30",
                 )}
-              </span>
-            </DropdownMenuPrimitive.RadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+                style={{
+                  insetInlineStart: `calc((100% - 2rem) * ${at} / ${EFFORTS.length - 1} + 1rem)`,
+                }}
+              />
+            ))}
+            <Slider.Thumb
+              ref={thumb}
+              aria-label={t("Effort")}
+              aria-valuetext={name}
+              className="focus-visible:ring-ring block size-8 rounded-full bg-white shadow-sm outline-none focus-visible:ring-2"
+            />
+          </Slider.Root>
+        </div>
+      </DropdownMenuItem>
+    </>
   );
 };

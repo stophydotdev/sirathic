@@ -45,6 +45,9 @@ export default {
   Low: "Rendah",
   Medium: "Sedang",
   High: "Tinggi",
+  "Extra high": "Sangat tinggi",
+  Max: "Maksimum",
+  "{level} effort": "Upaya: {level}",
   "Ran code": "Kode dijalankan",
   "Saved skill": "Keahlian disimpan",
   "Deleted skill": "Keahlian dihapus",
@@ -146,7 +149,6 @@ export default {
   Detailed: "Rinci",
   "Settings sections": "Bagian pengaturan",
   "No chat models available": "Tidak ada model obrolan",
-  "Longer answers that explain more": "Jawaban lebih panjang dengan penjelasan lebih banyak",
   "Open ChatGPT": "Buka ChatGPT",
   "Waiting for approval": "Menunggu persetujuan",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -345,6 +347,7 @@ export default {
   "Social media": "Media sosial",
   "Design and websites": "Desain dan situs web",
   Connect: "Hubungkan",
+  "Connect {name}?": "Hubungkan {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "Plugin dibuat oleh perusahaan lain, bukan Sirathic. Periksa apa yang bisa dilihat plugin sebelum Anda menghubungkannya.",
   "No plugins match your search.": "Tidak ada plugin yang cocok dengan pencarian Anda.",

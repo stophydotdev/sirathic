@@ -45,6 +45,9 @@ export default {
   Low: "Basso",
   Medium: "Medio",
   High: "Alto",
+  "Extra high": "Molto alto",
+  Max: "Massimo",
+  "{level} effort": "Impegno: {level}",
   "Ran code": "Codice eseguito",
   "Saved skill": "Abilità salvata",
   "Deleted skill": "Abilità eliminata",
@@ -146,7 +149,6 @@ export default {
   Detailed: "Dettagliata",
   "Settings sections": "Sezioni delle impostazioni",
   "No chat models available": "Nessun modello di chat disponibile",
-  "Longer answers that explain more": "Risposte più lunghe che spiegano di più",
   "Open ChatGPT": "Apri ChatGPT",
   "Waiting for approval": "In attesa di approvazione",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -346,6 +348,7 @@ export default {
   "Social media": "Social media",
   "Design and websites": "Design e siti web",
   Connect: "Collega",
+  "Connect {name}?": "Collegare {name}?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "I plugin sono creati da altre aziende, non da Sirathic. Controlla cosa può vedere un plugin prima di collegarlo.",
   "No plugins match your search.": "Nessun plugin corrisponde alla tua ricerca.",

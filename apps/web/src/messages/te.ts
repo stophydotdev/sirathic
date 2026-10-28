@@ -44,6 +44,9 @@ export default {
   Low: "తక్కువ",
   Medium: "మధ్యస్థం",
   High: "ఎక్కువ",
+  "Extra high": "చాలా ఎక్కువ",
+  Max: "గరిష్ఠం",
+  "{level} effort": "ప్రయత్నం: {level}",
   "Ran code": "కోడ్ రన్ చేసింది",
   "Saved skill": "స్కిల్ సేవ్ అయింది",
   "Deleted skill": "స్కిల్ తొలగించబడింది",
@@ -143,7 +146,6 @@ export default {
   Detailed: "వివరంగా",
   "Settings sections": "సెట్టింగ్‌ల విభాగాలు",
   "No chat models available": "మోడల్స్ ఏవీ అందుబాటులో లేవు",
-  "Longer answers that explain more": "మరింత వివరించే పొడవైన సమాధానాలు",
   "Open ChatGPT": "ChatGPT తెరవండి",
   "Waiting for approval": "ఆమోదం కోసం వేచి ఉంది",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
@@ -338,6 +340,7 @@ export default {
   "Social media": "సోషల్ మీడియా",
   "Design and websites": "డిజైన్, వెబ్‌సైట్‌లు",
   Connect: "కనెక్ట్ చేయి",
+  "Connect {name}?": "{name} కనెక్ట్ చేయాలా?",
   "Plugins are made by other companies, not Sirathic. Check what a plugin can see before you connect it.":
     "ప్లగిన్‌లను ఇతర కంపెనీలు తయారు చేస్తాయి, Sirathic కాదు. కనెక్ట్ చేసే ముందు ప్లగిన్ ఏమి చూడగలదో పరిశీలించండి.",
   "No plugins match your search.": "మీ శోధనకు సరిపోయే ప్లగిన్‌లు లేవు.",
