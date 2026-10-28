@@ -23,7 +23,7 @@ export const duaSearchInput = z.object({
 export const duaSearch = async (input: z.input<typeof duaSearchInput>) => {
   const { query, limit } = duaSearchInput.parse(input);
   const topic = query.replaceAll(DUA_WORDS, " ").trim() || query;
-  const ids = await hybridIds(SEARCHABLE.duas, topic, limit);
+  const ids = await hybridIds(SEARCHABLE.duas, topic, limit, { topUp: true });
   if (ids.length === 0) return { duas: [] };
   const rows = await db
     .select({
