@@ -218,6 +218,7 @@ test("every tool the prompt files name is a real tool", () => {
     ...Object.keys(codeTools("sirathic-noor-1-flash")),
     LOAD_SKILL,
     CLARIFYING,
+    "gmail_send_email",
   ]);
   const dir = new URL("../apps/server/src/chat/prompts/", import.meta.url);
   const named = readdirSync(dir)
