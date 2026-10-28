@@ -24,14 +24,14 @@ const PAGE_CHARS = 25_000;
 export const CLARIFYING = "clarifying_questions";
 
 export const clarifyingQuestions = tool({
-  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. Call it before you search or answer when:
+  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. In Research mode, call it before you search or answer when:
 - a subjective term is present, like best, good or top, and the answer depends on the user's own needs;
 - it is a personal decision, like a marriage, a purchase, an investment or a career;
 - the scope is undefined: which madhab, a budget, a timeframe, their experience level or their region;
 - several valid interpretations exist;
 - a financial question depends on personal context, like whether to invest in something;
 - a skill tells you to ask a certain question.
-Skip it when the question has a single factual answer, like how wudu is done or what a word means, or when the scope is already specified. Skip it when the answer is what people in general prefer or recommend, which you can search. Never use it to ask for the details of a sin or a private matter.
+Skip it when the question has a single factual answer, like how wudu is done or what a word means, or when the scope is already specified. Skip it when the answer is what people in general prefer or recommend, which you can search. Never use it to ask for the details of a sin.
 Use only this tool when clarification is needed. Don't ask clarifying questions in your answer text. Ask one natural question, and make every answer a real option. The card ends your turn. Their reply comes as their next message. A dismissed question is a decline: proceed directly using reasonable defaults, and don't ask it again in any form.`,
   inputSchema: question,
   execute: async () => ({ shown: true }),
