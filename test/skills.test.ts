@@ -11,6 +11,7 @@ import {
   withoutAiAnswers,
 } from "../apps/server/src/chat/stophyTools";
 import {
+  closedTools,
   loadSkill,
   loadedText,
   skillIndex,
@@ -156,8 +157,8 @@ test.each([
     "custom_sendEmail",
     "custom_manage_mail",
     "custom_manage_files",
-  ]);
     "googlecalendar_delete_event",
+  ]);
   expect(needsApproval({ toolName, input }, writes)).toBe(expected);
 });
 
@@ -261,6 +262,24 @@ test("a chat that cannot save skills has no skill_authoring skill", () => {
     timezone: undefined,
   });
   expect(skills.map(({ name }) => name)).toEqual([]);
+});
+
+test("a tool that several skills list opens when any one of them loads", () => {
+  const skills = skillsFor({
+    ...noSkills,
+    mode: "quick",
+    texting: false,
+    inBot: false,
+    timezone: undefined,
+    offered: { stophy_call: noInput, search_plugins: noInput },
+    plugins: { gmail_send_email: noInput },
+  });
+  const closedAfter = (...names: string[]) => [...closedTools(skills, new Set(names))];
+  expect(closedAfter("stophy")).not.toContain("stophy_call");
+  expect(closedAfter("send_on_behalf")).not.toContain("gmail_send_email");
+  expect(closedAfter()).toEqual(
+    expect.arrayContaining(["stophy_call", "gmail_send_email", "install_plugin"]),
+  );
 });
 
 test("code, file and plugin tools stay closed until their skill loads", async () => {

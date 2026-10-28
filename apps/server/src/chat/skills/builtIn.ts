@@ -4,8 +4,18 @@ import type { Mode } from "../../shared/messages";
 import { CODE_RULES } from "../codeTools";
 import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
+import documentReview from "./documentReview.md" with { type: "text" };
+import jobSearch from "./jobSearch.md" with { type: "text" };
+import noConnector from "./noConnector.md" with { type: "text" };
+import onboarding from "./onboarding.md" with { type: "text" };
+import pastContext from "./pastContext.md" with { type: "text" };
+import peopleSearch from "./peopleSearch.md" with { type: "text" };
+import recentChanges from "./recentChanges.md" with { type: "text" };
 import research from "./research.md" with { type: "text" };
+import restaurants from "./restaurants.md" with { type: "text" };
 import routines from "./routines.md" with { type: "text" };
+import scheduling from "./scheduling.md" with { type: "text" };
+import sendOnBehalf from "./sendOnBehalf.md" with { type: "text" };
 import skillAuthoring from "./skillAuthoring.md" with { type: "text" };
 import stophy from "./stophy.md" with { type: "text" };
 import study from "./study.md" with { type: "text" };
@@ -38,6 +48,9 @@ const WHEN_CHARS = 140;
 const PLUGIN_RULES =
   "The tools of the apps the user has connected open with this skill: use them for what the user asks of that app. Never say you don't have access to an app or its data without first calling search_plugins, then connect the app with install_plugin. If no plugin fits, ask the user where the data lives. For a command tool like PostHog's exec, read its help once, then run the query.";
 
+const appTools = (plugins: ToolSet, apps: readonly string[]) =>
+  Object.keys(plugins).filter((name) => apps.some((app) => name.startsWith(`${app}_`)));
+
 const whenOf = ({ instructions }: UserSkill) =>
   (instructions.split(/(?<=[.!?])\s/u)[0] ?? instructions).slice(0, WHEN_CHARS);
 
@@ -59,6 +72,24 @@ export const skillsFor = ({
             name: "stophy",
             when: "Load when the user links a YouTube, TikTok, Instagram, X, Reddit, Amazon, Airbnb, Booking or Google Maps page, or wants live flights, hotels, products and prices, places, reviews, jobs, homes or apps",
             text: stophy,
+            tools: ["stophy_search_endpoints", "stophy_call"],
+          },
+          {
+            name: "restaurants",
+            when: "Load when the user asks where or what to eat, wants restaurant ideas or a comparison for an occasion, before naming any restaurant",
+            text: restaurants,
+            tools: ["stophy_search_endpoints", "stophy_call"],
+          },
+          {
+            name: "job_search",
+            when: "Load when the user wants job openings, what a company is hiring for, or new postings for a role, before searching any job site",
+            text: jobSearch,
+            tools: ["stophy_search_endpoints", "stophy_call"],
+          },
+          {
+            name: "people_search",
+            when: "Load when the user wants to find people by name, role, company, school, skill or location, like who someone at a company is",
+            text: peopleSearch,
             tools: ["stophy_search_endpoints", "stophy_call"],
           },
         ]
@@ -141,8 +172,62 @@ export const skillsFor = ({
               .join("\n\n"),
             tools: ["search_plugins", "install_plugin", ...Object.keys(plugins)],
           },
+          {
+            name: "send_on_behalf",
+            when: "Load when the user asks to write, draft, reply to or send an email as them, or to leave a draft in Gmail",
+            text: sendOnBehalf,
+            tools: ["search_plugins", "install_plugin", ...appTools(plugins, ["gmail"])],
+          },
+          {
+            name: "scheduling",
+            when: "Load when the user mentions their calendar, a meeting, availability, a recurring reminder, or coordinating a time with others",
+            text: scheduling,
+            tools: [
+              "search_plugins",
+              "install_plugin",
+              ...appTools(plugins, ["googlecalendar", "gmail"]),
+            ],
+          },
+          {
+            name: "no_plugin_fallback",
+            when: "Load when an app or service the user wants has no plugin, a plugin needs sign-in, or you are about to say you cannot reach something",
+            text: noConnector,
+            tools: ["search_plugins", "install_plugin"],
+          },
         ]
       : []),
+    ...("search_user_memories" in offered
+      ? [
+          {
+            name: "past_context",
+            when: "Load when the user refers to an earlier chat or something they told you, or their saved preferences would improve your answer",
+            text: pastContext,
+          },
+        ]
+      : []),
+    ...(inBot || texting
+      ? []
+      : [
+          {
+            name: "onboarding",
+            when: "Load when the first message is a greeting or vague, or the user asks what Sirathic can do or how a feature works",
+            text: onboarding,
+          },
+        ]),
+    ...(texting
+      ? []
+      : [
+          {
+            name: "document_review",
+            when: "Load when the user attaches a document and asks to review, proofread, fact-check or find errors, including its verses and hadith",
+            text: documentReview,
+          },
+          {
+            name: "recent_changes",
+            when: "Load when the user asks why something about you or the app changed, reports a change you did not make, or asks what is new",
+            text: recentChanges,
+          },
+        ]),
   ] satisfies Skill[];
   const taken = new Set(builtIn.map(({ name }) => name.toLowerCase()));
   const own = userSkills
@@ -182,5 +267,14 @@ export const loadedText = (skills: readonly Skill[], loaded: ReadonlySet<string>
     .map(({ name, text }) => `\n\n## Skill: ${name}\n\n${text}`)
     .join("");
 
-export const closedTools = (skills: readonly Skill[], loaded: ReadonlySet<string>) =>
-  new Set(skills.filter(({ name }) => !loaded.has(name)).flatMap(({ tools = [] }) => tools));
+export const closedTools = (skills: readonly Skill[], loaded: ReadonlySet<string>) => {
+  const opened = new Set(
+    skills.filter(({ name }) => loaded.has(name)).flatMap(({ tools = [] }) => tools),
+  );
+  return new Set(
+    skills
+      .filter(({ name }) => !loaded.has(name))
+      .flatMap(({ tools = [] }) => tools)
+      .filter((name) => !opened.has(name)),
+  );
+};
