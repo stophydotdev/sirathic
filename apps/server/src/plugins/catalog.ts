@@ -92,6 +92,7 @@ export const CONNECTORS = {
     googleScopes: [
       "https://www.googleapis.com/auth/gmail.readonly",
       "https://www.googleapis.com/auth/gmail.compose",
+      "https://www.googleapis.com/auth/gmail.modify",
     ],
   },
   googlecalendar: {
@@ -103,7 +104,7 @@ export const CONNECTORS = {
     googleScopes: [
       "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
       "https://www.googleapis.com/auth/calendar.events.freebusy",
-      "https://www.googleapis.com/auth/calendar.events.readonly",
+      "https://www.googleapis.com/auth/calendar.events",
     ],
   },
   googledrive: {

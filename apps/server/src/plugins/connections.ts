@@ -33,6 +33,7 @@ const CONNECT_TIMEOUT_MS = 10_000;
 const ANSWER_CONNECT_MS = 3_000;
 const TOOLS_FRESH_MS = 6 * 60 * 60_000;
 
+const MISSING_SCOPE = /insufficient authentication scopes/iu;
 type Listed = Tool<unknown, CallToolResult>;
 
 const TOOLS_NAMESPACE = "mcpTools";
@@ -316,11 +317,11 @@ export async function connect(owner: string, id: string, returnTo = "/plugins") 
     await store(owner, id, {}, true);
     return { status: "connected" as const };
   }
-  const { provider, authorizationUrl } = providerFor(owner, id, server, {
-    ...(await storedFor(owner, id)),
-    returnTo,
-  });
-  const result = await auth(provider, {
+  const stored = await storedFor(owner, id);
+  const { provider, authorizationUrl } = providerFor(owner, id, server, { ...stored, returnTo });
+  const granted = stored.tokens?.scope?.split(" ") ?? [];
+  const needsMore = server.googleScopes?.some((scope) => !granted.includes(scope));
+  const result = await auth(needsMore ? { ...provider, tokens: () => undefined } : provider, {
     serverUrl: server.url,
     scope: server.googleScopes?.join(" "),
   }).catch((err: Error) => {
@@ -464,3 +465,8 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
     close: () => Promise.allSettled(ready.map(({ close }) => close())),
   };
 }
+          if (MISSING_SCOPE.test(err.message)) {
+            throw new Error(
+              `Needs more access: the user has not allowed this in ${row.connector} yet. Call install_plugin with id ${row.connector} so they can allow it on the card, then end your turn.`,
+            );
+          }
