@@ -139,12 +139,10 @@ export const fiqhPassages = pgTable(
     textAr: text().notNull(),
     textArClean: text().notNull(),
     search: tsvector().generatedAlwaysAs(sql`to_tsvector('simple', text_ar_clean)`),
-    embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
     embeddingM3: halfvec("embedding_m3", { dimensions: BGE_M3.dimensions }),
   },
   (table) => [
     index("fiqh_passages_search").using("gin", table.search),
-    index("fiqh_passages_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
     index("fiqh_passages_embedding_m3").using("hnsw", table.embeddingM3.op("halfvec_cosine_ops")),
   ],
 );
@@ -201,44 +199,11 @@ export const fatwas = pgTable(
     search: tsvector().generatedAlwaysAs(
       sql`to_tsvector('english', title || ' ' || coalesce(question, '') || ' ' || answer)`,
     ),
-    embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
     embeddingM3: halfvec("embedding_m3", { dimensions: BGE_M3.dimensions }),
   },
   (table) => [
     index("fatwas_search").using("gin", table.search),
-    index("fatwas_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
     index("fatwas_embedding_m3").using("hnsw", table.embeddingM3.op("halfvec_cosine_ops")),
-  ],
-);
-
-export const REDDIT_EMBEDDING_DIMENSIONS = 512;
-
-type RedditComment = {
-  id: string;
-  parent: string;
-  score: number;
-  body: string;
-};
-
-export const redditThreads = pgTable(
-  "reddit_threads",
-  {
-    id: text().primaryKey(),
-    subreddit: text().notNull(),
-    url: text().notNull(),
-    title: text().notNull(),
-    question: text(),
-    score: integer().notNull(),
-    postedAt: timestamp({ withTimezone: true }).notNull(),
-    comments: jsonb().$type<RedditComment[]>().notNull(),
-    search: tsvector().generatedAlwaysAs(
-      sql`to_tsvector('english', title || ' ' || coalesce(question, ''))`,
-    ),
-    embedding: halfvec({ dimensions: REDDIT_EMBEDDING_DIMENSIONS }),
-  },
-  (table) => [
-    index("reddit_threads_search").using("gin", table.search),
-    index("reddit_threads_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
   ],
 );
 
