@@ -6,7 +6,7 @@ import { z } from "zod";
 type Part = ThreadMessage["content"][number];
 
 const SEARCH_SOURCES = ["quran", "hadith", "fiqh", "fatwa", "web", "news", "duas"] as const;
-export type SearchSource = (typeof SEARCH_SOURCES)[number];
+type SearchSource = (typeof SEARCH_SOURCES)[number];
 
 const searchArgs = z
   .object({ queries: z.array(z.string()), arabic: z.array(z.string()) })
@@ -62,7 +62,7 @@ const LEGACY_SEARCHES = new Set([
 
 export type Read = { source: SearchSource; title: string; detail?: string; url?: string };
 
-export type PluginCall = { tool: string; detail: string; done: boolean };
+type PluginCall = { tool: string; detail: string; done: boolean };
 
 export type ResearchStep =
   | { kind: "think"; text: string; live: boolean }
