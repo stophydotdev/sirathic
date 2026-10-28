@@ -6,7 +6,8 @@ import { projectId, requireProject } from "../projects/projects";
 import { StatusError } from "../http";
 import { mode } from "../shared/messages";
 import { PROJECT_ICONS } from "../shared/projects";
-import { nextRun, notify, schedule, timezone } from "./schedule";
+import { timezone } from "../shared/settings";
+import { nextRun, notify, schedule } from "./schedule";
 
 const MAX_AUTOMATIONS = 10;
 const RUNS_LIMIT = 50;
@@ -60,6 +61,23 @@ const upcoming = (plan: z.output<typeof schedule>, zone: string) => {
   if (!next) throw new StatusError(400, "That time has already passed.");
   return next;
 };
+
+export async function moveRoutines(by: string, zone: string) {
+  const rows = await db
+    .select({ id: automations.id, schedule: automations.schedule, enabled: automations.enabled })
+    .from(automations)
+    .where(eq(automations.owner, by));
+  await Promise.all(
+    rows.map((row) => {
+      const plan = schedule.safeParse(row.schedule);
+      const next = row.enabled && plan.success ? nextRun(plan.data, zone, new Date()) : undefined;
+      return db
+        .update(automations)
+        .set({ timezone: zone, nextRunAt: next ?? null })
+        .where(eq(automations.id, row.id));
+    }),
+  );
+}
 
 export async function listAutomations(by: string) {
   const rows = await db

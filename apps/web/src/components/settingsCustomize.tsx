@@ -8,6 +8,7 @@ import type { MessageKey } from "@/messages/en";
 import {
   ANSWER_LANGUAGES,
   ANSWER_LENGTHS,
+  LIST_STYLES,
   MADHABS,
   type Settings,
 } from "@sirathic/server/settings";
@@ -20,6 +21,12 @@ const MADHAB_NAMES = {
   shafii: "Shafi'i",
   hanbali: "Hanbali",
 } satisfies Record<(typeof MADHABS)[number], MessageKey>;
+
+const LIST_STYLE_NAMES = {
+  lists: "Lists",
+  default: "Default",
+  paragraphs: "Paragraphs",
+} satisfies Record<(typeof LIST_STYLES)[number], MessageKey>;
 
 const LENGTH_NAMES = {
   short: "Short",
@@ -36,11 +43,13 @@ const answerLanguageName =
 
 const INSTRUCTIONS_LIMIT = 1500;
 const NAME_LIMIT = 80;
+const ABOUT_LIMIT = 500;
 
 export const CustomizeSection: FC = () => {
   const [saved, setSaved] = useState<Settings>();
   const [failed, setFailed] = useState(false);
   const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
   const [instructions, setInstructions] = useState("");
   const queue = useRef(Promise.resolve());
   const t = useT();
@@ -53,6 +62,7 @@ export const CustomizeSection: FC = () => {
         if (!current) return;
         setSaved(loaded);
         setName(loaded.name);
+        setAbout(loaded.about);
         setInstructions(loaded.instructions);
       },
       () => {
@@ -93,6 +103,14 @@ export const CustomizeSection: FC = () => {
             onChange={(answerLength) => save({ answerLength })}
           />
         </Row>
+        <Row label={t("Headers and lists")}>
+          <Segmented
+            label={t("Headers and lists")}
+            value={saved.listStyle}
+            options={LIST_STYLES.map((value) => ({ value, label: LIST_STYLE_NAMES[value] }))}
+            onChange={(listStyle) => save({ listStyle })}
+          />
+        </Row>
         <Row label={t("Answer language")}>
           <Choice
             label={t("Answer language")}
@@ -126,6 +144,22 @@ export const CustomizeSection: FC = () => {
             className="border-foreground/10 placeholder:text-muted-foreground h-8 w-[220px] rounded-[12px] border bg-transparent px-3 text-sm outline-none"
           />
         </Row>
+        <div className="flex flex-col gap-2 py-3">
+          <label htmlFor="about-you" className="text-sm">
+            {t("About you")}
+          </label>
+          <textarea
+            id="about-you"
+            value={about}
+            maxLength={ABOUT_LIMIT}
+            onChange={(event) => setAbout(event.target.value)}
+            onBlur={() => {
+              if (about.trim() !== saved.about) save({ about: about.trim() });
+            }}
+            placeholder={t("Your work, your studies, what you already know")}
+            className="border-foreground/10 placeholder:text-muted-foreground h-20 w-full resize-none rounded-[12px] border bg-transparent px-3 py-2.5 text-sm outline-none"
+          />
+        </div>
         <Row
           label={t("Madhab")}
           hint={t("Fiqh answers lead with this school and still show the others")}

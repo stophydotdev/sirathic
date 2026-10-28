@@ -3,7 +3,7 @@
 import { useAccount } from "@/components/account";
 import { useT } from "@/components/i18n";
 import { usePreferences } from "@/components/preferences";
-import { control, Group, Row, Toggle } from "@/components/settingsControls";
+import { control, DangerRow, Group, Row, Toggle } from "@/components/settingsControls";
 import { MemoryRow } from "@/components/settingsMemory";
 import { useSessions } from "@/components/sessions";
 import { useStartChat } from "@/components/newChat";
@@ -26,26 +26,16 @@ export const DataSection: FC = () => {
   const change = usePreferences((s) => s.change);
   const refresh = useSessions((s) => s.refresh);
   const startChat = useStartChat();
-  const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const t = useT();
 
-  const exportChats = async () => {
+  const exportData = async () => {
     setBusy(true);
-    const chats = await api.sessions.export.query().catch(() => undefined);
+    const data = await api.account.export.query().catch(() => undefined);
     setBusy(false);
-    if (!chats) return;
+    if (!data) return;
     const day = new Date().toISOString().slice(0, 10);
-    download(`sirathic-chats-${day}.json`, JSON.stringify(chats, null, 2));
-  };
-
-  const deleteAll = async () => {
-    setBusy(true);
-    await api.sessions.removeAll.mutate().catch(() => undefined);
-    await refresh();
-    setBusy(false);
-    setConfirming(false);
-    if (window.location.pathname.startsWith("/c/")) startChat();
+    download(`sirathic-data-${day}.json`, JSON.stringify(data, null, 2));
   };
 
   return (
@@ -64,51 +54,27 @@ export const DataSection: FC = () => {
         {signedIn && <MemoryRow />}
       </Group>
       <Group>
-        <Row label={t("Export my chats")} hint={t("Download every saved chat as a file")}>
+        <Row label={t("Export my data")} hint={t("Chats, memory, bots and settings in one file")}>
           <button
             type="button"
             disabled={busy}
-            onClick={() => void exportChats()}
+            onClick={() => void exportData()}
             className={cn(control, "disabled:opacity-60")}
           >
             {t("Export")}
           </button>
         </Row>
-        <Row
+        <DangerRow
           label={t("Delete all chats")}
-          hint={
-            confirming
-              ? t("Delete every saved chat? This can't be undone.")
-              : t("Removes every saved chat")
-          }
-        >
-          {confirming ? (
-            <div className="flex gap-2">
-              <button type="button" onClick={() => setConfirming(false)} className={control}>
-                {t("Cancel")}
-              </button>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => void deleteAll()}
-                className={cn(
-                  control,
-                  "bg-destructive border-0 text-white hover:opacity-90 disabled:opacity-60",
-                )}
-              >
-                {t("Delete all")}
-              </button>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setConfirming(true)}
-              className={cn(control, "text-destructive")}
-            >
-              {t("Delete all")}
-            </button>
-          )}
-        </Row>
+          hint={t("Removes every saved chat")}
+          question={t("Delete every saved chat? This can't be undone.")}
+          action={t("Delete all")}
+          onConfirm={async () => {
+            await api.sessions.removeAll.mutate();
+            await refresh();
+            if (window.location.pathname.startsWith("/c/")) startChat();
+          }}
+        />
       </Group>
     </>
   );

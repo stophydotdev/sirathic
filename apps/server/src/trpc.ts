@@ -13,6 +13,7 @@ const TRPC_CODES = {
 } as const satisfies Record<StatusError["status"], TRPCError["code"]>;
 
 export const createContext = async (headers: Headers) => ({
+  headers,
   user: await userFor(headers),
 });
 

@@ -14,6 +14,7 @@ import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 import { refreshing } from "../apps/web/src/lib/refreshing";
+import { importedFacts } from "../apps/web/src/components/memoryImport";
 import { blobMotion } from "../apps/web/src/lib/blob/engine";
 import { BODIES, bodyOf } from "../apps/web/src/lib/blob/shape";
 
@@ -310,4 +311,15 @@ test("the shine hides while the bot thinks and comes back after the done burst",
   motion.frame(3.5);
   expect(motion.frame(4.5).shine?.opacity).toBe(0.85);
   expect(motion.still(4.5)).toBe(true);
+});
+
+test("imported memory drops bullets, blanks and repeats, and stops at the 20 facts kept", () => {
+  const pasted = "- Lives in Leeds\n\n2. Teaches Arabic\n• lives in leeds\n* Is a revert";
+  expect(importedFacts(pasted, ["Is a revert"])).toEqual(["Lives in Leeds", "Teaches Arabic"]);
+  expect(
+    importedFacts(
+      pasted,
+      Array.from({ length: 19 }, (_, i) => `Fact ${i}`),
+    ),
+  ).toEqual(["Lives in Leeds"]);
 });

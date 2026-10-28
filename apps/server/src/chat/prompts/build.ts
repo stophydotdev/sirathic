@@ -78,16 +78,26 @@ const dateLine = (now: Date, timeZone: string) => {
   return `It is currently ${day} in ${timeZone} (${hijri}). The Hijri date is calculated and turns at Maghrib, so it can differ by a day from local sighting. The year began on Jan 1, ${year}. This means ${year - 1} was last year and next year is ${year + 1}.`;
 };
 
+const LIST_STYLE_LINES = {
+  lists: "Formatting: the user prefers bulleted lists.",
+  default: "",
+  paragraphs: "Formatting: the user prefers paragraphs to lists.",
+} satisfies Record<Settings["listStyle"], string>;
+
 const background = ({
   name,
+  about,
   madhab,
   answerLanguage,
   answerLength,
+  listStyle,
   instructions,
   memory,
 }: Settings) =>
   [
     name && `Name: ${name}`,
+    about && `About the user: ${about}`,
+    LIST_STYLE_LINES[listStyle],
     madhab !== "none" &&
       `Madhhab: ${SCHOOLS[madhab]}. ${
         answerLength === "short"

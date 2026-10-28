@@ -13,7 +13,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { Switch } from "radix-ui";
-import { type FC, type ReactNode } from "react";
+import { type FC, type ReactNode, useState } from "react";
 
 export const control =
   "border-foreground/10 hover:bg-muted flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-[12px] border px-2.5 text-sm font-medium transition-colors";
@@ -38,6 +38,56 @@ export const Row: FC<{ label: string; hint?: string; children?: ReactNode }> = (
     {children}
   </div>
 );
+
+export const DangerRow: FC<{
+  label: string;
+  hint: string;
+  question: string;
+  action: string;
+  onConfirm: () => Promise<void>;
+}> = ({ label, hint, question, action, onConfirm }) => {
+  const [confirming, setConfirming] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const t = useT();
+
+  const confirm = async () => {
+    setBusy(true);
+    await onConfirm().catch(() => undefined);
+    setBusy(false);
+    setConfirming(false);
+  };
+
+  return (
+    <Row label={label} hint={confirming ? question : hint}>
+      {confirming ? (
+        <div className="flex gap-2">
+          <button type="button" onClick={() => setConfirming(false)} className={control}>
+            {t("Cancel")}
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => void confirm()}
+            className={cn(
+              control,
+              "bg-destructive border-0 text-white hover:opacity-90 disabled:opacity-60",
+            )}
+          >
+            {action}
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setConfirming(true)}
+          className={cn(control, "text-destructive")}
+        >
+          {action}
+        </button>
+      )}
+    </Row>
+  );
+};
 
 export function Segmented<Value extends string>({
   label,

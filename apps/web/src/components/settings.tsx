@@ -6,8 +6,10 @@ import { Fold } from "@/components/fold";
 import { useT } from "@/components/i18n";
 import { TabPill } from "@/components/tabLink";
 import { MakerIcon } from "@/components/makerIcon";
+import { AboutSection } from "@/components/settingsAbout";
 import { CustomizeSection } from "@/components/settingsCustomize";
 import { DataSection } from "@/components/settingsData";
+import { NotificationsSection } from "@/components/settingsNotifications";
 import { AccountSection, AppearanceSection, BehaviorSection } from "@/components/settingsSections";
 import {
   DropdownMenuContent,
@@ -23,6 +25,8 @@ import {
   Cancel01Icon,
   Cursor01Icon,
   Database01Icon,
+  InformationCircleIcon,
+  Notification01Icon,
   PaintBrush01Icon,
   SlidersHorizontalIcon,
   Tick02Icon,
@@ -32,7 +36,15 @@ import { Dialog } from "radix-ui";
 import { type FC, Fragment, useState } from "react";
 import { create } from "zustand";
 
-const SECTIONS = ["account", "appearance", "behavior", "customize", "data"] as const;
+const SECTIONS = [
+  "account",
+  "appearance",
+  "behavior",
+  "notifications",
+  "customize",
+  "data",
+  "about",
+] as const;
 
 type Section = (typeof SECTIONS)[number];
 
@@ -45,6 +57,12 @@ const SECTION_DETAILS = {
     Body: AppearanceSection,
   },
   behavior: { name: "Behavior", group: "General", icon: Cursor01Icon, Body: BehaviorSection },
+  notifications: {
+    name: "Notifications",
+    group: "General",
+    icon: Notification01Icon,
+    Body: NotificationsSection,
+  },
   customize: {
     name: "Customize",
     group: "Sirathic",
@@ -56,6 +74,12 @@ const SECTION_DETAILS = {
     group: "Data and information",
     icon: Database01Icon,
     Body: DataSection,
+  },
+  about: {
+    name: "About",
+    group: "Data and information",
+    icon: InformationCircleIcon,
+    Body: AboutSection,
   },
 } satisfies Record<
   Section,

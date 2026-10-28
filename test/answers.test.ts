@@ -149,6 +149,21 @@ test("the prompt lists what the user told Sirathic about themselves", () => {
   );
 });
 
+test("the prompt gives what the user says about themselves and their layout", () => {
+  const prompt = promptFor({
+    settings: {
+      ...DEFAULT_SETTINGS,
+      about: "Teaches Arabic",
+      listStyle: "paragraphs",
+    },
+  });
+  expect(
+    ["About the user: Teaches Arabic", "prefers paragraphs to lists"].map((line) =>
+      prompt.includes(line),
+    ),
+  ).toEqual([true, true]);
+});
+
 test("the date line gives the user's own date, and UTC when no zone is known", () => {
   const now = new Date(Date.UTC(2026, 9, 28, 3, 0));
   expect(promptFor({ now, timezone: "America/Los_Angeles" })).toContain(
@@ -190,7 +205,7 @@ test("every tool the prompt files name is a real tool", () => {
     "islamic_dates",
     ...Object.keys(skillTools("o")),
     ...Object.keys(pluginTools("o", "/c/test")),
-    ...Object.keys(memoryTools(undefined)),
+    ...Object.keys(memoryTools(undefined, true)),
     ...Object.keys(
       fileTools({
         owner: "o",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useT } from "@/components/i18n";
+import { usePreferences } from "@/components/preferences";
 import { api } from "@/lib/trpc";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Clock04Icon } from "@hugeicons/core-free-icons";
@@ -36,14 +37,14 @@ export const askNotifications = () => {
   }
 };
 
-const announce = (id: string, title: string, body: string) => {
+export const notify = (path: string, title: string, body: string) => {
   if (!("Notification" in window) || Notification.permission !== "granted") return;
-  const note = new Notification(title, { body, tag: id });
+  const note = new Notification(title, { body, tag: path });
   note.addEventListener(
     "click",
     () => {
       window.focus();
-      window.location.assign(`/c/${id}`);
+      window.location.assign(path);
       note.close();
     },
     { once: true },
@@ -67,7 +68,9 @@ export function useUnseenRuns(signedIn: boolean | undefined) {
       for (const run of alerting) {
         if (announced.has(run.id)) continue;
         announced.add(run.id);
-        if (primed) announce(run.id, run.title, t("Finished. Open to read the answer."));
+        if (primed && usePreferences.getState().routineAlerts) {
+          notify(`/c/${run.id}`, run.title, t("Finished. Open to read the answer."));
+        }
       }
       primed = true;
     };
