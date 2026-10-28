@@ -2,21 +2,20 @@ import { isToolUIPart, type ModelMessage } from "ai";
 import { z } from "zod";
 import type { ChatMessage } from "../shared/messages";
 import { source } from "../shared/sources";
+import { citations } from "./citations";
 
 const STALE = "Earlier results, removed to save space.";
 const withSources = z.object({ sources: z.array(source) });
 
-export function shortenEarlierResults(
-  history: ChatMessage[],
-  numberOf: (url: string) => number | undefined,
-) {
+export function shortenEarlierResults(history: ChatMessage[]) {
   const answered = history.slice(
     0,
     history.findLastIndex((message) => message.role === "user"),
   );
   const notes = new Map(
-    answered.flatMap((message) =>
-      message.parts.flatMap((part) => {
+    answered.flatMap((message) => {
+      const { numberOf } = citations([message]);
+      return message.parts.flatMap((part) => {
         if (!isToolUIPart(part) || part.state !== "output-available") {
           return [];
         }
@@ -39,8 +38,8 @@ export function shortenEarlierResults(
               : `${STALE} Search again if you need them.`,
           ],
         ];
-      }),
-    ),
+      });
+    }),
   );
   return (message: ModelMessage): ModelMessage =>
     message.role === "tool"
