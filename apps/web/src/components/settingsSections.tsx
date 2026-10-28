@@ -39,6 +39,7 @@ const LOCALE_NAMES = {
   az: "Azərbaycanca",
   bs: "Bosanski",
   sr: "Српски",
+  sl: "Slovenščina",
   uz: "Ўзбекча",
   ky: "Кыргызча",
   id: "Bahasa Indonesia",
@@ -60,6 +61,7 @@ const LOCALE_NAMES = {
   ta: "தமிழ்",
   si: "සිංහල",
   ff: "Fulfulde",
+  sw: "Kiswahili",
 } satisfies Record<Locale, string>;
 const interfaceLanguageName = (t: Translate) => (code: "auto" | Locale) =>
   code === "auto" ? t("Same as my browser") : LOCALE_NAMES[code];

@@ -18,6 +18,7 @@ const dictionaries = {
   az: () => import("@/messages/az").then((module) => module.default),
   bs: () => import("@/messages/bs").then((module) => module.default),
   sr: () => import("@/messages/sr").then((module) => module.default),
+  sl: () => import("@/messages/sl").then((module) => module.default),
   uz: () => import("@/messages/uz").then((module) => module.default),
   ky: () => import("@/messages/ky").then((module) => module.default),
   id: () => import("@/messages/id").then((module) => module.default),
@@ -39,6 +40,7 @@ const dictionaries = {
   ta: () => import("@/messages/ta").then((module) => module.default),
   si: () => import("@/messages/si").then((module) => module.default),
   ff: () => import("@/messages/ff").then((module) => module.default),
+  sw: () => import("@/messages/sw").then((module) => module.default),
 } satisfies Record<Exclude<Locale, "en">, () => Promise<Messages>>;
 
 export const getDictionary = async (locale: Locale) =>
