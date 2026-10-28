@@ -631,9 +631,10 @@ export default {
   "New automation answers": "Новые ответы автоматизаций",
   "Running now. The answer will show up in Runs.":
     "Запуск начат. Ответ появится в разделе «Запуски».",
-  "Search, read and draft your email": "Ищите, читайте и пишите черновики писем",
-  "See your calendars and events": "Смотрите свои календари и события",
-  "Search and read your files": "Ищите и читайте свои файлы",
+  "Search, read, draft and send your email":
+    "Ищите, читайте, пишите черновики и отправляйте письма",
+  "See and change your calendar events": "Смотрите и меняйте события в календаре",
+  "Search, read and add files": "Ищите, читайте и добавляйте файлы",
   Bots: "Боты",
   "New bot": "Новый бот",
   "What should this bot do?": "Что должен делать этот бот?",

@@ -198,7 +198,7 @@ test("a plugin search ranks by shared words, says what is installed, and never o
     {
       id: "googlecalendar",
       name: "Google Calendar",
-      does: "See your calendars and events",
+      does: "See and change your calendar events",
       installed: true,
     },
     {

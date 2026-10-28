@@ -634,9 +634,9 @@ export default {
   "New automation answers": "Jawaban otomatisasi baru",
   "Running now. The answer will show up in Runs.":
     "Sedang berjalan. Jawabannya akan muncul di Eksekusi.",
-  "Search, read and draft your email": "Cari, baca, dan buat draf email Anda",
-  "See your calendars and events": "Lihat kalender dan acara Anda",
-  "Search and read your files": "Cari dan baca file Anda",
+  "Search, read, draft and send your email": "Cari, baca, buat draf, dan kirim email Anda",
+  "See and change your calendar events": "Lihat dan ubah acara kalender Anda",
+  "Search, read and add files": "Cari, baca, dan tambahkan file",
   Bots: "Bot",
   "New bot": "Bot baru",
   "What should this bot do?": "Apa yang harus dilakukan bot ini?",

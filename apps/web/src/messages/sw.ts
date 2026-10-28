@@ -631,9 +631,9 @@ export default {
   "New automation answers": "Majibu mapya ya kazi otomatiki",
   "Running now. The answer will show up in Runs.":
     "Inaendeshwa sasa. Jibu litaonekana kwenye Uendeshaji.",
-  "Search, read and draft your email": "Tafuta, soma na uandae barua pepe yako",
-  "See your calendars and events": "Ona kalenda na matukio yako",
-  "Search and read your files": "Tafuta na usome faili zako",
+  "Search, read, draft and send your email": "Tafuta, soma, andaa na tuma barua pepe yako",
+  "See and change your calendar events": "Ona na ubadilishe matukio ya kalenda yako",
+  "Search, read and add files": "Tafuta, soma na uongeze faili",
   Bots: "Bot",
   "New bot": "Bot mpya",
   "What should this bot do?": "Bot hii ifanye nini?",

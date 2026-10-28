@@ -633,9 +633,9 @@ export default {
   "New automation answers": "وەڵامی نوێی ئۆتۆماتکردن",
   "Running now. The answer will show up in Runs.":
     "ئێستا جێبەجێ دەکرێت. وەڵامەکە لە جارەکان دەردەکەوێت.",
-  "Search, read and draft your email": "ئیمەیڵەکەت بگەڕێ، بیخوێنەوە و ڕەشنووس بنووسە",
-  "See your calendars and events": "ڕۆژژمێر و ڕووداوەکانت ببینە",
-  "Search and read your files": "فایلەکانت بگەڕێ و بیانخوێنەوە",
+  "Search, read, draft and send your email": "ئیمەیڵەکەت بگەڕێ، بیخوێنەوە، ڕەشنووس بنووسە و بینێرە",
+  "See and change your calendar events": "ڕووداوەکانی ڕۆژژمێرەکەت ببینە و بیانگۆڕە",
+  "Search, read and add files": "فایلەکان بگەڕێ، بیانخوێنەوە و زیادیان بکە",
   Bots: "بۆتەکان",
   "New bot": "بۆتی نوێ",
   "What should this bot do?": "ئەم بۆتە چی بکات؟",

@@ -86,7 +86,7 @@ export const CONNECTORS = {
   gmail: {
     name: "Gmail",
     category: "productivity",
-    description: "Search, read and draft your email",
+    description: "Search, read, draft and send your email",
     url: "https://gmailmcp.googleapis.com/mcp/v1",
     icon: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
     googleScopes: [
@@ -98,7 +98,7 @@ export const CONNECTORS = {
   googlecalendar: {
     name: "Google Calendar",
     category: "productivity",
-    description: "See your calendars and events",
+    description: "See and change your calendar events",
     url: "https://calendarmcp.googleapis.com/mcp/v1",
     icon: "https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_31_2x.png",
     googleScopes: [
@@ -110,7 +110,7 @@ export const CONNECTORS = {
   googledrive: {
     name: "Google Drive",
     category: "productivity",
-    description: "Search and read your files",
+    description: "Search, read and add files",
     url: "https://drivemcp.googleapis.com/mcp/v1",
     icon: "https://ssl.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png",
     googleScopes: [

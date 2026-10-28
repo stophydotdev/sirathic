@@ -637,9 +637,10 @@ export default {
   "New automation answers": "Автоматлаштиришнинг янги жавоблари",
   "Running now. The answer will show up in Runs.":
     "Ҳозир ишламоқда. Жавоб Ишга туширишларда кўринади.",
-  "Search, read and draft your email": "Почтангизни қидиринг, ўқинг ва қоралама ёзинг",
-  "See your calendars and events": "Тақвимларингиз ва тадбирларингизни кўринг",
-  "Search and read your files": "Файлларингизни қидиринг ва ўқинг",
+  "Search, read, draft and send your email":
+    "Почтангизни қидиринг, ўқинг, қоралама ёзинг ва юборинг",
+  "See and change your calendar events": "Тақвим тадбирларингизни кўринг ва ўзгартиринг",
+  "Search, read and add files": "Файлларни қидиринг, ўқинг ва қўшинг",
   Bots: "Ботлар",
   "New bot": "Янги бот",
   "What should this bot do?": "Бу бот нима қилиши керак?",

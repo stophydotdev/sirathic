@@ -629,9 +629,9 @@ export default {
   "New automation answers": "Нови одговори аутоматизација",
   "Running now. The answer will show up in Runs.":
     "Покреће се сада. Одговор ће се појавити у Покретањима.",
-  "Search, read and draft your email": "Претражујте, читајте и пишите нацрте поште",
-  "See your calendars and events": "Погледајте своје календаре и догађаје",
-  "Search and read your files": "Претражујте и читајте своје датотеке",
+  "Search, read, draft and send your email": "Претражујте, читајте, пишите нацрте и шаљите пошту",
+  "See and change your calendar events": "Погледајте и мењајте догађаје у календару",
+  "Search, read and add files": "Претражујте, читајте и додајте датотеке",
   Bots: "Ботови",
   "New bot": "Нови бот",
   "What should this bot do?": "Шта треба да ради овај бот?",
