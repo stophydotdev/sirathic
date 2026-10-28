@@ -35,6 +35,7 @@ import {
   pageText,
   quranBlock,
 } from "./compact";
+import { fuse } from "./fuse";
 import { relevant } from "./relevance";
 import { cleanSearch } from "./searchQuery";
 
@@ -105,22 +106,6 @@ type Searched = { results: unknown[]; sources: Source[]; text: string };
 
 const siteOf = (url: string) => URL.parse(url)?.hostname.replace(/^www\./u, "") ?? url;
 
-function interleave<Item>(lists: Item[][], keyOf: (item: Item) => string, limit: number) {
-  const seen = new Set<string>();
-  const merged: Item[] = [];
-  const longest = Math.max(0, ...lists.map((list) => list.length));
-  for (let index = 0; index < longest && merged.length < limit; index++) {
-    for (const list of lists) {
-      const item = list[index];
-      if (item === undefined || seen.has(keyOf(item))) continue;
-      seen.add(keyOf(item));
-      merged.push(item);
-      if (merged.length === limit) break;
-    }
-  }
-  return merged;
-}
-
 const tafsirFor = (groups: TafsirGroup[], verse: Verse) =>
   groups.find((group) => {
     const [surah, range = ""] = group.verses.split(":");
@@ -137,10 +122,9 @@ const searchQuran = async (cite: Cite, queries: string[]) => {
   const found = await Promise.all(
     queries.map((query) => quranSearch({ query, limit: LISTED_PER_QUERY })),
   );
-  const ranked = interleave(
+  const ranked = fuse(
     found.map((result) => result.verses),
     (verse) => String(verse.id),
-    Number.POSITIVE_INFINITY,
   );
   const tafsir = found.flatMap((result) => result.tafsirEn);
   const { kept, dropped } = await relevant(
@@ -167,10 +151,9 @@ const searchHadith = async (cite: Cite, queries: string[]) => {
   const found = await Promise.all(
     queries.map((query) => hadithSearch({ query, limit: LISTED_PER_QUERY })),
   );
-  const ranked = interleave(
+  const ranked = fuse(
     found.map((result) => result.hadiths),
     (hadith) => hadith.id,
-    Number.POSITIVE_INFINITY,
   );
   const { kept, dropped } = await relevant(
     queries.join("; "),
@@ -201,11 +184,10 @@ const searchDuas = async (queries: string[]) => {
   const found = await Promise.all(
     queries.map((query) => duaSearch({ query, limit: SEARCH_LIMITS.duas })),
   );
-  const duas = interleave(
+  const duas = fuse(
     found.map((result) => result.duas),
     (dua) => dua.id,
-    SEARCH_LIMITS.duas,
-  );
+  ).slice(0, SEARCH_LIMITS.duas);
   return { results: duas, sources: [], text: duaBlock(duas) };
 };
 
@@ -235,13 +217,12 @@ export const onePerPage = (passages: readonly FiqhHit[]) => {
 const searchFiqh = async (cite: Cite, queries: string[], sites: string[]) => {
   const bySchool = await Promise.all(
     FIQH_SCHOOLS.map(async ([school, limit]) =>
-      interleave(
+      fuse(
         (await Promise.all(queries.map((query) => fiqhSearch({ query, school, limit })))).map(
           (result) => result.passages,
         ),
         (passage) => passage.id,
-        limit,
-      ),
+      ).slice(0, limit),
     ),
   );
   const onSites = onePerPage(
@@ -319,10 +300,9 @@ const searchFatwa = async (cite: Cite, queries: string[], sites: string[]) => {
   const found = await Promise.all(
     queries.map((query) => fatwaSearch({ query, sites, limit: LISTED_PER_QUERY })),
   );
-  const ranked = interleave(
+  const ranked = fuse(
     found.map((result) => result.fatwas),
     (fatwa) => fatwa.url,
-    Number.POSITIVE_INFINITY,
   );
   const { kept, dropped } = await relevant(
     queries.join("; "),
@@ -384,10 +364,9 @@ const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: T
   const scraped = new Map(
     found.flat().flatMap((hit) => (hit.markdown ? [[hit.url, hit.markdown]] : [])),
   );
-  const hits = interleave(
+  const hits = fuse(
     found.map((list) => list.filter((hit) => !textBlocked(hit.url))),
     (hit) => hit.url,
-    Number.POSITIVE_INFINITY,
   ).map((hit) => ({
     url: hit.url,
     title: hit.title,
@@ -424,11 +403,10 @@ const searchNews = async (cite: Cite, queries: string[], time: Time) => {
       newsSearch({ query, time, limit: SEARCH_LIMITS.news }).then((result) => result.articles),
     ),
   );
-  const articles = interleave(
+  const articles = fuse(
     found.map((list) => list.filter((article) => !textBlocked(article.url))),
     (article) => article.url,
-    SEARCH_LIMITS.news,
-  );
+  ).slice(0, SEARCH_LIMITS.news);
   const dates = new Map(
     articles.flatMap((article) =>
       article.publishedAt ? [[article.url, article.publishedAt]] : [],
