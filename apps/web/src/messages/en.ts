@@ -680,6 +680,7 @@ export const MESSAGES = [
   "You've used {percent}% of Noor's limit for now. Resets {time}.",
   "You've used {percent}% of this week's Noor limit. Resets {time}.",
   "Sign in with ChatGPT to keep asking with GPT.",
+  "Queued",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

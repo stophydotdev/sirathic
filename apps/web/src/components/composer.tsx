@@ -1,7 +1,9 @@
 "use client";
 
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
+import { useChatState } from "@/components/chat";
 import { takeDraft } from "@/components/draft";
+import { QueuedFollowUps, queueFollowUp } from "@/components/followUps";
 import { useT } from "@/components/i18n";
 import { useAccount, useCurrentModel } from "@/components/account";
 import {
@@ -139,6 +141,14 @@ export const Composer: FC<{
 
   const command = /^\/[^\s]*$/u.test(text) ? text : undefined;
   const composer = () => aui.thread().composer();
+  const chatId = useChatState()?.id;
+  const queueing =
+    running && chatId !== undefined && text.trim() !== "" && !hasAttachments && !command;
+  const queue = () => {
+    if (!chatId) return;
+    queueFollowUp(chatId, text.trim());
+    composer().setText("");
+  };
 
   const choices: Choice[] = command?.startsWith("/")
     ? MODES.filter((name) =>
@@ -175,6 +185,11 @@ export const Composer: FC<{
       aui.thread().message({ index }).composer().beginEdit();
       return;
     }
+    if (queueing && event.key === "Enter" && !event.shiftKey && !selecting) {
+      take();
+      queue();
+      return;
+    }
     if (signedOut && event.key === "Enter" && !event.shiftKey && !selecting) {
       take();
       ask(text);
@@ -199,6 +214,12 @@ export const Composer: FC<{
   return (
     <ComposerPrimitive.TriggerPopoverRoot>
       <div className="relative w-full">
+        {chatId && (
+          <QueuedFollowUps
+            chatId={chatId}
+            onEdit={(queued) => composer().setText(text ? `${text}\n${queued}` : queued)}
+          />
+        )}
         {signedIn && noor && <NoorLimitLine running={running} />}
         <ComposerPrimitive.Root
           className={cn(
@@ -257,9 +278,18 @@ export const Composer: FC<{
           <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>
             <ModelPicker side={menuSide} />
             <Swap
-              swapped={running}
+              swapped={running && !queueing}
               from={
-                signedOut ? (
+                queueing ? (
+                  <button
+                    type="button"
+                    onClick={queue}
+                    className={primaryButton}
+                    aria-label={t("Submit")}
+                  >
+                    <HugeiconsIcon icon={ArrowUp02Icon} className="size-4" />
+                  </button>
+                ) : signedOut ? (
                   <button
                     type="button"
                     onClick={() => ask(text)}

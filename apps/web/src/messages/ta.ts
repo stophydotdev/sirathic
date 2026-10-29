@@ -742,4 +742,5 @@ export default {
   Links: "இணைப்புகள்",
   "Previous source": "முந்தைய மூலம்",
   "Next source": "அடுத்த மூலம்",
+  Queued: "வரிசையில்",
 } satisfies Messages;

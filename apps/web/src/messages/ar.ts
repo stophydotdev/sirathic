@@ -736,4 +736,5 @@ export default {
   Links: "الروابط",
   "Previous source": "المصدر السابق",
   "Next source": "المصدر التالي",
+  Queued: "في الانتظار",
 } satisfies Messages;

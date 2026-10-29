@@ -742,4 +742,5 @@ export default {
   Links: "لینکونه",
   "Previous source": "مخکینۍ سرچینه",
   "Next source": "بله سرچینه",
+  Queued: "په کتار کې",
 } satisfies Messages;

@@ -748,4 +748,5 @@ export default {
   Links: "ئۇلانمىلار",
   "Previous source": "ئالدىنقى مەنبە",
   "Next source": "كېيىنكى مەنبە",
+  Queued: "ئۆچرەتتە",
 } satisfies Messages;

@@ -746,4 +746,5 @@ export default {
   Links: "لینکەکان",
   "Previous source": "سەرچاوەی پێشوو",
   "Next source": "سەرچاوەی دواتر",
+  Queued: "لە ڕیزدا",
 } satisfies Messages;

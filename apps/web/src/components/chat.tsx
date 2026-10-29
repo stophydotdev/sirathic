@@ -4,6 +4,7 @@ import { chosenModel } from "@/components/account";
 import { notify } from "@/components/automationAlerts";
 import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
+import { nextFollowUp } from "@/components/followUps";
 import { usePreferences } from "@/components/preferences";
 import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
@@ -24,6 +25,7 @@ import {
 import { useAISDKRuntime } from "@assistant-ui/react-ai-sdk";
 import {
   DefaultChatTransport,
+  isToolUIPart,
   lastAssistantMessageIsCompleteWithApprovalResponses,
   validateUIMessages,
 } from "ai";
@@ -230,8 +232,15 @@ const liveChat = (
     },
     onFinish: ({ message, isAbort, isError }) => {
       markAnswered(id);
-      if (!isAbort && !isError)
-        announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
+      if (isAbort || isError) return;
+      announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
+      const waiting = message.parts.some(
+        (part) => isToolUIPart(part) && part.state === "approval-requested",
+      );
+      const next = waiting ? undefined : nextFollowUp(id);
+      if (next !== undefined) {
+        void created.sendMessage({ text: next, metadata: { createdAt: Date.now() } });
+      }
     },
     onError: () => void waitForSaved(created),
   });

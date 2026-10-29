@@ -728,4 +728,5 @@ export default {
   Links: "链接",
   "Previous source": "上一个来源",
   "Next source": "下一个来源",
+  Queued: "排队中",
 } satisfies Messages;

@@ -742,4 +742,5 @@ export default {
   Links: "Jokkorde",
   "Previous source": "Iwdi adiiɗi",
   "Next source": "Iwdi garooɗi",
+  Queued: "Ina fadi",
 } satisfies Messages;

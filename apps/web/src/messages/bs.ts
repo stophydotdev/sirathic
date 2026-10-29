@@ -743,4 +743,5 @@ export default {
   Links: "Linkovi",
   "Previous source": "Prethodni izvor",
   "Next source": "Sljedeći izvor",
+  Queued: "Na čekanju",
 } satisfies Messages;

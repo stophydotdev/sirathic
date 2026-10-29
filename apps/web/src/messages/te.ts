@@ -730,4 +730,5 @@ export default {
   Links: "లింక్‌లు",
   "Previous source": "మునుపటి మూలం",
   "Next source": "తదుపరి మూలం",
+  Queued: "క్యూలో ఉంది",
 } satisfies Messages;

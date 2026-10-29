@@ -734,4 +734,5 @@ export default {
   Links: "සබැඳි",
   "Previous source": "පෙර මූලාශ්‍රය",
   "Next source": "ඊළඟ මූලාශ්‍රය",
+  Queued: "පෝලිමේ",
 } satisfies Messages;
