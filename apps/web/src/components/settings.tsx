@@ -1,11 +1,9 @@
 "use client";
 
 import { useAccount, useCurrentModel } from "@/components/account";
-import { EffortPicker } from "@/components/effortPicker";
-import { Fold } from "@/components/fold";
+import { EffortPicker, useEffortName } from "@/components/effortPicker";
 import { useT } from "@/components/i18n";
 import { TabPill } from "@/components/tabLink";
-import { MakerIcon } from "@/components/makerIcon";
 import { AboutSection } from "@/components/settingsAbout";
 import { CustomizeSection } from "@/components/settingsCustomize";
 import { DataSection } from "@/components/settingsData";
@@ -206,7 +204,7 @@ export const SettingsDialog: FC = () => {
   );
 };
 
-const ModelList: FC = () => {
+const ModelList: FC<{ onChosen: () => void }> = ({ onChosen }) => {
   const models = useAccount((s) => s.models);
   const chosen = useAccount((s) => s.chosen);
   const choose = useAccount((s) => s.choose);
@@ -236,7 +234,11 @@ const ModelList: FC = () => {
           {group.models.map((model) => (
             <DropdownMenuItem
               key={model.slug}
-              onSelect={() => choose(model.slug)}
+              onSelect={(event) => {
+                event.preventDefault();
+                choose(model.slug);
+                onChosen();
+              }}
               className={cn(modelRow, "h-7.5 min-h-0! py-0")}
             >
               <span className="min-w-0 flex-1 truncate">{model.name}</span>
@@ -249,48 +251,48 @@ const ModelList: FC = () => {
   );
 };
 
-const ModelFold: FC = () => {
+const ModelTitle: FC<{ onOpen: () => void }> = ({ onOpen }) => {
   const current = useCurrentModel();
-  const [open, setOpen] = useState(false);
+  const effortName = useEffortName();
   const t = useT();
 
   return (
-    <>
-      <DropdownMenuItem
-        aria-expanded={open}
-        onSelect={(event) => {
-          event.preventDefault();
-          setOpen(!open);
-        }}
-        className={modelRow}
-      >
-        {current && <MakerIcon maker={current.maker} className="size-4" />}
-        <span className="flex-1">{t("Model")}</span>
-        <span className="text-muted-foreground min-w-0 truncate">{current?.name}</span>
-        <HugeiconsIcon
-          icon={ArrowRight01Icon}
-          className={cn(
-            "text-muted-foreground size-4 transition-transform duration-300 ease-out-quint rtl:rotate-180 motion-reduce:transition-none",
-            open && "rotate-90 rtl:rotate-90",
-          )}
-        />
-      </DropdownMenuItem>
-      <Fold open={open}>
-        <ModelList />
-      </Fold>
-    </>
+    <DropdownMenuItem
+      onSelect={(event) => {
+        event.preventDefault();
+        onOpen();
+      }}
+      className="h-9 justify-center gap-1 rounded-[8px] text-base font-semibold"
+    >
+      <span className="min-w-0 truncate">{current?.name ?? t("Model")}</span>
+      <span className="text-muted-foreground font-normal">{effortName}</span>
+      <HugeiconsIcon
+        icon={ArrowRight01Icon}
+        className="text-muted-foreground size-4 rtl:rotate-180"
+      />
+    </DropdownMenuItem>
   );
 };
 
 export const ModelMenuContent: FC<{
   side?: "top" | "bottom";
-}> = ({ side }) => (
-  <DropdownMenuContent
-    align="end"
-    side={side}
-    className="ring-foreground/7 max-h-[min(405px,var(--radix-dropdown-menu-content-available-height))] w-70 rounded-[12px] p-1"
-  >
-    <ModelFold />
-    <EffortPicker />
-  </DropdownMenuContent>
-);
+}> = ({ side }) => {
+  const [listing, setListing] = useState(false);
+
+  return (
+    <DropdownMenuContent
+      align="end"
+      side={side}
+      className="ring-foreground/7 max-h-[min(405px,var(--radix-dropdown-menu-content-available-height))] w-70 rounded-[12px] p-1"
+    >
+      {listing ? (
+        <ModelList onChosen={() => setListing(false)} />
+      ) : (
+        <>
+          <ModelTitle onOpen={() => setListing(true)} />
+          <EffortPicker />
+        </>
+      )}
+    </DropdownMenuContent>
+  );
+};
