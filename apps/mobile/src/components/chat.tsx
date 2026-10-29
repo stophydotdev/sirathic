@@ -53,6 +53,14 @@ const refreshSaved = () => {
   if (!incognito) void loadSessions();
 };
 
+const markAnswered = (id: string) => {
+  const { chatId, loadSessions } = useChatState.getState();
+  void api.sessions.update
+    .mutate({ id, unread: chatId !== id })
+    .catch(() => undefined)
+    .then(loadSessions);
+};
+
 export const liveChat = (id: string, messages: ChatMessage[] | undefined, projectId?: string) => {
   const found = live.get(id);
   if (found && answering(found)) return found;
@@ -63,7 +71,7 @@ export const liveChat = (id: string, messages: ChatMessage[] | undefined, projec
     onData: (part) => {
       if (part.type === "data-title") refreshSaved();
     },
-    onFinish: refreshSaved,
+    onFinish: () => (projectId ? refreshSaved() : markAnswered(id)),
   });
   const stopHere = created.stop;
   created.stop = async () => {
@@ -159,11 +167,15 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
   const newChat = useChatState((s) => s.newChat);
   const [session] = useState(() => liveChat(id, initialMessages));
   const { messages, sendMessage, regenerate, setMessages, status, stop, error } =
-    useChat<ChatMessage>({ chat: session });
+    useChat<ChatMessage>({ chat: session, resume: session.messages.length > 0 });
   const incognito = useChatState((s) => s.incognito);
   const [dock, setDock] = useState(0);
   const wasBusy = useRef(false);
   const busy = status === "submitted" || status === "streaming";
+  const streaming = status === "streaming";
+  useEffect(() => {
+    if (streaming) refreshSaved();
+  }, [streaming]);
   useEffect(() => {
     if (wasBusy.current && !busy) scroll.current?.scrollToEnd({ animated: true });
     wasBusy.current = busy;

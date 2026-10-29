@@ -1,7 +1,7 @@
 import { type Href, router } from "expo-router";
 import type { DrawerContentComponentProps } from "expo-router/drawer";
 import { type FC, useState } from "react";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Image, Pressable, ScrollView, Text, View } from "react-native";
 import { authClient } from "@/lib/auth";
 import { BotList } from "./bot-list";
 import { SearchChats } from "./search-chats";
@@ -81,7 +81,15 @@ const Recents: FC<{ onOpen: () => void; onSeeAll: () => void }> = ({ onOpen, onS
             >
               {session.title}
             </Text>
-            {session.unread && <View className="bg-super me-2 size-1.5 rounded-full" />}
+            {session.working ? (
+              <ActivityIndicator
+                size="small"
+                accessibilityLabel="Working"
+                colorClassName="accent-muted-foreground"
+              />
+            ) : (
+              session.unread && <View className="bg-super me-2 size-1.5 rounded-full" />
+            )}
           </Pressable>
         ))}
         {ordered.length > RECENT_LIMIT && (

@@ -50,7 +50,14 @@ export const useChatState = create<{
     const { defaultMode, incognitoByDefault } = usePreferences.getState();
     set({ chatId: randomUUID(), saved: false, mode: defaultMode, incognito: incognitoByDefault });
   },
-  open: (chatId) => set({ chatId, saved: true }),
+  open: (chatId) =>
+    set((state) => ({
+      chatId,
+      saved: true,
+      sessions: state.sessions?.map((session) =>
+        session.id === chatId ? { ...session, unread: false } : session,
+      ),
+    })),
   setMode: (mode) => set({ mode }),
   setEffort: (effort) => set({ effort }),
   setIncognito: (incognito) => set({ incognito }),
