@@ -9,6 +9,7 @@ import {
   hour24Of,
 } from "../apps/web/src/components/automationText";
 import { rehypeBareCitations } from "../apps/web/src/components/citations";
+import { rehypeNotes } from "../apps/web/src/components/markdownNote";
 import { rowsOf, tableCsv, tableMarkdown } from "../apps/web/src/components/markdownTable";
 import { botGroups } from "../packages/app/src/botGroups";
 import { bubblesOf } from "../packages/app/src/botBubbles";
@@ -310,6 +311,26 @@ const element = (
 ): Hast => ({ type: "element", tagName, properties, children });
 
 const textNode = (value: string) => ({ type: "text" as const, value });
+
+test("a quote that opens with [!WARNING] becomes a warning note without the marker, a plain quote stays", () => {
+  const tree: Tree = {
+    type: "root",
+    children: [
+      element("blockquote", [
+        textNode("\n"),
+        element("p", [textNode("[!WARNING]\nScholars differ here.")]),
+      ]),
+      element("blockquote", [element("p", [textNode("A plain quote.")])]),
+    ],
+  };
+  rehypeNotes()(tree);
+  expect(tree.children).toEqual([
+    element("aside", [textNode("\n"), element("p", [textNode("Scholars differ here.")])], {
+      dataNote: "warning",
+    }),
+    element("blockquote", [element("p", [textNode("A plain quote.")])]),
+  ]);
+});
 
 test("a copied table leaves out citations, escapes pipes for Markdown and quotes commas for CSV", () => {
   const url = "https://sunnah.com/muslim:705";

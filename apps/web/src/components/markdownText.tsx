@@ -28,6 +28,7 @@ import {
 } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
 import { CodeBlock } from "@/components/markdownCode";
+import { Note, rehypeNotes } from "@/components/markdownNote";
 import { MarkdownTable } from "@/components/markdownTable";
 import { useVideoLine } from "@/components/videoLine";
 import { siteName, SourcesContext } from "@/components/sources";
@@ -52,6 +53,7 @@ const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => 
     rehypePlugins={[
       rehypeKatex,
       rehypeCitations,
+      rehypeNotes,
       rehypeVerses,
       ...(citations ? [] : [rehypeBareCitations]),
     ]}
@@ -322,6 +324,7 @@ const components = {
   ...memoized,
   a: Anchor,
   figure: Figure,
+  aside: Note,
   table: MarkdownTable,
   SyntaxHighlighter: CodeBlock,
 };
