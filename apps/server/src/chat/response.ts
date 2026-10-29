@@ -18,6 +18,7 @@ import {
   type ToolSet,
   type UIMessageStreamOutcome,
 } from "ai";
+import { OpenTelemetry } from "@ai-sdk/otel";
 import { memoryTools } from "../account/memory";
 import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
@@ -72,6 +73,8 @@ import {
   sendFeedback,
   sirathicTools,
 } from "./tools";
+
+const tracing = new OpenTelemetry({ agentSpanName: "functionId" });
 
 export const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
@@ -143,6 +146,12 @@ export function answerAgent({
   );
   return new ToolLoopAgent({
     model,
+    experimental_telemetry: {
+      functionId: "answer",
+      recordInputs: false,
+      recordOutputs: false,
+      integrations: tracing,
+    },
     instructions: system,
     tools: gated,
     stopWhen: [hasToolCall(CLARIFYING), isStepCount(STEP_CAP)],

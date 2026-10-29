@@ -1,4 +1,10 @@
 import { expect, test } from "bun:test";
+import { SpanStatusCode } from "@opentelemetry/api";
+import {
+  InMemorySpanExporter,
+  SimpleSpanProcessor,
+  TracerProvider,
+} from "@opentelemetry/sdk-trace";
 import { simulateReadableStream } from "ai";
 import {
   followAnswer,
@@ -7,6 +13,7 @@ import {
   stopAnswer,
 } from "../apps/server/src/chat/answers";
 import server from "../apps/server/src/index";
+import { withoutErrorText } from "../apps/server/src/tracing";
 
 test("an answer runs until stopped or replaced, not until the browser leaves", async () => {
   const first = startAnswer("user", "chat");
@@ -61,4 +68,19 @@ test("reopening a chat signed out gets nothing to follow, even mid-answer", asyn
   const res = await server.fetch(new Request("http://localhost/api/chat/chat/stream"));
   expect(res.status).toBe(204);
   stopAnswer("user", "chat");
+});
+
+test("traces drop error text, which can hold a fetched URL", async () => {
+  const exporter = new InMemorySpanExporter();
+  const provider = new TracerProvider({
+    spanProcessors: [withoutErrorText, new SimpleSpanProcessor({ exporter })],
+  });
+  const span = provider.getTracer("test").startSpan("execute_tool fetch_url");
+  const failed = new Error("Fetching https://example.com/?q=private failed");
+  span.recordException(failed);
+  span.setStatus({ code: SpanStatusCode.ERROR, message: failed.message });
+  span.end();
+  const [sent] = exporter.getFinishedSpans();
+  expect(sent?.status).toEqual({ code: SpanStatusCode.ERROR });
+  expect(JSON.stringify(sent?.events)).not.toContain("private");
 });
