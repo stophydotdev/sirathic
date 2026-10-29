@@ -8,6 +8,7 @@ import { AboutSection } from "@/components/settingsAbout";
 import { CustomizeSection } from "@/components/settingsCustomize";
 import { DataSection } from "@/components/settingsData";
 import { NotificationsSection } from "@/components/settingsNotifications";
+import { OwnPlans, PLANS } from "@/components/planConnect";
 import { AccountSection, AppearanceSection, BehaviorSection } from "@/components/settingsSections";
 import {
   DropdownMenuContent,
@@ -211,10 +212,10 @@ const ModelList: FC<{ onChosen: () => void }> = ({ onChosen }) => {
   const t = useT();
   const groups = [
     { label: t("Sirathic"), models: models.filter((model) => model.maker === "sirathic") },
-    {
-      label: t("From your ChatGPT account"),
-      models: models.filter((model) => model.maker !== "sirathic"),
-    },
+    ...PLANS.map((plan) => ({
+      label: t("From your {name} account", { name: plan.name }),
+      models: models.filter((model) => model.maker === plan.maker),
+    })),
   ].filter((group) => group.models.length > 0);
 
   return (
@@ -247,6 +248,7 @@ const ModelList: FC<{ onChosen: () => void }> = ({ onChosen }) => {
           ))}
         </Fragment>
       ))}
+      <OwnPlans />
     </>
   );
 };

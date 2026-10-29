@@ -1,4 +1,12 @@
 import { NOOR_MODELS } from "../models/noor";
+import {
+  connectedPlans,
+  disconnectPlan,
+  plan,
+  planModels,
+  pollPlan,
+  startPlan,
+} from "../models/plans";
 import { DEFAULT_MODEL, models, usage } from "../models/subscription";
 import { noorUsage } from "../models/usage";
 import { settingsUpdate } from "../shared/settings";
@@ -27,6 +35,18 @@ export const accountRoutes = {
       return updateSettings(ctx.owner, input);
     }),
   }),
+  plans: t.router({
+    list: signedIn.query(({ ctx }) => connectedPlans(ctx.user)),
+    start: signedIn
+      .input(z.object({ plan }))
+      .mutation(({ ctx, input }) => startPlan(ctx.owner, input.plan)),
+    poll: signedIn
+      .input(z.object({ ticket: z.string() }))
+      .mutation(async ({ ctx, input }) => ({ status: await pollPlan(ctx.owner, input.ticket) })),
+    disconnect: signedIn
+      .input(z.object({ plan }))
+      .mutation(({ ctx, input }) => disconnectPlan(ctx.owner, input.plan)),
+  }),
   account: t.router({
     status: procedure.query(async ({ ctx }) =>
       ctx.user
@@ -40,10 +60,13 @@ export const accountRoutes = {
     ),
     models: procedure.query(async ({ ctx }) => {
       if (!ctx.user) return [];
-      return [
-        ...NOOR_MODELS,
-        ...(ctx.user.via === "chatgpt" ? await models(ctx.user) : []),
-      ].toSorted((a, b) => isDefault(b) - isDefault(a));
+      const [chatgpt, plans] = await Promise.all([
+        ctx.user.via === "chatgpt" ? models(ctx.user) : [],
+        connectedPlans(ctx.user),
+      ]);
+      return [...NOOR_MODELS, ...chatgpt, ...planModels(plans)].toSorted(
+        (a, b) => isDefault(b) - isDefault(a),
+      );
     }),
     devices: signedIn.query(async ({ ctx }) =>
       listDevices(ctx.owner, await sessionOf(ctx.headers)),

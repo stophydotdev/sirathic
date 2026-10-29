@@ -15,7 +15,17 @@ export type ProviderOptions = NonNullable<Parameters<typeof streamText>[0]["prov
 const listedModel = z.object({
   slug: z.string(),
   name: z.string(),
-  maker: z.enum(["sirathic", "openai", "anthropic", "deepseek", "zhipu", "qwen", "xiaomi"]),
+  maker: z.enum([
+    "sirathic",
+    "openai",
+    "anthropic",
+    "deepseek",
+    "zhipu",
+    "qwen",
+    "xiaomi",
+    "minimax",
+    "xai",
+  ]),
 });
 
 export type Model = z.infer<typeof listedModel>;

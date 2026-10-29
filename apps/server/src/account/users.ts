@@ -34,7 +34,7 @@ async function saveTokens(userId: string, tokens: DeviceTokens) {
     .where(eq(users.id, userId));
 }
 
-async function forgetSubscription(userId: string) {
+export async function forgetSubscription(userId: string) {
   access.delete(userId);
   await db
     .update(users)
@@ -70,6 +70,19 @@ export async function signIn(tokens: DeviceTokens) {
     id,
   );
   return id;
+}
+
+export async function connectChatgpt(userId: string, tokens: DeviceTokens) {
+  const identity = await identityOf(tokens);
+  await db
+    .update(users)
+    .set({
+      plan: identity.plan ?? null,
+      accountId: identity.accountId,
+      tokens: await seal(JSON.stringify(tokens)),
+    })
+    .where(eq(users.id, userId));
+  access.delete(userId);
 }
 
 export async function forgetIfSignedOut(userId: string) {
