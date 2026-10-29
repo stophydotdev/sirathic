@@ -28,6 +28,7 @@ import {
 } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
 import { CodeBlock } from "@/components/markdownCode";
+import { MarkdownDiagram, markOpenDiagram } from "@/components/markdownDiagram";
 import { MarkdownMedia } from "@/components/markdownMedia";
 import { Note, rehypeNotes } from "@/components/markdownNote";
 import { MarkdownTable } from "@/components/markdownTable";
@@ -58,9 +59,12 @@ const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => 
       rehypeVerses,
       ...(citations ? [] : [rehypeBareCitations]),
     ]}
-    preprocess={(text) => withMathDelimiters(closeOpenBold(hidePendingCitation(text)))}
+    preprocess={(text) =>
+      markOpenDiagram(withMathDelimiters(closeOpenBold(hidePendingCitation(text))))
+    }
     className="aui-md"
     components={citations ? components : withoutCitations}
+    componentsByLanguage={byLanguage}
   />
 );
 
@@ -330,6 +334,8 @@ const components = {
   table: MarkdownTable,
   SyntaxHighlighter: CodeBlock,
 };
+
+const byLanguage = { mermaid: { SyntaxHighlighter: MarkdownDiagram } };
 
 const BareAnchor: FC<ComponentProps<"a"> & { node?: Element }> = (props) =>
   citedUrls.safeParse(props.node?.properties.dataUrls).success ? null : <Anchor {...props} />;

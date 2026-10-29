@@ -9,6 +9,7 @@ import {
   hour24Of,
 } from "../apps/web/src/components/automationText";
 import { rehypeBareCitations } from "../apps/web/src/components/citations";
+import { markOpenDiagram } from "../apps/web/src/components/markdownDiagram";
 import { rehypeNotes } from "../apps/web/src/components/markdownNote";
 import { rowsOf, tableCsv, tableMarkdown } from "../apps/web/src/components/markdownTable";
 import { botGroups } from "../packages/app/src/botGroups";
@@ -356,6 +357,15 @@ test("a copied table leaves out citations, escapes pipes for Markdown and quotes
   expect(tableCsv(rows)).toBe(
     'Heir,Share\nFather,"1/6 + rest, if only daughters"\nA|B,"say ""x"""',
   );
+});
+
+test("a mermaid block still streaming stays code, and draws once its fence closes", () => {
+  const open = "Here is the chain:\n\n```mermaid\nflowchart TD\n  A --> B";
+  expect(markOpenDiagram(open)).toBe(
+    "Here is the chain:\n\n```mermaid streaming\nflowchart TD\n  A --> B",
+  );
+  expect(markOpenDiagram(`${open}\n\`\`\``)).toBe(`${open}\n\`\`\``);
+  expect(markOpenDiagram("```ts\nconst a = 1")).toBe("```ts\nconst a = 1");
 });
 
 test("a bot's chosen shape wins, an old icon name falls back to the shape its id picks", () => {

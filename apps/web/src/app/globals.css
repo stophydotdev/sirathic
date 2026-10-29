@@ -547,3 +547,24 @@
 .bot-bubble .aui-md-inline-code {
   @apply bg-background font-mono;
 }
+
+.diagram {
+  --pele-bg: var(--background);
+  --pele-fg: var(--foreground);
+  --pele-muted: var(--muted-foreground);
+  --pele-line: color-mix(in oklab, var(--foreground) 45%, transparent);
+  --pele-surface: color-mix(in oklab, var(--foreground) 4%, var(--background));
+  --pele-surface-alt: color-mix(in oklab, var(--foreground) 8%, var(--background));
+  --pele-border: color-mix(in oklab, var(--foreground) 18%, transparent);
+  --pele-accent: var(--super);
+  --pele-radius: 8px;
+  --pele-title-weight: 500;
+  --pele-series-1: var(--super);
+  --pele-series-2: color-mix(in oklab, var(--super) 60%, var(--foreground));
+  --pele-series-3: color-mix(in oklab, var(--super) 30%, var(--foreground));
+  --pele-series-4: color-mix(in oklab, var(--super) 80%, var(--foreground));
+  --pele-series-5: color-mix(in oklab, var(--super) 45%, var(--foreground));
+  --pele-series-6: color-mix(in oklab, var(--super) 15%, var(--foreground));
+  --pele-series-7: color-mix(in oklab, var(--super) 70%, var(--foreground));
+  --pele-series-8: color-mix(in oklab, var(--super) 22%, var(--foreground));
+}

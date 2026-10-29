@@ -3,7 +3,7 @@
 import type { SyntaxHighlighterProps } from "@assistant-ui/react-markdown";
 import { Copy01Icon, TextWrapIcon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { type FC, lazy, Suspense, useState } from "react";
+import { type FC, lazy, type ReactNode, Suspense, useState } from "react";
 
 import { useT } from "@/components/i18n";
 import { Swap } from "@/components/swap";
@@ -15,7 +15,12 @@ const CodeHighlighter = lazy(() => import("@/components/codeHighlighter"));
 
 const fenceTitle = /title="([^"]+)"/u;
 
-export const CodeBlock: FC<SyntaxHighlighterProps> = ({ node, language, code }) => {
+export const CodeBlock: FC<SyntaxHighlighterProps & { actions?: ReactNode }> = ({
+  node,
+  language,
+  code,
+  actions,
+}) => {
   const t = useT();
   const [wrapped, setWrapped] = useState(false);
   const { isCopied, copyToClipboard } = useCopyToClipboard();
@@ -35,6 +40,7 @@ export const CodeBlock: FC<SyntaxHighlighterProps> = ({ node, language, code }) 
           {title && <span className="text-foreground truncate font-medium">{title}</span>}
         </span>
         <span className="flex items-center gap-0.5">
+          {actions}
           <TooltipIconButton
             tooltip={t("Wrap lines")}
             aria-pressed={wrapped}
