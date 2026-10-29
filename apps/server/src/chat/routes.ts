@@ -10,6 +10,7 @@ import { appOf, clientOf } from "./client";
 import { browserEvent, track } from "./events";
 import { withoutPageText } from "./pageText";
 import { publishedPage, publishSession } from "./pages";
+import { reactionInput, setReaction } from "./reactions";
 import {
   deleteAllSessions,
   deleteSession,
@@ -72,6 +73,9 @@ export const chatRoutes = {
         );
         return saved;
       }),
+    react: signedIn
+      .input(reactionInput.safeExtend({ id: sessionId }))
+      .mutation(({ ctx, input: { id, ...reaction } }) => setReaction(id, ctx.owner, reaction)),
     publish: signedIn
       .input(session.extend({ published: z.boolean() }))
       .mutation(async ({ ctx, input }) => {

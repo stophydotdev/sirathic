@@ -19,6 +19,11 @@ export const DEFAULT_EFFORT = { quick: "high", research: "high" } as const satis
   Effort
 >;
 
+export const oneEmoji = z
+  .emoji()
+  .max(16)
+  .refine((text) => [...new Intl.Segmenter().segment(text)].length === 1, "send exactly one emoji");
+
 export const feedback = z.enum(["up", "down"]);
 
 export const reportReason = z.enum(["quote", "school", "source", "ruling", "other"]);
@@ -41,6 +46,7 @@ export const messageMetadata = z.object({
   mode: mode.optional(),
   model: z.string().optional(),
   feedback: feedback.optional(),
+  reaction: oneEmoji.optional(),
   report: report.optional(),
   routine: z.string().optional(),
   formReply: z.enum(["filled", "missed", "dismissed"]).optional(),

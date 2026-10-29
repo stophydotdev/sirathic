@@ -2,7 +2,8 @@ import { expect, mock, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import { APICallError, simulateReadableStream } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
-import { DEFAULT_EFFORT, MODES } from "../apps/server/src/shared/messages";
+import { DEFAULT_EFFORT, MODES, oneEmoji } from "../apps/server/src/shared/messages";
+import { prependQuote, splitQuote } from "../packages/app/src/botQuote";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { fill } from "../apps/server/src/chat/prompts/build";
 import { routineTools } from "../apps/server/src/automations/tools";
@@ -31,6 +32,27 @@ test("a prompt slot with no value throws, and a value is never read as a slot", 
   expect(() => fill("Hello {name}", {})).toThrow("{name}");
   expect(fill("{a} and {a}", { a: "{b}" })).toBe("{b} and {b}");
 });
+
+test("reply quotes round trip and plain text stays unchanged", () => {
+  expect(prependQuote("First\nsecond", "Reply")).toBe("> First second\n\nReply");
+  expect(splitQuote(prependQuote("x".repeat(210), "Reply\n\nnext"))).toEqual({
+    quote: "x".repeat(200),
+    text: "Reply\n\nnext",
+  });
+  expect(splitQuote("No quote")).toEqual({ quote: undefined, text: "No quote" });
+  const emoji = `${"x".repeat(199)}😀`;
+  expect(splitQuote(prependQuote(emoji, "")).quote).toBe(emoji);
+});
+
+test.each([
+  ["👍", true],
+  ["❤️", true],
+  ["👍🏽", true],
+  ["👍👎", false],
+  ["hello", false],
+])("reaction %s accepts exactly one emoji", (emoji, valid) =>
+  expect(oneEmoji.safeParse(emoji).success).toBe(valid),
+);
 
 const COACH = { name: "Coach", title: "prayer guide", instructions: "Daily tips." };
 
