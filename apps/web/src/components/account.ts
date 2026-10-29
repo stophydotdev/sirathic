@@ -78,8 +78,15 @@ export const useAccount = create<{
   ),
 );
 
-export const useCurrentModel = () =>
-  useAccount((s) => s.models.find((model) => model.slug === s.chosen) ?? s.models[0]);
+const currentOf = ({
+  chosen,
+  models,
+}: Pick<ReturnType<typeof useAccount.getState>, "chosen" | "models">) =>
+  models.find((model) => model.slug === chosen) ?? models[0];
+
+export const useCurrentModel = () => useAccount(currentOf);
+
+export const currentModel = () => currentOf(useAccount.getState());
 
 export function chosenModel() {
   const { chosen, models } = useAccount.getState();

@@ -744,4 +744,5 @@ export default {
   "Previous source": "Prejšnji vir",
   "Next source": "Naslednji vir",
   Queued: "V čakalni vrsti",
+  "Your question sends by itself then.": "Takrat se vaše vprašanje pošlje samo.",
 } satisfies Messages;

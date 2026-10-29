@@ -743,4 +743,5 @@ export default {
   "Previous source": "முந்தைய மூலம்",
   "Next source": "அடுத்த மூலம்",
   Queued: "வரிசையில்",
+  "Your question sends by itself then.": "அப்போது உங்கள் கேள்வி தானாக அனுப்பப்படும்.",
 } satisfies Messages;

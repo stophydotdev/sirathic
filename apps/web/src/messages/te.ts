@@ -731,4 +731,5 @@ export default {
   "Previous source": "మునుపటి మూలం",
   "Next source": "తదుపరి మూలం",
   Queued: "క్యూలో ఉంది",
+  "Your question sends by itself then.": "అప్పుడు మీ ప్రశ్న దానంతట అదే పంపబడుతుంది.",
 } satisfies Messages;

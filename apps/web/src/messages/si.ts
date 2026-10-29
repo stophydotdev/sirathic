@@ -735,4 +735,5 @@ export default {
   "Previous source": "පෙර මූලාශ්‍රය",
   "Next source": "ඊළඟ මූලාශ්‍රය",
   Queued: "පෝලිමේ",
+  "Your question sends by itself then.": "එවිට ඔබේ ප්‍රශ්නය ස්වයංක්‍රීයව යවනු ලැබේ.",
 } satisfies Messages;

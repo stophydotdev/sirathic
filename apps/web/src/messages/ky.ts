@@ -749,4 +749,5 @@ export default {
   "Previous source": "Мурунку булак",
   "Next source": "Кийинки булак",
   Queued: "Кезекте",
+  "Your question sends by itself then.": "Ошондо сурооңуз өзү жөнөтүлөт.",
 } satisfies Messages;

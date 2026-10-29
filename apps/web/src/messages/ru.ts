@@ -746,4 +746,5 @@ export default {
   "Previous source": "Предыдущий источник",
   "Next source": "Следующий источник",
   Queued: "В очереди",
+  "Your question sends by itself then.": "Тогда ваш вопрос отправится сам.",
 } satisfies Messages;

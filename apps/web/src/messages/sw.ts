@@ -744,4 +744,5 @@ export default {
   "Previous source": "Chanzo kilichotangulia",
   "Next source": "Chanzo kinachofuata",
   Queued: "Inasubiri",
+  "Your question sends by itself then.": "Swali lako litatumwa lenyewe wakati huo.",
 } satisfies Messages;

@@ -737,4 +737,5 @@ export default {
   "Previous source": "المصدر السابق",
   "Next source": "المصدر التالي",
   Queued: "في الانتظار",
+  "Your question sends by itself then.": "سيُرسَل سؤالك تلقائيًا حينها.",
 } satisfies Messages;
