@@ -35,7 +35,13 @@ import { appRouter } from "./router";
 import { createContext } from "./trpc";
 import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
-import { messageSchemas, saveSession, sessionId, titleSession } from "./chat/sessions";
+import {
+  messageSchemas,
+  saveSession,
+  sessionId,
+  titleSession,
+  updateSession,
+} from "./chat/sessions";
 import { listSkills } from "./skills/skills";
 import { sourceKind } from "./shared/sources";
 
@@ -166,7 +172,7 @@ app.post("/api/chat", (c) =>
     const answer = startAnswer(by, input.id, {
       continuing: validated.at(-1)?.role === "assistant",
     });
-    return chatResponse({
+    const response = chatResponse({
       models,
       modelName,
       messages: validated,
@@ -191,7 +197,13 @@ app.post("/api/chat", (c) =>
       userSkills,
       turn: { effort: input.effort ?? DEFAULT_EFFORT[input.mode], sessionId: input.id, by },
       title,
-      save: (messages) => save(messages).then(() => learn(messages)),
+      save: (messages) =>
+        save(messages).then(async () => {
+          learn(messages);
+          if (!input.incognito && answer.unwatched()) {
+            await updateSession(input.id, by, { unread: true });
+          }
+        }),
       record: (event) => track(event, owner),
       fileOwner: by,
       automate:
@@ -201,6 +213,7 @@ app.post("/api/chat", (c) =>
       owner,
       sourceKinds: input.sources,
     });
+    return new Response(response.body && answer.toAsker(response.body), response);
   }),
 );
 

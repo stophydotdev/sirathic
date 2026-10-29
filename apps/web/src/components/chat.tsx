@@ -119,6 +119,14 @@ const refreshSaved = () => {
   if (!useChatOptions.getState().incognito) void useSessions.getState().refresh();
 };
 
+const seen = (id: string) => window.location.pathname.endsWith(`/${id}`);
+
+const markAnswered = (id: string) => {
+  if (!useChatOptions.getState().incognito) {
+    void useSessions.getState().change(id, { unread: !seen(id) });
+  }
+};
+
 const SAVED_WAIT_MS = 3000;
 const SAVED_WAITS = 100;
 
@@ -180,6 +188,7 @@ const waitForSaved = async (chat: LiveChat<ChatMessage>, waitsLeft = SAVED_WAITS
   );
   if (saved === "gone") return;
   if (saved !== "unreachable" && !saved.unfinished) {
+    if (seen(chat.id)) markAnswered(chat.id);
     if (answeredFurther(saved.messages, chat.messages)) {
       chat.clearError();
       chat.messages = saved.messages;
@@ -220,7 +229,7 @@ const liveChat = (
       if (part.type === "data-title") void useSessions.getState().refresh();
     },
     onFinish: ({ message, isAbort, isError }) => {
-      refreshSaved();
+      markAnswered(id);
       if (!isAbort && !isError)
         announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
     },
@@ -280,6 +289,13 @@ export const Chat: FC<{
   useEffect(() => {
     if (streaming) refreshSaved();
   }, [streaming]);
+
+  useEffect(() => {
+    const { sessions, change } = useSessions.getState();
+    if (sessions?.some((opened) => opened.id === chatId && opened.unread)) {
+      void change(chatId, { unread: false });
+    }
+  }, [chatId]);
 
   useEffect(() => {
     if (!started || incognito) return;

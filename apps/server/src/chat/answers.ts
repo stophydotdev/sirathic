@@ -1,6 +1,7 @@
 type Answer = {
   controller: AbortController;
   continuing: boolean;
+  asker: "connected" | "gone";
   sent: string[];
   followers: Set<ReadableStreamDefaultController<string>>;
 };
@@ -15,6 +16,7 @@ export function startAnswer(owner: string, id: string, { continuing = false } = 
   const answer: Answer = {
     controller: new AbortController(),
     continuing,
+    asker: "connected",
     sent: [],
     followers: new Set(),
   };
@@ -36,6 +38,21 @@ export function startAnswer(owner: string, id: string, { continuing = false } = 
           }),
         )
         .then(settled, settled),
+    toAsker: (body: ReadableStream<Uint8Array>) => {
+      const reader = body.getReader();
+      return new ReadableStream<Uint8Array>({
+        pull: async (controller) => {
+          const read = await reader.read();
+          if (read.done) controller.close();
+          else controller.enqueue(read.value);
+        },
+        cancel: (reason) => {
+          answer.asker = "gone";
+          return reader.cancel(reason);
+        },
+      });
+    },
+    unwatched: () => answer.asker === "gone" && answer.followers.size === 0,
   };
 }
 
