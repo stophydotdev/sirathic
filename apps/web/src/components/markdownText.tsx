@@ -28,6 +28,7 @@ import {
 } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
 import { CodeBlock } from "@/components/markdownCode";
+import { MarkdownTable } from "@/components/markdownTable";
 import { useVideoLine } from "@/components/videoLine";
 import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
@@ -264,14 +265,6 @@ const memoized = memoizeMarkdownComponents({
   hr: ({ className, ...props }) => (
     <hr className={cn("aui-md-hr border-border/50 my-4", className)} {...props} />
   ),
-  table: ({ className, ...props }) => (
-    <div className="aui-md-table-wrapper border-border/50 my-3 overflow-x-auto rounded-lg border">
-      <table
-        className={cn("aui-md-table w-full border-collapse text-sm leading-5", className)}
-        {...props}
-      />
-    </div>
-  ),
   th: ({ className, ...props }) => (
     <th
       dir="auto"
@@ -329,6 +322,7 @@ const components = {
   ...memoized,
   a: Anchor,
   figure: Figure,
+  table: MarkdownTable,
   SyntaxHighlighter: CodeBlock,
 };
 
