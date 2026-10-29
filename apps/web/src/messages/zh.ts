@@ -712,4 +712,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} 次观看",
+  "Use all sources": "使用全部来源",
 } satisfies Messages;

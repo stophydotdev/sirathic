@@ -8,12 +8,14 @@ import {
   type Mode,
   mode as modeSchema,
 } from "@sirathic/server/messages";
+import { type SourceKind, sourceKind } from "@sirathic/server/sources";
 
 const STORAGE_KEY = "sirathicChatOptions";
 
 const saved = z.object({
   mode: modeSchema.catch("quick"),
   effort: effortSchema.optional().catch(undefined),
+  sources: z.array(sourceKind).min(1).optional().catch(undefined),
 });
 
 type Override = { mode?: Mode; model?: string };
@@ -39,6 +41,7 @@ export const useChatOptions = create<{
   mode: Mode;
   defaultMode: Mode;
   effort: Effort | undefined;
+  sources: SourceKind[] | undefined;
   incognito: boolean;
   override: Override | undefined;
   loaded: boolean;
@@ -46,27 +49,33 @@ export const useChatOptions = create<{
   setMode: (next: Mode) => void;
   setDefaultMode: (next: Mode) => void;
   setEffort: (next: Effort | undefined) => void;
+  setSources: (next: SourceKind[] | undefined) => void;
   setIncognito: (on: boolean) => void;
   setOverride: (next: Override) => void;
   takeOverride: () => Override | undefined;
 }>()((set, get) => {
   const persist = () => {
-    const { defaultMode, effort } = get();
-    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify({ mode: defaultMode, effort }));
+    const { defaultMode, effort, sources } = get();
+    globalThis.localStorage?.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ mode: defaultMode, effort, sources }),
+    );
   };
   return {
     mode: "quick",
     defaultMode: "quick",
     effort: undefined,
+    sources: undefined,
     incognito: false,
     override: undefined,
     loaded: false,
     load: () => {
-      const { mode, effort } = read();
+      const { mode, effort, sources } = read();
       set({
         mode,
         defaultMode: mode,
         effort,
+        sources,
         incognito:
           new URLSearchParams(globalThis.location?.search).has("incognito") ||
           usePreferences.getState().incognitoByDefault,
@@ -80,6 +89,10 @@ export const useChatOptions = create<{
     },
     setEffort: (next) => {
       set({ effort: next });
+      persist();
+    },
+    setSources: (next) => {
+      set({ sources: next });
       persist();
     },
     setIncognito: (on) => set({ incognito: on }),

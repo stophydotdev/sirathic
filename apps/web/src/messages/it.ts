@@ -731,4 +731,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} visualizzazioni",
+  "Use all sources": "Usa tutte le fonti",
 } satisfies Messages;

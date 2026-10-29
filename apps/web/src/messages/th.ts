@@ -712,4 +712,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "ดู {count} ครั้ง",
+  "Use all sources": "ใช้แหล่งข้อมูลทั้งหมด",
 } satisfies Messages;

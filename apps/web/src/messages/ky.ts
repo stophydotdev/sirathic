@@ -732,4 +732,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} көрүү",
+  "Use all sources": "Бардык булактарды колдонуу",
 } satisfies Messages;

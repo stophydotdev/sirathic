@@ -726,4 +726,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} کتنې",
+  "Use all sources": "ټولې سرچینې وکاروئ",
 } satisfies Messages;

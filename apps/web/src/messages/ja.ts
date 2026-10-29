@@ -726,4 +726,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} 回視聴",
+  "Use all sources": "すべての出典を使う",
 } satisfies Messages;

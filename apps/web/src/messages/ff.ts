@@ -726,4 +726,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "Yiyeede {count}",
+  "Use all sources": "Huutor iwdi fof",
 } satisfies Messages;

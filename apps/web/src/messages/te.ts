@@ -714,4 +714,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} వీక్షణలు",
+  "Use all sources": "అన్ని మూలాలను ఉపయోగించండి",
 } satisfies Messages;

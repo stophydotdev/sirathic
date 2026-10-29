@@ -39,6 +39,7 @@ import { nearFused, withinChars } from "./cut";
 import { fuse } from "./fuse";
 import { relevant } from "./relevance";
 import { cleanSearch } from "./searchQuery";
+import type { SourceKind } from "../shared/sources";
 import { readVideo, withVideoHits, withVideos } from "./youtube";
 import { youtubeVideoId } from "@sirathic/core/tools/youtubeVideo";
 
@@ -53,6 +54,16 @@ const FATWA_CHARS = 900;
 const SEARCH_SOURCES = ["quran", "hadith", "fatwa", "fiqh", "web", "news", "duas"] as const;
 
 type SearchSource = (typeof SEARCH_SOURCES)[number];
+
+const KIND_OF_SEARCH = {
+  quran: "quran",
+  hadith: "hadith",
+  duas: "hadith",
+  fatwa: "fatwa",
+  fiqh: "book",
+  web: "web",
+  news: "web",
+} satisfies Record<SearchSource, SourceKind>;
 
 const TIMES = ["pastWeek", "pastMonth", "pastYear"] as const;
 
@@ -469,7 +480,11 @@ const searchNews = async (cite: Cite, queries: string[], time: Time) => {
   return { ...pages, text: pagesBlock("news", pages.results) };
 };
 
-export const searchAll = async (cite: Cite, input: z.infer<typeof searchInput>) => {
+export const searchAll = async (
+  cite: Cite,
+  input: z.infer<typeof searchInput>,
+  kinds?: SourceKind[],
+) => {
   const { queries, arabic, sites, notes } = cleanSearch({
     queries: input.queries,
     arabic: input.arabic ?? [],
@@ -479,7 +494,14 @@ export const searchAll = async (cite: Cite, input: z.infer<typeof searchInput>) 
     return { results: {}, sources: [], text: `Nothing was searched. ${notes.join(" ")}` };
   }
   const { time } = input;
-  const chosen = [...new Set(input.sources)];
+  const asked = [...new Set(input.sources)];
+  const chosen = kinds ? asked.filter((name) => kinds.includes(KIND_OF_SEARCH[name])) : asked;
+  const skipped = asked.filter((name) => !chosen.includes(name));
+  if (skipped.length > 0) {
+    notes.push(
+      `The user turned off ${skipped.join(", ")} for this question, so they were not searched.`,
+    );
+  }
   const both = [...new Set([...queries, ...arabic])];
   const share = Math.floor(
     TOTAL_CHARS / Math.max(1, chosen.filter((name) => BUDGETED.has(name)).length),

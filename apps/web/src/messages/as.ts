@@ -716,4 +716,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} বাৰ চোৱা হৈছে",
+  "Use all sources": "সকলো উৎস ব্যৱহাৰ কৰক",
 } satisfies Messages;

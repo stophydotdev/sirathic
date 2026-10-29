@@ -720,4 +720,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} مشاهدة",
+  "Use all sources": "استخدم كل المصادر",
 } satisfies Messages;

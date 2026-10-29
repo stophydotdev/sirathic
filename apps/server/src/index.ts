@@ -37,6 +37,7 @@ import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
 import { messageSchemas, saveSession, sessionId, titleSession } from "./chat/sessions";
 import { listSkills } from "./skills/skills";
+import { sourceKind } from "./shared/sources";
 
 const IDLE_TIMEOUT_SECONDS = 255;
 
@@ -52,6 +53,7 @@ const chatBody = z.object({
   device: device.optional().catch(undefined),
   timezone: timezone.optional().catch(undefined),
   language: appLanguage.optional().catch(undefined),
+  sources: z.array(sourceKind).min(1).optional().catch(undefined),
 });
 
 const app = new Hono();
@@ -197,6 +199,7 @@ app.post("/api/chat", (c) =>
           ? undefined
           : { owner, timezone: input.timezone },
       owner,
+      sourceKinds: input.sources,
     });
   }),
 );

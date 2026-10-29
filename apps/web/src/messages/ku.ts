@@ -730,4 +730,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} بینین",
+  "Use all sources": "هەموو سەرچاوەکان بەکاربهێنە",
 } satisfies Messages;

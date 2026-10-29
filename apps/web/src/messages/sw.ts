@@ -727,4 +727,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "Imetazamwa mara {count}",
+  "Use all sources": "Tumia vyanzo vyote",
 } satisfies Messages;

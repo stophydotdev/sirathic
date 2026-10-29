@@ -727,4 +727,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} pregleda",
+  "Use all sources": "Koristi sve izvore",
 } satisfies Messages;

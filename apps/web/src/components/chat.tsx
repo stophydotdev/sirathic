@@ -90,12 +90,12 @@ const transportIn = (projectId: string | undefined) =>
     body: () => {
       const options = useChatOptions.getState();
       const override = options.takeOverride();
+      const inBot = useProjects.getState().bots?.some((bot) => bot.id === projectId);
       return {
         model: override?.model ?? chosenModel(),
-        mode: useProjects.getState().bots?.some((bot) => bot.id === projectId)
-          ? "quick"
-          : (override?.mode ?? options.mode),
+        mode: inBot ? "quick" : (override?.mode ?? options.mode),
         effort: options.effort,
+        sources: inBot ? undefined : options.sources,
         incognito: options.incognito,
         projectId,
         device: deviceOf(),

@@ -719,4 +719,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} বার দেখা হয়েছে",
+  "Use all sources": "সব উৎস ব্যবহার করুন",
 } satisfies Messages;

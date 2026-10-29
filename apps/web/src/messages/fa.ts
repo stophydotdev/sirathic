@@ -725,4 +725,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} بازدید",
+  "Use all sources": "استفاده از همه منابع",
 } satisfies Messages;

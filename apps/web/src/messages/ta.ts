@@ -726,4 +726,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} பார்வைகள்",
+  "Use all sources": "எல்லா மூலங்களையும் பயன்படுத்து",
 } satisfies Messages;
