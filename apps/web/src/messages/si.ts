@@ -415,6 +415,7 @@ export default {
   "Schedule posts and read analytics": "පළ කිරීම් කාලසටහන්ගත කර විශ්ලේෂණ කියවන්න",
   "Search and crawl the web": "වෙබයේ සොයා පිරික්සන්න",
   "Search and edit pages and databases": "පිටු සහ දත්ත සමුදා සොයා සංස්කරණය කරන්න",
+  "Search and edit repositories, code and issues": "රිපොසිටරි, කේත සහ ගැටලු සොයා සංස්කරණය කරන්න",
   "Search and update CRM records": "CRM වාර්තා සොයා යාවත්කාලීන කරන්න",
   "Search, create and edit notes": "සටහන් සොයන්න, සාදන්න සහ සංස්කරණය කරන්න",
   "Search meeting transcripts and summaries": "රැස්වීම් පිටපත් සහ සාරාංශ සොයන්න",

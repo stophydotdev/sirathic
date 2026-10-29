@@ -6,6 +6,7 @@ export const CONNECTOR_IDS = [
   "gmail",
   "googlecalendar",
   "googledrive",
+  "github",
   "notion",
   "todoist",
   "canva",
@@ -82,6 +83,8 @@ export const CATEGORIES = [
 
 export type Category = (typeof CATEGORIES)[number];
 
+export type OAuthClient = "google" | "github";
+
 export const CONNECTORS = {
   gmail: {
     name: "Gmail",
@@ -89,7 +92,8 @@ export const CONNECTORS = {
     description: "Search, read, draft and send your email",
     url: "https://gmailmcp.googleapis.com/mcp/v1",
     icon: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-    googleScopes: [
+    client: "google",
+    scopes: [
       "https://www.googleapis.com/auth/gmail.readonly",
       "https://www.googleapis.com/auth/gmail.compose",
       "https://www.googleapis.com/auth/gmail.modify",
@@ -101,7 +105,8 @@ export const CONNECTORS = {
     description: "See and change your calendar events",
     url: "https://calendarmcp.googleapis.com/mcp/v1",
     icon: "https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_31_2x.png",
-    googleScopes: [
+    client: "google",
+    scopes: [
       "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
       "https://www.googleapis.com/auth/calendar.events.freebusy",
       "https://www.googleapis.com/auth/calendar.events",
@@ -113,10 +118,20 @@ export const CONNECTORS = {
     description: "Search, read and add files",
     url: "https://drivemcp.googleapis.com/mcp/v1",
     icon: "https://ssl.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png",
-    googleScopes: [
+    client: "google",
+    scopes: [
       "https://www.googleapis.com/auth/drive.readonly",
       "https://www.googleapis.com/auth/drive.file",
     ],
+  },
+  github: {
+    name: "GitHub",
+    category: "developer",
+    description: "Search and edit repositories, code and issues",
+    url: "https://api.githubcopilot.com/mcp/",
+    icon: "https://github.githubassets.com/apple-touch-icon-180x180.png",
+    client: "github",
+    scopes: ["repo", "read:org", "read:user"],
   },
   notion: {
     name: "Notion",
@@ -429,7 +444,8 @@ export const CONNECTORS = {
     open?: true;
     tokenAuth?: "none" | "client_secret_post";
     icon?: string;
-    googleScopes?: readonly string[];
+    client?: OAuthClient;
+    scopes?: readonly string[];
   }
 >;
 

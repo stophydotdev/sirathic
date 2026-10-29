@@ -422,6 +422,7 @@ export default {
   "Schedule posts and read analytics": "投稿を予約して分析を読む",
   "Search and crawl the web": "ウェブを検索してクロール",
   "Search and edit pages and databases": "ページとデータベースを検索・編集",
+  "Search and edit repositories, code and issues": "リポジトリ・コード・Issue を検索・編集",
   "Search and update CRM records": "CRM レコードを検索・更新",
   "Search, create and edit notes": "メモを検索、作成、編集",
   "Search meeting transcripts and summaries": "会議の文字起こしと要約を検索",

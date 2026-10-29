@@ -410,6 +410,7 @@ export default {
   "Schedule posts and read analytics": "安排帖子并阅读分析",
   "Search and crawl the web": "搜索并抓取网页",
   "Search and edit pages and databases": "搜索并编辑页面和数据库",
+  "Search and edit repositories, code and issues": "搜索并编辑仓库、代码和议题",
   "Search and update CRM records": "搜索并更新 CRM 记录",
   "Search, create and edit notes": "搜索、创建并编辑笔记",
   "Search meeting transcripts and summaries": "搜索会议记录和摘要",

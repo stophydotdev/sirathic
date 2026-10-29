@@ -413,6 +413,7 @@ export default {
   "Schedule posts and read analytics": "កំណត់ពេលប្រកាស និងអានការវិភាគ",
   "Search and crawl the web": "ស្វែងរក និងវារលើបណ្ដាញ",
   "Search and edit pages and databases": "ស្វែងរក និងកែសម្រួលទំព័រ និងមូលដ្ឋានទិន្នន័យ",
+  "Search and edit repositories, code and issues": "ស្វែងរក និងកែសម្រួលឃ្លាំងកូដ កូដ និងបញ្ហា",
   "Search and update CRM records": "ស្វែងរក និងធ្វើបច្ចុប្បន្នភាពកំណត់ត្រា CRM",
   "Search, create and edit notes": "ស្វែងរក បង្កើត និងកែសម្រួលកំណត់ចំណាំ",
   "Search meeting transcripts and summaries": "ស្វែងរកសេចក្តីចម្លង និងសេចក្តីសង្ខេបនៃការប្រជុំ",

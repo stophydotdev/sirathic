@@ -427,6 +427,8 @@ export default {
   "Schedule posts and read analytics": "Mag-iskedyul ng mga post at basahin ang analytics",
   "Search and crawl the web": "Maghanap at mag-crawl sa web",
   "Search and edit pages and databases": "Maghanap at mag-edit ng mga page at database",
+  "Search and edit repositories, code and issues":
+    "Maghanap at mag-edit ng mga repository, code at issue",
   "Search and update CRM records": "Maghanap at mag-update ng mga record sa CRM",
   "Search, create and edit notes": "Maghanap, gumawa at mag-edit ng mga tala",
   "Search meeting transcripts and summaries": "Maghanap ng mga transcript at buod ng meeting",

@@ -420,6 +420,7 @@ export default {
   "Schedule posts and read analytics": "Lên lịch bài đăng và đọc số liệu phân tích",
   "Search and crawl the web": "Tìm kiếm và thu thập dữ liệu web",
   "Search and edit pages and databases": "Tìm và chỉnh sửa trang và cơ sở dữ liệu",
+  "Search and edit repositories, code and issues": "Tìm và chỉnh sửa kho mã, mã nguồn và issue",
   "Search and update CRM records": "Tìm và cập nhật bản ghi CRM",
   "Search, create and edit notes": "Tìm, tạo và chỉnh sửa ghi chú",
   "Search meeting transcripts and summaries": "Tìm bản ghi và tóm tắt cuộc họp",

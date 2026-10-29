@@ -422,6 +422,8 @@ export default {
   "Schedule posts and read analytics": "پۆستەکان خشتە بکە و شیکارییەکان بخوێنەوە",
   "Search and crawl the web": "لە وێب بگەڕێ و بیپشکنە",
   "Search and edit pages and databases": "لاپەڕە و داتابەیسەکان بگەڕێ و دەستکاریان بکە",
+  "Search and edit repositories, code and issues":
+    "ڕیپۆزیتۆری، کۆد و کێشەکان بگەڕێ و دەستکاریان بکە",
   "Search and update CRM records": "تۆماری CRM بگەڕێ و نوێیان بکەرەوە",
   "Search, create and edit notes": "تێبینی بگەڕێ، دروست بکە و دەستکاری بکە",
   "Search meeting transcripts and summaries": "دەقی کۆبوونەوە و کورتەکانیان بگەڕێ",

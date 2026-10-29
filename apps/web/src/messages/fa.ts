@@ -419,6 +419,7 @@ export default {
   "Schedule posts and read analytics": "پست‌ها را زمان‌بندی کنید و تحلیل‌ها را بخوانید",
   "Search and crawl the web": "در وب جستجو و خزش کنید",
   "Search and edit pages and databases": "صفحه‌ها و پایگاه‌های داده را جستجو و ویرایش کنید",
+  "Search and edit repositories, code and issues": "مخزن‌ها، کد و مسئله‌ها را جستجو و ویرایش کنید",
   "Search and update CRM records": "رکوردهای CRM را جستجو و به‌روزرسانی کنید",
   "Search, create and edit notes": "یادداشت‌ها را جستجو، ایجاد و ویرایش کنید",
   "Search meeting transcripts and summaries": "متن و خلاصه جلسه‌ها را جستجو کنید",

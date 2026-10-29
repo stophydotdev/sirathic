@@ -390,6 +390,7 @@ export const MESSAGES = [
   "Schedule posts and read analytics",
   "Search and crawl the web",
   "Search and edit pages and databases",
+  "Search and edit repositories, code and issues",
   "Search and update CRM records",
   "Search, create and edit notes",
   "Search meeting transcripts and summaries",

@@ -410,6 +410,7 @@ export default {
   "Schedule posts and read analytics": "ตั้งเวลาโพสต์และอ่านการวิเคราะห์",
   "Search and crawl the web": "ค้นหาและรวบรวมข้อมูลบนเว็บ",
   "Search and edit pages and databases": "ค้นหาและแก้ไขหน้าและฐานข้อมูล",
+  "Search and edit repositories, code and issues": "ค้นหาและแก้ไขรีโพซิทอรี โค้ด และ issue",
   "Search and update CRM records": "ค้นหาและอัปเดตระเบียน CRM",
   "Search, create and edit notes": "ค้นหา สร้าง และแก้ไขโน้ต",
   "Search meeting transcripts and summaries": "ค้นหาบทถอดเสียงและสรุปการประชุม",

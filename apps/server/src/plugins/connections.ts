@@ -22,6 +22,7 @@ import {
   CONNECTOR_IDS,
   CONNECTORS,
   type ConnectorId,
+  type OAuthClient,
   connectorId,
   newCustomId,
   pluginId,
@@ -79,11 +80,18 @@ const toolsFromSaved = createMCPClient({
   },
 });
 
-const GOOGLE_CLIENT = {
-  issuer: "https://accounts.google.com",
-  client_id: env.GOOGLE_CLIENT_ID,
-  client_secret: env.GOOGLE_CLIENT_SECRET,
-};
+const OAUTH_CLIENTS = {
+  google: {
+    issuer: "https://accounts.google.com",
+    client_id: env.GOOGLE_CLIENT_ID,
+    client_secret: env.GOOGLE_CLIENT_SECRET,
+  },
+  github: {
+    issuer: "https://github.com/login/oauth",
+    client_id: env.GITHUB_CLIENT_ID,
+    client_secret: env.GITHUB_CLIENT_SECRET,
+  },
+} satisfies Record<OAuthClient, { issuer: string; client_id: string; client_secret: string }>;
 
 const CLIENT_METADATA = {
   client_name: "Sirathic",
@@ -149,7 +157,8 @@ type Server = {
   url: string;
   open?: true;
   tokenAuth?: "none" | "client_secret_post";
-  googleScopes?: readonly string[];
+  client?: OAuthClient;
+  scopes?: readonly string[];
 };
 
 export const customInput = z.object({
@@ -224,9 +233,9 @@ function providerFor(owner: string, connector: string, server: Server, stored: S
       ? { ...CLIENT_METADATA, token_endpoint_auth_method: server.tokenAuth }
       : CLIENT_METADATA,
     clientInformation: () =>
-      server.googleScopes ? { ...secrets.client, ...GOOGLE_CLIENT } : secrets.client,
+      server.client ? { ...secrets.client, ...OAUTH_CLIENTS[server.client] } : secrets.client,
     saveClientInformation: (client) => save({ client }),
-    isClientInformationDynamicallyRegistered: () => !server.googleScopes,
+    isClientInformationDynamicallyRegistered: () => !server.client,
     tokens: () => secrets.tokens,
     saveTokens: (tokens) => save({ tokens, verifier: undefined, state: undefined }),
     codeVerifier: () => {
@@ -238,7 +247,7 @@ function providerFor(owner: string, connector: string, server: Server, stored: S
     saveState: (state) => save({ state }),
     storedState: () => secrets.state,
     redirectToAuthorization: (url) => {
-      if (server.googleScopes) {
+      if (server.client === "google") {
         url.searchParams.set("access_type", "offline");
         url.searchParams.set("prompt", "consent");
       }
@@ -321,10 +330,10 @@ export async function connect(owner: string, id: string, returnTo = "/plugins") 
   const stored = await storedFor(owner, id);
   const { provider, authorizationUrl } = providerFor(owner, id, server, { ...stored, returnTo });
   const granted = stored.tokens?.scope?.split(" ") ?? [];
-  const needsMore = server.googleScopes?.some((scope) => !granted.includes(scope));
+  const needsMore = server.scopes?.some((scope) => !granted.includes(scope));
   const result = await auth(needsMore ? { ...provider, tokens: () => undefined } : provider, {
     serverUrl: server.url,
-    scope: server.googleScopes?.join(" "),
+    scope: server.scopes?.join(" "),
   }).catch((err: Error) => {
     throw new StatusError(502, `${server.name} sign-in failed: ${err.message}`);
   });

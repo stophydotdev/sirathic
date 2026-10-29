@@ -421,6 +421,8 @@ export default {
   "Schedule posts and read analytics": "Gönderileri zamanlayın ve analizleri okuyun",
   "Search and crawl the web": "Web'de arayın ve tarayın",
   "Search and edit pages and databases": "Sayfaları ve veritabanlarını arayın ve düzenleyin",
+  "Search and edit repositories, code and issues":
+    "Depoları, kodu ve sorunları arayın ve düzenleyin",
   "Search and update CRM records": "CRM kayıtlarını arayın ve güncelleyin",
   "Search, create and edit notes": "Notları arayın, oluşturun ve düzenleyin",
   "Search meeting transcripts and summaries": "Toplantı dökümlerini ve özetlerini arayın",

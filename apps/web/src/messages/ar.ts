@@ -417,6 +417,7 @@ export default {
   "Schedule posts and read analytics": "جدول المنشورات واقرأ التحليلات",
   "Search and crawl the web": "ابحث في الويب وازحف عليه",
   "Search and edit pages and databases": "ابحث في الصفحات وقواعد البيانات وعدّلها",
+  "Search and edit repositories, code and issues": "ابحث في المستودعات والشيفرة والمشكلات وعدّلها",
   "Search and update CRM records": "ابحث في سجلات CRM وحدّثها",
   "Search, create and edit notes": "ابحث في الملاحظات وأنشئها وعدّلها",
   "Search meeting transcripts and summaries": "ابحث في نصوص الاجتماعات وملخصاتها",
