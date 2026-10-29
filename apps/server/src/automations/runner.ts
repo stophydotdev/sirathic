@@ -5,6 +5,7 @@ import { and, asc, eq, lte } from "drizzle-orm";
 import { toUser } from "../account/auth";
 import { pickModels } from "../models/pick";
 import { BOT_HISTORY } from "../bots/tools";
+import { holdShutdown } from "../chat/answers";
 import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
@@ -305,7 +306,7 @@ export async function runNow(id: string, by: string) {
     .from(automations)
     .where(and(eq(automations.id, id), eq(automations.owner, by)));
   if (!found) throw new StatusError(404, "no such automation");
-  void runAutomation(found).catch((err: Error) => {
+  void holdShutdown(runAutomation(found)).catch((err: Error) => {
     console.error(`automation ${id} not run: ${reasonOf(err)}`);
   });
   return { started: true };
@@ -321,7 +322,7 @@ async function claimAndRun(due: typeof automations.$inferSelect) {
     .where(and(eq(automations.id, due.id), eq(automations.nextRunAt, due.nextRunAt)))
     .returning({ id: automations.id });
   if (!claimed || Date.now() - due.nextRunAt.getTime() > MISSED_AFTER_MS) return;
-  await runAutomation(due).catch((err: Error) => {
+  await holdShutdown(runAutomation(due)).catch((err: Error) => {
     console.error(`automation ${due.id} not run: ${reasonOf(err)}`);
   });
 }
