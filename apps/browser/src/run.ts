@@ -161,11 +161,13 @@ const failedStep = async (session: Session, steps: readonly Step[]) =>
   steps.reduce<Promise<string | undefined>>(
     async (failed, step, index) =>
       (await failed) ??
-      perform(session.page, step).then(
-        () => undefined,
-        (error: Error) =>
-          `Step ${index + 1} (${step.kind}) failed: ${reasonOf(error)} The steps after it did not run.`,
-      ),
+      (session.controllers > 0
+        ? `Step ${index + 1} did not run: the person is using your browser now. Stop and wait until they say they're done.`
+        : perform(session.page, step).then(
+            () => undefined,
+            (error: Error) =>
+              `Step ${index + 1} (${step.kind}) failed: ${reasonOf(error)} The steps after it did not run.`,
+          )),
     Promise.resolve(undefined),
   );
 
@@ -272,13 +274,18 @@ const unmasked = async (session: Session, action: Action): Promise<Result> => {
 };
 
 export const screenshotOf = async (session: Session) => {
-  const { page } = session;
+  const { page, hidden } = session;
   const values = (await secretsOf(session)).filter((value) => value.length >= SHOWN_MIN_CHARS);
+  const fields = (await inputsOf(page)).map(([, value]) => value);
   const shown = [
     ...(await Promise.all(page.frames().map((frame) => frame.innerText("body").catch(() => "")))),
-    ...(await inputsOf(page)).map(([, value]) => value),
+    ...fields,
   ].join("\n");
-  if ((await secretInField(session)) || masked(shown, values) !== shown) {
+  if (
+    (await secretInField(session)) ||
+    fields.some((value) => value !== "" && hidden.has(value)) ||
+    masked(shown, values) !== shown
+  ) {
     throw new Error(
       "browser_screenshot is off while a password or another private value is on the page. Submit the form or leave the page first.",
     );

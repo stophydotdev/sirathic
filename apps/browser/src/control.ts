@@ -11,11 +11,16 @@ export const onSite = (url: string, site: string) => {
   return host === bare || host.endsWith(`.${bare}`) || bare.endsWith(`.${host}`);
 };
 
-const put = (page: Page, target: string, value: string) => {
+const put = (page: Page, target: string, value: string, shown: Set<string>) => {
   const field = page.locator(`aria-ref=${target}`);
   return field
     .fill(value, { timeout: FILL_TIMEOUT_MS })
-    .catch(() => field.selectOption(value, { timeout: FILL_TIMEOUT_MS }))
+    .catch(async () => {
+      await field.selectOption(value, { timeout: FILL_TIMEOUT_MS });
+      for (const label of await field.locator("option:checked").allInnerTexts()) {
+        shown.add(label.trim());
+      }
+    })
     .then(
       () => true,
       () => false,
@@ -43,11 +48,11 @@ export const fill = async (
   const secret = fields.some((field) => field.secret);
   for (const field of fields) (field.secret ? secrets : hidden).add(field.value);
   const results = await fields.reduce<Promise<Filled["fields"]>>(
-    async (done, { target, value }) => [
+    async (done, { target, value, secret: isSecret }) => [
       ...(await done),
       {
         target,
-        filled: await put(page, target, value),
+        filled: await put(page, target, value, isSecret ? secrets : hidden),
       },
     ],
     Promise.resolve([]),
@@ -89,7 +94,9 @@ export const refill = async (
   const results = await fields.reduce<Promise<Filled["fields"]>>(async (done, { from, to }) => {
     const held = session.held.get(from);
     const ok =
-      held !== undefined && onSite(page.url(), held.domain) && (await put(page, to, held.value));
+      held !== undefined &&
+      onSite(page.url(), held.domain) &&
+      (await put(page, to, held.value, session.hidden));
     if (ok) session.held.delete(from);
     return [...(await done), { target: to, filled: ok }];
   }, Promise.resolve([]));
