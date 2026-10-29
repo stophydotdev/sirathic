@@ -218,7 +218,9 @@ export const Composer: FC<{
           <div
             className={cn(
               "min-w-0",
-              row ? "flex-1 px-1.5" : "-order-1 basis-full",
+              row
+                ? "flex-1 px-1.5 max-sm:-order-1 max-sm:basis-full max-sm:px-2.5 max-sm:pt-1.5 max-sm:pb-1"
+                : "-order-1 basis-full",
               !row && (compact ? "px-2.5 pt-1.5 pb-1" : "px-5 pt-3.5"),
             )}
           >
@@ -240,7 +242,7 @@ export const Composer: FC<{
           <div
             className={cn(
               "flex min-w-0 items-center gap-1.5",
-              row && "-order-1",
+              row && "-order-1 max-sm:order-none",
               !compact && "ps-3 pt-2.5 pb-3",
             )}
           >
