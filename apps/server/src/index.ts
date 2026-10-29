@@ -1,16 +1,17 @@
 import { trpcServer } from "@hono/trpc-server";
 import { env } from "@sirathic/env/server";
-import { validateUIMessages } from "ai";
+import { UI_MESSAGE_STREAM_HEADERS, validateUIMessages } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
 import { auth, userFor } from "./account/auth";
 import { startScheduler } from "./automations/runner";
 import { timezone } from "./shared/settings";
-import { startAnswer } from "./chat/answers";
+import { followAnswer, startAnswer } from "./chat/answers";
+import { keepAlive } from "./chat/keepAlive";
 import { refreshSummary } from "./bots/summary";
 import { pickModels } from "./models/pick";
 import { checkNoorUsage, spendNoor } from "./models/usage";
-import { chatResponse } from "./chat/response";
+import { chatResponse, KEEPALIVE_MS } from "./chat/response";
 import { reviewEvery } from "./bots/review";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
@@ -160,14 +161,16 @@ app.post("/api/chat", (c) =>
             console.error(`title not set: ${reasonOf(err)}`);
             return undefined;
           });
-    const answer = startAnswer(by, input.id);
+    const answer = startAnswer(by, input.id, {
+      continuing: validated.at(-1)?.role === "assistant",
+    });
     return chatResponse({
       models,
       modelName,
       messages: validated,
       mode: input.mode,
       abortSignal: answer.signal,
-      settled: answer.settled,
+      consumeSseStream: answer.consumeSseStream,
       spend: spendNoor(by, modelName),
       bot:
         owner === undefined
@@ -197,6 +200,16 @@ app.post("/api/chat", (c) =>
     });
   }),
 );
+
+app.get("/api/chat/:id/stream", async (c) => {
+  const user = await userFor(c.req.raw.headers);
+  const following = user ? followAnswer(user.id, c.req.param("id")) : undefined;
+  if (!following) return c.body(null, 204);
+  return new Response(
+    following.pipeThrough(new TextEncoderStream()).pipeThrough(keepAlive(KEEPALIVE_MS)),
+    { headers: { ...UI_MESSAGE_STREAM_HEADERS, "cache-control": "no-cache, no-transform" } },
+  );
+});
 
 app.route("/api/files", uploadRoutes);
 

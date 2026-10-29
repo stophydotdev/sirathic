@@ -69,7 +69,7 @@ import {
   sirathicTools,
 } from "./tools";
 
-const KEEPALIVE_MS = 15_000;
+export const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
 const SAME_CALLS = 2;
 const STALLED_MS = 120_000;
@@ -193,7 +193,7 @@ export function chatResponse({
   owner,
   automate,
   fileOwner,
-  settled,
+  consumeSseStream = consumeStream,
   spend,
   unattended,
   bot,
@@ -216,7 +216,7 @@ export function chatResponse({
   owner: string | undefined;
   automate: AutomationScope | undefined;
   fileOwner?: string;
-  settled?: () => void;
+  consumeSseStream?: Parameters<typeof createUIMessageStreamResponse>[0]["consumeSseStream"];
   spend?: (counted: number) => void;
   unattended?: true;
   bot?: Promise<BotScope | undefined>;
@@ -501,7 +501,7 @@ export function chatResponse({
   const response = createUIMessageStreamResponse({
     stream,
     headers: { "cache-control": "no-cache, no-transform" },
-    consumeSseStream: ({ stream: copy }) => consumeStream({ stream: copy }).then(settled),
+    consumeSseStream,
   });
   return new Response(response.body?.pipeThrough(keepAlive(KEEPALIVE_MS)) ?? null, response);
 }

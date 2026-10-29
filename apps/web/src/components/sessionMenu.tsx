@@ -17,6 +17,7 @@ import {
   Delete02Icon,
   IncognitoIcon,
   LinkSquare02Icon,
+  Loading03Icon,
   Mail01Icon,
   MailOpen01Icon,
   MoreHorizontalIcon,
@@ -249,8 +250,18 @@ export const SessionRow: FC<{
             >
               {session.title}
             </Link>
-            {session.unread && (
-              <span className="bg-super me-2 size-1.5 shrink-0 rounded-full group-focus-within/session:hidden group-hover/session:hidden group-has-[[data-state=open]]/session:hidden" />
+            {session.working ? (
+              <span
+                role="status"
+                className="text-muted-foreground me-1.5 shrink-0 group-focus-within/session:hidden group-hover/session:hidden group-has-[[data-state=open]]/session:hidden"
+              >
+                <HugeiconsIcon icon={Loading03Icon} className="size-3 motion-safe:animate-spin" />
+                <span className="sr-only">{t("Working")}</span>
+              </span>
+            ) : (
+              session.unread && (
+                <span className="bg-super me-2 size-1.5 shrink-0 rounded-full group-focus-within/session:hidden group-hover/session:hidden group-has-[[data-state=open]]/session:hidden" />
+              )
             )}
             <button
               type="button"
