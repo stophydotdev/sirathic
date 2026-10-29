@@ -232,6 +232,8 @@ export default {
   "Add {count} facts": "{count} پاكىت قوشۇش",
   "Searching your past chats": "ئىلگىرىكى سۆھبەتلىرىڭىز ئىزدەلمەكتە",
   "Searched your past chats": "ئىلگىرىكى سۆھبەتلىرىڭىز ئىزدەلدى",
+  "Searching X": "X دىن ئىزدەۋاتىدۇ",
+  "Searched X": "X دىن ئىزدەلدى",
   "From your {name} account": "{name} ھېساباتىڭىزدىن",
   "No preference": "تاللاش يوق",
   Hanafi: "ھەنەفى",

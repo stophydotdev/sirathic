@@ -247,6 +247,8 @@ export default {
   "Add {count} facts": "Dodaj {count} dejstev",
   "Searching your past chats": "Iščem po tvojih preteklih pogovorih",
   "Searched your past chats": "Iskano po tvojih preteklih pogovorih",
+  "Searching X": "Iskanje po X",
+  "Searched X": "Iskano po X",
   "From your {name} account": "Iz vašega računa {name}",
   "No preference": "Brez nastavitve",
   Hanafi: "Hanefijski",

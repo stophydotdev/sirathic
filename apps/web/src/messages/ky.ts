@@ -232,6 +232,8 @@ export default {
   "Add {count} facts": "{count} факт кошуу",
   "Searching your past chats": "Мурунку маектериңизден изделүүдө",
   "Searched your past chats": "Мурунку маектериңизден изделди",
+  "Searching X": "X'тен издөө",
+  "Searched X": "X'тен изделди",
   "From your {name} account": "{name} аккаунтуңуздан",
   "No preference": "Тандоо жок",
   Hanafi: "Ханафий",

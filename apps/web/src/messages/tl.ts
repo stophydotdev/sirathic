@@ -234,6 +234,8 @@ export default {
   "Add {count} facts": "Magdagdag ng {count} katotohanan",
   "Searching your past chats": "Hinahanap ang mga nakaraang chat mo",
   "Searched your past chats": "Naghanap sa mga nakaraang chat mo",
+  "Searching X": "Naghahanap sa X",
+  "Searched X": "Naghanap sa X",
   "From your {name} account": "Mula sa iyong {name} account",
   "No preference": "Walang pinipili",
   Hanafi: "Hanafi",

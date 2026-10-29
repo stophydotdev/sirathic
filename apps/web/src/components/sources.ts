@@ -77,6 +77,7 @@ const SITES = new Map(
     "seekersguidance.org": { name: "SeekersGuidance", kind: "fatwa" },
     "thehumblei.com": { name: "The Humble I", kind: "fatwa" },
     "virtualmosque.com": { name: "Virtual Mosque", kind: "fatwa" },
+    "x.com": { name: "X", kind: "web" },
     "yaqeeninstitute.org": { name: "Yaqeen Institute", kind: "fatwa" },
   } satisfies Record<string, { name: string; kind: SourceKind }>),
 );

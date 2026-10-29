@@ -229,6 +229,8 @@ export default {
   "Add {count} facts": "افزودن {count} واقعیت",
   "Searching your past chats": "در حال جست‌وجو در گفتگوهای قبلی شما",
   "Searched your past chats": "در گفتگوهای قبلی شما جست‌وجو شد",
+  "Searching X": "در حال جستجو در X",
+  "Searched X": "در X جستجو شد",
   "From your {name} account": "از حساب {name} شما",
   "No preference": "بدون ترجیح",
   Hanafi: "حنفی",

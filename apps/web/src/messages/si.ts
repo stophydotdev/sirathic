@@ -227,6 +227,8 @@ export default {
   "Add {count} facts": "කරුණු {count}ක් එක් කරන්න",
   "Searching your past chats": "ඔබේ පෙර කතාබස් සොයමින්",
   "Searched your past chats": "ඔබේ පෙර කතාබස් සෙවීය",
+  "Searching X": "X හි සොයමින්",
+  "Searched X": "X හි සෙව්වා",
   "From your {name} account": "ඔබේ {name} ගිණුමෙන්",
   "No preference": "මනාපයක් නැත",
   Hanafi: "හනෆී",

@@ -63,6 +63,8 @@ import {
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
 import { relatedQuestions } from "./related";
 import type { SourceKind } from "../shared/sources";
+import { xSearchTools } from "./xSearch";
+import { hasGrok } from "../models/plans";
 import {
   CLARIFYING,
   clarifyingQuestions,
@@ -276,7 +278,7 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [preferred, connectors, inProject, ownSkills, inBot, sourcesNeeded, plugins] =
+      const [preferred, connectors, inProject, ownSkills, inBot, sourcesNeeded, plugins, grok] =
         await Promise.all([
           preferences,
           Promise.race([connected, stopped]),
@@ -287,6 +289,7 @@ export function chatResponse({
           owner !== undefined && !unattended
             ? listConnections(owner).catch(() => [])
             : Promise.resolve([]),
+          owner !== undefined && !unattended && hasGrok(owner).catch(() => false),
         ]);
       const opening = forced === "search" && !sourcesNeeded ? undefined : forced;
       const texts = inProject !== undefined;
@@ -310,6 +313,7 @@ export function chatResponse({
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
+        ...(owner !== undefined && grok && xSearchTools(owner, sources.add)),
         ...(owner !== undefined && !unattended && { [SEND_FEEDBACK]: sendFeedback }),
         ...(owner !== undefined &&
           !unattended &&

@@ -222,6 +222,8 @@ export default {
   "Add {count} facts": "เพิ่ม {count} ข้อเท็จจริง",
   "Searching your past chats": "กำลังค้นหาแชทที่ผ่านมาของคุณ",
   "Searched your past chats": "ค้นหาแชทที่ผ่านมาของคุณแล้ว",
+  "Searching X": "กำลังค้นหาใน X",
+  "Searched X": "ค้นหาใน X แล้ว",
   "From your {name} account": "จากบัญชี {name} ของคุณ",
   "No preference": "ไม่ระบุ",
   Hanafi: "ฮะนะฟี",

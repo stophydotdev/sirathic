@@ -235,6 +235,8 @@ export default {
   "Add {count} facts": "Ajouter {count} faits",
   "Searching your past chats": "Recherche dans vos discussions passées",
   "Searched your past chats": "Recherche faite dans vos discussions passées",
+  "Searching X": "Recherche sur X",
+  "Searched X": "Recherche sur X terminée",
   "From your {name} account": "Depuis votre compte {name}",
   "No preference": "Aucune préférence",
   Hanafi: "Hanafite",
