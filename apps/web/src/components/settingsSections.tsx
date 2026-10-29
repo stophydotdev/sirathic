@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccount } from "@/components/account";
+import { useAccount, ACCOUNT_LABELS } from "@/components/account";
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { type Translate, useT } from "@/components/i18n";
 import { LOCALE_COOKIE, LOCALES, type Locale } from "@/components/locales";
@@ -114,10 +114,10 @@ export const AccountSection: FC = () => {
             )}
             <div className="flex min-w-0 flex-1 flex-col">
               <span className="truncate text-sm">
-                {status.label ?? t(status.via === "google" ? "Google account" : "ChatGPT account")}
+                {status.label ?? t(ACCOUNT_LABELS[status.via].account)}
               </span>
               <span className="text-muted-foreground text-[13px]">
-                {t(status.via === "google" ? "Signed in with Google" : "Signed in with ChatGPT")}
+                {t(ACCOUNT_LABELS[status.via].signedIn)}
               </span>
             </div>
             <button type="button" onClick={() => void signOut()} className={control}>

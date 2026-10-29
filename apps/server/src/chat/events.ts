@@ -7,7 +7,7 @@ import { reasonOf } from "../http";
 import type { Device, feedback, Mode, reportReason } from "../shared/messages";
 import type { User } from "../account/users";
 
-type SignInVia = User["via"];
+export type SignInVia = User["via"] | "github";
 
 type AnswerStats = {
   outcome: UIMessageStreamOutcome["status"];

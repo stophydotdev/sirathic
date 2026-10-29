@@ -5,10 +5,16 @@ import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { createAuthMiddleware } from "better-auth/api";
+import { eq } from "drizzle-orm";
+import { z } from "zod";
 import { deviceSignIn } from "./deviceSignIn";
 import { clientOf } from "../chat/client";
-import { track } from "../chat/events";
+import { type SignInVia, track } from "../chat/events";
 import { forgetIfSignedOut, SESSION_DAYS, type User } from "./users";
+
+const socialProvider = z.enum(["google", "github"]).catch("google");
+
+const socialSignIn = z.object({ provider: socialProvider }).catch({ provider: "google" });
 
 const APP_ORIGINS = env.SITE_URL.startsWith("http://")
   ? ["sirathic://", "exp://**"]
@@ -44,6 +50,10 @@ export const auth = betterAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       prompt: "select_account",
     },
+    github: {
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    },
   },
   advanced: {
     cookiePrefix: "sirathic",
@@ -62,7 +72,7 @@ export const auth = betterAuth({
         name: "signin",
         props: {
           step: "started",
-          via: "google",
+          via: socialSignIn.parse(ctx.body).provider,
           ...clientOf(ctx.headers ?? new Headers()),
         },
       });
@@ -73,7 +83,11 @@ export const auth = betterAuth({
       track(
         {
           name: "signin",
-          props: { step: "completed", via: "google", plan: null },
+          props: {
+            step: "completed",
+            via: socialProvider.parse(ctx.path.slice("/callback/".length)),
+            plan: null,
+          },
         },
         created.user.id,
       );
@@ -97,6 +111,16 @@ export function toUser({
   return accountId
     ? { via: "chatgpt", id, email, image: image ?? null, plan: plan ?? null, accountId }
     : { via: "google", id, email, image: image ?? null };
+}
+
+export async function signInMethod(user: User): Promise<SignInVia> {
+  if (user.via === "chatgpt") return user.via;
+  const linked = await db
+    .select({ provider: accounts.providerId })
+    .from(accounts)
+    .where(eq(accounts.userId, user.id));
+  const providers = new Set(linked.map((row) => row.provider));
+  return providers.has("github") && !providers.has("google") ? "github" : "google";
 }
 
 export async function userFor(headers: Headers): Promise<User | undefined> {
