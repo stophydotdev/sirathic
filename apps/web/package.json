@@ -28,6 +28,7 @@
     "ai": "7.0.154",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.0",
+    "docx": "9.11.0",
     "fflate": "0.8.3",
     "katex": "^0.19.1",
     "lexical": "0.52.0",

@@ -716,4 +716,7 @@ export default {
   "You've used {percent}% of this week's Noor limit. Resets {time}.":
     "استخدمت {percent}% من حد Noor لهذا الأسبوع. يُعاد الضبط {time}.",
   "Sign in with ChatGPT to keep asking with GPT.": "سجّل الدخول عبر ChatGPT لتواصل السؤال مع GPT.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

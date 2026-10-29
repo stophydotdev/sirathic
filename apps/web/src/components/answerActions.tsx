@@ -28,6 +28,7 @@ import {
   type Report,
 } from "@sirathic/server/messages";
 import type { Source } from "@sirathic/server/sources";
+import { answerParts, printAnswer, saveFile, wordAnswer } from "@/lib/answerFile";
 import { api } from "@/lib/trpc";
 import { useAui, useAuiState } from "@assistant-ui/react";
 import { useRouter } from "next/navigation";
@@ -38,7 +39,7 @@ import {
   MoreHorizontalIcon,
   RefreshIcon,
 } from "@hugeicons/core-free-icons";
-import { type FC, type ReactNode, useState } from "react";
+import { type FC, type ReactNode, useRef, useState } from "react";
 import { z } from "zod";
 
 export const actionButton =
@@ -50,20 +51,6 @@ type Feedback = z.infer<typeof feedbackSchema>;
 
 export const messageText = (message: ChatMessage | undefined) =>
   message?.parts.map((part) => (part.type === "text" ? part.text : "")).join("") ?? "";
-
-function download(name: string, markdown: string) {
-  const url = URL.createObjectURL(new Blob([markdown], { type: "text/markdown" }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `${
-    name
-      .replaceAll(/[^\p{L}\p{N} -]/gu, "")
-      .trim()
-      .slice(0, 60) || "answer"
-  }.md`;
-  link.click();
-  URL.revokeObjectURL(url);
-}
 
 export function useAnswer() {
   const chat = useChatState();
@@ -154,21 +141,34 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
   const [model, setModel] = useState<string | undefined>(chosen);
   const t = useT();
 
-  const save = () => {
+  const trigger = useRef<HTMLButtonElement>(null);
+
+  const asked = () => {
     const stored = chat?.chat.messages ?? [];
     const index = stored.findIndex((message) => message.id === messageId);
-    const answer = stored[index];
     const question = stored
       .slice(0, Math.max(index, 0))
       .findLast((message) => message.role === "user");
-    const title = messageText(question);
+    return { title: messageText(question), answer: stored[index] };
+  };
+
+  const saveMarkdown = () => {
+    const { title, answer } = asked();
     const sourceList = sources
       .map((source, i) => `${i + 1}. [${source.title}](${source.url})`)
       .join("\n");
-    download(
-      title,
-      `# ${title}\n\n${messageText(answer)}\n${sourceList ? `\n## ${t("Sources")}\n\n${sourceList}\n` : ""}`,
-    );
+    const markdown = `# ${title}\n\n${messageText(answer)}\n${sourceList ? `\n## ${t("Sources")}\n\n${sourceList}\n` : ""}`;
+    saveFile(title, "md", new Blob([markdown], { type: "text/markdown" }));
+  };
+
+  const shown = () => {
+    const root = trigger.current?.closest("[data-answer]");
+    return {
+      title: asked().title,
+      parts: root ? answerParts(root) : [],
+      sources,
+      heading: t("Sources"),
+    };
   };
 
   const rewrite = () => {
@@ -178,14 +178,23 @@ const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={actionButton} aria-label={t("More actions")}>
+      <DropdownMenuTrigger ref={trigger} className={actionButton} aria-label={t("More actions")}>
         <HugeiconsIcon icon={MoreHorizontalIcon} className="size-3.5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuItem onSelect={save} disabled={messages.length === 0}>
-          <HugeiconsIcon icon={Download04Icon} className="size-4" />
-          {t("Download")}
-        </DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger disabled={messages.length === 0}>
+            <HugeiconsIcon icon={Download04Icon} className="size-4" />
+            {t("Download")}
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent className="w-44">
+            <DropdownMenuItem onSelect={saveMarkdown}>{t("Markdown (.md)")}</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => printAnswer(shown())}>{t("PDF")}</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => void wordAnswer(shown())}>
+              {t("Word (.docx)")}
+            </DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <HugeiconsIcon icon={RefreshIcon} className="size-4" />

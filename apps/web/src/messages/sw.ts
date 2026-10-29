@@ -723,4 +723,7 @@ export default {
     "Umetumia {percent}% ya kikomo cha wiki hii cha Noor. Huwekwa upya {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "Ingia kwa ChatGPT ili uendelee kuuliza kwa GPT.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

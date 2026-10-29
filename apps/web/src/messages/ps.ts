@@ -722,4 +722,7 @@ export default {
     "تاسو د دې اونۍ د Noor د حد {percent}% کارولی. بیا تنظیمیږي {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "د GPT سره د پوښتنو د دوام لپاره په ChatGPT ننوځئ.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

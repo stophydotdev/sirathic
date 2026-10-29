@@ -730,4 +730,7 @@ export default {
     "Nagamit mo na ang {percent}% ng lingguhang limit ng Noor. Magre-reset {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "Mag-sign in gamit ang ChatGPT para patuloy na magtanong gamit ang GPT.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

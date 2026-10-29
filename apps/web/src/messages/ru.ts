@@ -725,4 +725,7 @@ export default {
     "Вы использовали {percent}% недельного лимита Noor. Сброс {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "Войдите через ChatGPT, чтобы продолжить спрашивать с GPT.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

@@ -710,4 +710,7 @@ export default {
   "You've used {percent}% of this week's Noor limit. Resets {time}.":
     "ఈ వారపు Noor పరిమితిలో {percent}% వాడారు. {time}కి రీసెట్ అవుతుంది.",
   "Sign in with ChatGPT to keep asking with GPT.": "GPTతో అడుగుతూనే ఉండటానికి ChatGPTతో సైన్ ఇన్ చేయండి.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

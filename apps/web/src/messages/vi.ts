@@ -720,4 +720,7 @@ export default {
     "Bạn đã dùng {percent}% giới hạn Noor tuần này. Đặt lại {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "Đăng nhập bằng ChatGPT để tiếp tục hỏi với GPT.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

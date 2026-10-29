@@ -727,4 +727,7 @@ export default {
     "Anda sudah memakai {percent}% batas mingguan Noor. Direset {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "Masuk dengan ChatGPT untuk terus bertanya dengan GPT.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

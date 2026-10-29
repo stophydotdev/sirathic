@@ -708,4 +708,7 @@ export default {
   "You've used {percent}% of this week's Noor limit. Resets {time}.":
     "你已用掉本周 Noor 限额的 {percent}%。{time} 重置。",
   "Sign in with ChatGPT to keep asking with GPT.": "使用 ChatGPT 登录，继续用 GPT 提问。",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;
