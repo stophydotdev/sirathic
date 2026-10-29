@@ -19,6 +19,7 @@ import { seal, unseal } from "../account/vault";
 import { publicUrl } from "./address";
 import { emailEditKey, outgoingEmail } from "./outgoingEmail";
 import { type Event, track } from "../chat/events";
+import { fenced } from "../chat/fence";
 import {
   CONNECTOR_IDS,
   CONNECTORS,
@@ -504,6 +505,12 @@ async function connectorTools(owner: string, row: ConnectionRow) {
   };
   const lazy = (name: string, listed: Listed): Listed => ({
     ...listed,
+    toModelOutput: async (options) =>
+      fenced(
+        listed.toModelOutput
+          ? await listed.toModelOutput(options)
+          : { type: "text", value: JSON.stringify(options.output) },
+      ),
     execute: async (args, options) => {
       const connected = await open(AbortSignal.timeout(CONNECT_TIMEOUT_MS));
       return connected

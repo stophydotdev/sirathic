@@ -5,6 +5,7 @@ import { z } from "zod";
 import { wordsOf } from "../plugins/tools";
 import type { Source } from "../shared/sources";
 import type { Cite } from "./cite";
+import { fenced } from "./fence";
 
 const API = "https://api.stophy.dev";
 const MAX_MATCHES = 8;
@@ -190,9 +191,7 @@ export const stophyTools = (cite: Cite) => ({
       if (!body.success) throw new Error(body.error.message);
       return { ...withCitations(cite, body.data, endpoint.title), creditsUsed: body.creditsUsed };
     },
-    toModelOutput: ({ output: { data, creditsUsed } }) => ({
-      type: "text",
-      value: clip(JSON.stringify({ data, creditsUsed }), RESULT_CHARS),
-    }),
+    toModelOutput: ({ output: { data, creditsUsed } }) =>
+      fenced({ type: "text", value: clip(JSON.stringify({ data, creditsUsed }), RESULT_CHARS) }),
   }),
 });

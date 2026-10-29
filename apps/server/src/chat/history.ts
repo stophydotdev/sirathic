@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { ChatMessage } from "../shared/messages";
 import { source } from "../shared/sources";
 import { citations } from "./citations";
+import { fencedText } from "./fence";
 
 const STALE = "Earlier results, removed to save space.";
 const withSources = z.object({ sources: z.array(source) });
@@ -34,7 +35,7 @@ export function shortenEarlierResults(history: ChatMessage[]) {
           [
             part.toolCallId,
             list
-              ? `${STALE} Cited in the answer: ${list}. Search again if you need their full text.`
+              ? `${STALE} Cited in the answer: ${fencedText(list)}. Search again if you need their full text.`
               : `${STALE} Search again if you need them.`,
           ],
         ];
