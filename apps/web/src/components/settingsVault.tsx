@@ -1,6 +1,6 @@
 "use client";
 
-import { useT } from "@/components/i18n";
+import { useLocale, useT } from "@/components/i18n";
 import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
 import { control, Group, Row } from "@/components/settingsControls";
 import {
@@ -15,15 +15,17 @@ import {
   ArrowDown01Icon,
   Key01Icon,
   LockPasswordIcon,
+  UserIcon,
   ViewIcon,
   ViewOffSlashIcon,
 } from "@hugeicons/core-free-icons";
+import { COUNTRY_CODES } from "@sirathic/server/countries";
 import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "react";
 
 type Vault = Awaited<ReturnType<typeof api.vault.list.query>>;
 
-type Adding = { kind: "none" } | { kind: "login" } | { kind: "onePassword" };
+type Adding = { kind: "none" } | { kind: "login" } | { kind: "onePassword" } | { kind: "contact" };
 
 const inputClass =
   "bg-foreground/6 focus-visible:bg-foreground/10 h-10 w-full rounded-xl px-3 text-sm outline-none";
@@ -163,6 +165,127 @@ const NewLogin: FC<{ open: boolean; onClose: () => void; onSaved: () => Promise<
   );
 };
 
+const blankContact = {
+  label: "",
+  fullName: "",
+  address: "",
+  address2: "",
+  city: "",
+  region: "",
+  postalCode: "",
+  country: "",
+  phone: "",
+  email: "",
+};
+
+const NewContact: FC<{ open: boolean; onClose: () => void; onSaved: () => Promise<void> }> = ({
+  open,
+  onClose,
+  onSaved,
+}) => {
+  const [draft, setDraft] = useState(blankContact);
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const t = useT();
+  const locale = useLocale();
+  const regions = new Intl.DisplayNames([locale], { type: "region" });
+  const countries = COUNTRY_CODES.map((code) => ({
+    code,
+    name: regions.of(code) ?? code,
+  })).toSorted((a, b) => a.name.localeCompare(b.name, locale));
+  const ready =
+    draft.label.trim() !== "" &&
+    Object.entries(draft).some(([key, value]) => key !== "label" && value.trim() !== "");
+
+  const close = () => {
+    setDraft(blankContact);
+    setFailed(false);
+    onClose();
+  };
+
+  const save = async (event: FormEvent) => {
+    event.preventDefault();
+    setBusy(true);
+    setFailed(false);
+    const saved = await api.vault.saveContact
+      .mutate({ ...draft, country: COUNTRY_CODES.find((code) => code === draft.country) })
+      .then(
+        () => true,
+        () => false,
+      );
+    setBusy(false);
+    if (!saved) {
+      setFailed(true);
+      return;
+    }
+    close();
+    await onSaved();
+  };
+
+  const field = (key: keyof typeof blankContact, type = "text", placeholder?: string) => (
+    <input
+      type={type}
+      autoComplete="off"
+      placeholder={placeholder}
+      value={draft[key]}
+      onChange={(event) => setDraft({ ...draft, [key]: event.target.value })}
+      className={inputClass}
+    />
+  );
+
+  return (
+    <Modal
+      open={open}
+      onOpenChange={(next) => !next && close()}
+      title={t("New contact info")}
+      className="max-h-dvh max-w-170 overflow-y-auto"
+    >
+      <form onSubmit={(event) => void save(event)} className="grid grid-cols-2 gap-4">
+        <Field label={t("Label")}>{field("label", "text", t("e.g. Home"))}</Field>
+        <Field label={t("Full name")}>{field("fullName")}</Field>
+        <div className="col-span-2">
+          <Field label={t("Address")}>{field("address")}</Field>
+        </div>
+        <div className="col-span-2">
+          <Field label={t("Address line 2")}>{field("address2")}</Field>
+        </div>
+        <Field label={t("City")}>{field("city")}</Field>
+        <Field label={t("State or region")}>{field("region")}</Field>
+        <Field label={t("ZIP or postal code")}>{field("postalCode")}</Field>
+        <Field label={t("Country")}>
+          <select
+            value={draft.country}
+            onChange={(event) => setDraft({ ...draft, country: event.target.value })}
+            className={`${inputClass} ${draft.country === "" ? "text-muted-foreground" : ""}`}
+          >
+            <option value="">{t("Choose a country")}</option>
+            {countries.map(({ code, name }) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <Field label={t("Phone")}>{field("phone", "tel")}</Field>
+        <Field label={t("Email address")}>{field("email", "email")}</Field>
+        {failed && (
+          <p className="text-destructive text-sm col-span-2">
+            {t("Could not save your changes. Try again.")}
+          </p>
+        )}
+        <div className="col-span-2">
+          <Footer
+            hint={t("Your bots can type this in for you")}
+            busy={busy}
+            ready={ready}
+            save={t("Save contact")}
+          />
+        </div>
+      </form>
+    </Modal>
+  );
+};
+
 const ConnectOnePassword: FC<{
   open: boolean;
   onClose: () => void;
@@ -235,7 +358,7 @@ export const VaultSection: FC = () => {
 
   const load = () =>
     api.vault.list.query().then(setVault, () => {
-      setVault({ logins: [], onePassword: false });
+      setVault({ logins: [], onePassword: false, contacts: [] });
     });
 
   useEffect(() => {
@@ -243,7 +366,7 @@ export const VaultSection: FC = () => {
   }, []);
 
   const close = () => setAdding({ kind: "none" });
-  const empty = vault?.logins.length === 0 && !vault.onePassword;
+  const empty = vault?.logins.length === 0 && vault.contacts.length === 0 && !vault.onePassword;
 
   return (
     <Group>
@@ -260,6 +383,10 @@ export const VaultSection: FC = () => {
             <DropdownMenuItem onSelect={() => setAdding({ kind: "login" })}>
               <HugeiconsIcon icon={Key01Icon} className="size-4" />
               {t("Login")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setAdding({ kind: "contact" })}>
+              <HugeiconsIcon icon={UserIcon} className="size-4" />
+              {t("Contact info")}
             </DropdownMenuItem>
             {vault && !vault.onePassword && (
               <DropdownMenuItem onSelect={() => setAdding({ kind: "onePassword" })}>
@@ -290,6 +417,17 @@ export const VaultSection: FC = () => {
           </button>
         </Row>
       ))}
+      {vault?.contacts.map((contact) => (
+        <Row key={contact.id} label={contact.label} hint={contact.fullName}>
+          <button
+            type="button"
+            onClick={() => void api.vault.remove.mutate({ id: contact.id }).then(load)}
+            className={control}
+          >
+            {t("Remove")}
+          </button>
+        </Row>
+      ))}
       {vault?.onePassword && (
         <Row
           label="1Password"
@@ -311,6 +449,7 @@ export const VaultSection: FC = () => {
       </p>
       <NewLogin open={adding.kind === "login"} onClose={close} onSaved={load} />
       <ConnectOnePassword open={adding.kind === "onePassword"} onClose={close} onSaved={load} />
+      <NewContact open={adding.kind === "contact"} onClose={close} onSaved={load} />
     </Group>
   );
 };

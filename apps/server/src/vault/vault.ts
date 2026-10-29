@@ -1,9 +1,10 @@
 import { db } from "@sirathic/db";
 import { vaultLogins } from "@sirathic/db/schema";
 import { isOnSite, siteHost } from "@sirathic/core/web/url";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { StatusError } from "../http";
+import { listContacts } from "./contacts";
 import { checkToken, onePasswordLogin } from "./onePassword";
 import { seal, unseal } from "./seal";
 import { setupKey, totp } from "./totp";
@@ -61,11 +62,11 @@ const rowsOf = (owner: string) =>
       sealed: vaultLogins.sealed,
     })
     .from(vaultLogins)
-    .where(eq(vaultLogins.owner, owner))
+    .where(and(eq(vaultLogins.owner, owner), inArray(vaultLogins.kind, ["login", "onepassword"])))
     .orderBy(vaultLogins.site);
 
 export const listVault = async (owner: string) => {
-  const rows = await rowsOf(owner);
+  const [rows, contacts] = await Promise.all([rowsOf(owner), listContacts(owner)]);
   const logins = await Promise.all(
     rows
       .filter(({ kind }) => kind === "login")
@@ -74,7 +75,7 @@ export const listVault = async (owner: string) => {
         return { id, site, username, twoStep: code !== undefined };
       }),
   );
-  return { logins, onePassword: rows.some(({ kind }) => kind === "onepassword") };
+  return { logins, onePassword: rows.some(({ kind }) => kind === "onepassword"), contacts };
 };
 
 export const removeFromVault = async (owner: string, id: string) => {
@@ -82,7 +83,7 @@ export const removeFromVault = async (owner: string, id: string) => {
     .delete(vaultLogins)
     .where(and(eq(vaultLogins.owner, owner), eq(vaultLogins.id, id)))
     .returning({ id: vaultLogins.id });
-  if (removed.length === 0) throw new StatusError(404, "no such login");
+  if (removed.length === 0) throw new StatusError(404, "no such vault item");
 };
 
 export const disconnectOnePassword = (owner: string) =>

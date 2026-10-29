@@ -8,6 +8,7 @@
     "./automations": "./src/automations/schedule.ts",
     "./catalog": "./src/plugins/catalog.ts",
     "./confirm": "./src/chat/confirm.ts",
+    "./countries": "./src/shared/countries.ts",
     "./email": "./src/plugins/outgoingEmail.ts",
     "./files": "./src/shared/files.ts",
     "./messages": "./src/shared/messages.ts",

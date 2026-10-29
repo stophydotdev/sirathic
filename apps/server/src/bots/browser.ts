@@ -27,6 +27,7 @@ import { z } from "zod";
 import { fencedText } from "../chat/fence";
 import { StatusError } from "../http";
 import { loginFor } from "../vault/vault";
+import { contactTools, VAULT_FILL_CONTACT } from "./contactFill";
 import type { BotScope } from "./tools";
 
 const TIMEOUT_MS = 90_000;
@@ -47,6 +48,7 @@ export const BROWSER_TOOLS = [
   "browser_run_code",
   "browser_batch",
   VAULT_SIGN_IN,
+  VAULT_FILL_CONTACT,
   USER_FORM,
   BROWSER_HELP,
 ] as const;
@@ -132,6 +134,7 @@ export function browserTools(scope: BotScope) {
       inputSchema: z.object({}),
       execute: () => vaultSignIn(scope),
     }),
+    ...contactTools(scope, fillBrowser),
     [USER_FORM]: tool({
       description:
         "Shows the user a Secure Form in the chat for typed details only they have, like a login, a one-time code, an address or card details, and fills what they type straight into the page in your browser. Every value is write-only: you get back only which fields were filled. Take a fresh snapshot first and give every field its target ref from that snapshot, embedded and cross-origin fields included. Set reason to auth for a sign-in. Tell the user in one line that what they type goes straight into the page and you never see it. The form ends your turn, and their receipt comes as their next message. A form with a secret field fills, submits the page's form and clears the secret from the page, so after the receipt take a fresh snapshot to see where it landed. Other forms only fill: after the receipt, take a fresh snapshot, then click the site's own continue button yourself. Set submit only for a one-shot code step whose only field is the code. A dismissed form is a decline, so don't send the same form again.",

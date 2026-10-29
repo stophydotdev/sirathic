@@ -35,10 +35,27 @@ mock.module("@sirathic/core/cache", () => ({
   dropKept: async (key: string) => void savedLists.delete(key),
 }));
 const selects: string[] = [];
+const vaultRows = new Map<string, string[][]>();
+mock.module("../apps/server/src/vault/seal", () => ({
+  seal: async (plain: string) => plain,
+  unseal: async (sealed: string) => sealed,
+}));
 mock.module("@sirathic/db", () => ({
   db: drizzle(
-    async (sql) => {
+    async (sql, params) => {
       if (sql.startsWith("select")) selects.push(sql);
+      if (sql.includes('from "vault_logins"')) {
+        const rows = vaultRows.get(z.string().parse(params[0])) ?? [];
+        if (sql.startsWith('select "sealed"')) {
+          return { rows: rows.filter((row) => row[2] === params[2]).map((row) => [row[3]]) };
+        }
+        if (sql.startsWith('select "id", "site", "sealed"')) {
+          return {
+            rows: rows.filter((row) => row[1] === "contact").map((row) => [row[0], row[2], row[3]]),
+          };
+        }
+        return { rows };
+      }
       return { rows: [connectionRow] };
     },
     { casing: "snake_case" },
@@ -48,6 +65,9 @@ const { connectedTools, disconnect, emailToSend, listConnections, FORGET, mimeOf
   await import("../apps/server/src/plugins/connections");
 const { keepFor } = await import("@sirathic/core/cache");
 const { matchingPlugins, notConnected } = await import("../apps/server/src/plugins/tools");
+const { vaultContact } = await import("../apps/server/src/vault/contacts");
+const { loginFor, listVault } = await import("../apps/server/src/vault/vault");
+const { contactTools } = await import("../apps/server/src/bots/contactFill");
 
 test.each([
   "127.0.0.1",
@@ -392,6 +412,65 @@ test("pages can't take a bot's browser to private or internal hosts", () => {
   ];
   expect(blocked.filter((url) => !isPrivateUrl(url))).toEqual([]);
   expect(isPrivateUrl("https://the-internet.herokuapp.com/login")).toBe(false);
+});
+
+test.each([
+  [{ fullName: "Amina" }, false],
+  [{ label: "  ", phone: "123" }, false],
+  [{ label: "Home" }, false],
+  [{ label: "Home", fullName: "  ", email: "" }, false],
+  [{ label: "Home", email: "not-an-email" }, false],
+  [{ label: "Home", country: "ZZ" }, false],
+  [{ label: "Home", email: "amina@example.com" }, true],
+  [{ label: "Home", country: "GB" }, true],
+])("contact schema validates %j", (input, accepted) => {
+  expect(vaultContact.safeParse(input).success).toBe(accepted);
+});
+
+const homeContact = { label: "Home", fullName: "Amina Private", email: "private@example.com" };
+const homeRow = ["home-id", "contact", "contact:home", JSON.stringify(homeContact)];
+vaultRows.set("contacts", [homeRow]);
+vaultRows.set("choice", [
+  homeRow,
+  ["work-id", "contact", "contact:work", JSON.stringify({ label: "Work", city: "Private City" })],
+]);
+
+test("login lookup and login lists ignore contact rows", async () => {
+  vaultRows.set("login-ignore", [["contact-id", "contact", "example.com", homeRow[3] ?? ""]]);
+  expect(await loginFor("login-ignore", "example.com")).toBeUndefined();
+  expect(await listVault("contacts")).toEqual({
+    logins: [],
+    onePassword: false,
+    contacts: [{ id: "home-id", label: "Home", fullName: "Amina Private" }],
+  });
+});
+
+test("a bot fills a saved contact without seeing it, and gets only labels to choose from", async () => {
+  const sent: string[] = [];
+  const fill: Parameters<typeof contactTools>[1] = async (_bot, form) => {
+    sent.push(...form.fields.map(({ value }) => value));
+    return {
+      fields: form.fields.map(({ target }) => ({ target, filled: true })),
+      submitted: false,
+    };
+  };
+  const run = (owner: string, fields: { part: "email" | "city"; target: string }[]) =>
+    contactTools({ id: "bot", owner }, fill).vault_fill_contact.execute?.(
+      { domain: "example.com", fields },
+      { toolCallId: "contact", messages: [], context: {} },
+    );
+  const receipt = await run("contacts", [
+    { part: "email", target: "e1" },
+    { part: "city", target: "e2" },
+  ]);
+  expect(sent).toEqual(["private@example.com"]);
+  expect(receipt).toEqual({ kind: "filled", filled: ["email"], empty: ["city"], failed: [] });
+  expect(JSON.stringify(receipt)).not.toContain("private@example.com");
+  expect(await run("choice", [{ part: "email", target: "e1" }])).toEqual({
+    kind: "choose",
+    labels: ["Home", "Work"],
+  });
+  expect(await run("nobody", [{ part: "email", target: "e1" }])).toMatchObject({ kind: "missing" });
 });
 
 test("two-step codes match the RFC 6238 test vector", () => {
