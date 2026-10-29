@@ -3,10 +3,8 @@
 import { useT } from "@/components/i18n";
 import { useAccount, useCurrentModel } from "@/components/account";
 import { useEffortName } from "@/components/effortPicker";
-import { MakerIcon } from "@/components/makerIcon";
 import { ModelMenuContent } from "@/components/settings";
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdownMenu";
-import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import type { ComponentProps, FC } from "react";
@@ -28,11 +26,8 @@ export const ModelPicker: FC<ComponentProps<typeof ModelMenuContent>> = ({ side 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger aria-label={`${name}, ${effortName}`} className={composerControl}>
-        {current && (
-          <MakerIcon maker={current.maker} className="text-muted-foreground size-4 shrink-0" />
-        )}
-        <span className={cn("max-w-40 truncate", current && "hidden sm:inline")}>{name}</span>
-        <span className="text-muted-foreground hidden font-normal sm:inline">{effortName}</span>
+        <span className="max-w-40 truncate">{name}</span>
+        <span className="text-muted-foreground font-normal">{effortName}</span>
         <HugeiconsIcon
           icon={ArrowDown01Icon}
           strokeWidth={2.25}
