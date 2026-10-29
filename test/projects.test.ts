@@ -1,27 +1,15 @@
 import { expect, mock, test } from "bun:test";
 import { asSchema } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
-import { profileRejection } from "../apps/server/src/bots/profile";
+import { profileRejection, profileRules } from "../apps/server/src/bots/profile";
 import { fallenOut } from "../apps/server/src/bots/summary";
 import { BOT_HISTORY, recentTurns } from "../apps/server/src/bots/tools";
 import { taughtNote } from "../apps/server/src/bots/notes";
 import { reviewed } from "../apps/server/src/bots/review";
-import { settingsInProject } from "../apps/server/src/projects/rules";
 import { projectUpdate } from "../apps/server/src/projects/projects";
 import { afterReview, isMemorized } from "../apps/server/src/bots/study";
 import { changedFacts, matchingFacts } from "../apps/server/src/account/memory";
 import { containsLink } from "../apps/server/src/shared/projects";
-
-test("a bot's own memory replaces the main memory and the default keeps it", () => {
-  const settings = { madhab: "hanafi", memory: ["Lives in Kigali"] };
-  const project = { projectOnlyMemory: true, memory: ["Studies fiqh"] };
-  expect(settingsInProject(settings, project)).toEqual({
-    madhab: "hanafi",
-    memory: ["Studies fiqh"],
-  });
-  expect(settingsInProject(settings, { ...project, projectOnlyMemory: false })).toEqual(settings);
-  expect(settingsInProject(settings, undefined)).toEqual(settings);
-});
 
 test("a bot name with a link is caught and a plain name is not", () => {
   expect(["http://localhost", "www.example.com", "visit example.com"].map(containsLink)).toEqual([
@@ -125,7 +113,7 @@ test("update_memory corrects a fact by forgetting the old one and writing the ne
 });
 
 test("a bot keeps what it learned in its profile, and a kept entry keeps its source and date", async () => {
-  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a" }, true);
+  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a", saveShared: true }, true);
   await tools.update_memory?.execute?.({ forget: "Now on 114", write: "Now on 112" }, call);
   expect(botProfile.map(({ text, source, at }) => [text, source, at === 1 ? 1 : "new"])).toEqual([
     ["Goal: memorize Juz Amma", "guessed", 1],
@@ -138,11 +126,40 @@ test("a bot keeps what it learned in its profile, and a kept entry keeps its sou
 
 test("a bot's memory refuses a sin they disclosed and saves nothing", async () => {
   const before = botProfile;
-  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a" }, true);
+  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a", saveShared: true }, true);
   expect(await tools.update_memory?.execute?.({ write: "Committed a sin last night" }, call)).toBe(
     "Not saved: the profile never holds a sin, even one they shared. Tell them kindly it was not saved.",
   );
   expect(botProfile).toBe(before);
+});
+
+test("a bot sees the shared facts apart from its own, and saves a fact about the user to the shared list", async () => {
+  expect(
+    profileRules([{ text: "Quizzes five words each evening", source: "said", at: 0 }]),
+  ).toContain(
+    "is their shared memory, which every chat and bot of theirs contributes to.\n\nYour own memory: durable facts",
+  );
+
+  const before = botProfile;
+  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a", saveShared: true }, true);
+  await tools.update_memory?.execute?.({ write: "Is a revert", scope: "user" }, call);
+  expect([accountFacts, botProfile]).toEqual([
+    ["Prays at the mosque on Fridays", "Is 29", "Is a revert"],
+    before,
+  ]);
+  expect(await tools.search_user_memories.execute?.({ query: "revert juz" }, call)).toBe(
+    "- Is a revert (scope: user)\n- Goal: memorize Juz Amma (scope: bot)",
+  );
+});
+
+test("with saving off, a bot keeps even a shared fact to itself", async () => {
+  const shared = accountFacts;
+  const tools = memoryTools({ kind: "bot", id: botId, owner: "user-a", saveShared: false }, true);
+  await tools.update_memory?.execute?.({ write: "Lives in Leeds", scope: "user" }, call);
+  expect([accountFacts, botProfile.map(({ text }) => text).includes("Lives in Leeds")]).toEqual([
+    shared,
+    true,
+  ]);
 });
 
 test("a sign-in's browser and system come from its user agent, and the phone app is the app", () => {

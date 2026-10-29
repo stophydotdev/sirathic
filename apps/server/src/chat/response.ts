@@ -308,7 +308,7 @@ export function chatResponse({
             owner === undefined
               ? undefined
               : inBot
-                ? { kind: "bot", ...inBot }
+                ? { kind: "bot", ...inBot, saveShared: preferred.saveMemory }
                 : { kind: "account", owner },
             inBot !== undefined || preferred.saveMemory,
           )),
