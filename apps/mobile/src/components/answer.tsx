@@ -8,10 +8,10 @@ import { Renderer, useMarkdown } from "react-native-marked";
 import { z } from "zod";
 import { type Now, nowOf, summaryOf, toolOf } from "@/lib/research";
 import {
+  citationRuns,
   faviconUrl,
   groupedCitations,
   relatedOf,
-  siteName,
   sourcesOf,
   textOf,
 } from "@/lib/sources";
@@ -29,10 +29,11 @@ import {
   World,
 } from "./icons";
 import { Fold, Swap, Turn } from "./motion";
+import { Cited, CitationPill, CitationSheet } from "./citation";
 import { SourcesSheet } from "./sources-sheet";
 import { AutomationCard, isCardTool } from "./chat-cards";
 
-const CITATION = /^(0|\+\d+)$/u;
+const CITATION = /^c\d+$/u;
 
 class AnswerRenderer extends Renderer {
   link(children: string | ReactNode[], href: string) {
@@ -45,18 +46,7 @@ class AnswerRenderer extends Renderer {
         </Text>
       );
     }
-    const name = siteName(href);
-    return (
-      <Text
-        key={this.getKey()}
-        onPress={open}
-        className="bg-muted text-muted-foreground font-medium text-xs"
-      >
-        {"\u00a0\u00a0"}
-        <Image source={{ uri: faviconUrl(href) }} className="size-3 rounded-full" />
-        {`\u00a0${name.charAt(0).toUpperCase()}${name.slice(1)}${label === "0" ? "" : `\u00a0${label}`}\u00a0\u00a0`}
-      </Text>
-    );
+    return <CitationPill key={this.getKey()} href={href} run={Number(label.slice(1))} />;
   }
 }
 
@@ -214,6 +204,8 @@ export const Answer: FC<{
   const sources = useMemo(() => sourcesOf(message), [message]);
   const related = relatedOf(message);
   const [showSources, setShowSources] = useState(false);
+  const [cited, setCited] = useState<string[]>();
+  const runs = useMemo(() => ({ runs: citationRuns(text), show: setCited }), [text]);
   const [copied, setCopied] = useState(false);
   const working = streaming && text === "";
 
@@ -233,7 +225,10 @@ export const Answer: FC<{
           ? [<AutomationCard key={index} tool={tool.name} output={tool.output} />]
           : [];
       })}
-      {text !== "" && elements}
+      {text !== "" && <Cited value={runs}>{elements}</Cited>}
+      {cited && (
+        <CitationSheet urls={cited} sources={sources} onClose={() => setCited(undefined)} />
+      )}
       {!streaming && text !== "" && (
         <View className="mt-3 flex-row items-center gap-0.5">
           <Pressable accessibilityLabel="Copy response" onPress={copy} className={actionButton}>
