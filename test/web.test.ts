@@ -15,6 +15,7 @@ import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 import { refreshing } from "../apps/web/src/lib/refreshing";
+import { question } from "../apps/server/src/shared/messages";
 import { importedFacts } from "../apps/web/src/components/memoryImport";
 import { blobMotion } from "../packages/app/src/blob/engine";
 import { BODIES, bodyOf } from "../packages/app/src/blob/shape";
@@ -334,4 +335,13 @@ test.each([
   ["todoist_update_task", { id: "1" }, "Confirm", false],
 ])("%s asks to %s, and wipe-outs and payments are red", (toolName, args, label, danger) => {
   expect(approveAs({ toolName, args })).toMatchObject({ label, danger });
+});
+
+test("a question card saved before multi-pick still opens as a single pick", () => {
+  expect(
+    question.safeParse({ question: "Which school?", options: ["Hanafi", "Maliki"] }).data,
+  ).toEqual({
+    question: "Which school?",
+    options: ["Hanafi", "Maliki"],
+  });
 });

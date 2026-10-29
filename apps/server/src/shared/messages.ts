@@ -52,6 +52,7 @@ export const ANSWER_MAX = 80;
 export const question = z.object({
   question: z.string().trim().min(1).max(120),
   options: z.array(z.string().trim().min(1).max(ANSWER_MAX)).min(2).max(5),
+  multiple: z.boolean().optional(),
 });
 
 export const questionAnswer = z.enum(["option", "own", "dismissed"]);

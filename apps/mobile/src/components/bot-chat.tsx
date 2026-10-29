@@ -185,7 +185,7 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
             (!bot.instructions || reply !== undefined) && (
               <QuestionCard
                 question="What should I focus on?"
-                options={STARTER_REPLIES}
+                options={[...STARTER_REPLIES]}
                 reply={reply}
                 busy={busy}
                 onAnswer={ask}
