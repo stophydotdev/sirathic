@@ -25,6 +25,7 @@ const nextConfig: NextConfig = {
       "/api/chat",
       "/api/chat/:id/stream",
       "/api/files/:path*",
+      "/api/bots/:path*",
       "/api/auth/:path*",
       "/api/connectors/:path*",
       "/auth/:path*",

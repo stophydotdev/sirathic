@@ -6,6 +6,7 @@ import { BotAvatar } from "@/components/botAvatar";
 import { BotPickerPanel } from "@/components/botPicker";
 import { BotPlugins } from "@/components/botPlugins";
 import { BotProgress } from "@/components/botProgress";
+import { BrowserPreview } from "@/components/browserView";
 import { RoutineDetail, RoutineList, useRoutines } from "@/components/botRoutines";
 import { useT } from "@/components/i18n";
 import { type Project, projectNameError, useProjects } from "@/components/projects";
@@ -103,6 +104,7 @@ export const BotPanel: FC<{ bot: Project }> = ({ bot }) => {
           />
         ) : (
           <>
+            <BrowserPreview />
             <Popover>
               <PopoverTrigger
                 aria-label={t("Edit bot avatar")}

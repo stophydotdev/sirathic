@@ -9,7 +9,8 @@ import { Mark } from "@/components/logo";
 import { useProjects } from "@/components/projects";
 import { useBot } from "@/components/botHome";
 import { BotList } from "@/components/botNav";
-import { BotPanel } from "@/components/botSettings";
+import { BotPanel, useBotPanel } from "@/components/botSettings";
+import { BrowserScreen } from "@/components/browserView";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
@@ -47,6 +48,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const keys = useKeyNames();
   const unseenRuns = useUnseenRuns(useAccount((s) => s.status?.signedIn));
   const bot = useBot();
+  const panelOpen = useBotPanel((s) => s.open);
   const startChat = useStartChat();
   const newChatClick = useNewChatClick();
 
@@ -246,6 +248,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 
       <div className="min-w-0 flex-1 overflow-hidden print:overflow-visible">{children}</div>
       {bot && <BotPanel bot={bot} />}
+      {bot && <BrowserScreen botId={bot.id} panelOpen={panelOpen} />}
       <SettingsDialog />
       <SearchDialog open={searching} onOpenChange={setSearching} />
       <ShortcutsSheet />

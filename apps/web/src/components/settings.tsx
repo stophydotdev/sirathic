@@ -8,6 +8,7 @@ import { AboutSection } from "@/components/settingsAbout";
 import { CustomizeSection } from "@/components/settingsCustomize";
 import { DataSection } from "@/components/settingsData";
 import { NotificationsSection } from "@/components/settingsNotifications";
+import { VaultSection } from "@/components/settingsVault";
 import { OwnPlans, PLANS } from "@/components/planConnect";
 import { AccountSection, AppearanceSection, BehaviorSection } from "@/components/settingsSections";
 import {
@@ -25,6 +26,7 @@ import {
   Cursor01Icon,
   Database01Icon,
   InformationCircleIcon,
+  LockPasswordIcon,
   Notification01Icon,
   PaintBrush01Icon,
   SlidersHorizontalIcon,
@@ -41,6 +43,7 @@ const SECTIONS = [
   "behavior",
   "notifications",
   "customize",
+  "vault",
   "data",
   "about",
 ] as const;
@@ -67,6 +70,12 @@ const SECTION_DETAILS = {
     group: "Sirathic",
     icon: SlidersHorizontalIcon,
     Body: CustomizeSection,
+  },
+  vault: {
+    name: "Vault",
+    group: "Sirathic",
+    icon: LockPasswordIcon,
+    Body: VaultSection,
   },
   data: {
     name: "Data controls",

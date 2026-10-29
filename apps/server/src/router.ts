@@ -8,6 +8,7 @@ import { pluginRoutes } from "./plugins/routes";
 import { projectRoutes } from "./projects/routes";
 import { skillRoutes } from "./skills/routes";
 import { t } from "./trpc";
+import { vaultRoutes } from "./vault/routes";
 
 export const appRouter = t.router({
   ...chatRoutes,
@@ -19,6 +20,7 @@ export const appRouter = t.router({
   ...emailRoutes,
   ...skillRoutes,
   ...fileRoutes,
+  ...vaultRoutes,
 });
 
 export type AppRouter = typeof appRouter;

@@ -638,3 +638,27 @@ export const botNotes = pgTable(
     }).onDelete("cascade"),
   ],
 );
+
+export const vaultLogins = pgTable(
+  "vault_logins",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    owner: text().notNull(),
+    kind: text().$type<"login" | "onepassword">().notNull().default("login"),
+    site: text().notNull(),
+    sealed: text().notNull(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    uniqueIndex("vault_logins_owner_site").on(table.owner, table.site),
+    foreignKey({
+      name: "vault_logins_owner_fkey",
+      columns: [table.owner],
+      foreignColumns: [users.id],
+    }).onDelete("cascade"),
+  ],
+);

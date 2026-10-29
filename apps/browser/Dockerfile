@@ -17,6 +17,7 @@ COPY packages/env/package.json packages/env/
 RUN bun install --frozen-lockfile --production --filter @sirathic/browser
 
 COPY apps/browser/src apps/browser/src
+RUN mkdir -p /data/logins
 WORKDIR /repo/apps/browser
 
 ENV NODE_ENV=production
@@ -25,4 +26,4 @@ ENV DISPLAY=:99
 EXPOSE 8080
 
 ENTRYPOINT ["tini", "--"]
-CMD ["sh", "-c", "Xvfb :99 -screen 0 1280x800x24 -nolisten tcp >/dev/null 2>&1 & exec bun src/index.ts"]
+CMD ["sh", "-c", "rm -f /tmp/.X99-lock && Xvfb :99 -screen 0 1280x800x24 -nolisten tcp >/dev/null 2>&1 & exec bun src/index.ts"]

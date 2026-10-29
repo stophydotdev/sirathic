@@ -1,5 +1,7 @@
 import { type Browser, type BrowserContext, chromium, type Page } from "patchright";
-import { BLOCKED_URLS } from "./blocked";
+import { BLOCKED_URLS, isPrivateUrl } from "./blocked";
+import { forgetLogins, saveLogins, savedLogins } from "./logins";
+import { VIEWPORT } from "./protocol";
 
 const CHROME_PATH = "/usr/bin/google-chrome-stable";
 const ARGS = [
@@ -15,14 +17,18 @@ const ARGS = [
   "--mute-audio",
   "--no-first-run",
 ];
-const VIEWPORT = { width: 1280, height: 800 };
 const MAX_SESSIONS = 8;
-const SESSION_IDLE_MS = 5 * 60_000;
+const SESSION_IDLE_MS = 15 * 60_000;
+const SAVE_DELAY_MS = 1_000;
 const BROWSER_IDLE_MS = 60_000;
 const SWEEP_MS = 15_000;
 
 export class BusyError extends Error {
   override name = "BusyError";
+}
+
+export class ClosedError extends Error {
+  override name = "ClosedError";
 }
 
 export type Session = {
@@ -33,6 +39,8 @@ export type Session = {
   queue: Promise<unknown>;
   inFlight: number;
   idleSince: number;
+  saveTimer?: ReturnType<typeof setTimeout>;
+  secrets: Set<string>;
 };
 
 export const quietFor = (session: Session) =>
@@ -59,16 +67,32 @@ const launched = () => {
   return launching;
 };
 
-const blockAdsAndTrackers = async (page: Page) => {
+const guard = async (page: Page) => {
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("Network.enable");
   await cdp.send("Network.setBlockedURLs", { urls: BLOCKED_URLS });
+  cdp.on("Fetch.requestPaused", ({ requestId, request }) => {
+    void (
+      isPrivateUrl(request.url)
+        ? cdp.send("Fetch.failRequest", { requestId, errorReason: "BlockedByClient" })
+        : cdp.send("Fetch.continueRequest", { requestId })
+    ).catch(() => undefined);
+  });
+  await cdp.send("Fetch.enable", {
+    patterns: [{ urlPattern: "*", resourceType: "Document", requestStage: "Request" }],
+  });
 };
 
 const open = async (key: string): Promise<Session> => {
-  const context = await (await launched()).newContext({ viewport: VIEWPORT, locale: "en-US" });
+  const context = await (
+    await launched()
+  ).newContext({
+    viewport: VIEWPORT,
+    locale: "en-US",
+    storageState: await savedLogins(key),
+  });
   const page = await context.newPage();
-  await blockAdsAndTrackers(page);
+  await guard(page);
   const session: Session = {
     context,
     page,
@@ -77,6 +101,7 @@ const open = async (key: string): Promise<Session> => {
     queue: Promise.resolve(),
     inFlight: 0,
     idleSince: Date.now(),
+    secrets: new Set(),
   };
   const finished = () => {
     session.inFlight = Math.max(0, session.inFlight - 1);
@@ -89,11 +114,34 @@ const open = async (key: string): Promise<Session> => {
   context.on("requestfailed", finished);
   context.on("page", (opened) => {
     session.page = opened;
-    void blockAdsAndTrackers(opened).catch(() => undefined);
+    void guard(opened).catch(() => undefined);
   });
   context.on("close", () => sessions.delete(key));
   return session;
 };
+
+const saveSoon = (key: string, session: Session) => {
+  clearTimeout(session.saveTimer);
+  session.saveTimer = setTimeout(
+    () => void saveLogins(key, session.context).catch(() => undefined),
+    SAVE_DELAY_MS,
+  );
+};
+
+const queued = async <T>(key: string, session: Session, work: (session: Session) => Promise<T>) => {
+  if (session.page.isClosed()) {
+    session.page = session.context.pages().at(-1) ?? (await session.context.newPage());
+  }
+  const run = session.queue.then(() => work(session));
+  session.queue = run.catch(() => undefined);
+  session.lastUsed = Date.now();
+  return run.finally(() => {
+    session.lastUsed = Date.now();
+    saveSoon(key, session);
+  });
+};
+
+export const existing = (key: string) => sessions.get(key)?.catch(() => undefined);
 
 export const inSession = async <T>(key: string, work: (session: Session) => Promise<T>) => {
   let pending = sessions.get(key);
@@ -105,16 +153,25 @@ export const inSession = async <T>(key: string, work: (session: Session) => Prom
     sessions.set(key, pending);
     pending.catch(() => sessions.delete(key));
   }
-  const session = await pending;
-  if (session.page.isClosed()) {
-    session.page = session.context.pages().at(-1) ?? (await session.context.newPage());
-  }
-  const run = session.queue.then(() => work(session));
-  session.queue = run.catch(() => undefined);
-  session.lastUsed = Date.now();
-  return run.finally(() => {
-    session.lastUsed = Date.now();
-  });
+  return queued(key, await pending, work);
+};
+
+export const inOpenSession = async <T>(key: string, work: (session: Session) => Promise<T>) => {
+  const session = await existing(key);
+  if (!session) throw new ClosedError("Your bot's browser is closed.");
+  return queued(key, session, work);
+};
+
+const closed = async (key: string, session: Session) => {
+  clearTimeout(session.saveTimer);
+  sessions.delete(key);
+  await session.context.close().catch(() => undefined);
+};
+
+export const forget = async (key: string) => {
+  const session = await existing(key);
+  if (session) await closed(key, session);
+  await forgetLogins(key);
 };
 
 const sweep = async () => {
@@ -123,8 +180,8 @@ const sweep = async () => {
     [...sessions].map(async ([key, pending]) => {
       const session = await pending.catch(() => undefined);
       if (session && now - session.lastUsed > SESSION_IDLE_MS) {
-        sessions.delete(key);
-        await session.context.close().catch(() => undefined);
+        await saveLogins(key, session.context).catch(() => undefined);
+        await closed(key, session);
       }
     }),
   );
