@@ -2,7 +2,7 @@
 
 import { askNotifications } from "@/components/automationAlerts";
 import { type Automation, localZone } from "@/components/automationText";
-import { type Draft, isComplete, scheduleOf } from "@/components/automationDraft";
+import { type Draft, isComplete, scheduleOf } from "@sirathic/app/automationDraft";
 import { TriggerField } from "@/components/automationTrigger";
 import { useT } from "@/components/i18n";
 import {

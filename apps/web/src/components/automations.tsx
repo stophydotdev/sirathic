@@ -1,7 +1,7 @@
 "use client";
 
 import { useAccount } from "@/components/account";
-import { blankDraft, type Draft, draftOf } from "@/components/automationDraft";
+import { blankDraft, type Draft, draftOf } from "@sirathic/app/automationDraft";
 import { AutomationEditor } from "@/components/automationEditor";
 import { AutomationIdeas } from "@/components/automationIdeas";
 import { type Automation, describeSchedule, formatInstant } from "@/components/automationText";

@@ -1,5 +1,5 @@
-import { blend, clamp, lerp, pathOf, radiusAt, rounded } from "@/lib/blob/shape";
-import { arcFrame, type BlobState, easeOutQuint, type Pose, POSES } from "@/lib/blob/states";
+import { blend, clamp, lerp, pathOf, radiusAt, rounded } from "./shape";
+import { arcFrame, type BlobState, easeOutQuint, type Pose, POSES } from "./states";
 
 const SCALE = 100;
 

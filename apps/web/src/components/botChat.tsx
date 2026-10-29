@@ -3,7 +3,7 @@
 import { actionButton, useAnswer } from "@/components/answerActions";
 import { ReplyError } from "@/components/answer";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
-import { bubblesOf } from "@/components/botBubbles";
+import { bubblesOf } from "@sirathic/app/botBubbles";
 import { BotEvent, isBotEvent } from "@/components/botEvents";
 import { STAMP_GAP, stampText } from "@/components/botStamp";
 import { AttachmentChip } from "@/components/composer";

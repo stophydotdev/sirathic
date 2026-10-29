@@ -1,4 +1,4 @@
-import { EGG, HEXAGON, TRIANGLE } from "@/lib/blob/profiles";
+import { EGG, HEXAGON, TRIANGLE } from "./profiles";
 import {
   circle,
   clamp,
@@ -7,7 +7,7 @@ import {
   profileOf,
   rounded,
   type Silhouette,
-} from "@/lib/blob/shape";
+} from "./shape";
 
 const TAU = Math.PI * 2;
 const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;

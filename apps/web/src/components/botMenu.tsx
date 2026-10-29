@@ -1,6 +1,6 @@
 "use client";
 
-import { sectionNames } from "@/components/botGroups";
+import { sectionNames } from "@sirathic/app/botGroups";
 import { useBotPanel } from "@/components/botSettings";
 import { useT } from "@/components/i18n";
 import { DeleteProjectDialog, TextDialog } from "@/components/projectMenu";

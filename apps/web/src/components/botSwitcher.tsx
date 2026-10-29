@@ -1,7 +1,7 @@
 "use client";
 
 import { BotAvatar } from "@/components/botAvatar";
-import { botLabel } from "@/components/botGroups";
+import { botLabel } from "@sirathic/app/botGroups";
 import { useT } from "@/components/i18n";
 import { type Project, useProjects } from "@/components/projects";
 import { cn } from "@/lib/utils";

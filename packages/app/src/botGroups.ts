@@ -10,10 +10,11 @@ export const SIDEBAR_LIMIT = 6;
 export const botLabel = (bot: { name: string; title: string }) =>
   bot.title ? `${bot.name} · ${bot.title}` : bot.name;
 
-export const sectionNames = (bots: Grouped[]) =>
-  [...new Set(bots.flatMap((bot) => (bot.section ? [bot.section] : [])))].toSorted((a, b) =>
-    a.localeCompare(b),
-  );
+export const sectionNames = (bots: Grouped[]) => {
+  const names = [...new Set(bots.flatMap((bot) => (bot.section ? [bot.section] : [])))];
+  names.sort((a, b) => a.localeCompare(b));
+  return names;
+};
 
 export function botGroups<Bot extends Grouped>(bots: Bot[], limit: number) {
   const shown = bots.filter((bot) => !bot.hidden);

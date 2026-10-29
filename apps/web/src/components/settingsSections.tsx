@@ -4,13 +4,7 @@ import { useAccount } from "@/components/account";
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { type Translate, useT } from "@/components/i18n";
 import { LOCALE_COOKIE, LOCALES, type Locale } from "@/components/locales";
-import {
-  ANSWER_FONTS,
-  PALETTES,
-  THEME_NAMES,
-  THEMES,
-  usePreferences,
-} from "@/components/preferences";
+import { THEME_NAMES, usePreferences } from "@/components/preferences";
 import { useSettings } from "@/components/settings";
 import { Choice, control, Group, Row, Segmented } from "@/components/settingsControls";
 import { DeleteAccountRow, DevicesGroup } from "@/components/settingsDevices";
@@ -21,6 +15,7 @@ import { useKeyNames } from "@/lib/keys";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/messages/en";
+import { ANSWER_FONTS, PALETTES, THEMES } from "@sirathic/app/preferences";
 import { MODES } from "@sirathic/server/messages";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AlertCircleIcon, UserIcon } from "@hugeicons/core-free-icons";

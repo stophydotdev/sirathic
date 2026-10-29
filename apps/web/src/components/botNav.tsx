@@ -2,7 +2,7 @@
 
 import { useAccount } from "@/components/account";
 import { BotAvatar } from "@/components/botAvatar";
-import { botGroups, botLabel, SIDEBAR_LIMIT } from "@/components/botGroups";
+import { botGroups, botLabel, SIDEBAR_LIMIT } from "@sirathic/app/botGroups";
 import { BotMenu } from "@/components/botMenu";
 import { BotSwitcher } from "@/components/botSwitcher";
 import { whenOf } from "@/components/botTime";
