@@ -5,6 +5,7 @@ import { bodyOf } from "@sirathic/app/blob/shape";
 import type { BlobState } from "@sirathic/app/blob/states";
 import { cn } from "@/lib/utils";
 import type { BOT_COLORS } from "@sirathic/server/projects";
+import { useReducedMotion } from "motion/react";
 import { type FC, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 
 type BotColor = (typeof BOT_COLORS)[number];
@@ -30,23 +31,62 @@ const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const BUSY = new Set<BlobState>(["thinking", "searching", "working", "writing"]);
 
-const SITE_CYCLE: readonly (readonly [BlobState, number])[] = [
-  ["ready", 2.4],
-  ["thinking", 2.6],
-  ["ready", 3.4],
-  ["failed", 2.4],
-  ["asking", 2.2],
-  ["stopped", 2],
-  ["paused", 2.4],
-  ["egg", 1.8],
-  ["hexagon", 1.6],
-  ["working", 2],
-  ["searching", 3.4],
-  ["done", 2.6],
-  ["writing", 2.4],
-];
+const LOOKS = [
+  [-1, 0, 1.4],
+  [0, 0, 1.6],
+  [1, 0.1, 1.2],
+  [-0.7, -0.7, 0.9],
+  [0, 0, 2.4],
+  [0.8, 0.4, 1],
+  [0, 0, 2.2],
+] as const;
+const TURN_SECONDS = 0.38;
+const LOOK_SECONDS = LOOKS.reduce((sum, [, , seconds]) => sum + seconds, 0);
+const LOOK_KEYS = LOOKS.flatMap(([x, y, seconds], index) => {
+  const start = LOOKS.slice(0, index).reduce((sum, [, , held]) => sum + held, 0);
+  return [
+    { at: (start + TURN_SECONDS) / LOOK_SECONDS, x, y, spline: "0.65 0 0.35 1" },
+    { at: (start + seconds) / LOOK_SECONDS, x, y, spline: "0 0 1 1" },
+  ];
+});
 
-const useBlob = (body: readonly number[], state: BlobState, start: number) => {
+const track = (place: (x: number, y: number) => string) => ({
+  values: [place(0, 0), ...LOOK_KEYS.map(({ x, y }) => place(x, y))].join(";"),
+  keyTimes: [0, ...LOOK_KEYS.map(({ at }) => Math.min(1, Number(at.toFixed(4))))].join(";"),
+  keySplines: LOOK_KEYS.map(({ spline }) => spline).join(";"),
+  calcMode: "spline",
+  repeatCount: "indefinite",
+});
+
+const SHADE_X = (x: number) => String(x * 55);
+const SHADE_Y = (_: number, y: number) => String(y * 45 - 10);
+const LEAN = (x: number, y: number) => `${x * 5} ${y * 3}`;
+const GLEAM = (x: number, y: number) => `${x * 16} ${y * 10}`;
+
+type Look = { kind: "roam"; seconds: number } | { kind: "fixed"; x: number; y: number };
+
+const ROAM = { kind: "roam", seconds: LOOK_SECONDS } as const;
+const SCAN = { kind: "roam", seconds: LOOK_SECONDS / 2 } as const;
+const AHEAD = { kind: "fixed", x: 0, y: 0 } as const;
+const DOWN = { kind: "fixed", x: 0, y: 0.85 } as const;
+
+const LOOK_OF = {
+  ready: ROAM,
+  egg: ROAM,
+  hexagon: ROAM,
+  opening: ROAM,
+  done: ROAM,
+  thinking: SCAN,
+  searching: SCAN,
+  working: SCAN,
+  writing: SCAN,
+  asking: AHEAD,
+  stopped: AHEAD,
+  failed: DOWN,
+  paused: DOWN,
+} satisfies Record<BlobState, Look>;
+
+const useBlob = (body: readonly number[], state: BlobState) => {
   const motion = useMemo(() => blobMotion(body, "ready"), [body]);
   const [frame, setFrame] = useState<BlobFrame>(() => motion.frame(0));
   const raf = useRef(0);
@@ -74,26 +114,9 @@ const useBlob = (body: readonly number[], state: BlobState, start: number) => {
   useEffect(() => {
     const finished = state === "ready" && BUSY.has(previous.current);
     previous.current = state;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const stop = () => {
-      clearTimeout(timer);
-      cancelAnimationFrame(raf.current);
-    };
-    if (state !== "ready" || reduced()) {
-      play(finished ? "done" : state);
-      return stop;
-    }
-    const run = (index: number) => {
-      const [next, seconds] = SITE_CYCLE[index % SITE_CYCLE.length];
-      play(next);
-      timer = setTimeout(() => run(index + 1), seconds * 1000);
-    };
-    if (finished) {
-      play("done");
-      timer = setTimeout(() => run(start), 2600);
-    } else run(start);
-    return stop;
-  }, [play, state, start]);
+    play(finished ? "done" : state);
+    return () => cancelAnimationFrame(raf.current);
+  }, [play, state]);
 
   return frame;
 };
@@ -108,12 +131,17 @@ export const BotAvatar: FC<{
   className?: string;
 }> = ({ color, body, seed, state = "ready", className }) => {
   const id = useId().replace(/\W/g, "");
-  const frame = useBlob(
-    bodyOf(body, seed),
-    state,
-    [...seed].reduce((sum, char) => sum + char.charCodeAt(0), 0) % SITE_CYCLE.length,
-  );
+  const outline = bodyOf(body, seed);
+  const resting = useMemo(() => blobMotion(outline, "ready").frame(1), [outline]);
+  const frame = useBlob(outline, state);
+  const look: Look = useReducedMotion() ? AHEAD : LOOK_OF[state];
+  const begin = `-${([...seed].reduce((sum, char) => sum + char.charCodeAt(0), 0) % LOOK_SECONDS).toFixed(2)}s`;
   const area = { x: -BOX, y: -BOX, width: BOX * 2, height: BOX * 2 };
+  const animate = (place: (x: number, y: number) => string, seconds: number) => ({
+    ...track(place),
+    dur: `${seconds}s`,
+    begin,
+  });
   const dots = frame.dots.map((dot, index) =>
     dot.d ? (
       <path
@@ -156,13 +184,31 @@ export const BotAvatar: FC<{
     >
       <defs>
         <mask id={`${id}body`} maskUnits="userSpaceOnUse" {...area}>
-          <path d={frame.body} fill="#fff" />
+          <path d={resting.body} fill="#fff" />
           {frame.notif && <circle cx={frame.notif.x} cy={frame.notif.y} r={frame.notif.notch} />}
         </mask>
         <mask id={`${id}behind`} maskUnits="userSpaceOnUse" {...area}>
           <rect {...area} fill="#fff" />
-          <path d={frame.body} />
+          <path d={resting.body} />
         </mask>
+        <radialGradient
+          id={`${id}shade`}
+          gradientUnits="userSpaceOnUse"
+          r={175}
+          cx={look.kind === "fixed" ? SHADE_X(look.x) : 0}
+          cy={look.kind === "fixed" ? SHADE_Y(look.x, look.y) : -10}
+        >
+          {look.kind === "roam" && (
+            <>
+              <animate attributeName="cx" {...animate(SHADE_X, look.seconds)} />
+              <animate attributeName="cy" {...animate(SHADE_Y, look.seconds)} />
+            </>
+          )}
+          <stop offset={0} stopColor="#fff" stopOpacity={0.16} />
+          <stop offset={0.45} stopColor="#fff" stopOpacity={0} />
+          <stop offset={0.7} stopColor="#000" stopOpacity={0.18} />
+          <stop offset={1} stopColor="#000" stopOpacity={0.55} />
+        </radialGradient>
         {frame.arcs.map((arc) => (
           <linearGradient
             key={arc.id}
@@ -183,21 +229,54 @@ export const BotAvatar: FC<{
         {rings("back")}
         {frame.dotsBehind && dots}
       </g>
-      <g mask={`url(#${id}body)`}>
-        <rect {...area} fill="currentColor" />
-        {frame.shine && (
-          <path
-            d={frame.shine.d}
-            fill="none"
-            stroke="#fff"
-            strokeWidth={13}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity={frame.shine.opacity}
+      <g transform={look.kind === "fixed" ? `translate(${LEAN(look.x, look.y)})` : undefined}>
+        {look.kind === "roam" && (
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            {...animate(LEAN, look.seconds)}
           />
         )}
+        <g transform="translate(0 100)">
+          <g>
+            {look.kind === "roam" && (
+              <animateTransform
+                attributeName="transform"
+                type="scale"
+                values="1 1;1 1;1.05 0.91;1 1"
+                keyTimes="0;0.97;0.985;1"
+                dur="7.3s"
+                begin={begin}
+                repeatCount="indefinite"
+              />
+            )}
+            <g transform="translate(0 -100)" mask={`url(#${id}body)`}>
+              <rect {...area} fill="currentColor" />
+              <rect {...area} fill={`url(#${id}shade)`} />
+              <path
+                d={resting.shine?.d}
+                fill="none"
+                stroke="#fff"
+                strokeWidth={13}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity={resting.shine?.opacity}
+                transform={
+                  look.kind === "fixed" ? `translate(${GLEAM(look.x, look.y)})` : undefined
+                }
+              >
+                {look.kind === "roam" && (
+                  <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    {...animate(GLEAM, look.seconds)}
+                  />
+                )}
+              </path>
+            </g>
+          </g>
+        </g>
       </g>
-      {!frame.dotsBehind && dots}
       {frame.notif && (
         <circle cx={frame.notif.x} cy={frame.notif.y} r={frame.notif.r} fill="#2496e8" />
       )}
