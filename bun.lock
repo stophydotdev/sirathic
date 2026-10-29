@@ -159,6 +159,7 @@
         "@types/hast": "^3.0.5",
         "@types/react": "^19",
         "@types/react-dom": "^19",
+        "babel-plugin-react-compiler": "1.0.0",
         "tailwindcss": "^4",
         "typescript": "^5",
         "wrangler": "4.153.0",
