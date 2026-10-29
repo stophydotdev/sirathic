@@ -220,9 +220,11 @@ const liveChat = (
       if (part.type === "data-title") void useSessions.getState().refresh();
     },
     onFinish: ({ message, isAbort, isError }) => {
-      refreshSaved();
-      if (!isAbort && !isError)
-        announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
+      const answered = !isAbort && !isError;
+      if (answered && !window.location.pathname.endsWith(`/${id}`)) {
+        void useSessions.getState().change(id, { unread: true });
+      } else refreshSaved();
+      if (answered) announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
     },
     onError: () => void waitForSaved(created),
   });
@@ -276,6 +278,10 @@ export const Chat: FC<{
     usePreferences.getState().load();
     useChatOptions.getState().load();
   }, []);
+
+  useEffect(() => {
+    if (listed(chatId)?.unread) void useSessions.getState().change(chatId, { unread: false });
+  }, [chatId]);
 
   useEffect(() => {
     if (streaming) refreshSaved();
