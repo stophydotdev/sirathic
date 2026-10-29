@@ -6,6 +6,7 @@ import { PROFILE_LIMIT, profileEntry } from "../bots/profile";
 import { pluginId } from "../plugins/catalog";
 import { ownerCache } from "../account/ownerCache";
 import { StatusError } from "../http";
+import { track } from "../chat/events";
 import {
   BOT_COLORS,
   BOT_BODIES,
@@ -122,6 +123,7 @@ export async function createProject(by: string, input: z.output<typeof projectIn
       color: input.color ?? BOT_COLORS[Math.floor(Math.random() * BOT_COLORS.length)],
     })
     .returning(projectColumns);
+  track({ name: "bot.created", props: {} }, by);
   return created;
 }
 

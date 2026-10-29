@@ -1,6 +1,7 @@
 import { countOf, countUpBy } from "@sirathic/core/cache";
 import type { LanguageModelUsage, ProviderMetadata } from "ai";
 import { z } from "zod";
+import { track } from "../chat/events";
 import { reasonOf, StatusError } from "../http";
 import { noorModel } from "./noor";
 
@@ -73,6 +74,13 @@ export async function checkNoorUsage({
   });
   const full = windows.findLast(({ usedPercent }) => usedPercent >= 100);
   if (full?.resetAt) {
+    track(
+      {
+        name: "limit.hit",
+        props: { window: full.seconds === NOOR_WINDOWS[0].seconds ? "5h" : "week" },
+      },
+      by,
+    );
     const reset = resetText(full.seconds, full.resetAt, timeZone);
     throw new StatusError(429, offerGpt ? reset + GPT_WAY_OUT : reset);
   }

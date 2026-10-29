@@ -18,6 +18,7 @@ import { ownerCache } from "../account/ownerCache";
 import { seal, unseal } from "../account/vault";
 import { publicUrl } from "./address";
 import { emailEditKey, outgoingEmail } from "./outgoingEmail";
+import { type Event, track } from "../chat/events";
 import {
   CONNECTOR_IDS,
   CONNECTORS,
@@ -321,10 +322,21 @@ const opensWithoutSignIn = (url: string) =>
     () => false,
   );
 
+const connecting = (
+  owner: string,
+  id: string,
+  step: Extract<Event, { name: "plugin.connected" }>["props"]["step"],
+) =>
+  track(
+    { name: "plugin.connected", props: { plugin: isCatalog(id) ? id : "custom", step } },
+    owner,
+  );
+
 export async function connect(owner: string, id: string, returnTo = "/plugins") {
   const server = await serverOf(owner, id);
   if (server.open || (!isCatalog(id) && (await opensWithoutSignIn(server.url)))) {
     await store(owner, id, {}, true);
+    connecting(owner, id, "completed");
     return { status: "connected" as const };
   }
   const stored = await storedFor(owner, id);
@@ -335,9 +347,11 @@ export async function connect(owner: string, id: string, returnTo = "/plugins") 
     serverUrl: server.url,
     scope: server.scopes?.join(" "),
   }).catch((err: Error) => {
+    connecting(owner, id, "failed");
     throw new StatusError(502, `${server.name} sign-in failed: ${err.message}`);
   });
   const url = authorizationUrl();
+  connecting(owner, id, result === "AUTHORIZED" ? "completed" : url ? "started" : "failed");
   if (result === "AUTHORIZED") return { status: "connected" as const };
   if (!url) throw new StatusError(502, `${server.name} gave no sign-in page`);
   return { status: "redirect" as const, url: url.href };
@@ -364,7 +378,10 @@ export async function finishConnect(owner: string, query: Record<string, string>
   const { state, code, iss } = callbackQuery.parse(query);
   const connector = pluginId.parse(state.split(".")[0]);
   const stored = await storedFor(owner, connector);
-  if (!code) return stored.returnTo;
+  if (!code) {
+    connecting(owner, connector, "cancelled");
+    return stored.returnTo;
+  }
   const server = await serverOf(owner, connector);
   const { provider } = providerFor(owner, connector, server, stored);
   await auth(provider, {
@@ -372,7 +389,13 @@ export async function finishConnect(owner: string, query: Record<string, string>
     authorizationCode: code,
     callbackState: state,
     callbackIssuer: iss,
-  }).catch((err: Error) => console.error(`connector not connected: ${reasonOf(err)}`));
+  }).then(
+    () => connecting(owner, connector, "completed"),
+    (err: Error) => {
+      console.error(`connector not connected: ${reasonOf(err)}`);
+      connecting(owner, connector, "failed");
+    },
+  );
   return stored.returnTo;
 }
 

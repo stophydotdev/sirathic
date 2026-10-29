@@ -1,5 +1,6 @@
 "use client";
 
+import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
 import "katex/dist/katex.min.css";
 
@@ -40,6 +41,7 @@ import { Favicon } from "@/components/favicon";
 import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
+import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 
 const withMathDelimiters = (text: string) =>
@@ -112,8 +114,16 @@ const citedUrls = z.array(z.string()).min(1);
 
 const Citation: FC<{ urls: string[] }> = ({ urls }) => {
   const sources = useContext(SourcesContext);
+  const chat = useChatState();
   const [first, ...more] = urls;
   const name = siteName(first);
+  const opened = (url: string) => {
+    const site = URL.parse(url)?.hostname.replace(/^www\./u, "");
+    if (!chat?.saved || !site) return;
+    void api.events.record
+      .mutate({ name: "source.opened", props: { site, where: "inline" } })
+      .catch(() => undefined);
+  };
 
   return (
     <HoverCard.Root openDelay={150} closeDelay={100}>
@@ -122,6 +132,7 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           href={first}
           target="_blank"
           rel="noreferrer"
+          onClick={() => opened(first)}
           className="bg-muted text-muted-foreground! hover:text-foreground! relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-full py-[2.5px] ps-1 pe-2 align-middle text-[13px] leading-[15px] font-medium! no-underline! transition-colors"
         >
           <Favicon url={first} size={12} />
@@ -142,6 +153,7 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
               href={url}
               target="_blank"
               rel="noreferrer"
+              onClick={() => opened(url)}
               className="hover:bg-muted flex gap-2 rounded-lg p-2 text-sm"
             >
               <Favicon url={url} size={16} className="mt-0.5" />

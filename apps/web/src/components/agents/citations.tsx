@@ -3,7 +3,9 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Globe02Icon } from "@hugeicons/core-free-icons";
 import { type ReactNode, useId, useState } from "react";
+import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
+import { api } from "@/lib/trpc";
 import { useFavicon } from "@/lib/hooks/useFavicon";
 import { cn } from "@/lib/utils";
 
@@ -95,6 +97,14 @@ function CitationRow({
   index: number;
   idPrefix: string;
 }) {
+  const chat = useChatState();
+  const opened = (url: string) => {
+    const site = URL.parse(url)?.hostname.replace(/^www\./u, "");
+    if (!chat?.saved || !site) return;
+    void api.events.record
+      .mutate({ name: "source.opened", props: { site, where: "panel" } })
+      .catch(() => undefined);
+  };
   const content = (
     <>
       <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -119,7 +129,14 @@ function CitationRow({
   const id = citationTargetId(idPrefix, citation.id);
 
   return citation.url ? (
-    <a id={id} href={citation.url} target="_blank" rel="noreferrer noopener" className={className}>
+    <a
+      id={id}
+      href={citation.url}
+      target="_blank"
+      rel="noreferrer noopener"
+      className={className}
+      onClick={() => citation.url && opened(citation.url)}
+    >
       {content}
     </a>
   ) : (

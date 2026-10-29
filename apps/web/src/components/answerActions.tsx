@@ -91,10 +91,15 @@ export function useAnswer() {
     }
   };
 
-  const copy = () =>
-    navigator.clipboard.writeText(
-      messageText(chat?.chat.messages.find((message) => message.id === messageId)),
-    );
+  const copy = () => {
+    const copied = chat?.chat.messages.find((message) => message.id === messageId);
+    if (chat?.saved) {
+      void api.events.record
+        .mutate({ name: "answer.copied", props: { mode: copied?.metadata?.mode } })
+        .catch(() => undefined);
+    }
+    return navigator.clipboard.writeText(messageText(copied));
+  };
 
   return { feedback, rate, copy };
 }

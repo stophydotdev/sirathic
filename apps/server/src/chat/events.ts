@@ -1,13 +1,33 @@
 import { db } from "@sirathic/db";
 import { events } from "@sirathic/db/schema";
 import type { FinishReason, UIMessageStreamOutcome } from "ai";
-import type { z } from "zod";
+import { z } from "zod";
 import type { Client } from "./client";
+import type { ActionKind } from "./confirm";
 import { reasonOf } from "../http";
-import type { Device, feedback, Mode, reportReason } from "../shared/messages";
+import {
+  type Device,
+  type feedback,
+  type Mode,
+  mode,
+  questionAnswer,
+  type reportReason,
+} from "../shared/messages";
 import type { User } from "../account/users";
 
 export type SignInVia = User["via"] | "github";
+
+export const browserEvent = z.discriminatedUnion("name", [
+  z.object({ name: z.literal("answer.copied"), props: z.object({ mode: mode.optional() }) }),
+  z.object({
+    name: z.literal("source.opened"),
+    props: z.object({ site: z.string().max(100), where: z.enum(["inline", "panel"]) }),
+  }),
+  z.object({
+    name: z.literal("question.answered"),
+    props: z.object({ answer: questionAnswer }),
+  }),
+]);
 
 type AnswerStats = {
   outcome: UIMessageStreamOutcome["status"];
@@ -51,11 +71,12 @@ export type Event =
         files: number;
         device?: Device;
         language?: string;
+        from: "chat" | "bot";
       } & Client;
     }
   | {
       name: "answer.completed";
-      props: AnswerStats & { mode: Mode; model: string };
+      props: AnswerStats & { mode: Mode; model: string; from: "chat" | "bot" | "routine" };
     }
   | {
       name: "tool.completed";
@@ -72,7 +93,27 @@ export type Event =
       name: "feedback.given";
       props: { value: z.infer<typeof feedback> | null; reason?: z.infer<typeof reportReason> };
     }
-  | { name: "api.failed"; props: { route: string; code: string } };
+  | { name: "api.failed"; props: { route: string; code: string } }
+  | {
+      name: "card.decided";
+      props: {
+        tool: string;
+        kind?: ActionKind;
+        decision: "approved" | "declined" | "ignored";
+        seconds?: number;
+      };
+    }
+  | {
+      name: "plugin.connected";
+      props: { plugin: string; step: "started" | "completed" | "cancelled" | "failed" };
+    }
+  | {
+      name: "routine.ran";
+      props: { outcome: "answered" | "skipped" | "signedOut" | "failed"; ms: number };
+    }
+  | { name: "bot.created"; props: Record<never, never> }
+  | { name: "limit.hit"; props: { window: "5h" | "week" } }
+  | z.infer<typeof browserEvent>;
 
 export function track({ name, props }: Event, owner?: string) {
   void db
