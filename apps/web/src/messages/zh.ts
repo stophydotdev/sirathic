@@ -713,4 +713,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} 次观看",
   "Use all sources": "使用全部来源",
+  "Copy link": "复制链接",
+  "Only you can open it": "只有你能打开",
+  "Publish page": "发布页面",
+  "Anyone with the link can read it": "任何拿到链接的人都能阅读",
+  "Copy page link": "复制页面链接",
+  "Unpublish page": "取消发布页面",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic 回答 · {date}",
+  "Ask your own question": "提出你自己的问题",
+  "{count} more sources": "另外 {count} 个来源",
 } satisfies Messages;

@@ -720,4 +720,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} बार देखा गया",
   "Use all sources": "सभी स्रोतों का उपयोग करें",
+  "Copy link": "लिंक कॉपी करें",
+  "Only you can open it": "इसे सिर्फ़ आप खोल सकते हैं",
+  "Publish page": "पेज प्रकाशित करें",
+  "Anyone with the link can read it": "लिंक वाला कोई भी इसे पढ़ सकता है",
+  "Copy page link": "पेज का लिंक कॉपी करें",
+  "Unpublish page": "पेज का प्रकाशन हटाएं",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic ने जवाब दिया · {date}",
+  "Ask your own question": "अपना सवाल पूछें",
+  "{count} more sources": "{count} और स्रोत",
 } satisfies Messages;

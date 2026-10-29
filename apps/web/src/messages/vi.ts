@@ -725,4 +725,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} lượt xem",
   "Use all sources": "Dùng tất cả nguồn",
+  "Copy link": "Sao chép liên kết",
+  "Only you can open it": "Chỉ bạn mới mở được",
+  "Publish page": "Xuất bản trang",
+  "Anyone with the link can read it": "Bất kỳ ai có liên kết đều đọc được",
+  "Copy page link": "Sao chép liên kết trang",
+  "Unpublish page": "Gỡ xuất bản trang",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic trả lời · {date}",
+  "Ask your own question": "Đặt câu hỏi của bạn",
+  "{count} more sources": "Thêm {count} nguồn",
 } satisfies Messages;

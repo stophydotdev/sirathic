@@ -717,4 +717,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "ការមើល {count}",
   "Use all sources": "ប្រើប្រភពទាំងអស់",
+  "Copy link": "ចម្លងតំណ",
+  "Only you can open it": "មានតែអ្នកទេដែលអាចបើកវាបាន",
+  "Publish page": "បោះពុម្ពផ្សាយទំព័រ",
+  "Anyone with the link can read it": "អ្នកណាដែលមានតំណអាចអានវាបាន",
+  "Copy page link": "ចម្លងតំណទំព័រ",
+  "Unpublish page": "ឈប់បោះពុម្ពផ្សាយទំព័រ",
+  "Answered by Sirathic \u00b7 {date}": "ឆ្លើយដោយ Sirathic · {date}",
+  "Ask your own question": "សួរសំណួររបស់អ្នក",
+  "{count} more sources": "ប្រភព {count} ទៀត",
 } satisfies Messages;

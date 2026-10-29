@@ -14,6 +14,14 @@ import { ThreadKeys } from "@/components/shortcuts";
 import { ThreadShell } from "@/components/threadShell";
 import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
+import { api } from "@/lib/trpc";
+import { useSessions } from "@/components/sessions";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdownMenu";
 import {
   ActionBarPrimitive,
   AttachmentPrimitive,
@@ -105,32 +113,76 @@ const HeaderActions: FC = () => {
   const chat = useChatState();
   const t = useT();
   const [copied, setCopied] = useState(false);
+  const published = useSessions(
+    (s) => s.sessions?.find((session) => session.id === chat?.id)?.published === true,
+  );
 
-  const share = () => {
-    if (!chat?.saved) return;
-    void navigator.clipboard.writeText(`${window.location.origin}/c/${chat.id}`).then(() => {
+  const copy = (path: string) =>
+    navigator.clipboard.writeText(`${window.location.origin}${path}`).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2_000);
     });
+
+  const publish = async (next: boolean) => {
+    if (!chat?.saved) return;
+    const done = await api.sessions.publish
+      .mutate({ id: chat.id, published: next })
+      .catch(() => undefined);
+    if (!done) return;
+    useSessions.setState((state) => ({
+      sessions: state.sessions?.map((session) =>
+        session.id === chat.id ? Object.assign({}, session, done) : session,
+      ),
+    }));
+    if (done.published) await copy(`/p/${chat.id}`);
   };
 
   return (
     <div className="flex items-center gap-2">
       <IncognitoToggle />
-      <button
-        type="button"
-        onClick={share}
-        disabled={!chat?.saved}
-        title={t("Copy a link to this chat")}
-        className="bg-foreground/10 hover:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
-      >
-        <Swap
-          swapped={copied}
-          from={<HugeiconsIcon icon={Share08Icon} className="size-4" />}
-          to={<HugeiconsIcon icon={Tick02Icon} className="size-4" />}
-        />
-        <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
-      </button>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          disabled={!chat?.saved}
+          aria-label={t("Share")}
+          className="bg-foreground/10 hover:bg-foreground/15 data-[state=open]:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
+        >
+          <Swap
+            swapped={copied}
+            from={<HugeiconsIcon icon={Share08Icon} className="size-4" />}
+            to={<HugeiconsIcon icon={Tick02Icon} className="size-4" />}
+          />
+          <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-64">
+          <DropdownMenuItem
+            onSelect={() => void copy(`/c/${chat?.id ?? ""}`)}
+            className="flex-col items-start gap-0"
+          >
+            <span>{t("Copy link")}</span>
+            <span className="text-muted-foreground text-xs">{t("Only you can open it")}</span>
+          </DropdownMenuItem>
+          {published ? (
+            <>
+              <DropdownMenuItem onSelect={() => void copy(`/p/${chat?.id ?? ""}`)}>
+                {t("Copy page link")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => void publish(false)}>
+                {t("Unpublish page")}
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <DropdownMenuItem
+              onSelect={() => void publish(true)}
+              className="flex-col items-start gap-0"
+            >
+              <span>{t("Publish page")}</span>
+              <span className="text-muted-foreground text-xs">
+                {t("Anyone with the link can read it")}
+              </span>
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };

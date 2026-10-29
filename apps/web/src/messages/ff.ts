@@ -727,4 +727,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "Yiyeede {count}",
   "Use all sources": "Huutor iwdi fof",
+  "Copy link": "Natto jokkorde",
+  "Only you can open it": "Aan tan waawi udditde ɗum",
+  "Publish page": "Muurtin hello",
+  "Anyone with the link can read it": "Kala jogiiɗo jokkorde ndee ina waawi janngude ɗum",
+  "Copy page link": "Natto jokkorde hello ngoo",
+  "Unpublish page": "Itto hello ngoo",
+  "Answered by Sirathic \u00b7 {date}": "Jaabtaama e Sirathic · {date}",
+  "Ask your own question": "Naamno naamnal maa",
+  "{count} more sources": "Iwdi {count} goɗɗi",
 } satisfies Messages;

@@ -726,4 +726,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} بازدید",
   "Use all sources": "استفاده از همه منابع",
+  "Copy link": "کپی پیوند",
+  "Only you can open it": "فقط خودتان می‌توانید آن را باز کنید",
+  "Publish page": "انتشار صفحه",
+  "Anyone with the link can read it": "هر کسی که پیوند را داشته باشد می‌تواند آن را بخواند",
+  "Copy page link": "کپی پیوند صفحه",
+  "Unpublish page": "لغو انتشار صفحه",
+  "Answered by Sirathic \u00b7 {date}": "پاسخ از Sirathic · {date}",
+  "Ask your own question": "سؤال خودتان را بپرسید",
+  "{count} more sources": "{count} منبع دیگر",
 } satisfies Messages;

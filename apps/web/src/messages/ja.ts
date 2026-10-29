@@ -727,4 +727,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} 回視聴",
   "Use all sources": "すべての出典を使う",
+  "Copy link": "リンクをコピー",
+  "Only you can open it": "開けるのはあなただけです",
+  "Publish page": "ページを公開",
+  "Anyone with the link can read it": "リンクを知っている人なら誰でも読めます",
+  "Copy page link": "ページのリンクをコピー",
+  "Unpublish page": "ページの公開をやめる",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic の回答 · {date}",
+  "Ask your own question": "自分の質問をする",
+  "{count} more sources": "ほかの出典 {count} 件",
 } satisfies Messages;

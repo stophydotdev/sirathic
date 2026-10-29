@@ -4,10 +4,11 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { reviewBot } from "../bots/review";
 import { device } from "../shared/messages";
-import { signedIn, t } from "../trpc";
+import { procedure, signedIn, t } from "../trpc";
 import { isAnswering, stopAnswer } from "./answers";
 import { appOf, clientOf } from "./client";
 import { browserEvent, track } from "./events";
+import { publishedPage, publishSession } from "./pages";
 import {
   deleteAllSessions,
   deleteSession,
@@ -68,9 +69,23 @@ export const chatRoutes = {
         );
         return saved;
       }),
+    publish: signedIn
+      .input(session.extend({ published: z.boolean() }))
+      .mutation(async ({ ctx, input }) => {
+        const done = await publishSession(input.id, ctx.owner, input.published);
+        if (!done) throw new TRPCError({ code: "NOT_FOUND", message: "no such chat" });
+        return done;
+      }),
     fork: signedIn
       .input(forkInput.safeExtend({ id: sessionId }))
       .mutation(({ ctx, input: { id, ...fork } }) => forkSession(id, ctx.owner, fork)),
+  }),
+  pages: t.router({
+    get: procedure.input(session).query(async ({ input }) => {
+      const page = await publishedPage(input.id);
+      if (!page) throw new TRPCError({ code: "NOT_FOUND", message: "no such page" });
+      return page;
+    }),
   }),
   media: t.router({
     images: signedIn

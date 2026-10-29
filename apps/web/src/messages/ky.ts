@@ -733,4 +733,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} көрүү",
   "Use all sources": "Бардык булактарды колдонуу",
+  "Copy link": "Шилтемени көчүрүү",
+  "Only you can open it": "Аны сиз гана ача аласыз",
+  "Publish page": "Баракты жарыялоо",
+  "Anyone with the link can read it": "Шилтемеси бар ар ким окуй алат",
+  "Copy page link": "Барактын шилтемесин көчүрүү",
+  "Unpublish page": "Баракты жарыялоону токтотуу",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic жооп берген · {date}",
+  "Ask your own question": "Өз сурооңузду бериңиз",
+  "{count} more sources": "Дагы {count} булак",
 } satisfies Messages;

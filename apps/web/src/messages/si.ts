@@ -719,4 +719,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "බැලීම් {count}",
   "Use all sources": "සියලු මූලාශ්‍ර භාවිත කරන්න",
+  "Copy link": "සබැඳිය පිටපත් කරන්න",
+  "Only you can open it": "එය විවෘත කළ හැක්කේ ඔබට පමණි",
+  "Publish page": "පිටුව ප්‍රකාශ කරන්න",
+  "Anyone with the link can read it": "සබැඳිය ඇති ඕනෑම අයෙකුට එය කියවිය හැක",
+  "Copy page link": "පිටු සබැඳිය පිටපත් කරන්න",
+  "Unpublish page": "පිටුවේ ප්‍රකාශනය ඉවත් කරන්න",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic පිළිතුරු දුන්නේ · {date}",
+  "Ask your own question": "ඔබේම ප්‍රශ්නය අසන්න",
+  "{count} more sources": "තවත් මූලාශ්‍ර {count}",
 } satisfies Messages;
