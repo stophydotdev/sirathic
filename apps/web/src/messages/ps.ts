@@ -736,6 +736,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "د Sirathic ځواب · {date}",
   "Ask your own question": "خپله پوښتنه وکړئ",
   "{count} more sources": "{count} نورې سرچینې",
+  Answer: "ځواب",
+  Links: "لینکونه",
   "Previous source": "مخکینۍ سرچینه",
   "Next source": "بله سرچینه",
 } satisfies Messages;

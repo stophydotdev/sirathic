@@ -1,6 +1,5 @@
 "use client";
 
-import { useChatState } from "@/components/chat";
 import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
@@ -14,14 +13,10 @@ import { ThreadKeys } from "@/components/shortcuts";
 import { ThreadShell } from "@/components/threadShell";
 import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
-import { api } from "@/lib/trpc";
-import { useSessions } from "@/components/sessions";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdownMenu";
+import { ShareMenu } from "@/components/shareMenu";
+import { LinksView } from "@/components/linksView";
+import { sourcesOf } from "@/components/sources";
+import { useThreadView } from "@/components/threadView";
 import {
   ActionBarPrimitive,
   AttachmentPrimitive,
@@ -36,12 +31,14 @@ import {
   Add01Icon,
   ArrowDown02Icon,
   Copy01Icon,
+  Globe02Icon,
   IncognitoIcon,
   PencilEdit02Icon,
   Share08Icon,
+  TextAlignLeftIcon,
   Tick02Icon,
 } from "@hugeicons/core-free-icons";
-import { type FC, memo, type ReactNode, useState } from "react";
+import { type FC, memo, type ReactNode, useEffect } from "react";
 import { z } from "zod";
 import { Reply } from "@/components/answer";
 
@@ -49,6 +46,8 @@ const iconButton =
   "text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 shrink-0 items-center justify-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-40";
 
 const ThreadImpl: FC = () => {
+  const view = useThreadView((s) => s.view);
+
   return (
     <ThreadShell>
       <ThreadKeys />
@@ -58,7 +57,10 @@ const ThreadImpl: FC = () => {
         </AuiIf>
 
         <AuiIf condition={(s) => s.thread.messages.length > 0}>
-          <ThreadPrimitive.Viewport className="flex grow flex-col overflow-y-auto print:overflow-visible">
+          <ThreadPrimitive.Viewport
+            autoScroll={view === "answer"}
+            className="flex grow flex-col overflow-y-auto print:overflow-visible"
+          >
             <TopBar />
             <ThreadBody />
           </ThreadPrimitive.Viewport>
@@ -103,6 +105,7 @@ const TopBar: FC = () => {
             <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
           </a>
           <BotTitle />
+          {!bot && <ViewTabs />}
         </div>
       </TurnRow>
     </div>
@@ -110,79 +113,23 @@ const TopBar: FC = () => {
 };
 
 const HeaderActions: FC = () => {
-  const chat = useChatState();
   const t = useT();
-  const [copied, setCopied] = useState(false);
-  const published = useSessions(
-    (s) => s.sessions?.find((session) => session.id === chat?.id)?.published === true,
-  );
-
-  const copy = (path: string) =>
-    navigator.clipboard.writeText(`${window.location.origin}${path}`).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2_000);
-    });
-
-  const publish = async (next: boolean) => {
-    if (!chat?.saved) return;
-    const done = await api.sessions.publish
-      .mutate({ id: chat.id, published: next })
-      .catch(() => undefined);
-    if (!done) return;
-    useSessions.setState((state) => ({
-      sessions: state.sessions?.map((session) =>
-        session.id === chat.id ? Object.assign({}, session, done) : session,
-      ),
-    }));
-    if (done.published) await copy(`/p/${chat.id}`);
-  };
 
   return (
     <div className="flex items-center gap-2">
       <IncognitoToggle />
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          disabled={!chat?.saved}
-          aria-label={t("Share")}
-          className="bg-foreground/10 hover:bg-foreground/15 data-[state=open]:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40"
-        >
-          <Swap
-            swapped={copied}
-            from={<HugeiconsIcon icon={Share08Icon} className="size-4" />}
-            to={<HugeiconsIcon icon={Tick02Icon} className="size-4" />}
-          />
-          <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-64">
-          <DropdownMenuItem
-            onSelect={() => void copy(`/c/${chat?.id ?? ""}`)}
-            className="flex-col items-start gap-0"
-          >
-            <span>{t("Copy link")}</span>
-            <span className="text-muted-foreground text-xs">{t("Only you can open it")}</span>
-          </DropdownMenuItem>
-          {published ? (
-            <>
-              <DropdownMenuItem onSelect={() => void copy(`/p/${chat?.id ?? ""}`)}>
-                {t("Copy page link")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => void publish(false)}>
-                {t("Unpublish page")}
-              </DropdownMenuItem>
-            </>
-          ) : (
-            <DropdownMenuItem
-              onSelect={() => void publish(true)}
-              className="flex-col items-start gap-0"
-            >
-              <span>{t("Publish page")}</span>
-              <span className="text-muted-foreground text-xs">
-                {t("Anyone with the link can read it")}
-              </span>
-            </DropdownMenuItem>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <ShareMenu className="bg-foreground/10 hover:bg-foreground/15 data-[state=open]:bg-foreground/15 flex h-8 items-center gap-1.5 rounded-lg px-3 text-sm font-[470] transition-colors disabled:opacity-40">
+        {(copied) => (
+          <>
+            <Swap
+              swapped={copied}
+              from={<HugeiconsIcon icon={Share08Icon} className="size-4" />}
+              to={<HugeiconsIcon icon={Tick02Icon} className="size-4" />}
+            />
+            <span className="hidden sm:inline">{copied ? t("Copied") : t("Share")}</span>
+          </>
+        )}
+      </ShareMenu>
     </div>
   );
 };
@@ -213,13 +160,48 @@ const IncognitoToggle: FC = () => {
   );
 };
 
+const VIEWS = [
+  { view: "answer", label: "Answer", icon: TextAlignLeftIcon },
+  { view: "links", label: "Links", icon: Globe02Icon },
+] as const;
+
+const ViewTabs: FC = () => {
+  const view = useThreadView((s) => s.view);
+  const t = useT();
+  useEffect(() => () => useThreadView.setState({ view: "answer" }), []);
+
+  return (
+    <div role="tablist" className="flex h-14 items-stretch gap-5">
+      {VIEWS.map((tab) => (
+        <button
+          key={tab.view}
+          type="button"
+          role="tab"
+          aria-selected={view === tab.view}
+          aria-label={t(tab.label)}
+          onClick={() => useThreadView.setState({ view: tab.view })}
+          className="text-muted-foreground hover:text-foreground aria-selected:text-foreground aria-selected:border-foreground flex items-center gap-1.5 border-b-2 border-transparent text-sm font-medium"
+        >
+          <HugeiconsIcon icon={tab.icon} className="size-4" />
+          <span className="max-sm:hidden">{t(tab.label)}</span>
+        </button>
+      ))}
+    </div>
+  );
+};
+
 const ThreadBody: FC = () => {
   const t = useT();
   const bot = useBot();
   const sourcesOpen = useOpenSources((s) => s.id !== undefined);
+  const view = useThreadView((s) => s.view);
+  const pinned = useAuiState((s) => {
+    const last = s.thread.messages.at(-1);
+    return last?.role === "assistant" && sourcesOf(last.content).length > 0;
+  });
   const shifted = cn(
     "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
-    sourcesOpen && "@3xl:pe-90",
+    (sourcesOpen || (pinned && !bot)) && "@3xl:pe-90",
   );
 
   return (
@@ -227,9 +209,13 @@ const ThreadBody: FC = () => {
       <div className={cn("px-6 pb-8", shifted)}>
         <TurnRow>
           <BotGreeting />
-          <ThreadPrimitive.Messages>
-            {() => (bot ? <BotTurn /> : <Turn />)}
-          </ThreadPrimitive.Messages>
+          {view === "links" && !bot ? (
+            <LinksView />
+          ) : (
+            <ThreadPrimitive.Messages>
+              {() => (bot ? <BotTurn /> : <Turn />)}
+            </ThreadPrimitive.Messages>
+          )}
           <BotLearned />
         </TurnRow>
       </div>
@@ -238,12 +224,14 @@ const ThreadBody: FC = () => {
       >
         <TurnRow>
           <div className="relative">
-            <ThreadPrimitive.ScrollToBottom
-              behavior="smooth"
-              className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible"
-            >
-              <HugeiconsIcon icon={ArrowDown02Icon} className="size-4" />
-            </ThreadPrimitive.ScrollToBottom>
+            {view === "answer" && (
+              <ThreadPrimitive.ScrollToBottom
+                behavior="smooth"
+                className="bg-card border-border text-muted-foreground hover:text-foreground absolute -top-11 left-1/2 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border disabled:invisible"
+              >
+                <HugeiconsIcon icon={ArrowDown02Icon} className="size-4" />
+              </ThreadPrimitive.ScrollToBottom>
+            )}
             <Composer
               placeholder={bot ? t("Message {name}", { name: bot.name }) : t("Ask a follow-up")}
               menuSide="top"

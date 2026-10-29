@@ -91,10 +91,7 @@ export function useAnswer() {
   return { feedback, rate, copy };
 }
 
-export const AnswerExtras: FC<{
-  sources: Source[];
-  children?: ReactNode;
-}> = ({ sources, children }) => {
+export const AnswerExtras: FC<{ children?: ReactNode }> = ({ children }) => {
   const chat = useChatState();
   const router = useRouter();
   const messageId = useAuiState((s) => s.message.id);
@@ -124,12 +121,11 @@ export const AnswerExtras: FC<{
         <HugeiconsIcon icon={GitForkIcon} className="size-3.5" />
       </button>
       {children}
-      <MoreMenu sources={sources} />
     </>
   );
 };
 
-const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
+export const MoreMenu: FC<{ sources: Source[] }> = ({ sources }) => {
   const aui = useAui();
   const messages = useAuiState((s) => s.thread.messages);
   const messageId = useAuiState((s) => s.message.id);

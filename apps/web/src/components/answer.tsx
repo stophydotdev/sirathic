@@ -2,7 +2,8 @@
 
 import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streamingResponse";
-import { actionButton, AnswerExtras, useAnswer } from "@/components/answerActions";
+import { actionButton, AnswerExtras, MoreMenu, useAnswer } from "@/components/answerActions";
+import { ShareMenu } from "@/components/shareMenu";
 import { AutomationCard } from "@/components/automationCard";
 import { ConfirmCard } from "@/components/confirmCard";
 import { FILE_TOOLS, FileCards } from "@/components/fileCards";
@@ -28,6 +29,7 @@ import {
   ArrowLeft01Icon,
   ArrowMoveDownRightIcon,
   ArrowRight01Icon,
+  Share08Icon,
 } from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 import { z } from "zod";
@@ -92,7 +94,6 @@ const startOf = (messageId: string) => {
 };
 
 const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
-  const aui = useAui();
   const state = useAuiState((s) => answerState(s.message.status?.type));
   const messageId = useAuiState((s) => s.message.id);
   const [startedAt] = useState(() => startOf(messageId));
@@ -100,6 +101,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const [reporting, setReporting] = useState(false);
   const answerFont = usePreferences((s) => s.answerFont);
   const videoLine = useVideoLine();
+  const last = useAuiState((s) => s.message.isLast);
   const t = useT();
 
   return (
@@ -108,7 +110,6 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         status={state}
         contentClassName={answerFont === "serif" ? "font-serif" : undefined}
         onCopy={copy}
-        onRetry={() => aui.message().reload()}
         sources={groupsOf(sources).flatMap((group) =>
           group.sources.map((source) => ({
             ...citationOf(source, videoLine),
@@ -117,11 +118,18 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         )}
         feedback={feedback}
         onFeedbackChange={(value) => (value === "down" ? setReporting(true) : rate(value))}
+        share={
+          <ShareMenu className={actionButton}>
+            {() => <HugeiconsIcon icon={Share08Icon} className="size-3.5" />}
+          </ShareMenu>
+        }
         actions={
-          <AnswerExtras sources={sources}>
+          <AnswerExtras>
             <BranchPicker />
           </AnswerExtras>
         }
+        trailing={<MoreMenu sources={sources} />}
+        pinned={last}
       >
         <MessagePrimitive.GroupedParts groupBy={research} indicator="empty">
           {({ part }) => {
@@ -175,17 +183,17 @@ const Related: FC = () => {
   if (!last || questions.length === 0) return null;
 
   return (
-    <div className="mt-3 flex flex-col items-start print:hidden">
+    <div className="border-border/60 mt-4 flex flex-col border-t pt-2 print:hidden">
       {questions.map((question) => (
         <button
           key={question}
           type="button"
           onClick={() => aui.thread().append(question)}
-          className="text-muted-foreground hover:text-foreground focus-visible:ring-ring flex items-start gap-2 rounded-md py-1 text-start text-sm outline-none focus-visible:ring-2"
+          className="text-foreground/90 hover:text-foreground focus-visible:ring-ring flex items-start gap-3 rounded-md py-2.5 text-start text-base outline-none focus-visible:ring-2"
         >
           <HugeiconsIcon
             icon={ArrowMoveDownRightIcon}
-            className="mt-0.5 size-4 shrink-0 rtl:-scale-x-100"
+            className="text-muted-foreground mt-1 size-4 shrink-0 rtl:-scale-x-100"
           />
           {question}
         </button>

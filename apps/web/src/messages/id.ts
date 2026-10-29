@@ -741,6 +741,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Dijawab oleh Sirathic · {date}",
   "Ask your own question": "Ajukan pertanyaan Anda sendiri",
   "{count} more sources": "{count} sumber lainnya",
+  Answer: "Jawaban",
+  Links: "Tautan",
   "Previous source": "Sumber sebelumnya",
   "Next source": "Sumber berikutnya",
 } satisfies Messages;

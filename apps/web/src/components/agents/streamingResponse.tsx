@@ -4,9 +4,9 @@ import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
+  ArrowRight01Icon,
   Cancel01Icon,
   Copy01Icon,
-  RotateClockwiseIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
   Tick02Icon,
@@ -31,7 +31,6 @@ export interface StreamingResponseProps {
   status?: StreamingResponseStatus;
   copyText?: string;
   onCopy?: () => void | Promise<void>;
-  onRetry?: () => void;
   sources?: CitationItem[];
   sourceIdPrefix?: string;
   feedback?: StreamingResponseFeedback;
@@ -40,6 +39,9 @@ export interface StreamingResponseProps {
   announce?: boolean;
   showActions?: boolean;
   actions?: ReactNode;
+  share?: ReactNode;
+  trailing?: ReactNode;
+  pinned?: boolean;
   className?: string;
   contentClassName?: string;
   actionsClassName?: string;
@@ -83,7 +85,6 @@ export function StreamingResponse({
   status = "streaming",
   copyText,
   onCopy,
-  onRetry,
   sources = [],
   sourceIdPrefix,
   feedback,
@@ -92,6 +93,9 @@ export function StreamingResponse({
   announce = true,
   showActions = true,
   actions,
+  share,
+  trailing,
+  pinned = false,
   className,
   contentClassName,
   actionsClassName,
@@ -108,8 +112,7 @@ export function StreamingResponse({
   const complete = status === "complete";
   const canCopy = Boolean(copyText || onCopy);
   const hasSources = sources.length > 0;
-  const shouldShowActions =
-    showActions && !streaming && (canCopy || onRetry || complete || hasSources);
+  const shouldShowActions = showActions && !streaming && (canCopy || complete || hasSources);
   const sourcesContentId = `${baseId}-sources`;
   const resolvedSourcePrefix = sourceIdPrefix ?? `response-source-${baseId.replace(/:/g, "")}`;
 
@@ -157,6 +160,7 @@ export function StreamingResponse({
                 />
               </ResponseAction>
             ) : null}
+            {share}
             {complete ? (
               <>
                 <ResponseAction
@@ -175,11 +179,6 @@ export function StreamingResponse({
                 </ResponseAction>
               </>
             ) : null}
-            {onRetry ? (
-              <ResponseAction label="Retry response" onClick={onRetry}>
-                <HugeiconsIcon icon={RotateClockwiseIcon} className="size-3.5" />
-              </ResponseAction>
-            ) : null}
             {actions}
             {hasSources ? (
               <button
@@ -190,13 +189,14 @@ export function StreamingResponse({
                 className="bg-muted text-foreground hover:bg-foreground/10 focus-visible:ring-ring ms-1 inline-flex h-[31px] items-center gap-1.5 rounded-full ps-1 pe-2.5 text-sm outline-none transition-colors focus-visible:ring-2"
               >
                 <CitationStack citations={sources} />
-                <span className="tabular-nums">
+                <span className="whitespace-nowrap tabular-nums">
                   {sources.length === 1
                     ? t("1 source")
                     : t("{count} sources", { count: sources.length })}
                 </span>
               </button>
             ) : null}
+            {trailing ? <div className="ms-auto">{trailing}</div> : null}
           </div>
 
           {hasSources ? (
@@ -232,6 +232,21 @@ export function StreamingResponse({
             </Dialog.Root>
           ) : null}
         </div>
+      ) : null}
+      {pinned && hasSources && !currentSourcesOpen ? (
+        <button
+          type="button"
+          onClick={() => setSourcesOpen(true)}
+          className="bg-card ring-foreground/7 hover:bg-muted fixed end-2 top-16 z-30 hidden h-12 w-80 items-center gap-2 rounded-2xl ps-4 pe-3 text-sm ring-1 transition-colors ring-inset md:end-4 @3xl:flex print:hidden"
+        >
+          <span className="flex-1 text-start font-medium">{t("Sources")}</span>
+          <CitationStack citations={sources} />
+          <span className="text-muted-foreground tabular-nums">{sources.length}</span>
+          <HugeiconsIcon
+            icon={ArrowRight01Icon}
+            className="text-muted-foreground size-4 rtl:rotate-180"
+          />
+        </button>
       ) : null}
     </div>
   );

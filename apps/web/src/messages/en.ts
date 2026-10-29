@@ -49,6 +49,8 @@ export const MESSAGES = [
   "Sources",
   "Previous source",
   "Next source",
+  "Answer",
+  "Links",
   "More actions",
   "Download",
   "Markdown (.md)",

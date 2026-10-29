@@ -734,6 +734,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic trả lời · {date}",
   "Ask your own question": "Đặt câu hỏi của bạn",
   "{count} more sources": "Thêm {count} nguồn",
+  Answer: "Câu trả lời",
+  Links: "Liên kết",
   "Previous source": "Nguồn trước",
   "Next source": "Nguồn tiếp theo",
 } satisfies Messages;

@@ -729,6 +729,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic ने जवाब दिया · {date}",
   "Ask your own question": "अपना सवाल पूछें",
   "{count} more sources": "{count} और स्रोत",
+  Answer: "जवाब",
+  Links: "लिंक",
   "Previous source": "पिछला स्रोत",
   "Next source": "अगला स्रोत",
 } satisfies Messages;

@@ -742,6 +742,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic жооп берген · {date}",
   "Ask your own question": "Өз сурооңузду бериңиз",
   "{count} more sources": "Дагы {count} булак",
+  Answer: "Жооп",
+  Links: "Шилтемелер",
   "Previous source": "Мурунку булак",
   "Next source": "Кийинки булак",
 } satisfies Messages;

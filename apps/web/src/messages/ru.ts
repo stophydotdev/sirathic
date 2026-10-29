@@ -739,6 +739,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Ответ Sirathic · {date}",
   "Ask your own question": "Задать свой вопрос",
   "{count} more sources": "Ещё {count} источников",
+  Answer: "Ответ",
+  Links: "Ссылки",
   "Previous source": "Предыдущий источник",
   "Next source": "Следующий источник",
 } satisfies Messages;
