@@ -14,6 +14,8 @@ export const env = createEnv({
     ANTHROPIC_API_KEY: z.string(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
+    GITHUB_CLIENT_ID: z.string(),
+    GITHUB_CLIENT_SECRET: z.string(),
     STORAGE_ENDPOINT: z.url(),
     STORAGE_REGION: z.string(),
     STORAGE_BUCKET: z.string(),

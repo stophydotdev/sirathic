@@ -2,10 +2,20 @@ import { useOwnLists } from "@/components/ownLists";
 import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { api } from "@/lib/trpc";
+import type { MessageKey } from "@/messages/en";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type Status = Awaited<ReturnType<typeof api.account.status.query>>;
+
+export const ACCOUNT_LABELS = {
+  google: { account: "Google account", signedIn: "Signed in with Google" },
+  github: { account: "GitHub account", signedIn: "Signed in with GitHub" },
+  chatgpt: { account: "ChatGPT account", signedIn: "Signed in with ChatGPT" },
+} as const satisfies Record<
+  Extract<Status, { signedIn: true }>["via"],
+  { account: MessageKey; signedIn: MessageKey }
+>;
 export type Model = Awaited<ReturnType<typeof api.account.models.query>>[number];
 
 type Models = { list: Model[]; error?: string };

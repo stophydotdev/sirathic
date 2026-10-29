@@ -5,7 +5,7 @@ import { settingsUpdate } from "../shared/settings";
 import { z } from "zod";
 import { StatusError } from "../http";
 import { procedure, signedIn, t } from "../trpc";
-import { auth } from "./auth";
+import { auth, signInMethod } from "./auth";
 import { deleteAccount, exportData } from "./data";
 import { moveRoutines } from "../automations/store";
 import { listDevices, signOutDevice, signOutOthers } from "./devices";
@@ -28,13 +28,13 @@ export const accountRoutes = {
     }),
   }),
   account: t.router({
-    status: procedure.query(({ ctx }) =>
+    status: procedure.query(async ({ ctx }) =>
       ctx.user
         ? {
             signedIn: true as const,
             label: ctx.user.email,
             image: ctx.user.image,
-            via: ctx.user.via,
+            via: await signInMethod(ctx.user),
           }
         : { signedIn: false as const },
     ),

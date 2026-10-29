@@ -3,7 +3,7 @@ import { type FC, useEffect, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { api } from "@/lib/api";
 import { authClient } from "@/lib/auth";
-import { useChatState } from "@/lib/chat-state";
+import { SIGN_IN_NAMES, useChatState } from "@/lib/chat-state";
 import { useConfirm } from "./confirm";
 import { User } from "./icons";
 import { ActionButton, Group, Setting } from "./settings-controls";
@@ -140,10 +140,10 @@ export const AccountSection: FC = () => {
           )}
           <View className="flex-1">
             <Text numberOfLines={1} className="text-foreground font-sans text-sm">
-              {account.label ?? (account.via === "google" ? "Google account" : "ChatGPT account")}
+              {account.label ?? `${SIGN_IN_NAMES[account.via]} account`}
             </Text>
             <Text className="text-muted-foreground font-sans text-xs">
-              {account.via === "google" ? "Signed in with Google" : "Signed in with ChatGPT"}
+              {`Signed in with ${SIGN_IN_NAMES[account.via]}`}
             </Text>
           </View>
           <ActionButton

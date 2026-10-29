@@ -5,7 +5,7 @@ import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { authClient } from "@/lib/auth";
 import { BotList } from "./bot-list";
 import { SearchChats } from "./search-chats";
-import { useChatState } from "@/lib/chat-state";
+import { SIGN_IN_NAMES, useChatState } from "@/lib/chat-state";
 import {
   At,
   Books,
@@ -132,7 +132,7 @@ const AccountRow: FC<{ onDone: () => void }> = ({ onDone }) => {
             </View>
           )}
           <Text numberOfLines={1} className="text-foreground font-medium flex-1 text-base">
-            {account.label ?? (account.via === "google" ? "Google account" : "ChatGPT account")}
+            {account.label ?? `${SIGN_IN_NAMES[account.via]} account`}
           </Text>
         </>
       }
@@ -142,7 +142,7 @@ const AccountRow: FC<{ onDone: () => void }> = ({ onDone }) => {
           <View className="gap-0.5 px-2.5 py-2">
             <Text className="text-foreground font-medium text-sm">{account.label}</Text>
             <Text className="text-muted-foreground font-sans text-xs">
-              {account.via === "google" ? "Google account" : "ChatGPT account"}
+              {`${SIGN_IN_NAMES[account.via]} account`}
             </Text>
           </View>
           <Pressable

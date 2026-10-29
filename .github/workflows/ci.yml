@@ -22,6 +22,8 @@ jobs:
       ANTHROPIC_API_KEY: ci
       GOOGLE_CLIENT_ID: ci
       GOOGLE_CLIENT_SECRET: ci
+      GITHUB_CLIENT_ID: ci
+      GITHUB_CLIENT_SECRET: ci
       STORAGE_ENDPOINT: http://127.0.0.1:9000
       STORAGE_REGION: ci
       STORAGE_BUCKET: ci

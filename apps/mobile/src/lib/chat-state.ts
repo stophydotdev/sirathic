@@ -9,6 +9,12 @@ export type Model = Awaited<ReturnType<typeof api.account.models.query>>[number]
 export type Session = Awaited<ReturnType<typeof api.sessions.list.query>>[number];
 type Account = Awaited<ReturnType<typeof api.account.status.query>>;
 
+export const SIGN_IN_NAMES = {
+  google: "Google",
+  github: "GitHub",
+  chatgpt: "ChatGPT",
+} satisfies Record<Extract<Account, { signedIn: true }>["via"], string>;
+
 export const useChatState = create<{
   chatId: string;
   saved: boolean;
