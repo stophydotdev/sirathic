@@ -1,6 +1,6 @@
 "use client";
 
-import { Cancel01Icon, Maximize01Icon } from "@hugeicons/core-free-icons";
+import { Cancel01Icon, ArrowExpand01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Dialog } from "radix-ui";
 import { type ComponentProps, type FC, useState } from "react";
@@ -43,7 +43,7 @@ export const MarkdownMedia: FC<ComponentProps<"img">> = ({ src, alt }) => {
         >
           <img src={url} alt={alt ?? ""} className="block max-h-96 max-w-full" />
           <span className="bg-background/80 text-foreground absolute end-2 top-2 flex size-7 items-center justify-center rounded-lg opacity-0 transition-opacity group-hover/image:opacity-100 pointer-coarse:opacity-100">
-            <HugeiconsIcon icon={Maximize01Icon} className="size-4" />
+            <HugeiconsIcon icon={ArrowExpand01Icon} className="size-4" />
           </span>
         </Dialog.Trigger>
         {alt && <span className="text-muted-foreground mt-1.5 block text-xs">{alt}</span>}
