@@ -728,4 +728,7 @@ export default {
     "Жумалык Noor чегинин {percent}% колдондуңуз. Кайра башталат: {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "GPT менен суроону улантуу үчүн ChatGPT аркылуу кириңиз.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

@@ -715,4 +715,7 @@ export default {
     "আপনি এই সপ্তাহের Noor সীমার {percent}% ব্যবহার করেছেন। {time} রিসেট হবে।",
   "Sign in with ChatGPT to keep asking with GPT.":
     "GPT দিয়ে প্রশ্ন চালিয়ে যেতে ChatGPT দিয়ে সাইন ইন করুন।",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

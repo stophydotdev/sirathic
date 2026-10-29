@@ -726,4 +726,7 @@ export default {
     "Haftalık Noor limitinin %{percent} kadarını kullandınız. Sıfırlanma: {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "GPT ile sormaya devam etmek için ChatGPT ile giriş yapın.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

@@ -726,4 +726,7 @@ export default {
     "{percent}% ی سنووری هەفتانەی Noor ت بەکارهێناوە. دووبارە دەستپێدەکاتەوە {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "بە ChatGPT بچۆ ژوورەوە بۆ ئەوەی بە GPT پرسیار بکەیت.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

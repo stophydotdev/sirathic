@@ -722,4 +722,7 @@ export default {
   "You've used {percent}% of this week's Noor limit. Resets {time}.":
     "A huutorii {percent}% keerol Noor yontere ndee. Hesɗitinoo {time}.",
   "Sign in with ChatGPT to keep asking with GPT.": "Seŋo e ChatGPT ngam jokkude naamnde e GPT.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

@@ -708,4 +708,7 @@ export default {
   "You've used {percent}% of this week's Noor limit. Resets {time}.":
     "คุณใช้ขีดจำกัดรายสัปดาห์ของ Noor ไปแล้ว {percent}% รีเซ็ต {time}",
   "Sign in with ChatGPT to keep asking with GPT.": "ลงชื่อเข้าใช้ด้วย ChatGPT เพื่อถามต่อด้วย GPT",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

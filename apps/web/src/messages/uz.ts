@@ -731,4 +731,7 @@ export default {
     "Ҳафталик Noor лимитининг {percent}% ини ишлатдингиз. Қайта тикланади: {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "GPT билан сўрашни давом эттириш учун ChatGPT орқали киринг.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

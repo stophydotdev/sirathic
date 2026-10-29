@@ -728,4 +728,7 @@ export default {
     "ھەپتىلىك Noor چېكىنىڭ {percent}% نى ئىشلەتتىڭىز. {time} قايتا تەڭشىلىدۇ.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "GPT ئارقىلىق داۋاملىق سوراش ئۈچۈن ChatGPT بىلەن كىرىڭ.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

@@ -137,7 +137,7 @@ export function StreamingResponse({
     useOpenSources.setState({ id: next ? baseId : undefined });
 
   return (
-    <div data-state={status} aria-busy={streaming} className={cn("w-full", className)}>
+    <div data-answer data-state={status} aria-busy={streaming} className={cn("w-full", className)}>
       <div
         aria-live={announce ? "polite" : "off"}
         className={cn(

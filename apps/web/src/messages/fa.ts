@@ -721,4 +721,7 @@ export default {
     "{percent}% از سقف هفتگی Noor را استفاده کرده‌اید. بازنشانی {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "برای ادامهٔ پرسیدن با GPT، با ChatGPT وارد شوید.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

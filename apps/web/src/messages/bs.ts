@@ -723,4 +723,7 @@ export default {
     "Iskoristili ste {percent}% sedmičnog Noor limita. Resetuje se {time}.",
   "Sign in with ChatGPT to keep asking with GPT.":
     "Prijavite se putem ChatGPT-a da nastavite pitati s GPT-om.",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;

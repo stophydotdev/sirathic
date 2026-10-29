@@ -722,4 +722,7 @@ export default {
     "今週の Noor の上限の {percent}% を使用しました。{time}にリセット。",
   "Sign in with ChatGPT to keep asking with GPT.":
     "GPT で質問を続けるには ChatGPT でサインインしてください。",
+  "Markdown (.md)": "Markdown (.md)",
+  PDF: "PDF",
+  "Word (.docx)": "Word (.docx)",
 } satisfies Messages;
