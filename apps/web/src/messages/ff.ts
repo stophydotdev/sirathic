@@ -811,4 +811,13 @@ export default {
   "{name} waits while you use it": "{name} ena habba tuma nde huutortoɗaa ɗum",
   "I'm done": "Mi gasii",
   Keyboard: "Tappirde",
+  "Teach a task": "Ekkit golle",
+  "Showing {name} how": "Ena hollita {name} no waɗortee",
+  "Learn this task from what I just did:": "Ekkit ndee golle e ko mi waɗi jooni:",
+  "Opened {url}": "Mi udditi {url}",
+  "Clicked {target}": "Mi dobi {target}",
+  "Typed a private value into {target}": "Mi winndi huunde suuɗaande e {target}",
+  "Typed “{text}” into {target}": "Mi winndi “{text}” e {target}",
+  "Chose {option} in {target}": "Mi suɓii {option} e {target}",
+  "Pressed Enter": "Mi ñoƴƴi Enter",
 } satisfies Messages;

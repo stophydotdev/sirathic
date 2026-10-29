@@ -808,4 +808,13 @@ export default {
   "{name} waits while you use it": "നിങ്ങൾ ഉപയോഗിക്കുമ്പോൾ {name} കാത്തിരിക്കുന്നു",
   "I'm done": "കഴിഞ്ഞു",
   Keyboard: "കീബോർഡ്",
+  "Teach a task": "ഒരു ജോലി പഠിപ്പിക്കുക",
+  "Showing {name} how": "{name}-നെ കാണിക്കുന്നു",
+  "Learn this task from what I just did:": "ഞാൻ ഇപ്പോൾ ചെയ്തതിൽ നിന്ന് ഈ ജോലി പഠിക്കൂ:",
+  "Opened {url}": "{url} തുറന്നു",
+  "Clicked {target}": "{target} ക്ലിക്ക് ചെയ്തു",
+  "Typed a private value into {target}": "{target}-ൽ ഒരു സ്വകാര്യ മൂല്യം ടൈപ്പ് ചെയ്തു",
+  "Typed “{text}” into {target}": "{target}-ൽ “{text}” ടൈപ്പ് ചെയ്തു",
+  "Chose {option} in {target}": "{target}-ൽ {option} തിരഞ്ഞെടുത്തു",
+  "Pressed Enter": "Enter അമർത്തി",
 } satisfies Messages;

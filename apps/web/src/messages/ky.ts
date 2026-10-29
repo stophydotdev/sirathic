@@ -817,4 +817,13 @@ export default {
   "{name} waits while you use it": "Сиз колдонуп жатканда {name} күтөт",
   "I'm done": "Бүттүм",
   Keyboard: "Баскычтоп",
+  "Teach a task": "Тапшырма үйрөтүү",
+  "Showing {name} how": "{name} ботуна көрсөтүп жатасыз",
+  "Learn this task from what I just did:": "Бул тапшырманы мен азыр кылгандан үйрөн:",
+  "Opened {url}": "{url} ачылды",
+  "Clicked {target}": "{target} басылды",
+  "Typed a private value into {target}": "{target} талаасына жеке маани жазылды",
+  "Typed “{text}” into {target}": "{target} талаасына “{text}” жазылды",
+  "Chose {option} in {target}": "{target} ичинен {option} тандалды",
+  "Pressed Enter": "Enter басылды",
 } satisfies Messages;

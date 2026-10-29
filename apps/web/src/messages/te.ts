@@ -797,4 +797,13 @@ export default {
   "{name} waits while you use it": "మీరు ఉపయోగిస్తున్నప్పుడు {name} వేచి ఉంటుంది",
   "I'm done": "అయిపోయింది",
   Keyboard: "కీబోర్డ్",
+  "Teach a task": "ఒక పని నేర్పించు",
+  "Showing {name} how": "{name}కి చూపిస్తున్నారు",
+  "Learn this task from what I just did:": "నేను ఇప్పుడే చేసిన దాని నుండి ఈ పని నేర్చుకో:",
+  "Opened {url}": "{url} తెరిచాను",
+  "Clicked {target}": "{target} క్లిక్ చేశాను",
+  "Typed a private value into {target}": "{target}లో ఒక ప్రైవేట్ విలువ టైప్ చేశాను",
+  "Typed “{text}” into {target}": "{target}లో “{text}” టైప్ చేశాను",
+  "Chose {option} in {target}": "{target}లో {option} ఎంచుకున్నాను",
+  "Pressed Enter": "Enter నొక్కాను",
 } satisfies Messages;

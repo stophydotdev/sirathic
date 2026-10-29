@@ -2,6 +2,7 @@ import { type Browser, type BrowserContext, chromium, type Page } from "patchrig
 import { BLOCKED_URLS, isPrivateUrl } from "./blocked";
 import { closable, HOLD_MS, IDLE_MS, MAKE_ROOM_IDLE_MS, RESTORE_MS } from "./idle";
 import { forgetLogins, saveLogins, savedLogins } from "./logins";
+import type { TaughtStep } from "./protocol";
 import { closeScreen, openScreen, SCREEN, type Screen } from "./screen";
 
 const CHROME_PATH = "/usr/bin/google-chrome-stable";
@@ -57,6 +58,8 @@ export type Session = {
   controllers: number;
   typedBefore: Set<string>;
   holdUntil: number;
+  held: Map<string, { value: string; domain: string }>;
+  teaching?: TaughtStep[];
 };
 
 export const quietFor = (session: Session) =>
@@ -108,6 +111,7 @@ const open = async (key: string): Promise<Session> => {
     controllers: 0,
     typedBefore: new Set(),
     holdUntil: 0,
+    held: new Map(),
   };
   const finished = () => {
     session.inFlight = Math.max(0, session.inFlight - 1);

@@ -4,7 +4,7 @@ import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
 import type RFB from "@novnc/novnc";
-import type { screenMode } from "@sirathic/browser/protocol";
+import { type screenMode, type TaughtStep, taught } from "@sirathic/browser/protocol";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Cancel01Icon, ComputerIcon, KeyboardIcon } from "@hugeicons/core-free-icons";
 import { type FC, type RefObject, useEffect, useRef, useState } from "react";
@@ -30,6 +30,31 @@ const KEYS = new Map([
 ]);
 
 const ticketBody = z.object({ ticket: z.string() });
+
+type Translate = ReturnType<typeof useT>;
+
+const lineOf = (t: Translate, step: TaughtStep) => {
+  switch (step.kind) {
+    case "open":
+      return t("Opened {url}", { url: step.url });
+    case "click":
+      return t("Clicked {target}", { target: step.target });
+    case "type":
+      return step.text === undefined
+        ? t("Typed a private value into {target}", { target: step.target })
+        : t("Typed “{text}” into {target}", { text: step.text, target: step.target });
+    case "choose":
+      return t("Chose {option} in {target}", { option: step.option, target: step.target });
+    case "press":
+      return t("Pressed Enter");
+  }
+};
+
+const lessonOf = (t: Translate, steps: TaughtStep[]) =>
+  [
+    t("Learn this task from what I just did:"),
+    ...steps.map((step, index) => `${index + 1}. ${lineOf(t, step)}`),
+  ].join("\n");
 
 const screenUrl = (botId: string, mode: Mode, ticket: string) => {
   const url = new URL(`/api/bots/${botId}/browser/screen`, process.env.NEXT_PUBLIC_SERVER);
@@ -127,8 +152,31 @@ const FullView: FC<{ botId: string; name: string }> = ({ botId, name }) => {
   const target = useRef<HTMLDivElement>(null);
   const typing = useRef<HTMLInputElement>(null);
   const { live, remote } = useScreen(botId, "control", target);
+  const [teaching, setTeaching] = useState(false);
   const t = useT();
   const press = (keysym: number, code: string | null) => remote.current?.sendKey(keysym, code);
+  const teach = (on: boolean) =>
+    fetch(`/api/bots/${botId}/browser/teach`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ teaching: on }),
+    }).catch(() => undefined);
+  const startTeaching = async () => {
+    if ((await teach(true))?.ok) setTeaching(true);
+  };
+  const finishTeaching = async () => {
+    const response = await teach(false);
+    const steps = response?.ok ? (taught.safeParse(await response.json()).data?.steps ?? []) : [];
+    setTeaching(false);
+    if (steps.length > 1) {
+      void chat?.sendMessage({ text: lessonOf(t, steps), metadata: { createdAt: Date.now() } });
+    }
+    hide();
+  };
+  const close = () => {
+    if (teaching) void teach(false);
+    hide();
+  };
   return (
     <div
       role="dialog"
@@ -167,33 +215,60 @@ const FullView: FC<{ botId: string; name: string }> = ({ botId, name }) => {
         />
       </div>
       <div className="bg-card/95 border-foreground/14 flex h-12 max-w-full shrink-0 items-center gap-2.5 rounded-xl border ps-4 pe-1.5 text-sm backdrop-blur-sm">
-        <span className="size-1.5 shrink-0 rounded-full bg-amber-500" />
-        <span className="text-muted-foreground min-w-0 truncate">
-          {t("{name} waits while you use it", { name })}
-        </span>
-        <button
-          type="button"
-          aria-label={t("Keyboard")}
-          onClick={() => typing.current?.focus()}
-          className="text-muted-foreground hover:bg-muted hover:text-foreground hidden size-9 shrink-0 items-center justify-center rounded-xl pointer-coarse:flex"
-        >
-          <HugeiconsIcon icon={KeyboardIcon} className="size-4.5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            void chat?.sendMessage({ text: t("I'm done"), metadata: { createdAt: Date.now() } });
-            hide();
-          }}
-          className="bg-foreground text-background h-9 shrink-0 rounded-full px-4 font-medium"
-        >
-          {t("I'm done")}
-        </button>
+        {teaching ? (
+          <>
+            <span className="size-2 shrink-0 rounded-full bg-red-500" />
+            <span className="min-w-0 truncate">{t("Showing {name} how", { name })}</span>
+            <button
+              type="button"
+              onClick={() => void finishTeaching()}
+              className="bg-foreground text-background h-9 shrink-0 rounded-full px-4 font-medium"
+            >
+              {t("Done")}
+            </button>
+          </>
+        ) : (
+          <>
+            <span className="size-1.5 shrink-0 rounded-full bg-amber-500" />
+            <span className="text-muted-foreground min-w-0 truncate">
+              {t("{name} waits while you use it", { name })}
+            </span>
+            <button
+              type="button"
+              onClick={() => void startTeaching()}
+              className="hover:bg-muted flex h-9 shrink-0 items-center gap-2 rounded-full px-3 font-medium pointer-coarse:hidden"
+            >
+              <span className="size-3 rounded-full border-2 border-current" />
+              {t("Teach a task")}
+            </button>
+            <button
+              type="button"
+              aria-label={t("Keyboard")}
+              onClick={() => typing.current?.focus()}
+              className="text-muted-foreground hover:bg-muted hover:text-foreground hidden size-9 shrink-0 items-center justify-center rounded-xl pointer-coarse:flex"
+            >
+              <HugeiconsIcon icon={KeyboardIcon} className="size-4.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                void chat?.sendMessage({
+                  text: t("I'm done"),
+                  metadata: { createdAt: Date.now() },
+                });
+                hide();
+              }}
+              className="bg-foreground text-background h-9 shrink-0 rounded-full px-4 font-medium"
+            >
+              {t("I'm done")}
+            </button>
+          </>
+        )}
         <span className="bg-foreground/14 h-5 w-px shrink-0" />
         <button
           type="button"
           aria-label={t("Close")}
-          onClick={hide}
+          onClick={close}
           className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-9 shrink-0 items-center justify-center rounded-xl"
         >
           <HugeiconsIcon icon={Cancel01Icon} className="size-4.5" />

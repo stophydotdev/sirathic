@@ -821,4 +821,13 @@ export default {
   "{name} waits while you use it": "Сиз фойдаланаётганда {name} кутади",
   "I'm done": "Тайёр",
   Keyboard: "Клавиатура",
+  "Teach a task": "Вазифа ўргатиш",
+  "Showing {name} how": "{name} га кўрсатяпсиз",
+  "Learn this task from what I just did:": "Бу вазифани ҳозир қилганларимдан ўрган:",
+  "Opened {url}": "{url} очилди",
+  "Clicked {target}": "{target} босилди",
+  "Typed a private value into {target}": "{target} га махфий қиймат ёзилди",
+  "Typed “{text}” into {target}": "{target} га “{text}” ёзилди",
+  "Chose {option} in {target}": "{target} да {option} танланди",
+  "Pressed Enter": "Enter босилди",
 } satisfies Messages;

@@ -11,9 +11,11 @@ import { useAuiState } from "@assistant-ui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ComputerIcon, Shield01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { type FC, type ReactNode, useState } from "react";
-import type { z } from "zod";
+import { z } from "zod";
 
 type FormReply = NonNullable<z.infer<typeof messageMetadata>["formReply"]>;
+
+const notShown = z.object({ shown: z.literal(false) });
 
 const useReply = () =>
   useAuiState((s) => {
@@ -66,7 +68,7 @@ const Receipt: FC<{ title: string; reply: FormReply | "answered" }> = ({ title, 
   );
 };
 
-export const FormCard: FC<{ args: unknown }> = ({ args }) => {
+export const FormCard: FC<{ args: unknown; result: unknown }> = ({ args, result }) => {
   const form = userForm.safeParse(args).data;
   const bot = useBot();
   const chat = useChatState()?.chat;
@@ -78,7 +80,7 @@ export const FormCard: FC<{ args: unknown }> = ({ args }) => {
   const [failed, setFailed] = useState(false);
   const [keep, setKeep] = useState(false);
   const t = useT();
-  if (!form || !bot) return null;
+  if (!form || !bot || notShown.safeParse(result).success) return null;
   if (reply) return <Receipt title={form.title} reply={reply} />;
   const login =
     form.reason === "auth" &&

@@ -814,4 +814,13 @@ export default {
   "{name} waits while you use it": "{name} چاوەڕێ دەکات تا تۆ بەکاری دەهێنیت",
   "I'm done": "تەواو بووم",
   Keyboard: "تەختەکلیل",
+  "Teach a task": "ئەرکێک فێر بکە",
+  "Showing {name} how": "نیشانی {name} دەدەیت",
+  "Learn this task from what I just did:": "ئەم ئەرکە لەوەی ئێستا کردم فێربە:",
+  "Opened {url}": "{url}م کردەوە",
+  "Clicked {target}": "کرتەم لە {target} کرد",
+  "Typed a private value into {target}": "بەهایەکی تایبەتم لە {target} نووسی",
+  "Typed “{text}” into {target}": "“{text}”م لە {target} نووسی",
+  "Chose {option} in {target}": "{option}م لە {target} هەڵبژارد",
+  "Pressed Enter": "Enterم داگرت",
 } satisfies Messages;

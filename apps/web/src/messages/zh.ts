@@ -794,4 +794,13 @@ export default {
   "{name} waits while you use it": "你使用时 {name} 会等待",
   "I'm done": "我完成了",
   Keyboard: "键盘",
+  "Teach a task": "教一个任务",
+  "Showing {name} how": "正在演示给 {name}",
+  "Learn this task from what I just did:": "从我刚才的操作中学会这个任务：",
+  "Opened {url}": "打开了 {url}",
+  "Clicked {target}": "点击了 {target}",
+  "Typed a private value into {target}": "在 {target} 中输入了一个私密值",
+  "Typed “{text}” into {target}": "在 {target} 中输入了“{text}”",
+  "Chose {option} in {target}": "在 {target} 中选择了 {option}",
+  "Pressed Enter": "按了 Enter",
 } satisfies Messages;

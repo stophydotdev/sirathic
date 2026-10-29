@@ -793,4 +793,13 @@ export default {
   "{name} waits while you use it": "{name} รอระหว่างที่คุณใช้งาน",
   "I'm done": "เสร็จแล้ว",
   Keyboard: "แป้นพิมพ์",
+  "Teach a task": "สอนงาน",
+  "Showing {name} how": "กำลังสอน {name}",
+  "Learn this task from what I just did:": "เรียนรู้งานนี้จากสิ่งที่ฉันเพิ่งทำ:",
+  "Opened {url}": "เปิด {url}",
+  "Clicked {target}": "คลิก {target}",
+  "Typed a private value into {target}": "พิมพ์ค่าส่วนตัวใน {target}",
+  "Typed “{text}” into {target}": "พิมพ์ “{text}” ใน {target}",
+  "Chose {option} in {target}": "เลือก {option} ใน {target}",
+  "Pressed Enter": "กด Enter",
 } satisfies Messages;

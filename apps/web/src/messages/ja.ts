@@ -811,4 +811,13 @@ export default {
   "{name} waits while you use it": "使っている間、{name}は待機します",
   "I'm done": "終わりました",
   Keyboard: "キーボード",
+  "Teach a task": "タスクを教える",
+  "Showing {name} how": "{name}にやり方を見せています",
+  "Learn this task from what I just did:": "今やったことからこのタスクを覚えて：",
+  "Opened {url}": "{url} を開いた",
+  "Clicked {target}": "{target} をクリックした",
+  "Typed a private value into {target}": "{target} に非公開の値を入力した",
+  "Typed “{text}” into {target}": "{target} に「{text}」と入力した",
+  "Chose {option} in {target}": "{target} で {option} を選んだ",
+  "Pressed Enter": "Enter を押した",
 } satisfies Messages;

@@ -813,4 +813,13 @@ export default {
   "{name} waits while you use it": "{name} ждёт, пока вы пользуетесь",
   "I'm done": "Готово",
   Keyboard: "Клавиатура",
+  "Teach a task": "Научить задаче",
+  "Showing {name} how": "Показываете {name}, как это делать",
+  "Learn this task from what I just did:": "Изучи эту задачу по моим действиям:",
+  "Opened {url}": "Открыт {url}",
+  "Clicked {target}": "Нажато: {target}",
+  "Typed a private value into {target}": "Введено скрытое значение в {target}",
+  "Typed “{text}” into {target}": "Введено «{text}» в {target}",
+  "Chose {option} in {target}": "Выбрано {option} в {target}",
+  "Pressed Enter": "Нажат Enter",
 } satisfies Messages;

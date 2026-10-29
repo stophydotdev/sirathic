@@ -816,4 +816,13 @@ export default {
   "{name} waits while you use it": "{name} aspetta mentre lo usi",
   "I'm done": "Ho finito",
   Keyboard: "Tastiera",
+  "Teach a task": "Insegna un'attività",
+  "Showing {name} how": "Stai mostrando a {name}",
+  "Learn this task from what I just did:": "Impara questa attività da quello che ho appena fatto:",
+  "Opened {url}": "Ho aperto {url}",
+  "Clicked {target}": "Ho cliccato {target}",
+  "Typed a private value into {target}": "Ho scritto un valore privato in {target}",
+  "Typed “{text}” into {target}": "Ho scritto “{text}” in {target}",
+  "Chose {option} in {target}": "Ho scelto {option} in {target}",
+  "Pressed Enter": "Ho premuto Invio",
 } satisfies Messages;

@@ -808,4 +808,13 @@ export default {
   "{name} waits while you use it": "{name} chờ trong lúc bạn dùng",
   "I'm done": "Tôi xong rồi",
   Keyboard: "Bàn phím",
+  "Teach a task": "Dạy một việc",
+  "Showing {name} how": "Đang chỉ cho {name}",
+  "Learn this task from what I just did:": "Học việc này từ những gì tôi vừa làm:",
+  "Opened {url}": "Đã mở {url}",
+  "Clicked {target}": "Đã nhấp {target}",
+  "Typed a private value into {target}": "Đã nhập một giá trị riêng tư vào {target}",
+  "Typed “{text}” into {target}": "Đã nhập “{text}” vào {target}",
+  "Chose {option} in {target}": "Đã chọn {option} trong {target}",
+  "Pressed Enter": "Đã nhấn Enter",
 } satisfies Messages;

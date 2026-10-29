@@ -811,4 +811,13 @@ export default {
   "{name} waits while you use it": "நீங்கள் பயன்படுத்தும்போது {name} காத்திருக்கும்",
   "I'm done": "முடித்துவிட்டேன்",
   Keyboard: "விசைப்பலகை",
+  "Teach a task": "ஒரு பணியைக் கற்றுக்கொடு",
+  "Showing {name} how": "{name}-க்குக் காட்டுகிறீர்கள்",
+  "Learn this task from what I just did:": "நான் இப்போது செய்ததிலிருந்து இந்தப் பணியைக் கற்றுக்கொள்:",
+  "Opened {url}": "{url} திறந்தேன்",
+  "Clicked {target}": "{target} கிளிக் செய்தேன்",
+  "Typed a private value into {target}": "{target}-இல் ஒரு தனிப்பட்ட மதிப்பை உள்ளிட்டேன்",
+  "Typed “{text}” into {target}": "{target}-இல் “{text}” உள்ளிட்டேன்",
+  "Chose {option} in {target}": "{target}-இல் {option} தேர்ந்தேன்",
+  "Pressed Enter": "Enter அழுத்தினேன்",
 } satisfies Messages;

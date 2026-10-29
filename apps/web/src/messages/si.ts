@@ -800,4 +800,13 @@ export default {
   "{name} waits while you use it": "ඔබ භාවිත කරන අතරතුර {name} රැඳී සිටී",
   "I'm done": "මම ඉවරයි",
   Keyboard: "යතුරුපුවරුව",
+  "Teach a task": "කාර්යයක් උගන්වන්න",
+  "Showing {name} how": "{name}ට පෙන්වමින්",
+  "Learn this task from what I just did:": "මම දැන් කළ දෙයින් මෙම කාර්යය ඉගෙන ගන්න:",
+  "Opened {url}": "{url} විවෘත කළා",
+  "Clicked {target}": "{target} ක්ලික් කළා",
+  "Typed a private value into {target}": "{target} තුළ පුද්ගලික අගයක් ටයිප් කළා",
+  "Typed “{text}” into {target}": "{target} තුළ “{text}” ටයිප් කළා",
+  "Chose {option} in {target}": "{target} තුළ {option} තෝරා ගත්තා",
+  "Pressed Enter": "Enter එබුවා",
 } satisfies Messages;

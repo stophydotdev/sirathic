@@ -46,6 +46,9 @@ export const fill = async (
     ],
     Promise.resolve([]),
   );
+  for (const [index, field] of fields.entries()) {
+    if (!results[index]?.filled) session.held.set(field.target, { value: field.value, domain });
+  }
   const last = fields.at(-1);
   const submitted =
     (submit || secret) && last !== undefined && results.every((field) => field.filled);
@@ -55,4 +58,42 @@ export const fill = async (
     await cleared(session);
   }
   return { fields: results, submitted };
+};
+
+export const check = async ({ page }: Session, targets: string[]) => ({
+  missing: (
+    await Promise.all(
+      targets.map(async (target) =>
+        (await page
+          .locator(`aria-ref=${target}`)
+          .count()
+          .catch(() => 0)) > 0
+          ? []
+          : [target],
+      ),
+    )
+  ).flat(),
+});
+
+export const refill = async (
+  session: Session,
+  fields: { from: string; to: string }[],
+): Promise<Filled> => {
+  const { page } = session;
+  const results = await fields.reduce<Promise<Filled["fields"]>>(async (done, { from, to }) => {
+    const held = session.held.get(from);
+    const ok =
+      held !== undefined &&
+      onSite(page.url(), held.domain) &&
+      (await page
+        .locator(`aria-ref=${to}`)
+        .fill(held.value, { timeout: FILL_TIMEOUT_MS })
+        .then(
+          () => true,
+          () => false,
+        ));
+    if (ok) session.held.delete(from);
+    return [...(await done), { target: to, filled: ok }];
+  }, Promise.resolve([]));
+  return { fields: results, submitted: false };
 };

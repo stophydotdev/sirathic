@@ -811,4 +811,13 @@ export default {
   "{name} waits while you use it": "{name} чека док га користите",
   "I'm done": "Готово",
   Keyboard: "Тастатура",
+  "Teach a task": "Научи задатак",
+  "Showing {name} how": "Показујете боту {name}",
+  "Learn this task from what I just did:": "Научи овај задатак из онога што је управо урађено:",
+  "Opened {url}": "Отворено {url}",
+  "Clicked {target}": "Кликнуто: {target}",
+  "Typed a private value into {target}": "Уписана приватна вредност у {target}",
+  "Typed “{text}” into {target}": "Уписано „{text}“ у {target}",
+  "Chose {option} in {target}": "Изабрано {option} у {target}",
+  "Pressed Enter": "Притиснут Enter",
 } satisfies Messages;

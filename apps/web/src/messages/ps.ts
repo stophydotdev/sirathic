@@ -810,4 +810,13 @@ export default {
   "{name} waits while you use it": "{name} انتظار کوي تر هغه چې تاسو یې کاروئ",
   "I'm done": "خلاص شوم",
   Keyboard: "کیبورډ",
+  "Teach a task": "یوه دنده ور زده کړئ",
+  "Showing {name} how": "{name} ته یې ښیئ",
+  "Learn this task from what I just did:": "دا دنده له هغه څه زده کړه چې ما همدا اوس وکړل:",
+  "Opened {url}": "{url} مې پرانیست",
+  "Clicked {target}": "{target} مې کلیک کړ",
+  "Typed a private value into {target}": "په {target} کې مې یو شخصي ارزښت ولیکه",
+  "Typed “{text}” into {target}": "په {target} کې مې “{text}” ولیکل",
+  "Chose {option} in {target}": "په {target} کې مې {option} وټاکه",
+  "Pressed Enter": "Enter مې کېکاږه",
 } satisfies Messages;

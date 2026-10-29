@@ -812,4 +812,14 @@ export default {
   "{name} waits while you use it": "{name} čaka, medtem ko ga uporabljate",
   "I'm done": "Končano",
   Keyboard: "Tipkovnica",
+  "Teach a task": "Nauči opravilo",
+  "Showing {name} how": "Kažete botu {name}",
+  "Learn this task from what I just did:":
+    "Nauči se tega opravila iz tega, kar je bilo pravkar narejeno:",
+  "Opened {url}": "Odprto {url}",
+  "Clicked {target}": "Kliknjeno: {target}",
+  "Typed a private value into {target}": "V {target} vpisana zasebna vrednost",
+  "Typed “{text}” into {target}": "V {target} vpisano „{text}“",
+  "Chose {option} in {target}": "V {target} izbrano {option}",
+  "Pressed Enter": "Pritisnjen Enter",
 } satisfies Messages;

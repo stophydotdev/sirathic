@@ -812,4 +812,13 @@ export default {
   "{name} waits while you use it": "{name} anasubiri unapoitumia",
   "I'm done": "Nimemaliza",
   Keyboard: "Kibodi",
+  "Teach a task": "Fundisha kazi",
+  "Showing {name} how": "Unamwonyesha {name}",
+  "Learn this task from what I just did:": "Jifunze kazi hii kutokana na nilichofanya sasa hivi:",
+  "Opened {url}": "Nimefungua {url}",
+  "Clicked {target}": "Nimebofya {target}",
+  "Typed a private value into {target}": "Nimeandika thamani ya faragha kwenye {target}",
+  "Typed “{text}” into {target}": "Nimeandika “{text}” kwenye {target}",
+  "Chose {option} in {target}": "Nimechagua {option} kwenye {target}",
+  "Pressed Enter": "Nimebonyeza Enter",
 } satisfies Messages;

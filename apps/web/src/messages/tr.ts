@@ -814,4 +814,13 @@ export default {
   "{name} waits while you use it": "Siz kullanırken {name} bekler",
   "I'm done": "Bitirdim",
   Keyboard: "Klavye",
+  "Teach a task": "Bir görev öğret",
+  "Showing {name} how": "{name} botuna gösteriyorsunuz",
+  "Learn this task from what I just did:": "Bu görevi az önce yaptıklarımdan öğren:",
+  "Opened {url}": "{url} açıldı",
+  "Clicked {target}": "{target} tıklandı",
+  "Typed a private value into {target}": "{target} alanına özel bir değer yazıldı",
+  "Typed “{text}” into {target}": "{target} alanına “{text}” yazıldı",
+  "Chose {option} in {target}": "{target} içinde {option} seçildi",
+  "Pressed Enter": "Enter'a basıldı",
 } satisfies Messages;

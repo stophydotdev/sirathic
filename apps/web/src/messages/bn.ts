@@ -802,4 +802,13 @@ export default {
   "{name} waits while you use it": "আপনি ব্যবহার করার সময় {name} অপেক্ষা করে",
   "I'm done": "আমার হয়ে গেছে",
   Keyboard: "কীবোর্ড",
+  "Teach a task": "একটি কাজ শেখান",
+  "Showing {name} how": "{name}-কে দেখাচ্ছেন",
+  "Learn this task from what I just did:": "আমি এইমাত্র যা করলাম তা থেকে এই কাজটি শেখো:",
+  "Opened {url}": "{url} খুললাম",
+  "Clicked {target}": "{target}-এ ক্লিক করলাম",
+  "Typed a private value into {target}": "{target}-এ একটি ব্যক্তিগত মান লিখলাম",
+  "Typed “{text}” into {target}": "{target}-এ “{text}” লিখলাম",
+  "Chose {option} in {target}": "{target}-এ {option} বেছে নিলাম",
+  "Pressed Enter": "Enter চাপলাম",
 } satisfies Messages;

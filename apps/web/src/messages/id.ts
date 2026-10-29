@@ -816,4 +816,13 @@ export default {
   "{name} waits while you use it": "{name} menunggu selama Anda memakainya",
   "I'm done": "Sudah selesai",
   Keyboard: "Keyboard",
+  "Teach a task": "Ajarkan tugas",
+  "Showing {name} how": "Sedang menunjukkan ke {name}",
+  "Learn this task from what I just did:": "Pelajari tugas ini dari yang baru saja saya lakukan:",
+  "Opened {url}": "Membuka {url}",
+  "Clicked {target}": "Mengklik {target}",
+  "Typed a private value into {target}": "Mengetik nilai pribadi di {target}",
+  "Typed “{text}” into {target}": "Mengetik “{text}” di {target}",
+  "Chose {option} in {target}": "Memilih {option} di {target}",
+  "Pressed Enter": "Menekan Enter",
 } satisfies Messages;

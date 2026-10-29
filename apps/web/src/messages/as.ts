@@ -800,4 +800,13 @@ export default {
   "{name} waits while you use it": "আপুনি ব্যৱহাৰ কৰালৈকে {name} অপেক্ষা কৰে",
   "I'm done": "মোৰ হ'ল",
   Keyboard: "কীবৰ্ড",
+  "Teach a task": "এটা কাম শিকাওক",
+  "Showing {name} how": "{name}ক কেনেকৈ কৰে দেখুৱাই আছে",
+  "Learn this task from what I just did:": "মই এইমাত্ৰ কৰা কামৰ পৰা এই কামটো শিকক:",
+  "Opened {url}": "{url} খুলিলোঁ",
+  "Clicked {target}": "{target} ক্লিক কৰিলোঁ",
+  "Typed a private value into {target}": "{target}ত এটা ব্যক্তিগত মান টাইপ কৰিলোঁ",
+  "Typed “{text}” into {target}": "{target}ত “{text}” টাইপ কৰিলোঁ",
+  "Chose {option} in {target}": "{target}ত {option} বাছিলোঁ",
+  "Pressed Enter": "Enter টিপিলোঁ",
 } satisfies Messages;

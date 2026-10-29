@@ -820,4 +820,13 @@ export default {
   "{name} waits while you use it": "Naghihintay si {name} habang ginagamit mo ito",
   "I'm done": "Tapos na ako",
   Keyboard: "Keyboard",
+  "Teach a task": "Magturo ng gawain",
+  "Showing {name} how": "Ipinapakita kay {name}",
+  "Learn this task from what I just did:": "Alamin ang gawaing ito mula sa ginawa ko ngayon:",
+  "Opened {url}": "Binuksan ang {url}",
+  "Clicked {target}": "Na-click ang {target}",
+  "Typed a private value into {target}": "Nag-type ng pribadong value sa {target}",
+  "Typed “{text}” into {target}": "Nag-type ng “{text}” sa {target}",
+  "Chose {option} in {target}": "Pinili ang {option} sa {target}",
+  "Pressed Enter": "Pinindot ang Enter",
 } satisfies Messages;

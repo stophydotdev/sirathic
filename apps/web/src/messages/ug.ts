@@ -816,4 +816,13 @@ export default {
   "{name} waits while you use it": "سىز ئىشلەتكەندە {name} ساقلاپ تۇرىدۇ",
   "I'm done": "تۈگەتتىم",
   Keyboard: "كۇنۇپكا تاختىسى",
+  "Teach a task": "بىر ۋەزىپە ئۆگىتىش",
+  "Showing {name} how": "{name} غا كۆرسىتىۋاتىسىز",
+  "Learn this task from what I just did:": "بۇ ۋەزىپىنى مەن ھازىر قىلغانلىرىمدىن ئۆگەن:",
+  "Opened {url}": "{url} نى ئاچتىم",
+  "Clicked {target}": "{target} نى چەكتىم",
+  "Typed a private value into {target}": "{target} غا شەخسىي قىممەت كىرگۈزدۈم",
+  "Typed “{text}” into {target}": "{target} غا “{text}” نى كىرگۈزدۈم",
+  "Chose {option} in {target}": "{target} دىن {option} نى تاللىدىم",
+  "Pressed Enter": "Enter نى باستىم",
 } satisfies Messages;

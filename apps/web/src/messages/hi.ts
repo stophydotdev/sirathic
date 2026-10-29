@@ -803,4 +803,13 @@ export default {
   "{name} waits while you use it": "जब तक आप इसे इस्तेमाल करते हैं, {name} इंतज़ार करता है",
   "I'm done": "हो गया",
   Keyboard: "कीबोर्ड",
+  "Teach a task": "कोई काम सिखाएँ",
+  "Showing {name} how": "{name} को दिखा रहे हैं",
+  "Learn this task from what I just did:": "मैंने अभी जो किया उससे यह काम सीखो:",
+  "Opened {url}": "{url} खोला",
+  "Clicked {target}": "{target} पर क्लिक किया",
+  "Typed a private value into {target}": "{target} में एक निजी मान लिखा",
+  "Typed “{text}” into {target}": "{target} में “{text}” लिखा",
+  "Chose {option} in {target}": "{target} में {option} चुना",
+  "Pressed Enter": "Enter दबाया",
 } satisfies Messages;

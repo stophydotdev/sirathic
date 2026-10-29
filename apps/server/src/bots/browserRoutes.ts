@@ -1,4 +1,4 @@
-import { fillRequest, screenMode } from "@sirathic/browser/protocol";
+import { fillRequest, screenMode, teachRequest } from "@sirathic/browser/protocol";
 import { Hono } from "hono";
 import { upgradeWebSocket } from "hono/bun";
 import { z } from "zod";
@@ -7,7 +7,7 @@ import { userFor } from "../account/auth";
 import { respond, StatusError } from "../http";
 import { projectId, requireProject } from "../projects/projects";
 import { saveLogin } from "../vault/vault";
-import { browserPage, fillBrowser, screenSocket } from "./browser";
+import { browserPage, fillBrowser, screenSocket, teachBrowser } from "./browser";
 import { screenTicket, ticketFits } from "./screenTicket";
 
 const fillBody = fillRequest
@@ -29,6 +29,14 @@ const bodyOf = async <Schema extends z.ZodType>(request: Request, schema: Schema
 };
 
 export const browserRoutes = new Hono();
+
+browserRoutes.post("/:id/browser/teach", (c) =>
+  respond(async () => {
+    const { botId } = await ownBot(c.req.raw.headers, c.req.param("id"));
+    const { teaching } = await bodyOf(c.req.raw, teachRequest.omit({ session: true }));
+    return teachBrowser(botId, teaching);
+  }),
+);
 
 browserRoutes.post("/:id/browser/ticket", (c) =>
   respond(async () => {

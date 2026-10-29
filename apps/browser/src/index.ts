@@ -1,9 +1,18 @@
 import type { ServerWebSocket, Socket } from "bun";
 import { z } from "zod";
-import { fill } from "./control";
+import { check, fill, refill } from "./control";
 import { login } from "./login";
-import { fillRequest, loginRequest, request, screenRequest, sessionRequest } from "./protocol";
-import { reasonOf, run } from "./run";
+import {
+  checkRequest,
+  fillRequest,
+  loginRequest,
+  refillRequest,
+  request,
+  screenRequest,
+  sessionRequest,
+  teachRequest,
+} from "./protocol";
+import { reasonOf, run, screenshotOf, secretsOf } from "./run";
 import {
   BusyError,
   ClosedError,
@@ -19,6 +28,7 @@ import {
   startControl,
 } from "./sessions";
 import { settings } from "./settings";
+import { startTeaching, stopTeaching } from "./teach";
 
 const failed = (error: string, status: number) => Response.json({ error }, { status });
 
@@ -75,6 +85,36 @@ Bun.serve({
         handled(incoming, fillRequest, async ({ session, ...form }) =>
           Response.json(await inOpenSession(session, (open) => fill(open, form))),
         ),
+    },
+    "/check": {
+      POST: (incoming) =>
+        handled(incoming, checkRequest, async ({ session, targets }) =>
+          Response.json(await inOpenSession(session, (open) => check(open, targets))),
+        ),
+    },
+    "/refill": {
+      POST: (incoming) =>
+        handled(incoming, refillRequest, async ({ session, fields }) =>
+          Response.json(await inOpenSession(session, (open) => refill(open, fields))),
+        ),
+    },
+    "/screenshot": {
+      POST: (incoming) =>
+        handled(incoming, sessionRequest, async ({ session }) =>
+          Response.json(await inSession(session, screenshotOf)),
+        ),
+    },
+    "/teach": {
+      POST: (incoming) =>
+        handled(incoming, teachRequest, async ({ session, teaching }) => {
+          const open = await existing(session);
+          if (!open) throw new ClosedError("Your bot's browser is closed.");
+          if (teaching) {
+            await startTeaching(open);
+            return done();
+          }
+          return Response.json({ steps: stopTeaching(open, await secretsOf(open)) });
+        }),
     },
     "/page": {
       POST: (incoming) =>

@@ -797,4 +797,13 @@ export default {
   "{name} waits while you use it": "{name} រង់ចាំខណៈពេលអ្នកកំពុងប្រើ",
   "I'm done": "ខ្ញុំរួចរាល់ហើយ",
   Keyboard: "ក្ដារចុច",
+  "Teach a task": "បង្រៀនកិច្ចការ",
+  "Showing {name} how": "កំពុងបង្ហាញ {name}",
+  "Learn this task from what I just did:": "រៀនកិច្ចការនេះពីអ្វីដែលខ្ញុំទើបតែធ្វើ៖",
+  "Opened {url}": "បានបើក {url}",
+  "Clicked {target}": "បានចុច {target}",
+  "Typed a private value into {target}": "បានវាយតម្លៃឯកជនក្នុង {target}",
+  "Typed “{text}” into {target}": "បានវាយ “{text}” ក្នុង {target}",
+  "Chose {option} in {target}": "បានជ្រើស {option} ក្នុង {target}",
+  "Pressed Enter": "បានចុច Enter",
 } satisfies Messages;

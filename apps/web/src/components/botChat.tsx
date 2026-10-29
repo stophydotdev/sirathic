@@ -103,7 +103,9 @@ const Bubble: FC<{ said: Said; menu: boolean }> = ({ said, menu }) => {
   if (said.kind === "text") return <BotText text={said.text} menu={menu} />;
   const { toolName, args, result } = said.part;
   if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
-  if (currentToolName(toolName) === "request_user_form") return <FormCard args={args} />;
+  if (currentToolName(toolName) === "request_user_form") {
+    return <FormCard args={args} result={result} />;
+  }
   if (currentToolName(toolName) === "request_browser_help") return <HelpCard args={args} />;
   return (
     <>

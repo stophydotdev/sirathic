@@ -742,6 +742,15 @@ export const MESSAGES = [
   "{name} waits while you use it",
   "I'm done",
   "Keyboard",
+  "Teach a task",
+  "Showing {name} how",
+  "Learn this task from what I just did:",
+  "Opened {url}",
+  "Clicked {target}",
+  "Typed a private value into {target}",
+  "Typed “{text}” into {target}",
+  "Chose {option} in {target}",
+  "Pressed Enter",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

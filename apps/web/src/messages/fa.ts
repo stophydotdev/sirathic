@@ -809,4 +809,13 @@ export default {
   "{name} waits while you use it": "{name} تا وقتی از آن استفاده می‌کنید صبر می‌کند",
   "I'm done": "تمام شد",
   Keyboard: "صفحه‌کلید",
+  "Teach a task": "یاد دادن یک کار",
+  "Showing {name} how": "در حال نشان دادن به {name}",
+  "Learn this task from what I just did:": "این کار را از آنچه همین حالا انجام دادم یاد بگیر:",
+  "Opened {url}": "{url} را باز کردم",
+  "Clicked {target}": "روی {target} کلیک کردم",
+  "Typed a private value into {target}": "یک مقدار خصوصی در {target} نوشتم",
+  "Typed “{text}” into {target}": "“{text}” را در {target} نوشتم",
+  "Chose {option} in {target}": "{option} را در {target} انتخاب کردم",
+  "Pressed Enter": "Enter را زدم",
 } satisfies Messages;

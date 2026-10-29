@@ -803,4 +803,13 @@ export default {
   "{name} waits while you use it": "{name} ينتظر بينما تستخدمه",
   "I'm done": "انتهيت",
   Keyboard: "لوحة المفاتيح",
+  "Teach a task": "علّم مهمة",
+  "Showing {name} how": "تُري {name} الطريقة",
+  "Learn this task from what I just did:": "تعلّم هذه المهمة مما فعلته للتو:",
+  "Opened {url}": "فتحتُ {url}",
+  "Clicked {target}": "نقرتُ {target}",
+  "Typed a private value into {target}": "كتبتُ قيمة خاصة في {target}",
+  "Typed “{text}” into {target}": "كتبتُ “{text}” في {target}",
+  "Chose {option} in {target}": "اخترتُ {option} في {target}",
+  "Pressed Enter": "ضغطتُ Enter",
 } satisfies Messages;

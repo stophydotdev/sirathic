@@ -822,4 +822,14 @@ export default {
   "{name} waits while you use it": "{name} attend pendant que vous l'utilisez",
   "I'm done": "J'ai terminé",
   Keyboard: "Clavier",
+  "Teach a task": "Apprendre une tâche",
+  "Showing {name} how": "Vous montrez à {name}",
+  "Learn this task from what I just did:":
+    "Apprends cette tâche à partir de ce que je viens de faire :",
+  "Opened {url}": "J'ai ouvert {url}",
+  "Clicked {target}": "J'ai cliqué sur {target}",
+  "Typed a private value into {target}": "J'ai saisi une valeur privée dans {target}",
+  "Typed “{text}” into {target}": "J'ai saisi « {text} » dans {target}",
+  "Chose {option} in {target}": "J'ai choisi {option} dans {target}",
+  "Pressed Enter": "J'ai appuyé sur Entrée",
 } satisfies Messages;
