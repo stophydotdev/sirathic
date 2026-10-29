@@ -256,7 +256,7 @@ test("an earlier turn's results reach the model as the sources its answer cited"
     {
       type: "text",
       value:
-        "Earlier results, removed to save space. Cited in the answer: [4] Wudu. Search again if you need their full text.",
+        "Earlier results, removed to save space. Cited in the answer: <untrusted_data>\n[4] Wudu\n</untrusted_data>. Search again if you need their full text.",
     },
   ]);
 });

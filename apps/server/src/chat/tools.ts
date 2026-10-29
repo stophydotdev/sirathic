@@ -17,6 +17,7 @@ import {
   verseSource,
 } from "./cite";
 import { pageText } from "./compact";
+import { fenced, fencedText } from "./fence";
 import { searchAll, searchInput } from "./search";
 
 const PAGE_CHARS = 25_000;
@@ -95,10 +96,7 @@ Best practices:
 If results are incomplete, conflicting, snippet-level, single-sided, or do not cover a distinct requested part, call search_web again with a focused query or use fetch_url before answering.`,
       inputSchema: searchInput,
       execute: (input) => searchAll(cite, input),
-      toModelOutput: ({ output }) => ({
-        type: "text",
-        value: output.text || "No results.",
-      }),
+      toModelOutput: ({ output }) => fenced({ type: "text", value: output.text || "No results." }),
     }),
     get_verses: tool({
       description: "Read Quran verses by surah and ayah range.",
@@ -143,7 +141,15 @@ If results are incomplete, conflicting, snippet-level, single-sided, or do not c
           sources: pages.map((entry) => entry.source),
         };
       },
-      toModelOutput: ({ output }) => ({ type: "json", value: { pages: output.pages } }),
+      toModelOutput: ({ output }) => ({
+        type: "text",
+        value: [
+          fencedText(JSON.stringify({ pages: output.pages.filter((page) => !("error" in page)) })),
+          ...output.pages.flatMap((page) =>
+            "error" in page ? [`${page.url} was not read: ${page.error}`] : [],
+          ),
+        ].join("\n"),
+      }),
     }),
   };
 }
