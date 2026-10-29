@@ -2,6 +2,7 @@ import { db } from "@sirathic/db";
 import { chatSessions, projects } from "@sirathic/db/schema";
 import { type AnyColumn, and, count, eq, sql } from "drizzle-orm";
 import { z } from "zod";
+import { forgetBrowser } from "../bots/browser";
 import { PROFILE_LIMIT, profileEntry } from "../bots/profile";
 import { pluginId } from "../plugins/catalog";
 import { ownerCache } from "../account/ownerCache";
@@ -164,6 +165,7 @@ export async function removeProject(id: string, by: string) {
     .where(and(eq(chatSessions.projectId, id), eq(chatSessions.owner, by)));
   await db.delete(projects).where(owned(id, by));
   forgetBot(id, by);
+  void forgetBrowser(id).catch(() => undefined);
   return { deleted: true };
 }
 

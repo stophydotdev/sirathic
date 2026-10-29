@@ -5,6 +5,7 @@ import { ReplyError } from "@/components/answer";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { bubblesOf } from "@sirathic/app/botBubbles";
 import { BotEvent, isBotEvent } from "@/components/botEvents";
+import { FormCard, HelpCard } from "@/components/browserCards";
 import { STAMP_GAP, stampText } from "@/components/botStamp";
 import { AttachmentChip } from "@/components/composer";
 import { FILE_TOOLS, FileResult } from "@/components/fileCards";
@@ -102,6 +103,8 @@ const Bubble: FC<{ said: Said; menu: boolean }> = ({ said, menu }) => {
   if (said.kind === "text") return <BotText text={said.text} menu={menu} />;
   const { toolName, args, result } = said.part;
   if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
+  if (currentToolName(toolName) === "request_user_form") return <FormCard args={args} />;
+  if (currentToolName(toolName) === "request_browser_help") return <HelpCard args={args} />;
   return (
     <>
       {said.part.approval && <ConfirmCard call={said.part} />}
@@ -156,7 +159,9 @@ const stepLineOf = (part: Extract<Part, { type: "tool-call" }>) =>
     ? (searched.safeParse(part.args).data?.sources ?? []).flatMap(
         (source) => SEARCH_LINES.get(source) ?? [],
       )[0]
-    : TOOL_LINES.get(currentToolName(part.toolName));
+    : currentToolName(part.toolName).startsWith("browser_")
+      ? "Reading the page…"
+      : TOOL_LINES.get(currentToolName(part.toolName));
 
 const Working: FC<{ step: StepLine | undefined }> = ({ step }) => {
   const t = useT();

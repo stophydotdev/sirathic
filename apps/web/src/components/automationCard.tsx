@@ -21,6 +21,8 @@ const CARD_TOOLS = new Set([
   "update_profile",
   "install_plugin",
   "clarifying_questions",
+  "request_user_form",
+  "request_browser_help",
   ...FILE_TOOLS,
 ]);
 

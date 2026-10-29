@@ -1,4 +1,7 @@
 import { expect, mock, test } from "bun:test";
+import { isPrivateUrl } from "../apps/browser/src/blocked";
+import { masked } from "../apps/browser/src/mask";
+import { totp } from "../apps/server/src/vault/totp";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import { z } from "zod";
 import { writingTools } from "../apps/server/src/chat/confirm";
@@ -374,4 +377,31 @@ test("plan models get earlier answers without another model's hidden reasoning",
     },
   });
   expect(sent?.prompt[1]).toEqual({ role: "assistant", content: [{ type: "text", text: "Yes." }] });
+});
+
+test("pages can't take a bot's browser to private or internal hosts", () => {
+  const blocked = [
+    "http://127.0.0.1:8080/health",
+    "http://localhost:3000/",
+    "http://api.railway.internal:3000/",
+    "http://10.1.2.3/",
+    "http://169.254.169.254/latest/meta-data/",
+    "http://[::1]/",
+    "http://intranet/",
+  ];
+  expect(blocked.filter((url) => !isPrivateUrl(url))).toEqual([]);
+  expect(isPrivateUrl("https://the-internet.herokuapp.com/login")).toBe(false);
+});
+
+test("two-step codes match the RFC 6238 test vector", () => {
+  expect(totp("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 59_000)).toBe("287082");
+  expect(totp("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 1_111_111_109_000)).toBe("081804");
+});
+
+test("a secret is masked in every spelling a page can show it, and nothing else changes", () => {
+  const shown = masked(
+    'a ?q=p%40ss%20w%22rd%21 b ?q=p%40ss+w%22rd! c {"v":"p@ss w\\"rd!"} d ?q=prayer%26mat',
+    ['p@ss w"rd!'],
+  );
+  expect(shown).toBe('a ?q=•••••• b ?q=•••••• c {"v":"••••••"} d ?q=prayer%26mat');
 });

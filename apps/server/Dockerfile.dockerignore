@@ -4,6 +4,8 @@
 !tsconfig.json
 !apps/server/package.json
 !apps/server/src
+!apps/browser/package.json
+!apps/browser/src/protocol.ts
 !apps/web/package.json
 !packages/*/package.json
 !packages/*/src

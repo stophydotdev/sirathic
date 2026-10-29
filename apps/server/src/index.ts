@@ -24,6 +24,7 @@ import { connectedTools, finishConnect } from "./plugins/connections";
 import { track } from "./chat/events";
 import { cardDecisions } from "./chat/confirm";
 import { uploadRoutes } from "./files/upload";
+import { browserRoutes } from "./bots/browserRoutes";
 import { projectOfChat } from "./projects/projects";
 import {
   appLanguage,
@@ -255,6 +256,7 @@ app.get("/api/chat/:id/stream", async (c) => {
 });
 
 app.route("/api/files", uploadRoutes);
+app.route("/api/bots", browserRoutes);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 

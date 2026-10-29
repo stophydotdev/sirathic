@@ -1,10 +1,12 @@
 import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { Mode } from "../../shared/messages";
+import { BROWSER_TOOLS } from "../../bots/browser";
 import { CODE_RULES } from "../codeTools";
 import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
 import { STOPHY_LINK } from "../stophyTools";
+import browser from "./browser.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
 import jobSearch from "./jobSearch.md" with { type: "text" };
 import noConnector from "./noConnector.md" with { type: "text" };
@@ -160,6 +162,16 @@ export const skillsFor = ({
             when: "Load when the user asks you to save, rewrite or delete a skill, or you notice a task worth saving for reuse",
             text: skillAuthoring,
             tools: ["update_skill"],
+          },
+        ]
+      : []),
+    ...("browser_navigate" in offered
+      ? [
+          {
+            name: "browser",
+            when: "Load when a task needs a website you must click, type into or step through, or when search_web or fetch_url fails or is blocked on a public page",
+            text: browser,
+            tools: BROWSER_TOOLS,
           },
         ]
       : []),

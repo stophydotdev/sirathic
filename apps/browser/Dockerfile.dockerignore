@@ -1,0 +1,8 @@
+**
+!package.json
+!bun.lock
+!apps/browser/package.json
+!apps/browser/src
+!packages/*/package.json
+**/node_modules
+**/.env*

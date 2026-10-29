@@ -91,7 +91,9 @@ const stepLineOf = (tool: Tool) =>
     ? (searched.safeParse(tool.input).data?.sources ?? []).flatMap(
         (source) => SEARCH_LINES.get(source) ?? [],
       )[0]
-    : TOOL_LINES.get(currentToolName(tool.name));
+    : currentToolName(tool.name).startsWith("browser_")
+      ? "Reading the page…"
+      : TOOL_LINES.get(currentToolName(tool.name));
 
 const bubble = "bg-foreground/7 overflow-hidden rounded-3xl px-4 py-2";
 

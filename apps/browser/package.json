@@ -1,0 +1,16 @@
+{
+  "name": "@sirathic/browser",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./protocol": "./src/protocol.ts"
+  },
+  "scripts": {
+    "start": "bun src/index.ts"
+  },
+  "dependencies": {
+    "patchright": "1.63.0",
+    "zod": "^4.4.3"
+  }
+}

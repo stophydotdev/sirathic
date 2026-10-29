@@ -29,6 +29,7 @@ import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
 import { type AutomationScope, routineTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
+import { BROWSER_HELP, browserTools, USER_FORM } from "../bots/browser";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
@@ -154,7 +155,12 @@ export function answerAgent({
     },
     instructions: system,
     tools: gated,
-    stopWhen: [hasToolCall(CLARIFYING), isStepCount(STEP_CAP)],
+    stopWhen: [
+      hasToolCall(CLARIFYING),
+      hasToolCall(USER_FORM),
+      hasToolCall(BROWSER_HELP),
+      isStepCount(STEP_CAP),
+    ],
     timeout: { chunkMs: STALLED_MS },
     toolApproval: ({ toolCall }) => (confirm(toolCall) ? "user-approval" : undefined),
     allowSystemInMessages: true,
@@ -320,6 +326,7 @@ export function chatResponse({
         ...((!sourceKinds || sourceKinds.includes("web")) && stophyTools(sources.add)),
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
+        ...(inBot && !unattended && browserTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
         ...(owner !== undefined && grok && xSearchTools(owner, sources.add)),
