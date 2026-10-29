@@ -126,6 +126,22 @@ const onlyOptions = (providerOptions: ProviderOptions): LanguageModelMiddleware 
   transformParams: async ({ params }) => ({ ...params, providerOptions }),
 });
 
+export const withoutHiddenReasoning: LanguageModelMiddleware = {
+  transformParams: async ({ params }) => ({
+    ...params,
+    prompt: params.prompt.map((message) =>
+      message.role === "assistant"
+        ? {
+            ...message,
+            content: message.content.flatMap(({ providerOptions: _hidden, ...part }) =>
+              part.type === "reasoning" ? [] : [part],
+            ),
+          }
+        : message,
+    ),
+  }),
+};
+
 const MODEL_OF = {
   minimax: (userId: string, slug: string) =>
     wrapLanguageModel({
@@ -145,12 +161,15 @@ const MODEL_OF = {
         baseURL: "https://api.x.ai/v1",
         fetch: withToken(userId, "xai"),
       }).responses(slug),
-      middleware: onlyOptions({
-        openai: {
-          store: false,
-          include: ["reasoning.encrypted_content"],
-        } satisfies OpenAILanguageModelResponsesOptions,
-      }),
+      middleware: [
+        onlyOptions({
+          openai: {
+            store: false,
+            include: ["reasoning.encrypted_content"],
+          } satisfies OpenAILanguageModelResponsesOptions,
+        }),
+        withoutHiddenReasoning,
+      ],
     }),
 };
 

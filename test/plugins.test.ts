@@ -9,6 +9,8 @@ import { emailEditKey } from "../apps/server/src/plugins/outgoingEmail";
 import { mentionedSkills } from "../apps/server/src/skills/mentions";
 import { fenced, fencedText } from "../apps/server/src/chat/fence";
 import { sirathicTools } from "../apps/server/src/chat/tools";
+import { MockLanguageModelV4 } from "ai/test";
+import { withoutHiddenReasoning } from "../apps/server/src/models/plans";
 
 const connectionRow = ["exa", null, null, await seal("{}")];
 const savedLists = new Map<string, string>();
@@ -348,4 +350,28 @@ test("a page that could not be read stays outside the fence, so its next step st
     type: "text",
     value: `${fencedText(JSON.stringify({ pages: [read] }))}\nhttps://b.example was not read: ${note}`,
   });
+});
+
+test("plan models get earlier answers without another model's hidden reasoning", async () => {
+  const sent = await withoutHiddenReasoning.transformParams?.({
+    type: "stream",
+    model: new MockLanguageModelV4(),
+    params: {
+      prompt: [
+        { role: "user", content: [{ type: "text", text: "Can I combine prayers?" }] },
+        {
+          role: "assistant",
+          content: [
+            {
+              type: "reasoning",
+              text: "",
+              providerOptions: { openai: { itemId: "rs_1", reasoningEncryptedContent: "gAAAA" } },
+            },
+            { type: "text", text: "Yes.", providerOptions: { openai: { itemId: "msg_1" } } },
+          ],
+        },
+      ],
+    },
+  });
+  expect(sent?.prompt[1]).toEqual({ role: "assistant", content: [{ type: "text", text: "Yes." }] });
 });
