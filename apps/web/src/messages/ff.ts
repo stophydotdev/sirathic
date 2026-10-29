@@ -19,6 +19,8 @@ export default {
     "Teal ko nooro mawɗo, ngam jokkorɗe e ko ɓeydaa yiyeede. Ndaha e Kayitaaru ko noorooji hello dolnde niɓɓinde e ndaygiinde. Dow Ndaha, huutoro teal ɓuuɗo laaɓde ngam no jangugol yaawa.",
   Copy: "Natto",
   Copied: "Nattaama",
+  "Open image": "Uddit natal",
+  Image: "Natal",
   Note: "Tinndol",
   Tip: "Ballal",
   Important: "Ko himmi",

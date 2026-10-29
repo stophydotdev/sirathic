@@ -19,6 +19,8 @@ export default {
     "Xanh mòng két là màu nhấn cho liên kết và phần nổi bật. Mực và Giấy là màu nền của giao diện tối và sáng. Trên nền Mực, hãy dùng xanh mòng két nhạt hơn để dễ đọc.",
   Copy: "Sao chép",
   Copied: "Đã sao chép",
+  "Open image": "Mở hình ảnh",
+  Image: "Hình ảnh",
   Note: "Ghi chú",
   Tip: "Mẹo",
   Important: "Quan trọng",

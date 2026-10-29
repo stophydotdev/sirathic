@@ -19,6 +19,8 @@ export default {
     "Turkizna je poudarna barva, za povezave in poudarke. Črnilo in Papir sta barvi ozadja temne in svetle teme. Na Črnilu uporabite svetlejšo turkizno, da ostane besedilo berljivo.",
   Copy: "Kopiraj",
   Copied: "Kopirano",
+  "Open image": "Odpri sliko",
+  Image: "Slika",
   Note: "Opomba",
   Tip: "Nasvet",
   Important: "Pomembno",

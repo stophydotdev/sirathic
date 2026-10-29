@@ -20,6 +20,8 @@ export default {
     "Ang teal ang kulay na pantampok para sa mga link at highlight. Ang Tinta at Papel ang mga kulay ng pahina sa madilim at maliwanag na tema. Sa Tinta, gamitin ang mas mapusyaw na teal para madaling mabasa.",
   Copy: "Kopyahin",
   Copied: "Nakopya",
+  "Open image": "Buksan ang larawan",
+  Image: "Larawan",
   Note: "Tala",
   Tip: "Tip",
   Important: "Mahalaga",

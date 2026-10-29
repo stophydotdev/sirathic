@@ -28,6 +28,7 @@ import {
 } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
 import { CodeBlock } from "@/components/markdownCode";
+import { MarkdownMedia } from "@/components/markdownMedia";
 import { Note, rehypeNotes } from "@/components/markdownNote";
 import { MarkdownTable } from "@/components/markdownTable";
 import { useVideoLine } from "@/components/videoLine";
@@ -267,6 +268,7 @@ const memoized = memoizeMarkdownComponents({
   hr: ({ className, ...props }) => (
     <hr className={cn("aui-md-hr border-border/50 my-4", className)} {...props} />
   ),
+  img: MarkdownMedia,
   th: ({ className, ...props }) => (
     <th
       dir="auto"

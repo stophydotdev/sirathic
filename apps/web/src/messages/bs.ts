@@ -19,6 +19,8 @@ export default {
     "Tirkizna je boja naglaska, za linkove i isticanje. Tinta i Papir su boje pozadine tamne i svijetle teme. Na Tinti koristite svjetliju tirkiznu da tekst ostane čitljiv.",
   Copy: "Kopiraj",
   Copied: "Kopirano",
+  "Open image": "Otvori sliku",
+  Image: "Slika",
   Note: "Napomena",
   Tip: "Savjet",
   Important: "Važno",

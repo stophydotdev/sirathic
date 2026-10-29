@@ -20,6 +20,8 @@ export default {
     "Le bleu sarcelle est la couleur d'accent, pour les liens et les éléments mis en avant. Encre et Papier sont les couleurs de fond des thèmes sombre et clair. Sur Encre, utilisez le bleu sarcelle plus clair pour rester lisible.",
   Copy: "Copier",
   Copied: "Copié",
+  "Open image": "Ouvrir l'image",
+  Image: "Image",
   Note: "Remarque",
   Tip: "Astuce",
   Important: "Important",

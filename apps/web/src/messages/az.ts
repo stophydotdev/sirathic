@@ -20,6 +20,8 @@ export default {
     "Firuzəyi keçidlər və vurğular üçün əsas rəngdir. Mürəkkəb və Kağız tünd və açıq mövzuların fon rəngləridir. Mürəkkəb üzərində asan oxunsun deyə açıq firuzəyidən istifadə edin.",
   Copy: "Kopyala",
   Copied: "Kopyalandı",
+  "Open image": "Şəkli aç",
+  Image: "Şəkil",
   Note: "Qeyd",
   Tip: "Məsləhət",
   Important: "Vacib",
