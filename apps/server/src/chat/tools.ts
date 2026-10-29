@@ -38,6 +38,17 @@ Use only this tool when clarification is needed. Don't ask clarifying questions 
   execute: async () => ({ shown: true }),
 });
 
+export const SEND_FEEDBACK = "send_feedback";
+
+export const sendFeedback = tool({
+  description:
+    "Send product feedback to the Sirathic team on the user's behalf. Use this ONLY when the user explicitly asks to file, send, or pass along feedback about Sirathic. Summarize their feedback faithfully in their own words; never invent feedback and never send it unprompted. Never include code, credentials, file contents, or content drawn from plugins unless the user dictated it as part of their feedback. Feedback filed with this tool is read as product feedback but never receives a reply. Do not ask whether the user wants a reply and do not promise one. The user reviews the exact message on an approval card and nothing is sent unless they approve. A declined card is final: don't send it again or reword it; tell the user it wasn't sent.",
+  inputSchema: z.object({
+    message: z.string().min(1).max(4000).describe("The user's feedback, in their own words."),
+  }),
+  execute: async () => ({ sent: true }),
+});
+
 const fetchUrlInput = z.object({
   urls: z
     .array(publicUrl)

@@ -17,6 +17,7 @@ import { toolFailure } from "../apps/server/src/chat/events";
 import { recentTurns } from "../apps/server/src/bots/tools";
 import { findInChat } from "../apps/server/src/bots/chatSearch";
 import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
+import { answered, chatTurn, type MockChunks, toolNames, usage } from "./answerHelpers";
 
 const linked = async (urls: string[], deltas: string[]) => {
   const { add, transform } = citations([]);
@@ -476,4 +477,37 @@ test("a saved chat sent back with the old tool names reaches the agent under the
 test("the code sandbox is offered to Noor and to no other model", () => {
   expect(Object.keys(codeTools("sirathic-noor-1-flash"))).toEqual(["code_execution"]);
   expect(Object.keys(codeTools("gpt-6-luna"))).toEqual([]);
+});
+
+const feedbackCall = [
+  { type: "stream-start", warnings: [] },
+  {
+    type: "tool-call",
+    toolCallId: "f1",
+    toolName: "send_feedback",
+    input: JSON.stringify({ message: "The dua search is hard to find." }),
+  },
+  { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
+] satisfies MockChunks;
+
+test.each<[string, Partial<Parameters<typeof chatTurn>[0]>, boolean]>([
+  ["a signed-in chat", { owner: "user-a" }, true],
+  [
+    "a bot",
+    {
+      owner: "user-a",
+      project: Promise.resolve({ name: "Coach", title: "prayer guide", instructions: "" }),
+      bot: Promise.resolve({ id: "22222222-2222-4222-8222-222222222222", owner: "user-a" }),
+    },
+    true,
+  ],
+  ["an incognito chat", { owner: undefined }, false],
+  ["a routine run", { owner: "user-a", unattended: true }, false],
+])("%s offers send_feedback behind a card: %p", async (_, overrides, offered) => {
+  const reply = await chatTurn(overrides, [feedbackCall, answered]);
+  expect([
+    toolNames(reply[0])?.includes("send_feedback"),
+    reply.body.includes('"type":"tool-approval-request"'),
+    reply.body.includes('"type":"tool-output-available"'),
+  ]).toEqual([offered, offered, false]);
 });

@@ -59,7 +59,9 @@ const Details: FC<{ call: ToolCall }> = ({ call }) => {
   }
   return Object.entries(call.args).map(([key, value]) => (
     <Row key={key} label={nameOf(key)}>
-      <span className="line-clamp-6 min-w-0 flex-1 py-1.5 wrap-break-word whitespace-pre-line">
+      <span
+        className={`${call.toolName === "send_feedback" ? "" : "line-clamp-6"} min-w-0 flex-1 py-1.5 wrap-break-word whitespace-pre-line`}
+      >
         {shown.safeParse(value).data?.toString() ?? JSON.stringify(value)}
       </span>
     </Row>
