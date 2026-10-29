@@ -1,49 +1,48 @@
-import { useRouter } from "expo-router";
+import "@/global.css";
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from "@expo-google-fonts/inter";
+import { useFonts } from "expo-font";
 import { Drawer } from "expo-router/drawer";
 import { StatusBar } from "expo-status-bar";
-import { SquarePen } from "lucide-react-native";
-import { Pressable } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+import { SafeAreaListener } from "react-native-safe-area-context";
+import { Uniwind, useResolveClassNames, useUniwind } from "uniwind";
+import { ConfirmDialog } from "@/components/confirm";
+import { OverlayHost } from "@/components/overlay";
 import { DrawerPanel } from "@/components/drawer-panel";
-import { useChatState } from "@/lib/chat-state";
+import { usePreferences } from "@/lib/preferences";
 import { installPolyfills } from "@/polyfills";
-import { colors } from "@/theme";
 
 installPolyfills();
-
-const NewChatButton = () => {
-  const newChat = useChatState((s) => s.newChat);
-  const router = useRouter();
-  return (
-    <Pressable
-      hitSlop={12}
-      style={{ marginRight: 16 }}
-      onPress={() => {
-        newChat();
-        router.navigate("/");
-      }}
-    >
-      <SquarePen size={20} color={colors.foreground} />
-    </Pressable>
-  );
-};
+usePreferences.getState().load();
 
 export default function Layout() {
+  const [fontsLoaded] = useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold });
+  const drawerStyle = useResolveClassNames("bg-sidebar w-3/4");
+  const sceneStyle = useResolveClassNames("bg-background");
+  const { theme } = useUniwind();
+  if (!fontsLoaded) return null;
+
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.background }}>
-      <StatusBar style="light" />
-      <Drawer
-        drawerContent={(props) => <DrawerPanel {...props} />}
-        screenOptions={{
-          title: "sirathic",
-          headerStyle: { backgroundColor: colors.background },
-          headerTintColor: colors.foreground,
-          headerShadowVisible: false,
-          headerRight: () => <NewChatButton />,
-          drawerStyle: { backgroundColor: colors.background },
-          sceneStyle: { backgroundColor: colors.background },
-        }}
-      />
-    </GestureHandlerRootView>
+    <SafeAreaListener onChange={({ insets }) => Uniwind.updateInsets(insets)}>
+      <GestureHandlerRootView className="bg-background flex-1">
+        <KeyboardProvider statusBarTranslucent navigationBarTranslucent preserveEdgeToEdge>
+          <StatusBar style={theme === "light" ? "dark" : "light"} />
+          <Drawer
+            drawerContent={(props) => <DrawerPanel {...props} />}
+            screenOptions={{ headerShown: false, drawerStyle, sceneStyle }}
+          >
+            <Drawer.Screen name="index" />
+            <Drawer.Screen name="library" />
+            <Drawer.Screen name="automations" />
+            <Drawer.Screen name="plugins" />
+            <Drawer.Screen name="settings" />
+            <Drawer.Screen name="bot/[id]" />
+          </Drawer>
+          <ConfirmDialog />
+          <OverlayHost />
+        </KeyboardProvider>
+      </GestureHandlerRootView>
+    </SafeAreaListener>
   );
 }

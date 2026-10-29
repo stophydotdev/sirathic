@@ -1,25 +1,87 @@
-import { useChat } from "@ai-sdk/react";
-import type { ChatMessage } from "@sirathic/server/messages";
-import { DefaultChatTransport } from "ai";
-import { type ComponentRef, type FC, useEffect, useRef } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Chat as LiveChat, useChat } from "@ai-sdk/react";
+import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
+import { DefaultChatTransport, type FileUIPart, validateUIMessages } from "ai";
+import { type ComponentRef, type FC, useEffect, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Share as SystemShare,
+  Text,
+  View,
+} from "react-native";
+import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { z } from "zod";
+import { api } from "@/lib/api";
 import { API_URL, sessionHeaders } from "@/lib/auth";
 import { useChatState } from "@/lib/chat-state";
 import { textOf } from "@/lib/sources";
-import { colors } from "@/theme";
-import { Answer } from "./answer";
+import { Answer, type Feedback } from "./answer";
+import { SentFiles } from "./attachment-chip";
 import { Composer } from "./composer";
+import { ComposerDock } from "./composer-dock";
+import { GLASS, GlassFill } from "./glass";
+import { Plus, Share, Spy } from "./icons";
+import { Mark } from "./mark";
 
-const transport = new DefaultChatTransport<ChatMessage>({
-  api: `${API_URL}/api/chat`,
-  credentials: "omit",
-  headers: sessionHeaders,
-  body: () => {
-    const { mode, model } = useChatState.getState();
-    return { mode, model, device: "phone" };
-  },
-});
+const transportIn = (projectId: string | undefined) =>
+  new DefaultChatTransport<ChatMessage>({
+    api: `${API_URL}/api/chat`,
+    credentials: "omit",
+    headers: sessionHeaders,
+    body: () => {
+      const { mode, model, effort, incognito } = useChatState.getState();
+      return {
+        mode: projectId ? "quick" : mode,
+        model,
+        effort,
+        incognito,
+        projectId,
+        device: "phone",
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      };
+    },
+  });
+
+const live = new Map<string, LiveChat<ChatMessage>>();
+
+const answering = (chat: LiveChat<ChatMessage>) =>
+  chat.status === "submitted" || chat.status === "streaming";
+
+const refreshSaved = () => {
+  const { incognito, loadSessions } = useChatState.getState();
+  if (!incognito) void loadSessions();
+};
+
+export const liveChat = (id: string, messages: ChatMessage[] | undefined, projectId?: string) => {
+  const found = live.get(id);
+  if (found && answering(found)) return found;
+  const created = new LiveChat<ChatMessage>({
+    id,
+    messages,
+    transport: transportIn(projectId),
+    onData: (part) => {
+      if (part.type === "data-title") refreshSaved();
+    },
+    onFinish: refreshSaved,
+  });
+  const stopHere = created.stop;
+  created.stop = async () => {
+    void api.sessions.stop.mutate({ id }).catch(() => undefined);
+    await stopHere();
+  };
+  live.set(id, created);
+  return created;
+};
+
+export const savedChat = (id: string) =>
+  api.sessions.get.query({ id }).then(({ messages }) =>
+    validateUIMessages<ChatMessage>({
+      messages,
+      dataSchemas: chatData,
+      metadataSchema: messageMetadata,
+    }),
+  );
 
 const jsonText = z.string().transform((text, ctx) => {
   try {
@@ -32,79 +94,185 @@ const jsonText = z.string().transform((text, ctx) => {
 
 const serverError = jsonText.pipe(z.object({ error: z.string() }));
 
-const messageOf = (error: Error) =>
+export const messageOf = (error: Error) =>
   serverError.safeParse(error.message).data?.error ?? error.message;
 
-export const Chat: FC<{ id: string }> = ({ id }) => {
-  const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
-  const loadModels = useChatState((s) => s.loadModels);
-  const { messages, sendMessage, status, stop, error } = useChat<ChatMessage>({
-    id,
-    transport,
-  });
-  const busy = status === "submitted" || status === "streaming";
-  const ask = (text: string) => void sendMessage({ text });
-
-  useEffect(() => {
-    void loadModels();
-  }, [loadModels]);
-
+const IncognitoToggle: FC = () => {
+  const incognito = useChatState((s) => s.incognito);
+  const setIncognito = useChatState((s) => s.setIncognito);
   return (
-    <KeyboardAvoidingView
-      style={styles.page}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={90}
+    <Pressable
+      accessibilityRole="switch"
+      accessibilityState={{ checked: incognito }}
+      accessibilityLabel="Incognito"
+      onPress={() => setIncognito(!incognito)}
+      className={`h-11 min-w-11 flex-row items-center justify-center gap-1.5 rounded-full px-2.5 ${incognito ? "bg-super/15" : "active:bg-muted"}`}
     >
-      {messages.length === 0 ? (
-        <View style={styles.empty}>
-          <Text style={styles.headline}>What do you want to know?</Text>
-        </View>
-      ) : (
-        <ScrollView
-          ref={scroll}
-          contentContainerStyle={styles.thread}
-          onContentSizeChange={() => scroll.current?.scrollToEnd({ animated: true })}
-        >
-          {messages.map((message, index) =>
-            message.role === "user" ? (
-              <Text key={message.id} style={styles.question}>
-                {textOf(message)}
-              </Text>
-            ) : (
-              <Answer
-                key={message.id}
-                message={message}
-                streaming={busy && index === messages.length - 1}
-                onAsk={ask}
-              />
-            ),
-          )}
-          {error && <Text style={styles.error}>{messageOf(error)}</Text>}
-        </ScrollView>
-      )}
-      <View style={styles.composer}>
-        <Composer busy={busy} onSend={ask} onStop={() => void stop()} />
-      </View>
-    </KeyboardAvoidingView>
+      <GlassFill radius={22} />
+      <Spy
+        size={24}
+        strokeWidth={1.75}
+        colorClassName={incognito ? "accent-super" : "accent-muted-foreground"}
+      />
+      {incognito && <Text className="text-super font-sans text-sm">Incognito</Text>}
+    </Pressable>
   );
 };
 
-const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: colors.background },
-  empty: { flex: 1, justifyContent: "center", alignItems: "center" },
-  headline: { color: colors.foreground, fontSize: 24, fontWeight: "500" },
-  thread: { padding: 16, gap: 20 },
-  question: {
-    alignSelf: "flex-end",
-    maxWidth: "85%",
-    backgroundColor: colors.card,
-    color: colors.foreground,
-    fontSize: 16,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 16,
-    overflow: "hidden",
-  },
-  error: { color: colors.danger, fontSize: 14 },
-  composer: { padding: 12 },
-});
+export const SavedChat: FC<{ id: string }> = ({ id }) => {
+  const [messages, setMessages] = useState<ChatMessage[]>();
+  const [resumed] = useState(() => {
+    const found = live.get(id);
+    return found !== undefined && answering(found);
+  });
+
+  useEffect(() => {
+    if (resumed) return;
+    let current = true;
+    savedChat(id).then(
+      (found) => {
+        if (current) setMessages(found);
+      },
+      () => {
+        if (current) useChatState.getState().newChat();
+      },
+    );
+    return () => {
+      current = false;
+    };
+  }, [id, resumed]);
+
+  return messages || resumed ? (
+    <Chat id={id} initialMessages={messages} />
+  ) : (
+    <View className="flex-1 items-center justify-center">
+      <ActivityIndicator colorClassName="accent-muted-foreground" />
+    </View>
+  );
+};
+
+export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
+  id,
+  initialMessages,
+}) => {
+  const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
+  const newChat = useChatState((s) => s.newChat);
+  const [session] = useState(() => liveChat(id, initialMessages));
+  const { messages, sendMessage, regenerate, setMessages, status, stop, error } =
+    useChat<ChatMessage>({ chat: session });
+  const incognito = useChatState((s) => s.incognito);
+  const [dock, setDock] = useState(0);
+  const wasBusy = useRef(false);
+  const busy = status === "submitted" || status === "streaming";
+  useEffect(() => {
+    if (wasBusy.current && !busy) scroll.current?.scrollToEnd({ animated: true });
+    wasBusy.current = busy;
+  }, [busy]);
+  const ask = (text: string, files: FileUIPart[] = []) =>
+    void sendMessage({ text, files, metadata: {} });
+  const rate = (messageId: string, next: Feedback) => {
+    setMessages((all) =>
+      all.map((message) =>
+        message.id === messageId
+          ? { ...message, metadata: { ...message.metadata, feedback: next ?? undefined } }
+          : message,
+      ),
+    );
+    if (!incognito) {
+      void api.sessions.feedback.mutate({ id, messageId, value: next }).catch(() => undefined);
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView behavior="padding" className="flex-1">
+      {messages.length === 0 ? (
+        <View className="flex-1">
+          <View className="absolute end-3 top-0 h-14 justify-center">
+            <IncognitoToggle />
+          </View>
+          <View className="my-auto items-center gap-5 pb-9">
+            <Mark size={26} />
+            <Text className="text-foreground font-sans px-4 text-center text-xl tracking-[-0.02em]">
+              What do you want to know?
+            </Text>
+          </View>
+          <ComposerDock>
+            <Composer
+              placeholder="Ask anything…"
+              busy={busy}
+              onSend={ask}
+              onStop={() => void stop()}
+            />
+          </ComposerDock>
+        </View>
+      ) : (
+        <View className="flex-1 justify-end">
+          <ScrollView
+            ref={scroll}
+            className="absolute inset-0"
+            contentContainerClassName="px-4 pt-14 pb-6"
+            onContentSizeChange={() => {
+              if (busy) scroll.current?.scrollToEnd({ animated: true });
+            }}
+          >
+            {messages.map((message, index) =>
+              message.role === "user" ? (
+                <View key={message.id} className="items-end pt-8 pb-6">
+                  <SentFiles message={message} />
+                  <Text className="bg-bubble text-foreground font-sans max-w-[90%] overflow-hidden rounded-3xl px-4 py-2.5 text-base">
+                    {textOf(message)}
+                  </Text>
+                </View>
+              ) : (
+                <Answer
+                  key={message.id}
+                  message={message}
+                  streaming={busy && index === messages.length - 1}
+                  feedback={message.metadata?.feedback ?? null}
+                  onRate={(next) => rate(message.id, next)}
+                  onRetry={() => void regenerate({ messageId: message.id })}
+                  onAsk={ask}
+                />
+              ),
+            )}
+            {error && (
+              <Text className="text-destructive font-sans text-sm">{messageOf(error)}</Text>
+            )}
+            <View style={{ height: dock }} />
+          </ScrollView>
+          <View
+            className={`absolute inset-x-0 top-0 h-14 flex-row items-center gap-2 ps-16 pe-3 ${GLASS ? "" : "bg-background"}`}
+          >
+            <Pressable
+              accessibilityLabel="New chat"
+              onPress={newChat}
+              className="active:bg-muted size-11 items-center justify-center rounded-full"
+            >
+              <GlassFill radius={22} />
+              <Plus size={24} strokeWidth={1.75} colorClassName="accent-muted-foreground" />
+            </Pressable>
+            <View className="flex-1" />
+            <IncognitoToggle />
+            <Pressable
+              accessibilityLabel="Share"
+              disabled={incognito}
+              onPress={() => void SystemShare.share({ message: `https://sirathic.com/c/${id}` })}
+              className={`active:bg-foreground/15 size-11 items-center justify-center rounded-full disabled:opacity-40 ${GLASS ? "" : "bg-foreground/10"}`}
+            >
+              <GlassFill radius={22} />
+              <Share size={22} strokeWidth={1.75} colorClassName="accent-foreground" />
+            </Pressable>
+          </View>
+          <ComposerDock onLayout={(event) => setDock(event.nativeEvent.layout.height)}>
+            <Composer
+              placeholder="Ask a follow-up"
+              busy={busy}
+              onSend={ask}
+              onStop={() => void stop()}
+            />
+          </ComposerDock>
+        </View>
+      )}
+    </KeyboardAvoidingView>
+  );
+};
