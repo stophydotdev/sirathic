@@ -742,6 +742,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic جاۋاب بەرگەن · {date}",
   "Ask your own question": "ئۆز سوئالىڭىزنى سوراڭ",
   "{count} more sources": "يەنە {count} مەنبە",
+  Answer: "جاۋاب",
+  Links: "ئۇلانمىلار",
   "Previous source": "ئالدىنقى مەنبە",
   "Next source": "كېيىنكى مەنبە",
 } satisfies Messages;

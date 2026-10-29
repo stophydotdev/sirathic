@@ -736,6 +736,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Одговорио Sirathic · {date}",
   "Ask your own question": "Поставите своје питање",
   "{count} more sources": "Још {count} извора",
+  Answer: "Одговор",
+  Links: "Везе",
   "Previous source": "Претходни извор",
   "Next source": "Следећи извор",
 } satisfies Messages;

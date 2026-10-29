@@ -740,6 +740,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic yanıtladı · {date}",
   "Ask your own question": "Kendi sorunuzu sorun",
   "{count} more sources": "{count} kaynak daha",
+  Answer: "Yanıt",
+  Links: "Bağlantılar",
   "Previous source": "Önceki kaynak",
   "Next source": "Sonraki kaynak",
 } satisfies Messages;

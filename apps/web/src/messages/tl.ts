@@ -744,6 +744,8 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sinagot ng Sirathic · {date}",
   "Ask your own question": "Itanong ang sarili mong tanong",
   "{count} more sources": "{count} pang sanggunian",
+  Answer: "Sagot",
+  Links: "Mga link",
   "Previous source": "Nakaraang sanggunian",
   "Next source": "Susunod na sanggunian",
 } satisfies Messages;
