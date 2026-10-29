@@ -34,6 +34,7 @@ export const MESSAGES = [
   "Free Islamic answering engine. Answers come from the Quran, graded hadith and scholars' rulings, and cite their sources.",
   "1 source",
   "{count} sources",
+  "{count} views",
   "Fork into a new chat",
   "Sources",
   "More actions",

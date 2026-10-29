@@ -40,6 +40,8 @@ const SITES = new Map(
     "sunnah.com": { name: "Sunnah.com", kind: "hadith" },
     "ar.wikisource.org": { name: "Wikisource", kind: "hadith" },
     "shamela.ws": { name: "Shamela", kind: "book" },
+    "youtube.com": { name: "YouTube", kind: "web" },
+    "youtu.be": { name: "YouTube", kind: "web" },
     "aboutislam.net": { name: "About Islam", kind: "fatwa" },
     "akramnadwi.com": { name: "Akram Nadwi", kind: "fatwa" },
     "al-fatawa.com": { name: "Al-Fatawa", kind: "fatwa" },

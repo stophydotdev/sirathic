@@ -34,6 +34,7 @@ import { z } from "zod";
 import { ReportMistake } from "@/components/reportMistake";
 import { usePreferences } from "@/components/preferences";
 import { Research } from "@/components/researchSteps";
+import { useVideoLine } from "@/components/videoLine";
 
 export const Reply: FC = () => {
   const content = useAuiState((s) => s.message.content);
@@ -68,13 +69,18 @@ const research: typeof researchByType = (part, context) =>
 const answerState = (status: MessageStatus["type"] | undefined) =>
   status === "running" ? "streaming" : status === "incomplete" ? "error" : "complete";
 
-const citationOf = (source: Source) => ({
+const citationOf = (source: Source, videoLine: ReturnType<typeof useVideoLine>) => ({
   id: source.url,
   title: source.title,
   domain: siteName(source.url),
   url: source.url,
   icon: <Favicon url={source.url} size={16} />,
   snippet: source.snippet,
+  video: source.video && {
+    channel: source.video.channel,
+    thumbnail: source.video.thumbnail,
+    line: videoLine(source.video),
+  },
 });
 
 const startTimes = new Map<string, number>();
@@ -93,6 +99,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const { feedback, rate, copy } = useAnswer();
   const [reporting, setReporting] = useState(false);
   const answerFont = usePreferences((s) => s.answerFont);
+  const videoLine = useVideoLine();
   const t = useT();
 
   return (
@@ -104,7 +111,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         onRetry={() => aui.message().reload()}
         sources={groupsOf(sources).flatMap((group) =>
           group.sources.map((source) => ({
-            ...citationOf(source),
+            ...citationOf(source, videoLine),
             group: t(KIND_NAMES[group.kind]),
           })),
         )}

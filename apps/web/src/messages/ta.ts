@@ -725,4 +725,5 @@ export default {
   "Markdown (.md)": "Markdown (.md)",
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
+  "{count} views": "{count} பார்வைகள்",
 } satisfies Messages;

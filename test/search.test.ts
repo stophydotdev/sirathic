@@ -10,6 +10,8 @@ import { onePerAnswer } from "@sirathic/core/search/onePerAnswer";
 import { SEARCHABLE } from "@sirathic/core/search/searchable";
 import { hadithLink } from "@sirathic/core/tools/hadithLinks";
 import { clean } from "../scripts/fatwaPages";
+import { youtubeVideoId } from "@sirathic/core/tools/youtubeVideo";
+import { videoLength } from "../apps/server/src/shared/sources";
 import { SITES } from "../scripts/fatwaSites";
 
 test("keyword queries drop Arabic stopwords and keep every other word as written", () => {
@@ -297,4 +299,24 @@ test("a saved fatwa keeps its text and drops the page around it", () => {
     "| **رقم الفتوى:** | 3882 |",
     "There is no harm in changing it.",
   ]);
+});
+
+test("a YouTube link is read as its video, and a video's length reads like YouTube's", () => {
+  expect(
+    [
+      "https://www.youtube.com/watch?v=rWX5bb1pdiI",
+      "https://youtube.com/watch?feature=share&v=rWX5bb1pdiI&t=30",
+      "https://m.youtube.com/shorts/rWX5bb1pdiI",
+      "https://youtu.be/rWX5bb1pdiI?si=abc",
+      "https://www.youtube.com/embed/rWX5bb1pdiI",
+    ].map(youtubeVideoId),
+  ).toEqual(Array.from({ length: 5 }, () => "rWX5bb1pdiI"));
+  expect(
+    [
+      "https://www.youtube.com/@NourishYourHeart",
+      "https://www.youtube.com/watch?v=short",
+      "https://notyoutube.com/watch?v=rWX5bb1pdiI",
+    ].map(youtubeVideoId),
+  ).toEqual([undefined, undefined, undefined]);
+  expect([59, 116, 3725].map(videoLength)).toEqual(["0:59", "1:56", "1:02:05"]);
 });

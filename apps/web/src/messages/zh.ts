@@ -711,4 +711,5 @@ export default {
   "Markdown (.md)": "Markdown (.md)",
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
+  "{count} views": "{count} 次观看",
 } satisfies Messages;

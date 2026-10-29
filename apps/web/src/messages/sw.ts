@@ -726,4 +726,5 @@ export default {
   "Markdown (.md)": "Markdown (.md)",
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
+  "{count} views": "Imetazamwa mara {count}",
 } satisfies Messages;

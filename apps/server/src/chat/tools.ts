@@ -19,6 +19,7 @@ import {
 import { pageText } from "./compact";
 import { fenced, fencedText } from "./fence";
 import { searchAll, searchInput } from "./search";
+import { readVideo } from "./youtube";
 
 const PAGE_CHARS = 25_000;
 
@@ -68,6 +69,18 @@ export const routedToStophy = (message: string) =>
   );
 
 const readPage = async (cite: Cite, url: string) => {
+  const video = await readVideo(url);
+  if (video) {
+    return {
+      page: {
+        url,
+        title: video.source.title,
+        markdown: pageText(video.markdown, PAGE_CHARS),
+        citation: cite(url),
+      },
+      source: video.source,
+    };
+  }
   if (textBlocked(url)) {
     const id = hadithIdOfSunnahUrl(url);
     const [hadith] = id === null ? [] : await hadithsByIds([id]);

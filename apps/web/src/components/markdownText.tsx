@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
 import "katex/dist/katex.min.css";
@@ -38,6 +39,7 @@ import {
 } from "@/components/citations";
 import { Swap } from "@/components/swap";
 import { Favicon } from "@/components/favicon";
+import { useVideoLine } from "@/components/videoLine";
 import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
@@ -115,6 +117,7 @@ const citedUrls = z.array(z.string()).min(1);
 const Citation: FC<{ urls: string[] }> = ({ urls }) => {
   const sources = useContext(SourcesContext);
   const chat = useChatState();
+  const videoLine = useVideoLine();
   const [first, ...more] = urls;
   const name = siteName(first);
   const opened = (url: string) => {
@@ -147,22 +150,44 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           sideOffset={6}
           className="bg-card border-border z-50 flex w-80 flex-col gap-1 rounded-xl border p-1 shadow-lg"
         >
-          {urls.map((url) => (
-            <a
-              key={url}
-              href={url}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => opened(url)}
-              className="hover:bg-muted flex gap-2 rounded-lg p-2 text-sm"
-            >
-              <Favicon url={url} size={16} className="mt-0.5" />
-              <span className="flex min-w-0 flex-col">
-                <span className="text-muted-foreground line-clamp-1 text-xs">{siteName(url)}</span>
-                <span className="line-clamp-2">{sources.get(url)?.title ?? url}</span>
-              </span>
-            </a>
-          ))}
+          {urls.map((url) => {
+            const video = sources.get(url)?.video;
+            return (
+              <a
+                key={url}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => opened(url)}
+                className="hover:bg-muted flex gap-2 rounded-lg p-2 text-sm"
+              >
+                {video?.thumbnail ? (
+                  <Image
+                    src={video.thumbnail}
+                    alt=""
+                    width={64}
+                    height={36}
+                    unoptimized
+                    className="bg-muted mt-0.5 h-9 w-16 shrink-0 rounded-md object-cover"
+                  />
+                ) : (
+                  <Favicon url={url} size={16} className="mt-0.5" />
+                )}
+                <span className="flex min-w-0 flex-col">
+                  <span className="text-muted-foreground line-clamp-1 text-xs">
+                    {siteName(url)}
+                    {video && ` · ${video.channel}`}
+                  </span>
+                  <span className="line-clamp-2">{sources.get(url)?.title ?? url}</span>
+                  {video && (
+                    <span className="text-muted-foreground text-xs tabular-nums">
+                      {videoLine(video)}
+                    </span>
+                  )}
+                </span>
+              </a>
+            );
+          })}
         </HoverCard.Content>
       </HoverCard.Portal>
     </HoverCard.Root>

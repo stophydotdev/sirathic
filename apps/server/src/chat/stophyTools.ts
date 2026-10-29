@@ -6,6 +6,7 @@ import { wordsOf } from "../plugins/tools";
 import type { Source } from "../shared/sources";
 import type { Cite } from "./cite";
 import { fenced } from "./fence";
+import { videoOfRow, withVideos } from "./youtube";
 
 const API = "https://api.stophy.dev";
 const MAX_MATCHES = 8;
@@ -25,7 +26,7 @@ const listed = z.object({ results: z.array(row) }).catchall(json);
 const textField = z.string();
 const pageUrl = z.url({ protocol: /^https?$/u });
 
-type Row = z.infer<typeof row>;
+export type Row = z.infer<typeof row>;
 
 const pageOf = (entry: Row) =>
   Object.entries(entry).flatMap(([key, value]) => {
@@ -42,7 +43,12 @@ export const withCitations = (cite: Cite, data: z.infer<typeof json>, fallbackTi
     const snippet =
       textField.safeParse(entry.description ?? entry.summary ?? entry.address ?? entry.text).data ??
       "";
-    sources.push({ url, title, snippet: clip(snippet, SNIPPET_CHARS) });
+    sources.push({
+      url,
+      title,
+      snippet: clip(snippet, SNIPPET_CHARS),
+      video: videoOfRow(url, entry),
+    });
     return { citation: cite(url), ...entry };
   };
   const list = listed.safeParse(data);
@@ -189,7 +195,12 @@ export const stophyTools = (cite: Cite) => ({
       });
       const body = reply.parse(await response.json());
       if (!body.success) throw new Error(body.error.message);
-      return { ...withCitations(cite, body.data, endpoint.title), creditsUsed: body.creditsUsed };
+      const marked = withCitations(cite, body.data, endpoint.title);
+      return {
+        ...marked,
+        sources: await withVideos(marked.sources),
+        creditsUsed: body.creditsUsed,
+      };
     },
     toModelOutput: ({ output: { data, creditsUsed } }) =>
       fenced({ type: "text", value: clip(JSON.stringify({ data, creditsUsed }), RESULT_CHARS) }),
