@@ -1,5 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI, type OpenAILanguageModelResponsesOptions } from "@ai-sdk/openai";
+import { cacheFor } from "@sirathic/core/cache";
 import { db } from "@sirathic/db";
 import { accounts } from "@sirathic/db/schema";
 import { type LanguageModelMiddleware, wrapLanguageModel } from "ai";
@@ -24,10 +25,22 @@ type Plan = z.infer<typeof plan>;
 
 const PLAN_NAMES = { minimax: "MiniMax", xai: "Grok" } satisfies Record<TokenPlan, string>;
 
-const PLAN_MODELS = {
-  minimax: [{ slug: "MiniMax-M2.7", name: "MiniMax M2.7", maker: "minimax" }],
-  xai: [{ slug: "grok-4.3", name: "Grok 4.3", maker: "xai" }],
-} satisfies Record<TokenPlan, Model[]>;
+const MINIMAX_MODELS = [
+  { slug: "MiniMax-M2.7", name: "MiniMax M2.7", maker: "minimax" },
+] satisfies Model[];
+
+const XAI_API = "https://api.x.ai/v1";
+const GROK_FALLBACK = "grok-4.6";
+const HOUR_MS = 3_600_000;
+
+const grokList = z.object({ data: z.array(z.object({ id: z.string(), created: z.number() })) });
+
+const grokModelIds = cacheFor({
+  namespace: "grok-models:v1",
+  schema: z.array(z.string()),
+  freshMs: HOUR_MS,
+  keepMs: 24 * HOUR_MS,
+});
 
 const ticket = planLogin.extend({ plan, owner: z.string() });
 
@@ -158,7 +171,7 @@ const MODEL_OF = {
       model: createOpenAI({
         name: "xai",
         apiKey: "plan",
-        baseURL: "https://api.x.ai/v1",
+        baseURL: XAI_API,
         fetch: withToken(userId, "xai"),
       }).responses(slug),
       middleware: [
@@ -174,9 +187,33 @@ const MODEL_OF = {
 };
 
 export function planModel(userId: string, slug: string) {
-  const id = TOKEN_PLANS.find((each) => PLAN_MODELS[each].some((model) => model.slug === slug));
-  return id && MODEL_OF[id](userId, slug);
+  if (slug.startsWith("grok-")) return MODEL_OF.xai(userId, slug);
+  return MINIMAX_MODELS.some((model) => model.slug === slug)
+    ? MODEL_OF.minimax(userId, slug)
+    : undefined;
 }
+
+const grokName = (slug: string) =>
+  slug
+    .split("-")
+    .filter((word) => !/^\d{4}$/u.test(word))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+async function listGrokModels(userId: string) {
+  const response = await withToken(userId, "xai")(`${XAI_API}/models`);
+  if (!response.ok) throw new StatusError(502, `xAI models answered ${response.status}`);
+  return grokList
+    .parse(await response.json())
+    .data.filter((model) => !model.id.startsWith("grok-imagine"))
+    .toSorted((a, b) => b.created - a.created)
+    .map((model) => model.id);
+}
+
+const grokModels = async (userId: string) =>
+  (await grokModelIds(userId, () => listGrokModels(userId)).catch(() => [GROK_FALLBACK])).map(
+    (slug): Model => ({ slug, name: grokName(slug), maker: "xai" }),
+  );
 
 export async function connectedPlans(user: User): Promise<Plan[]> {
   const rows = await db
@@ -187,8 +224,14 @@ export async function connectedPlans(user: User): Promise<Plan[]> {
   return [...chatgpt, ...rows.map((row) => tokenPlan.parse(row.id))];
 }
 
-export const planModels = (plans: Plan[]) =>
-  plans.flatMap<Model>((id) => (id === "chatgpt" ? [] : PLAN_MODELS[id]));
+export const planModels = async (userId: string, plans: Plan[]) =>
+  (
+    await Promise.all(
+      plans.map((id) =>
+        id === "xai" ? grokModels(userId) : id === "minimax" ? MINIMAX_MODELS : [],
+      ),
+    )
+  ).flat();
 
 async function startLogin(id: Plan): Promise<PlanLogin> {
   if (id !== "chatgpt") return PLAN_LOGINS[id].start();
