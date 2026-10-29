@@ -11,7 +11,7 @@ import { auth, userFor } from "./account/auth";
 import { startScheduler } from "./automations/runner";
 import { timezone } from "./shared/settings";
 import { withoutErrorText } from "./tracing";
-import { followAnswer, startAnswer } from "./chat/answers";
+import { drainAnswers, followAnswer, startAnswer } from "./chat/answers";
 import { keepAlive } from "./chat/keepAlive";
 import { refreshSummary } from "./bots/summary";
 import { pickModels } from "./models/pick";
@@ -53,6 +53,7 @@ import { listSkills } from "./skills/skills";
 import { sourceKind } from "./shared/sources";
 
 const IDLE_TIMEOUT_SECONDS = 255;
+const DRAIN_MS = 290_000;
 
 const chatBody = z.object({
   id: sessionId,
@@ -75,7 +76,13 @@ const tracing = new NodeSDK({
   logRecordProcessors: [],
 });
 tracing.start();
-process.on("SIGTERM", () => void tracing.shutdown().finally(() => process.exit(0)));
+process.on(
+  "SIGTERM",
+  () =>
+    void drainAnswers(DRAIN_MS)
+      .then(() => tracing.shutdown())
+      .finally(() => process.exit(0)),
+);
 
 const app = new Hono();
 

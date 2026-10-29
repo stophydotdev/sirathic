@@ -7,7 +7,9 @@ import {
 } from "@opentelemetry/sdk-trace";
 import { simulateReadableStream } from "ai";
 import {
+  drainAnswers,
   followAnswer,
+  holdShutdown,
   isAnswering,
   startAnswer,
   stopAnswer,
@@ -64,10 +66,11 @@ test("an answer is unwatched only when its asker left and nobody follows it", as
 });
 
 test("reopening a chat signed out gets nothing to follow, even mid-answer", async () => {
-  startAnswer("user", "chat");
+  const answer = startAnswer("user", "chat");
   const res = await server.fetch(new Request("http://localhost/api/chat/chat/stream"));
   expect(res.status).toBe(204);
   stopAnswer("user", "chat");
+  await answer.consumeSseStream({ stream: simulateReadableStream({ chunks: [] }) });
 });
 
 test("traces drop error text, which can hold a fetched URL", async () => {
@@ -83,4 +86,20 @@ test("traces drop error text, which can hold a fetched URL", async () => {
   const [sent] = exporter.getFinishedSpans();
   expect(sent?.status).toEqual({ code: SpanStatusCode.ERROR });
   expect(JSON.stringify(sent?.events)).not.toContain("private");
+});
+
+test("a stopping server waits for running answers and routine runs before it exits", async () => {
+  const answer = startAnswer("user", "draining");
+  const routine = Promise.withResolvers<void>();
+  void holdShutdown(routine.promise);
+  let drained = false;
+  const draining = drainAnswers(60_000).then(() => {
+    drained = true;
+  });
+  await answer.consumeSseStream({ stream: simulateReadableStream({ chunks: [] }) });
+  await Bun.sleep(0);
+  expect(drained).toBe(false);
+  routine.resolve();
+  await draining;
+  expect(drained).toBe(true);
 });
