@@ -8,6 +8,7 @@ import { procedure, signedIn, t } from "../trpc";
 import { isAnswering, stopAnswer } from "./answers";
 import { appOf, clientOf } from "./client";
 import { browserEvent, track } from "./events";
+import { withoutPageText } from "./pageText";
 import { publishedPage, publishSession } from "./pages";
 import {
   deleteAllSessions,
@@ -39,7 +40,7 @@ export const chatRoutes = {
         if (!messages) {
           throw new TRPCError({ code: "NOT_FOUND", message: "no such session" });
         }
-        return { messages, answering: isAnswering(ctx.owner, input.id) };
+        return { messages: withoutPageText(messages), answering: isAnswering(ctx.owner, input.id) };
       }),
     stop: signedIn.input(session).mutation(({ ctx, input }) => {
       stopAnswer(ctx.owner, input.id);

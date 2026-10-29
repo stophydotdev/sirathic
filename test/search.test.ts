@@ -1,9 +1,12 @@
 import { expect, test } from "bun:test";
+import { validateUIMessages } from "ai";
 import { nearBest, nearFused, withinChars } from "../apps/server/src/chat/cut";
 import { fuse } from "../apps/server/src/chat/fuse";
+import { withoutPageText, withStoredPageText } from "../apps/server/src/chat/pageText";
 import { needsSources, relevant } from "../apps/server/src/chat/relevance";
 import { onePerPage } from "../apps/server/src/chat/search";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
+import { type ChatMessage, chatData, messageMetadata } from "../apps/server/src/shared/messages";
 import { publicUrl } from "@sirathic/core/web/url";
 import { withoutStopwords } from "@sirathic/core/search/arabic";
 import { onePerAnswer } from "@sirathic/core/search/onePerAnswer";
@@ -319,4 +322,47 @@ test("a YouTube link is read as its video, and a video's length reads like YouTu
     ].map(youtubeVideoId),
   ).toEqual([undefined, undefined, undefined]);
   expect([59, 116, 3725].map(videoLength)).toEqual(["0:59", "1:56", "1:02:05"]);
+});
+
+test("a loaded chat drops search page text, and the next question gets it back", async () => {
+  const output = {
+    results: {
+      fatwa: [
+        {
+          citation: 1,
+          title: "Witr",
+          site: "islamqa.org",
+          date: null,
+          text: "Witr is three rak'ahs.",
+        },
+      ],
+    },
+    sources: [{ url: "https://islamqa.org/1", title: "Witr", snippet: "Witr is" }],
+    text: "[1] Witr is three rak'ahs.",
+  };
+  const stored: ChatMessage[] = [
+    {
+      id: "answer",
+      role: "assistant",
+      metadata: {},
+      parts: [
+        {
+          type: "tool-search_web",
+          toolCallId: "call",
+          state: "output-available",
+          input: { queries: ["witr"], sources: ["fatwa"] },
+          output,
+        },
+      ],
+    },
+  ];
+  const sent = withoutPageText(stored);
+  expect(JSON.stringify(sent)).not.toContain("three rak'ahs");
+  expect(sent[0]?.parts[0]).toMatchObject({ output: { sources: output.sources } });
+  const sentBack = await validateUIMessages<ChatMessage>({
+    messages: JSON.parse(JSON.stringify(sent)),
+    dataSchemas: chatData,
+    metadataSchema: messageMetadata,
+  });
+  expect(withStoredPageText(sentBack, stored)).toEqual(stored);
 });

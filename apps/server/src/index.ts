@@ -35,8 +35,10 @@ import { appRouter } from "./router";
 import { createContext } from "./trpc";
 import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
+import { withStoredPageText } from "./chat/pageText";
 import {
   messageSchemas,
+  openSession,
   saveSession,
   sessionId,
   titleSession,
@@ -79,12 +81,15 @@ app.post("/api/chat", (c) =>
     const user = await userFor(c.req.raw.headers);
     if (!user) throw new StatusError(401, "not signed in");
     const by = user.id;
-    const validated = await validateUIMessages<ChatMessage>({
-      messages: input.messages,
-      ...messageSchemas,
-    }).catch((err: Error) => {
-      throw new StatusError(400, err.message);
-    });
+    const validated = withStoredPageText(
+      await validateUIMessages<ChatMessage>({
+        messages: input.messages,
+        ...messageSchemas,
+      }).catch((err: Error) => {
+        throw new StatusError(400, err.message);
+      }),
+      (input.incognito ? undefined : await openSession(input.id, by, false)) ?? [],
+    );
     const owner = input.incognito ? undefined : by;
     const { modelName, models } = pickModels(user, input.model);
     await checkNoorUsage({
