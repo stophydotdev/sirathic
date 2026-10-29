@@ -420,6 +420,7 @@ export default {
   "Schedule posts and read analytics": "Panga machapisho na usome uchanganuzi",
   "Search and crawl the web": "Tafuta na ukague wavuti",
   "Search and edit pages and databases": "Tafuta na uhariri kurasa na hifadhidata",
+  "Search and edit repositories, code and issues": "Tafuta na uhariri hazina, msimbo na masuala",
   "Search and update CRM records": "Tafuta na usasishe rekodi za CRM",
   "Search, create and edit notes": "Tafuta, unda na uhariri madokezo",
   "Search meeting transcripts and summaries": "Tafuta nakala na muhtasari wa mikutano",

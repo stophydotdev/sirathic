@@ -411,6 +411,7 @@ export default {
   "Schedule posts and read analytics": "పోస్ట్‌లను షెడ్యూల్ చేయండి, అనలిటిక్స్ చదవండి",
   "Search and crawl the web": "వెబ్‌లో వెతకండి, క్రాల్ చేయండి",
   "Search and edit pages and databases": "పేజీలు, డేటాబేస్‌లను వెతకండి, సవరించండి",
+  "Search and edit repositories, code and issues": "రిపోజిటరీలు, కోడ్, ఇష్యూలను వెతకండి, సవరించండి",
   "Search and update CRM records": "CRM రికార్డ్‌లను వెతకండి, అప్‌డేట్ చేయండి",
   "Search, create and edit notes": "నోట్స్‌ను వెతకండి, సృష్టించండి, సవరించండి",
   "Search meeting transcripts and summaries": "మీటింగ్ ట్రాన్స్‌క్రిప్ట్‌లు, సారాంశాలను వెతకండి",

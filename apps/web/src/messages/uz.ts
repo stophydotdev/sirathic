@@ -426,6 +426,8 @@ export default {
   "Search and crawl the web": "Веб-да қидиринг ва сканерланг",
   "Search and edit pages and databases":
     "Саҳифалар ва маълумотлар базаларини қидиринг ва таҳрирланг",
+  "Search and edit repositories, code and issues":
+    "Репозиторийлар, код ва муаммоларни қидиринг ва таҳрирланг",
   "Search and update CRM records": "CRM ёзувларини қидиринг ва янгиланг",
   "Search, create and edit notes": "Қайдларни қидиринг, яратинг ва таҳрирланг",
   "Search meeting transcripts and summaries": "Учрашув транскрипт ва хулосаларини қидиринг",

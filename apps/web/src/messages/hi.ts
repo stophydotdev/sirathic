@@ -416,6 +416,7 @@ export default {
   "Schedule posts and read analytics": "पोस्ट शेड्यूल करें और एनालिटिक्स पढ़ें",
   "Search and crawl the web": "वेब पर खोजें और क्रॉल करें",
   "Search and edit pages and databases": "पेज और डेटाबेस खोजें और बदलें",
+  "Search and edit repositories, code and issues": "रिपॉज़िटरी, कोड और इश्यू खोजें और बदलें",
   "Search and update CRM records": "CRM रिकॉर्ड खोजें और अपडेट करें",
   "Search, create and edit notes": "नोट खोजें, बनाएँ और बदलें",
   "Search meeting transcripts and summaries": "मीटिंग के ट्रांसक्रिप्ट और सारांश खोजें",

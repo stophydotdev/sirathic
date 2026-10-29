@@ -419,6 +419,8 @@ export default {
   "Schedule posts and read analytics": "இடுகைகளை திட்டமிட்டுப் பகுப்பாய்வைப் படிக்கவும்",
   "Search and crawl the web": "இணையத்தில் தேடி வலம் வரவும்",
   "Search and edit pages and databases": "பக்கங்களையும் தரவுத்தளங்களையும் தேடித் திருத்தவும்",
+  "Search and edit repositories, code and issues":
+    "களஞ்சியங்கள், குறியீடு மற்றும் சிக்கல்களைத் தேடித் திருத்தவும்",
   "Search and update CRM records": "CRM பதிவுகளைத் தேடிப் புதுப்பிக்கவும்",
   "Search, create and edit notes": "குறிப்புகளைத் தேடி, உருவாக்கி, திருத்தவும்",
   "Search meeting transcripts and summaries": "சந்திப்பு எழுத்துப்படிகளையும் சுருக்கங்களையும் தேடவும்",

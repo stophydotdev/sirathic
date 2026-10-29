@@ -423,6 +423,8 @@ export default {
   "Search and crawl the web": "Veb-də axtarın və skan edin",
   "Search and edit pages and databases":
     "Səhifələri və verilənlər bazalarını axtarın və redaktə edin",
+  "Search and edit repositories, code and issues":
+    "Repozitoriləri, kodu və məsələləri axtarın və redaktə edin",
   "Search and update CRM records": "CRM qeydlərini axtarın və yeniləyin",
   "Search, create and edit notes": "Qeydləri axtarın, yaradın və redaktə edin",
   "Search meeting transcripts and summaries": "Görüş transkriptlərini və xülasələrini axtarın",

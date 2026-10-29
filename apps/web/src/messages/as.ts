@@ -413,6 +413,7 @@ export default {
   "Schedule posts and read analytics": "পোষ্ট শিডিউল কৰক আৰু এনালিটিক্স পঢ়ক",
   "Search and crawl the web": "ৱেবত বিচাৰক আৰু ক্ৰল কৰক",
   "Search and edit pages and databases": "পৃষ্ঠা আৰু ডাটাবেছ বিচাৰক আৰু সম্পাদনা কৰক",
+  "Search and edit repositories, code and issues": "ৰিপজিটৰি, কোড আৰু সমস্যা বিচাৰক আৰু সম্পাদনা কৰক",
   "Search and update CRM records": "CRM ৰেকৰ্ড বিচাৰক আৰু আপডেট কৰক",
   "Search, create and edit notes": "টোকা বিচাৰক, বনাওক আৰু সম্পাদনা কৰক",
   "Search meeting transcripts and summaries": "মিটিঙৰ ট্ৰান্সক্ৰিপ্ট আৰু সাৰাংশ বিচাৰক",

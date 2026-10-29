@@ -425,6 +425,8 @@ export default {
   "Schedule posts and read analytics": "Programa publicaciones y consulta analíticas",
   "Search and crawl the web": "Busca y rastrea la web",
   "Search and edit pages and databases": "Busca y edita páginas y bases de datos",
+  "Search and edit repositories, code and issues":
+    "Busca y edita repositorios, código e incidencias",
   "Search and update CRM records": "Busca y actualiza registros de CRM",
   "Search, create and edit notes": "Busca, crea y edita notas",
   "Search meeting transcripts and summaries": "Busca transcripciones y resúmenes de reuniones",

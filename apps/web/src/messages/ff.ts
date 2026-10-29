@@ -420,6 +420,7 @@ export default {
   "Schedule posts and read analytics": "Teelto posti e janngu analiis",
   "Search and crawl the web": "Yiylo e geese e raaree",
   "Search and edit pages and databases": "Yiylo e waylu hello e keɓal",
+  "Search and edit repositories, code and issues": "Yiylo e waylu repositories, kod e issues",
   "Search and update CRM records": "Yiylo e hesɗitin winndooje CRM",
   "Search, create and edit notes": "Yiylo, waɗu e waylu winndooje",
   "Search meeting transcripts and summaries": "Yiylo binndol hawtere e ɓadaaji",

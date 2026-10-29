@@ -425,6 +425,7 @@ export default {
   "Schedule posts and read analytics": "يازمىلارنى پىلانلاڭ ۋە ئانالىزنى ئوقۇڭ",
   "Search and crawl the web": "توردا ئىزدەڭ ۋە سايىلەڭ",
   "Search and edit pages and databases": "بەت ۋە سانلىق مەلۇمات ئامبىرىنى ئىزدەڭ ۋە تەھرىرلەڭ",
+  "Search and edit repositories, code and issues": "ئامبار، كود ۋە مەسىلىلەرنى ئىزدەڭ ۋە تەھرىرلەڭ",
   "Search and update CRM records": "CRM خاتىرىلىرىنى ئىزدەڭ ۋە يېڭىلاڭ",
   "Search, create and edit notes": "خاتىرىلەرنى ئىزدەڭ، قۇرۇڭ ۋە تەھرىرلەڭ",
   "Search meeting transcripts and summaries": "يىغىن يېزىقى ۋە خۇلاسىلىرىنى ئىزدەڭ",

@@ -423,6 +423,8 @@ export default {
   "Schedule posts and read analytics": "Посттарды пландап, аналитиканы окуңуз",
   "Search and crawl the web": "Интернеттен издеп, сайттарды сканерлеңиз",
   "Search and edit pages and databases": "Беттерди жана маалымат базаларын издеп, оңдоңуз",
+  "Search and edit repositories, code and issues":
+    "Репозиторийлерди, кодду жана маселелерди издеп, оңдоңуз",
   "Search and update CRM records": "CRM жазууларын издеп, жаңыртыңыз",
   "Search, create and edit notes": "Эскертмелерди издеп, түзүп, оңдоңуз",
   "Search meeting transcripts and summaries":

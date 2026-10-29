@@ -420,6 +420,7 @@ export default {
   "Schedule posts and read analytics": "پوسټونه مهالویش کړئ او شننې ولولئ",
   "Search and crawl the web": "په وېب کې ولټوئ او وګرځئ",
   "Search and edit pages and databases": "پاڼې او ډیټابیسونه ولټوئ او سم کړئ",
+  "Search and edit repositories, code and issues": "ریپازیټرۍ، کوډ او ستونزې ولټوئ او سم کړئ",
   "Search and update CRM records": "د CRM ریکارډونه ولټوئ او تازه کړئ",
   "Search, create and edit notes": "یادښتونه ولټوئ، جوړ او سم کړئ",
   "Search meeting transcripts and summaries": "د ناستو متنونه او لنډیزونه ولټوئ",

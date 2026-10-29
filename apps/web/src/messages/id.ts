@@ -424,6 +424,7 @@ export default {
   "Schedule posts and read analytics": "Jadwalkan postingan dan baca analitik",
   "Search and crawl the web": "Cari dan telusuri web",
   "Search and edit pages and databases": "Cari dan edit halaman dan basis data",
+  "Search and edit repositories, code and issues": "Cari dan edit repositori, kode, dan issue",
   "Search and update CRM records": "Cari dan perbarui data CRM",
   "Search, create and edit notes": "Cari, buat, dan edit catatan",
   "Search meeting transcripts and summaries": "Cari transkrip dan ringkasan rapat",

@@ -427,6 +427,7 @@ export default {
   "Schedule posts and read analytics": "Planifiez des publications et lisez les statistiques",
   "Search and crawl the web": "Recherchez et explorez le web",
   "Search and edit pages and databases": "Recherchez et modifiez pages et bases de données",
+  "Search and edit repositories, code and issues": "Recherchez et modifiez dépôts, code et tickets",
   "Search and update CRM records": "Recherchez et mettez à jour des fiches CRM",
   "Search, create and edit notes": "Recherchez, créez et modifiez des notes",
   "Search meeting transcripts and summaries": "Recherchez transcriptions et résumés de réunions",

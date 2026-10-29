@@ -419,6 +419,8 @@ export default {
   "Schedule posts and read analytics": "Закажите објаве и читајте аналитику",
   "Search and crawl the web": "Претражујте и пролазите кроз веб",
   "Search and edit pages and databases": "Претражујте и уређујте странице и базе података",
+  "Search and edit repositories, code and issues":
+    "Претражујте и уређујте репозиторијуме, код и пријаве проблема",
   "Search and update CRM records": "Претражујте и ажурирајте CRM записе",
   "Search, create and edit notes": "Претражујте, креирајте и уређујте белешке",
   "Search meeting transcripts and summaries": "Претражујте транскрипте и сажетке састанака",
