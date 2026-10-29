@@ -12,18 +12,23 @@ import { MarkdownText } from "@/components/markdownText";
 import { groupsOf, KIND_NAMES, SourcesContext, siteName, sourcesOf } from "@/components/sources";
 import { useSignIn } from "@/components/signIn";
 import { useT } from "@/components/i18n";
-import { currentToolName } from "@sirathic/server/messages";
+import { chatData, currentToolName } from "@sirathic/server/messages";
 import type { Source } from "@sirathic/server/sources";
 import {
   BranchPickerPrimitive,
   groupPartByType,
   MessagePrimitive,
   type MessageStatus,
+  type ThreadMessage,
   useAui,
   useAuiState,
 } from "@assistant-ui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowLeft01Icon,
+  ArrowMoveDownRightIcon,
+  ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
 import { type FC, useState } from "react";
 import { z } from "zod";
 import { ReportMistake } from "@/components/reportMistake";
@@ -137,12 +142,47 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         <FileCards />
         <ReplyError />
       </StreamingResponse>
+      {state === "complete" && <Related />}
 
       <ReportMistake
         open={reporting}
         onOpenChange={setReporting}
         onSend={(report) => rate("down", report)}
       />
+    </div>
+  );
+};
+
+const relatedOf = (content: ThreadMessage["content"]) =>
+  content.flatMap((part) =>
+    part.type === "data" && part.name === "related"
+      ? (chatData.related.safeParse(part.data).data?.questions ?? [])
+      : [],
+  );
+
+const Related: FC = () => {
+  const aui = useAui();
+  const last = useAuiState((s) => s.message.isLast);
+  const content = useAuiState((s) => s.message.content);
+  const questions = relatedOf(content);
+  if (!last || questions.length === 0) return null;
+
+  return (
+    <div className="mt-3 flex flex-col items-start print:hidden">
+      {questions.map((question) => (
+        <button
+          key={question}
+          type="button"
+          onClick={() => aui.thread().append(question)}
+          className="text-muted-foreground hover:text-foreground focus-visible:ring-ring flex items-start gap-2 rounded-md py-1 text-start text-sm outline-none focus-visible:ring-2"
+        >
+          <HugeiconsIcon
+            icon={ArrowMoveDownRightIcon}
+            className="mt-0.5 size-4 shrink-0 rtl:-scale-x-100"
+          />
+          {question}
+        </button>
+      ))}
     </div>
   );
 };

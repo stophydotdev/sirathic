@@ -61,6 +61,7 @@ import {
   skillsFor,
 } from "./skills/builtIn";
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
+import { relatedQuestions } from "./related";
 import {
   CLARIFYING,
   clarifyingQuestions,
@@ -459,6 +460,12 @@ export function chatResponse({
             });
           }
         }
+      }
+      if (!inBot && !unattended && ended?.finishReason === "stop" && text.trim()) {
+        const questions = await relatedQuestions(models.small, askedText, text, abortSignal).catch(
+          () => [],
+        );
+        if (questions.length > 0) writer.write({ type: "data-related", data: { questions } });
       }
       streaming = false;
       if (finish) writer.write(finish);
