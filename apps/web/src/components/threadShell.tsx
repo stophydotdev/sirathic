@@ -19,7 +19,7 @@ import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AskSelection } from "@/components/askSelection";
-import { useStartChat } from "@/components/newChat";
+import { useNewChatClick, useStartChat } from "@/components/newChat";
 import { ShortcutsSheet, useShortcuts } from "@/components/shortcuts";
 import { useKeyNames, withMod } from "@/lib/keys";
 import { Fold } from "@/components/fold";
@@ -48,6 +48,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
   const unseenRuns = useUnseenRuns(useAccount((s) => s.status?.signedIn));
   const bot = useBot();
   const startChat = useStartChat();
+  const newChatClick = useNewChatClick();
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -92,12 +93,13 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       >
         <div className="flex h-14 shrink-0 items-center justify-between px-2">
           {!collapsed && (
-            <a
+            <Link
               href="/"
+              onClick={newChatClick}
               className="text-foreground me-auto flex size-10 items-center justify-center"
             >
               <Mark size={20} color="currentColor" />
-            </a>
+            </Link>
           )}
           {!collapsed && (
             <TooltipIconButton
@@ -257,22 +259,14 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 type RowProps = { className: string; children: ReactNode; onDone?: () => void };
 
 const NewButton: FC<RowProps> = ({ className, children, onDone }) => {
-  const startChat = useStartChat();
+  const newChatClick = useNewChatClick(onDone);
   return (
     <Button
       variant="ghost"
       asChild
       className={cn("hover:bg-muted dark:hover:bg-muted justify-start font-normal", className)}
     >
-      <Link
-        href="/"
-        onClick={(event) => {
-          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
-          event.preventDefault();
-          startChat();
-          onDone?.();
-        }}
-      >
+      <Link href="/" onClick={newChatClick}>
         {children}
       </Link>
     </Button>

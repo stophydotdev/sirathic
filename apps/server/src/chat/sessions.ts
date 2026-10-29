@@ -111,10 +111,10 @@ async function storedMessages(id: string, by: string) {
   return row;
 }
 
-export async function openSession(id: string, by: string) {
+export async function openSession(id: string, by: string, markRead = true) {
   const row = await storedMessages(id, by);
   if (!row) return undefined;
-  if (row.unread) {
+  if (markRead && row.unread) {
     await db
       .update(chatSessions)
       .set({ unread: false, updatedAt: keepUpdatedAt })

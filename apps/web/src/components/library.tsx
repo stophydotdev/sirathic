@@ -109,11 +109,14 @@ const circleButton =
 const uploadButton =
   "bg-foreground text-background h-9 rounded-full px-4 text-sm font-medium transition hover:opacity-85 disabled:opacity-60";
 
+const lastFiles = new Map<string, LibraryFile[]>();
+
 export const Library: FC<{ tab: Tab }> = ({ tab }) => {
   const slide = useTabSlide(TABS, tab);
   const signedIn = useAccount((s) => s.status?.signedIn);
+  const account = useAccount((s) => (s.status?.signedIn ? s.status.label : undefined));
   const ask = useSignIn((s) => s.ask);
-  const [files, setFiles] = useState<LibraryFile[]>();
+  const [files, setFiles] = useState(() => (account ? lastFiles.get(account) : undefined));
   const [version, setVersion] = useState(0);
   const [query, setQuery] = useState("");
   const [searching, setSearching] = useState(false);
@@ -128,6 +131,10 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
   const [deleting, setDeleting] = useState<LibraryFile>();
   const picker = useRef<HTMLInputElement>(null);
   const t = useT();
+
+  useEffect(() => {
+    if (account && files) lastFiles.set(account, files);
+  }, [account, files]);
 
   useEffect(() => {
     if (!signedIn) return;

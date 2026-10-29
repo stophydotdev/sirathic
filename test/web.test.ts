@@ -15,7 +15,8 @@ import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 import { refreshing } from "../apps/web/src/lib/refreshing";
-import { question } from "../apps/server/src/shared/messages";
+import { type ChatMessage, question } from "../apps/server/src/shared/messages";
+import { outdated } from "../apps/web/src/components/chat";
 import { importedFacts } from "../apps/web/src/components/memoryImport";
 import { blobMotion } from "../packages/app/src/blob/engine";
 import { BODIES, bodyOf } from "../packages/app/src/blob/shape";
@@ -344,4 +345,17 @@ test("a question card saved before multi-pick still opens as a single pick", () 
     question: "Which school?",
     options: ["Hanafi", "Maliki"],
   });
+});
+
+const turn = (id: string, role: ChatMessage["role"], text: string) =>
+  ({ id, role, parts: [{ type: "text", text }] }) satisfies ChatMessage;
+
+test("a chat kept from this tab is redrawn only when the server has more of it", () => {
+  const asked = turn("q", "user", "What breaks wudu?");
+  const kept = [asked, turn("a", "assistant", "Sleep and")];
+  expect([
+    outdated(kept, kept),
+    outdated(kept, [asked, turn("a", "assistant", "Sleep and wind break it.")]),
+    outdated(kept, [...kept, turn("q2", "user", "And blood?")]),
+  ]).toEqual([false, true, true]);
 });

@@ -196,13 +196,19 @@ const RunsList: FC<{ runs: Run[] }> = ({ runs }) => {
   );
 };
 
+const lastAutomations = new Map<string, Automation[]>();
+const lastRuns = new Map<string, Run[]>();
+
 export const Automations: FC = () => {
   const signedIn = useAccount((s) => s.status?.signedIn);
+  const account = useAccount((s) => (s.status?.signedIn ? s.status.label : undefined));
   const ask = useSignIn((s) => s.ask);
   const [tab, setTab] = useState<Tab>("automations");
   const slide = useTabSlide(TABS, tab);
-  const [automations, setAutomations] = useState<Automation[]>();
-  const [runs, setRuns] = useState<Run[]>([]);
+  const [automations, setAutomations] = useState(() =>
+    account ? lastAutomations.get(account) : undefined,
+  );
+  const [runs, setRuns] = useState(() => (account ? lastRuns.get(account) : undefined) ?? []);
   const [editing, setEditing] = useState<Editing>();
   const [busy, setBusy] = useState<string>();
   const [deleting, setDeleting] = useState<Automation>();
@@ -217,6 +223,12 @@ export const Automations: FC = () => {
     setAutomations((current) => found ?? current ?? []);
     if (ran) setRuns(ran);
   }, []);
+
+  useEffect(() => {
+    if (!account) return;
+    if (automations) lastAutomations.set(account, automations);
+    lastRuns.set(account, runs);
+  }, [account, automations, runs]);
 
   useEffect(() => {
     if (!signedIn) return;
