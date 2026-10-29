@@ -2,6 +2,7 @@ import { expect, mock, test } from "bun:test";
 import { isPrivateUrl } from "../apps/browser/src/blocked";
 import { masked } from "../apps/browser/src/mask";
 import { totp } from "../apps/server/src/vault/totp";
+import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import { z } from "zod";
 import { writingTools } from "../apps/server/src/chat/confirm";
@@ -404,4 +405,20 @@ test("a secret is masked in every spelling a page can show it, and nothing else 
     ['p@ss w"rd!'],
   );
   expect(shown).toBe('a ?q=•••••• b ?q=•••••• c {"v":"••••••"} d ?q=prayer%26mat');
+});
+
+test("a screen ticket opens only its own bot's screen, and only for a minute", () => {
+  const bot = "8bc4443d-047a-49e6-b335-9cf3fa71d658";
+  const ticket = screenTicket(bot, 1_000);
+  expect(ticketFits(ticket, bot, 2_000)).toBe(true);
+  expect(ticketFits(ticket, "53f15e17-feea-458d-80b0-0f767c35455b", 2_000)).toBe(false);
+  expect(ticketFits(ticket, bot, 62_000)).toBe(false);
+  expect(
+    ticketFits(
+      ticket.replace(/.$/u, (last) => (last === "A" ? "B" : "A")),
+      bot,
+      2_000,
+    ),
+  ).toBe(false);
+  expect(ticketFits(`${bot}.999999999999999.forged`, bot, 2_000)).toBe(false);
 });

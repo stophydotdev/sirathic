@@ -43,6 +43,7 @@ export const messageMetadata = z.object({
   feedback: feedback.optional(),
   report: report.optional(),
   routine: z.string().optional(),
+  formReply: z.enum(["filled", "missed", "dismissed"]).optional(),
 });
 
 type MessageMetadata = z.infer<typeof messageMetadata>;

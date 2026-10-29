@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-export const VIEWPORT = { width: 1280, height: 800 };
-
 const target = z
   .string()
   .regex(/^(?:f\d+)?e\d+$/u)
@@ -96,20 +94,9 @@ export const failure = z.object({ error: z.string() });
 
 export const sessionRequest = z.object({ session });
 
-const x = z.number().min(0).max(VIEWPORT.width);
-const y = z.number().min(0).max(VIEWPORT.height);
-const delta = z.number().min(-5_000).max(5_000);
+export const screenMode = z.enum(["watch", "control"]);
 
-export const userInput = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("click"), x, y }),
-  z.object({ kind: z.literal("wheel"), x, y, deltaX: delta, deltaY: delta }),
-  z.object({ kind: z.literal("key"), key: z.string().min(1).max(40) }),
-  z.object({ kind: z.literal("text"), text: z.string().min(1).max(2_000) }),
-]);
-
-export type UserInput = z.infer<typeof userInput>;
-
-export const inputRequest = z.object({ session, input: userInput });
+export const screenRequest = z.object({ session, mode: screenMode });
 
 export const userForm = z.object({
   title: z
@@ -181,14 +168,6 @@ export const filled = z.object({
 
 export type Filled = z.infer<typeof filled>;
 
-export const viewEvent = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("closed") }),
-  z.object({ kind: z.literal("page"), url: z.string(), title: z.string() }),
-  z.object({ kind: z.literal("frame"), jpeg: z.string() }),
-]);
-
-export type ViewEvent = z.infer<typeof viewEvent>;
-
 export const loginRequest = z.object({
   session,
   site: z.string().min(1).max(253),
@@ -212,7 +191,6 @@ export type LoginResult = z.infer<typeof loginResult>;
 
 export type ServiceRequest =
   | z.infer<typeof request>
-  | z.infer<typeof inputRequest>
   | FillRequest
   | LoginRequest
   | z.infer<typeof sessionRequest>;

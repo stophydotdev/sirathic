@@ -1,12 +1,14 @@
-import { fillRequest, userInput } from "@sirathic/browser/protocol";
+import { fillRequest, screenMode } from "@sirathic/browser/protocol";
 import { Hono } from "hono";
+import { upgradeWebSocket } from "hono/bun";
 import { z } from "zod";
 import { siteHost } from "@sirathic/core/web/url";
 import { userFor } from "../account/auth";
 import { respond, StatusError } from "../http";
 import { projectId, requireProject } from "../projects/projects";
 import { saveLogin } from "../vault/vault";
-import { controlBrowser, fillBrowser, watchBrowser } from "./browser";
+import { browserPage, fillBrowser, screenSocket } from "./browser";
+import { screenTicket, ticketFits } from "./screenTicket";
 
 const fillBody = fillRequest
   .omit({ session: true })
@@ -28,22 +30,45 @@ const bodyOf = async <Schema extends z.ZodType>(request: Request, schema: Schema
 
 export const browserRoutes = new Hono();
 
-browserRoutes.get("/:id/browser/view", (c) =>
+browserRoutes.post("/:id/browser/ticket", (c) =>
   respond(async () => {
     const { botId } = await ownBot(c.req.raw.headers, c.req.param("id"));
-    const upstream = await watchBrowser(botId, c.req.raw.signal);
-    if (!upstream.ok || !upstream.body) throw new StatusError(502, "the browser is unavailable");
-    return new Response(upstream.body, {
-      headers: { "content-type": "text/event-stream", "cache-control": "no-cache, no-transform" },
-    });
+    await browserPage(botId);
+    return { ticket: screenTicket(botId) };
   }),
 );
 
-browserRoutes.post("/:id/browser/input", (c) =>
-  respond(async () => {
-    const { botId } = await ownBot(c.req.raw.headers, c.req.param("id"));
-    await controlBrowser(botId, await bodyOf(c.req.raw, userInput));
-    return new Response(null, { status: 204 });
+browserRoutes.get(
+  "/:id/browser/screen",
+  upgradeWebSocket((c) => {
+    const botId = c.req.param("id") ?? "";
+    const allowed = ticketFits(c.req.query("ticket") ?? "", botId);
+    const mode = screenMode.catch("watch").parse(c.req.query("mode"));
+    const pending: Parameters<WebSocket["send"]>[0][] = [];
+    let upstream: WebSocket | undefined;
+    return {
+      onOpen: (_event, socket) => {
+        if (!allowed) {
+          socket.close(4401, "expired");
+          return;
+        }
+        const opened = screenSocket(botId, mode);
+        opened.binaryType = "arraybuffer";
+        opened.addEventListener("open", () => {
+          for (const chunk of pending.splice(0)) opened.send(chunk);
+        });
+        opened.addEventListener("message", (event: MessageEvent<string | ArrayBuffer>) =>
+          socket.send(event.data),
+        );
+        opened.addEventListener("close", () => socket.close(4404, "closed"));
+        upstream = opened;
+      },
+      onMessage: (event) => {
+        if (upstream?.readyState === WebSocket.OPEN) upstream.send(event.data);
+        else pending.push(event.data);
+      },
+      onClose: () => upstream?.close(),
+    };
   }),
 );
 

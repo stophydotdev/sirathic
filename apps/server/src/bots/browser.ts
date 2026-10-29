@@ -12,11 +12,11 @@ import {
   pressInput,
   result,
   runCodeInput,
+  type screenMode,
   selectInput,
   type ServiceRequest,
   snapshotInput,
   typeInput,
-  type UserInput,
   userForm,
   waitForInput,
 } from "@sirathic/browser/protocol";
@@ -56,7 +56,7 @@ const sessionOf = (botId: string) => `bot:${botId}`;
 const authorization = { authorization: `Bearer ${env.BROWSER_TOKEN}` };
 
 const statusOf = (status: number) =>
-  status === 400 || status === 404 ? status : status === 503 ? 429 : 502;
+  status === 400 || status === 404 ? status : status === 503 || status === 409 ? 429 : 502;
 
 const service = async (path: string, body: ServiceRequest) => {
   const response = await fetch(new URL(path, env.BROWSER_URL), {
@@ -78,10 +78,7 @@ const act = async (botId: string, action: Action) =>
 export const fillBrowser = async (botId: string, form: Omit<FillRequest, "session">) =>
   filled.parse(await (await service("/fill", { session: sessionOf(botId), ...form })).json());
 
-export const controlBrowser = (botId: string, input: UserInput) =>
-  service("/input", { session: sessionOf(botId), input });
-
-const browserPage = async (botId: string) =>
+export const browserPage = async (botId: string) =>
   pageInfo.parse(await (await service("/page", { session: sessionOf(botId) })).json());
 
 const SIGN_IN_NOTES = {
@@ -110,10 +107,15 @@ const vaultSignIn = async ({ id, owner }: BotScope) => {
 
 export const forgetBrowser = (botId: string) => service("/forget", { session: sessionOf(botId) });
 
-export const watchBrowser = (botId: string, hungUp: AbortSignal) => {
-  const url = new URL("/view", env.BROWSER_URL);
+const holdBrowser = (botId: string) =>
+  service("/hold", { session: sessionOf(botId) }).catch(() => undefined);
+
+export const screenSocket = (botId: string, mode: z.infer<typeof screenMode>) => {
+  const url = new URL("/screen", env.BROWSER_URL);
+  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
   url.searchParams.set("session", sessionOf(botId));
-  return fetch(url, { headers: authorization, signal: hungUp });
+  url.searchParams.set("mode", mode);
+  return new WebSocket(url, ["screen", env.BROWSER_TOKEN]);
 };
 
 const pageText = (output: z.infer<typeof result>) => ({
@@ -134,13 +136,19 @@ export function browserTools(scope: BotScope) {
       description:
         "Shows the user a Secure Form in the chat for typed details only they have, like a login, a one-time code, an address or card details, and fills what they type straight into the page in your browser. Every value is write-only: you get back only which fields were filled. Take a fresh snapshot first and give every field its target ref from that snapshot, embedded and cross-origin fields included. Set reason to auth for a sign-in. Tell the user in one line that what they type goes straight into the page and you never see it. The form ends your turn, and their receipt comes as their next message. A form with a secret field fills, submits the page's form and clears the secret from the page, so after the receipt take a fresh snapshot to see where it landed. Other forms only fill: after the receipt, take a fresh snapshot, then click the site's own continue button yourself. Set submit only for a one-shot code step whose only field is the code. A dismissed form is a decline, so don't send the same form again.",
       inputSchema: userForm,
-      execute: async () => ({ shown: true }),
+      execute: async () => {
+        await holdBrowser(botId);
+        return { shown: true };
+      },
     }),
     [BROWSER_HELP]: tool({
       description:
         "Hands your browser to the user for a step a form cannot do: single sign-on through another company's sign-in page, a passkey, a captcha you tried and could not get past, an approval on another app or device, a QR code, a bank or 3DS confirmation after the card is entered, a field the Secure Form could not fill, or a sign-in the user prefers to do themselves. A typed login, address, card, or one-time code goes to request_user_form first. Pass one short instruction; it is shown in chat with a button that opens your browser, then your turn ends. The user does the step and tells you they're done, so start by taking a fresh browser_snapshot to see what they changed. When the user signs in on your browser, you never see their password or code.",
       inputSchema: browserHelp,
-      execute: async () => ({ shown: true }),
+      execute: async () => {
+        await holdBrowser(botId);
+        return { shown: true };
+      },
     }),
     browser_navigate: tool({
       description:

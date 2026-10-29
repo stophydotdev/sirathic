@@ -56,7 +56,7 @@ export const BotMenu: FC<{
   const editProfile = () => {
     onDone?.();
     if (pathname !== `/bot/${bot.id}`) router.push(`/bot/${bot.id}`);
-    useBotPanel.getState().setOpen(true);
+    useBotPanel.getState().show("settings");
   };
 
   return (

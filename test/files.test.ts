@@ -2,6 +2,7 @@ import { expect, mock, test } from "bun:test";
 import { z } from "zod";
 import { fileIdOf, formatSize, shownFiles } from "../apps/server/src/shared/files";
 import { mediaTypeOf } from "../apps/server/src/files/sniff";
+import { closable, IDLE_MS, MAKE_ROOM_IDLE_MS } from "../apps/browser/src/idle";
 
 const src = `${import.meta.dir}/../apps/server/src`;
 const fileA = "3f2b8c1e-5d4a-4e6b-9a7c-0d1e2f3a4b5c";
@@ -294,4 +295,16 @@ test("share_files refuses a sandbox file over the size limit", async () => {
   await expect(attempt).rejects.toThrow("big.csv is over 10.0 MB");
   restore();
   expect(saved).toEqual([]);
+});
+
+test("a bot's browser closes when idle, never while someone uses it or a form waits", () => {
+  const now = 10 * 60 * 60_000;
+  const idle = { controllers: 0, holdUntil: 0, lastUsed: now - IDLE_MS };
+  expect(closable(idle, now, IDLE_MS)).toBe(true);
+  expect(closable({ ...idle, lastUsed: now - IDLE_MS + 1 }, now, IDLE_MS)).toBe(false);
+  expect(closable({ ...idle, controllers: 1 }, now, IDLE_MS)).toBe(false);
+  expect(closable({ ...idle, holdUntil: now + 1 }, now, IDLE_MS)).toBe(false);
+  const quiet = { ...idle, lastUsed: now - MAKE_ROOM_IDLE_MS };
+  expect(closable(quiet, now, IDLE_MS)).toBe(false);
+  expect(closable(quiet, now, MAKE_ROOM_IDLE_MS)).toBe(true);
 });

@@ -13,16 +13,20 @@ import { type Project, projectNameError, useProjects } from "@/components/projec
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { PROJECT_NAME_MAX } from "@sirathic/server/projects";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Cancel01Icon } from "@hugeicons/core-free-icons";
+import { Cancel01Icon, Settings01Icon } from "@hugeicons/core-free-icons";
 import { type ChangeEvent, type FC, type ReactNode, useState } from "react";
 import { create } from "zustand";
 
 const INSTRUCTIONS_MAX = 4000;
 
-export const useBotPanel = create<{ open: boolean; setOpen: (open: boolean) => void }>()((set) => ({
-  open: false,
-  setOpen: (open) => set({ open }),
-}));
+type PanelView = "closed" | "screen" | "settings";
+
+export const useBotPanel = create<{ view: PanelView; show: (view: PanelView) => void }>()(
+  (set) => ({
+    view: "closed",
+    show: (view) => set({ view }),
+  }),
+);
 
 const fieldClass =
   "bg-card border-border focus-visible:border-foreground/30 w-full rounded-xl border px-3 text-sm outline-none";
@@ -66,9 +70,12 @@ const Field: FC<{
   );
 };
 
+const headerButton =
+  "text-muted-foreground hover:bg-muted hover:text-foreground aria-pressed:bg-muted aria-pressed:text-foreground flex size-8 items-center justify-center rounded-full";
+
 export const BotPanel: FC<{ bot: Project }> = ({ bot }) => {
-  const open = useBotPanel((s) => s.open);
-  const setOpen = useBotPanel((s) => s.setOpen);
+  const view = useBotPanel((s) => s.view);
+  const show = useBotPanel((s) => s.show);
   const change = useProjects((s) => s.change);
   const { routines, refresh } = useRoutines(bot.id);
   const [routineId, setRoutineId] = useState<string>();
@@ -76,21 +83,30 @@ export const BotPanel: FC<{ bot: Project }> = ({ bot }) => {
   const routine = routines?.find((found) => found.id === routineId);
   const t = useT();
 
-  if (!open) return null;
+  if (view === "closed") return null;
 
   return (
     <aside
-      aria-label={t("Settings")}
-      onKeyDown={(event) => event.key === "Escape" && setOpen(false)}
-      className="bg-background border-sidebar-border fixed inset-y-0 end-0 z-50 flex w-full max-w-90 flex-col border-s shadow-lg md:static md:z-auto md:shrink-0 md:shadow-none print:hidden"
+      aria-label={view === "screen" ? t("{name}'s screen", { name: bot.name }) : t("Settings")}
+      onKeyDown={(event) => event.key === "Escape" && show("closed")}
+      className="bg-background border-sidebar-border fixed inset-y-0 end-0 z-50 flex w-full max-w-90 flex-col border-s shadow-lg md:static md:z-auto md:max-w-110 md:shrink-0 md:shadow-none xl:max-w-140 print:hidden"
     >
-      <div className="flex h-14 shrink-0 items-center justify-between ps-5 pe-3">
-        <h2 className="text-base font-medium">{t("Settings")}</h2>
+      <div className="flex h-14 shrink-0 items-center justify-end gap-1 ps-5 pe-3">
+        {view === "settings" && <h2 className="me-auto text-base font-medium">{t("Settings")}</h2>}
+        <button
+          type="button"
+          aria-label={t("Settings")}
+          aria-pressed={view === "settings"}
+          onClick={() => show(view === "settings" ? "screen" : "settings")}
+          className={headerButton}
+        >
+          <HugeiconsIcon icon={Settings01Icon} className="size-4.5" />
+        </button>
         <button
           type="button"
           aria-label={t("Close")}
-          onClick={() => setOpen(false)}
-          className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-8 items-center justify-center rounded-full"
+          onClick={() => show("closed")}
+          className={headerButton}
         >
           <HugeiconsIcon icon={Cancel01Icon} className="size-4.5" />
         </button>
@@ -102,9 +118,19 @@ export const BotPanel: FC<{ bot: Project }> = ({ bot }) => {
             onBack={() => setRoutineId(undefined)}
             onChanged={refresh}
           />
+        ) : view === "screen" ? (
+          <>
+            <BrowserPreview botId={bot.id} name={bot.name} />
+            {routines && (
+              <RoutineList
+                routines={routines}
+                onOpen={setRoutineId}
+                onCreate={() => setCreating(true)}
+              />
+            )}
+          </>
         ) : (
           <>
-            <BrowserPreview />
             <Popover>
               <PopoverTrigger
                 aria-label={t("Edit bot avatar")}
@@ -163,13 +189,6 @@ export const BotPanel: FC<{ bot: Project }> = ({ bot }) => {
               onSave={(instructions) => void change(bot.id, { instructions })}
             />
             <BotProgress id={bot.id} />
-            {routines && (
-              <RoutineList
-                routines={routines}
-                onOpen={setRoutineId}
-                onCreate={() => setCreating(true)}
-              />
-            )}
             <BotPlugins id={bot.id} allowed={bot.plugins} />
           </>
         )}

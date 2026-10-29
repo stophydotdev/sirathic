@@ -1,94 +1,79 @@
 "use client";
 
 import { useT } from "@/components/i18n";
+import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
 import { control, Group, Row } from "@/components/settingsControls";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdownMenu";
 import { api } from "@/lib/trpc";
-import { type FC, type FormEvent, useEffect, useState } from "react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  ArrowDown01Icon,
+  Key01Icon,
+  LockPasswordIcon,
+  ViewIcon,
+  ViewOffSlashIcon,
+} from "@hugeicons/core-free-icons";
+import { Dialog } from "radix-ui";
+import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "react";
 
 type Vault = Awaited<ReturnType<typeof api.vault.list.query>>;
 
+type Adding = { kind: "none" } | { kind: "login" } | { kind: "onePassword" };
+
 const inputClass =
-  "bg-foreground/6 focus-visible:bg-foreground/10 h-10 rounded-xl px-3 text-sm outline-none";
+  "bg-foreground/6 focus-visible:bg-foreground/10 h-10 w-full rounded-xl px-3 text-sm outline-none";
 
 const blank = { site: "", username: "", password: "", code: "" };
 
-const OnePassword: FC<{ connected: boolean; onChange: () => Promise<void> }> = ({
-  connected,
-  onChange,
+const Field: FC<{ label: ReactNode; children: ReactNode }> = ({ label, children }) => (
+  <label className="flex flex-col gap-1.5 text-sm">
+    {label}
+    {children}
+  </label>
+);
+
+const Footer: FC<{ hint?: string; busy: boolean; ready: boolean; save: string }> = ({
+  hint,
+  busy,
+  ready,
+  save,
 }) => {
-  const [token, setToken] = useState("");
-  const [failed, setFailed] = useState(false);
   const t = useT();
-  if (connected) {
-    return (
-      <Row label="1Password" hint={t("Connected")}>
-        <button
-          type="button"
-          onClick={() => void api.vault.disconnectOnePassword.mutate().then(onChange)}
-          className={control}
-        >
-          {t("Disconnect")}
-        </button>
-      </Row>
-    );
-  }
-  const connect = async (event: FormEvent) => {
-    event.preventDefault();
-    setFailed(false);
-    const done = await api.vault.connectOnePassword.mutate({ token }).then(
-      () => true,
-      () => false,
-    );
-    if (!done) {
-      setFailed(true);
-      return;
-    }
-    setToken("");
-    await onChange();
-  };
   return (
-    <form onSubmit={(event) => void connect(event)} className="flex flex-col gap-2 py-2">
-      <span className="text-sm font-medium">1Password</span>
-      <p className="text-muted-foreground text-xs">
-        {t(
-          "Create a 1Password service account that can read the vault with the logins your bots may use, then paste its token here.",
-        )}
-      </p>
-      <input
-        type="password"
-        required
-        aria-label={t("Service account token")}
-        placeholder={t("Service account token")}
-        autoComplete="off"
-        value={token}
-        onChange={(event) => setToken(event.target.value)}
-        className={inputClass}
-      />
-      {failed && (
-        <p className="text-destructive text-sm">{t("1Password didn't accept that token.")}</p>
-      )}
-      <button type="submit" className={`${control} self-start`}>
-        {t("Connect 1Password")}
+    <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
+      {hint && <span className="text-muted-foreground me-auto text-xs">{hint}</span>}
+      <Dialog.Close type="button" className={modalButton}>
+        {t("Cancel")}
+      </Dialog.Close>
+      <button type="submit" disabled={busy || !ready} className={modalPrimaryButton}>
+        {save}
       </button>
-    </form>
+    </div>
   );
 };
 
-export const VaultSection: FC = () => {
-  const [vault, setVault] = useState<Vault>();
+const NewLogin: FC<{ open: boolean; onClose: () => void; onSaved: () => Promise<void> }> = ({
+  open,
+  onClose,
+  onSaved,
+}) => {
   const [draft, setDraft] = useState(blank);
+  const [visible, setVisible] = useState(false);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const t = useT();
 
-  const load = () =>
-    api.vault.list.query().then(setVault, () => {
-      setVault({ logins: [], onePassword: false });
-    });
-
-  useEffect(() => {
-    void load();
-  }, []);
+  const close = () => {
+    setDraft(blank);
+    setVisible(false);
+    setFailed(false);
+    onClose();
+  };
 
   const save = async (event: FormEvent) => {
     event.preventDefault();
@@ -105,17 +90,16 @@ export const VaultSection: FC = () => {
       setFailed(true);
       return;
     }
-    setDraft(blank);
-    await load();
+    close();
+    await onSaved();
   };
 
-  const field = (key: keyof typeof blank, placeholder: string, type = "text") => (
+  const field = (key: keyof typeof blank, placeholder?: string) => (
     <input
-      type={type}
+      type="text"
       required={key !== "code"}
-      aria-label={placeholder}
-      placeholder={placeholder}
       autoComplete="off"
+      placeholder={placeholder}
       value={draft[key]}
       onChange={(event) => setDraft({ ...draft, [key]: event.target.value })}
       className={inputClass}
@@ -123,52 +107,210 @@ export const VaultSection: FC = () => {
   );
 
   return (
-    <>
-      <Group>
-        <p className="text-muted-foreground py-2 text-sm">
-          {t("Logins your bots can sign in with. They never see them.")}
-        </p>
-        {vault?.logins.length === 0 && (
-          <p className="text-muted-foreground py-3 text-sm">{t("No saved logins yet.")}</p>
-        )}
-        {vault?.logins.map((login) => (
-          <Row
-            key={login.id}
-            label={login.site}
-            hint={login.twoStep ? `${login.username} · ${t("Two-step on")}` : login.username}
-          >
+    <Modal
+      open={open}
+      onOpenChange={(next) => !next && close()}
+      title={t("New login")}
+      className="max-w-130"
+    >
+      <form onSubmit={(event) => void save(event)} className="flex flex-col gap-4">
+        <Field label={t("Website")}>{field("site", "example.com")}</Field>
+        <Field label={t("Username or email")}>{field("username", "name@example.com")}</Field>
+        <Field label={t("Password")}>
+          <span className="bg-foreground/6 focus-within:bg-foreground/10 flex h-10 items-center rounded-xl ps-3 pe-1">
+            <input
+              type={visible ? "text" : "password"}
+              required
+              autoComplete="off"
+              value={draft.password}
+              onChange={(event) => setDraft({ ...draft, password: event.target.value })}
+              className="min-w-0 flex-1 bg-transparent text-sm outline-none"
+            />
             <button
               type="button"
-              onClick={() => void api.vault.remove.mutate({ id: login.id }).then(load)}
-              className={control}
+              aria-label={visible ? t("Hide password") : t("Show password")}
+              onClick={() => setVisible(!visible)}
+              className="text-muted-foreground hover:text-foreground flex size-8 items-center justify-center rounded-lg"
             >
-              {t("Remove")}
+              <HugeiconsIcon icon={visible ? ViewOffSlashIcon : ViewIcon} className="size-4" />
             </button>
-          </Row>
-        ))}
-      </Group>
-      <Group>
-        <form onSubmit={(event) => void save(event)} className="flex flex-col gap-2 py-2">
-          {field("site", t("Website"))}
-          {field("username", t("Username or email"))}
-          {field("password", t("Password"), "password")}
-          {field("code", `${t("Two-step setup key")} (${t("Optional")})`)}
-          <p className="text-muted-foreground text-xs">{t("Your bots enter the code for you.")}</p>
-          {failed && (
-            <p className="text-destructive text-sm">
-              {t("Could not save your changes. Try again.")}
-            </p>
+          </span>
+        </Field>
+        <Field
+          label={
+            <span>
+              {t("Two-step setup key")}{" "}
+              <span className="text-muted-foreground">({t("Optional")})</span>
+            </span>
+          }
+        >
+          {field("code")}
+          <span className="text-muted-foreground text-xs">
+            {t("Your bots enter the code for you.")}
+          </span>
+        </Field>
+        {failed && (
+          <p className="text-destructive text-sm">{t("Could not save your changes. Try again.")}</p>
+        )}
+        <Footer
+          hint={t("Your bots can use this login to sign in for you")}
+          busy={busy}
+          ready={draft.site.trim() !== "" && draft.username.trim() !== "" && draft.password !== ""}
+          save={t("Save login")}
+        />
+      </form>
+    </Modal>
+  );
+};
+
+const ConnectOnePassword: FC<{
+  open: boolean;
+  onClose: () => void;
+  onSaved: () => Promise<void>;
+}> = ({ open, onClose, onSaved }) => {
+  const [token, setToken] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const t = useT();
+
+  const close = () => {
+    setToken("");
+    setFailed(false);
+    onClose();
+  };
+
+  const connect = async (event: FormEvent) => {
+    event.preventDefault();
+    setBusy(true);
+    setFailed(false);
+    const done = await api.vault.connectOnePassword.mutate({ token }).then(
+      () => true,
+      () => false,
+    );
+    setBusy(false);
+    if (!done) {
+      setFailed(true);
+      return;
+    }
+    close();
+    await onSaved();
+  };
+
+  return (
+    <Modal
+      open={open}
+      onOpenChange={(next) => !next && close()}
+      title={t("Connect 1Password")}
+      className="max-w-130"
+    >
+      <form onSubmit={(event) => void connect(event)} className="flex flex-col gap-4">
+        <p className="text-muted-foreground text-sm">
+          {t(
+            "Create a 1Password service account that can read the vault with the logins your bots may use, then paste its token here.",
           )}
-          <button type="submit" disabled={busy} className={`${control} self-start`}>
-            {t("Save login")}
-          </button>
-        </form>
-      </Group>
-      {vault && (
-        <Group>
-          <OnePassword connected={vault.onePassword} onChange={load} />
-        </Group>
+        </p>
+        <Field label={t("Service account token")}>
+          <input
+            type="password"
+            required
+            autoComplete="off"
+            value={token}
+            onChange={(event) => setToken(event.target.value)}
+            className={inputClass}
+          />
+        </Field>
+        {failed && (
+          <p className="text-destructive text-sm">{t("1Password didn't accept that token.")}</p>
+        )}
+        <Footer busy={busy} ready={token !== ""} save={t("Connect 1Password")} />
+      </form>
+    </Modal>
+  );
+};
+
+export const VaultSection: FC = () => {
+  const [vault, setVault] = useState<Vault>();
+  const [adding, setAdding] = useState<Adding>({ kind: "none" });
+  const t = useT();
+
+  const load = () =>
+    api.vault.list.query().then(setVault, () => {
+      setVault({ logins: [], onePassword: false });
+    });
+
+  useEffect(() => {
+    void load();
+  }, []);
+
+  const close = () => setAdding({ kind: "none" });
+  const empty = vault?.logins.length === 0 && !vault.onePassword;
+
+  return (
+    <Group>
+      <div className="flex items-center gap-4 py-2">
+        <p className="text-muted-foreground min-w-0 flex-1 text-sm">
+          {t("Logins your bots can sign in with.")}
+        </p>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="bg-foreground text-background flex h-9 shrink-0 items-center gap-1.5 rounded-full ps-4 pe-3 text-sm font-medium">
+            {t("New item")}
+            <HugeiconsIcon icon={ArrowDown01Icon} className="size-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuItem onSelect={() => setAdding({ kind: "login" })}>
+              <HugeiconsIcon icon={Key01Icon} className="size-4" />
+              {t("Login")}
+            </DropdownMenuItem>
+            {vault && !vault.onePassword && (
+              <DropdownMenuItem onSelect={() => setAdding({ kind: "onePassword" })}>
+                <HugeiconsIcon icon={LockPasswordIcon} className="size-4" />
+                {t("Connect 1Password")}
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      {empty && (
+        <p className="text-muted-foreground py-6 text-center text-sm">
+          {t("Nothing saved yet. Add a login with New item.")}
+        </p>
       )}
-    </>
+      {vault?.logins.map((login) => (
+        <Row
+          key={login.id}
+          label={login.site}
+          hint={login.twoStep ? `${login.username} · ${t("Two-step on")}` : login.username}
+        >
+          <button
+            type="button"
+            onClick={() => void api.vault.remove.mutate({ id: login.id }).then(load)}
+            className={control}
+          >
+            {t("Remove")}
+          </button>
+        </Row>
+      ))}
+      {vault?.onePassword && (
+        <Row
+          label="1Password"
+          hint={t("Connected. Your bots can sign in with logins from the vault you shared.")}
+        >
+          <button
+            type="button"
+            onClick={() => void api.vault.disconnectOnePassword.mutate().then(load)}
+            className={control}
+          >
+            {t("Disconnect")}
+          </button>
+        </Row>
+      )}
+      <p className="text-muted-foreground py-2 text-xs">
+        {t(
+          "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.",
+        )}
+      </p>
+      <NewLogin open={adding.kind === "login"} onClose={close} onSaved={load} />
+      <ConnectOnePassword open={adding.kind === "onePassword"} onClose={close} onSaved={load} />
+    </Group>
   );
 };

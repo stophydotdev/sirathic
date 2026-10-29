@@ -1,0 +1,25 @@
+{
+  "URLBlocklist": [
+    "file://*",
+    "chrome://settings",
+    "chrome://flags",
+    "chrome://inspect",
+    "chrome://extensions",
+    "chrome://policy",
+    "chrome://net-internals",
+    "chrome://management"
+  ],
+  "IncognitoModeAvailability": 1,
+  "BrowserGuestModeEnabled": false,
+  "BrowserAddPersonEnabled": false,
+  "BrowserSignin": 0,
+  "SyncDisabled": true,
+  "DownloadRestrictions": 3,
+  "PrintingEnabled": false,
+  "PasswordManagerEnabled": false,
+  "AutofillAddressEnabled": false,
+  "AutofillCreditCardEnabled": false,
+  "DefaultBrowserSettingEnabled": false,
+  "PromotionalTabsEnabled": false,
+  "MetricsReportingEnabled": false
+}
