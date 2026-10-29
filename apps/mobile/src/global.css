@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@import "uniwind";
+
+@theme {
+  --color-background: #161616;
+  --color-foreground: #dedede;
+  --color-answer: #ffffff;
+  --color-super: #4e99a3;
+  --color-card: #1d1d1d;
+  --color-field: rgba(222, 222, 222, 0.13);
+  --color-popover: #1d1d1d;
+  --color-primary: #dedede;
+  --color-primary-foreground: #161616;
+  --color-muted: rgba(222, 222, 222, 0.06);
+  --color-muted-foreground: rgba(222, 222, 222, 0.65);
+  --color-surface: #0a0a0a;
+  --color-sidebar: #1c1c1c;
+  --color-destructive: #ff6467;
+  --color-border: rgba(222, 222, 222, 0.14);
+  --color-bubble: rgba(222, 222, 222, 0.03);
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 22px;
+
+  --font-sans: "Inter_400Regular";
+
+  --text-xs: 13px;
+  --text-xs--line-height: 18px;
+  --text-sm: 15px;
+  --text-sm--line-height: 22px;
+  --text-base: 17px;
+  --text-base--line-height: 26px;
+  --text-lg: 20px;
+  --text-lg--line-height: 28px;
+  --text-xl: 22px;
+  --text-xl--line-height: 28px;
+  --text-2xl: 26px;
+  --text-2xl--line-height: 32px;
+}
+
+@layer theme {
+  :root {
+    @variant dark {
+      --color-background: #161616;
+      --color-foreground: #dedede;
+      --color-answer: #ffffff;
+      --color-super: #4e99a3;
+      --color-card: #1d1d1d;
+      --color-field: rgba(222, 222, 222, 0.13);
+      --color-popover: #1d1d1d;
+      --color-primary: #dedede;
+      --color-primary-foreground: #161616;
+      --color-muted: rgba(222, 222, 222, 0.06);
+      --color-muted-foreground: rgba(222, 222, 222, 0.65);
+      --color-surface: #0a0a0a;
+      --color-sidebar: #1c1c1c;
+      --color-destructive: #ff6467;
+      --color-border: rgba(222, 222, 222, 0.14);
+      --color-bubble: rgba(222, 222, 222, 0.03);
+    }
+
+    @variant light {
+      --color-background: #ffffff;
+      --color-foreground: #0a0a0a;
+      --color-answer: #0a0a0a;
+      --color-super: #20808d;
+      --color-card: #ffffff;
+      --color-field: rgba(10, 10, 10, 0.05);
+      --color-popover: #ffffff;
+      --color-primary: #171717;
+      --color-primary-foreground: #fafafa;
+      --color-muted: #f5f5f5;
+      --color-muted-foreground: #737373;
+      --color-surface: #ffffff;
+      --color-sidebar: #fafafa;
+      --color-destructive: #e7000b;
+      --color-border: #e5e5e5;
+      --color-bubble: rgba(10, 10, 10, 0.03);
+    }
+  }
+}
+
+@utility font-medium {
+  font-family: "Inter_500Medium";
+}
+
+@utility font-semibold {
+  font-family: "Inter_600SemiBold";
+}

@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "automatic",
     "backgroundColor": "#000000",
     "ios": {
       "bundleIdentifier": "com.sirathic.app",
@@ -22,7 +22,27 @@
       },
       "predictiveBackGestureEnabled": false
     },
-    "plugins": ["expo-router", "expo-status-bar", "expo-secure-store", "expo-web-browser"],
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-secure-store",
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#161616",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 64
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow Sirathic to use your microphone for voice input.",
+          "recordAudioAndroid": false
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     },
