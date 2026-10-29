@@ -29,6 +29,7 @@ import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
 import { type AutomationScope, routineTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
+import { browserTools } from "../bots/browser";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
@@ -320,6 +321,7 @@ export function chatResponse({
         ...((!sourceKinds || sourceKinds.includes("web")) && stophyTools(sources.add)),
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
+        ...(inBot && !unattended && browserTools(`bot:${inBot.id}`)),
         ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
         ...(owner !== undefined && grok && xSearchTools(owner, sources.add)),

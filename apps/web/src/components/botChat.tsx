@@ -156,7 +156,9 @@ const stepLineOf = (part: Extract<Part, { type: "tool-call" }>) =>
     ? (searched.safeParse(part.args).data?.sources ?? []).flatMap(
         (source) => SEARCH_LINES.get(source) ?? [],
       )[0]
-    : TOOL_LINES.get(currentToolName(part.toolName));
+    : currentToolName(part.toolName).startsWith("browser_")
+      ? "Reading the page…"
+      : TOOL_LINES.get(currentToolName(part.toolName));
 
 const Working: FC<{ step: StepLine | undefined }> = ({ step }) => {
   const t = useT();

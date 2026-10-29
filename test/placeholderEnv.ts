@@ -7,6 +7,8 @@ const PLACEHOLDERS = {
   NEON_AI_GATEWAY_TOKEN: "test",
   NEON_AI_GATEWAY_BASE_URL: "https://gateway.invalid",
   STOPHY_API_KEY: "test",
+  BROWSER_URL: "http://127.0.0.1:8080",
+  BROWSER_TOKEN: "test",
   ANTHROPIC_API_KEY: "test",
   GOOGLE_CLIENT_ID: "test",
   GOOGLE_CLIENT_SECRET: "test",

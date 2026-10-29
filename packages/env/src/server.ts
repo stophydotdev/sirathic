@@ -9,6 +9,8 @@ export const env = createEnv({
     CLOUDFLARE_ACCOUNT_ID: z.string(),
     CLOUDFLARE_AI_TOKEN: z.string(),
     STOPHY_API_KEY: z.string(),
+    BROWSER_URL: z.url(),
+    BROWSER_TOKEN: z.string(),
     NEON_AI_GATEWAY_TOKEN: z.string(),
     NEON_AI_GATEWAY_BASE_URL: z.url(),
     ANTHROPIC_API_KEY: z.string(),

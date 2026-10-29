@@ -19,6 +19,8 @@ jobs:
       NEON_AI_GATEWAY_TOKEN: ci
       NEON_AI_GATEWAY_BASE_URL: https://gateway.invalid
       STOPHY_API_KEY: ci
+      BROWSER_URL: http://127.0.0.1:8080
+      BROWSER_TOKEN: ci
       ANTHROPIC_API_KEY: ci
       GOOGLE_CLIENT_ID: ci
       GOOGLE_CLIENT_SECRET: ci

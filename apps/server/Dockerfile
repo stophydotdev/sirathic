@@ -3,6 +3,7 @@ WORKDIR /repo
 
 COPY package.json bun.lock ./
 COPY apps/server/package.json apps/server/
+COPY apps/browser/package.json apps/browser/
 COPY apps/web/package.json apps/web/
 COPY packages/app/package.json packages/app/
 COPY packages/core/package.json packages/core/
@@ -13,6 +14,7 @@ RUN bun install --frozen-lockfile --filter @sirathic/server
 COPY tsconfig.json ./
 COPY packages packages
 COPY apps/server/src apps/server/src
+COPY apps/browser/src/protocol.ts apps/browser/src/
 RUN bun build --compile --minify --sourcemap apps/server/src/index.ts --outfile /server
 
 FROM gcr.io/distroless/cc-debian12:nonroot

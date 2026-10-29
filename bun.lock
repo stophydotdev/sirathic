@@ -26,6 +26,14 @@
         "typescript": "7",
       },
     },
+    "apps/browser": {
+      "name": "@sirathic/browser",
+      "version": "0.0.0",
+      "dependencies": {
+        "patchright": "1.63.0",
+        "zod": "^4.4.3",
+      },
+    },
     "apps/desktop": {
       "name": "desktop",
       "version": "0.1.0",
@@ -106,6 +114,7 @@
         "@opentelemetry/exporter-trace-otlp-proto": "0.223.0",
         "@opentelemetry/sdk-node": "0.223.0",
         "@opentelemetry/sdk-trace": "2.12.0",
+        "@sirathic/browser": "workspace:*",
         "@sirathic/core": "workspace:*",
         "@sirathic/db": "workspace:*",
         "@sirathic/env": "workspace:*",
@@ -1359,6 +1368,8 @@
     "@sindresorhus/merge-streams": ["@sindresorhus/merge-streams@4.0.0", "", {}, "sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ=="],
 
     "@sirathic/app": ["@sirathic/app@workspace:packages/app"],
+
+    "@sirathic/browser": ["@sirathic/browser@workspace:apps/browser"],
 
     "@sirathic/core": ["@sirathic/core@workspace:packages/core"],
 
@@ -2719,6 +2730,10 @@
     "parse5": ["parse5@7.3.0", "", { "dependencies": { "entities": "^6.0.0" } }, "sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw=="],
 
     "parseurl": ["parseurl@1.3.3", "", {}, "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ=="],
+
+    "patchright": ["patchright@1.63.0", "", { "dependencies": { "patchright-core": "1.63.0" }, "bin": { "patchright": "cli.js" } }, "sha512-WVXhmNhAJ5I+CmcHEu/I3KMKhOlQaKS1XJsk+5nRIypKJ3Dq9IaQP29p4vB3I1FWCTarUXVRj02Na30wGcuztQ=="],
+
+    "patchright-core": ["patchright-core@1.63.0", "", { "bin": { "patchright-core": "cli.js" } }, "sha512-nuRJVTMVKoOFzY8vmwFqJZR3F0trUCKiPzDSgCOPq/yHHTefm9czILV23dXJsi5mvS7sCy7U1CqG7edA/21DtQ=="],
 
     "path-browserify": ["path-browserify@1.0.1", "", {}, "sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g=="],
 
