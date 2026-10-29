@@ -17,6 +17,7 @@ export const ACCOUNT_LABELS = {
   { account: MessageKey; signedIn: MessageKey }
 >;
 export type Model = Awaited<ReturnType<typeof api.account.models.query>>[number];
+export type Plan = Awaited<ReturnType<typeof api.plans.list.query>>[number];
 
 type Models = { list: Model[]; error?: string };
 
@@ -30,6 +31,7 @@ export const useAccount = create<{
   status: Status | undefined;
   models: Model[];
   modelsError: string | undefined;
+  plans: Plan[];
   chosen: string | undefined;
   refresh: () => Promise<void>;
   choose: (slug: string) => void;
@@ -40,12 +42,14 @@ export const useAccount = create<{
       status: undefined,
       models: [],
       modelsError: undefined,
+      plans: [],
       chosen: undefined,
       refresh: async () => {
         void fetch("/api/auth/get-session").catch(() => undefined);
-        const [status, models] = await Promise.all([
+        const [status, models, plans] = await Promise.all([
           api.account.status.query().catch(() => undefined),
           loadModels(),
+          api.plans.list.query().catch(() => []),
         ]);
         if (!status) return;
         const before = get().status;
@@ -53,7 +57,7 @@ export const useAccount = create<{
           before?.signedIn === status.signedIn &&
           (!status.signedIn || (before.signedIn && before.label === status.label));
         if (before && !sameUser) useOwnLists.getState().reset();
-        set({ status, models: models.list, modelsError: models.error });
+        set({ status, models: models.list, modelsError: models.error, plans });
       },
       choose: (slug) => set({ chosen: slug }),
       signOut: async () => {
@@ -68,7 +72,7 @@ export const useAccount = create<{
     }),
     {
       name: "sirathicAccount",
-      partialize: ({ status, models, chosen }) => ({ status, models, chosen }),
+      partialize: ({ status, models, plans, chosen }) => ({ status, models, plans, chosen }),
       skipHydration: true,
     },
   ),

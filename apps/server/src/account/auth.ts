@@ -114,13 +114,13 @@ export function toUser({
 }
 
 export async function signInMethod(user: User): Promise<SignInVia> {
-  if (user.via === "chatgpt") return user.via;
   const linked = await db
     .select({ provider: accounts.providerId })
     .from(accounts)
     .where(eq(accounts.userId, user.id));
   const providers = new Set(linked.map((row) => row.provider));
-  return providers.has("github") && !providers.has("google") ? "github" : "google";
+  if (providers.has("google")) return "google";
+  return providers.has("github") ? "github" : user.via;
 }
 
 export async function userFor(headers: Headers): Promise<User | undefined> {

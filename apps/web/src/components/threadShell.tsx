@@ -14,6 +14,7 @@ import { SearchDialog, SessionRow } from "@/components/sessionMenu";
 import { useSessions } from "@/components/sessions";
 import { SettingsDialog, useSettings } from "@/components/settings";
 import { AccountRow, SignInDialog } from "@/components/signIn";
+import { PlanConnectDialog } from "@/components/planConnect";
 import { TooltipIconButton } from "@/components/tooltipIconButton";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -247,6 +248,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
       <SearchDialog open={searching} onOpenChange={setSearching} />
       <ShortcutsSheet />
       <SignInDialog />
+      <PlanConnectDialog />
       <AskSelection />
     </div>
   );
