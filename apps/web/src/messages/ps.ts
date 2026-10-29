@@ -727,4 +727,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} کتنې",
   "Use all sources": "ټولې سرچینې وکاروئ",
+  "Copy link": "لینک کاپي کړئ",
+  "Only you can open it": "یوازې تاسو یې خلاصولی شئ",
+  "Publish page": "پاڼه خپره کړئ",
+  "Anyone with the link can read it": "هر څوک چې لینک ولري لوستلی یې شي",
+  "Copy page link": "د پاڼې لینک کاپي کړئ",
+  "Unpublish page": "د پاڼې خپرول لغوه کړئ",
+  "Answered by Sirathic \u00b7 {date}": "د Sirathic ځواب · {date}",
+  "Ask your own question": "خپله پوښتنه وکړئ",
+  "{count} more sources": "{count} نورې سرچینې",
 } satisfies Messages;

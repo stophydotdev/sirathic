@@ -721,4 +721,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} مشاهدة",
   "Use all sources": "استخدم كل المصادر",
+  "Copy link": "نسخ الرابط",
+  "Only you can open it": "أنت وحدك تستطيع فتحه",
+  "Publish page": "نشر صفحة",
+  "Anyone with the link can read it": "يستطيع أي شخص لديه الرابط قراءتها",
+  "Copy page link": "نسخ رابط الصفحة",
+  "Unpublish page": "إلغاء نشر الصفحة",
+  "Answered by Sirathic \u00b7 {date}": "أجاب عنه Sirathic · {date}",
+  "Ask your own question": "اطرح سؤالك",
+  "{count} more sources": "{count} مصادر أخرى",
 } satisfies Messages;

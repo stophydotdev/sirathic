@@ -731,4 +731,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} بینین",
   "Use all sources": "هەموو سەرچاوەکان بەکاربهێنە",
+  "Copy link": "لینک کۆپی بکە",
+  "Only you can open it": "تەنها تۆ دەتوانیت بیکەیتەوە",
+  "Publish page": "پەڕە بڵاو بکەرەوە",
+  "Anyone with the link can read it": "هەر کەسێک لینکەکەی هەبێت دەتوانێت بیخوێنێتەوە",
+  "Copy page link": "لینکی پەڕە کۆپی بکە",
+  "Unpublish page": "بڵاوکردنەوەی پەڕە هەڵبوەشێنەوە",
+  "Answered by Sirathic \u00b7 {date}": "وەڵامی Sirathic · {date}",
+  "Ask your own question": "پرسیاری خۆت بکە",
+  "{count} more sources": "{count} سەرچاوەی تر",
 } satisfies Messages;

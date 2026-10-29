@@ -736,4 +736,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} marta ko‘rilgan",
   "Use all sources": "Barcha manbalardan foydalanish",
+  "Copy link": "Havolani nusxalash",
+  "Only you can open it": "Uni faqat siz ocha olasiz",
+  "Publish page": "Sahifani nashr qilish",
+  "Anyone with the link can read it": "Havolasi bor har kim o‘qiy oladi",
+  "Copy page link": "Sahifa havolasini nusxalash",
+  "Unpublish page": "Sahifa nashrini bekor qilish",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic javob bergan · {date}",
+  "Ask your own question": "O‘z savolingizni bering",
+  "{count} more sources": "Yana {count} ta manba",
 } satisfies Messages;

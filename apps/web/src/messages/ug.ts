@@ -733,4 +733,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} قېتىم كۆرۈلگەن",
   "Use all sources": "بارلىق مەنبەلەرنى ئىشلىتىش",
+  "Copy link": "ئۇلانمىنى كۆچۈرۈش",
+  "Only you can open it": "ئۇنى پەقەت سىزلا ئاچالايسىز",
+  "Publish page": "بەتنى ئېلان قىلىش",
+  "Anyone with the link can read it": "ئۇلانمىسى بار ھەر قانداق ئادەم ئوقۇيالايدۇ",
+  "Copy page link": "بەت ئۇلانمىسىنى كۆچۈرۈش",
+  "Unpublish page": "بەتنىڭ ئېلانىنى ئەمەلدىن قالدۇرۇش",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic جاۋاب بەرگەن · {date}",
+  "Ask your own question": "ئۆز سوئالىڭىزنى سوراڭ",
+  "{count} more sources": "يەنە {count} مەنبە",
 } satisfies Messages;

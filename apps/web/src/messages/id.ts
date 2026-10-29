@@ -732,4 +732,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} kali ditonton",
   "Use all sources": "Gunakan semua sumber",
+  "Copy link": "Salin tautan",
+  "Only you can open it": "Hanya Anda yang bisa membukanya",
+  "Publish page": "Terbitkan halaman",
+  "Anyone with the link can read it": "Siapa pun yang punya tautan bisa membacanya",
+  "Copy page link": "Salin tautan halaman",
+  "Unpublish page": "Batalkan terbitan halaman",
+  "Answered by Sirathic \u00b7 {date}": "Dijawab oleh Sirathic · {date}",
+  "Ask your own question": "Ajukan pertanyaan Anda sendiri",
+  "{count} more sources": "{count} sumber lainnya",
 } satisfies Messages;

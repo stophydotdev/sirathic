@@ -715,4 +715,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} వీక్షణలు",
   "Use all sources": "అన్ని మూలాలను ఉపయోగించండి",
+  "Copy link": "లింక్‌ను కాపీ చేయండి",
+  "Only you can open it": "మీరు మాత్రమే దీన్ని తెరవగలరు",
+  "Publish page": "పేజీని ప్రచురించండి",
+  "Anyone with the link can read it": "లింక్ ఉన్న ఎవరైనా దీన్ని చదవగలరు",
+  "Copy page link": "పేజీ లింక్‌ను కాపీ చేయండి",
+  "Unpublish page": "పేజీ ప్రచురణను రద్దు చేయండి",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic సమాధానం · {date}",
+  "Ask your own question": "మీ ప్రశ్నను అడగండి",
+  "{count} more sources": "మరో {count} మూలాలు",
 } satisfies Messages;

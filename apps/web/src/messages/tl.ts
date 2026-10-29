@@ -735,4 +735,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} na panonood",
   "Use all sources": "Gamitin ang lahat ng sanggunian",
+  "Copy link": "Kopyahin ang link",
+  "Only you can open it": "Ikaw lang ang makakapagbukas nito",
+  "Publish page": "I-publish ang pahina",
+  "Anyone with the link can read it": "Mababasa ito ng sinumang may link",
+  "Copy page link": "Kopyahin ang link ng pahina",
+  "Unpublish page": "Bawiin ang pag-publish ng pahina",
+  "Answered by Sirathic \u00b7 {date}": "Sinagot ng Sirathic · {date}",
+  "Ask your own question": "Itanong ang sarili mong tanong",
+  "{count} more sources": "{count} pang sanggunian",
 } satisfies Messages;

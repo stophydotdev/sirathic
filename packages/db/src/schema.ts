@@ -382,6 +382,7 @@ export const chatSessions = pgTable(
     automationId: uuid(),
     summary: text(),
     summarized: integer().notNull().default(0),
+    publishedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
       .notNull()

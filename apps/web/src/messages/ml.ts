@@ -725,4 +725,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} കാഴ്ചകൾ",
   "Use all sources": "എല്ലാ ഉറവിടങ്ങളും ഉപയോഗിക്കുക",
+  "Copy link": "ലിങ്ക് പകർത്തുക",
+  "Only you can open it": "നിങ്ങൾക്ക് മാത്രമേ ഇത് തുറക്കാനാകൂ",
+  "Publish page": "പേജ് പ്രസിദ്ധീകരിക്കുക",
+  "Anyone with the link can read it": "ലിങ്ക് ഉള്ള ആർക്കും ഇത് വായിക്കാം",
+  "Copy page link": "പേജ് ലിങ്ക് പകർത്തുക",
+  "Unpublish page": "പേജ് പ്രസിദ്ധീകരണം പിൻവലിക്കുക",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic മറുപടി നൽകിയത് · {date}",
+  "Ask your own question": "നിങ്ങളുടെ ചോദ്യം ചോദിക്കൂ",
+  "{count} more sources": "{count} ഉറവിടങ്ങൾ കൂടി",
 } satisfies Messages;

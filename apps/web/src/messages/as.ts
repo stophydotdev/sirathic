@@ -717,4 +717,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} বাৰ চোৱা হৈছে",
   "Use all sources": "সকলো উৎস ব্যৱহাৰ কৰক",
+  "Copy link": "লিংক কপি কৰক",
+  "Only you can open it": "কেৱল আপুনিহে খুলিব পাৰে",
+  "Publish page": "পৃষ্ঠা প্ৰকাশ কৰক",
+  "Anyone with the link can read it": "লিংক থকা যিকোনো লোকে পঢ়িব পাৰে",
+  "Copy page link": "পৃষ্ঠাৰ লিংক কপি কৰক",
+  "Unpublish page": "পৃষ্ঠাৰ প্ৰকাশ বাতিল কৰক",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic-এ উত্তৰ দিছে · {date}",
+  "Ask your own question": "আপোনাৰ নিজৰ প্ৰশ্ন সোধক",
+  "{count} more sources": "আৰু {count}টা উৎস",
 } satisfies Messages;

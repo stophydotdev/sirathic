@@ -730,4 +730,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} просмотров",
   "Use all sources": "Использовать все источники",
+  "Copy link": "Скопировать ссылку",
+  "Only you can open it": "Открыть можете только вы",
+  "Publish page": "Опубликовать страницу",
+  "Anyone with the link can read it": "Прочитать может любой, у кого есть ссылка",
+  "Copy page link": "Скопировать ссылку на страницу",
+  "Unpublish page": "Снять страницу с публикации",
+  "Answered by Sirathic \u00b7 {date}": "Ответ Sirathic · {date}",
+  "Ask your own question": "Задать свой вопрос",
+  "{count} more sources": "Ещё {count} источников",
 } satisfies Messages;

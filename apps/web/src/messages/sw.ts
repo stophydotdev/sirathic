@@ -728,4 +728,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "Imetazamwa mara {count}",
   "Use all sources": "Tumia vyanzo vyote",
+  "Copy link": "Nakili kiungo",
+  "Only you can open it": "Ni wewe tu unayeweza kukifungua",
+  "Publish page": "Chapisha ukurasa",
+  "Anyone with the link can read it": "Yeyote mwenye kiungo anaweza kuusoma",
+  "Copy page link": "Nakili kiungo cha ukurasa",
+  "Unpublish page": "Ondoa ukurasa uliochapishwa",
+  "Answered by Sirathic \u00b7 {date}": "Imejibiwa na Sirathic · {date}",
+  "Ask your own question": "Uliza swali lako",
+  "{count} more sources": "Vyanzo {count} zaidi",
 } satisfies Messages;

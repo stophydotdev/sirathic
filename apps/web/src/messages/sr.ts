@@ -727,4 +727,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} прегледа",
   "Use all sources": "Користи све изворе",
+  "Copy link": "Копирај везу",
+  "Only you can open it": "Само ви можете да је отворите",
+  "Publish page": "Објави страницу",
+  "Anyone with the link can read it": "Свако ко има везу може да је прочита",
+  "Copy page link": "Копирај везу странице",
+  "Unpublish page": "Повуци објаву странице",
+  "Answered by Sirathic \u00b7 {date}": "Одговорио Sirathic · {date}",
+  "Ask your own question": "Поставите своје питање",
+  "{count} more sources": "Још {count} извора",
 } satisfies Messages;

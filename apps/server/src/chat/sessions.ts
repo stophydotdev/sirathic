@@ -35,7 +35,7 @@ export const feedbackInput = z.object({
 
 export const forkInput = z.object({ messageId: z.string().min(1) });
 
-const keepUpdatedAt = sql`${chatSessions.updatedAt}`;
+export const keepUpdatedAt = sql`${chatSessions.updatedAt}`;
 
 const isoTime = (column: AnyColumn) =>
   sql<string>`to_char(${column} at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`;
@@ -53,7 +53,8 @@ export const messageSchemas = {
   metadataSchema: messageMetadata,
 };
 
-const owned = (id: string, by: string) => and(eq(chatSessions.id, id), eq(chatSessions.owner, by));
+export const owned = (id: string, by: string) =>
+  and(eq(chatSessions.id, id), eq(chatSessions.owner, by));
 
 const asked = z.array(z.string());
 
@@ -76,6 +77,7 @@ export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT)
       title: chatSessions.title,
       pinned: chatSessions.pinned,
       unread: chatSessions.unread,
+      published: sql<boolean>`${chatSessions.publishedAt} is not null`,
       projectId: chatSessions.projectId,
       updatedAt: isoTime(chatSessions.updatedAt),
       preview: sql<string>`left(coalesce((select string_agg(part->>'text', ' ') from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where part->>'type' = 'text'), ''), ${PREVIEW_CHARS})`,

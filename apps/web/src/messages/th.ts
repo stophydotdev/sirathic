@@ -713,4 +713,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "ดู {count} ครั้ง",
   "Use all sources": "ใช้แหล่งข้อมูลทั้งหมด",
+  "Copy link": "คัดลอกลิงก์",
+  "Only you can open it": "มีแค่คุณที่เปิดได้",
+  "Publish page": "เผยแพร่หน้า",
+  "Anyone with the link can read it": "ทุกคนที่มีลิงก์อ่านได้",
+  "Copy page link": "คัดลอกลิงก์หน้า",
+  "Unpublish page": "ยกเลิกการเผยแพร่หน้า",
+  "Answered by Sirathic \u00b7 {date}": "ตอบโดย Sirathic · {date}",
+  "Ask your own question": "ถามคำถามของคุณเอง",
+  "{count} more sources": "แหล่งข้อมูลอีก {count} แห่ง",
 } satisfies Messages;

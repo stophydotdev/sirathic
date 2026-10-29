@@ -737,4 +737,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} vues",
   "Use all sources": "Utiliser toutes les sources",
+  "Copy link": "Copier le lien",
+  "Only you can open it": "Vous seul pouvez l’ouvrir",
+  "Publish page": "Publier la page",
+  "Anyone with the link can read it": "Toute personne disposant du lien peut la lire",
+  "Copy page link": "Copier le lien de la page",
+  "Unpublish page": "Retirer la page",
+  "Answered by Sirathic \u00b7 {date}": "Réponse de Sirathic · {date}",
+  "Ask your own question": "Posez votre propre question",
+  "{count} more sources": "{count} sources de plus",
 } satisfies Messages;

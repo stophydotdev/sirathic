@@ -21,6 +21,9 @@ import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 
 type StreamingResponseStatus = "streaming" | "complete" | "error";
+export const answerText =
+  "text-base leading-[26px] text-foreground/90 [&_a]:font-medium [&_a]:underline [&_a]:underline-offset-4 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:ps-5 [&_p+p]:mt-3 [&_pre]:my-3 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted/45 [&_pre]:p-3 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:ps-5";
+
 export type StreamingResponseFeedback = "up" | "down" | null;
 
 export interface StreamingResponseProps {
@@ -138,13 +141,7 @@ export function StreamingResponse({
 
   return (
     <div data-answer data-state={status} aria-busy={streaming} className={cn("w-full", className)}>
-      <div
-        aria-live={announce ? "polite" : "off"}
-        className={cn(
-          "text-base leading-[26px] text-foreground/90 [&_a]:font-medium [&_a]:underline [&_a]:underline-offset-4 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:ps-5 [&_p+p]:mt-3 [&_pre]:my-3 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted/45 [&_pre]:p-3 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:ps-5",
-          contentClassName,
-        )}
-      >
+      <div aria-live={announce ? "polite" : "off"} className={cn(answerText, contentClassName)}>
         {children}
       </div>
 

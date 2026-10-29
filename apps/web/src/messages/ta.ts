@@ -727,4 +727,13 @@ export default {
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} பார்வைகள்",
   "Use all sources": "எல்லா மூலங்களையும் பயன்படுத்து",
+  "Copy link": "இணைப்பை நகலெடு",
+  "Only you can open it": "நீங்கள் மட்டுமே இதைத் திறக்க முடியும்",
+  "Publish page": "பக்கத்தை வெளியிடு",
+  "Anyone with the link can read it": "இணைப்பு உள்ள எவரும் இதைப் படிக்கலாம்",
+  "Copy page link": "பக்க இணைப்பை நகலெடு",
+  "Unpublish page": "பக்க வெளியீட்டை நீக்கு",
+  "Answered by Sirathic \u00b7 {date}": "Sirathic அளித்த பதில் · {date}",
+  "Ask your own question": "உங்கள் சொந்த கேள்வியைக் கேளுங்கள்",
+  "{count} more sources": "மேலும் {count} மூலங்கள்",
 } satisfies Messages;
