@@ -19,7 +19,6 @@ import { track } from "./chat/events";
 import { cardDecisions } from "./chat/confirm";
 import { uploadRoutes } from "./files/upload";
 import { projectOfChat } from "./projects/projects";
-import { settingsInProject } from "./projects/rules";
 import {
   appLanguage,
   type ChatMessage,
@@ -176,12 +175,10 @@ app.post("/api/chat", (c) =>
           : project.then((inProject) =>
               inProject?.kind === "bot" ? { id: inProject.id, owner } : undefined,
             ),
-      preferences: Promise.all([getSettings(by), project])
-        .then(([settings, inProject]) => settingsInProject(settings, inProject))
-        .catch((err: Error) => {
-          console.error(`settings not read: ${reasonOf(err)}`);
-          return DEFAULT_SETTINGS;
-        }),
+      preferences: getSettings(by).catch((err: Error) => {
+        console.error(`settings not read: ${reasonOf(err)}`);
+        return DEFAULT_SETTINGS;
+      }),
       connected: project.then((inProject) =>
         connectedTools(by, inProject?.kind === "bot" ? inProject.plugins : undefined),
       ),

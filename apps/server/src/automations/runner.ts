@@ -9,7 +9,6 @@ import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
 import { projectOfChat } from "../projects/projects";
-import { settingsInProject } from "../projects/rules";
 import { reasonOf, StatusError } from "../http";
 import { openSession, saveSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
@@ -155,12 +154,10 @@ async function answerPrompt(
     mode: runMode,
     abortSignal: AbortSignal.timeout(RUN_TIMEOUT_MS),
     unattended: true,
-    preferences: getSettings(by)
-      .then((settings) => settingsInProject(settings, project))
-      .catch((err: Error) => {
-        console.error(`settings not read: ${reasonOf(err)}`);
-        return DEFAULT_SETTINGS;
-      }),
+    preferences: getSettings(by).catch((err: Error) => {
+      console.error(`settings not read: ${reasonOf(err)}`);
+      return DEFAULT_SETTINGS;
+    }),
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
     project: Promise.resolve(project),
     userSkills: Promise.resolve([]),

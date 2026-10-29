@@ -23,8 +23,3 @@ export const teachingRules = (note: string | undefined) =>
 
 export const botIdentity = ({ name, title }: { name: string; title: string }) =>
   title ? `"${name}", ${title}` : `"${name}"`;
-
-export const settingsInProject = <Settings extends { memory: unknown }>(
-  settings: Settings,
-  project: { projectOnlyMemory: boolean; memory: Settings["memory"] } | undefined,
-) => (project?.projectOnlyMemory ? { ...settings, memory: project.memory } : settings);
