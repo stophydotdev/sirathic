@@ -14,6 +14,7 @@ import { api } from "@/lib/trpc";
 import { deviceOf } from "@/lib/visit";
 import { TRPCClientError } from "@trpc/client";
 import { fileUrl } from "@sirathic/server/files";
+import { prependQuote } from "@sirathic/app/botQuote";
 import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
 import { Chat as LiveChat, useChat } from "@ai-sdk/react";
 import {
@@ -291,6 +292,34 @@ type ChatState = {
   chat: ReturnType<typeof useChat<ChatMessage>>;
 };
 
+const outgoingQuote = z.object({
+  custom: z.object({ quote: z.object({ text: z.string() }) }),
+});
+
+const botSendMessage =
+  (sendMessage: ChatState["chat"]["sendMessage"]): typeof sendMessage =>
+  (message, options) => {
+    const quote = outgoingQuote.safeParse(message?.metadata).data?.custom.quote.text;
+    if (!message || quote === undefined) return sendMessage(message, options);
+    if (message.parts) {
+      const firstText = message.parts.findIndex((part) => part.type === "text");
+      const parts = message.parts.map((part, index) =>
+        index === firstText && part.type === "text"
+          ? { ...part, text: prependQuote(quote, part.text) }
+          : part,
+      );
+      if (firstText < 0) parts.unshift({ type: "text", text: prependQuote(quote, "") });
+      return sendMessage({ ...message, parts }, options);
+    }
+    return sendMessage(
+      {
+        ...message,
+        text: prependQuote(quote, "text" in message ? (message.text ?? "") : ""),
+      },
+      options,
+    );
+  };
+
 const ChatContext = createContext<ChatState | undefined>(undefined);
 
 export const useChatState = () => useContext(ChatContext);
@@ -310,9 +339,10 @@ export const Chat: FC<{
   );
   const [session] = useState(() => liveChat(chatId, initialMessages, projectId, unfinished));
   const chat = useChat<ChatMessage>({ chat: session, resume: session.messages.length > 0 });
-  const runtime = useAISDKRuntime(chat, {
-    adapters: { attachments },
-  });
+  const runtime = useAISDKRuntime(
+    projectId === chatId ? { ...chat, sendMessage: botSendMessage(chat.sendMessage) } : chat,
+    { adapters: { attachments } },
+  );
   const started = chat.messages.length > 0;
   const streaming = chat.status === "streaming";
   const question = chat.messages

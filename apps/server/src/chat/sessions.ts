@@ -80,7 +80,7 @@ export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT)
       published: sql<boolean>`${chatSessions.publishedAt} is not null`,
       projectId: chatSessions.projectId,
       updatedAt: isoTime(chatSessions.updatedAt),
-      preview: sql<string>`left(coalesce((select string_agg(part->>'text', ' ') from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where part->>'type' = 'text'), ''), ${PREVIEW_CHARS})`,
+      preview: sql<string>`left(regexp_replace(coalesce((select string_agg(part->>'text', ' ') from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where part->>'type' = 'text'), ''), '^> [^\n]*\n\n', ''), ${PREVIEW_CHARS})`,
       waiting: sql<
         string | null
       >`(select left(coalesce(part->'input'->>'title', part->'input'->>'instruction'), ${PREVIEW_CHARS}) from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where ${chatSessions.messages} -> -1 ->> 'role' = 'assistant' and part->>'type' in ('tool-request_user_form', 'tool-request_browser_help') limit 1)`,

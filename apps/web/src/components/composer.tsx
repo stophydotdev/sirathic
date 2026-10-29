@@ -1,5 +1,6 @@
 "use client";
 
+import { BotReply, useBotReply } from "@/components/botReply";
 import { MODE_DETAILS, useChatOptions } from "@/components/chatOptions";
 import { useChatState } from "@/components/chat";
 import { takeDraft } from "@/components/draft";
@@ -56,6 +57,7 @@ import {
   Telescope01Icon,
 } from "@hugeicons/core-free-icons";
 import { type SourceKind, sourceKind } from "@sirathic/server/sources";
+import { prependQuote } from "@sirathic/app/botQuote";
 import { KIND_NAMES } from "@/components/sources";
 import Image from "next/image";
 import { type FC, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
@@ -146,7 +148,12 @@ export const Composer: FC<{
     running && chatId !== undefined && text.trim() !== "" && !hasAttachments && !command;
   const queue = () => {
     if (!chatId) return;
-    queueFollowUp(chatId, text.trim());
+    const quote = bot ? composer().getState().quote?.text : undefined;
+    queueFollowUp(chatId, quote === undefined ? text.trim() : prependQuote(quote, text.trim()));
+    if (bot) {
+      composer().setQuote(undefined);
+      useBotReply.setState(({ byChat }) => ({ byChat: { ...byChat, [chatId]: undefined } }));
+    }
     composer().setText("");
   };
 
@@ -221,6 +228,7 @@ export const Composer: FC<{
           />
         )}
         {signedIn && noor && <NoorLimitLine running={running} />}
+        {bot && <BotReply />}
         <ComposerPrimitive.Root
           className={cn(
             "bg-card border-foreground/10 flex w-full flex-wrap items-center border",

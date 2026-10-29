@@ -1,11 +1,7 @@
 import { tool } from "ai";
 import { z } from "zod";
 import { botTitle, projectInstructions, projectName, updateProject } from "../projects/projects";
-
-const oneEmoji = z
-  .emoji()
-  .max(16)
-  .refine((text) => [...new Intl.Segmenter().segment(text)].length === 1, "send exactly one emoji");
+import { oneEmoji } from "../shared/messages";
 
 export type BotScope = { id: string; owner: string };
 

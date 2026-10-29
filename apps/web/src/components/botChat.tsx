@@ -1,6 +1,7 @@
 "use client";
 
-import { actionButton, useAnswer } from "@/components/answerActions";
+import { BotMessageActions, BotReactions, sentAt } from "@/components/botMessageActions";
+import { splitQuote } from "@sirathic/app/botQuote";
 import { ReplyError } from "@/components/answer";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { bubblesOf } from "@sirathic/app/botBubbles";
@@ -14,14 +15,7 @@ import { MarkdownText } from "@/components/markdownText";
 import { UserText } from "@/components/mentions";
 import { ConfirmCard } from "@/components/confirmCard";
 import { AskCard } from "@/components/questionCard";
-import { ReportMistake } from "@/components/reportMistake";
 import { SourcesContext, siteName, sourcesOf } from "@/components/sources";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdownMenu";
 import { cn } from "@/lib/utils";
 import { currentToolName, messageMetadata } from "@sirathic/server/messages";
 import {
@@ -32,13 +26,6 @@ import {
   type ThreadMessage,
   useAuiState,
 } from "@assistant-ui/react";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Copy01Icon,
-  MoreHorizontalIcon,
-  ThumbsDownIcon,
-  ThumbsUpIcon,
-} from "@hugeicons/core-free-icons";
 import type { Source } from "@sirathic/server/sources";
 import { type FC, Fragment, useEffect, useRef, useState } from "react";
 import { z } from "zod";
@@ -88,19 +75,32 @@ const usePaced = (said: Said[], ready: number, running: boolean) => {
   return shown;
 };
 
-const BotText: FC<{ text: string; menu: boolean }> = ({ text, menu }) => (
-  <div className="mb-2 flex max-w-9/10 items-end gap-1">
-    <TextMessagePartProvider text={text}>
-      <div className="bot-bubble">
-        <MarkdownText citations={false} />
+const BotText: FC<{ text: string; last: boolean }> = ({ text, last }) => {
+  const reaction = useAuiState(
+    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.reaction,
+  );
+  return (
+    <div
+      className={cn(
+        "group/bubble mb-2 flex max-w-full items-end gap-1",
+        last && reaction && "mb-5",
+      )}
+    >
+      <div className="relative min-w-0 max-w-9/10">
+        <TextMessagePartProvider text={text}>
+          <div className="bot-bubble">
+            <MarkdownText citations={false} />
+          </div>
+        </TextMessagePartProvider>
+        {last && <BotReactions />}
       </div>
-    </TextMessagePartProvider>
-    {menu && <MoreMenu />}
-  </div>
-);
+      <BotMessageActions text={text} touch={last} />
+    </div>
+  );
+};
 
-const Bubble: FC<{ said: Said; menu: boolean }> = ({ said, menu }) => {
-  if (said.kind === "text") return <BotText text={said.text} menu={menu} />;
+const Bubble: FC<{ said: Said; last: boolean }> = ({ said, last }) => {
+  if (said.kind === "text") return <BotText text={said.text} last={last} />;
   const { toolName, args, result } = said.part;
   if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
   if (currentToolName(toolName) === "request_user_form") {
@@ -182,48 +182,6 @@ const Working: FC<{ step: StepLine | undefined }> = ({ step }) => {
   );
 };
 
-const MoreMenu: FC = () => {
-  const { feedback, rate, copy } = useAnswer();
-  const [reporting, setReporting] = useState(false);
-  const t = useT();
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          aria-label={t("More actions")}
-          className={cn(
-            actionButton,
-            "opacity-0 group-focus-within/message:opacity-100 group-hover/message:opacity-100 data-[state=open]:opacity-100 pointer-coarse:size-9 pointer-coarse:opacity-100 print:hidden",
-          )}
-        >
-          <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-48">
-          <DropdownMenuItem onSelect={() => void copy()}>
-            <HugeiconsIcon icon={Copy01Icon} className="size-4" />
-            {t("Copy response")}
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => rate(feedback === "up" ? null : "up")}>
-            <HugeiconsIcon icon={ThumbsUpIcon} className="size-4" />
-            {t("Helpful")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={() => (feedback === "down" ? rate(null) : setReporting(true))}
-          >
-            <HugeiconsIcon icon={ThumbsDownIcon} className="size-4" />
-            {t("Not helpful")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <ReportMistake
-        open={reporting}
-        onOpenChange={setReporting}
-        onSend={(report) => rate("down", report)}
-      />
-    </>
-  );
-};
-
 const SourceLine: FC<{ sources: readonly Source[] }> = ({ sources }) => {
   const t = useT();
   const sites = [...new Map(sources.map((source) => [siteName(source.url), source.url]))].slice(
@@ -278,7 +236,7 @@ const BotSays: FC = () => {
       <div className="flex flex-col items-start pt-2">
         {said.slice(0, shown).map((item, index) => (
           <Fragment key={index}>
-            <Bubble said={item} menu={!working && index === lastText} />
+            <Bubble said={item} last={index === lastText} />
             {!working && index === lastText && <SourceLine sources={sources} />}
           </Fragment>
         ))}
@@ -299,15 +257,6 @@ const reactionAfter = (messages: readonly ThreadMessage[], id: string) => {
   return call?.type === "tool-call" ? reacted.safeParse(call.result).data?.emoji : undefined;
 };
 
-const sentAt = (messages: readonly ThreadMessage[], message: ThreadMessage) => {
-  const reply = messages[messages.indexOf(message) + 1];
-  const replied =
-    reply?.role === "assistant"
-      ? messageMetadata.safeParse(reply.metadata.custom).data?.createdAt
-      : undefined;
-  return replied ?? message.createdAt.getTime();
-};
-
 const stampOf = (messages: readonly ThreadMessage[], id: string) => {
   const message = messages.find((item) => item.id === id);
   if (message?.role !== "user") return undefined;
@@ -326,9 +275,29 @@ const Stamp: FC<{ at: number }> = ({ at }) => {
   );
 };
 
+const BotUserText: FC<{ text: string }> = ({ text }) => {
+  const reply = splitQuote(text);
+  return (
+    <>
+      {reply.quote !== undefined && (
+        <p className="mb-1 truncate border-s-2 border-white/40 ps-2 text-sm text-white/90">
+          {reply.quote}
+        </p>
+      )}
+      <UserText text={reply.text} />
+    </>
+  );
+};
+
 const BotYou: FC = () => {
   const t = useT();
   const reaction = useAuiState((s) => reactionAfter(s.thread.messages, s.message.id));
+  const ownReaction = useAuiState(
+    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.reaction,
+  );
+  const text = useAuiState((s) =>
+    s.message.content.flatMap((part) => (part.type === "text" ? [part.text] : [])).join("\n"),
+  );
   const routine = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.routine,
   );
@@ -356,19 +325,19 @@ const BotYou: FC = () => {
           </MessagePrimitive.Attachments>
         </div>
       </AuiIf>
-      <div className={cn("relative max-w-4/5 text-base text-white", reaction && "mb-3")}>
-        <div className="rounded-3xl bg-sky-700 px-4 py-2 wrap-break-word whitespace-pre-wrap">
-          <MessagePrimitive.Parts components={{ Text: UserText }} />
+      <div className="group/bubble flex w-full items-end justify-end gap-1">
+        <BotMessageActions text={splitQuote(text).text} />
+        <div
+          className={cn(
+            "relative min-w-0 max-w-4/5 text-base text-white",
+            (reaction || ownReaction) && "mb-3",
+          )}
+        >
+          <div className="rounded-3xl bg-sky-700 px-4 py-2 wrap-break-word whitespace-pre-wrap">
+            <MessagePrimitive.Parts components={{ Text: BotUserText }} />
+          </div>
+          <BotReactions botReaction={reaction} user />
         </div>
-        {reaction && (
-          <span
-            role="img"
-            aria-label={reaction}
-            className="bg-background border-border absolute -bottom-3 end-2 rounded-full border px-1.5 py-0.5 text-sm leading-none"
-          >
-            {reaction}
-          </span>
-        )}
       </div>
     </div>
   );
@@ -378,7 +347,19 @@ export const BotTurn: FC = () => {
   const role = useAuiState((s) => s.message.role);
   const stamp = useAuiState((s) => stampOf(s.thread.messages, s.message.id));
   return (
-    <MessagePrimitive.Root className="group/message">
+    <MessagePrimitive.Root
+      className="group/message"
+      tabIndex={0}
+      onPointerDown={(event) => {
+        if (
+          event.pointerType === "touch" &&
+          event.target instanceof Element &&
+          event.currentTarget.contains(event.target) &&
+          !event.target.closest("button, a, input, textarea, [role=button]")
+        )
+          event.currentTarget.focus();
+      }}
+    >
       {stamp !== undefined && <Stamp at={stamp} />}
       {role === "user" ? <BotYou /> : role === "assistant" ? <BotSays /> : null}
     </MessagePrimitive.Root>
