@@ -1,6 +1,6 @@
 "use client";
 
-import { blankDraft, type Draft } from "@/components/automationDraft";
+import { blankDraft, type Draft } from "@sirathic/app/automationDraft";
 import { type Translate, useT } from "@/components/i18n";
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";

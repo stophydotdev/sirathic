@@ -1,8 +1,8 @@
 "use client";
 
-import { type BlobFrame, blobMotion, restingOf } from "@/lib/blob/engine";
-import { bodyOf } from "@/lib/blob/shape";
-import type { BlobState } from "@/lib/blob/states";
+import { type BlobFrame, blobMotion, restingOf } from "@sirathic/app/blob/engine";
+import { bodyOf } from "@sirathic/app/blob/shape";
+import type { BlobState } from "@sirathic/app/blob/states";
 import { cn } from "@/lib/utils";
 import type { BOT_COLORS } from "@sirathic/server/projects";
 import { type FC, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";

@@ -1,9 +1,10 @@
-import type { Automation, Schedule } from "@/components/automationText";
+import type { Schedule } from "@sirathic/server/automations";
+import type { PROJECT_ICONS } from "@sirathic/server/projects";
 
 export type Draft = {
   name: string;
   prompt: string;
-  icon: Automation["icon"];
+  icon: (typeof PROJECT_ICONS)[number] | null;
   kind: Schedule["kind"] | undefined;
   date: string;
   time: string;
@@ -38,7 +39,9 @@ export const blankDraft = (): Draft => {
   };
 };
 
-export const draftOf = (automation: Automation): Draft => {
+export const draftOf = (
+  automation: Pick<Draft, "name" | "prompt" | "icon"> & { schedule: Schedule },
+): Draft => {
   const { schedule } = automation;
   return {
     ...blankDraft(),

@@ -9,15 +9,15 @@ import {
   hour24Of,
 } from "../apps/web/src/components/automationText";
 import { rehypeBareCitations } from "../apps/web/src/components/citations";
-import { botGroups } from "../apps/web/src/components/botGroups";
-import { bubblesOf } from "../apps/web/src/components/botBubbles";
+import { botGroups } from "../packages/app/src/botGroups";
+import { bubblesOf } from "../packages/app/src/botBubbles";
 import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 import { refreshing } from "../apps/web/src/lib/refreshing";
 import { importedFacts } from "../apps/web/src/components/memoryImport";
-import { blobMotion } from "../apps/web/src/lib/blob/engine";
-import { BODIES, bodyOf } from "../apps/web/src/lib/blob/shape";
+import { blobMotion } from "../packages/app/src/blob/engine";
+import { BODIES, bodyOf } from "../packages/app/src/blob/shape";
 
 test("a link keeps its path and drops the trailing period and question mark", () => {
   expect(splitLinks("What does https://a.org/x/y say? Also see https://b.info/en/82536.")).toEqual([

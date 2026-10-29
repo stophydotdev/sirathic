@@ -1,14 +1,9 @@
 import type { MessageKey } from "@/messages/en";
+import { ANSWER_FONTS, PALETTES, THEMES } from "@sirathic/app/preferences";
 import { z } from "zod";
 import { create } from "zustand";
 
 const STORAGE_KEY = "sirathicPreferences";
-
-export const THEMES = ["dark", "light", "system"] as const;
-
-export const ANSWER_FONTS = ["sans", "serif"] as const;
-
-export const PALETTES = ["sirathic", "grove", "ocean", "ember", "iris", "rose"] as const;
 
 export const THEME_NAMES = {
   dark: "Dark",

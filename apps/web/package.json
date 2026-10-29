@@ -22,6 +22,7 @@
     "@lexical/react": "0.52.0",
     "@lexical/utils": "0.52.0",
     "@opennextjs/cloudflare": "1.20.13",
+    "@sirathic/app": "workspace:*",
     "@sirathic/server": "workspace:*",
     "@trpc/client": "11.19.0",
     "ai": "7.0.154",

@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   env: { BUILT_AT: new Date().toISOString() },
   experimental: { optimizePackageImports: ["@hugeicons/core-free-icons"] },
-  transpilePackages: ["@sirathic/server"],
+  transpilePackages: ["@sirathic/app", "@sirathic/server"],
   headers: async () => [
     {
       source: "/c/:id",

@@ -9,7 +9,7 @@ import { Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
 import { type Project, useProjects } from "@/components/projects";
 import { QuestionCard, useFirstReply } from "@/components/questionCard";
-import type { BlobState } from "@/lib/blob/states";
+import type { BlobState } from "@sirathic/app/blob/states";
 import { useAuiState } from "@assistant-ui/react";
 import { currentToolName } from "@sirathic/server/messages";
 import { type FC, useEffect, useState } from "react";

@@ -8,7 +8,7 @@ import { useT } from "@/components/i18n";
 import { CONTACT } from "@/components/legalPage";
 import { Mark } from "@/components/logo";
 import { OpenAIIcon } from "@/components/openaiIcon";
-import { THEME_NAMES, THEMES, usePreferences } from "@/components/preferences";
+import { THEME_NAMES, usePreferences } from "@/components/preferences";
 import { useSessions } from "@/components/sessions";
 import { useSettings } from "@/components/settings";
 import {
@@ -48,6 +48,7 @@ import {
 import Link from "next/link";
 import { Dialog } from "radix-ui";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
+import { THEMES } from "@sirathic/app/preferences";
 import { z } from "zod";
 import { create } from "zustand";
 

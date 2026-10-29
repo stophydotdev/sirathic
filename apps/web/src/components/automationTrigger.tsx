@@ -1,7 +1,7 @@
 "use client";
 
 import { dayOf, monthNames, type Schedule, weekdayNames } from "@/components/automationText";
-import { type Draft, isoOf, todayIso } from "@/components/automationDraft";
+import { type Draft, isoOf, todayIso } from "@sirathic/app/automationDraft";
 import { type Translate, useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { TimePicker } from "@/components/timePicker";

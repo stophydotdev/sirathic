@@ -1,7 +1,7 @@
 "use client";
 
 import { AutomationEditor } from "@/components/automationEditor";
-import { blankDraft } from "@/components/automationDraft";
+import { blankDraft } from "@sirathic/app/automationDraft";
 import { BotAvatar } from "@/components/botAvatar";
 import { BotPickerPanel } from "@/components/botPicker";
 import { BotPlugins } from "@/components/botPlugins";

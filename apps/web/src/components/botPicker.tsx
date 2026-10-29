@@ -2,7 +2,7 @@
 
 import { BOT_TINTS, tintOf } from "@/components/botAvatar";
 import { useT } from "@/components/i18n";
-import { BODIES, bodyOf, pathOf } from "@/lib/blob/shape";
+import { BODIES, bodyOf, pathOf } from "@sirathic/app/blob/shape";
 import { cn } from "@/lib/utils";
 import { BOT_COLORS, BOT_BODIES } from "@sirathic/server/projects";
 import type { FC } from "react";
