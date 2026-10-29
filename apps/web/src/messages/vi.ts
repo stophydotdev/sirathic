@@ -724,4 +724,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} lượt xem",
+  "Use all sources": "Dùng tất cả nguồn",
 } satisfies Messages;

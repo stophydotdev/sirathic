@@ -716,4 +716,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "ការមើល {count}",
+  "Use all sources": "ប្រើប្រភពទាំងអស់",
 } satisfies Messages;

@@ -19,6 +19,7 @@ import {
 import { pageText } from "./compact";
 import { fenced, fencedText } from "./fence";
 import { searchAll, searchInput } from "./search";
+import type { SourceKind } from "../shared/sources";
 import { readVideo } from "./youtube";
 
 const PAGE_CHARS = 25_000;
@@ -104,7 +105,7 @@ const readPage = async (cite: Cite, url: string) => {
   };
 };
 
-export function sirathicTools(cite: Cite) {
+export function sirathicTools(cite: Cite, kinds?: SourceKind[]) {
   return {
     search_web: tool({
       description: `Searches the Quran, hadith, fatwas, fiqh books, the web and news for current and factual information, returning relevant results with titles, URLs and content snippets, numbered for citing. Use for questions about up-to-date or externally verified information. Works best with short, keyword-focused queries. Complex multi-step reasoning queries are not supported.
@@ -119,23 +120,25 @@ Best practices:
 
 If results are incomplete, conflicting, snippet-level, single-sided, or do not cover a distinct requested part, call search_web again with a focused query or use fetch_url before answering.`,
       inputSchema: searchInput,
-      execute: (input) => searchAll(cite, input),
+      execute: (input) => searchAll(cite, input, kinds),
       toModelOutput: ({ output }) => fenced({ type: "text", value: output.text || "No results." }),
     }),
-    get_verses: tool({
-      description: "Read Quran verses by surah and ayah range.",
-      inputSchema: quranGetInput,
-      execute: async (input) => {
-        const { verses, truncated } = await quranGet(input);
-        const { cited, sources } = numbered(cite, verses, verseSource);
-        return { verses: cited, truncated, sources };
-      },
-      toModelOutput: ({ output }) => ({
-        type: "json",
-        value: {
-          verses: output.verses.map(({ textAr: _shownByTheCard, ...verse }) => verse),
-          truncated: output.truncated,
+    ...((!kinds || kinds.includes("quran")) && {
+      get_verses: tool({
+        description: "Read Quran verses by surah and ayah range.",
+        inputSchema: quranGetInput,
+        execute: async (input) => {
+          const { verses, truncated } = await quranGet(input);
+          const { cited, sources } = numbered(cite, verses, verseSource);
+          return { verses: cited, truncated, sources };
         },
+        toModelOutput: ({ output }) => ({
+          type: "json",
+          value: {
+            verses: output.verses.map(({ textAr: _shownByTheCard, ...verse }) => verse),
+            truncated: output.truncated,
+          },
+        }),
       }),
     }),
     fetch_url: tool({

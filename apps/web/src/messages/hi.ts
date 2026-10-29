@@ -719,4 +719,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} बार देखा गया",
+  "Use all sources": "सभी स्रोतों का उपयोग करें",
 } satisfies Messages;

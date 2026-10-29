@@ -718,4 +718,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "බැලීම් {count}",
+  "Use all sources": "සියලු මූලාශ්‍ර භාවිත කරන්න",
 } satisfies Messages;

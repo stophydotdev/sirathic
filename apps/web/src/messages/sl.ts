@@ -727,4 +727,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} ogledov",
+  "Use all sources": "Uporabi vse vire",
 } satisfies Messages;

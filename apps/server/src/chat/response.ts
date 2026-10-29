@@ -62,6 +62,7 @@ import {
 } from "./skills/builtIn";
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
 import { relatedQuestions } from "./related";
+import type { SourceKind } from "../shared/sources";
 import {
   CLARIFYING,
   clarifyingQuestions,
@@ -200,6 +201,7 @@ export function chatResponse({
   bot,
   historyLimit,
   citedEarlier,
+  sourceKinds,
 }: {
   models: { model: LanguageModel; small: LanguageModel };
   turn: Turn;
@@ -223,6 +225,7 @@ export function chatResponse({
   bot?: Promise<BotScope | undefined>;
   historyLimit?: number;
   citedEarlier?: ChatMessage[];
+  sourceKinds?: SourceKind[];
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -236,7 +239,7 @@ export function chatResponse({
   let text = "";
   const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages);
-  const tools = sirathicTools(sources.add);
+  const tools = sirathicTools(sources.add, sourceKinds);
   const asked = messages.findLast((message) => message.role === "user");
   const askedText =
     asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "";
@@ -302,7 +305,7 @@ export function chatResponse({
       };
       const available = {
         ...tools,
-        ...stophyTools(sources.add),
+        ...((!sourceKinds || sourceKinds.includes("web")) && stophyTools(sources.add)),
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),

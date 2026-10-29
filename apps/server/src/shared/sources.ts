@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const sourceKind = z.enum(["quran", "hadith", "fatwa", "book", "web"]);
+
+export type SourceKind = z.infer<typeof sourceKind>;
+
 export const sourceVideo = z.object({
   channel: z.string(),
   thumbnail: z.string().optional(),

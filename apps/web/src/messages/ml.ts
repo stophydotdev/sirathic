@@ -724,4 +724,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} കാഴ്ചകൾ",
+  "Use all sources": "എല്ലാ ഉറവിടങ്ങളും ഉപയോഗിക്കുക",
 } satisfies Messages;

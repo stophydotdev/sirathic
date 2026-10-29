@@ -730,4 +730,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} görüntüleme",
+  "Use all sources": "Tüm kaynakları kullan",
 } satisfies Messages;

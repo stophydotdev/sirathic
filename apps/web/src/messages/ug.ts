@@ -732,4 +732,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} قېتىم كۆرۈلگەن",
+  "Use all sources": "بارلىق مەنبەلەرنى ئىشلىتىش",
 } satisfies Messages;

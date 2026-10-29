@@ -735,4 +735,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} marta ko‘rilgan",
+  "Use all sources": "Barcha manbalardan foydalanish",
 } satisfies Messages;

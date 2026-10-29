@@ -22,6 +22,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuRadioGroup,
+  DropdownMenuCheckboxItem,
   DropdownMenuRadioItem,
   DropdownMenuSub,
   DropdownMenuSubContent,
@@ -46,11 +47,14 @@ import {
   Add01Icon,
   ArrowUp02Icon,
   Attachment01Icon,
+  Books01Icon,
   Cancel01Icon,
   File01Icon,
   Search01Icon,
   Telescope01Icon,
 } from "@hugeicons/core-free-icons";
+import { type SourceKind, sourceKind } from "@sirathic/server/sources";
+import { KIND_NAMES } from "@/components/sources";
 import Image from "next/image";
 import { type FC, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
@@ -247,6 +251,7 @@ export const Composer: FC<{
             )}
           >
             <AddMenu side={menuSide} modes={!bot} />
+            {!bot && <SourcesChip />}
           </div>
 
           <div className={cn("ms-auto flex items-center gap-1", !compact && "pe-3 pt-2.5 pb-3")}>
@@ -374,6 +379,7 @@ const AddMenu: FC<{ side: "top" | "bottom"; modes: boolean }> = ({ side, modes }
               </DropdownMenuSubContent>
             </DropdownMenuSub>
           )}
+          {modes && <SourcesMenu />}
           <DropdownMenuItem onSelect={() => upload.current?.click()} className={menuItem}>
             <HugeiconsIcon icon={Attachment01Icon} className="size-4" />
             {t("Upload a file")}
@@ -382,6 +388,67 @@ const AddMenu: FC<{ side: "top" | "bottom"; modes: boolean }> = ({ side, modes }
         </DropdownMenuContent>
       </DropdownMenu>
     </>
+  );
+};
+
+const SourcesMenu: FC = () => {
+  const sources = useChatOptions((s) => s.sources);
+  const setSources = useChatOptions((s) => s.setSources);
+  const t = useT();
+  const on = sources ?? sourceKind.options;
+
+  const toggle = (kind: SourceKind, checked: boolean) => {
+    const next = sourceKind.options.filter((option) =>
+      option === kind ? checked : on.includes(option),
+    );
+    setSources(next.length === sourceKind.options.length ? undefined : next);
+  };
+
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger className={menuItem}>
+        <HugeiconsIcon icon={Books01Icon} className="size-4" />
+        <span className="flex-1">{t("Sources")}</span>
+        {sources && (
+          <span className="text-muted-foreground text-xs">
+            {t("{count} sources", { count: sources.length })}
+          </span>
+        )}
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent className={cn(menuBox, "w-48")}>
+        {sourceKind.options.map((kind) => (
+          <DropdownMenuCheckboxItem
+            key={kind}
+            checked={on.includes(kind)}
+            disabled={on.length === 1 && on.includes(kind)}
+            onCheckedChange={(checked) => toggle(kind, checked === true)}
+            onSelect={(event) => event.preventDefault()}
+          >
+            {t(KIND_NAMES[kind])}
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
+  );
+};
+
+const SourcesChip: FC = () => {
+  const sources = useChatOptions((s) => s.sources);
+  const setSources = useChatOptions((s) => s.setSources);
+  const t = useT();
+  if (!sources) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={() => setSources(undefined)}
+      aria-label={t("Use all sources")}
+      title={t("Use all sources")}
+      className="bg-foreground/8 text-foreground/80 hover:bg-foreground/12 focus-visible:ring-ring flex h-7 shrink-0 items-center gap-1 rounded-full ps-2.5 pe-2 text-sm outline-none focus-visible:ring-2"
+    >
+      {sources.length === 1 ? t("1 source") : t("{count} sources", { count: sources.length })}
+      <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
+    </button>
   );
 };
 

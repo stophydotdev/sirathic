@@ -731,4 +731,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} kali ditonton",
+  "Use all sources": "Gunakan semua sumber",
 } satisfies Messages;

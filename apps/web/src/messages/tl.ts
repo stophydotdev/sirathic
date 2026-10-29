@@ -734,4 +734,5 @@ export default {
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
   "{count} views": "{count} na panonood",
+  "Use all sources": "Gamitin ang lahat ng sanggunian",
 } satisfies Messages;

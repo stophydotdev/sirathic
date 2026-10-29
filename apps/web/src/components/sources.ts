@@ -1,7 +1,7 @@
 import type { ThreadMessage } from "@assistant-ui/react";
 import { createContext } from "react";
 import { z } from "zod";
-import { type Source, source } from "@sirathic/server/sources";
+import { type Source, type SourceKind, source, sourceKind } from "@sirathic/server/sources";
 import type { MessageKey } from "@/messages/en";
 
 const sourced = z.object({ sources: z.array(source) });
@@ -30,9 +30,6 @@ export function sourcesOf(content: ThreadMessage["content"]) {
 }
 
 export const SourcesContext = createContext<ReadonlyMap<string, Source>>(new Map());
-
-const SOURCE_KINDS = ["quran", "hadith", "fatwa", "book", "web"] as const;
-export type SourceKind = (typeof SOURCE_KINDS)[number];
 
 const SITES = new Map(
   Object.entries({
@@ -103,10 +100,12 @@ export const KIND_NAMES = {
 } satisfies Record<SourceKind, MessageKey>;
 
 export const groupsOf = (sources: readonly Source[]) =>
-  SOURCE_KINDS.map((kind) => ({
-    kind,
-    sources: sources.filter((found) => kindOf(found.url) === kind),
-  })).filter((group) => group.sources.length > 0);
+  sourceKind.options
+    .map((kind) => ({
+      kind,
+      sources: sources.filter((found) => kindOf(found.url) === kind),
+    }))
+    .filter((group) => group.sources.length > 0);
 
 export const faviconUrl = (url: string) =>
   `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(URL.parse(url)?.hostname ?? url)}`;
