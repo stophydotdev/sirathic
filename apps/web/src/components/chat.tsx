@@ -122,8 +122,8 @@ const refreshSaved = () => {
 const SAVED_WAIT_MS = 3000;
 const SAVED_WAITS = 100;
 
-export const savedChat = (id: string) =>
-  api.sessions.get.query({ id }).then(async ({ messages, answering: unfinished }) => ({
+export const savedChat = (id: string, peek?: true) =>
+  api.sessions.get.query({ id, peek }).then(async ({ messages, answering: unfinished }) => ({
     unfinished,
     messages: await validateUIMessages<ChatMessage>({
       messages,
@@ -131,6 +131,29 @@ export const savedChat = (id: string) =>
       metadataSchema: messageMetadata,
     }),
   }));
+
+const prefetched = new Map<string, Promise<ChatMessage[] | undefined>>();
+
+const listed = (id: string) =>
+  useSessions.getState().sessions?.find((session) => session.id === id);
+
+export const prefetchChat = (id: string) => {
+  if (!listed(id) || live.has(id) || prefetched.has(id)) return;
+  prefetched.set(
+    id,
+    savedChat(id, true).then(
+      (found) => found.messages,
+      () => undefined,
+    ),
+  );
+};
+
+export const keptMessages = (id: string) => (listed(id) ? live.get(id)?.messages : undefined);
+
+export const prefetchedMessages = (id: string) => (listed(id) ? prefetched.get(id) : undefined);
+
+export const outdated = (kept: readonly ChatMessage[], saved: readonly ChatMessage[]) =>
+  kept.length !== saved.length || answerText(kept) !== answerText(saved);
 
 const answerText = (messages: readonly ChatMessage[]) => {
   const last = messages.at(-1);

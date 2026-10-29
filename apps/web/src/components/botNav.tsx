@@ -2,6 +2,7 @@
 
 import { useAccount } from "@/components/account";
 import { BotAvatar } from "@/components/botAvatar";
+import { prefetchChat } from "@/components/chat";
 import { botGroups, botLabel, SIDEBAR_LIMIT } from "@sirathic/app/botGroups";
 import { BotMenu } from "@/components/botMenu";
 import { BotSwitcher } from "@/components/botSwitcher";
@@ -43,6 +44,8 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
       <Link
         href={href}
         onClick={onDone}
+        onPointerEnter={() => prefetchChat(bot.id)}
+        onFocus={() => prefetchChat(bot.id)}
         className="flex min-w-0 flex-1 items-center gap-2.5 px-2.5 py-2"
       >
         <span className="relative shrink-0">

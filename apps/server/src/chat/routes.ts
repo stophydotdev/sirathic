@@ -32,13 +32,15 @@ export const chatRoutes = {
     list: signedIn
       .input(z.object({ query: z.string().trim().optional() }).optional())
       .query(({ ctx, input }) => listSessions(ctx.owner, input?.query)),
-    get: signedIn.input(session).query(async ({ ctx, input }) => {
-      const messages = await openSession(input.id, ctx.owner);
-      if (!messages) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "no such session" });
-      }
-      return { messages, answering: isAnswering(ctx.owner, input.id) };
-    }),
+    get: signedIn
+      .input(session.extend({ peek: z.boolean().optional() }))
+      .query(async ({ ctx, input }) => {
+        const messages = await openSession(input.id, ctx.owner, !input.peek);
+        if (!messages) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "no such session" });
+        }
+        return { messages, answering: isAnswering(ctx.owner, input.id) };
+      }),
     stop: signedIn.input(session).mutation(({ ctx, input }) => {
       stopAnswer(ctx.owner, input.id);
     }),

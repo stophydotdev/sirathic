@@ -4,6 +4,7 @@ import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
 import { Mark } from "@/components/logo";
+import { useNewChatClick } from "@/components/newChat";
 import { UserText } from "@/components/mentions";
 import { useOpenSources } from "@/components/openSources";
 import { BotTurn } from "@/components/botChat";
@@ -38,6 +39,7 @@ import {
   TextAlignLeftIcon,
   Tick02Icon,
 } from "@hugeicons/core-free-icons";
+import Link from "next/link";
 import { type FC, memo, type ReactNode, useEffect } from "react";
 import { z } from "zod";
 import { Reply } from "@/components/answer";
@@ -88,6 +90,7 @@ const TurnRow: FC<{ children: ReactNode; layout?: "column" | "edge" }> = ({
 const TopBar: FC = () => {
   const bot = useBot();
   const t = useT();
+  const newChatClick = useNewChatClick();
 
   return (
     <div
@@ -101,9 +104,14 @@ const TopBar: FC = () => {
       </div>
       <TurnRow layout={bot ? "edge" : "column"}>
         <div className="flex h-14 items-center gap-4">
-          <a href="/" aria-label={t("New chat")} className={cn(iconButton, "lg:hidden")}>
+          <Link
+            href="/"
+            onClick={newChatClick}
+            aria-label={t("New chat")}
+            className={cn(iconButton, "lg:hidden")}
+          >
             <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
-          </a>
+          </Link>
           <BotTitle />
           {!bot && <ViewTabs />}
         </div>
