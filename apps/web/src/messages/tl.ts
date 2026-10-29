@@ -751,4 +751,5 @@ export default {
   "Previous source": "Nakaraang sanggunian",
   "Next source": "Susunod na sanggunian",
   Queued: "Nakapila",
+  "Your question sends by itself then.": "Kusa nang maipapadala ang tanong mo sa oras na iyon.",
 } satisfies Messages;

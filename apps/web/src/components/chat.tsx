@@ -1,6 +1,6 @@
 "use client";
 
-import { chosenModel } from "@/components/account";
+import { chosenModel, currentModel } from "@/components/account";
 import { notify } from "@/components/automationAlerts";
 import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
@@ -31,6 +31,7 @@ import {
 } from "ai";
 import { createContext, type FC, useContext, useEffect, useState } from "react";
 import { z } from "zod";
+import { create } from "zustand";
 
 const dataUrlOf = (file: File) =>
   new Promise<string>((resolve, reject) => {
@@ -203,6 +204,32 @@ const waitForSaved = async (chat: LiveChat<ChatMessage>, waitsLeft = SAVED_WAITS
   }
 };
 
+const RESUME_GRACE_MS = 5000;
+
+const useLimitResume = create<Record<string, number>>(() => ({}));
+
+export const useResumeAt = (chatId: string | undefined) =>
+  useLimitResume((s) => (chatId === undefined ? undefined : s[chatId]));
+
+const resumeAfterLimit = async (chat: LiveChat<ChatMessage>) => {
+  if (currentModel()?.maker !== "sirathic") return;
+  const usage = await api.account.usage.query().catch(() => undefined);
+  const resetAt = usage?.noor.findLast((window) => window.usedPercent >= 100)?.resetAt;
+  if (!resetAt) return;
+  const asked = lastAsked(chat.messages);
+  useLimitResume.setState({ [chat.id]: resetAt });
+  setTimeout(
+    () => {
+      useLimitResume.setState(
+        (waiting) => Object.fromEntries(Object.entries(waiting).filter(([id]) => id !== chat.id)),
+        true,
+      );
+      if (!answering(chat) && lastAsked(chat.messages) === asked) void chat.regenerate();
+    },
+    resetAt - Date.now() + RESUME_GRACE_MS,
+  );
+};
+
 const NOTE_CHARS = 140;
 
 const announceAnswer = (id: string, path: string, message: ChatMessage) => {
@@ -221,7 +248,7 @@ const liveChat = (
   unfinished: boolean,
 ) => {
   const found = live.get(id);
-  if (found && answering(found)) return found;
+  if (found && (answering(found) || useLimitResume.getState()[id] !== undefined)) return found;
   const created = new LiveChat<ChatMessage>({
     id,
     messages,
@@ -242,7 +269,10 @@ const liveChat = (
         void created.sendMessage({ text: next, metadata: { createdAt: Date.now() } });
       }
     },
-    onError: () => void waitForSaved(created),
+    onError: () => {
+      void waitForSaved(created);
+      void resumeAfterLimit(created);
+    },
   });
   const stopHere = created.stop;
   created.stop = async () => {

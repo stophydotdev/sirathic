@@ -748,4 +748,5 @@ export default {
   "Previous source": "Sumber sebelumnya",
   "Next source": "Sumber berikutnya",
   Queued: "Dalam antrean",
+  "Your question sends by itself then.": "Pertanyaan Anda akan terkirim sendiri saat itu.",
 } satisfies Messages;

@@ -742,4 +742,5 @@ export default {
   "Previous source": "منبع قبلی",
   "Next source": "منبع بعدی",
   Queued: "در صف",
+  "Your question sends by itself then.": "سؤال شما آن موقع خودکار فرستاده می‌شود.",
 } satisfies Messages;

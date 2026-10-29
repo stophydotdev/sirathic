@@ -749,4 +749,5 @@ export default {
   "Previous source": "Əvvəlki mənbə",
   "Next source": "Növbəti mənbə",
   Queued: "Növbədə",
+  "Your question sends by itself then.": "Sualınız o zaman özü göndəriləcək.",
 } satisfies Messages;

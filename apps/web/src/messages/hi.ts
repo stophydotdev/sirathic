@@ -736,4 +736,5 @@ export default {
   "Previous source": "पिछला स्रोत",
   "Next source": "अगला स्रोत",
   Queued: "कतार में",
+  "Your question sends by itself then.": "तब आपका सवाल अपने आप भेज दिया जाएगा।",
 } satisfies Messages;

@@ -749,4 +749,5 @@ export default {
   "Previous source": "ئالدىنقى مەنبە",
   "Next source": "كېيىنكى مەنبە",
   Queued: "ئۆچرەتتە",
+  "Your question sends by itself then.": "شۇ چاغدا سوئالىڭىز ئۆزلۈكىدىن يوللىنىدۇ.",
 } satisfies Messages;

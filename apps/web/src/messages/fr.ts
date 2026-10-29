@@ -753,4 +753,5 @@ export default {
   "Previous source": "Source précédente",
   "Next source": "Source suivante",
   Queued: "En attente",
+  "Your question sends by itself then.": "Votre question partira toute seule à ce moment-là.",
 } satisfies Messages;

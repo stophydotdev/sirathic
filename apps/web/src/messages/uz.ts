@@ -752,4 +752,5 @@ export default {
   "Previous source": "Oldingi manba",
   "Next source": "Keyingi manba",
   Queued: "Навбатда",
+  "Your question sends by itself then.": "Ўшанда саволингиз ўзи юборилади.",
 } satisfies Messages;

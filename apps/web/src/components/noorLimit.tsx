@@ -1,6 +1,7 @@
 "use client";
 
 import { useAccount } from "@/components/account";
+import { useChatState, useResumeAt } from "@/components/chat";
 import { useLocale, useT } from "@/components/i18n";
 import { useSettings } from "@/components/settings";
 import { resetTime, type Usage, WEEK_SECONDS } from "@/components/settingsUsage";
@@ -17,6 +18,7 @@ export const NoorLimitLine: FC<{ running: boolean }> = ({ running }) => {
   const ask = useSignIn((s) => s.ask);
   const locale = useLocale();
   const t = useT();
+  const resuming = useResumeAt(useChatState()?.id) !== undefined;
 
   useEffect(() => {
     if (running) return;
@@ -26,9 +28,9 @@ export const NoorLimitLine: FC<{ running: boolean }> = ({ running }) => {
     );
   }, [running]);
 
-  const fullest = windows.findLast(
-    (window) => window.usedPercent >= WARN_PERCENT && window.resetAt !== null,
-  );
+  const fullest =
+    windows.findLast((window) => window.usedPercent >= 100 && window.resetAt !== null) ??
+    windows.findLast((window) => window.usedPercent >= WARN_PERCENT && window.resetAt !== null);
   if (!fullest?.resetAt) return null;
   const time = resetTime(fullest.resetAt, locale);
   const week = fullest.seconds === WEEK_SECONDS;
@@ -46,6 +48,7 @@ export const NoorLimitLine: FC<{ running: boolean }> = ({ running }) => {
     <div className="text-muted-foreground flex flex-wrap items-baseline gap-x-2 px-3 pb-2 text-xs">
       <span>
         {line}
+        {percent >= 100 && resuming && ` ${t("Your question sends by itself then.")}`}
         {wayOut && ` ${t("Sign in with ChatGPT to keep asking with GPT.")}`}
       </span>
       {wayOut && (

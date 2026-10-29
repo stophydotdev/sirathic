@@ -743,4 +743,5 @@ export default {
   "Previous source": "前の出典",
   "Next source": "次の出典",
   Queued: "送信待ち",
+  "Your question sends by itself then.": "その時に質問は自動で送信されます。",
 } satisfies Messages;

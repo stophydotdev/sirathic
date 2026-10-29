@@ -729,4 +729,5 @@ export default {
   "Previous source": "上一个来源",
   "Next source": "下一个来源",
   Queued: "排队中",
+  "Your question sends by itself then.": "届时你的问题会自动发送。",
 } satisfies Messages;

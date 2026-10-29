@@ -741,4 +741,5 @@ export default {
   "Previous source": "Nguồn trước",
   "Next source": "Nguồn tiếp theo",
   Queued: "Đang chờ",
+  "Your question sends by itself then.": "Khi đó câu hỏi của bạn sẽ tự gửi đi.",
 } satisfies Messages;

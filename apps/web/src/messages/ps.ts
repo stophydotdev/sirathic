@@ -743,4 +743,5 @@ export default {
   "Previous source": "مخکینۍ سرچینه",
   "Next source": "بله سرچینه",
   Queued: "په کتار کې",
+  "Your question sends by itself then.": "هغه وخت ستاسو پوښتنه پخپله لیږل کېږي.",
 } satisfies Messages;

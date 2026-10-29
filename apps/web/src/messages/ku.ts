@@ -747,4 +747,5 @@ export default {
   "Previous source": "سەرچاوەی پێشوو",
   "Next source": "سەرچاوەی دواتر",
   Queued: "لە ڕیزدا",
+  "Your question sends by itself then.": "ئەو کاتە پرسیارەکەت خۆی دەنێردرێت.",
 } satisfies Messages;

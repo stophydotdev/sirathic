@@ -743,4 +743,5 @@ export default {
   "Previous source": "Iwdi adiiɗi",
   "Next source": "Iwdi garooɗi",
   Queued: "Ina fadi",
+  "Your question sends by itself then.": "Naamnde maa ina neldee hoore mum tuma ndeen.",
 } satisfies Messages;

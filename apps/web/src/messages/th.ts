@@ -729,4 +729,5 @@ export default {
   "Previous source": "แหล่งข้อมูลก่อนหน้า",
   "Next source": "แหล่งข้อมูลถัดไป",
   Queued: "อยู่ในคิว",
+  "Your question sends by itself then.": "เมื่อถึงตอนนั้นคำถามของคุณจะถูกส่งเอง",
 } satisfies Messages;

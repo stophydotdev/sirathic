@@ -748,4 +748,5 @@ export default {
   "Previous source": "Fonte precedente",
   "Next source": "Fonte successiva",
   Queued: "In coda",
+  "Your question sends by itself then.": "La tua domanda partirà da sola in quel momento.",
 } satisfies Messages;

@@ -741,4 +741,5 @@ export default {
   "Previous source": "മുമ്പത്തെ ഉറവിടം",
   "Next source": "അടുത്ത ഉറവിടം",
   Queued: "ക്യൂവിൽ",
+  "Your question sends by itself then.": "അപ്പോൾ നിങ്ങളുടെ ചോദ്യം സ്വയം അയയ്ക്കും.",
 } satisfies Messages;
