@@ -61,7 +61,13 @@ import {
   skillsFor,
 } from "./skills/builtIn";
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
-import { CLARIFYING, clarifyingQuestions, sirathicTools } from "./tools";
+import {
+  CLARIFYING,
+  clarifyingQuestions,
+  SEND_FEEDBACK,
+  sendFeedback,
+  sirathicTools,
+} from "./tools";
 
 const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
@@ -300,6 +306,7 @@ export function chatResponse({
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
         ...(owner !== undefined && !unattended && skillTools(owner)),
+        ...(owner !== undefined && !unattended && { [SEND_FEEDBACK]: sendFeedback }),
         ...(owner !== undefined &&
           !unattended &&
           pluginTools(owner, inBot ? `/bot/${inBot.id}` : `/c/${turn.sessionId}`)),
@@ -357,7 +364,7 @@ export function chatResponse({
         ...(mode === "research" ? RESEARCH_OPENS : []),
         ...openedBy(askedText, plugins),
       ];
-      const writes = unattended ? [] : writingTools(connectors.tools);
+      const writes = unattended ? [] : [...writingTools(connectors.tools), SEND_FEEDBACK];
       const agent = answerAgent({
         model: models.model,
         tools: offered,
