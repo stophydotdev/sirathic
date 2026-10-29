@@ -6,10 +6,8 @@ import { useT } from "@/components/i18n";
 import "katex/dist/katex.min.css";
 
 import {
-  type CodeHeaderProps,
   MarkdownTextPrimitive,
   memoizeMarkdownComponents,
-  type SyntaxHighlighterProps,
   useIsMarkdownCodeBlock,
 } from "@assistant-ui/react-markdown";
 import type { Element } from "hast";
@@ -17,38 +15,22 @@ import { HoverCard } from "radix-ui";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import {
-  type ComponentProps,
-  type FC,
-  lazy,
-  memo,
-  type ReactNode,
-  Suspense,
-  useContext,
-  useState,
-} from "react";
+import { type ComponentProps, type FC, memo, type ReactNode, useContext, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-  Copy01Icon,
-  Tick02Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { z } from "zod";
 
-import { TooltipIconButton } from "@/components/tooltipIconButton";
 import {
   hidePendingCitation,
   rehypeBareCitations,
   rehypeCitations,
   rehypeVerses,
 } from "@/components/citations";
-import { Swap } from "@/components/swap";
 import { Favicon } from "@/components/favicon";
+import { CodeBlock } from "@/components/markdownCode";
 import { useVideoLine } from "@/components/videoLine";
 import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
-import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 
@@ -79,44 +61,6 @@ const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => 
 );
 
 export const MarkdownText = memo(MarkdownTextImpl);
-
-const CodeHighlighter = lazy(() => import("@/components/codeHighlighter"));
-
-const SyntaxHighlighter: FC<SyntaxHighlighterProps> = (props) => (
-  <Suspense
-    fallback={
-      <pre className="text-[13px] leading-relaxed">
-        <code>{props.code.trimEnd()}</code>
-      </pre>
-    }
-  >
-    <CodeHighlighter {...props} />
-  </Suspense>
-);
-
-const CodeHeader: FC<CodeHeaderProps> = ({ language, code }) => {
-  const t = useT();
-  const { isCopied, copyToClipboard } = useCopyToClipboard();
-  const onCopy = () => {
-    if (!code || isCopied) return;
-    copyToClipboard(code);
-  };
-
-  return (
-    <div className="aui-code-header-root border-border/50 bg-muted/50 mt-3 flex items-center justify-between rounded-t-xl border border-b-0 px-3.5 py-1.5 text-xs">
-      <span className="aui-code-header-language text-muted-foreground font-medium lowercase">
-        {language}
-      </span>
-      <TooltipIconButton tooltip={t("Copy")} onClick={onCopy}>
-        <Swap
-          swapped={isCopied}
-          from={<HugeiconsIcon icon={Copy01Icon} />}
-          to={<HugeiconsIcon icon={Tick02Icon} />}
-        />
-      </TooltipIconButton>
-    </div>
-  );
-};
 
 const citedUrls = z.array(z.string()).min(1);
 
@@ -372,8 +316,6 @@ const memoized = memoizeMarkdownComponents({
       />
     );
   },
-  CodeHeader,
-  SyntaxHighlighter,
 });
 
 const verseUrl = z.string();
@@ -383,7 +325,12 @@ const Figure: FC<{ node?: Element; children?: ReactNode }> = ({ node, children }
   return url ? <InlineVerse url={url} fallback={children} /> : null;
 };
 
-const components = { ...memoized, a: Anchor, figure: Figure };
+const components = {
+  ...memoized,
+  a: Anchor,
+  figure: Figure,
+  SyntaxHighlighter: CodeBlock,
+};
 
 const BareAnchor: FC<ComponentProps<"a"> & { node?: Element }> = (props) =>
   citedUrls.safeParse(props.node?.properties.dataUrls).success ? null : <Anchor {...props} />;

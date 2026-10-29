@@ -13,6 +13,7 @@ export const MESSAGES = [
   "Teal is the accent, for links and highlights. Ink and Paper are the page colors of the dark and light themes. On Ink, use the lighter teal so it stays easy to read.",
   "Copy",
   "Copied",
+  "Wrap lines",
   "Also on {first} and {second}.",
   "Free.",
   "Open Sirathic",

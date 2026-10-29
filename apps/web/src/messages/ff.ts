@@ -19,6 +19,7 @@ export default {
     "Teal ko nooro mawɗo, ngam jokkorɗe e ko ɓeydaa yiyeede. Ndaha e Kayitaaru ko noorooji hello dolnde niɓɓinde e ndaygiinde. Dow Ndaha, huutoro teal ɓuuɗo laaɓde ngam no jangugol yaawa.",
   Copy: "Natto",
   Copied: "Nattaama",
+  "Wrap lines": "Taƴ diidi juuɗi",
   Hadith: "Hadiis",
   Quran: "Alkur'aana",
   Fatwas: "Fatwaaji",

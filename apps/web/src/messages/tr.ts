@@ -20,6 +20,7 @@ export default {
     "Camgöbeği, bağlantılar ve vurgular için kullanılan vurgu rengidir. Mürekkep ve Kâğıt, koyu ve açık temaların sayfa renkleridir. Mürekkep üzerinde, kolay okunsun diye açık camgöbeğini kullanın.",
   Copy: "Kopyala",
   Copied: "Kopyalandı",
+  "Wrap lines": "Satırları kaydır",
   Hadith: "Hadis",
   Quran: "Kur'an",
   Fatwas: "Fetvalar",

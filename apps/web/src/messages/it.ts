@@ -19,6 +19,7 @@ export default {
     "Il verde acqua è il colore d'accento, per link ed evidenziazioni. Inchiostro e Carta sono i colori di sfondo dei temi scuro e chiaro. Su Inchiostro usa il verde acqua più chiaro, così resta leggibile.",
   Copy: "Copia",
   Copied: "Copiato",
+  "Wrap lines": "A capo automatico",
   Hadith: "Hadith",
   Quran: "Corano",
   Fatwas: "Fatwa",

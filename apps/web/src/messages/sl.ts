@@ -19,6 +19,7 @@ export default {
     "Turkizna je poudarna barva, za povezave in poudarke. Črnilo in Papir sta barvi ozadja temne in svetle teme. Na Črnilu uporabite svetlejšo turkizno, da ostane besedilo berljivo.",
   Copy: "Kopiraj",
   Copied: "Kopirano",
+  "Wrap lines": "Prelomi vrstice",
   "Also on {first} and {second}.": "Na voljo tudi za {first} in {second}.",
   "Free.": "Brezplačno.",
   "Open Sirathic": "Odpri Sirathic",

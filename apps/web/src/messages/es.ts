@@ -19,6 +19,7 @@ export default {
     "El verde azulado es el color de acento, para enlaces y resaltados. Tinta y Papel son los fondos de los temas oscuro y claro. Sobre Tinta, usa el verde azulado claro para que se lea bien.",
   Copy: "Copiar",
   Copied: "Copiado",
+  "Wrap lines": "Ajustar líneas",
   Hadith: "Hadiz",
   Quran: "Corán",
   Fatwas: "Fetuas",

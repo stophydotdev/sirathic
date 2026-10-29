@@ -19,6 +19,7 @@ export default {
     "Xanh mòng két là màu nhấn cho liên kết và phần nổi bật. Mực và Giấy là màu nền của giao diện tối và sáng. Trên nền Mực, hãy dùng xanh mòng két nhạt hơn để dễ đọc.",
   Copy: "Sao chép",
   Copied: "Đã sao chép",
+  "Wrap lines": "Ngắt dòng",
   Hadith: "Hadith",
   Quran: "Qur'an",
   Fatwas: "Fatwa",

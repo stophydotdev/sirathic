@@ -19,6 +19,7 @@ export default {
     "Hijau toska adalah warna aksen untuk tautan dan sorotan. Tinta dan Kertas adalah warna halaman tema gelap dan terang. Di atas Tinta, gunakan hijau toska yang lebih terang agar tetap mudah dibaca.",
   Copy: "Salin",
   Copied: "Disalin",
+  "Wrap lines": "Bungkus baris",
   Hadith: "Hadis",
   Quran: "Al-Qur'an",
   Fatwas: "Fatwa",

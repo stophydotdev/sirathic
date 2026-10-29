@@ -19,6 +19,7 @@ export default {
     "Kijani-buluu ni rangi ya msisitizo, kwa viungo na vitu vinavyoangaziwa. Wino na Karatasi ni rangi za ukurasa za mandhari ya giza na ya mwanga. Kwenye Wino, tumia kijani-buluu chepesi zaidi ili kiendelee kusomeka kwa urahisi.",
   Copy: "Nakili",
   Copied: "Imenakiliwa",
+  "Wrap lines": "Kunja mistari",
   "Also on {first} and {second}.": "Pia kwenye {first} na {second}.",
   "Free.": "Bila malipo.",
   "Open Sirathic": "Fungua Sirathic",
