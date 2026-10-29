@@ -421,6 +421,7 @@ export const users = pgTable("users", {
   plan: text(),
   accountId: text(),
   tokens: text(),
+  staff: boolean().notNull().default(false),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp({ withTimezone: true })
     .notNull()
