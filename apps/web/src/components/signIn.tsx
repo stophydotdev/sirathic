@@ -47,6 +47,7 @@ import Link from "next/link";
 import { Dialog } from "radix-ui";
 import { type FC, type ReactNode, useRef, useState } from "react";
 import { THEMES } from "@sirathic/app/preferences";
+import { landingHeaders } from "@/lib/visit";
 import { z } from "zod";
 import { create } from "zustand";
 
@@ -95,7 +96,7 @@ const continueWith = async (provider: "google" | "github", draft: string) => {
   const back = `${location.pathname}${location.search}`;
   const { url } = await fetch("/api/auth/sign-in/social", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...landingHeaders() },
     body: JSON.stringify({
       provider,
       callbackURL: back,

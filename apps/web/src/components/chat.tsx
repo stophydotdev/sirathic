@@ -10,14 +10,10 @@ import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";
 import { uploadToLibrary } from "@/components/libraryUpload";
 import { api } from "@/lib/trpc";
+import { deviceOf } from "@/lib/visit";
 import { TRPCClientError } from "@trpc/client";
 import { fileUrl } from "@sirathic/server/files";
-import {
-  type ChatMessage,
-  chatData,
-  type Device,
-  messageMetadata,
-} from "@sirathic/server/messages";
+import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
 import { Chat as LiveChat, useChat } from "@ai-sdk/react";
 import {
   type AttachmentAdapter,
@@ -87,11 +83,6 @@ const attachments = new CompositeAttachmentAdapter([
   new SimpleTextAttachmentAdapter(),
   storedAttachments("application/pdf", "pdf"),
 ]);
-
-const deviceOf = (): Device => {
-  if (!matchMedia("(pointer: coarse)").matches) return "desktop";
-  return Math.min(screen.width, screen.height) < 600 ? "phone" : "tablet";
-};
 
 const transportIn = (projectId: string | undefined) =>
   new DefaultChatTransport<ChatMessage>({

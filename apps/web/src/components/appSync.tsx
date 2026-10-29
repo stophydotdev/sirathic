@@ -3,12 +3,21 @@
 import { useAccount } from "@/components/account";
 import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
+import { api } from "@/lib/trpc";
+import { deviceOf, rememberLanding } from "@/lib/visit";
 import { useEffect } from "react";
 
 export const AppSync = () => {
   useEffect(() => {
+    rememberLanding();
     const load = () => {
-      void useAccount.getState().refresh();
+      void useAccount
+        .getState()
+        .refresh()
+        .then(() => {
+          if (!useAccount.getState().status?.signedIn) return;
+          void api.events.opened.mutate({ device: deviceOf() }).catch(() => undefined);
+        });
       void useSessions.getState().refresh();
       void useProjects.getState().refresh();
     };

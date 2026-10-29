@@ -1,9 +1,12 @@
+import { countUp } from "@sirathic/core/cache";
 import { imageSearch } from "@sirathic/core/tools/imageSearch";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { reviewBot } from "../bots/review";
+import { device } from "../shared/messages";
 import { signedIn, t } from "../trpc";
 import { isAnswering, stopAnswer } from "./answers";
+import { appOf, clientOf } from "./client";
 import { browserEvent, track } from "./events";
 import {
   deleteAllSessions,
@@ -20,6 +23,8 @@ import {
 } from "./sessions";
 
 const session = z.object({ id: sessionId });
+
+const TWO_DAYS = 2 * 24 * 60 * 60;
 
 export const chatRoutes = {
   sessions: t.router({
@@ -74,5 +79,18 @@ export const chatRoutes = {
   }),
   events: t.router({
     record: signedIn.input(browserEvent).mutation(({ ctx, input }) => track(input, ctx.owner)),
+    opened: signedIn
+      .input(z.object({ device: device.optional() }))
+      .mutation(async ({ ctx, input }) => {
+        const today = new Date().toISOString().slice(0, 10);
+        if ((await countUp(`app-opened:${today}:${ctx.owner}`, TWO_DAYS)) > 1) return;
+        track(
+          {
+            name: "app.opened",
+            props: { app: appOf(ctx.headers), device: input.device, ...clientOf(ctx.headers) },
+          },
+          ctx.owner,
+        );
+      }),
   }),
 };

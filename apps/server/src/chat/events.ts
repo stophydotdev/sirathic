@@ -112,6 +112,7 @@ export type Event =
       props: { outcome: "answered" | "skipped" | "signedOut" | "failed"; ms: number };
     }
   | { name: "bot.created"; props: Record<never, never> }
+  | { name: "app.opened"; props: { app: "web" | "desktop"; device?: Device } & Client }
   | { name: "limit.hit"; props: { window: "5h" | "week" } }
   | z.infer<typeof browserEvent>;
 

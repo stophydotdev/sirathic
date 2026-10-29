@@ -354,6 +354,19 @@ test("the country is kept only as a two-letter code", () => {
   ).toEqual(["SI", undefined, undefined, undefined]);
 });
 
+test("where someone came from is kept only as a site name or a short tag", () => {
+  expect(
+    [
+      "news.ycombinator.com",
+      "X.com",
+      "ramadan_post",
+      "https://x.com/a",
+      "a b",
+      "x".repeat(101),
+    ].map((ref) => clientOf(new Headers({ "x-sirathic-ref": ref })).ref),
+  ).toEqual(["news.ycombinator.com", "x.com", "ramadan_post", undefined, undefined, undefined]);
+});
+
 test("a sunnah.com hadith link maps to our hadith id, and a failed tool gets a kind", () => {
   expect(hadithIdOfSunnahUrl("https://sunnah.com/bukhari:7191")).toBe("bukhari:7191");
   expect(hadithIdOfSunnahUrl("https://sunnah.com/nawawi40:3")).toBe("nawawi:3");
