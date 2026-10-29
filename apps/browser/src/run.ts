@@ -19,7 +19,8 @@ const PLAIN_MIN_CHARS = 2;
 const COOKIE_MIN_CHARS = 8;
 const SHOWN_MIN_CHARS = 4;
 const SHOT_QUALITY = 70;
-const INPUTS = "[...document.querySelectorAll('input')].map((input) => [input.type, input.value])";
+const INPUTS =
+  "[...document.querySelectorAll('input, textarea')].map((input) => [input.type, input.value])";
 
 const inputValues = z.array(z.tuple([z.string(), z.string()]));
 
@@ -274,7 +275,7 @@ export const screenshotOf = async (session: Session) => {
   const { page } = session;
   const values = (await secretsOf(session)).filter((value) => value.length >= SHOWN_MIN_CHARS);
   const shown = [
-    await page.innerText("body").catch(() => ""),
+    ...(await Promise.all(page.frames().map((frame) => frame.innerText("body").catch(() => "")))),
     ...(await inputsOf(page)).map(([, value]) => value),
   ].join("\n");
   if ((await secretInField(session)) || masked(shown, values) !== shown) {

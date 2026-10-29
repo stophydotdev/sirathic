@@ -26,13 +26,17 @@ const recorder = (binding: string) => `(() => {
     (el.tagName === "INPUT" ? (["submit", "button"].includes(el.type) ? "button" : el.type === "checkbox" || el.type === "radio" ? el.type : "field") : el.tagName.toLowerCase());
   const describe = (el) => kindOf(el) + ' "' + nameOf(el) + '"';
   const typing = (el) => el.tagName === "TEXTAREA" || (el.tagName === "INPUT" && !["submit", "button", "checkbox", "radio", "file", "hidden", "image", "reset"].includes(el.type));
-  const private_ = (el) => el.type === "password" || /one-time-code|cc-|password/.test(el.autocomplete || "");
+  const secret = new WeakSet();
+  const markSecret = () => document.querySelectorAll("input[type=password]").forEach((el) => secret.add(el));
+  markSecret();
+  const private_ = (el) => secret.has(el) || el.type === "password" || /one-time-code|cc-|password/.test(el.autocomplete || "");
   const sent = new WeakMap();
   const typed = (el) => {
     if (sent.get(el) === el.value) return;
     sent.set(el, el.value);
     send(private_(el) ? { kind: "type", target: describe(el) } : { kind: "type", target: describe(el), text: String(el.value).slice(0, 200) });
   };
+  addEventListener("pointerdown", markSecret, true);
   addEventListener("click", (event) => {
     const el = event.target instanceof Element && event.target.closest("a, button, input, select, textarea, summary, label, [role=button], [role=link], [role=tab], [role=menuitem], [role=option], [role=checkbox], [role=radio], [role=switch]");
     if (!el || event.detail === 0 || typing(el) || el.tagName === "SELECT") return;
@@ -45,6 +49,7 @@ const recorder = (binding: string) => `(() => {
     else if (typing(el)) typed(el);
   }, true);
   addEventListener("keydown", (event) => {
+    markSecret();
     if (event.key !== "Enter" || event.isComposing) return;
     if (event.target instanceof Element && typing(event.target)) typed(event.target);
     send({ kind: "press", key: "Enter" });

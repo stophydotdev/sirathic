@@ -206,13 +206,14 @@ export const inSession = async <T>(key: string, work: (session: Session) => Prom
     sessions.set(key, pending);
     pending.catch(() => sessions.delete(key));
   }
-  const session = await pending;
-  if (session.controllers > 0) {
-    throw new InUseError(
-      "The person is using your browser right now. Stop and wait until they say they're done.",
-    );
-  }
-  return queued(key, session, work);
+  return queued(key, await pending, (session) => {
+    if (session.controllers > 0) {
+      throw new InUseError(
+        "The person is using your browser right now. Stop and wait until they say they're done.",
+      );
+    }
+    return work(session);
+  });
 };
 
 export const pageOf = async (key: string) => {
@@ -248,12 +249,12 @@ export const startControl = async (session: Session) => {
 };
 
 export const endControl = async (session: Session) => {
-  session.controllers = Math.max(0, session.controllers - 1);
   for (const value of await fieldValues(session)) {
     if (value.length >= TYPED_MIN_CHARS && !session.typedBefore.has(value)) {
       session.secrets.add(value);
     }
   }
+  session.controllers = Math.max(0, session.controllers - 1);
 };
 
 export const forget = async (key: string) => {

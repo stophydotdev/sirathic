@@ -1,3 +1,4 @@
+import type { Page } from "patchright";
 import type { Filled, FillRequest } from "./protocol";
 import { settled } from "./run";
 import type { Session } from "./sessions";
@@ -8,6 +9,17 @@ export const onSite = (url: string, site: string) => {
   const host = URL.parse(url)?.hostname.replace(/^www\./u, "") ?? "";
   const bare = site.replace(/^www\./u, "");
   return host === bare || host.endsWith(`.${bare}`) || bare.endsWith(`.${host}`);
+};
+
+const put = (page: Page, target: string, value: string) => {
+  const field = page.locator(`aria-ref=${target}`);
+  return field
+    .fill(value, { timeout: FILL_TIMEOUT_MS })
+    .catch(() => field.selectOption(value, { timeout: FILL_TIMEOUT_MS }))
+    .then(
+      () => true,
+      () => false,
+    );
 };
 
 const clearSecrets = (secrets: ReadonlySet<string>) =>
@@ -35,13 +47,7 @@ export const fill = async (
       ...(await done),
       {
         target,
-        filled: await page
-          .locator(`aria-ref=${target}`)
-          .fill(value, { timeout: FILL_TIMEOUT_MS })
-          .then(
-            () => true,
-            () => false,
-          ),
+        filled: await put(page, target, value),
       },
     ],
     Promise.resolve([]),
@@ -83,15 +89,7 @@ export const refill = async (
   const results = await fields.reduce<Promise<Filled["fields"]>>(async (done, { from, to }) => {
     const held = session.held.get(from);
     const ok =
-      held !== undefined &&
-      onSite(page.url(), held.domain) &&
-      (await page
-        .locator(`aria-ref=${to}`)
-        .fill(held.value, { timeout: FILL_TIMEOUT_MS })
-        .then(
-          () => true,
-          () => false,
-        ));
+      held !== undefined && onSite(page.url(), held.domain) && (await put(page, to, held.value));
     if (ok) session.held.delete(from);
     return [...(await done), { target: to, filled: ok }];
   }, Promise.resolve([]));

@@ -15,6 +15,7 @@
   "BrowserSignin": 0,
   "SyncDisabled": true,
   "DownloadRestrictions": 3,
+  "AllowFileSelectionDialogs": false,
   "PrintingEnabled": false,
   "PasswordManagerEnabled": false,
   "AutofillAddressEnabled": false,
