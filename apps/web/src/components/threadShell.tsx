@@ -9,6 +9,7 @@ import { Mark } from "@/components/logo";
 import { useProjects } from "@/components/projects";
 import { useBot } from "@/components/botHome";
 import { BotList } from "@/components/botNav";
+import { BotProfile } from "@/components/botProfile";
 import { BotPanel } from "@/components/botSettings";
 import { BrowserScreen } from "@/components/browserView";
 import { SearchDialog, SessionRow } from "@/components/sessionMenu";
@@ -247,6 +248,7 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
 
       <div className="min-w-0 flex-1 overflow-hidden print:overflow-visible">{children}</div>
       {bot && <BotPanel bot={bot} />}
+      {bot && <BotProfile bot={bot} />}
       {bot && <BrowserScreen botId={bot.id} name={bot.name} />}
       <SettingsDialog />
       <SearchDialog open={searching} onOpenChange={setSearching} />

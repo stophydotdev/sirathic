@@ -3,6 +3,7 @@
 import { useAccount } from "@/components/account";
 import { BotAvatar } from "@/components/botAvatar";
 import { BotMenu } from "@/components/botMenu";
+import { useBotProfile } from "@/components/botProfile";
 import { useBotPanel } from "@/components/botSettings";
 import { useChatState } from "@/components/chat";
 import { Composer } from "@/components/composer";
@@ -63,16 +64,14 @@ const useBotState = () =>
 export const BotTitle: FC = () => {
   const bot = useBot();
   const state = useBotState();
-  const view = useBotPanel((s) => s.view);
-  const show = useBotPanel((s) => s.show);
   const t = useT();
   if (!bot) return null;
   return (
     <button
       type="button"
-      aria-pressed={view === "settings"}
-      onClick={() => show(view === "settings" ? "closed" : "settings")}
-      title={t("Settings")}
+      aria-haspopup="dialog"
+      onClick={() => useBotProfile.getState().setOpen(true)}
+      title={t("Edit profile")}
       className="bg-muted hover:bg-foreground/10 flex h-8 min-w-0 items-center gap-2 rounded-xl px-2.5 text-sm font-medium"
     >
       <BotAvatar
