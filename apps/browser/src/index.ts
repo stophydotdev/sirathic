@@ -58,8 +58,8 @@ Bun.serve({
     },
     "/fill": {
       POST: (incoming) =>
-        handled(incoming, fillRequest, async ({ session, fields, submit }) =>
-          Response.json(await inOpenSession(session, (open) => fill(open, fields, submit))),
+        handled(incoming, fillRequest, async ({ session, ...form }) =>
+          Response.json(await inOpenSession(session, (open) => fill(open, form))),
         ),
     },
     "/page": {

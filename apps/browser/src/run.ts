@@ -1,6 +1,7 @@
 import type { Page } from "patchright";
 import { z } from "zod";
 import type { Action, Result } from "./protocol";
+import { masked } from "./mask";
 import { quietFor, type Session } from "./sessions";
 
 const PAGE_CHARS = 15_000;
@@ -14,9 +15,8 @@ const WAIT_TIMEOUT_MS = 10_000;
 const NAVIGATE_TIMEOUT_MS = 30_000;
 const LOAD_TIMEOUT_MS = 5_000;
 const KEY_DELAY_MS = 40;
-const SECRET_MIN_CHARS = 4;
+const PLAIN_MIN_CHARS = 2;
 const COOKIE_MIN_CHARS = 8;
-const MASK = "••••••";
 const INPUTS = "[...document.querySelectorAll('input')].map((input) => [input.type, input.value])";
 
 const inputValues = z.array(z.tuple([z.string(), z.string()]));
@@ -33,23 +33,21 @@ const inputsOf = async (page: Page) =>
     )
   ).flat();
 
-const secretsOf = async ({ page, context, secrets }: Session) => {
+const secretsOf = async ({ page, context, secrets, hidden }: Session) => {
   const passwords = (await inputsOf(page)).flatMap(([type, value]) =>
     type === "password" ? [value] : [],
   );
   const cookies = (await context.cookies().catch(() => []))
     .map((cookie) => cookie.value)
     .filter((value) => value.length >= COOKIE_MIN_CHARS);
-  return [...secrets, ...passwords, ...cookies].filter((value) => value.length >= SECRET_MIN_CHARS);
+  const plain = [...hidden].filter((value) => value.length >= PLAIN_MIN_CHARS);
+  return [...secrets, ...passwords, ...cookies, ...plain].filter((value) => value !== "");
 };
 
 const secretInField = async ({ page, secrets }: Session) =>
   (await inputsOf(page)).some(
     ([type, value]) => (type === "password" && value !== "") || secrets.has(value),
   );
-
-const masked = (text: string, secrets: readonly string[]) =>
-  secrets.reduce((out, secret) => out.replaceAll(secret, MASK), text);
 
 const STRUCTURAL =
   /^\s*- (?:generic|list|listitem|group|region|none|presentation|separator|table|rowgroup|row) \[ref=\w+\](?: \[cursor=pointer\])?:?$/u;
@@ -232,7 +230,10 @@ const unmasked = async (session: Session, action: Action): Promise<Result> => {
 };
 
 export const run = async (session: Session, action: Action): Promise<Result> => {
-  const result = await unmasked(session, action);
+  const result = await unmasked(session, action).catch(async (error: Error) => {
+    const secrets = await secretsOf(session).catch(() => [...session.secrets]);
+    throw new Error(masked(error.message, secrets));
+  });
   const secrets = await secretsOf(session);
   return {
     url: masked(result.url, secrets),

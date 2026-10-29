@@ -43,7 +43,9 @@ export const FormCard: FC<{ args: unknown }> = ({ args }) => {
   const t = useT();
   if (!form || !bot) return null;
   const login =
-    form.fields.some((field) => field.secret) && form.fields.some((field) => !field.secret);
+    form.reason === "auth" &&
+    form.fields.some((field) => field.secret) &&
+    form.fields.some((field) => !field.secret);
   if (answered) return <p className="bot-bubble my-2">{form.title}</p>;
 
   const fillIn = async () => {

@@ -35,7 +35,9 @@ const hostOf = (url: string) => URL.parse(url)?.hostname ?? url;
 const TEXT_MAX = 2_000;
 const DELTA_MAX = 5_000;
 
-const outbox: UserInput[] = [];
+type Outgoing = { botId: string; input: UserInput };
+
+const outbox: Outgoing[] = [];
 let sending = false;
 
 const joined = (last: UserInput | undefined, input: UserInput): UserInput | undefined => {
@@ -53,27 +55,28 @@ const joined = (last: UserInput | undefined, input: UserInput): UserInput | unde
   return undefined;
 };
 
-const drain = async (botId: string): Promise<void> => {
+const drain = async (): Promise<void> => {
   const next = outbox.shift();
   if (!next) {
     sending = false;
     return;
   }
-  await fetch(`/api/bots/${botId}/browser/input`, {
+  await fetch(`/api/bots/${next.botId}/browser/input`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify(next),
+    body: JSON.stringify(next.input),
   }).catch(() => undefined);
-  return drain(botId);
+  return drain();
 };
 
 const send = (botId: string, input: UserInput) => {
-  const merged = joined(outbox.at(-1), input);
-  if (merged) outbox[outbox.length - 1] = merged;
-  else outbox.push(input);
+  const last = outbox.at(-1);
+  const merged = last?.botId === botId ? joined(last.input, input) : undefined;
+  if (merged) outbox[outbox.length - 1] = { botId, input: merged };
+  else outbox.push({ botId, input });
   if (sending) return;
   sending = true;
-  void drain(botId);
+  void drain();
 };
 
 const BrowserStream: FC<{ botId: string; panelOpen: boolean }> = ({ botId, panelOpen }) => {

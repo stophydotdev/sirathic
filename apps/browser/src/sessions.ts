@@ -41,6 +41,7 @@ export type Session = {
   idleSince: number;
   saveTimer?: ReturnType<typeof setTimeout>;
   secrets: Set<string>;
+  hidden: Set<string>;
 };
 
 export const quietFor = (session: Session) =>
@@ -57,7 +58,8 @@ const launched = () => {
   launching.then(
     (browser) =>
       browser.on("disconnected", () => {
-        if (chrome === launching) chrome = undefined;
+        if (chrome !== launching) return;
+        chrome = undefined;
         sessions.clear();
       }),
     () => {
@@ -67,20 +69,10 @@ const launched = () => {
   return launching;
 };
 
-const guard = async (page: Page) => {
+const blockAdsAndTrackers = async (page: Page) => {
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("Network.enable");
   await cdp.send("Network.setBlockedURLs", { urls: BLOCKED_URLS });
-  cdp.on("Fetch.requestPaused", ({ requestId, request }) => {
-    void (
-      isPrivateUrl(request.url)
-        ? cdp.send("Fetch.failRequest", { requestId, errorReason: "BlockedByClient" })
-        : cdp.send("Fetch.continueRequest", { requestId })
-    ).catch(() => undefined);
-  });
-  await cdp.send("Fetch.enable", {
-    patterns: [{ urlPattern: "*", resourceType: "Document", requestStage: "Request" }],
-  });
 };
 
 const open = async (key: string): Promise<Session> => {
@@ -91,8 +83,12 @@ const open = async (key: string): Promise<Session> => {
     locale: "en-US",
     storageState: await savedLogins(key),
   });
+  await context.route(
+    (url) => isPrivateUrl(url.href),
+    (route) => route.abort("blockedbyclient"),
+  );
   const page = await context.newPage();
-  await guard(page);
+  await blockAdsAndTrackers(page);
   const session: Session = {
     context,
     page,
@@ -102,6 +98,7 @@ const open = async (key: string): Promise<Session> => {
     inFlight: 0,
     idleSince: Date.now(),
     secrets: new Set(),
+    hidden: new Set(),
   };
   const finished = () => {
     session.inFlight = Math.max(0, session.inFlight - 1);
@@ -114,7 +111,7 @@ const open = async (key: string): Promise<Session> => {
   context.on("requestfailed", finished);
   context.on("page", (opened) => {
     session.page = opened;
-    void guard(opened).catch(() => undefined);
+    void blockAdsAndTrackers(opened).catch(() => undefined);
   });
   context.on("close", () => sessions.delete(key));
   return session;

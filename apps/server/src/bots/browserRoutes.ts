@@ -1,12 +1,12 @@
 import { fillRequest, userInput } from "@sirathic/browser/protocol";
 import { Hono } from "hono";
 import { z } from "zod";
-import { isOnSite, siteHost } from "@sirathic/core/web/url";
+import { siteHost } from "@sirathic/core/web/url";
 import { userFor } from "../account/auth";
 import { respond, StatusError } from "../http";
 import { projectId, requireProject } from "../projects/projects";
 import { saveLogin } from "../vault/vault";
-import { browserPage, controlBrowser, fillBrowser, watchBrowser } from "./browser";
+import { controlBrowser, fillBrowser, watchBrowser } from "./browser";
 
 const fillBody = fillRequest
   .omit({ session: true })
@@ -51,15 +51,11 @@ browserRoutes.post("/:id/browser/fill", (c) =>
   respond(async () => {
     const { botId, owner } = await ownBot(c.req.raw.headers, c.req.param("id"));
     const { fields, submit, domain, save } = await bodyOf(c.req.raw, fillBody);
-    const host = siteHost.parse((await browserPage(botId)).url);
-    if (!isOnSite(host, domain) && !isOnSite(domain, host)) {
-      throw new StatusError(400, `The page is on ${host}, not ${domain}.`);
-    }
-    const filled = await fillBrowser(botId, fields, submit);
+    const filled = await fillBrowser(botId, { domain, fields, submit });
     const username = fields.find((field) => !field.secret)?.value;
     const password = fields.find((field) => field.secret)?.value;
     if (save && username && password && filled.fields.every((field) => field.filled)) {
-      await saveLogin(owner, { site: host, username, password });
+      await saveLogin(owner, { site: domain, username, password });
     }
     return filled;
   }),

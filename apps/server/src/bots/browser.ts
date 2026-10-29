@@ -75,15 +75,13 @@ const service = async (path: string, body: ServiceRequest) => {
 const act = async (botId: string, action: Action) =>
   result.parse(await (await service("/act", { session: sessionOf(botId), action })).json());
 
-export const fillBrowser = async (botId: string, fields: FillRequest["fields"], submit: boolean) =>
-  filled.parse(
-    await (await service("/fill", { session: sessionOf(botId), fields, submit })).json(),
-  );
+export const fillBrowser = async (botId: string, form: Omit<FillRequest, "session">) =>
+  filled.parse(await (await service("/fill", { session: sessionOf(botId), ...form })).json());
 
 export const controlBrowser = (botId: string, input: UserInput) =>
   service("/input", { session: sessionOf(botId), input });
 
-export const browserPage = async (botId: string) =>
+const browserPage = async (botId: string) =>
   pageInfo.parse(await (await service("/page", { session: sessionOf(botId) })).json());
 
 const SIGN_IN_NOTES = {
@@ -134,7 +132,7 @@ export function browserTools(scope: BotScope) {
     }),
     [USER_FORM]: tool({
       description:
-        "Shows the user a Secure Form in the chat for typed details only they have, like a login, a one-time code, an address or card details, and fills what they type straight into the page in your browser. Every value is write-only: you get back only which fields were filled. Take a fresh snapshot first and give every field its target ref from that snapshot, embedded and cross-origin fields included. Tell the user in one line that what they type goes straight into the page and you never see it. The form ends your turn, and their receipt comes as their next message. A form with a secret field fills, submits the page's form and clears the secret from the page, so after the receipt take a fresh snapshot to see where it landed. Other forms only fill: after the receipt, take a fresh snapshot, then click the site's own continue button yourself. Set submit only for a one-shot code step whose only field is the code. A dismissed form is a decline, so don't send the same form again.",
+        "Shows the user a Secure Form in the chat for typed details only they have, like a login, a one-time code, an address or card details, and fills what they type straight into the page in your browser. Every value is write-only: you get back only which fields were filled. Take a fresh snapshot first and give every field its target ref from that snapshot, embedded and cross-origin fields included. Set reason to auth for a sign-in. Tell the user in one line that what they type goes straight into the page and you never see it. The form ends your turn, and their receipt comes as their next message. A form with a secret field fills, submits the page's form and clears the secret from the page, so after the receipt take a fresh snapshot to see where it landed. Other forms only fill: after the receipt, take a fresh snapshot, then click the site's own continue button yourself. Set submit only for a one-shot code step whose only field is the code. A dismissed form is a decline, so don't send the same form again.",
       inputSchema: userForm,
       execute: async () => ({ shown: true }),
     }),

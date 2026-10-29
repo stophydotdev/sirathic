@@ -1,5 +1,6 @@
 import { expect, mock, test } from "bun:test";
 import { isPrivateUrl } from "../apps/browser/src/blocked";
+import { masked } from "../apps/browser/src/mask";
 import { totp } from "../apps/server/src/vault/totp";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import { z } from "zod";
@@ -395,4 +396,12 @@ test("pages can't take a bot's browser to private or internal hosts", () => {
 test("two-step codes match the RFC 6238 test vector", () => {
   expect(totp("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 59_000)).toBe("287082");
   expect(totp("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 1_111_111_109_000)).toBe("081804");
+});
+
+test("a secret is masked in every spelling a page can show it, and nothing else changes", () => {
+  const shown = masked(
+    'a ?q=p%40ss%20w%22rd%21 b ?q=p%40ss+w%22rd! c {"v":"p@ss w\\"rd!"} d ?q=prayer%26mat',
+    ['p@ss w"rd!'],
+  );
+  expect(shown).toBe('a ?q=•••••• b ?q=•••••• c {"v":"••••••"} d ?q=prayer%26mat');
 });

@@ -1,4 +1,4 @@
-import { cleared } from "./control";
+import { cleared, onSite } from "./control";
 import type { LoginRequest, LoginResult } from "./protocol";
 import { settled } from "./run";
 import type { Session } from "./sessions";
@@ -28,11 +28,6 @@ const CODE = [
   .map((selector) => `${selector}:visible`)
   .join(", ");
 
-const onSite = (url: string, site: string) => {
-  const host = URL.parse(url)?.hostname.replace(/^www\./u, "") ?? "";
-  return host === site || host.endsWith(`.${site}`);
-};
-
 export const login = async (
   session: Session,
   { site, username, password, code }: LoginRequest,
@@ -55,6 +50,7 @@ export const login = async (
     await settled(session);
   };
   if (!onSite(session.page.url(), site)) return result("wrong-site");
+  session.hidden.add(username);
   session.secrets.add(password);
   if (code) session.secrets.add(code);
   if (!(await shows(PASSWORD)) && !(await shows(USERNAME))) return result("no-fields");

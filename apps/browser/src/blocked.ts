@@ -55,30 +55,10 @@ const AD_AND_TRACKER_HOSTS = [
   "hsadspixel.net",
 ];
 
-const PRIVATE_HOSTS = [
-  "*://localhost*",
-  "*://*.localhost*",
-  "*://*.internal*",
-  "*://*.local/*",
-  "*://*.local:*",
-  "*://*.localdomain*",
-  "*://*.lan/*",
-  "*://*.home.arpa*",
-  "*://0.*",
-  "*://10.*",
-  "*://127.*",
-  "*://169.254.*",
-  "*://192.168.*",
-  ...Array.from({ length: 16 }, (_, index) => `*://172.${16 + index}.*`),
-  ...Array.from({ length: 64 }, (_, index) => `*://100.${64 + index}.*`),
-  "*://[*",
-];
-
 export const BLOCKED_URLS = [
   ...AD_AND_TRACKER_HOSTS.flatMap((host) => [`*://${host}/*`, `*://*.${host}/*`]),
   "*/gtm.js?id=*",
   "*/gtag/js?id=*",
-  ...PRIVATE_HOSTS,
 ];
 
 const PRIVATE_IPV4 =

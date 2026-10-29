@@ -124,6 +124,11 @@ export const userForm = z.object({
     .describe(
       "The site's domain from the address bar, like github.com, even when fields are embedded from another site.",
     ),
+  reason: z
+    .enum(["auth", "checkout", "other"])
+    .describe(
+      '"auth" for any sign-in step, "checkout" for payment or shipping details, or "other".',
+    ),
   fields: z
     .array(
       z.object({
@@ -159,6 +164,7 @@ export const browserHelp = z.object({
 
 export const fillRequest = z.object({
   session,
+  domain: z.string().min(1).max(253),
   fields: z
     .array(z.object({ target, value: z.string().max(1_000), secret: z.boolean().optional() }))
     .min(1)
