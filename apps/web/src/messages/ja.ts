@@ -742,4 +742,5 @@ export default {
   Links: "リンク",
   "Previous source": "前の出典",
   "Next source": "次の出典",
+  Queued: "送信待ち",
 } satisfies Messages;

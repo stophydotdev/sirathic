@@ -732,4 +732,5 @@ export default {
   Links: "লিংক",
   "Previous source": "আগৰ উৎস",
   "Next source": "পিছৰ উৎস",
+  Queued: "অপেক্ষাত আছে",
 } satisfies Messages;

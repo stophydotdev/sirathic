@@ -748,4 +748,5 @@ export default {
   Links: "Enlaces",
   "Previous source": "Fuente anterior",
   "Next source": "Fuente siguiente",
+  Queued: "En cola",
 } satisfies Messages;

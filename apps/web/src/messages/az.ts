@@ -748,4 +748,5 @@ export default {
   Links: "Keçidlər",
   "Previous source": "Əvvəlki mənbə",
   "Next source": "Növbəti mənbə",
+  Queued: "Növbədə",
 } satisfies Messages;

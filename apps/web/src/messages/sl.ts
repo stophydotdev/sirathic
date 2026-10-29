@@ -743,4 +743,5 @@ export default {
   Links: "Povezave",
   "Previous source": "Prejšnji vir",
   "Next source": "Naslednji vir",
+  Queued: "V čakalni vrsti",
 } satisfies Messages;

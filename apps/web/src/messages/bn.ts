@@ -735,4 +735,5 @@ export default {
   Links: "লিংক",
   "Previous source": "আগের উৎস",
   "Next source": "পরের উৎস",
+  Queued: "অপেক্ষায়",
 } satisfies Messages;

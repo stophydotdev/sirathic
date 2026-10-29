@@ -745,4 +745,5 @@ export default {
   Links: "Ссылки",
   "Previous source": "Предыдущий источник",
   "Next source": "Следующий источник",
+  Queued: "В очереди",
 } satisfies Messages;

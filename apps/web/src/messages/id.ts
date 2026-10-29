@@ -747,4 +747,5 @@ export default {
   Links: "Tautan",
   "Previous source": "Sumber sebelumnya",
   "Next source": "Sumber berikutnya",
+  Queued: "Dalam antrean",
 } satisfies Messages;

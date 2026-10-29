@@ -732,4 +732,5 @@ export default {
   Links: "តំណ",
   "Previous source": "ប្រភពមុន",
   "Next source": "ប្រភពបន្ទាប់",
+  Queued: "កំពុងរង់ចាំ",
 } satisfies Messages;

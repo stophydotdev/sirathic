@@ -740,4 +740,5 @@ export default {
   Links: "ലിങ്കുകൾ",
   "Previous source": "മുമ്പത്തെ ഉറവിടം",
   "Next source": "അടുത്ത ഉറവിടം",
+  Queued: "ക്യൂവിൽ",
 } satisfies Messages;

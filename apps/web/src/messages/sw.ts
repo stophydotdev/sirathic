@@ -743,4 +743,5 @@ export default {
   Links: "Viungo",
   "Previous source": "Chanzo kilichotangulia",
   "Next source": "Chanzo kinachofuata",
+  Queued: "Inasubiri",
 } satisfies Messages;

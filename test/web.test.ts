@@ -17,6 +17,7 @@ import { researchOf } from "../apps/web/src/components/research";
 import { refreshing } from "../apps/web/src/lib/refreshing";
 import { type ChatMessage, question } from "../apps/server/src/shared/messages";
 import { outdated } from "../apps/web/src/components/chat";
+import { nextFollowUp, queueFollowUp } from "../apps/web/src/components/followUps";
 import { importedFacts } from "../apps/web/src/components/memoryImport";
 import { blobMotion } from "../packages/app/src/blob/engine";
 import { BODIES, bodyOf } from "../packages/app/src/blob/shape";
@@ -358,4 +359,16 @@ test("a chat kept from this tab is redrawn only when the server has more of it",
     outdated(kept, [asked, turn("a", "assistant", "Sleep and wind break it.")]),
     outdated(kept, [...kept, turn("q2", "user", "And blood?")]),
   ]).toEqual([false, true, true]);
+});
+
+test("follow-ups queued during an answer go out one at a time, in order, per chat", () => {
+  queueFollowUp("a", "And the Hanafi view?");
+  queueFollowUp("a", "Give the hadith too.");
+  queueFollowUp("b", "Is witr obligatory?");
+  expect([nextFollowUp("a"), nextFollowUp("a"), nextFollowUp("a"), nextFollowUp("b")]).toEqual([
+    "And the Hanafi view?",
+    "Give the hadith too.",
+    undefined,
+    "Is witr obligatory?",
+  ]);
 });

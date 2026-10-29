@@ -741,4 +741,5 @@ export default {
   Links: "پیوندها",
   "Previous source": "منبع قبلی",
   "Next source": "منبع بعدی",
+  Queued: "در صف",
 } satisfies Messages;

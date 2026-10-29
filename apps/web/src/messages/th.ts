@@ -728,4 +728,5 @@ export default {
   Links: "ลิงก์",
   "Previous source": "แหล่งข้อมูลก่อนหน้า",
   "Next source": "แหล่งข้อมูลถัดไป",
+  Queued: "อยู่ในคิว",
 } satisfies Messages;

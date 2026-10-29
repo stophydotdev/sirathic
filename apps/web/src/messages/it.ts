@@ -747,4 +747,5 @@ export default {
   Links: "Link",
   "Previous source": "Fonte precedente",
   "Next source": "Fonte successiva",
+  Queued: "In coda",
 } satisfies Messages;

@@ -748,4 +748,5 @@ export default {
   Links: "Шилтемелер",
   "Previous source": "Мурунку булак",
   "Next source": "Кийинки булак",
+  Queued: "Кезекте",
 } satisfies Messages;

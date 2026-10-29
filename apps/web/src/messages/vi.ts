@@ -740,4 +740,5 @@ export default {
   Links: "Liên kết",
   "Previous source": "Nguồn trước",
   "Next source": "Nguồn tiếp theo",
+  Queued: "Đang chờ",
 } satisfies Messages;

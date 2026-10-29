@@ -746,4 +746,5 @@ export default {
   Links: "Bağlantılar",
   "Previous source": "Önceki kaynak",
   "Next source": "Sonraki kaynak",
+  Queued: "Sırada",
 } satisfies Messages;

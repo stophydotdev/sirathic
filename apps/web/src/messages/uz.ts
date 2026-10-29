@@ -751,4 +751,5 @@ export default {
   Links: "Havolalar",
   "Previous source": "Oldingi manba",
   "Next source": "Keyingi manba",
+  Queued: "Навбатда",
 } satisfies Messages;

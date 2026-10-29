@@ -750,4 +750,5 @@ export default {
   Links: "Mga link",
   "Previous source": "Nakaraang sanggunian",
   "Next source": "Susunod na sanggunian",
+  Queued: "Nakapila",
 } satisfies Messages;

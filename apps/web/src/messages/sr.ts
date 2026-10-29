@@ -742,4 +742,5 @@ export default {
   Links: "Везе",
   "Previous source": "Претходни извор",
   "Next source": "Следећи извор",
+  Queued: "На чекању",
 } satisfies Messages;

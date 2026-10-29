@@ -735,4 +735,5 @@ export default {
   Links: "लिंक",
   "Previous source": "पिछला स्रोत",
   "Next source": "अगला स्रोत",
+  Queued: "कतार में",
 } satisfies Messages;
