@@ -64,7 +64,7 @@ export const accountRoutes = {
         ctx.user.via === "chatgpt" ? models(ctx.user) : [],
         connectedPlans(ctx.user),
       ]);
-      return [...NOOR_MODELS, ...chatgpt, ...planModels(plans)].toSorted(
+      return [...NOOR_MODELS, ...chatgpt, ...(await planModels(ctx.user.id, plans))].toSorted(
         (a, b) => isDefault(b) - isDefault(a),
       );
     }),
