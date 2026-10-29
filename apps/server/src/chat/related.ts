@@ -4,13 +4,13 @@ import { sideOptions } from "../models/subscription";
 
 const QUESTION_CHARS = 1_500;
 const ANSWER_CHARS = 4_000;
-const RELATED_LIMIT = 3;
+const RELATED_LIMIT = 5;
 const WAIT_MS = 5_000;
 const CITATIONS = /\[\d+\](\([^)\s]*\))?/gu;
 const RELATED_PROMPT = `Suggest the follow-up questions this user is most likely to ask next, after reading the answer.
 
 Rules:
-- 3 questions, each under 70 characters.
+- 5 questions, each under 70 characters.
 - Write them the way the user would ask them, in the language the user wrote in.
 - Each one goes one step past the answer: a related ruling, a condition, an exception or the evidence. Never ask what the answer already covered.
 - Keep the Islamic terms the user used, like wudu, Fajr or zakat.
