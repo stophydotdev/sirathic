@@ -735,4 +735,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "پاسخ از Sirathic · {date}",
   "Ask your own question": "سؤال خودتان را بپرسید",
   "{count} more sources": "{count} منبع دیگر",
+  "Previous source": "منبع قبلی",
+  "Next source": "منبع بعدی",
 } satisfies Messages;

@@ -25,9 +25,15 @@ import {
   type ReactNode,
   Suspense,
   useContext,
+  useState,
 } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  Copy01Icon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
 import { z } from "zod";
 
 import { TooltipIconButton } from "@/components/tooltipIconButton";
@@ -114,14 +120,26 @@ const CodeHeader: FC<CodeHeaderProps> = ({ language, code }) => {
 
 const citedUrls = z.array(z.string()).min(1);
 
+const shortSite = (url: string) => {
+  const parts = (URL.parse(url)?.hostname.replace(/^www\./u, "") ?? url).split(".");
+  return (parts.length > 2 ? parts.at(-2) : parts[0]) ?? url;
+};
+
+const pagerButton =
+  "hover:bg-muted hover:text-foreground grid size-6 place-items-center rounded-md disabled:opacity-40";
+
 const Citation: FC<{ urls: string[] }> = ({ urls }) => {
   const sources = useContext(SourcesContext);
   const chat = useChatState();
   const videoLine = useVideoLine();
+  const t = useT();
+  const [at, setAt] = useState(0);
   const [first, ...more] = urls;
-  const name = siteName(first);
-  const opened = (url: string) => {
-    const site = URL.parse(url)?.hostname.replace(/^www\./u, "");
+  const url = urls[at] ?? first;
+  const source = sources.get(url);
+  const video = source?.video;
+  const opened = (opening: string) => {
+    const site = URL.parse(opening)?.hostname.replace(/^www\./u, "");
     if (!chat?.saved || !site) return;
     void api.events.record
       .mutate({ name: "source.opened", props: { site, where: "inline" } })
@@ -136,10 +154,9 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           target="_blank"
           rel="noreferrer"
           onClick={() => opened(first)}
-          className="bg-muted text-muted-foreground! hover:text-foreground! relative -top-px ms-1 inline-flex max-w-[25ch] items-center gap-1 rounded-full py-[2.5px] ps-1 pe-2 align-middle text-[13px] leading-[15px] font-medium! no-underline! transition-colors"
+          className="bg-muted text-muted-foreground! hover:text-foreground! ms-1 inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 align-middle font-mono text-xs leading-none font-normal! no-underline! transition-colors"
         >
-          <Favicon url={first} size={12} />
-          <span className="truncate">{name.charAt(0).toUpperCase() + name.slice(1)}</span>
+          {shortSite(first)}
           {more.length > 0 && <span>+{more.length}</span>}
         </a>
       </HoverCard.Trigger>
@@ -148,46 +165,76 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           side="top"
           align="start"
           sideOffset={6}
-          className="bg-card border-border z-50 flex w-80 flex-col gap-1 rounded-xl border p-1 shadow-lg"
+          className="bg-card border-border z-50 flex w-80 flex-col rounded-xl border p-1 shadow-lg"
         >
-          {urls.map((url) => {
-            const video = sources.get(url)?.video;
-            return (
-              <a
-                key={url}
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => opened(url)}
-                className="hover:bg-muted flex gap-2 rounded-lg p-2 text-sm"
+          {urls.length > 1 && (
+            <div className="text-muted-foreground flex items-center gap-1 px-1.5 pt-1 text-xs">
+              <button
+                type="button"
+                aria-label={t("Previous source")}
+                disabled={at === 0}
+                onClick={() => setAt(at - 1)}
+                className={pagerButton}
               >
-                {video?.thumbnail ? (
-                  <Image
-                    src={video.thumbnail}
-                    alt=""
-                    width={64}
-                    height={36}
-                    unoptimized
-                    className="bg-muted mt-0.5 h-9 w-16 shrink-0 rounded-md object-cover"
-                  />
-                ) : (
-                  <Favicon url={url} size={16} className="mt-0.5" />
-                )}
-                <span className="flex min-w-0 flex-col">
-                  <span className="text-muted-foreground line-clamp-1 text-xs">
-                    {siteName(url)}
-                    {video && ` · ${video.channel}`}
-                  </span>
-                  <span className="line-clamp-2">{sources.get(url)?.title ?? url}</span>
-                  {video && (
-                    <span className="text-muted-foreground text-xs tabular-nums">
-                      {videoLine(video)}
-                    </span>
-                  )}
+                <HugeiconsIcon icon={ArrowLeft01Icon} className="size-3.5 rtl:rotate-180" />
+              </button>
+              <span className="tabular-nums">
+                {at + 1}/{urls.length}
+              </span>
+              <button
+                type="button"
+                aria-label={t("Next source")}
+                disabled={at === urls.length - 1}
+                onClick={() => setAt(at + 1)}
+                className={pagerButton}
+              >
+                <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5 rtl:rotate-180" />
+              </button>
+              <span className="ms-auto">{t("{count} sources", { count: urls.length })}</span>
+            </div>
+          )}
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => opened(url)}
+            className="hover:bg-muted flex flex-col gap-1 rounded-lg p-2 text-sm"
+          >
+            <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
+              <Favicon url={url} size={14} />
+              <span className="line-clamp-1">
+                {siteName(url)}
+                {video && ` · ${video.channel}`}
+              </span>
+            </span>
+            <span className="flex gap-2">
+              {video?.thumbnail ? (
+                <Image
+                  src={video.thumbnail}
+                  alt=""
+                  width={64}
+                  height={36}
+                  unoptimized
+                  className="bg-muted mt-0.5 h-9 w-16 shrink-0 rounded-md object-cover"
+                />
+              ) : null}
+              <span className="flex min-w-0 flex-col">
+                <span className="text-foreground line-clamp-2 font-medium">
+                  {source?.title ?? url}
                 </span>
-              </a>
-            );
-          })}
+                {video && (
+                  <span className="text-muted-foreground text-xs tabular-nums">
+                    {videoLine(video)}
+                  </span>
+                )}
+              </span>
+            </span>
+            {source?.snippet ? (
+              <span className="text-muted-foreground line-clamp-3 text-xs leading-5">
+                {source.snippet}
+              </span>
+            ) : null}
+          </a>
         </HoverCard.Content>
       </HoverCard.Portal>
     </HoverCard.Root>

@@ -730,4 +730,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "أجاب عنه Sirathic · {date}",
   "Ask your own question": "اطرح سؤالك",
   "{count} more sources": "{count} مصادر أخرى",
+  "Previous source": "المصدر السابق",
+  "Next source": "المصدر التالي",
 } satisfies Messages;

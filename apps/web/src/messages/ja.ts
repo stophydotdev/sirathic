@@ -736,4 +736,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic の回答 · {date}",
   "Ask your own question": "自分の質問をする",
   "{count} more sources": "ほかの出典 {count} 件",
+  "Previous source": "前の出典",
+  "Next source": "次の出典",
 } satisfies Messages;

@@ -742,4 +742,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Respondido por Sirathic · {date}",
   "Ask your own question": "Haz tu propia pregunta",
   "{count} more sources": "{count} fuentes más",
+  "Previous source": "Fuente anterior",
+  "Next source": "Fuente siguiente",
 } satisfies Messages;

@@ -724,4 +724,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic సమాధానం · {date}",
   "Ask your own question": "మీ ప్రశ్నను అడగండి",
   "{count} more sources": "మరో {count} మూలాలు",
+  "Previous source": "మునుపటి మూలం",
+  "Next source": "తదుపరి మూలం",
 } satisfies Messages;

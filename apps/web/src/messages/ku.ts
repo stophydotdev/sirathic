@@ -740,4 +740,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "وەڵامی Sirathic · {date}",
   "Ask your own question": "پرسیاری خۆت بکە",
   "{count} more sources": "{count} سەرچاوەی تر",
+  "Previous source": "سەرچاوەی پێشوو",
+  "Next source": "سەرچاوەی دواتر",
 } satisfies Messages;
