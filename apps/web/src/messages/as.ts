@@ -726,4 +726,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic-এ উত্তৰ দিছে · {date}",
   "Ask your own question": "আপোনাৰ নিজৰ প্ৰশ্ন সোধক",
   "{count} more sources": "আৰু {count}টা উৎস",
+  "Previous source": "আগৰ উৎস",
+  "Next source": "পিছৰ উৎস",
 } satisfies Messages;

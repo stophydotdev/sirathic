@@ -734,4 +734,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic മറുപടി നൽകിയത് · {date}",
   "Ask your own question": "നിങ്ങളുടെ ചോദ്യം ചോദിക്കൂ",
   "{count} more sources": "{count} ഉറവിടങ്ങൾ കൂടി",
+  "Previous source": "മുമ്പത്തെ ഉറവിടം",
+  "Next source": "അടുത്ത ഉറവിടം",
 } satisfies Messages;

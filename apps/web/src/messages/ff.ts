@@ -736,4 +736,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Jaabtaama e Sirathic · {date}",
   "Ask your own question": "Naamno naamnal maa",
   "{count} more sources": "Iwdi {count} goɗɗi",
+  "Previous source": "Iwdi adiiɗi",
+  "Next source": "Iwdi garooɗi",
 } satisfies Messages;

@@ -722,4 +722,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Sirathic 回答 · {date}",
   "Ask your own question": "提出你自己的问题",
   "{count} more sources": "另外 {count} 个来源",
+  "Previous source": "上一个来源",
+  "Next source": "下一个来源",
 } satisfies Messages;

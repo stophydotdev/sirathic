@@ -47,6 +47,8 @@ export const MESSAGES = [
   "{count} views",
   "Fork into a new chat",
   "Sources",
+  "Previous source",
+  "Next source",
   "More actions",
   "Download",
   "Markdown (.md)",

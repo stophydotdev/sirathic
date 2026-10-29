@@ -737,4 +737,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "Imejibiwa na Sirathic · {date}",
   "Ask your own question": "Uliza swali lako",
   "{count} more sources": "Vyanzo {count} zaidi",
+  "Previous source": "Chanzo kilichotangulia",
+  "Next source": "Chanzo kinachofuata",
 } satisfies Messages;

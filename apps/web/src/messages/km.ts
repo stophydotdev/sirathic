@@ -726,4 +726,6 @@ export default {
   "Answered by Sirathic \u00b7 {date}": "ឆ្លើយដោយ Sirathic · {date}",
   "Ask your own question": "សួរសំណួររបស់អ្នក",
   "{count} more sources": "ប្រភព {count} ទៀត",
+  "Previous source": "ប្រភពមុន",
+  "Next source": "ប្រភពបន្ទាប់",
 } satisfies Messages;
