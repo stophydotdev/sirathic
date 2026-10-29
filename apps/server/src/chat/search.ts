@@ -39,6 +39,8 @@ import { nearFused, withinChars } from "./cut";
 import { fuse } from "./fuse";
 import { relevant } from "./relevance";
 import { cleanSearch } from "./searchQuery";
+import { readVideo, withVideoHits, withVideos } from "./youtube";
+import { youtubeVideoId } from "@sirathic/core/tools/youtubeVideo";
 
 const RESULT_CHARS = 500;
 const WEB_CHARS = 2_000;
@@ -285,12 +287,12 @@ const extract = (markdown: string, queries: readonly string[]) =>
 
 const readPages = async (hits: Hit[], queries: readonly string[]) => {
   const read = await Promise.all(
-    hits.map((hit) =>
-      webFetch({ url: hit.url }).then(
-        (page) => extract(page.markdown, queries),
-        () => undefined,
-      ),
-    ),
+    hits.map(async (hit) => {
+      const page =
+        (await readVideo(hit.url).catch(() => undefined)) ??
+        (await webFetch({ url: hit.url }).catch(() => undefined));
+      return page && extract(page.markdown, queries);
+    }),
   );
   return new Map(
     hits.flatMap((hit, index) => {
@@ -399,16 +401,22 @@ const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: T
     ),
   );
   const scraped = new Map(
-    found.flat().flatMap((hit) => (hit.markdown ? [[hit.url, hit.markdown]] : [])),
+    found
+      .flat()
+      .flatMap((hit) =>
+        hit.markdown && !youtubeVideoId(hit.url) ? [[hit.url, hit.markdown]] : [],
+      ),
   );
-  const hits = fuse(
-    found.map((list) => list.filter((hit) => !textBlocked(hit.url))),
-    (hit) => hit.url,
-  ).map((hit) => ({
-    url: hit.url,
-    title: hit.title,
-    description: hit.description ?? "",
-  }));
+  const hits = await withVideoHits(
+    fuse(
+      found.map((list) => list.filter((hit) => !textBlocked(hit.url))),
+      (hit) => hit.url,
+    ).map((hit) => ({
+      url: hit.url,
+      title: hit.title,
+      description: hit.description ?? "",
+    })),
+  );
   const read = hits.slice(0, SEARCH_LIMITS.web);
   const fetched = await readPages(
     read.filter((hit) => !scraped.has(hit.url)),
@@ -429,7 +437,10 @@ const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: T
   const pages = citedPages(cite, kept, passages);
   return {
     ...pages,
-    sources: [...pages.sources, ...[...dropped, ...hits.slice(SEARCH_LIMITS.web)].map(hitSource)],
+    sources: await withVideos([
+      ...pages.sources,
+      ...[...dropped, ...hits.slice(SEARCH_LIMITS.web)].map(hitSource),
+    ]),
     text: pagesBlock("web", pages.results),
   };
 };

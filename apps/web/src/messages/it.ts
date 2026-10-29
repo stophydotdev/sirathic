@@ -730,4 +730,5 @@ export default {
   "Markdown (.md)": "Markdown (.md)",
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
+  "{count} views": "{count} visualizzazioni",
 } satisfies Messages;

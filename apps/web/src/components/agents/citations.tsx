@@ -2,6 +2,7 @@
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Globe02Icon } from "@hugeicons/core-free-icons";
+import Image from "next/image";
 import { type ReactNode, useId, useState } from "react";
 import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
@@ -17,6 +18,7 @@ export interface CitationItem {
   icon?: ReactNode;
   group?: string;
   snippet?: string;
+  video?: { channel: string; thumbnail?: string; line: string };
 }
 
 export interface CitationListProps {
@@ -109,13 +111,35 @@ function CitationRow({
     <>
       <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <CitationFavicon url={citation.url} icon={citation.icon} className="size-4" />
-        <span className="min-w-0 truncate">{citation.domain}</span>
+        <span className="min-w-0 truncate">
+          {citation.domain}
+          {citation.video && ` · ${citation.video.channel}`}
+        </span>
         <span className="ms-auto grid size-5 shrink-0 place-items-center rounded-md bg-foreground/[0.05] text-[10px] font-semibold tabular-nums">
           {index}
         </span>
       </span>
-      <span className="line-clamp-2 text-sm text-foreground/85 transition-colors group-hover/citation:text-foreground">
-        {citation.title}
+      <span className="flex gap-2.5">
+        {citation.video?.thumbnail ? (
+          <Image
+            src={citation.video.thumbnail}
+            alt=""
+            width={64}
+            height={36}
+            unoptimized
+            className="bg-muted mt-0.5 h-9 w-16 shrink-0 rounded-md object-cover"
+          />
+        ) : null}
+        <span className="flex min-w-0 flex-col gap-0.5">
+          <span className="line-clamp-2 text-sm text-foreground/85 transition-colors group-hover/citation:text-foreground">
+            {citation.title}
+          </span>
+          {citation.video?.line ? (
+            <span className="text-xs text-muted-foreground tabular-nums">
+              {citation.video.line}
+            </span>
+          ) : null}
+        </span>
       </span>
       {citation.snippet ? (
         <span className="line-clamp-2 text-xs leading-5 text-muted-foreground">

@@ -715,4 +715,5 @@ export default {
   "Markdown (.md)": "Markdown (.md)",
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
+  "{count} views": "ការមើល {count}",
 } satisfies Messages;

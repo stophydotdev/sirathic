@@ -734,4 +734,5 @@ export default {
   "Markdown (.md)": "Markdown (.md)",
   PDF: "PDF",
   "Word (.docx)": "Word (.docx)",
+  "{count} views": "{count} marta ko‘rilgan",
 } satisfies Messages;
