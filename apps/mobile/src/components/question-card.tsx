@@ -1,17 +1,24 @@
 import { ANSWER_MAX, question } from "@sirathic/server/messages";
 import { type FC, useState } from "react";
+import type { z } from "zod";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { X } from "./icons";
+import { Check, X } from "./icons";
 
-export const QuestionCard: FC<{
-  question: string;
-  options: readonly string[];
-  reply: string | undefined;
-  busy: boolean;
-  onAnswer: (text: string) => void;
-}> = ({ question: asked, options, reply, busy, onAnswer }) => {
+export const QuestionCard: FC<
+  z.infer<typeof question> & {
+    reply: string | undefined;
+    busy: boolean;
+    onAnswer: (text: string) => void;
+  }
+> = ({ question: asked, options, multiple, reply, busy, onAnswer }) => {
   const [dismissed, setDismissed] = useState(false);
   const [own, setOwn] = useState("");
+  const [picked, setPicked] = useState<string[]>([]);
+  const parts = [...options.filter((option) => picked.includes(option)), own.trim()].filter(
+    (part) => part !== "",
+  );
+  const answer =
+    parts.length < 2 ? (parts[0] ?? "") : `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}`;
 
   if (dismissed || reply !== undefined) {
     return (
@@ -27,9 +34,8 @@ export const QuestionCard: FC<{
   }
 
   const submit = () => {
-    const text = own.trim();
-    if (!text || busy) return;
-    onAnswer(text);
+    if (!answer || busy) return;
+    onAnswer(answer);
     setOwn("");
   };
 
@@ -47,23 +53,40 @@ export const QuestionCard: FC<{
       </View>
       <View className="mt-3 gap-3">
         <View className="border-foreground/10 overflow-hidden rounded-xl border">
-          {options.map((option, index) => (
-            <Pressable
-              key={option}
-              disabled={busy}
-              onPress={() => onAnswer(option)}
-              className={`active:bg-foreground/8 min-h-11 flex-row items-center gap-3 px-3 py-2.5 ${index > 0 ? "border-foreground/10 border-t" : ""} ${busy ? "opacity-50" : ""}`}
-            >
-              <View className="bg-foreground/10 size-5 items-center justify-center rounded-md">
-                <Text className="text-muted-foreground font-sans text-xs">
-                  {String.fromCharCode(65 + index)}
+          {options.map((option, index) => {
+            const checked = picked.includes(option);
+            return (
+              <Pressable
+                key={option}
+                disabled={busy}
+                accessibilityRole={multiple ? "checkbox" : undefined}
+                accessibilityState={multiple ? { checked } : undefined}
+                onPress={() =>
+                  multiple
+                    ? setPicked(
+                        checked ? picked.filter((pick) => pick !== option) : [...picked, option],
+                      )
+                    : onAnswer(option)
+                }
+                className={`active:bg-foreground/8 min-h-11 flex-row items-center gap-3 px-3 py-2.5 ${index > 0 ? "border-foreground/10 border-t" : ""} ${busy ? "opacity-50" : ""}`}
+              >
+                <View
+                  className={`${checked ? "bg-foreground" : "bg-foreground/10"} size-5 items-center justify-center rounded-md`}
+                >
+                  {checked ? (
+                    <Check size={14} strokeWidth={2} colorClassName="accent-background" />
+                  ) : (
+                    <Text className="text-muted-foreground font-sans text-xs">
+                      {String.fromCharCode(65 + index)}
+                    </Text>
+                  )}
+                </View>
+                <Text className="text-foreground font-sans flex-1 text-base leading-snug">
+                  {option}
                 </Text>
-              </View>
-              <Text className="text-foreground font-sans flex-1 text-base leading-snug">
-                {option}
-              </Text>
-            </Pressable>
-          ))}
+              </Pressable>
+            );
+          })}
         </View>
         <View className="bg-background flex-row items-center gap-2 rounded-xl ps-4 pe-1.5">
           <TextInput
@@ -75,11 +98,11 @@ export const QuestionCard: FC<{
             placeholderTextColorClassName="accent-muted-foreground"
             className="text-foreground font-sans h-11 flex-1 text-base"
           />
-          {own.trim() !== "" && (
+          {(multiple || own.trim() !== "") && (
             <Pressable
-              disabled={busy}
+              disabled={busy || !answer}
               onPress={submit}
-              className="bg-foreground h-8 items-center justify-center rounded-full px-3"
+              className={`bg-foreground h-8 items-center justify-center rounded-full px-3 ${answer ? "" : "opacity-50"}`}
             >
               <Text className="text-background font-medium text-sm">Submit</Text>
             </Pressable>
@@ -97,7 +120,5 @@ export const AskCard: FC<{
   onAnswer: (text: string) => void;
 }> = ({ input, ...rest }) => {
   const asked = question.safeParse(input).data;
-  return asked ? (
-    <QuestionCard question={asked.question} options={asked.options} {...rest} />
-  ) : null;
+  return asked ? <QuestionCard {...asked} {...rest} /> : null;
 };

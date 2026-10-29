@@ -25,7 +25,7 @@ const PAGE_CHARS = 25_000;
 export const CLARIFYING = "clarifying_questions";
 
 export const clarifyingQuestions = tool({
-  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. In Research mode, call it before you search or answer when:
+  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. Set multiple when several answers apply, so they can tick more than one. In Research mode, call it before you search or answer when:
 - a subjective term is present, like best, good or top, and the answer depends on the user's own needs;
 - it is a personal decision, like a marriage, a purchase, an investment or a career;
 - the scope is undefined: which madhab, a budget, a timeframe, their experience level or their region;
