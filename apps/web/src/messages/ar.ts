@@ -786,7 +786,8 @@ export default {
   "Hide password": "إخفاء كلمة المرور",
   "I dismissed the form.": "تجاهلتُ النموذج.",
   Login: "تسجيل دخول",
-  "Logins your bots can sign in with.": "بيانات الدخول التي تستطيع بوتاتك الدخول بها.",
+  "Logins and contact info your bots can use.":
+    "بيانات تسجيل الدخول ومعلومات الاتصال التي يمكن لروبوتاتك استخدامها.",
   "New item": "عنصر جديد",
   "New login": "تسجيل دخول جديد",
   "Nothing saved yet. Add a login with New item.":
@@ -797,8 +798,8 @@ export default {
   "Waiting for you: {task}": "بانتظارك: {task}",
   "Your bots can use this login to sign in for you":
     "يمكن لبوتاتك استخدام تسجيل الدخول هذا للدخول عنك",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "لا ترى بوتاتك إلا المواقع التي حفظتها. أسماء المستخدمين وكلمات المرور والرموز تذهب مباشرة إلى الصفحة.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "لا ترى روبوتاتك سوى المواقع والتسميات التي حفظتها. كل ما عدا ذلك يُدخَل مباشرةً في صفحة الموقع.",
   "{name}'s screen": "شاشة {name}",
   "{name} waits while you use it": "{name} ينتظر بينما تستخدمه",
   "I'm done": "انتهيت",

@@ -784,7 +784,7 @@ export default {
   "Hide password": "මුරපදය සඟවන්න",
   "I dismissed the form.": "මම පෝරමය ඉවත් කළා.",
   Login: "පිවිසුම",
-  "Logins your bots can sign in with.": "ඔබේ බොට්වරුන්ට පුරනය වීමට හැකි පිවිසුම්.",
+  "Logins and contact info your bots can use.": "ඔබේ බොට්වලට භාවිත කළ හැකි පිවිසුම් සහ සම්බන්ධතා තොරතුරු.",
   "New item": "නව අයිතමය",
   "New login": "නව පිවිසුම",
   "Nothing saved yet. Add a login with New item.": "තවම කිසිවක් සුරැකී නැත. නව අයිතමය හරහා පිවිසුමක් එක් කරන්න.",
@@ -794,8 +794,8 @@ export default {
   "Waiting for you: {task}": "ඔබ එනතුරු බලා සිටී: {task}",
   "Your bots can use this login to sign in for you":
     "ඔබ වෙනුවෙන් පුරනය වීමට ඔබේ බොට්වරුන්ට මෙම පිවිසුම භාවිත කළ හැක",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "ඔබේ බොට්වරු දකින්නේ ඔබ සුරැකූ වෙබ් අඩවි මොනවාද යන්න පමණි. පරිශීලක නාම, මුරපද සහ කේත කෙලින්ම පිටුවට යයි.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "ඔබේ බොට්වලට පෙනෙන්නේ ඔබ සුරැකි වෙබ් අඩවි සහ ලේබල පමණයි. අනෙක් සියලු තොරතුරු කෙළින්ම වෙබ් පිටුවට ඇතුළත් වේ.",
   "{name}'s screen": "{name}ගේ තිරය",
   "{name} waits while you use it": "ඔබ භාවිත කරන අතරතුර {name} රැඳී සිටී",
   "I'm done": "මම ඉවරයි",

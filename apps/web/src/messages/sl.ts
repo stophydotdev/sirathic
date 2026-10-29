@@ -795,7 +795,8 @@ export default {
   "Hide password": "Skrij geslo",
   "I dismissed the form.": "Obrazec je opuščen.",
   Login: "Prijava",
-  "Logins your bots can sign in with.": "Prijave, s katerimi se lahko prijavijo vaši boti.",
+  "Logins and contact info your bots can use.":
+    "Prijavni in kontaktni podatki, ki jih lahko uporabljajo vaši boti.",
   "New item": "Nov element",
   "New login": "Nova prijava",
   "Nothing saved yet. Add a login with New item.":
@@ -806,8 +807,8 @@ export default {
   "Waiting for you: {task}": "Čaka vas: {task}",
   "Your bots can use this login to sign in for you":
     "Vaši boti lahko s to prijavo vstopijo namesto vas",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Vaši boti vidijo samo, katera spletna mesta ste shranili. Uporabniška imena, gesla in kode gredo naravnost na stran.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Vaši boti vidijo le spletna mesta in oznake, ki ste jih shranili. Vsi drugi podatki se vnesejo neposredno na spletno stran.",
   "{name}'s screen": "Zaslon bota {name}",
   "{name} waits while you use it": "{name} čaka, medtem ko ga uporabljate",
   "I'm done": "Končano",

@@ -372,7 +372,7 @@ export const VaultSection: FC = () => {
     <Group>
       <div className="flex items-center gap-4 py-2">
         <p className="text-muted-foreground min-w-0 flex-1 text-sm">
-          {t("Logins your bots can sign in with.")}
+          {t("Logins and contact info your bots can use.")}
         </p>
         <DropdownMenu>
           <DropdownMenuTrigger className="bg-foreground text-background flex h-9 shrink-0 items-center gap-1.5 rounded-full ps-4 pe-3 text-sm font-medium">
@@ -444,7 +444,7 @@ export const VaultSection: FC = () => {
       )}
       <p className="text-muted-foreground py-2 text-xs">
         {t(
-          "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.",
+          "Your bots only see which websites and labels you saved. Everything else goes straight into the page.",
         )}
       </p>
       <NewLogin open={adding.kind === "login"} onClose={close} onSaved={load} />

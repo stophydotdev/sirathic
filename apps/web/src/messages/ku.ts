@@ -797,7 +797,8 @@ export default {
   "Hide password": "شاردنەوەی وشەی نهێنی",
   "I dismissed the form.": "فۆرمەکەم لابرد.",
   Login: "چوونەژوورەوە",
-  "Logins your bots can sign in with.": "ئەو چوونەژوورەوانەی بۆتەکانت دەتوانن پێیان بچنە ژوورەوە.",
+  "Logins and contact info your bots can use.":
+    "Agahiyên têketinê û têkiliyê ku botên te dikarin bi kar bînin.",
   "New item": "بڕگەی نوێ",
   "New login": "چوونەژوورەوەی نوێ",
   "Nothing saved yet. Add a login with New item.":
@@ -808,8 +809,8 @@ export default {
   "Waiting for you: {task}": "چاوەڕێی تۆیە: {task}",
   "Your bots can use this login to sign in for you":
     "بۆتەکانت دەتوانن ئەم چوونەژوورەوەیە بەکاربهێنن بۆ ئەوەی لە جیاتی تۆ بچنە ژوورەوە",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "بۆتەکانت تەنها دەبینن کام ماڵپەڕانت پاشەکەوت کردووە. ناوی بەکارهێنەر، وشەی نهێنی و کۆدەکان ڕاستەوخۆ دەچنە ناو پەڕەکە.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Botên te tenê malper û etîketên ku te tomar kirine dibînin. Hemû agahiyên din rasterast di rûpela malperê de tên nivîsandin.",
   "{name}'s screen": "شاشەی {name}",
   "{name} waits while you use it": "{name} چاوەڕێ دەکات تا تۆ بەکاری دەهێنیت",
   "I'm done": "تەواو بووم",

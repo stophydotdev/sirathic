@@ -792,7 +792,8 @@ export default {
   "Hide password": "پنهان کردن رمز",
   "I dismissed the form.": "فرم را رد کردم.",
   Login: "ورود",
-  "Logins your bots can sign in with.": "ورودهایی که ربات‌هایتان می‌توانند با آن‌ها وارد شوند.",
+  "Logins and contact info your bots can use.":
+    "اطلاعات ورود و تماس که ربات‌هایتان می‌توانند از آن‌ها استفاده کنند.",
   "New item": "مورد جدید",
   "New login": "ورود جدید",
   "Nothing saved yet. Add a login with New item.":
@@ -803,8 +804,8 @@ export default {
   "Waiting for you: {task}": "منتظر شماست: {task}",
   "Your bots can use this login to sign in for you":
     "ربات‌هایتان می‌توانند با این ورود به جای شما وارد شوند",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "ربات‌هایتان فقط می‌بینند کدام وب‌سایت‌ها را ذخیره کرده‌اید. نام‌های کاربری، رمزها و کدها مستقیم به صفحه می‌روند.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "ربات‌هایتان فقط وب‌سایت‌ها و برچسب‌هایی را می‌بینند که ذخیره کرده‌اید. بقیهٔ اطلاعات مستقیماً در صفحه وارد می‌شود.",
   "{name}'s screen": "صفحهٔ {name}",
   "{name} waits while you use it": "{name} تا وقتی از آن استفاده می‌کنید صبر می‌کند",
   "I'm done": "تمام شد",

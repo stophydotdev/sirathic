@@ -778,7 +778,7 @@ export default {
   "Hide password": "隐藏密码",
   "I dismissed the form.": "我忽略了这个表单。",
   Login: "登录信息",
-  "Logins your bots can sign in with.": "你的机器人可用来登录的登录信息。",
+  "Logins and contact info your bots can use.": "可供你的机器人使用的登录信息和联系方式。",
   "New item": "新建项目",
   "New login": "新建登录信息",
   "Nothing saved yet. Add a login with New item.":
@@ -788,8 +788,8 @@ export default {
   "Waiting for you": "等你处理",
   "Waiting for you: {task}": "等你处理：{task}",
   "Your bots can use this login to sign in for you": "你的机器人可以用这个登录信息替你登录",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "你的机器人只能看到你保存了哪些网站。用户名、密码和验证码直接填入页面。",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "你的机器人只能看到你保存的网站和标签。其他所有信息都会直接填入网页。",
   "{name}'s screen": "{name} 的屏幕",
   "{name} waits while you use it": "你使用时 {name} 会等待",
   "I'm done": "我完成了",

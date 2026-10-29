@@ -799,7 +799,8 @@ export default {
   "Hide password": "Sembunyikan sandi",
   "I dismissed the form.": "Saya mengabaikan formulirnya.",
   Login: "Login",
-  "Logins your bots can sign in with.": "Login yang bisa dipakai bot Anda untuk masuk.",
+  "Logins and contact info your bots can use.":
+    "Info login dan kontak yang bisa digunakan bot Anda.",
   "New item": "Item baru",
   "New login": "Login baru",
   "Nothing saved yet. Add a login with New item.":
@@ -810,8 +811,8 @@ export default {
   "Waiting for you: {task}": "Menunggu Anda: {task}",
   "Your bots can use this login to sign in for you":
     "Bot Anda bisa memakai login ini untuk masuk atas nama Anda",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Bot Anda hanya melihat situs web mana yang Anda simpan. Nama pengguna, sandi, dan kode langsung masuk ke halaman.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Bot Anda hanya melihat situs web dan label yang Anda simpan. Info lainnya langsung diisikan ke halaman situs.",
   "{name}'s screen": "Layar {name}",
   "{name} waits while you use it": "{name} menunggu selama Anda memakainya",
   "I'm done": "Sudah selesai",

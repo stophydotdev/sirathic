@@ -799,7 +799,8 @@ export default {
   "Hide password": "Nascondi password",
   "I dismissed the form.": "Ho ignorato il modulo.",
   Login: "Accesso",
-  "Logins your bots can sign in with.": "Gli accessi con cui i tuoi bot possono entrare.",
+  "Logins and contact info your bots can use.":
+    "Credenziali e recapiti che i tuoi bot possono usare.",
   "New item": "Nuovo elemento",
   "New login": "Nuovo accesso",
   "Nothing saved yet. Add a login with New item.":
@@ -810,8 +811,8 @@ export default {
   "Waiting for you: {task}": "Ti sta aspettando: {task}",
   "Your bots can use this login to sign in for you":
     "I tuoi bot possono usare questo accesso per entrare al posto tuo",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "I tuoi bot vedono solo quali siti hai salvato. Nomi utente, password e codici vanno direttamente nella pagina.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "I tuoi bot vedono solo i siti web e le etichette che hai salvato. Tutto il resto viene inserito direttamente nella pagina.",
   "{name}'s screen": "Schermo di {name}",
   "{name} waits while you use it": "{name} aspetta mentre lo usi",
   "I'm done": "Ho finito",

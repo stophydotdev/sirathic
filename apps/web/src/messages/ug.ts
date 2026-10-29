@@ -799,7 +799,8 @@ export default {
   "Hide password": "پارولنى يوشۇرۇش",
   "I dismissed the form.": "جەدۋەلنى تاقىدىم.",
   Login: "كىرىش",
-  "Logins your bots can sign in with.": "بوتلىرىڭىز كىرەلەيدىغان كىرىشلەر.",
+  "Logins and contact info your bots can use.":
+    "بوتلىرىڭىز ئىشلىتەلەيدىغان كىرىش ۋە ئالاقىلىشىش ئۇچۇرلىرى.",
   "New item": "يېڭى تۈر",
   "New login": "يېڭى كىرىش",
   "Nothing saved yet. Add a login with New item.":
@@ -810,8 +811,8 @@ export default {
   "Waiting for you: {task}": "سىزنى كۈتۈۋاتىدۇ: {task}",
   "Your bots can use this login to sign in for you":
     "بوتلىرىڭىز بۇ كىرىش ئارقىلىق سىزنىڭ ئورنىڭىزدا كىرەلەيدۇ",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "بوتلىرىڭىز پەقەت قايسى تور بېكەتلەرنى ساقلىغانلىقىڭىزنىلا كۆرىدۇ. ئىشلەتكۈچى ئىسىملىرى، پاروللار ۋە كودلار بىۋاسىتە بەتكە كىرىدۇ.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "بوتلىرىڭىز پەقەت سىز ساقلىغان تور بېكەتلەر ۋە بەلگىلەرنىلا كۆرىدۇ. باشقا بارلىق ئۇچۇرلار بىۋاسىتە تور بەتكە كىرگۈزۈلىدۇ.",
   "{name}'s screen": "{name} نىڭ ئېكرانى",
   "{name} waits while you use it": "سىز ئىشلەتكەندە {name} ساقلاپ تۇرىدۇ",
   "I'm done": "تۈگەتتىم",

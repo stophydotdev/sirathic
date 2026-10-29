@@ -800,7 +800,8 @@ export default {
   "Hide password": "Сырсөздү жашыруу",
   "I dismissed the form.": "Форманы жаптым.",
   Login: "Логин",
-  "Logins your bots can sign in with.": "Ботторуңуз кире ала турган логиндер.",
+  "Logins and contact info your bots can use.":
+    "Ботторуңуз колдоно ала турган кирүү жана байланыш маалыматтары.",
   "New item": "Жаңы элемент",
   "New login": "Жаңы логин",
   "Nothing saved yet. Add a login with New item.":
@@ -811,8 +812,8 @@ export default {
   "Waiting for you: {task}": "Сизди күтүүдө: {task}",
   "Your bots can use this login to sign in for you":
     "Ботторуңуз бул логин менен сиздин ордуңузга кире алат",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Ботторуңуз сиз кайсы сайттарды сактаганыңызды гана көрөт. Колдонуучу аттары, сырсөздөр жана коддор түз баракчага барат.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Ботторуңуз сиз сактаган сайттарды жана энбелгилерди гана көрөт. Калган маалыматтар түз эле сайттын барагына киргизилет.",
   "{name}'s screen": "{name} экраны",
   "{name} waits while you use it": "Сиз колдонуп жатканда {name} күтөт",
   "I'm done": "Бүттүм",

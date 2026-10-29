@@ -792,7 +792,8 @@ export default {
   "Hide password": "Ẩn mật khẩu",
   "I dismissed the form.": "Tôi đã bỏ qua biểu mẫu.",
   Login: "Đăng nhập",
-  "Logins your bots can sign in with.": "Các thông tin đăng nhập mà bot của bạn có thể dùng.",
+  "Logins and contact info your bots can use.":
+    "Thông tin đăng nhập và liên hệ mà bot của bạn có thể dùng.",
   "New item": "Mục mới",
   "New login": "Đăng nhập mới",
   "Nothing saved yet. Add a login with New item.": "Chưa lưu gì. Thêm một đăng nhập bằng Mục mới.",
@@ -802,8 +803,8 @@ export default {
   "Waiting for you: {task}": "Đang chờ bạn: {task}",
   "Your bots can use this login to sign in for you":
     "Bot của bạn có thể dùng thông tin đăng nhập này để đăng nhập thay bạn",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Bot của bạn chỉ thấy bạn đã lưu những trang web nào. Tên người dùng, mật khẩu và mã được điền thẳng vào trang.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Bot của bạn chỉ thấy các trang web và nhãn bạn đã lưu. Mọi thông tin khác được điền thẳng vào trang web.",
   "{name}'s screen": "Màn hình của {name}",
   "{name} waits while you use it": "{name} chờ trong lúc bạn dùng",
   "I'm done": "Tôi xong rồi",

@@ -803,7 +803,8 @@ export default {
   "Hide password": "Itago ang password",
   "I dismissed the form.": "Isinara ko ang form.",
   Login: "Login",
-  "Logins your bots can sign in with.": "Mga login na magagamit ng mga bot mo para mag-sign in.",
+  "Logins and contact info your bots can use.":
+    "Impormasyon sa pag-login at pakikipag-ugnayan na magagamit ng mga bot mo.",
   "New item": "Bagong item",
   "New login": "Bagong login",
   "Nothing saved yet. Add a login with New item.":
@@ -814,8 +815,8 @@ export default {
   "Waiting for you: {task}": "Hinihintay ka: {task}",
   "Your bots can use this login to sign in for you":
     "Magagamit ng mga bot mo ang login na ito para mag-sign in para sa iyo",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Nakikita lang ng mga bot mo kung aling mga website ang na-save mo. Diretso sa page ang mga username, password at code.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Nakikita lang ng mga bot mo ang mga website at label na na-save mo. Lahat ng iba pang impormasyon ay direktang inilalagay sa pahina ng website.",
   "{name}'s screen": "Screen ni {name}",
   "{name} waits while you use it": "Naghihintay si {name} habang ginagamit mo ito",
   "I'm done": "Tapos na ako",

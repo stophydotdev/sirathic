@@ -782,7 +782,7 @@ export default {
   "Hide password": "លាក់ពាក្យសម្ងាត់",
   "I dismissed the form.": "ខ្ញុំបានបោះបង់ទម្រង់។",
   Login: "ការចូល",
-  "Logins your bots can sign in with.": "ការចូលដែលបូតរបស់អ្នកអាចប្រើដើម្បីចូល។",
+  "Logins and contact info your bots can use.": "ព័ត៌មានចូលគណនី និងព័ត៌មានទំនាក់ទំនងដែលបូតរបស់អ្នកអាចប្រើបាន។",
   "New item": "ធាតុថ្មី",
   "New login": "ការចូលថ្មី",
   "Nothing saved yet. Add a login with New item.": "មិនទាន់មានអ្វីរក្សាទុកនៅឡើយ។ បន្ថែមការចូលតាមរយៈធាតុថ្មី។",
@@ -791,8 +791,8 @@ export default {
   "Waiting for you": "កំពុងរង់ចាំអ្នក",
   "Waiting for you: {task}": "កំពុងរង់ចាំអ្នក៖ {task}",
   "Your bots can use this login to sign in for you": "បូតរបស់អ្នកអាចប្រើការចូលនេះដើម្បីចូលជំនួសអ្នក",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "បូតរបស់អ្នកឃើញតែគេហទំព័រណាដែលអ្នកបានរក្សាទុកប៉ុណ្ណោះ។ ឈ្មោះអ្នកប្រើ ពាក្យសម្ងាត់ និងលេខកូដទៅកាន់ទំព័រដោយផ្ទាល់។",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "បូតរបស់អ្នកឃើញតែគេហទំព័រ និងស្លាកដែលអ្នកបានរក្សាទុកប៉ុណ្ណោះ។ ព័ត៌មានផ្សេងទៀតត្រូវបានបញ្ចូលដោយផ្ទាល់ទៅក្នុងទំព័រគេហទំព័រ។",
   "{name}'s screen": "អេក្រង់របស់ {name}",
   "{name} waits while you use it": "{name} រង់ចាំខណៈពេលអ្នកកំពុងប្រើ",
   "I'm done": "ខ្ញុំរួចរាល់ហើយ",

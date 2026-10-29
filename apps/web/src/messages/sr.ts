@@ -794,7 +794,8 @@ export default {
   "Hide password": "Сакриј лозинку",
   "I dismissed the form.": "Образац је одбачен.",
   Login: "Пријава",
-  "Logins your bots can sign in with.": "Пријаве којима ваши ботови могу да се пријаве.",
+  "Logins and contact info your bots can use.":
+    "Подаци за пријаву и контакт подаци које ваши ботови могу да користе.",
   "New item": "Нова ставка",
   "New login": "Нова пријава",
   "Nothing saved yet. Add a login with New item.":
@@ -805,8 +806,8 @@ export default {
   "Waiting for you: {task}": "Чека вас: {task}",
   "Your bots can use this login to sign in for you":
     "Ваши ботови могу да користе ову пријаву да се пријаве уместо вас",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Ваши ботови виде само које сте сајтове сачували. Корисничка имена, лозинке и кодови иду директно на страницу.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Ваши ботови виде само веб-сајтове и ознаке које сте сачували. Сви остали подаци уносе се директно на страницу сајта.",
   "{name}'s screen": "Екран бота {name}",
   "{name} waits while you use it": "{name} чека док га користите",
   "I'm done": "Готово",

@@ -804,8 +804,8 @@ export default {
   "Hide password": "Masquer le mot de passe",
   "I dismissed the form.": "J'ai ignoré le formulaire.",
   Login: "Identifiant",
-  "Logins your bots can sign in with.":
-    "Les identifiants avec lesquels vos bots peuvent se connecter.",
+  "Logins and contact info your bots can use.":
+    "Identifiants et coordonnées que vos bots peuvent utiliser.",
   "New item": "Nouvel élément",
   "New login": "Nouvel identifiant",
   "Nothing saved yet. Add a login with New item.":
@@ -816,8 +816,8 @@ export default {
   "Waiting for you: {task}": "Vous attend : {task}",
   "Your bots can use this login to sign in for you":
     "Vos bots peuvent utiliser cet identifiant pour se connecter à votre place",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Vos bots voient seulement quels sites vous avez enregistrés. Noms d'utilisateur, mots de passe et codes vont directement dans la page.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Vos bots ne voient que les sites et les libellés que vous avez enregistrés. Tout le reste est saisi directement sur la page.",
   "{name}'s screen": "Écran de {name}",
   "{name} waits while you use it": "{name} attend pendant que vous l'utilisez",
   "I'm done": "J'ai terminé",

@@ -794,7 +794,8 @@ export default {
   "Hide password": "Suuɗ finnde",
   "I dismissed the form.": "Mi uddii foormu oo.",
   Login: "Naatirgal",
-  "Logins your bots can sign in with.": "Naatirɗe ɗe bot maa mbaawi naatirde.",
+  "Logins and contact info your bots can use.":
+    "Keɓe naatirgol e jokkondiral ɗe botuuji maa mbaawi huutoraade.",
   "New item": "Huunde hesere",
   "New login": "Naatirgal hesal",
   "Nothing saved yet. Add a login with New item.":
@@ -805,8 +806,8 @@ export default {
   "Waiting for you: {task}": "Ena habba ma: {task}",
   "Your bots can use this login to sign in for you":
     "Bot maa ena mbaawi huutoraade ngal naatirgal ngam naatde e innde maa",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Bot maa yiyata si wonaa lowe ɗe mooftuɗaa. Inɗe huutortooɓe, finnde e koode ena njaha e hello ngo tigi.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Botuuji maa njiyata tan lowe geese e inɗe ɗe dannduɗaa. Ko heddii fof naatnetee ɗoon e hello ngoo.",
   "{name}'s screen": "Yaynirde {name}",
   "{name} waits while you use it": "{name} ena habba tuma nde huutortoɗaa ɗum",
   "I'm done": "Mi gasii",

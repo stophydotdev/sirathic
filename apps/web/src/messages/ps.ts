@@ -793,7 +793,8 @@ export default {
   "Hide password": "پټنوم پټ کړئ",
   "I dismissed the form.": "ما فورمه رد کړه.",
   Login: "ننوتنه",
-  "Logins your bots can sign in with.": "هغه ننوتنې چې ستاسو بوټونه پرې ننوتلی شي.",
+  "Logins and contact info your bots can use.":
+    "د ننوتلو او اړیکو معلومات چې ستاسو بوټونه یې کارولی شي.",
   "New item": "نوی توکی",
   "New login": "نوې ننوتنه",
   "Nothing saved yet. Add a login with New item.":
@@ -804,8 +805,8 @@ export default {
   "Waiting for you: {task}": "ستاسو په تمه دی: {task}",
   "Your bots can use this login to sign in for you":
     "ستاسو بوټونه کولی شي دا ننوتنه ستاسو پر ځای د ننوتلو لپاره وکاروي",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "ستاسو بوټونه یوازې دا وینې چې تاسو کومې ویبپاڼې خوندي کړې. کارن نومونه، پټنومونه او کوډونه مستقیم پاڼې ته ځي.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "ستاسو بوټونه یوازې هغه وېب‌سایټونه او لېبلونه ویني چې تاسو خوندي کړي دي. نور ټول معلومات نېغ د سایټ په پاڼه کې ډکېږي.",
   "{name}'s screen": "د {name} پرده",
   "{name} waits while you use it": "{name} انتظار کوي تر هغه چې تاسو یې کاروئ",
   "I'm done": "خلاص شوم",

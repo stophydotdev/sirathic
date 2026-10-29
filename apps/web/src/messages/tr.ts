@@ -797,7 +797,8 @@ export default {
   "Hide password": "Şifreyi gizle",
   "I dismissed the form.": "Formu kapattım.",
   Login: "Giriş",
-  "Logins your bots can sign in with.": "Botlarınızın oturum açabileceği girişler.",
+  "Logins and contact info your bots can use.":
+    "Botlarınızın kullanabileceği giriş ve iletişim bilgileri.",
   "New item": "Yeni öğe",
   "New login": "Yeni giriş",
   "Nothing saved yet. Add a login with New item.":
@@ -808,8 +809,8 @@ export default {
   "Waiting for you: {task}": "Sizi bekliyor: {task}",
   "Your bots can use this login to sign in for you":
     "Botlarınız bu girişi sizin yerinize oturum açmak için kullanabilir",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Botlarınız yalnızca hangi siteleri kaydettiğinizi görür. Kullanıcı adları, şifreler ve kodlar doğrudan sayfaya gider.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Botlarınız yalnızca kaydettiğiniz web sitelerini ve etiketleri görür. Diğer tüm bilgiler doğrudan sitenin sayfasına girilir.",
   "{name}'s screen": "{name} ekranı",
   "{name} waits while you use it": "Siz kullanırken {name} bekler",
   "I'm done": "Bitirdim",

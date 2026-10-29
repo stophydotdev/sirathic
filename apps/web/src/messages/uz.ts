@@ -804,7 +804,8 @@ export default {
   "Hide password": "Паролни яшириш",
   "I dismissed the form.": "Шаклни ёпдим.",
   Login: "Логин",
-  "Logins your bots can sign in with.": "Ботларингиз кира оладиган логинлар.",
+  "Logins and contact info your bots can use.":
+    "Botlaringiz foydalana oladigan kirish va aloqa ma’lumotlari.",
   "New item": "Янги элемент",
   "New login": "Янги логин",
   "Nothing saved yet. Add a login with New item.":
@@ -815,8 +816,8 @@ export default {
   "Waiting for you: {task}": "Сизни кутмоқда: {task}",
   "Your bots can use this login to sign in for you":
     "Ботларингиз бу логин билан сиз учун кира олади",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Ботларингиз фақат қайси сайтларни сақлаганингизни кўради. Фойдаланувчи номлари, пароллар ва кодлар тўғридан-тўғри саҳифага боради.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Botlaringiz faqat siz saqlagan saytlar va yorliqlarni ko‘radi. Qolgan barcha ma’lumotlar to‘g‘ridan-to‘g‘ri sayt sahifasiga kiritiladi.",
   "{name}'s screen": "{name} экрани",
   "{name} waits while you use it": "Сиз фойдаланаётганда {name} кутади",
   "I'm done": "Тайёр",

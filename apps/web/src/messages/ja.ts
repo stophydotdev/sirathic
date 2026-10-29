@@ -794,7 +794,7 @@ export default {
   "Hide password": "パスワードを隠す",
   "I dismissed the form.": "フォームを閉じました。",
   Login: "ログイン",
-  "Logins your bots can sign in with.": "ボットがサインインに使えるログイン情報です。",
+  "Logins and contact info your bots can use.": "ボットが使えるログイン情報と連絡先情報。",
   "New item": "新しい項目",
   "New login": "新しいログイン",
   "Nothing saved yet. Add a login with New item.":
@@ -805,8 +805,8 @@ export default {
   "Waiting for you: {task}": "あなたを待っています：{task}",
   "Your bots can use this login to sign in for you":
     "ボットはこのログインを使ってあなたの代わりにサインインできます",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "ボットに見えるのは保存したウェブサイト名だけです。ユーザー名、パスワード、コードはページに直接入力されます。",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "ボットに見えるのは、保存したウェブサイトとラベルだけです。それ以外の情報はウェブページに直接入力されます。",
   "{name}'s screen": "{name}の画面",
   "{name} waits while you use it": "使っている間、{name}は待機します",
   "I'm done": "終わりました",

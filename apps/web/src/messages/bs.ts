@@ -795,7 +795,8 @@ export default {
   "Hide password": "Sakrij lozinku",
   "I dismissed the form.": "Obrazac je odbačen.",
   Login: "Prijava",
-  "Logins your bots can sign in with.": "Prijave kojima se vaši botovi mogu prijaviti.",
+  "Logins and contact info your bots can use.":
+    "Podaci za prijavu i kontaktni podaci koje vaši botovi mogu koristiti.",
   "New item": "Nova stavka",
   "New login": "Nova prijava",
   "Nothing saved yet. Add a login with New item.":
@@ -806,8 +807,8 @@ export default {
   "Waiting for you: {task}": "Čeka vas: {task}",
   "Your bots can use this login to sign in for you":
     "Vaši botovi mogu koristiti ovu prijavu da se prijave umjesto vas",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Vaši botovi vide samo koje ste stranice sačuvali. Korisnička imena, lozinke i kodovi idu direktno na stranicu.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Vaši botovi vide samo web-stranice i oznake koje ste sačuvali. Svi ostali podaci unose se direktno na stranicu.",
   "{name}'s screen": "Ekran bota {name}",
   "{name} waits while you use it": "{name} čeka dok ga koristite",
   "I'm done": "Gotovo",

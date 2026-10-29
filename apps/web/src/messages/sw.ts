@@ -795,7 +795,8 @@ export default {
   "Hide password": "Ficha nenosiri",
   "I dismissed the form.": "Nimepuuza fomu.",
   Login: "Kuingia",
-  "Logins your bots can sign in with.": "Maingizo ambayo bot zako zinaweza kutumia kuingia.",
+  "Logins and contact info your bots can use.":
+    "Taarifa za kuingia na za mawasiliano ambazo boti zako zinaweza kutumia.",
   "New item": "Kipengee kipya",
   "New login": "Kuingia kupya",
   "Nothing saved yet. Add a login with New item.":
@@ -806,8 +807,8 @@ export default {
   "Waiting for you: {task}": "Inakusubiri: {task}",
   "Your bots can use this login to sign in for you":
     "Bot zako zinaweza kutumia kuingia huku kuingia kwa niaba yako",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Bot zako zinaona tu tovuti ulizohifadhi. Majina ya watumiaji, manenosiri na misimbo huenda moja kwa moja kwenye ukurasa.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Boti zako huona tu tovuti na lebo ulizohifadhi. Taarifa nyingine zote huingizwa moja kwa moja kwenye ukurasa wa tovuti.",
   "{name}'s screen": "Skrini ya {name}",
   "{name} waits while you use it": "{name} anasubiri unapoitumia",
   "I'm done": "Nimemaliza",

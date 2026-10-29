@@ -796,7 +796,8 @@ export default {
   "Hide password": "Скрыть пароль",
   "I dismissed the form.": "Форма закрыта.",
   Login: "Логин",
-  "Logins your bots can sign in with.": "Логины, с которыми ваши боты могут входить.",
+  "Logins and contact info your bots can use.":
+    "Данные для входа и контакты, которые могут использовать ваши боты.",
   "New item": "Новый элемент",
   "New login": "Новый логин",
   "Nothing saved yet. Add a login with New item.":
@@ -807,8 +808,8 @@ export default {
   "Waiting for you: {task}": "Ждёт вас: {task}",
   "Your bots can use this login to sign in for you":
     "Ваши боты могут входить с этим логином вместо вас",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "Ваши боты видят только, какие сайты вы сохранили. Имена пользователей, пароли и коды попадают прямо на страницу.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "Ваши боты видят только сохранённые вами сайты и метки. Все остальные данные вводятся прямо на странице сайта.",
   "{name}'s screen": "Экран бота {name}",
   "{name} waits while you use it": "{name} ждёт, пока вы пользуетесь",
   "I'm done": "Готово",

@@ -781,7 +781,7 @@ export default {
   "Hide password": "పాస్‌వర్డ్ దాచు",
   "I dismissed the form.": "నేను ఫారమ్‌ను తీసివేశాను.",
   Login: "లాగిన్",
-  "Logins your bots can sign in with.": "మీ బాట్‌లు సైన్ ఇన్ చేయగల లాగిన్‌లు.",
+  "Logins and contact info your bots can use.": "మీ బాట్‌లు ఉపయోగించగల లాగిన్, సంప్రదింపు సమాచారం.",
   "New item": "కొత్త అంశం",
   "New login": "కొత్త లాగిన్",
   "Nothing saved yet. Add a login with New item.": "ఇంకా ఏమీ సేవ్ కాలేదు. కొత్త అంశం ద్వారా ఒక లాగిన్ జోడించండి.",
@@ -791,8 +791,8 @@ export default {
   "Waiting for you: {task}": "మీ కోసం వేచి ఉంది: {task}",
   "Your bots can use this login to sign in for you":
     "మీ తరపున సైన్ ఇన్ చేయడానికి మీ బాట్‌లు ఈ లాగిన్‌ను ఉపయోగించగలవు",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "మీరు ఏ వెబ్‌సైట్‌లను సేవ్ చేశారో మాత్రమే మీ బాట్‌లు చూస్తాయి. యూజర్‌నేమ్‌లు, పాస్‌వర్డ్‌లు, కోడ్‌లు నేరుగా పేజీకి వెళ్తాయి.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "మీ బాట్‌లకు మీరు సేవ్ చేసిన వెబ్‌సైట్‌లు, లేబుల్‌లు మాత్రమే కనిపిస్తాయి. మిగతా సమాచారమంతా నేరుగా వెబ్‌పేజీలో నమోదవుతుంది.",
   "{name}'s screen": "{name} స్క్రీన్",
   "{name} waits while you use it": "మీరు ఉపయోగిస్తున్నప్పుడు {name} వేచి ఉంటుంది",
   "I'm done": "అయిపోయింది",

@@ -791,7 +791,8 @@ export default {
   "Hide password": "പാസ്‌വേഡ് മറയ്ക്കുക",
   "I dismissed the form.": "ഞാൻ ഫോം ഒഴിവാക്കി.",
   Login: "ലോഗിൻ",
-  "Logins your bots can sign in with.": "നിങ്ങളുടെ ബോട്ടുകൾക്ക് സൈൻ ഇൻ ചെയ്യാവുന്ന ലോഗിനുകൾ.",
+  "Logins and contact info your bots can use.":
+    "നിങ്ങളുടെ ബോട്ടുകൾക്ക് ഉപയോഗിക്കാവുന്ന ലോഗിൻ വിവരങ്ങളും ബന്ധപ്പെടാനുള്ള വിവരങ്ങളും.",
   "New item": "പുതിയ ഇനം",
   "New login": "പുതിയ ലോഗിൻ",
   "Nothing saved yet. Add a login with New item.":
@@ -802,8 +803,8 @@ export default {
   "Waiting for you: {task}": "നിങ്ങൾക്കായി കാത്തിരിക്കുന്നു: {task}",
   "Your bots can use this login to sign in for you":
     "നിങ്ങൾക്കുവേണ്ടി സൈൻ ഇൻ ചെയ്യാൻ നിങ്ങളുടെ ബോട്ടുകൾക്ക് ഈ ലോഗിൻ ഉപയോഗിക്കാം",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "നിങ്ങൾ സൂക്ഷിച്ച വെബ്സൈറ്റുകൾ ഏതൊക്കെയെന്ന് മാത്രമേ നിങ്ങളുടെ ബോട്ടുകൾ കാണൂ. ഉപയോക്തൃനാമങ്ങളും പാസ്‌വേഡുകളും കോഡുകളും നേരിട്ട് പേജിലേക്ക് പോകുന്നു.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "നിങ്ങൾ സേവ് ചെയ്ത വെബ്‌സൈറ്റുകളും ലേബലുകളും മാത്രമേ നിങ്ങളുടെ ബോട്ടുകൾ കാണൂ. മറ്റെല്ലാ വിവരങ്ങളും നേരിട്ട് വെബ്‌പേജിൽ പൂരിപ്പിക്കും.",
   "{name}'s screen": "{name}-ന്റെ സ്ക്രീൻ",
   "{name} waits while you use it": "നിങ്ങൾ ഉപയോഗിക്കുമ്പോൾ {name} കാത്തിരിക്കുന്നു",
   "I'm done": "കഴിഞ്ഞു",

@@ -778,7 +778,7 @@ export default {
   "Hide password": "ซ่อนรหัสผ่าน",
   "I dismissed the form.": "ฉันปิดแบบฟอร์มแล้ว",
   Login: "ข้อมูลเข้าสู่ระบบ",
-  "Logins your bots can sign in with.": "ข้อมูลเข้าสู่ระบบที่บอทของคุณใช้ได้",
+  "Logins and contact info your bots can use.": "ข้อมูลเข้าสู่ระบบและข้อมูลติดต่อที่บอตของคุณใช้ได้",
   "New item": "รายการใหม่",
   "New login": "ข้อมูลเข้าสู่ระบบใหม่",
   "Nothing saved yet. Add a login with New item.": "ยังไม่มีอะไรบันทึกไว้ เพิ่มข้อมูลเข้าสู่ระบบได้จากรายการใหม่",
@@ -787,8 +787,8 @@ export default {
   "Waiting for you": "รอคุณอยู่",
   "Waiting for you: {task}": "รอคุณอยู่: {task}",
   "Your bots can use this login to sign in for you": "บอทของคุณใช้ข้อมูลเข้าสู่ระบบนี้เพื่อเข้าสู่ระบบแทนคุณได้",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "บอทของคุณเห็นเพียงว่าคุณบันทึกเว็บไซต์ใดไว้ ชื่อผู้ใช้ รหัสผ่าน และรหัสจะถูกส่งเข้าหน้าเว็บโดยตรง",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "บอตของคุณจะเห็นเฉพาะเว็บไซต์และป้ายกำกับที่คุณบันทึกไว้ ข้อมูลอื่นทั้งหมดจะถูกกรอกลงในหน้าเว็บโดยตรง",
   "{name}'s screen": "หน้าจอของ {name}",
   "{name} waits while you use it": "{name} รอระหว่างที่คุณใช้งาน",
   "I'm done": "เสร็จแล้ว",

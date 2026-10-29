@@ -794,7 +794,8 @@ export default {
   "Hide password": "கடவுச்சொல்லை மறை",
   "I dismissed the form.": "நான் படிவத்தை நிராகரித்தேன்.",
   Login: "உள்நுழைவு",
-  "Logins your bots can sign in with.": "உங்கள் பாட்கள் உள்நுழையப் பயன்படுத்தக்கூடிய உள்நுழைவுகள்.",
+  "Logins and contact info your bots can use.":
+    "உங்கள் பாட்கள் பயன்படுத்தக்கூடிய உள்நுழைவு மற்றும் தொடர்புத் தகவல்கள்.",
   "New item": "புதிய உருப்படி",
   "New login": "புதிய உள்நுழைவு",
   "Nothing saved yet. Add a login with New item.":
@@ -805,8 +806,8 @@ export default {
   "Waiting for you: {task}": "உங்களுக்காகக் காத்திருக்கிறது: {task}",
   "Your bots can use this login to sign in for you":
     "உங்களுக்குப் பதிலாக உள்நுழைய உங்கள் பாட்கள் இந்த உள்நுழைவைப் பயன்படுத்தலாம்",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "நீங்கள் எந்த இணையதளங்களைச் சேமித்தீர்கள் என்பதை மட்டுமே உங்கள் பாட்கள் பார்க்கும். பயனர்பெயர்கள், கடவுச்சொற்கள், குறியீடுகள் நேரடியாகப் பக்கத்திற்குச் செல்லும்.",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "நீங்கள் சேமித்த இணையதளங்களையும் லேபிள்களையும் மட்டுமே உங்கள் பாட்கள் பார்க்கும். மற்ற தகவல்கள் அனைத்தும் நேரடியாக இணையப் பக்கத்தில் நிரப்பப்படும்.",
   "{name}'s screen": "{name}-இன் திரை",
   "{name} waits while you use it": "நீங்கள் பயன்படுத்தும்போது {name} காத்திருக்கும்",
   "I'm done": "முடித்துவிட்டேன்",

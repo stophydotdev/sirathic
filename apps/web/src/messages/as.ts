@@ -783,7 +783,7 @@ export default {
   "Hide password": "পাছৱৰ্ড লুকুৱাওক",
   "I dismissed the form.": "মই ফৰ্মখন বাতিল কৰিলোঁ।",
   Login: "লগইন",
-  "Logins your bots can sign in with.": "আপোনাৰ বটবোৰে ছাইন ইন কৰিব পৰা লগইনসমূহ।",
+  "Logins and contact info your bots can use.": "আপোনাৰ বটসমূহে ব্যৱহাৰ কৰিব পৰা লগইন আৰু যোগাযোগৰ তথ্য।",
   "New item": "নতুন বস্তু",
   "New login": "নতুন লগইন",
   "Nothing saved yet. Add a login with New item.":
@@ -794,8 +794,8 @@ export default {
   "Waiting for you: {task}": "আপোনালৈ অপেক্ষা কৰিছে: {task}",
   "Your bots can use this login to sign in for you":
     "আপোনাৰ বটবোৰে আপোনাৰ হৈ ছাইন ইন কৰিবলৈ এই লগইন ব্যৱহাৰ কৰিব পাৰে",
-  "Your bots only see which websites you saved. Usernames, passwords and codes go straight into the page.":
-    "আপোনাৰ বটবোৰে কেৱল আপুনি ৰখা ৱেবছাইটবোৰহে দেখে। ব্যৱহাৰকাৰীৰ নাম, পাছৱৰ্ড আৰু ক'ড পোনপটীয়াকৈ পৃষ্ঠালৈ যায়।",
+  "Your bots only see which websites and labels you saved. Everything else goes straight into the page.":
+    "আপোনাৰ বটসমূহে কেৱল আপুনি সংৰক্ষণ কৰা ৱেবছাইট আৰু লেবেলসমূহহে দেখে। বাকী সকলো তথ্য পোনে পোনে ৱেবপৃষ্ঠাত ভৰোৱা হয়।",
   "{name}'s screen": "{name}ৰ স্ক্ৰীণ",
   "{name} waits while you use it": "আপুনি ব্যৱহাৰ কৰালৈকে {name} অপেক্ষা কৰে",
   "I'm done": "মোৰ হ'ল",
