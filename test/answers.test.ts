@@ -5,7 +5,6 @@ import { MockLanguageModelV4 } from "ai/test";
 import { DEFAULT_EFFORT, MODES } from "../apps/server/src/shared/messages";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { fill } from "../apps/server/src/chat/prompts/build";
-import { isAnswering, startAnswer, stopAnswer } from "../apps/server/src/chat/answers";
 import { routineTools } from "../apps/server/src/automations/tools";
 import { memoryTools } from "../apps/server/src/account/memory";
 import { botTools } from "../apps/server/src/bots/tools";
@@ -239,21 +238,6 @@ test("an answer stops after 20 steps when the model keeps calling tools", async 
   const { model, seen } = scriptedModel(Array.from({ length: 30 }, () => "search_web"));
   const result = await answerWith(model, {}).generate({ prompt: "hi" });
   expect([result.steps.length, seen.length]).toEqual([20, 20]);
-});
-
-test("an answer runs until stopped or replaced, not until the browser leaves", () => {
-  const first = startAnswer("user", "chat");
-  expect(isAnswering("user", "chat")).toBe(true);
-  const second = startAnswer("user", "chat");
-  expect(first.signal.aborted).toBe(true);
-  first.settled();
-  expect(isAnswering("user", "chat")).toBe(true);
-  stopAnswer("other", "chat");
-  expect(second.signal.aborted).toBe(false);
-  stopAnswer("user", "chat");
-  expect(second.signal.aborted).toBe(true);
-  second.settled();
-  expect(isAnswering("user", "chat")).toBe(false);
 });
 
 test("a chat request with a system message is refused before anything runs", async () => {

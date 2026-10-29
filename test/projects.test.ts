@@ -1,5 +1,5 @@
 import { expect, mock, test } from "bun:test";
-import { asSchema } from "ai";
+import { asSchema, simulateReadableStream } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import { profileRejection, profileRules } from "../apps/server/src/bots/profile";
 import { fallenOut } from "../apps/server/src/bots/summary";
@@ -425,7 +425,7 @@ test("deleting a bot deletes its chat history first, and a bot in an answer show
   expect((await listSessions("user-a")).map((row) => row.working)).toEqual([false]);
   const answer = startAnswer("user-a", botId);
   expect((await listSessions("user-a")).map((row) => row.working)).toEqual([true]);
-  answer.settled();
+  await answer.consumeSseStream({ stream: simulateReadableStream({ chunks: [] }) });
 });
 
 test("setup data reads stay in memory for a minute and a save shows at once", async () => {

@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
     [
       "/trpc/:path*",
       "/api/chat",
+      "/api/chat/:id/stream",
       "/api/files/:path*",
       "/api/auth/:path*",
       "/api/connectors/:path*",

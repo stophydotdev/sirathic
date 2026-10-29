@@ -238,11 +238,12 @@ export const Chat: FC<{
     (s) => s.sessions?.find((session) => session.id === chatId)?.title,
   );
   const [session] = useState(() => liveChat(chatId, initialMessages, projectId, unfinished));
-  const chat = useChat<ChatMessage>({ chat: session });
+  const chat = useChat<ChatMessage>({ chat: session, resume: session.messages.length > 0 });
   const runtime = useAISDKRuntime(chat, {
     adapters: { attachments },
   });
   const started = chat.messages.length > 0;
+  const streaming = chat.status === "streaming";
   const question = chat.messages
     .find((message) => message.role === "user")
     ?.parts.find((part) => part.type === "text")?.text;
@@ -252,6 +253,10 @@ export const Chat: FC<{
     usePreferences.getState().load();
     useChatOptions.getState().load();
   }, []);
+
+  useEffect(() => {
+    if (streaming) refreshSaved();
+  }, [streaming]);
 
   useEffect(() => {
     if (!started || incognito) return;
