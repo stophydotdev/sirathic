@@ -4,7 +4,7 @@ import { z } from "zod";
 import { reviewBot } from "../bots/review";
 import { signedIn, t } from "../trpc";
 import { isAnswering, stopAnswer } from "./answers";
-import { track } from "./events";
+import { browserEvent, track } from "./events";
 import {
   deleteAllSessions,
   deleteSession,
@@ -71,5 +71,8 @@ export const chatRoutes = {
     images: signedIn
       .input(z.object({ q: z.string() }))
       .query(({ input }) => imageSearch({ query: input.q, limit: 10 })),
+  }),
+  events: t.router({
+    record: signedIn.input(browserEvent).mutation(({ ctx, input }) => track(input, ctx.owner)),
   }),
 };

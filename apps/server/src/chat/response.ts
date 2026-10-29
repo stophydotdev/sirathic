@@ -461,27 +461,31 @@ export function chatResponse({
       void connected.then(({ close }) => close());
       const status = ended?.outcome.status ?? outcome.status;
       spend?.(counted);
-      record({
-        name: "answer.completed",
-        props: {
-          mode,
-          model: modelName,
-          outcome: status,
-          finishReason: ended?.finishReason,
-          httpStatus,
-          totalMs: since(),
-          firstTextMs,
-          toolCalls: calls.size,
-          failedTools,
-          cited: new Set(text.match(/\[\d+\]/g)).size,
-          words: text.split(/\s+/).filter(Boolean).length,
-          inputTokens: usage?.inputTokens,
-          cachedInputTokens: usage?.inputTokenDetails.cacheReadTokens,
-          cacheWriteTokens: usage?.inputTokenDetails.cacheWriteTokens,
-          outputTokens: usage?.outputTokens,
-          reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
-        },
-      });
+      const totalMs = since();
+      void Promise.resolve(bot).then((inBot) =>
+        record({
+          name: "answer.completed",
+          props: {
+            mode,
+            model: modelName,
+            outcome: status,
+            finishReason: ended?.finishReason,
+            httpStatus,
+            totalMs,
+            firstTextMs,
+            toolCalls: calls.size,
+            failedTools,
+            cited: new Set(text.match(/\[\d+\]/g)).size,
+            words: text.split(/\s+/).filter(Boolean).length,
+            inputTokens: usage?.inputTokens,
+            cachedInputTokens: usage?.inputTokenDetails.cacheReadTokens,
+            cacheWriteTokens: usage?.inputTokenDetails.cacheWriteTokens,
+            outputTokens: usage?.outputTokens,
+            reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
+            from: unattended ? "routine" : inBot ? "bot" : "chat",
+          },
+        }),
+      );
       return save(answered).catch((err: Error) => {
         console.error(`session not saved: ${reasonOf(err)}`);
       });

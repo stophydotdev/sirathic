@@ -204,6 +204,7 @@ async function runAutomation({
   mode,
   failures,
 }: typeof automations.$inferSelect) {
+  const startedAt = performance.now();
   const runMode = modeSchema.catch("quick").parse(mode);
   const bot = projectId ? await botOf(projectId, owner) : undefined;
   const sessionId = bot?.id ?? crypto.randomUUID();
@@ -267,7 +268,18 @@ async function runAutomation({
     ...earlier,
     ...(answered ?? []).map((message) => (message.id === asked.id ? asked : message)),
   ];
-  if (!answered || (bot && isSkip(textOf(messages.at(-1))))) {
+  const skipped = !answered || (bot && isSkip(textOf(messages.at(-1))));
+  track(
+    {
+      name: "routine.ran",
+      props: {
+        outcome: skipped && outcome.kind === "answered" ? "skipped" : outcome.kind,
+        ms: Math.round(performance.now() - startedAt),
+      },
+    },
+    owner,
+  );
+  if (skipped) {
     await db.update(automations).set(finished).where(eq(automations.id, id));
     return;
   }

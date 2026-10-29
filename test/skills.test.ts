@@ -2,7 +2,7 @@ import { dynamicTool } from "ai";
 import { expect, test } from "bun:test";
 import { z } from "zod";
 import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
-import { needsApproval, writingTools } from "../apps/server/src/chat/confirm";
+import { cardDecisions, needsApproval, writingTools } from "../apps/server/src/chat/confirm";
 import { matchingPlugins } from "../apps/server/src/plugins/tools";
 import {
   matchingEndpoints,
@@ -173,6 +173,48 @@ test("a plugin tool needs confirmation unless the plugin marks it read-only", ()
   });
   const send = dynamicTool({ inputSchema: z.object({}), execute: async () => "sent" });
   expect(writingTools({ slack_find: lookup, slack_send: send })).toEqual(["slack_send"]);
+});
+
+const card = (state: "approval-requested" | "approval-responded"): ChatMessage => ({
+  id: "2",
+  role: "assistant",
+  metadata: { createdAt: Date.now() - 30_000 },
+  parts: [
+    state === "approval-responded"
+      ? {
+          type: "dynamic-tool",
+          toolName: "gmail_send_email",
+          toolCallId: "c1",
+          state,
+          input: {},
+          approval: { id: "a1", approved: true },
+        }
+      : {
+          type: "dynamic-tool",
+          toolName: "gmail_send_email",
+          toolCallId: "c1",
+          state,
+          input: {},
+          approval: { id: "a1" },
+        },
+  ],
+});
+
+test("a card counts once: answered on its own turn, ignored when the next message skips it", () => {
+  const asked = said("1", "user", "email Jane yes");
+  expect(cardDecisions([asked, card("approval-responded")])).toEqual([
+    {
+      name: "card.decided",
+      props: { tool: "gmail_send_email", kind: "send", decision: "approved", seconds: 30 },
+    },
+  ]);
+  const skipped = [asked, card("approval-requested"), said("3", "user", "never mind")];
+  expect(cardDecisions(skipped).map((event) => event.props)).toEqual([
+    { tool: "gmail_send_email", kind: "send", decision: "ignored" },
+  ]);
+  expect(
+    cardDecisions([...skipped, said("4", "assistant", "ok"), said("5", "user", "hi")]),
+  ).toEqual([]);
 });
 
 test("a loaded skill's text joins the rules and its tools open, while the tool result only says it loaded", async () => {

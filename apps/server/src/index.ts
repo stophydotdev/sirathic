@@ -16,6 +16,7 @@ import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
 import { connectedTools, finishConnect } from "./plugins/connections";
 import { track } from "./chat/events";
+import { cardDecisions } from "./chat/confirm";
 import { uploadRoutes } from "./files/upload";
 import { projectOfChat } from "./projects/projects";
 import { settingsInProject } from "./projects/rules";
@@ -85,27 +86,32 @@ app.post("/api/chat", (c) =>
       offerGpt: user.via !== "chatgpt",
     });
     const asked = validated.findLast((message) => message.role === "user");
-    track(
-      {
-        name: "answer.requested",
-        props: {
-          mode: input.mode,
-          model: modelName,
-          turn: validated.filter((message) => message.role === "user").length,
-          regenerate: input.trigger === "regenerate-message",
-          incognito: input.incognito,
-          files: asked?.parts.filter((part) => part.type === "file").length ?? 0,
-          device: input.device,
-          language: input.language,
-          ...clientOf(c.req.raw.headers),
-        },
-      },
-      owner,
-    );
+    const regenerate = input.trigger === "regenerate-message";
     const project = projectOfChat(input.id, by, input.projectId).catch((err: Error) => {
       console.error(`project not read: ${reasonOf(err)}`);
       return undefined;
     });
+    void project.then((inProject) =>
+      track(
+        {
+          name: "answer.requested",
+          props: {
+            mode: input.mode,
+            model: modelName,
+            turn: validated.filter((message) => message.role === "user").length,
+            regenerate,
+            incognito: input.incognito,
+            files: asked?.parts.filter((part) => part.type === "file").length ?? 0,
+            device: input.device,
+            language: input.language,
+            from: inProject?.kind === "bot" ? "bot" : "chat",
+            ...clientOf(c.req.raw.headers),
+          },
+        },
+        owner,
+      ),
+    );
+    if (!regenerate) for (const decided of cardDecisions(validated)) track(decided, owner);
     let saving = Promise.resolve();
     const save = (messages: typeof validated) => {
       if (input.incognito) return saving;

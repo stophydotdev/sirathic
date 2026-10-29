@@ -54,6 +54,8 @@ export const question = z.object({
   options: z.array(z.string().trim().min(1).max(ANSWER_MAX)).min(2).max(5),
 });
 
+export const questionAnswer = z.enum(["option", "own", "dismissed"]);
+
 export const chatData = {
   related: z.object({ questions: z.array(z.string()) }),
   title: z.object({ title: z.string() }),

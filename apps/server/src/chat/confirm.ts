@@ -1,5 +1,7 @@
-import type { ToolSet } from "ai";
+import { getToolName, isToolUIPart, type ToolSet } from "ai";
 import { z } from "zod";
+import type { Event } from "./events";
+import type { ChatMessage } from "../shared/messages";
 
 export const CONFIRM_RULES = `Act without asking when the action is reversible and inside what the user asked for, or when they told you to do it. Ask first only when a wrong guess has real consequences: deleting, sending or posting anything outside this chat, and similar.
 
@@ -60,3 +62,34 @@ const confirmedDelete = ({ toolName, input }: Call) =>
 
 export const needsApproval = (call: Call, writes: ReadonlySet<string>) =>
   (writes.has(call.toolName) && actionOf(call) !== undefined) || confirmedDelete(call);
+
+export const cardDecisions = (messages: readonly ChatMessage[]): Event[] => {
+  const last = messages.at(-1);
+  const card = last?.role === "assistant" ? last : messages.at(-2);
+  if (card?.role !== "assistant") return [];
+  const createdAt = card.metadata?.createdAt;
+  return card.parts.filter(isToolUIPart).flatMap((part) => {
+    const decision =
+      card === last && part.state === "approval-responded"
+        ? part.approval.approved
+          ? "approved"
+          : "declined"
+        : card !== last && part.state === "approval-requested"
+          ? "ignored"
+          : undefined;
+    if (decision === undefined) return [];
+    const tool = getToolName(part);
+    return [
+      {
+        name: "card.decided",
+        props: {
+          tool,
+          kind: actionOf({ toolName: tool, input: part.input }),
+          decision,
+          ...(decision !== "ignored" &&
+            createdAt !== undefined && { seconds: Math.round((Date.now() - createdAt) / 1000) }),
+        },
+      },
+    ];
+  });
+};
