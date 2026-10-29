@@ -1,3 +1,7 @@
+import { httpInstrumentationMiddleware } from "@hono/otel";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
+import { NodeSDK } from "@opentelemetry/sdk-node";
+import { BatchSpanProcessor } from "@opentelemetry/sdk-trace";
 import { trpcServer } from "@hono/trpc-server";
 import { env } from "@sirathic/env/server";
 import { UI_MESSAGE_STREAM_HEADERS, validateUIMessages } from "ai";
@@ -6,6 +10,7 @@ import { z } from "zod";
 import { auth, userFor } from "./account/auth";
 import { startScheduler } from "./automations/runner";
 import { timezone } from "./shared/settings";
+import { withoutErrorText } from "./tracing";
 import { followAnswer, startAnswer } from "./chat/answers";
 import { keepAlive } from "./chat/keepAlive";
 import { refreshSummary } from "./bots/summary";
@@ -64,7 +69,17 @@ const chatBody = z.object({
   sources: z.array(sourceKind).min(1).optional().catch(undefined),
 });
 
+const tracing = new NodeSDK({
+  spanProcessors: [withoutErrorText, new BatchSpanProcessor({ exporter: new OTLPTraceExporter() })],
+  metricReaders: [],
+  logRecordProcessors: [],
+});
+tracing.start();
+process.on("SIGTERM", () => void tracing.shutdown().finally(() => process.exit(0)));
+
 const app = new Hono();
+
+app.use("/api/chat", httpInstrumentationMiddleware());
 
 app.use(async (c, next) => {
   const started = performance.now();
