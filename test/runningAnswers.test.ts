@@ -44,6 +44,18 @@ test("an answer continued after an approval is not replayed, since its stream st
   await answer.consumeSseStream({ stream: simulateReadableStream({ chunks: [] }) });
 });
 
+test("an answer is unwatched only when its asker left and nobody follows it", async () => {
+  const answer = startAnswer("user", "chat");
+  const toAsker = answer.toAsker(simulateReadableStream({ chunks: [new Uint8Array([1])] }));
+  expect(answer.unwatched()).toBe(false);
+  const following = followAnswer("user", "chat");
+  await toAsker.cancel();
+  expect(answer.unwatched()).toBe(false);
+  await following?.cancel();
+  expect(answer.unwatched()).toBe(true);
+  await answer.consumeSseStream({ stream: simulateReadableStream({ chunks: [] }) });
+});
+
 test("reopening a chat signed out gets nothing to follow, even mid-answer", async () => {
   startAnswer("user", "chat");
   const res = await server.fetch(new Request("http://localhost/api/chat/chat/stream"));
