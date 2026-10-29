@@ -26,18 +26,24 @@ const storageState = z.object({
   ),
 });
 
+const savedState = storageState.extend({
+  page: z.object({ url: z.string(), at: z.number() }).optional(),
+});
+
 const fileOf = (session: string) =>
   `${DIRECTORY}/${createHash("sha256").update(session).digest("hex")}.json`;
 
 export const savedLogins = async (session: string) => {
   const saved = await readFile(fileOf(session), "utf8").catch(() => undefined);
-  return saved === undefined ? undefined : storageState.safeParse(JSON.parse(saved)).data;
+  return saved === undefined ? undefined : savedState.safeParse(JSON.parse(saved)).data;
 };
 
-export const saveLogins = async (session: string, context: BrowserContext) => {
+export const saveLogins = async (session: string, context: BrowserContext, url: string) => {
   const state = storageState.parse(await context.storageState());
   await mkdir(DIRECTORY, { recursive: true, mode: 0o700 });
-  await writeFile(fileOf(session), JSON.stringify(state), { mode: 0o600 });
+  await writeFile(fileOf(session), JSON.stringify({ ...state, page: { url, at: Date.now() } }), {
+    mode: 0o600,
+  });
 };
 
 export const forgetLogins = (session: string) => rm(fileOf(session), { force: true });

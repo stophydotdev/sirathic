@@ -3,6 +3,7 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace";
 import { trpcServer } from "@hono/trpc-server";
+import { websocket } from "hono/bun";
 import { env } from "@sirathic/env/server";
 import { UI_MESSAGE_STREAM_HEADERS, validateUIMessages } from "ai";
 import { Hono } from "hono";
@@ -289,4 +290,5 @@ export default {
   port: env.PORT,
   idleTimeout: IDLE_TIMEOUT_SECONDS,
   fetch: app.fetch,
+  websocket,
 };

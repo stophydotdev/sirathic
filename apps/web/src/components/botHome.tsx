@@ -11,6 +11,8 @@ import { type Project, useProjects } from "@/components/projects";
 import { QuestionCard, useFirstReply } from "@/components/questionCard";
 import type { BlobState } from "@sirathic/app/blob/states";
 import { useAuiState } from "@assistant-ui/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ComputerIcon } from "@hugeicons/core-free-icons";
 import { currentToolName } from "@sirathic/server/messages";
 import { type FC, useEffect, useState } from "react";
 
@@ -61,15 +63,15 @@ const useBotState = () =>
 export const BotTitle: FC = () => {
   const bot = useBot();
   const state = useBotState();
-  const open = useBotPanel((s) => s.open);
-  const setOpen = useBotPanel((s) => s.setOpen);
+  const view = useBotPanel((s) => s.view);
+  const show = useBotPanel((s) => s.show);
   const t = useT();
   if (!bot) return null;
   return (
     <button
       type="button"
-      aria-pressed={open}
-      onClick={() => setOpen(!open)}
+      aria-pressed={view === "settings"}
+      onClick={() => show(view === "settings" ? "closed" : "settings")}
       title={t("Settings")}
       className="bg-muted hover:bg-foreground/10 flex h-8 min-w-0 items-center gap-2 rounded-xl px-2.5 text-sm font-medium"
     >
@@ -88,14 +90,28 @@ export const BotTitle: FC = () => {
 export const BotHeaderMenu: FC = () => {
   const bot = useBot();
   const [open, setOpen] = useState(false);
+  const view = useBotPanel((s) => s.view);
+  const show = useBotPanel((s) => s.show);
+  const t = useT();
   if (!bot) return null;
   return (
-    <BotMenu
-      bot={bot}
-      open={open}
-      onOpenChange={setOpen}
-      className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 flex size-8 shrink-0 items-center justify-center rounded-xl"
-    />
+    <div className="flex items-center gap-1">
+      <button
+        type="button"
+        aria-label={t("{name}'s screen", { name: bot.name })}
+        aria-pressed={view === "screen"}
+        onClick={() => show(view === "screen" ? "closed" : "screen")}
+        className="text-muted-foreground hover:bg-muted hover:text-foreground aria-pressed:bg-foreground/10 aria-pressed:text-foreground flex size-8 shrink-0 items-center justify-center rounded-xl"
+      >
+        <HugeiconsIcon icon={ComputerIcon} className="size-4.5" />
+      </button>
+      <BotMenu
+        bot={bot}
+        open={open}
+        onOpenChange={setOpen}
+        className="text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-foreground/10 flex size-8 shrink-0 items-center justify-center rounded-xl"
+      />
+    </div>
   );
 };
 

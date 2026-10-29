@@ -2,6 +2,7 @@ import {
   type Action,
   batchInput,
   browserHelp,
+  checked,
   clickInput,
   failure,
   type FillRequest,
@@ -10,13 +11,17 @@ import {
   loginResult,
   pageInfo,
   pressInput,
+  refillRequest,
   result,
   runCodeInput,
+  type screenMode,
+  screenshot,
   selectInput,
   type ServiceRequest,
   snapshotInput,
+  tabsInput,
+  taught,
   typeInput,
-  type UserInput,
   userForm,
   waitForInput,
 } from "@sirathic/browser/protocol";
@@ -27,12 +32,14 @@ import { z } from "zod";
 import { fencedText } from "../chat/fence";
 import { StatusError } from "../http";
 import { loginFor } from "../vault/vault";
+import { contactTools, VAULT_FILL_CONTACT } from "./contactFill";
 import type { BotScope } from "./tools";
 
 const TIMEOUT_MS = 90_000;
 
 export const USER_FORM = "request_user_form";
 export const BROWSER_HELP = "request_browser_help";
+const REFILL = "refill_form_fields";
 const VAULT_SIGN_IN = "vault_sign_in";
 
 export const BROWSER_TOOLS = [
@@ -46,8 +53,12 @@ export const BROWSER_TOOLS = [
   "browser_wait_for",
   "browser_run_code",
   "browser_batch",
+  "browser_tabs",
+  "browser_screenshot",
   VAULT_SIGN_IN,
+  VAULT_FILL_CONTACT,
   USER_FORM,
+  REFILL,
   BROWSER_HELP,
 ] as const;
 
@@ -56,7 +67,7 @@ const sessionOf = (botId: string) => `bot:${botId}`;
 const authorization = { authorization: `Bearer ${env.BROWSER_TOKEN}` };
 
 const statusOf = (status: number) =>
-  status === 400 || status === 404 ? status : status === 503 ? 429 : 502;
+  status === 400 || status === 404 ? status : status === 503 || status === 409 ? 429 : 502;
 
 const service = async (path: string, body: ServiceRequest) => {
   const response = await fetch(new URL(path, env.BROWSER_URL), {
@@ -78,10 +89,7 @@ const act = async (botId: string, action: Action) =>
 export const fillBrowser = async (botId: string, form: Omit<FillRequest, "session">) =>
   filled.parse(await (await service("/fill", { session: sessionOf(botId), ...form })).json());
 
-export const controlBrowser = (botId: string, input: UserInput) =>
-  service("/input", { session: sessionOf(botId), input });
-
-const browserPage = async (botId: string) =>
+export const browserPage = async (botId: string) =>
   pageInfo.parse(await (await service("/page", { session: sessionOf(botId) })).json());
 
 const SIGN_IN_NOTES = {
@@ -110,10 +118,20 @@ const vaultSignIn = async ({ id, owner }: BotScope) => {
 
 export const forgetBrowser = (botId: string) => service("/forget", { session: sessionOf(botId) });
 
-export const watchBrowser = (botId: string, hungUp: AbortSignal) => {
-  const url = new URL("/view", env.BROWSER_URL);
+export const teachBrowser = async (botId: string, teaching: boolean) => {
+  const response = await service("/teach", { session: sessionOf(botId), teaching });
+  return teaching ? { steps: [] } : taught.parse(await response.json());
+};
+
+const holdBrowser = (botId: string) =>
+  service("/hold", { session: sessionOf(botId) }).catch(() => undefined);
+
+export const screenSocket = (botId: string, mode: z.infer<typeof screenMode>) => {
+  const url = new URL("/screen", env.BROWSER_URL);
+  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
   url.searchParams.set("session", sessionOf(botId));
-  return fetch(url, { headers: authorization, signal: hungUp });
+  url.searchParams.set("mode", mode);
+  return new WebSocket(url, ["screen", env.BROWSER_TOKEN]);
 };
 
 const pageText = (output: z.infer<typeof result>) => ({
@@ -130,17 +148,38 @@ export function browserTools(scope: BotScope) {
       inputSchema: z.object({}),
       execute: () => vaultSignIn(scope),
     }),
+    ...contactTools(scope, fillBrowser),
     [USER_FORM]: tool({
       description:
-        "Shows the user a Secure Form in the chat for typed details only they have, like a login, a one-time code, an address or card details, and fills what they type straight into the page in your browser. Every value is write-only: you get back only which fields were filled. Take a fresh snapshot first and give every field its target ref from that snapshot, embedded and cross-origin fields included. Set reason to auth for a sign-in. Tell the user in one line that what they type goes straight into the page and you never see it. The form ends your turn, and their receipt comes as their next message. A form with a secret field fills, submits the page's form and clears the secret from the page, so after the receipt take a fresh snapshot to see where it landed. Other forms only fill: after the receipt, take a fresh snapshot, then click the site's own continue button yourself. Set submit only for a one-shot code step whose only field is the code. A dismissed form is a decline, so don't send the same form again.",
+        "Shows the user a Secure Form in the chat for typed details only they have, like a login, a one-time code, an address or card details, and fills what they type straight into the page in your browser. Every value is write-only: you get back only which fields were filled. Take a fresh snapshot first and give every field its target ref from that snapshot, embedded and cross-origin fields included. Set reason to auth for a sign-in. Tell the user in one line that what they type goes straight into the page and you never see it. The form ends your turn, and their receipt comes as their next message. A form with a secret field fills, submits the page's form and clears the secret from the page, so after the receipt take a fresh snapshot to see where it landed. Other forms only fill: after the receipt, take a fresh snapshot, then click the site's own continue button yourself. Set submit only for a one-shot code step whose only field is the code. A dismissed form is a decline, so don't send the same form again. The form is checked against the live page first: when a target isn't there, nothing is shown, your turn goes on, and you take a fresh snapshot and send it again.",
       inputSchema: userForm,
-      execute: async () => ({ shown: true }),
+      execute: async (form) => {
+        const { missing } = checked.parse(
+          await (
+            await service("/check", {
+              session: sessionOf(botId),
+              targets: form.fields.map(({ target }) => target),
+            })
+          ).json(),
+        );
+        if (missing.length > 0) {
+          return {
+            shown: false,
+            note: `Not shown: these targets aren't on the page: ${missing.join(", ")}. Take a fresh snapshot and send the form again with refs from it.`,
+          };
+        }
+        await holdBrowser(botId);
+        return { shown: true };
+      },
     }),
     [BROWSER_HELP]: tool({
       description:
         "Hands your browser to the user for a step a form cannot do: single sign-on through another company's sign-in page, a passkey, a captcha you tried and could not get past, an approval on another app or device, a QR code, a bank or 3DS confirmation after the card is entered, a field the Secure Form could not fill, or a sign-in the user prefers to do themselves. A typed login, address, card, or one-time code goes to request_user_form first. Pass one short instruction; it is shown in chat with a button that opens your browser, then your turn ends. The user does the step and tells you they're done, so start by taking a fresh browser_snapshot to see what they changed. When the user signs in on your browser, you never see their password or code.",
       inputSchema: browserHelp,
-      execute: async () => ({ shown: true }),
+      execute: async () => {
+        await holdBrowser(botId);
+        return { shown: true };
+      },
     }),
     browser_navigate: tool({
       description:
@@ -165,7 +204,7 @@ export function browserTools(scope: BotScope) {
     }),
     browser_click: tool({
       description:
-        "Clicks an element. Returns what changed on the page, the whole new page after a navigation, or unchanged.",
+        'Clicks an element, or presses and holds it for holdMs on a "press and hold" button. Returns what changed on the page, the whole new page after a navigation, or unchanged.',
       inputSchema: clickInput,
       execute: (input) => act(botId, { kind: "click", ...input }),
       toModelOutput: ({ output }) => pageText(output),
@@ -211,6 +250,38 @@ export function browserTools(scope: BotScope) {
       inputSchema: runCodeInput,
       execute: (input) => act(botId, { kind: "run_code", ...input }),
       toModelOutput: ({ output }) => pageText(output),
+    }),
+    browser_tabs: tool({
+      description:
+        "Lists the tabs open in your browser, or switches to or closes one by its number from the list. Your browser acts on the tab in front.",
+      inputSchema: tabsInput,
+      execute: (input) => act(botId, { kind: "tabs", ...input }),
+      toModelOutput: ({ output }) => pageText(output),
+    }),
+    browser_screenshot: tool({
+      description:
+        "Takes a picture of the page in your browser, for what the page text can't tell you, like a picture puzzle, a chart or a page drawn without text. It refuses while a password or another private value is on the page. Never use it to check a field you or the user filled.",
+      inputSchema: z.object({}),
+      execute: async () =>
+        screenshot.parse(
+          await (await service("/screenshot", { session: sessionOf(botId) })).json(),
+        ),
+      toModelOutput: ({ output }) => ({
+        type: "content",
+        value: [
+          { type: "text", text: `### Page\n${output.url}\n${output.title}` },
+          { type: "file", mediaType: "image/jpeg", data: { type: "data", data: output.jpeg } },
+        ],
+      }),
+    }),
+    [REFILL]: tool({
+      description:
+        "Fills the fields of your last Secure Form that didn't fill into their new place on the page, with what the user already typed: you never see it and they don't type it again. Take a fresh snapshot first, then pass each missed field's target from the form you sent and its ref in that snapshot. Returns which fields filled.",
+      inputSchema: refillRequest.omit({ session: true }),
+      execute: async (input) =>
+        filled.parse(
+          await (await service("/refill", { session: sessionOf(botId), ...input })).json(),
+        ),
     }),
   };
 }

@@ -1,284 +1,284 @@
 "use client";
 
+import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
-import { getFaviconUrl } from "@/lib/favicon";
-import { type UserInput, VIEWPORT, viewEvent } from "@sirathic/browser/protocol";
+import { cn } from "@/lib/utils";
+import type RFB from "@novnc/novnc";
+import { type screenMode, type TaughtStep, taught } from "@sirathic/browser/protocol";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Cancel01Icon } from "@hugeicons/core-free-icons";
-import { type FC, type KeyboardEvent, type MouseEvent, type WheelEvent, useEffect } from "react";
+import { Cancel01Icon, ComputerIcon, KeyboardIcon } from "@hugeicons/core-free-icons";
+import { type FC, type RefObject, useEffect, useRef, useState } from "react";
+import { z } from "zod";
 import { create } from "zustand";
 
-type Screen =
-  | { kind: "closed" }
-  | { kind: "open"; url: string; title: string; jpeg: string | undefined };
-
-export const useBrowser = create<{
-  screen: Screen;
-  showing: boolean;
-  controlling: boolean;
-  show: (controlling: boolean) => void;
-  hide: () => void;
-  control: (controlling: boolean) => void;
-  seen: (screen: Screen) => void;
-}>()((set) => ({
-  screen: { kind: "closed" },
-  showing: false,
-  controlling: false,
-  show: (controlling) => set({ showing: true, controlling }),
-  hide: () => set({ showing: false, controlling: false }),
-  control: (controlling) => set({ controlling }),
-  seen: (screen) => set({ screen }),
-}));
-
-const hostOf = (url: string) => URL.parse(url)?.hostname ?? url;
-
-const TEXT_MAX = 2_000;
-const DELTA_MAX = 5_000;
-
-type Outgoing = { botId: string; input: UserInput };
-
-const outbox: Outgoing[] = [];
-let sending = false;
-
-const joined = (last: UserInput | undefined, input: UserInput): UserInput | undefined => {
-  if (last?.kind === "text" && input.kind === "text") {
-    const text = last.text + input.text;
-    return text.length <= TEXT_MAX ? { kind: "text", text } : undefined;
-  }
-  if (last?.kind === "wheel" && input.kind === "wheel") {
-    const deltaX = last.deltaX + input.deltaX;
-    const deltaY = last.deltaY + input.deltaY;
-    return Math.abs(deltaX) <= DELTA_MAX && Math.abs(deltaY) <= DELTA_MAX
-      ? { ...input, deltaX, deltaY }
-      : undefined;
-  }
-  return undefined;
-};
-
-const drain = async (): Promise<void> => {
-  const next = outbox.shift();
-  if (!next) {
-    sending = false;
-    return;
-  }
-  await fetch(`/api/bots/${next.botId}/browser/input`, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(next.input),
-  }).catch(() => undefined);
-  return drain();
-};
-
-const send = (botId: string, input: UserInput) => {
-  const last = outbox.at(-1);
-  const merged = last?.botId === botId ? joined(last.input, input) : undefined;
-  if (merged) outbox[outbox.length - 1] = { botId, input: merged };
-  else outbox.push({ botId, input });
-  if (sending) return;
-  sending = true;
-  void drain();
-};
-
-const BrowserStream: FC<{ botId: string; panelOpen: boolean }> = ({ botId, panelOpen }) => {
-  const showing = useBrowser((s) => s.showing);
-  const watching = panelOpen || showing;
-  useEffect(() => {
-    if (!watching) return;
-    const { seen } = useBrowser.getState();
-    const source = new EventSource(`/api/bots/${botId}/browser/view`);
-    source.addEventListener("message", (message) => {
-      const event = viewEvent.safeParse(JSON.parse(message.data)).data;
-      const { screen } = useBrowser.getState();
-      const jpeg = screen.kind === "open" ? screen.jpeg : undefined;
-      if (event?.kind === "closed") seen({ kind: "closed" });
-      if (event?.kind === "page") seen({ kind: "open", url: event.url, title: event.title, jpeg });
-      if (event?.kind === "frame") {
-        seen(
-          screen.kind === "open"
-            ? { ...screen, jpeg: event.jpeg }
-            : { kind: "open", url: "", title: "", jpeg: event.jpeg },
-        );
-      }
-    });
-    return () => {
-      source.close();
-      seen({ kind: "closed" });
-    };
-  }, [botId, watching]);
-  return null;
-};
-
-const Frame: FC<{ jpeg: string | undefined; title: string; className: string }> = ({
-  jpeg,
-  title,
-  className,
-}) =>
-  jpeg ? (
-    <img
-      src={`data:image/jpeg;base64,${jpeg}`}
-      alt={title}
-      draggable={false}
-      className={className}
-    />
-  ) : (
-    <div className={`bg-foreground/6 ${className}`} />
-  );
-
-const SiteLine: FC<{ url: string; title: string }> = ({ url, title }) => (
-  <span className="flex min-w-0 items-center gap-2 text-sm">
-    {url && (
-      <img
-        src={getFaviconUrl(url) ?? undefined}
-        alt=""
-        onError={(event) => {
-          event.currentTarget.hidden = true;
-        }}
-        className="size-4 shrink-0 rounded-sm"
-      />
-    )}
-    <span className="truncate font-medium">{title || hostOf(url)}</span>
-    <span className="text-muted-foreground shrink-0 truncate">{hostOf(url)}</span>
-  </span>
+export const useBrowser = create<{ showing: boolean; show: () => void; hide: () => void }>()(
+  (set) => ({
+    showing: false,
+    show: () => set({ showing: true }),
+    hide: () => set({ showing: false }),
+  }),
 );
 
-export const BrowserPreview: FC = () => {
-  const screen = useBrowser((s) => s.screen);
+type Mode = z.infer<typeof screenMode>;
+
+const RETRY_MS = 4_000;
+const SCREEN_WIDTH = "min(72rem, calc((100dvh - 8rem) * 1.6))";
+const KEYS = new Map([
+  ["Backspace", 0xff08],
+  ["Tab", 0xff09],
+  ["Enter", 0xff0d],
+]);
+
+const ticketBody = z.object({ ticket: z.string() });
+
+type Translate = ReturnType<typeof useT>;
+
+const lineOf = (t: Translate, step: TaughtStep) => {
+  switch (step.kind) {
+    case "open":
+      return t("Opened {url}", { url: step.url });
+    case "click":
+      return t("Clicked {target}", { target: step.target });
+    case "type":
+      return step.text === undefined
+        ? t("Typed a private value into {target}", { target: step.target })
+        : t("Typed “{text}” into {target}", { text: step.text, target: step.target });
+    case "choose":
+      return t("Chose {option} in {target}", { option: step.option, target: step.target });
+    case "press":
+      return t("Pressed Enter");
+  }
+};
+
+const lessonOf = (t: Translate, steps: TaughtStep[]) =>
+  [
+    t("Learn this task from what I just did:"),
+    ...steps.map((step, index) => `${index + 1}. ${lineOf(t, step)}`),
+  ].join("\n");
+
+const screenUrl = (botId: string, mode: Mode, ticket: string) => {
+  const url = new URL(`/api/bots/${botId}/browser/screen`, process.env.NEXT_PUBLIC_SERVER);
+  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
+  url.searchParams.set("mode", mode);
+  url.searchParams.set("ticket", ticket);
+  return url.href;
+};
+
+const keysymOf = (character: string) => {
+  const code = character.codePointAt(0) ?? 0;
+  return code < 0x100 ? code : 0x01000000 + code;
+};
+
+const useScreen = (botId: string, mode: Mode, target: RefObject<HTMLDivElement | null>) => {
+  const [live, setLive] = useState<boolean>();
+  const remote = useRef<RFB>(undefined);
+  useEffect(() => {
+    let stopped = false;
+    let retry: ReturnType<typeof setTimeout> | undefined;
+    const again = () => {
+      setLive(false);
+      if (!stopped) retry = setTimeout(() => void connect(), RETRY_MS);
+    };
+    const connect = async () => {
+      const response = await fetch(`/api/bots/${botId}/browser/ticket`, { method: "POST" }).catch(
+        () => undefined,
+      );
+      const ticket = response?.ok
+        ? ticketBody.safeParse(await response.json()).data?.ticket
+        : undefined;
+      if (stopped) return;
+      if (!ticket || !target.current) {
+        again();
+        return;
+      }
+      const { default: Remote } = await import("@novnc/novnc");
+      if (stopped || !target.current) return;
+      const rfb = new Remote(target.current, screenUrl(botId, mode, ticket));
+      rfb.viewOnly = mode === "watch";
+      rfb.focusOnClick = mode === "control";
+      rfb.scaleViewport = true;
+      rfb.background = "transparent";
+      rfb.qualityLevel = 6;
+      rfb.addEventListener("connect", () => setLive(true));
+      rfb.addEventListener("disconnect", () => {
+        remote.current = undefined;
+        again();
+      });
+      remote.current = rfb;
+    };
+    void connect();
+    return () => {
+      stopped = true;
+      clearTimeout(retry);
+      remote.current?.disconnect();
+      remote.current = undefined;
+    };
+  }, [botId, mode, target]);
+  return { live, remote };
+};
+
+export const BrowserPreview: FC<{ botId: string; name: string }> = ({ botId, name }) => {
+  const target = useRef<HTMLDivElement>(null);
+  const { live } = useScreen(botId, "watch", target);
   const show = useBrowser((s) => s.show);
   const t = useT();
-  if (screen.kind === "closed") return null;
   return (
-    <button
-      type="button"
-      aria-label={t("Open the browser")}
-      onClick={() => show(false)}
-      className="hover:bg-foreground/6 -mx-2 flex flex-col gap-2 rounded-2xl p-2 text-start"
-    >
-      <Frame
-        jpeg={screen.jpeg}
-        title={screen.title}
-        className="border-foreground/10 aspect-16/10 w-full rounded-xl border object-cover object-top"
-      />
-      <SiteLine url={screen.url} title={screen.title} />
-    </button>
+    <figure className="flex flex-col items-center gap-2.5">
+      <div className="bg-foreground/4 border-foreground/10 relative aspect-16/10 w-full overflow-hidden rounded-xl border">
+        <div ref={target} className={cn("size-full", !live && "invisible")} />
+        {live ? (
+          <button
+            type="button"
+            aria-label={t("Open the browser")}
+            onClick={show}
+            className="absolute inset-0 hover:bg-white/5"
+          />
+        ) : (
+          <span className="text-muted-foreground absolute inset-0 flex items-center justify-center">
+            <HugeiconsIcon icon={ComputerIcon} className="size-5" />
+          </span>
+        )}
+      </div>
+      <figcaption className="text-muted-foreground text-xs">
+        {t("{name}'s screen", { name })}
+      </figcaption>
+    </figure>
   );
 };
 
-const MODIFIERS = new Set(["Shift", "Control", "Alt", "Meta"]);
-
-const keyOf = (event: KeyboardEvent<HTMLInputElement>) =>
-  [
-    event.ctrlKey && "Control",
-    event.metaKey && "Meta",
-    event.altKey && "Alt",
-    event.shiftKey && event.key.length > 1 && "Shift",
-    event.key,
-  ]
-    .filter(Boolean)
-    .join("+");
-
-const clamp = (value: number, max: number) => Math.round(Math.min(Math.max(value, 0), max));
-
-const pointOf = (event: MouseEvent<HTMLElement> | WheelEvent<HTMLElement>) => {
-  const box = event.currentTarget.getBoundingClientRect();
-  const scale = Math.min(box.width / VIEWPORT.width, box.height / VIEWPORT.height);
-  const left = box.left + (box.width - VIEWPORT.width * scale) / 2;
-  const top = box.top + (box.height - VIEWPORT.height * scale) / 2;
-  return {
-    x: clamp((event.clientX - left) / scale, VIEWPORT.width),
-    y: clamp((event.clientY - top) / scale, VIEWPORT.height),
-  };
-};
-
-export const BrowserScreen: FC<{ botId: string; panelOpen: boolean }> = ({ botId, panelOpen }) => {
-  const { screen, showing, controlling, hide, control } = useBrowser();
+const FullView: FC<{ botId: string; name: string }> = ({ botId, name }) => {
+  const hide = useBrowser((s) => s.hide);
+  const chat = useChatState()?.chat;
+  const target = useRef<HTMLDivElement>(null);
+  const typing = useRef<HTMLInputElement>(null);
+  const { live, remote } = useScreen(botId, "control", target);
+  const [teaching, setTeaching] = useState(false);
   const t = useT();
+  const press = (keysym: number, code: string | null) => remote.current?.sendKey(keysym, code);
+  const teach = (on: boolean) =>
+    fetch(`/api/bots/${botId}/browser/teach`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ teaching: on }),
+    }).catch(() => undefined);
+  const startTeaching = async () => {
+    if ((await teach(true))?.ok) setTeaching(true);
+  };
+  const finishTeaching = async () => {
+    const response = await teach(false);
+    const steps = response?.ok ? (taught.safeParse(await response.json()).data?.steps ?? []) : [];
+    setTeaching(false);
+    if (steps.length > 1) {
+      void chat?.sendMessage({ text: lessonOf(t, steps), metadata: { createdAt: Date.now() } });
+    }
+    hide();
+  };
+  const close = () => {
+    if (teaching) void teach(false);
+    hide();
+  };
   return (
-    <>
-      <BrowserStream botId={botId} panelOpen={panelOpen} />
-      {showing && (
-        <div
-          role="dialog"
-          aria-modal
-          aria-label={t("Open the browser")}
-          onKeyDown={(event) => event.key === "Escape" && !controlling && hide()}
-          className="bg-background fixed inset-0 z-70 flex flex-col"
-        >
-          <div className="flex h-14 shrink-0 items-center gap-2 ps-4 pe-2">
-            <div className="min-w-0 flex-1">
-              {screen.kind === "open" && <SiteLine url={screen.url} title={screen.title} />}
-            </div>
-            {screen.kind === "open" && (
-              <button
-                type="button"
-                aria-pressed={controlling}
-                onClick={() => control(!controlling)}
-                className={`h-9 shrink-0 rounded-full px-4 text-sm font-medium ${controlling ? "bg-foreground text-background" : "bg-foreground/8 hover:bg-foreground/12"}`}
-              >
-                {controlling ? t("Stop control") : t("Take control")}
-              </button>
-            )}
+    <div
+      role="dialog"
+      aria-modal
+      aria-label={t("{name}'s screen", { name })}
+      className="fixed inset-0 z-70 flex flex-col items-center justify-center gap-4 bg-black/60 p-3 backdrop-blur-sm md:p-8"
+    >
+      <div
+        style={{ width: SCREEN_WIDTH }}
+        className="relative aspect-16/10 max-w-full overflow-hidden rounded-2xl bg-black shadow-2xl"
+      >
+        <div ref={target} className="size-full" />
+        {live === false && (
+          <p className="text-muted-foreground absolute inset-0 flex items-center justify-center px-6 text-center text-sm">
+            {t("Your bot's browser is closed.")}
+          </p>
+        )}
+        <input
+          ref={typing}
+          aria-label={t("Type here")}
+          autoComplete="off"
+          autoCapitalize="off"
+          spellCheck={false}
+          onKeyDown={(event) => {
+            const keysym = KEYS.get(event.key);
+            if (keysym === undefined) return;
+            event.preventDefault();
+            press(keysym, event.key);
+          }}
+          onInput={(event) => {
+            const text = event.currentTarget.value;
+            event.currentTarget.value = "";
+            for (const character of text) press(keysymOf(character), null);
+          }}
+          className="sr-only"
+        />
+      </div>
+      <div className="bg-card/95 border-foreground/14 flex h-12 max-w-full shrink-0 items-center gap-2.5 rounded-xl border ps-4 pe-1.5 text-sm backdrop-blur-sm">
+        {teaching ? (
+          <>
+            <span className="size-2 shrink-0 rounded-full bg-red-500" />
+            <span className="min-w-0 truncate">{t("Showing {name} how", { name })}</span>
             <button
               type="button"
-              aria-label={t("Close")}
-              onClick={hide}
-              className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-9 shrink-0 items-center justify-center rounded-full"
+              onClick={() => void finishTeaching()}
+              className="bg-foreground text-background h-9 shrink-0 rounded-full px-4 font-medium"
             >
-              <HugeiconsIcon icon={Cancel01Icon} className="size-4.5" />
+              {t("Done")}
             </button>
-          </div>
-          {screen.kind === "closed" ? (
-            <p className="text-muted-foreground m-auto px-6 text-center text-sm">
-              {t("Your bot's browser is closed.")}
-            </p>
-          ) : (
-            <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-3 p-2 md:p-4">
-              <div
-                onClick={(event) =>
-                  controlling && void send(botId, { kind: "click", ...pointOf(event) })
-                }
-                onWheel={(event) =>
-                  controlling &&
-                  void send(botId, {
-                    kind: "wheel",
-                    ...pointOf(event),
-                    deltaX: Math.round(event.deltaX),
-                    deltaY: Math.round(event.deltaY),
-                  })
-                }
-                className={`min-h-0 w-full max-w-7xl flex-1 ${controlling ? "cursor-pointer" : ""}`}
-              >
-                <Frame
-                  jpeg={screen.jpeg}
-                  title={screen.title}
-                  className="size-full object-contain select-none"
-                />
-              </div>
-              {controlling && (
-                <input
-                  autoFocus
-                  aria-label={t("Type here")}
-                  placeholder={t("Type here")}
-                  autoComplete="off"
-                  autoCapitalize="off"
-                  spellCheck={false}
-                  onKeyDown={(event) => {
-                    if (MODIFIERS.has(event.key)) return;
-                    if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) return;
-                    event.preventDefault();
-                    void send(botId, { kind: "key", key: keyOf(event) });
-                  }}
-                  onInput={(event) => {
-                    const text = event.currentTarget.value;
-                    event.currentTarget.value = "";
-                    if (text) void send(botId, { kind: "text", text });
-                  }}
-                  className="bg-foreground/6 focus-visible:bg-foreground/10 h-11 w-full max-w-md shrink-0 rounded-xl px-3 text-base outline-none"
-                />
-              )}
-            </div>
-          )}
-        </div>
-      )}
-    </>
+          </>
+        ) : (
+          <>
+            <span className="size-1.5 shrink-0 rounded-full bg-amber-500" />
+            <span className="text-muted-foreground min-w-0 truncate">
+              {t("{name} waits while you use it", { name })}
+            </span>
+            <button
+              type="button"
+              onClick={() => void startTeaching()}
+              className="hover:bg-muted flex h-9 shrink-0 items-center gap-2 rounded-full px-3 font-medium pointer-coarse:hidden"
+            >
+              <span className="size-3 rounded-full border-2 border-current" />
+              {t("Teach a task")}
+            </button>
+            <button
+              type="button"
+              aria-label={t("Keyboard")}
+              onClick={() => typing.current?.focus()}
+              className="text-muted-foreground hover:bg-muted hover:text-foreground hidden size-9 shrink-0 items-center justify-center rounded-xl pointer-coarse:flex"
+            >
+              <HugeiconsIcon icon={KeyboardIcon} className="size-4.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                void chat?.sendMessage({
+                  text: t("I'm done"),
+                  metadata: { createdAt: Date.now() },
+                });
+                hide();
+              }}
+              className="bg-foreground text-background h-9 shrink-0 rounded-full px-4 font-medium"
+            >
+              {t("I'm done")}
+            </button>
+          </>
+        )}
+        <span className="bg-foreground/14 h-5 w-px shrink-0" />
+        <button
+          type="button"
+          aria-label={t("Close")}
+          onClick={close}
+          className="text-muted-foreground hover:bg-muted hover:text-foreground flex size-9 shrink-0 items-center justify-center rounded-xl"
+        >
+          <HugeiconsIcon icon={Cancel01Icon} className="size-4.5" />
+        </button>
+      </div>
+    </div>
   );
+};
+
+export const BrowserScreen: FC<{ botId: string; name: string }> = ({ botId, name }) => {
+  const showing = useBrowser((s) => s.showing);
+  return showing ? <FullView botId={botId} name={name} /> : null;
 };

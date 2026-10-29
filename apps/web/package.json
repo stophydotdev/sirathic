@@ -21,6 +21,7 @@
     "@lexical/plain-text": "0.52.0",
     "@lexical/react": "0.52.0",
     "@lexical/utils": "0.52.0",
+    "@novnc/novnc": "1.7.0",
     "@opennextjs/cloudflare": "1.20.13",
     "@sirathic/app": "workspace:*",
     "@sirathic/browser": "workspace:*",

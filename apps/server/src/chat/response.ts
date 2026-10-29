@@ -19,6 +19,7 @@ import {
   type UIMessageStreamOutcome,
 } from "ai";
 import { OpenTelemetry } from "@ai-sdk/otel";
+import { z } from "zod";
 import { memoryTools } from "../account/memory";
 import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
@@ -74,6 +75,8 @@ import {
   sendFeedback,
   sirathicTools,
 } from "./tools";
+
+const shownForm = z.object({ shown: z.literal(true) });
 
 const tracing = new OpenTelemetry({ agentSpanName: "functionId" });
 
@@ -157,7 +160,12 @@ export function answerAgent({
     tools: gated,
     stopWhen: [
       hasToolCall(CLARIFYING),
-      hasToolCall(USER_FORM),
+      ({ steps }) =>
+        steps
+          .at(-1)
+          ?.toolResults.some(
+            (part) => part.toolName === USER_FORM && shownForm.safeParse(part.output).success,
+          ) ?? false,
       hasToolCall(BROWSER_HELP),
       isStepCount(STEP_CAP),
     ],

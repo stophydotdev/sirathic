@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-export const VIEWPORT = { width: 1280, height: 800 };
-
 const target = z
   .string()
   .regex(/^(?:f\d+)?e\d+$/u)
@@ -9,7 +7,18 @@ const target = z
 
 const navigateInput = z.object({ url: z.httpUrl() });
 export const findInput = z.object({ text: z.string().min(1).max(200) });
-export const clickInput = z.object({ target });
+export const clickInput = z.object({
+  target,
+  holdMs: z
+    .number()
+    .int()
+    .min(500)
+    .max(30_000)
+    .optional()
+    .describe(
+      'Press and hold this many milliseconds, for a "press and hold" button. Leave it out for a normal click.',
+    ),
+});
 export const typeInput = z.object({
   target,
   text: z.string().max(2_000),
@@ -55,6 +64,19 @@ export const batchInput = z.object({
   steps: z.array(step).min(2).max(10).describe("Actions run in order, each with its kind."),
 });
 
+export const tabsInput = z.object({
+  do: z
+    .enum(["list", "select", "close"])
+    .describe("List the open tabs, or switch to or close one."),
+  tab: z
+    .number()
+    .int()
+    .min(1)
+    .max(30)
+    .optional()
+    .describe("The tab's number from the list, for select and close."),
+});
+
 export const runCodeInput = z.object({
   code: z
     .string()
@@ -76,6 +98,7 @@ export const action = z.discriminatedUnion("kind", [
   waitForInput.extend({ kind: z.literal("wait_for") }),
   runCodeInput.extend({ kind: z.literal("run_code") }),
   batchInput.extend({ kind: z.literal("batch") }),
+  tabsInput.extend({ kind: z.literal("tabs") }),
 ]);
 
 export type Action = z.infer<typeof action>;
@@ -96,20 +119,9 @@ export const failure = z.object({ error: z.string() });
 
 export const sessionRequest = z.object({ session });
 
-const x = z.number().min(0).max(VIEWPORT.width);
-const y = z.number().min(0).max(VIEWPORT.height);
-const delta = z.number().min(-5_000).max(5_000);
+export const screenMode = z.enum(["watch", "control"]);
 
-export const userInput = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("click"), x, y }),
-  z.object({ kind: z.literal("wheel"), x, y, deltaX: delta, deltaY: delta }),
-  z.object({ kind: z.literal("key"), key: z.string().min(1).max(40) }),
-  z.object({ kind: z.literal("text"), text: z.string().min(1).max(2_000) }),
-]);
-
-export type UserInput = z.infer<typeof userInput>;
-
-export const inputRequest = z.object({ session, input: userInput });
+export const screenRequest = z.object({ session, mode: screenMode });
 
 export const userForm = z.object({
   title: z
@@ -181,13 +193,40 @@ export const filled = z.object({
 
 export type Filled = z.infer<typeof filled>;
 
-export const viewEvent = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("closed") }),
-  z.object({ kind: z.literal("page"), url: z.string(), title: z.string() }),
-  z.object({ kind: z.literal("frame"), jpeg: z.string() }),
+export const checkRequest = z.object({ session, targets: z.array(target).min(1).max(8) });
+
+export const checked = z.object({ missing: z.array(z.string()) });
+
+export const refillRequest = z.object({
+  session,
+  fields: z
+    .array(
+      z.object({
+        from: target.describe("The field's target in the form you sent."),
+        to: target.describe("The same field's ref in your fresh snapshot."),
+      }),
+    )
+    .min(1)
+    .max(8),
+});
+
+export const taughtStep = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("open"), url: z.string().max(2_000) }),
+  z.object({ kind: z.literal("click"), target: z.string().max(120) }),
+  z.object({
+    kind: z.literal("type"),
+    target: z.string().max(120),
+    text: z.string().max(200).optional(),
+  }),
+  z.object({ kind: z.literal("choose"), target: z.string().max(120), option: z.string().max(120) }),
+  z.object({ kind: z.literal("press"), key: z.literal("Enter") }),
 ]);
 
-export type ViewEvent = z.infer<typeof viewEvent>;
+export type TaughtStep = z.infer<typeof taughtStep>;
+
+export const teachRequest = z.object({ session, teaching: z.boolean() });
+
+export const taught = z.object({ steps: z.array(taughtStep) });
 
 export const loginRequest = z.object({
   session,
@@ -204,6 +243,8 @@ export type LoginRequest = z.infer<typeof loginRequest>;
 
 export const pageInfo = z.object({ url: z.string(), title: z.string() });
 
+export const screenshot = pageInfo.extend({ jpeg: z.string() });
+
 export const loginResult = pageInfo.extend({
   status: z.enum(["signed-in", "still-signing-in", "needs-code", "no-fields", "wrong-site"]),
 });
@@ -212,7 +253,9 @@ export type LoginResult = z.infer<typeof loginResult>;
 
 export type ServiceRequest =
   | z.infer<typeof request>
-  | z.infer<typeof inputRequest>
   | FillRequest
   | LoginRequest
-  | z.infer<typeof sessionRequest>;
+  | z.infer<typeof sessionRequest>
+  | z.infer<typeof checkRequest>
+  | z.infer<typeof refillRequest>
+  | z.infer<typeof teachRequest>;

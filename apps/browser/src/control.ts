@@ -1,19 +1,30 @@
-import { z } from "zod";
-import type { Filled, FillRequest, UserInput } from "./protocol";
+import type { Page } from "patchright";
+import type { Filled, FillRequest } from "./protocol";
 import { settled } from "./run";
 import type { Session } from "./sessions";
 
 const FILL_TIMEOUT_MS = 5_000;
-const TYPED_MIN_CHARS = 4;
-const FOCUSED_VALUE =
-  "(() => { const field = document.activeElement; return document.hasFocus() && field && 'value' in field ? String(field.value) : ''; })()";
-
-const focusedValue = z.string().catch("");
 
 export const onSite = (url: string, site: string) => {
   const host = URL.parse(url)?.hostname.replace(/^www\./u, "") ?? "";
   const bare = site.replace(/^www\./u, "");
   return host === bare || host.endsWith(`.${bare}`) || bare.endsWith(`.${host}`);
+};
+
+const put = (page: Page, target: string, value: string, shown: Set<string>) => {
+  const field = page.locator(`aria-ref=${target}`);
+  return field
+    .fill(value, { timeout: FILL_TIMEOUT_MS })
+    .catch(async () => {
+      await field.selectOption(value, { timeout: FILL_TIMEOUT_MS });
+      for (const label of await field.locator("option:checked").allInnerTexts()) {
+        shown.add(label.trim());
+      }
+    })
+    .then(
+      () => true,
+      () => false,
+    );
 };
 
 const clearSecrets = (secrets: ReadonlySet<string>) =>
@@ -23,32 +34,6 @@ export const cleared = ({ page, secrets }: Session) =>
   Promise.all(
     page.frames().map((frame) => frame.evaluate(clearSecrets(secrets)).catch(() => undefined)),
   );
-
-export const control = async ({ page, secrets }: Session, input: UserInput) => {
-  switch (input.kind) {
-    case "click":
-      await page.mouse.click(input.x, input.y);
-      return;
-    case "wheel":
-      await page.mouse.move(input.x, input.y);
-      await page.mouse.wheel(input.deltaX, input.deltaY);
-      return;
-    case "key":
-      await page.keyboard.press(input.key);
-      return;
-    case "text": {
-      await page.keyboard.insertText(input.text);
-      const typed = await Promise.all(
-        page
-          .frames()
-          .map(async (frame) =>
-            focusedValue.parse(await frame.evaluate(FOCUSED_VALUE).catch(() => "")),
-          ),
-      );
-      for (const value of typed) if (value.length >= TYPED_MIN_CHARS) secrets.add(value);
-    }
-  }
-};
 
 export const fill = async (
   session: Session,
@@ -63,21 +48,18 @@ export const fill = async (
   const secret = fields.some((field) => field.secret);
   for (const field of fields) (field.secret ? secrets : hidden).add(field.value);
   const results = await fields.reduce<Promise<Filled["fields"]>>(
-    async (done, { target, value }) => [
+    async (done, { target, value, secret: isSecret }) => [
       ...(await done),
       {
         target,
-        filled: await page
-          .locator(`aria-ref=${target}`)
-          .fill(value, { timeout: FILL_TIMEOUT_MS })
-          .then(
-            () => true,
-            () => false,
-          ),
+        filled: await put(page, target, value, isSecret ? secrets : hidden),
       },
     ],
     Promise.resolve([]),
   );
+  for (const [index, field] of fields.entries()) {
+    if (!results[index]?.filled) session.held.set(field.target, { value: field.value, domain });
+  }
   const last = fields.at(-1);
   const submitted =
     (submit || secret) && last !== undefined && results.every((field) => field.filled);
@@ -87,4 +69,36 @@ export const fill = async (
     await cleared(session);
   }
   return { fields: results, submitted };
+};
+
+export const check = async ({ page }: Session, targets: string[]) => ({
+  missing: (
+    await Promise.all(
+      targets.map(async (target) =>
+        (await page
+          .locator(`aria-ref=${target}`)
+          .count()
+          .catch(() => 0)) > 0
+          ? []
+          : [target],
+      ),
+    )
+  ).flat(),
+});
+
+export const refill = async (
+  session: Session,
+  fields: { from: string; to: string }[],
+): Promise<Filled> => {
+  const { page } = session;
+  const results = await fields.reduce<Promise<Filled["fields"]>>(async (done, { from, to }) => {
+    const held = session.held.get(from);
+    const ok =
+      held !== undefined &&
+      onSite(page.url(), held.domain) &&
+      (await put(page, to, held.value, session.hidden));
+    if (ok) session.held.delete(from);
+    return [...(await done), { target: to, filled: ok }];
+  }, Promise.resolve([]));
+  return { fields: results, submitted: false };
 };

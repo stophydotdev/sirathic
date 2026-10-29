@@ -644,7 +644,7 @@ export const vaultLogins = pgTable(
   {
     id: uuid().primaryKey().defaultRandom(),
     owner: text().notNull(),
-    kind: text().$type<"login" | "onepassword">().notNull().default("login"),
+    kind: text().$type<"login" | "onepassword" | "contact">().notNull().default("login"),
     site: text().notNull(),
     sealed: text().notNull(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),

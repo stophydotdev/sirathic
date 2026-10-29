@@ -3,6 +3,7 @@
 !bun.lock
 !apps/browser/package.json
 !apps/browser/src
+!apps/browser/chromePolicy.json
 !packages/*/package.json
 **/node_modules
 **/.env*

@@ -17,7 +17,10 @@ const LOAD_TIMEOUT_MS = 5_000;
 const KEY_DELAY_MS = 40;
 const PLAIN_MIN_CHARS = 2;
 const COOKIE_MIN_CHARS = 8;
-const INPUTS = "[...document.querySelectorAll('input')].map((input) => [input.type, input.value])";
+const SHOWN_MIN_CHARS = 4;
+const SHOT_QUALITY = 70;
+const INPUTS =
+  "[...document.querySelectorAll('input, textarea')].map((input) => [input.type, input.value])";
 
 const inputValues = z.array(z.tuple([z.string(), z.string()]));
 
@@ -33,7 +36,7 @@ const inputsOf = async (page: Page) =>
     )
   ).flat();
 
-const secretsOf = async ({ page, context, secrets, hidden }: Session) => {
+export const secretsOf = async ({ page, context, secrets, hidden }: Session) => {
   const passwords = (await inputsOf(page)).flatMap(([type, value]) =>
     type === "password" ? [value] : [],
   );
@@ -127,9 +130,20 @@ type Step = Extract<Action, { kind: "click" | "type" | "press" | "select" }>;
 const perform = async (page: Page, step: Step) => {
   const element = (target: string) => page.locator(`aria-ref=${target}`);
   switch (step.kind) {
-    case "click":
-      await element(step.target).click({ timeout: ACTION_TIMEOUT_MS });
+    case "click": {
+      if (!step.holdMs) {
+        await element(step.target).click({ timeout: ACTION_TIMEOUT_MS });
+        return;
+      }
+      await element(step.target).scrollIntoViewIfNeeded({ timeout: ACTION_TIMEOUT_MS });
+      const box = await element(step.target).boundingBox({ timeout: ACTION_TIMEOUT_MS });
+      if (!box) throw new Error("That element isn't on the screen, so it can't be held.");
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await page.waitForTimeout(step.holdMs);
+      await page.mouse.up();
       return;
+    }
     case "type":
       await element(step.target).fill("", { timeout: ACTION_TIMEOUT_MS });
       await page.keyboard.type(step.text, { delay: KEY_DELAY_MS });
@@ -147,11 +161,13 @@ const failedStep = async (session: Session, steps: readonly Step[]) =>
   steps.reduce<Promise<string | undefined>>(
     async (failed, step, index) =>
       (await failed) ??
-      perform(session.page, step).then(
-        () => undefined,
-        (error: Error) =>
-          `Step ${index + 1} (${step.kind}) failed: ${reasonOf(error)} The steps after it did not run.`,
-      ),
+      (session.controllers > 0
+        ? `Step ${index + 1} did not run: the person is using your browser now. Stop and wait until they say they're done.`
+        : perform(session.page, step).then(
+            () => undefined,
+            (error: Error) =>
+              `Step ${index + 1} (${step.kind}) failed: ${reasonOf(error)} The steps after it did not run.`,
+          )),
     Promise.resolve(undefined),
   );
 
@@ -211,6 +227,34 @@ const unmasked = async (session: Session, action: Action): Promise<Result> => {
       }
       if (action.time) await page.waitForTimeout(action.time * 1_000);
       return pageAfter(session, startUrl);
+    case "tabs": {
+      const pages = session.context.pages();
+      const chosen = action.tab === undefined ? undefined : pages[action.tab - 1];
+      if (action.do !== "list" && !chosen) {
+        throw new Error(`There is no tab ${action.tab ?? ""}. List the tabs first.`);
+      }
+      if (action.do === "select" && chosen) {
+        await chosen.bringToFront();
+        session.page = chosen;
+      }
+      if (action.do === "close" && chosen) {
+        await chosen.close();
+        session.page = session.context.pages().at(-1) ?? (await session.context.newPage());
+        await session.page.bringToFront();
+      }
+      const open = session.context.pages();
+      const titles = await Promise.all(open.map((tab) => titleOf(tab)));
+      return {
+        url: session.page.url(),
+        title: await titleOf(session.page),
+        page: open
+          .map(
+            (tab, index) =>
+              `${index + 1}. ${titles[index] || "Untitled"}: ${tab.url()}${tab === session.page ? " (in front)" : ""}`,
+          )
+          .join("\n"),
+      };
+    }
     case "run_code": {
       if (await secretInField(session)) {
         throw new Error(
@@ -227,6 +271,31 @@ const unmasked = async (session: Session, action: Action): Promise<Result> => {
       };
     }
   }
+};
+
+export const screenshotOf = async (session: Session) => {
+  const { page, hidden } = session;
+  const values = (await secretsOf(session)).filter((value) => value.length >= SHOWN_MIN_CHARS);
+  const fields = (await inputsOf(page)).map(([, value]) => value);
+  const shown = [
+    ...(await Promise.all(page.frames().map((frame) => frame.innerText("body").catch(() => "")))),
+    ...fields,
+  ].join("\n");
+  if (
+    (await secretInField(session)) ||
+    fields.some((value) => value !== "" && hidden.has(value)) ||
+    masked(shown, values) !== shown
+  ) {
+    throw new Error(
+      "browser_screenshot is off while a password or another private value is on the page. Submit the form or leave the page first.",
+    );
+  }
+  const jpeg = await page.screenshot({ type: "jpeg", quality: SHOT_QUALITY });
+  return {
+    url: masked(page.url(), values),
+    title: masked(await titleOf(page), values),
+    jpeg: jpeg.toString("base64"),
+  };
 };
 
 export const run = async (session: Session, action: Action): Promise<Result> => {

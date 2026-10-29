@@ -103,7 +103,9 @@ const Bubble: FC<{ said: Said; menu: boolean }> = ({ said, menu }) => {
   if (said.kind === "text") return <BotText text={said.text} menu={menu} />;
   const { toolName, args, result } = said.part;
   if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
-  if (currentToolName(toolName) === "request_user_form") return <FormCard args={args} />;
+  if (currentToolName(toolName) === "request_user_form") {
+    return <FormCard args={args} result={result} />;
+  }
   if (currentToolName(toolName) === "request_browser_help") return <HelpCard args={args} />;
   return (
     <>
@@ -309,6 +311,7 @@ const sentAt = (messages: readonly ThreadMessage[], message: ThreadMessage) => {
 const stampOf = (messages: readonly ThreadMessage[], id: string) => {
   const message = messages.find((item) => item.id === id);
   if (message?.role !== "user") return undefined;
+  if (messageMetadata.safeParse(message.metadata.custom).data?.formReply) return undefined;
   const at = sentAt(messages, message);
   const before = messages.slice(0, messages.indexOf(message)).findLast((m) => m.role === "user");
   return before === undefined || at - sentAt(messages, before) > STAMP_GAP ? at : undefined;
@@ -329,6 +332,10 @@ const BotYou: FC = () => {
   const routine = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.routine,
   );
+  const formReply = useAuiState(
+    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.formReply,
+  );
+  if (formReply) return null;
   if (routine) {
     return (
       <p className="text-muted-foreground pt-6 pb-1 text-center text-xs">

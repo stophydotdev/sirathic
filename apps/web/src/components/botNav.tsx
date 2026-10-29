@@ -26,7 +26,12 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
   const t = useT();
   const href = `/bot/${bot.id}`;
   const unread = session?.unread;
-  const preview = session ? session.preview : bot.greeting;
+  const waiting = session?.working ? null : session?.waiting;
+  const preview = waiting
+    ? t("Waiting for you: {task}", { task: waiting })
+    : session
+      ? session.preview
+      : bot.greeting;
 
   return (
     <div
@@ -79,8 +84,19 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
             )}
           </span>
           <span className="flex items-center gap-2 pointer-coarse:pe-6">
-            <span className="text-muted-foreground min-w-0 flex-1 truncate text-xs">{preview}</span>
-            {unread && <span className="bg-super size-1.5 shrink-0 rounded-full" />}
+            <span
+              className={cn(
+                "min-w-0 flex-1 truncate text-xs",
+                waiting ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground",
+              )}
+            >
+              {preview}
+            </span>
+            {waiting ? (
+              <span className="size-1.5 shrink-0 rounded-full bg-amber-500" />
+            ) : (
+              unread && <span className="bg-super size-1.5 shrink-0 rounded-full" />
+            )}
           </span>
         </span>
       </Link>
