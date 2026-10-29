@@ -1,7 +1,7 @@
 "use client";
 
 import { sectionNames } from "@sirathic/app/botGroups";
-import { useBotPanel } from "@/components/botSettings";
+import { useBotProfile } from "@/components/botProfile";
 import { useT } from "@/components/i18n";
 import { DeleteProjectDialog, TextDialog } from "@/components/projectMenu";
 import { type Project, useProjects } from "@/components/projects";
@@ -56,7 +56,7 @@ export const BotMenu: FC<{
   const editProfile = () => {
     onDone?.();
     if (pathname !== `/bot/${bot.id}`) router.push(`/bot/${bot.id}`);
-    useBotPanel.getState().show("settings");
+    useBotProfile.getState().setOpen(true);
   };
 
   return (
