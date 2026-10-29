@@ -19,6 +19,7 @@ import { type ChatMessage, question } from "../apps/server/src/shared/messages";
 import { outdated } from "../apps/web/src/components/chat";
 import { nextFollowUp, queueFollowUp } from "../apps/web/src/components/followUps";
 import { importedFacts } from "../apps/web/src/components/memoryImport";
+import { citationRuns, groupedCitations } from "../apps/mobile/src/lib/sources";
 import { blobMotion } from "../packages/app/src/blob/engine";
 import { BODIES, bodyOf } from "../packages/app/src/blob/shape";
 
@@ -370,5 +371,18 @@ test("follow-ups queued during an answer go out one at a time, in order, per cha
     "Give the hadith too.",
     undefined,
     "Is witr obligatory?",
+  ]);
+});
+
+test("a phone citation pill keeps every source of its own run, even when runs share a first source", () => {
+  const text =
+    "Patience [1](https://quran.com/2/153) [2](https://islamqa.info/a). Prayer [3](https://quran.com/2/153) [4](https://sunnah.com/b). Gift [5](https://quran.com/2/153).";
+  expect(groupedCitations(text)).toBe(
+    "Patience [c0](https://quran.com/2/153). Prayer [c1](https://quran.com/2/153). Gift [c2](https://quran.com/2/153).",
+  );
+  expect(citationRuns(text)).toEqual([
+    ["https://quran.com/2/153", "https://islamqa.info/a"],
+    ["https://quran.com/2/153", "https://sunnah.com/b"],
+    ["https://quran.com/2/153"],
   ]);
 });

@@ -31,15 +31,18 @@ export const faviconUrl = (url: string) =>
   `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(URL.parse(url)?.hostname ?? url)}`;
 
 const CITATION_RUN = /(?:\s*\[\d+\]\((https?:\/\/[^)\s]+)\))+/gu;
-const CITATION_LINK = /\[\d+\]\(/gu;
+
+const urlsIn = (run: string) => [...run.matchAll(CITED_LINK)].flatMap((link) => link[1] ?? []);
 
 export const withoutCitations = (text: string) => text.replace(CITATION_RUN, "");
 
-export const groupedCitations = (text: string) =>
-  text.replace(CITATION_RUN, (run, first: string) => {
-    const extra = (run.match(CITATION_LINK)?.length ?? 1) - 1;
-    return ` [${extra > 0 ? `+${extra}` : "0"}](${first})`;
-  });
+export const groupedCitations = (text: string) => {
+  let run = 0;
+  return text.replace(CITATION_RUN, (found) => ` [c${run++}](${urlsIn(found)[0] ?? ""})`);
+};
+
+export const citationRuns = (text: string) =>
+  [...text.matchAll(CITATION_RUN)].map((found) => urlsIn(found[0]));
 
 export const pluginIcon = (url: string) => {
   const known = Object.values(CONNECTORS).find((connector) => connector.url === url);
@@ -49,7 +52,6 @@ export const pluginIcon = (url: string) => {
 };
 
 export function siteName(url: string) {
-  const host = URL.parse(url)?.hostname.replace(/^www\./, "");
-  if (!host) return url;
-  return host.split(".").slice(0, -1).join(".") || host;
+  const parts = (URL.parse(url)?.hostname.replace(/^www\./, "") ?? url).split(".");
+  return (parts.length > 2 ? parts.at(-2) : parts[0]) ?? url;
 }
