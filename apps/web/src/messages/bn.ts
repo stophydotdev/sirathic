@@ -225,6 +225,8 @@ export default {
   "Add {count} facts": "{count}টি তথ্য যোগ করুন",
   "Searching your past chats": "আপনার আগের চ্যাট খোঁজা হচ্ছে",
   "Searched your past chats": "আপনার আগের চ্যাট খোঁজা হয়েছে",
+  "Searching X": "X-এ খোঁজা হচ্ছে",
+  "Searched X": "X-এ খোঁজা হয়েছে",
   "From your {name} account": "আপনার {name} অ্যাকাউন্ট থেকে",
   "No preference": "কোনো পছন্দ নেই",
   Hanafi: "হানাফি",

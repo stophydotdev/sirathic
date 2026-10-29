@@ -231,6 +231,8 @@ export default {
   "Add {count} facts": "Добавить факты: {count}",
   "Searching your past chats": "Ищу в ваших прошлых чатах",
   "Searched your past chats": "Поиск по вашим прошлым чатам выполнен",
+  "Searching X": "Поиск в X",
+  "Searched X": "Поиск в X выполнен",
   "From your {name} account": "Из вашего аккаунта {name}",
   "No preference": "Без предпочтения",
   Hanafi: "Ханафитский",

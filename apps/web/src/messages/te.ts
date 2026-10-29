@@ -223,6 +223,8 @@ export default {
   "Add {count} facts": "{count} విషయాలు జోడించండి",
   "Searching your past chats": "మీ గత చాట్‌లలో వెతుకుతోంది",
   "Searched your past chats": "మీ గత చాట్‌లలో వెతికింది",
+  "Searching X": "X లో వెతుకుతోంది",
+  "Searched X": "X లో వెతికింది",
   "From your {name} account": "మీ {name} ఖాతా నుండి",
   "No preference": "ప్రాధాన్యత లేదు",
   Hanafi: "హనఫీ",

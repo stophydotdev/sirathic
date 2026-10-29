@@ -232,6 +232,8 @@ export default {
   "Add {count} facts": "{count} حقایق اضافه کړئ",
   "Searching your past chats": "ستاسو پخوانۍ خبرې اترې لټول کیږي",
   "Searched your past chats": "ستاسو پخوانۍ خبرې اترې ولټول شوې",
+  "Searching X": "په X کې لټون",
+  "Searched X": "په X کې ولټول شو",
   "From your {name} account": "ستاسو د {name} له حسابه",
   "No preference": "هېڅ غوره توب نشته",
   Hanafi: "حنفي",

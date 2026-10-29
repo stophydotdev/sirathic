@@ -231,6 +231,8 @@ export default {
   "Add {count} facts": "Ɓeydu anndalji {count}",
   "Searching your past chats": "Ɗum ɗon ɗaɓɓita yeewtereeji maa adanɗi",
   "Searched your past chats": "Ɗum ɗaɓɓiti yeewtereeji maa adanɗi",
+  "Searching X": "Ina yiylo e X",
+  "Searched X": "Yiylii e X",
   "From your {name} account": "Iwde e konte {name} maa",
   "No preference": "Alaa ko ɓuri welde",
   Hanafi: "Hanafi",

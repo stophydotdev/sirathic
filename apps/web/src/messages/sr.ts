@@ -229,6 +229,8 @@ export default {
   "Add {count} facts": "Додај {count} чињеница",
   "Searching your past chats": "Претражујем твоје прошле разговоре",
   "Searched your past chats": "Претражио сам твоје прошле разговоре",
+  "Searching X": "Претрага X-а",
+  "Searched X": "Претражен X",
   "From your {name} account": "Из вашег {name} налога",
   "No preference": "Без предности",
   Hanafi: "Ханефијски",

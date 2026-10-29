@@ -230,6 +230,8 @@ export default {
   "Add {count} facts": "事実を{count}件追加",
   "Searching your past chats": "過去のチャットを検索中",
   "Searched your past chats": "過去のチャットを検索しました",
+  "Searching X": "X を検索中",
+  "Searched X": "X を検索しました",
   "From your {name} account": "あなたの {name} アカウントから",
   "No preference": "指定なし",
   Hanafi: "ハナフィー派",

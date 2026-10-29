@@ -233,6 +233,8 @@ export default {
   "Add {count} facts": "{count} та факт қўшиш",
   "Searching your past chats": "Олдинги суҳбатларингиздан қидирилмоқда",
   "Searched your past chats": "Олдинги суҳбатларингиздан қидирилди",
+  "Searching X": "X'да қидирилмоқда",
+  "Searched X": "X'да қидирилди",
   "From your {name} account": "{name} ҳисобингиздан",
   "No preference": "Танлов йўқ",
   Hanafi: "Ҳанафий",

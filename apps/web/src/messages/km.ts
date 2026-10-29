@@ -225,6 +225,8 @@ export default {
   "Add {count} facts": "បន្ថែម {count} ការពិត",
   "Searching your past chats": "កំពុងស្វែងរកការជជែកពីមុនរបស់អ្នក",
   "Searched your past chats": "បានស្វែងរកការជជែកពីមុនរបស់អ្នក",
+  "Searching X": "កំពុងស្វែងរកក្នុង X",
+  "Searched X": "បានស្វែងរកក្នុង X",
   "From your {name} account": "ពីគណនី {name} របស់អ្នក",
   "No preference": "គ្មានការជ្រើសរើស",
   Hanafi: "ហាណាហ្វី",

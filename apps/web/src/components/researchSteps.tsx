@@ -19,6 +19,7 @@ import {
   Clock04Icon,
   FavouriteIcon,
   Globe02Icon,
+  NewTwitterIcon,
   Search01Icon,
   SourceCodeIcon,
   SparklesIcon,
@@ -71,6 +72,10 @@ const TOOLS = new Map<
       label: (t) => t("Searching your past chats"),
       done: (t) => t("Searched your past chats"),
     },
+  ],
+  [
+    "search_x",
+    { Icon: NewTwitterIcon, label: (t) => t("Searching X"), done: (t) => t("Searched X") },
   ],
   [
     "stophy_search_endpoints",

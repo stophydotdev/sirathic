@@ -231,6 +231,8 @@ export default {
   "Add {count} facts": "{count} bilgi ekle",
   "Searching your past chats": "Geçmiş sohbetlerin aranıyor",
   "Searched your past chats": "Geçmiş sohbetlerin arandı",
+  "Searching X": "X'te aranıyor",
+  "Searched X": "X'te arandı",
   "From your {name} account": "{name} hesabınızdan",
   "No preference": "Tercih yok",
   Hanafi: "Hanefî",

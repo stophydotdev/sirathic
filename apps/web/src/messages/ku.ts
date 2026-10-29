@@ -232,6 +232,8 @@ export default {
   "Add {count} facts": "زیادکردنی {count} زانیاری",
   "Searching your past chats": "گەڕان بەناو گفتوگۆکانی پێشووت",
   "Searched your past chats": "گەڕا بەناو گفتوگۆکانی پێشووت",
+  "Searching X": "گەڕان لە X",
+  "Searched X": "لە X گەڕا",
   "From your {name} account": "لە هەژماری {name}ـەکەتەوە",
   "No preference": "هیچ هەڵبژاردنێک",
   Hanafi: "حەنەفی",

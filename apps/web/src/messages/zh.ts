@@ -222,6 +222,8 @@ export default {
   "Add {count} facts": "添加 {count} 条事实",
   "Searching your past chats": "正在搜索你的过往对话",
   "Searched your past chats": "已搜索你的过往对话",
+  "Searching X": "正在搜索 X",
+  "Searched X": "已搜索 X",
   "From your {name} account": "来自你的 {name} 账号",
   "No preference": "无偏好",
   Hanafi: "哈乃斐",

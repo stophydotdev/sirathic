@@ -229,6 +229,8 @@ export default {
   "Add {count} facts": "{count} உண்மைகளைச் சேர்",
   "Searching your past chats": "உங்கள் கடந்த உரையாடல்களில் தேடுகிறது",
   "Searched your past chats": "உங்கள் கடந்த உரையாடல்களில் தேடியது",
+  "Searching X": "X-இல் தேடுகிறது",
+  "Searched X": "X-இல் தேடியது",
   "From your {name} account": "உங்கள் {name} கணக்கிலிருந்து",
   "No preference": "விருப்பம் இல்லை",
   Hanafi: "ஹனஃபி",

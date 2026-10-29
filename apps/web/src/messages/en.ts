@@ -240,6 +240,8 @@ export const MESSAGES = [
   "Add {count} facts",
   "Searching your past chats",
   "Searched your past chats",
+  "Searching X",
+  "Searched X",
   "From your {name} account",
   "No preference",
   "Hanafi",

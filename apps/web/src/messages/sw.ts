@@ -247,6 +247,8 @@ export default {
   "Add {count} facts": "Ongeza mambo {count}",
   "Searching your past chats": "Inatafuta kwenye gumzo zako za zamani",
   "Searched your past chats": "Imetafuta kwenye gumzo zako za zamani",
+  "Searching X": "Inatafuta kwenye X",
+  "Searched X": "Imetafuta kwenye X",
   "From your {name} account": "Kutoka akaunti yako ya {name}",
   "No preference": "Hakuna upendeleo",
   Hanafi: "Hanafi",

@@ -231,6 +231,8 @@ export default {
   "Add {count} facts": "Thêm {count} điều",
   "Searching your past chats": "Đang tìm trong các cuộc trò chuyện trước của bạn",
   "Searched your past chats": "Đã tìm trong các cuộc trò chuyện trước của bạn",
+  "Searching X": "Đang tìm trên X",
+  "Searched X": "Đã tìm trên X",
   "From your {name} account": "Từ tài khoản {name} của bạn",
   "No preference": "Không ưu tiên",
   Hanafi: "Hanafi",

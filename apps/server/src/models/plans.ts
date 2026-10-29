@@ -33,6 +33,37 @@ const XAI_API = "https://api.x.ai/v1";
 const GROK_FALLBACK = "grok-4.6";
 const HOUR_MS = 3_600_000;
 
+const X_SEARCH_MODEL = "grok-4.20-0309-non-reasoning";
+const X_SEARCH_MS = 120_000;
+
+export const xSearchInput = z.object({
+  query: z.string().min(1).describe("What to look up on X."),
+  allowed_x_handles: z
+    .array(z.string())
+    .max(10)
+    .optional()
+    .describe("Optional list of X handles to include exclusively (max 10)."),
+  from_date: z.iso.date().optional().describe("Optional start date in YYYY-MM-DD format."),
+  to_date: z.iso.date().optional().describe("Optional end date in YYYY-MM-DD format."),
+});
+
+const grokAnswer = z.object({
+  citations: z.array(z.string()).catch([]),
+  output: z.array(
+    z.object({
+      type: z.string(),
+      content: z
+        .array(
+          z.object({
+            text: z.string().catch(""),
+            annotations: z.array(z.object({ url: z.string().optional() })).catch([]),
+          }),
+        )
+        .catch([]),
+    }),
+  ),
+});
+
 const grokList = z.object({ data: z.array(z.object({ id: z.string(), created: z.number() })) });
 
 const grokModelIds = cacheFor({
@@ -208,6 +239,42 @@ async function listGrokModels(userId: string) {
     .data.filter((model) => !model.id.startsWith("grok-imagine"))
     .toSorted((a, b) => b.created - a.created)
     .map((model) => model.id);
+}
+
+export const hasGrok = async (userId: string) =>
+  (
+    await db
+      .select({ id: accounts.id })
+      .from(accounts)
+      .where(eq(accounts.id, keyOf(userId, "xai")))
+      .limit(1)
+  ).length > 0;
+
+export async function searchX(userId: string, { query, ...filters }: z.infer<typeof xSearchInput>) {
+  const response = await withToken(userId, "xai")(`${XAI_API}/responses`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      model: X_SEARCH_MODEL,
+      input: [{ role: "user", content: query }],
+      tools: [{ type: "x_search", ...filters }],
+      store: false,
+    }),
+    signal: AbortSignal.timeout(X_SEARCH_MS),
+  });
+  if (response.status === 402 || response.status === 403) {
+    throw new Error("X search needs SuperGrok or X Premium+ on the connected Grok account");
+  }
+  if (!response.ok) throw new Error(`X search answered ${response.status}`);
+  const { citations, output } = grokAnswer.parse(await response.json());
+  const parts = output.flatMap((item) => (item.type === "message" ? item.content : []));
+  const linked = parts.flatMap((part) =>
+    part.annotations.flatMap((note) => (note.url ? [note.url] : [])),
+  );
+  return {
+    answer: parts.map((part) => part.text).join(""),
+    posts: [...new Set([...citations, ...linked])],
+  };
 }
 
 const grokModels = async (userId: string) =>

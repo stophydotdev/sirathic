@@ -233,6 +233,8 @@ export default {
   "Add {count} facts": "Tambah {count} fakta",
   "Searching your past chats": "Menelusuri obrolan lama Anda",
   "Searched your past chats": "Sudah menelusuri obrolan lama Anda",
+  "Searching X": "Mencari di X",
+  "Searched X": "Telah mencari di X",
   "From your {name} account": "Dari akun {name} Anda",
   "No preference": "Tanpa preferensi",
   Hanafi: "Hanafi",
