@@ -41,6 +41,7 @@ import { needsApproval, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
 import { fileTools, sandboxFiles } from "./fileTools";
+import { imageTools } from "./images";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
 import { reasonOf } from "../http";
@@ -331,7 +332,10 @@ export function chatResponse({
       };
       const available = {
         ...tools,
-        ...((!sourceKinds || sourceKinds.includes("web")) && stophyTools(sources.add)),
+        ...((!sourceKinds || sourceKinds.includes("web")) && {
+          ...stophyTools(sources.add),
+          ...imageTools(sources.addImage),
+        }),
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && !unattended && browserTools(inBot)),
