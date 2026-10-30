@@ -4,7 +4,6 @@ import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  ArrowRight01Icon,
   Cancel01Icon,
   Copy01Icon,
   ThumbsDownIcon,
@@ -41,7 +40,6 @@ export interface StreamingResponseProps {
   actions?: ReactNode;
   share?: ReactNode;
   trailing?: ReactNode;
-  pinned?: boolean;
   className?: string;
   contentClassName?: string;
   actionsClassName?: string;
@@ -95,7 +93,6 @@ export function StreamingResponse({
   actions,
   share,
   trailing,
-  pinned = false,
   className,
   contentClassName,
   actionsClassName,
@@ -232,21 +229,6 @@ export function StreamingResponse({
             </Dialog.Root>
           ) : null}
         </div>
-      ) : null}
-      {pinned && hasSources && !currentSourcesOpen ? (
-        <button
-          type="button"
-          onClick={() => setSourcesOpen(true)}
-          className="bg-card ring-foreground/7 hover:bg-muted fixed end-2 top-16 z-30 hidden h-12 w-80 items-center gap-2 rounded-2xl ps-4 pe-3 text-sm ring-1 transition-colors ring-inset md:end-4 @3xl:flex print:hidden"
-        >
-          <span className="flex-1 text-start font-medium">{t("Sources")}</span>
-          <CitationStack citations={sources} />
-          <span className="text-muted-foreground tabular-nums">{sources.length}</span>
-          <HugeiconsIcon
-            icon={ArrowRight01Icon}
-            className="text-muted-foreground size-4 rtl:rotate-180"
-          />
-        </button>
       ) : null}
     </div>
   );

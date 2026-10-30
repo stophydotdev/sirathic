@@ -16,7 +16,6 @@ import { Swap } from "@/components/swap";
 import { cn } from "@/lib/utils";
 import { ShareMenu } from "@/components/shareMenu";
 import { LinksView } from "@/components/linksView";
-import { sourcesOf } from "@/components/sources";
 import { useThreadView } from "@/components/threadView";
 import {
   ActionBarPrimitive,
@@ -203,13 +202,9 @@ const ThreadBody: FC = () => {
   const bot = useBot();
   const sourcesOpen = useOpenSources((s) => s.id !== undefined);
   const view = useThreadView((s) => s.view);
-  const pinned = useAuiState((s) => {
-    const last = s.thread.messages.at(-1);
-    return last?.role === "assistant" && sourcesOf(last.content).length > 0;
-  });
   const shifted = cn(
     "transition-all duration-300 ease-out-quint motion-reduce:transition-none",
-    (sourcesOpen || (pinned && !bot)) && "@3xl:pe-90",
+    sourcesOpen && "@3xl:pe-90",
   );
 
   return (

@@ -101,7 +101,6 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const [reporting, setReporting] = useState(false);
   const answerFont = usePreferences((s) => s.answerFont);
   const videoLine = useVideoLine();
-  const last = useAuiState((s) => s.message.isLast);
   const t = useT();
 
   return (
@@ -129,7 +128,6 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
           </AnswerExtras>
         }
         trailing={<MoreMenu sources={sources} />}
-        pinned={last}
       >
         <MessagePrimitive.GroupedParts groupBy={research} indicator="empty">
           {({ part }) => {
