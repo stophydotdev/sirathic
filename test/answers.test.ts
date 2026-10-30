@@ -285,13 +285,10 @@ test("an answer thinks at the effort the client asks for", async () => {
         prompt: "hi",
       });
       const options = seen[0]?.providerOptions;
-      return [options?.anthropic?.effort, options?.openai?.reasoningEffort];
+      return options?.openai?.reasoningEffort;
     }),
   );
-  expect(efforts).toEqual([
-    ["low", "low"],
-    ["max", "max"],
-  ]);
+  expect(efforts).toEqual(["low", "max"]);
 });
 
 test("quick and research both think at high when the user picks nothing", async () => {
@@ -301,7 +298,7 @@ test("quick and research both think at high when the user picks nothing", async 
       await answerWith(model, {
         turn: { effort: DEFAULT_EFFORT[mode], sessionId: "chat", by: "user" },
       }).generate({ prompt: "hi" });
-      return seen[0]?.providerOptions?.anthropic?.effort;
+      return seen[0]?.providerOptions?.openai?.reasoningEffort;
     }),
   );
   expect(efforts).toEqual(["high", "high"]);

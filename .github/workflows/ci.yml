@@ -24,7 +24,6 @@ jobs:
       VAULT_KMS_KEY_ARN: arn:aws:kms:us-east-1:000000000000:key/ci
       VAULT_AWS_ACCESS_KEY_ID: ci
       VAULT_AWS_SECRET_ACCESS_KEY: ci
-      ANTHROPIC_API_KEY: ci
       GOOGLE_CLIENT_ID: ci
       GOOGLE_CLIENT_SECRET: ci
       GITHUB_CLIENT_ID: ci

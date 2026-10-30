@@ -12,7 +12,6 @@ const PLACEHOLDERS = {
   VAULT_KMS_KEY_ARN: "arn:aws:kms:us-east-1:000000000000:key/test",
   VAULT_AWS_ACCESS_KEY_ID: "test",
   VAULT_AWS_SECRET_ACCESS_KEY: "test",
-  ANTHROPIC_API_KEY: "test",
   GOOGLE_CLIENT_ID: "test",
   GOOGLE_CLIENT_SECRET: "test",
   GITHUB_CLIENT_ID: "test",
