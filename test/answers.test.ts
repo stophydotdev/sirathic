@@ -255,10 +255,12 @@ test("every tool the prompt files name is a real tool", () => {
   expect(named.filter(({ word }) => !real.has(word))).toEqual([]);
 });
 
-test("an answer stops after 20 steps when the model keeps calling tools", async () => {
+test("an answer stops after 20 steps, and the last one must answer in text", async () => {
   const { model, seen } = scriptedModel(Array.from({ length: 30 }, () => "search_web"));
   const result = await answerWith(model, {}).generate({ prompt: "hi" });
   expect([result.steps.length, seen.length]).toEqual([20, 20]);
+  expect(toolNames(seen[19]) ?? []).toEqual([]);
+  expect(systemTexts(seen[19])?.at(-1)).toStartWith("You have no research steps left.");
 });
 
 test("a chat request with a system message is refused before anything runs", async () => {

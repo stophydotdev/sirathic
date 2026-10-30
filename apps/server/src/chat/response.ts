@@ -35,6 +35,7 @@ import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { islamicDates } from "../bots/islamicDates";
+import { prayerTimes } from "../prayer/tool";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
 import { needsApproval, writingTools } from "./confirm";
@@ -84,6 +85,8 @@ const tracing = new OpenTelemetry({ agentSpanName: "functionId" });
 
 export const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
+const LAST_STEP =
+  "You have no research steps left. Answer now from what you found, and say what you could not check.";
 const SAME_CALLS = 2;
 const STALLED_MS = 120_000;
 const RESEARCH_OPENS = ["research", "calculate", "files"];
@@ -184,14 +187,16 @@ export function answerAgent({
       const skillText = (index + loadedText(skills, open) + mentioned).trim();
       const earlier = initialMessages.map(shorten);
       const asked = earlier.findLastIndex((message) => message.role === "user") + 1;
+      const last = stepNumber === STEP_CAP - 1;
       return {
         messages: [
           ...earlier.slice(0, asked),
           ...(skillText ? [{ role: "system" as const, content: RULES_HEADER + skillText }] : []),
           ...earlier.slice(asked),
           ...responseMessages,
+          ...(last ? [{ role: "system" as const, content: LAST_STEP }] : []),
         ],
-        activeTools: Object.keys(tools).filter((name) => !closed.has(name)),
+        activeTools: last ? [] : Object.keys(tools).filter((name) => !closed.has(name)),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
       };
     },
@@ -346,6 +351,7 @@ export function chatResponse({
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && !unattended && browserTools(inBot)),
         ...(inBot && { islamic_dates: islamicDates }),
+        prayer_times: prayerTimes,
         ...(owner !== undefined && !unattended && skillTools(owner)),
         ...(owner !== undefined && grok && xSearchTools(owner, sources.add)),
         ...(owner !== undefined && !unattended && { [SEND_FEEDBACK]: sendFeedback }),

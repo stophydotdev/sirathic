@@ -5,6 +5,7 @@ import { fuse } from "../apps/server/src/chat/fuse";
 import { withoutPageText, withStoredPageText } from "../apps/server/src/chat/pageText";
 import { citations } from "../apps/server/src/chat/citations";
 import { needsSources, relevant } from "../apps/server/src/chat/relevance";
+import { documentLinks } from "../apps/server/src/chat/compact";
 import { onePerPage } from "../apps/server/src/chat/search";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { type ChatMessage, chatData, messageMetadata } from "../apps/server/src/shared/messages";
@@ -381,4 +382,25 @@ test("an image token split across chunks becomes that image, and an unknown one 
   let text = "";
   for await (const part of parts) if (part.type === "text-delta") text += part.text;
   expect(text).toBe("The Kaaba:\n\n![The Kaaba 2026](https://img.test/kaaba.jpg)\n\n\n");
+});
+
+test("a page's PDF links are listed so the model can open them", () => {
+  const markdown = [
+    "[Home](https://masjid.example/) [About](https://masjid.example/about)",
+    "[Download timetable 2026 (PDF)](https://masjid.example/Download.ashx?id=1)[Calendar](https://masjid.example/cal.pdf)",
+    "[Download timetable 2026 (PDF)](https://masjid.example/Download.ashx?id=1)",
+  ].join("\n");
+  expect(documentLinks(markdown)).toBe(
+    [
+      "Linked documents:",
+      "- Download timetable 2026 (PDF): https://masjid.example/Download.ashx?id=1",
+      "- Calendar: https://masjid.example/cal.pdf",
+    ].join("\n"),
+  );
+  expect(documentLinks("[Home](https://masjid.example/)")).toBe("");
+  const months = Array.from(
+    { length: 12 },
+    (_, month) => `[Month ${month + 1} (PDF)](https://masjid.example/${month + 1}.pdf)`,
+  );
+  expect(documentLinks(months.join(" ")).split("\n")).toHaveLength(13);
 });

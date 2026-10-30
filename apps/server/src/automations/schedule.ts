@@ -1,6 +1,9 @@
 import { z } from "zod";
+import { PRAYERS, prayerPlace, prayerTimesOn } from "../prayer/times";
 
 const SEARCH_DAYS = 366;
+
+const MAX_PRAYER_OFFSET = 180;
 
 const LEAP_YEAR = 2024;
 
@@ -18,7 +21,24 @@ export const schedule = z.discriminatedUnion("kind", [
   z
     .object({ kind: z.literal("hourly"), from: time, to: time })
     .refine((window) => window.to >= window.from, "the window ends before it starts"),
-  z.object({ kind: z.literal("daily"), time }),
+  z.object({
+    kind: z.literal("daily"),
+    time,
+    prayer: prayerPlace
+      .extend({
+        name: z.enum(PRAYERS),
+        minutes: z
+          .number()
+          .int()
+          .min(-MAX_PRAYER_OFFSET)
+          .max(MAX_PRAYER_OFFSET)
+          .describe("Minutes after the prayer time, negative for before."),
+      })
+      .optional()
+      .describe(
+        "Moves the run every day with this prayer time at the user's place. time is today's run time.",
+      ),
+  }),
   z.object({
     kind: z.literal("weekly"),
     days: z
@@ -123,6 +143,17 @@ export function nextRun(plan: Schedule, zone: string, after: Date) {
     return at > after.getTime() ? new Date(at) : undefined;
   }
   const today = wallClock(after.getTime(), zone);
+  if (plan.kind === "daily" && plan.prayer) {
+    for (let offset = -1; offset < 3; offset++) {
+      const at =
+        prayerTimesOn(plan.prayer, { ...today, day: today.day + offset })[
+          plan.prayer.name
+        ].getTime() +
+        plan.prayer.minutes * MINUTE_MS;
+      if (at > after.getTime()) return new Date(at);
+    }
+    return undefined;
+  }
   for (let offset = 0; offset < SEARCH_DAYS; offset++) {
     const day = new Date(Date.UTC(today.year, today.month - 1, today.day + offset));
     if (!runsOn(plan, day)) continue;

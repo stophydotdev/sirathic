@@ -67,6 +67,23 @@ export const pageText = (markdown: string, chars: number) => {
   );
 };
 
+const LINKED = new RegExp(
+  String.raw`\[((?:\\.|[^\]\\])*)\]\(((?:[^()\s]|\([^()\s]*\))*)(?:\s+"[^"]*")?\)`,
+  "gu",
+);
+const DOCUMENT = /\bpdf\b/iu;
+
+export const documentLinks = (markdown: string) => {
+  const links = new Map(
+    [...markdown.matchAll(LINKED)]
+      .filter(([, text = "", url = ""]) => DOCUMENT.test(text) || DOCUMENT.test(url))
+      .map(([, text = "", url = ""]) => [url, readable(text)]),
+  );
+  return links.size === 0
+    ? ""
+    : ["Linked documents:", ...[...links].map(([url, text]) => `- ${text}: ${url}`)].join("\n");
+};
+
 const PIECE_CHARS = 400;
 const SENTENCE_END = /(?<=[.!?؟؛])\s+/u;
 const ARABIC_PREFIX = /^(?:[وفبكل]?ال|[وف])(?=\p{L}{3})/u;
