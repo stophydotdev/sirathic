@@ -78,13 +78,13 @@ const tracing = new NodeSDK({
   logRecordProcessors: [],
 });
 tracing.start();
-process.on(
-  "SIGTERM",
-  () =>
-    void drainAnswers(DRAIN_MS)
-      .then(() => tracing.shutdown())
-      .finally(() => process.exit(0)),
-);
+const stopScheduler = env.RAILWAY_ENVIRONMENT_NAME === "production" ? startScheduler() : undefined;
+process.on("SIGTERM", () => {
+  void Promise.resolve(stopScheduler?.())
+    .then(() => drainAnswers(DRAIN_MS))
+    .then(() => tracing.shutdown())
+    .finally(() => process.exit(0));
+});
 
 const app = new Hono();
 
@@ -283,8 +283,6 @@ app.use(
     createContext: (_options, c) => createContext(c.req.raw.headers),
   }),
 );
-
-if (env.RAILWAY_ENVIRONMENT_NAME === "production") startScheduler();
 
 export default {
   port: env.PORT,
