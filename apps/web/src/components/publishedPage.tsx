@@ -2,6 +2,9 @@
 
 import { answerText } from "@/components/agents/streamingResponse";
 import { rehypeCitations } from "@/components/citations";
+import { Note, rehypeNotes } from "@/components/markdownNote";
+import { remarkPlugins, withMathDelimiters } from "@/components/markdownText";
+import { unwrappedCitations } from "@sirathic/app/citations";
 import { Favicon } from "@/components/favicon";
 import { useT } from "@/components/i18n";
 import { siteName } from "@/components/sources";
@@ -9,7 +12,7 @@ import type { Source } from "@sirathic/server/sources";
 import type { Element } from "hast";
 import type { ComponentProps, FC } from "react";
 import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import rehypeKatex from "rehype-katex";
 import { z } from "zod";
 
 const citedUrls = z.array(z.string()).min(1);
@@ -77,11 +80,11 @@ export const PublishedAnswers: FC<{
           )}
           <div className={answerText}>
             <Markdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeCitations]}
-              components={{ a: Anchor }}
+              remarkPlugins={remarkPlugins}
+              rehypePlugins={[rehypeKatex, rehypeCitations, rehypeNotes]}
+              components={{ a: Anchor, aside: Note }}
             >
-              {turn.answer}
+              {withMathDelimiters(unwrappedCitations(turn.answer))}
             </Markdown>
           </div>
         </section>

@@ -44,7 +44,7 @@ export const groupedCitations = (text: string) => {
 };
 
 export const citationRuns = (text: string) =>
-  [...text.matchAll(CITATION_RUN)].map((found) => urlsIn(found[0]));
+  [...unwrappedCitations(text).matchAll(CITATION_RUN)].map((found) => urlsIn(found[0]));
 
 export const pluginIcon = (url: string) => {
   const known = Object.values(CONNECTORS).find((connector) => connector.url === url);

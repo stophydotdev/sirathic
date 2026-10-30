@@ -1,13 +1,10 @@
 "use client";
 
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Globe02Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import { type ReactNode, useId, useState } from "react";
 import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
 import { api } from "@/lib/trpc";
-import { useFavicon } from "@/lib/hooks/useFavicon";
 import { cn } from "@/lib/utils";
 
 export interface CitationItem {
@@ -15,7 +12,7 @@ export interface CitationItem {
   title: ReactNode;
   domain?: ReactNode;
   url?: string;
-  icon?: ReactNode;
+  icon: ReactNode;
   group?: string;
   snippet?: string;
   video?: { channel: string; thumbnail?: string; line: string };
@@ -37,17 +34,7 @@ function citationTargetId(prefix: string, citationId: string) {
   return `${prefix}-${citationId.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
 }
 
-function CitationFavicon({
-  url,
-  icon,
-  className,
-}: {
-  url?: string;
-  icon?: ReactNode;
-  className?: string;
-}) {
-  const favicon = useFavicon(icon ? undefined : url);
-
+function CitationFavicon({ icon, className }: { icon: ReactNode; className?: string }) {
   return (
     <span
       aria-hidden="true"
@@ -56,21 +43,7 @@ function CitationFavicon({
         className,
       )}
     >
-      {icon ? (
-        icon
-      ) : favicon.src ? (
-        <img
-          ref={favicon.ref}
-          src={favicon.src}
-          alt=""
-          width={16}
-          height={16}
-          referrerPolicy="no-referrer"
-          className="size-4 rounded-sm object-contain"
-        />
-      ) : (
-        <HugeiconsIcon icon={Globe02Icon} className="size-3.5" />
-      )}
+      {icon}
     </span>
   );
 }
@@ -81,7 +54,6 @@ export function CitationStack({ citations, limit = 3, className }: CitationStack
       {citations.slice(0, limit).map((citation) => (
         <CitationFavicon
           key={citation.id}
-          url={citation.url}
           icon={citation.icon}
           className="size-6 rounded-full bg-background ring-2 ring-background"
         />
@@ -110,7 +82,7 @@ function CitationRow({
   const content = (
     <>
       <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-        <CitationFavicon url={citation.url} icon={citation.icon} className="size-4" />
+        <CitationFavicon icon={citation.icon} className="size-4" />
         <span className="min-w-0 truncate">
           {citation.domain}
           {citation.video && ` · ${citation.video.channel}`}

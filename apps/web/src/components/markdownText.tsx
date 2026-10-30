@@ -3,6 +3,7 @@
 import { useT } from "@/components/i18n";
 import "katex/dist/katex.min.css";
 
+import { useAuiState } from "@assistant-ui/react";
 import {
   MarkdownTextPrimitive,
   memoizeMarkdownComponents,
@@ -40,10 +41,19 @@ import { MarkdownTable } from "@/components/markdownTable";
 import { InlineVerse } from "@/components/verseCards";
 import { cn } from "@/lib/utils";
 
-const withMathDelimiters = (text: string) =>
+const CODE = /(```[\s\S]*?(?:```|$)|`[^`\n]*`)/u;
+
+export const withMathDelimiters = (text: string) =>
   text
-    .replaceAll(/\\\[([\s\S]*?)\\\]/gu, (_, math: string) => `\n$$\n${math}\n$$\n`)
-    .replaceAll(/\\\(([\s\S]*?)\\\)/gu, (_, math: string) => `$$${math}$$`);
+    .split(CODE)
+    .map((part, index) =>
+      index % 2 === 1
+        ? part
+        : part
+            .replaceAll(/\\\[([\s\S]*?)\\\]/gu, (_, math: string) => `\n$$\n${math}\n$$\n`)
+            .replaceAll(/\\\(([\s\S]*?)\\\)/gu, (_, math: string) => `$$${math}$$`),
+    )
+    .join("");
 
 const closeOpenBold = (text: string) => {
   const trimmed = text.endsWith("*") && !text.endsWith("**") ? text.slice(0, -1) : text;
@@ -51,26 +61,35 @@ const closeOpenBold = (text: string) => {
   return trimmed.endsWith("**") ? trimmed.slice(0, -2) : `${trimmed}**`;
 };
 
-const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => (
-  <MarkdownTextPrimitive
-    remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]}
-    rehypePlugins={[
-      rehypeKatex,
-      rehypeCitations,
-      rehypeNotes,
-      rehypeVerses,
-      ...(citations ? [] : [rehypeBareCitations]),
-    ]}
-    preprocess={(text) =>
-      markOpenDiagram(
-        withMathDelimiters(closeOpenBold(hidePendingCitation(unwrappedCitations(text)))),
-      )
-    }
-    className="aui-md"
-    components={citations ? components : withoutCitations}
-    componentsByLanguage={byLanguage}
-  />
-);
+export const remarkPlugins: ComponentProps<typeof MarkdownTextPrimitive>["remarkPlugins"] = [
+  remarkGfm,
+  [remarkMath, { singleDollarTextMath: false }],
+];
+
+const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => {
+  const streaming = useAuiState((s) => s.part.status.type === "running");
+  return (
+    <MarkdownTextPrimitive
+      remarkPlugins={remarkPlugins}
+      rehypePlugins={[
+        rehypeKatex,
+        rehypeCitations,
+        rehypeNotes,
+        rehypeVerses,
+        ...(citations ? [] : [rehypeBareCitations]),
+      ]}
+      preprocess={(text) => {
+        const shown = unwrappedCitations(text);
+        return markOpenDiagram(
+          withMathDelimiters(streaming ? closeOpenBold(hidePendingCitation(shown)) : shown),
+        );
+      }}
+      className="aui-md"
+      components={citations ? components : withoutCitations}
+      componentsByLanguage={byLanguage}
+    />
+  );
+};
 
 export const MarkdownText = memo(MarkdownTextImpl);
 

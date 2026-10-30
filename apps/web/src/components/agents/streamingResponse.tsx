@@ -28,21 +28,15 @@ export type StreamingResponseFeedback = "up" | "down" | null;
 export interface StreamingResponseProps {
   children: ReactNode;
   status?: StreamingResponseStatus;
-  copyText?: string;
   onCopy?: () => void | Promise<void>;
   sources?: CitationItem[];
-  sourceIdPrefix?: string;
-  feedback?: StreamingResponseFeedback;
-  defaultFeedback?: StreamingResponseFeedback;
+  feedback: StreamingResponseFeedback;
   onFeedbackChange?: (feedback: StreamingResponseFeedback) => void;
-  announce?: boolean;
   showActions?: boolean;
   actions?: ReactNode;
   share?: ReactNode;
   trailing?: ReactNode;
-  className?: string;
   contentClassName?: string;
-  actionsClassName?: string;
 }
 
 function ResponseAction({
@@ -81,37 +75,28 @@ function ResponseAction({
 export function StreamingResponse({
   children,
   status = "streaming",
-  copyText,
   onCopy,
   sources = [],
-  sourceIdPrefix,
   feedback,
-  defaultFeedback = null,
   onFeedbackChange,
-  announce = true,
   showActions = true,
   actions,
   share,
   trailing,
-  className,
   contentClassName,
-  actionsClassName,
 }: StreamingResponseProps) {
   const t = useT();
   const baseId = useId();
   const [copied, setCopied] = useState(false);
-  const [internalFeedback, setInternalFeedback] =
-    useState<StreamingResponseFeedback>(defaultFeedback);
   const copyTimer = useRef<number | undefined>(undefined);
-  const currentFeedback = feedback ?? internalFeedback;
   const currentSourcesOpen = useOpenSources((s) => s.id === baseId);
   const streaming = status === "streaming";
   const complete = status === "complete";
-  const canCopy = Boolean(copyText || onCopy);
+  const canCopy = onCopy !== undefined;
   const hasSources = sources.length > 0;
   const shouldShowActions = showActions && !streaming && (canCopy || complete || hasSources);
   const sourcesContentId = `${baseId}-sources`;
-  const resolvedSourcePrefix = sourceIdPrefix ?? `response-source-${baseId.replace(/:/g, "")}`;
+  const sourcePrefix = `response-source-${baseId.replace(/:/g, "")}`;
 
   useEffect(
     () => () => {
@@ -122,32 +107,28 @@ export function StreamingResponse({
   );
 
   const handleCopy = useCallback(async () => {
-    if (onCopy) await onCopy();
-    else if (copyText) await navigator.clipboard?.writeText(copyText);
+    await onCopy?.();
 
     setCopied(true);
     if (copyTimer.current) window.clearTimeout(copyTimer.current);
     copyTimer.current = window.setTimeout(() => setCopied(false), 1600);
-  }, [copyText, onCopy]);
+  }, [onCopy]);
 
-  const setFeedback = (next: Exclude<StreamingResponseFeedback, null>) => {
-    const value = currentFeedback === next ? null : next;
-    if (feedback === undefined) setInternalFeedback(value);
-    onFeedbackChange?.(value);
-  };
+  const setFeedback = (next: Exclude<StreamingResponseFeedback, null>) =>
+    onFeedbackChange?.(feedback === next ? null : next);
 
   const setSourcesOpen = (next: boolean) =>
     useOpenSources.setState({ id: next ? baseId : undefined });
 
   return (
-    <div data-answer data-state={status} aria-busy={streaming} className={cn("w-full", className)}>
-      <div aria-live={announce ? "polite" : "off"} className={cn(answerText, contentClassName)}>
+    <div data-answer data-state={status} aria-busy={streaming} className="w-full">
+      <div aria-live="polite" className={cn(answerText, contentClassName)}>
         {children}
       </div>
 
       {shouldShowActions ? (
         <div className="mt-3 print:hidden">
-          <div className={cn("flex items-center gap-0.5", actionsClassName)}>
+          <div className="flex items-center gap-0.5">
             {canCopy ? (
               <ResponseAction label={copied ? "Copied" : "Copy response"} onClick={handleCopy}>
                 <Swap
@@ -162,14 +143,14 @@ export function StreamingResponse({
               <>
                 <ResponseAction
                   label="Helpful"
-                  active={currentFeedback === "up"}
+                  active={feedback === "up"}
                   onClick={() => setFeedback("up")}
                 >
                   <HugeiconsIcon icon={ThumbsUpIcon} className="size-3.5" />
                 </ResponseAction>
                 <ResponseAction
                   label="Not helpful"
-                  active={currentFeedback === "down"}
+                  active={feedback === "down"}
                   onClick={() => setFeedback("down")}
                 >
                   <HugeiconsIcon icon={ThumbsDownIcon} className="size-3.5" />
@@ -221,7 +202,7 @@ export function StreamingResponse({
                   </div>
                   <CitationList
                     citations={sources}
-                    idPrefix={resolvedSourcePrefix}
+                    idPrefix={sourcePrefix}
                     className="min-h-0 overflow-y-auto px-2 pb-2"
                   />
                 </Dialog.Content>

@@ -88,6 +88,7 @@ const BotText: FC<{ text: string; last: boolean }> = ({ text, last }) => {
   const reaction = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.reaction,
   );
+  const running = useAuiState((s) => s.message.status?.type === "running");
   return (
     <div
       className={cn(
@@ -96,7 +97,7 @@ const BotText: FC<{ text: string; last: boolean }> = ({ text, last }) => {
       )}
     >
       <div className="relative min-w-0 max-w-9/10">
-        <TextMessagePartProvider text={text}>
+        <TextMessagePartProvider text={text} isRunning={last && running}>
           <div className="bot-bubble">
             <MarkdownText citations={false} />
           </div>
