@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { HoverCard } from "radix-ui";
 import Image from "next/image";
 import { type ComponentProps, type FC, type ReactNode, useContext, useState } from "react";
@@ -28,7 +26,7 @@ export const PreviewRoot: FC<{ children: ReactNode }> = ({ children }) => {
     <HoverCard.Root
       open={open}
       onOpenChange={(next) => setOpen(next && !matchMedia("(hover: none)").matches)}
-      openDelay={200}
+      openDelay={150}
       closeDelay={100}
     >
       {children}
@@ -42,14 +40,12 @@ export const PreviewContent: FC<{ children: ReactNode }> = ({ children }) => (
       side="top"
       align="start"
       sideOffset={6}
-      className="bg-card border-border z-50 flex w-60 flex-col rounded-xl border p-1 shadow-lg"
+      className="bg-card border-border z-50 flex w-80 flex-col rounded-xl border p-1 shadow-lg"
     >
       {children}
     </HoverCard.Content>
   </HoverCard.Portal>
 );
-
-const shownUrl = (url: string) => url.replace(/^https?:\/\/(?:www\.)?/u, "");
 
 export const LinkCard: FC<{ url: string }> = ({ url }) => {
   const sources = useContext(SourcesContext);
@@ -66,34 +62,38 @@ export const LinkCard: FC<{ url: string }> = ({ url }) => {
       target="_blank"
       rel="noreferrer"
       onClick={() => opened(url)}
-      className="hover:bg-muted flex flex-col gap-1.5 rounded-lg p-2 text-sm"
+      className="hover:bg-muted flex flex-col gap-1 rounded-lg p-2 text-sm"
     >
-      {video?.thumbnail ? (
-        <Image
-          src={video.thumbnail}
-          alt=""
-          width={224}
-          height={126}
-          unoptimized
-          className="bg-muted aspect-video w-full rounded-md object-cover"
-        />
-      ) : null}
-      <span className="text-foreground line-clamp-2 font-semibold">
-        {source?.title ?? siteName(url)}
+      <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
+        <Favicon url={url} size={14} />
+        <span className="line-clamp-1">
+          {siteName(url)}
+          {video && ` · ${video.channel}`}
+        </span>
       </span>
-      {video && (
-        <span className="text-muted-foreground text-xs tabular-nums">{videoLine(video)}</span>
-      )}
+      <span className="flex gap-2">
+        {video?.thumbnail ? (
+          <Image
+            src={video.thumbnail}
+            alt=""
+            width={64}
+            height={36}
+            unoptimized
+            className="bg-muted mt-0.5 h-9 w-16 shrink-0 rounded-md object-cover"
+          />
+        ) : null}
+        <span className="flex min-w-0 flex-col">
+          <span className="text-foreground line-clamp-2 font-medium">{source?.title ?? url}</span>
+          {video && (
+            <span className="text-muted-foreground text-xs tabular-nums">{videoLine(video)}</span>
+          )}
+        </span>
+      </span>
       {source?.snippet ? (
-        <span className="text-muted-foreground line-clamp-2 text-xs leading-5">
+        <span className="text-muted-foreground line-clamp-3 text-xs leading-5">
           {source.snippet}
         </span>
       ) : null}
-      <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
-        <Favicon url={url} size={14} />
-        <span className="min-w-0 flex-1 truncate">{shownUrl(url)}</span>
-        <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-3.5 shrink-0 rtl:-scale-x-100" />
-      </span>
     </a>
   );
 };
