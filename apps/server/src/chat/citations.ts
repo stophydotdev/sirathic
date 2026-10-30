@@ -25,6 +25,11 @@ const VERSE_KEY = /\b(\d{1,3}):(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/g;
 const PARAGRAPH = "\n\n";
 const CITED = /\[\d+\](?:\([^)\s]+\))?|\ue200cite\ue202[^\ue201]*\ue201/g;
 const TRAILING = /[\s\u2014]+$/u;
+const FENCE = /^ {0,3}```/gmu;
+
+const inCode = (text: string) =>
+  (text.match(FENCE)?.length ?? 0) % 2 === 1 ||
+  (text.slice(text.lastIndexOf("\n") + 1).match(/`/gu)?.length ?? 0) % 2 === 1;
 
 const paragraphOf = (text: string) => {
   const start = text.lastIndexOf(PARAGRAPH);
@@ -105,12 +110,18 @@ export function citations(history: UIMessage[]) {
       .replace(PRIVATE_USE, "")
       .replace(
         CITATION,
-        (_, space: string, raw: string, url: string | undefined, offset: number, whole: string) => {
+        (
+          found: string,
+          space: string,
+          raw: string,
+          url: string | undefined,
+          offset: number,
+          whole: string,
+        ) => {
+          const context = before + whole.slice(0, offset);
+          if (inCode(context)) return found;
           const written = url === undefined ? Number(raw) : (byUrl.get(url) ?? Number(raw));
-          const number =
-            written === undefined
-              ? undefined
-              : verseCited(written, before + whole.slice(0, offset));
+          const number = written === undefined ? undefined : verseCited(written, context);
           const target = number === undefined ? undefined : byNumber.get(number);
           return target === undefined ? "" : `${space}[${number}](${target})`;
         },
@@ -121,10 +132,10 @@ export function citations(history: UIMessage[]) {
     return () => {
       let pending = "";
       let id = "";
-      let paragraph = "";
+      let streamed = "";
       const linked = (text: string) => {
-        const result = link(text, paragraph);
-        paragraph = paragraphOf(paragraph + text);
+        const result = link(text, streamed);
+        streamed += text;
         return result;
       };
       const flush = (controller: TransformStreamDefaultController<TextStreamPart<TOOLS>>) => {
