@@ -451,8 +451,7 @@ export function chatResponse({
         },
         messageMetadata: ({ part }) => {
           if (part.type === "finish") usage = part.totalUsage;
-          if (part.type === "finish-step")
-            counted += countedTokens(part.usage, part.providerMetadata);
+          if (part.type === "finish-step") counted += countedTokens(part.usage);
           return undefined;
         },
         onError: (error) => {
