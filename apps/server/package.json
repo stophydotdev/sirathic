@@ -39,6 +39,7 @@
     "@sirathic/db": "workspace:*",
     "@sirathic/env": "workspace:*",
     "@trpc/server": "11.19.0",
+    "adhan": "4.4.6",
     "ai": "7.0.154",
     "better-auth": "1.7.14",
     "drizzle-orm": "^0.45.4",
