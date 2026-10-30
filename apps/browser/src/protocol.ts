@@ -253,7 +253,7 @@ export const taught = z.object({ steps: z.array(taughtStep) });
 export const loginRequest = z.object({
   session,
   site: z.string().min(1).max(253),
-  username: z.string().min(1).max(200),
+  username: z.string().min(1).max(200).optional(),
   password: z.string().min(1).max(500),
   code: z
     .string()

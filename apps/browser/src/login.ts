@@ -50,15 +50,16 @@ export const login = async (
     await settled(session);
   };
   if (!onSite(session.page.url(), site)) return result("wrong-site");
-  session.hidden.add(username);
+  if (username) session.hidden.add(username);
   session.secrets.add(password);
   if (code) session.secrets.add(code);
   if (!(await shows(PASSWORD)) && !(await shows(USERNAME))) return result("no-fields");
   if (await shows(PASSWORD)) {
-    if (await shows(USERNAME)) {
+    if (username && (await shows(USERNAME))) {
       await session.page.locator(USERNAME).first().fill(username, { timeout: FILL_TIMEOUT_MS });
     }
   } else {
+    if (!username) return result("still-signing-in");
     await enter(USERNAME, username);
     if (!onSite(session.page.url(), site)) return result("wrong-site");
   }

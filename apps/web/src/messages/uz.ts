@@ -802,23 +802,11 @@ export default {
   Phone: "Телефон",
   "Email address": "Электрон почта манзили",
   "Save contact": "Алоқани сақлаш",
-  "Your bots can type this in for you":
-    "Ботларингиз бу маълумотларни сизнинг ўрнингизга кирита олади",
   Website: "Веб-сайт",
   "Username or email": "Фойдаланувчи номи ёки email",
   Password: "Парол",
-  "Two-step setup key": "Икки босқичли созлаш калити",
-  "Your bots enter the code for you.": "Ботларингиз кодни сиз учун киритади.",
   "Save login": "Логинни сақлаш",
-  "Two-step on": "Икки босқичли ёқилган",
-  "Create a 1Password service account that can read the vault with the logins your bots may use, then paste its token here.":
-    "Ботларингиз фойдаланиши мумкин бўлган логинлар сақланган сейфни ўқий оладиган 1Password хизмат аккаунтини яратинг, сўнг унинг токенини шу ерга қўйинг.",
-  "Service account token": "Хизмат аккаунти токени",
-  "1Password didn't accept that token.": "1Password бу токенни қабул қилмади.",
-  "Connect 1Password": "1Password'ни улаш",
   Browser: "Браузер",
-  "Connected. Your bots can sign in with logins from the vault you shared.":
-    "Уланган. Ботларингиз сиз улашган сейфдаги логинлар билан кира олади.",
   Continue: "Давом этиш",
   Dismiss: "Ёпиш",
   Done: "Тайёр",
@@ -828,12 +816,20 @@ export default {
   "Hide password": "Паролни яшириш",
   "I dismissed the form.": "Шаклни ёпдим.",
   Login: "Логин",
-  "Logins and contact info your bots can use.":
-    "Botlaringiz foydalana oladigan kirish va aloqa ma’lumotlari.",
   "New item": "Янги элемент",
+  Logins: "Логинлар",
+  "Search Vault": "Сейфдан қидириш",
+  Notes: "Изоҳлар",
+  "Passwords and contact info your bots can fill in for you.":
+    "Ботларингиз сиз учун тўлдира оладиган пароллар ва алоқа маълумотлари.",
+  "Nothing saved yet. Add a login or contact info with New item.":
+    "Ҳали ҳеч нарса сақланмаган. Янги элемент орқали логин ёки алоқа маълумотларини қўшинг.",
+  "Nothing in your vault matches that.": "Сейфингизда бунга мос келадиган ҳеч нарса йўқ.",
+  Username: "Фойдаланувчи номи",
+  "Edit login": "Логинни таҳрирлаш",
+  "Edit contact info": "Алоқа маълумотларини таҳрирлаш",
+  "Open website": "Веб-сайтни очиш",
   "New login": "Янги логин",
-  "Nothing saved yet. Add a login with New item.":
-    "Ҳали ҳеч нарса сақланмаган. Янги элемент орқали логин қўшинг.",
   "Show password": "Паролни кўрсатиш",
   "Some fields didn't fill.": "Баъзи майдонлар тўлдирилмади.",
   "Waiting for you": "Сизни кутмоқда",

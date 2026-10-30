@@ -114,27 +114,26 @@ export const browserPage = async (botId: string) =>
   pageInfo.parse(await (await service("/page", { session: sessionOf(botId) })).json());
 
 const SIGN_IN_NOTES = {
-  "signed-in": (site: string, from: string) =>
-    `Signed in on ${site} with the login from ${from}. Take a fresh snapshot to continue.`,
-  "still-signing-in": (site: string, from: string) =>
-    `The page still shows a sign-in form after the login from ${from} for ${site} was used, so it may be wrong or out of date. Tell the user to update it, or send request_user_form.`,
-  "needs-code": (site: string, from: string) =>
-    `The site asks for a one-time code and ${from} has no two-step key for ${site}. Read it from the user's mail if a mail plugin is connected, or send request_user_form for the code.`,
+  "signed-in": (site: string) =>
+    `Signed in on ${site} with the login from the user's vault. Take a fresh snapshot to continue.`,
+  "still-signing-in": (site: string) =>
+    `The page still shows a sign-in form after the login from the user's vault for ${site} was used, so it may be wrong or out of date. Tell the user to update it, or send request_user_form.`,
+  "needs-code": (site: string) =>
+    `The site asks for a one-time code and the user's vault has no two-step key for ${site}. Read it from the user's mail if a mail plugin is connected, or send request_user_form for the code.`,
   "no-fields": () => "This page has no sign-in fields. Open the site's sign-in page first.",
   "wrong-site": (site: string) => `The page is not on ${site}, so the saved login was not used.`,
-} satisfies Record<z.infer<typeof loginResult>["status"], (site: string, from: string) => string>;
+} satisfies Record<z.infer<typeof loginResult>["status"], (site: string) => string>;
 
 const vaultSignIn = async ({ id, owner }: BotScope) => {
   const host = URL.parse((await browserPage(id)).url)?.hostname ?? "";
-  const saved = await loginFor(owner, host);
-  if (!saved) {
-    return `No login is saved in the vault or 1Password for ${host || "this page"}. Send request_user_form instead.`;
+  const login = await loginFor(owner, host);
+  if (!login) {
+    return `No login is saved in the vault for ${host || "this page"}. Send request_user_form instead.`;
   }
-  const { source, ...login } = saved;
   const { status } = loginResult.parse(
     await (await service("/login", { session: sessionOf(id), ...login })).json(),
   );
-  return SIGN_IN_NOTES[status](login.site, source === "vault" ? "the user's vault" : "1Password");
+  return SIGN_IN_NOTES[status](login.site);
 };
 
 export const forgetBrowser = (botId: string) => service("/forget", { session: sessionOf(botId) });
@@ -170,7 +169,7 @@ export function browserTools(scope: BotScope) {
   return {
     [VAULT_SIGN_IN]: tool({
       description:
-        "Signs in on the page your browser has open with a login the user saved for that website, in their vault or their connected 1Password. It finds the fields, fills and submits them, and enters a two-step code when one is saved, all without you seeing the username, password or code. Use it first on any sign-in page; when nothing is saved for the site, send request_user_form. It reports whether the sign-in went through.",
+        "Signs in on the page your browser has open with a login the user saved for that website in their vault. It finds the fields, fills and submits them, and enters a two-step code when one is saved, all without you seeing the username, password or code. Use it first on any sign-in page; when nothing is saved for the site, send request_user_form. It reports whether the sign-in went through.",
       inputSchema: z.object({}),
       execute: () => vaultSignIn(scope),
     }),
