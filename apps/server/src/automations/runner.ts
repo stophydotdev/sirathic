@@ -1,7 +1,7 @@
 import { db } from "@sirathic/db";
 import { automations, chatSessions, projects, users } from "@sirathic/db/schema";
 import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
-import { and, asc, eq, lte } from "drizzle-orm";
+import { and, asc, eq, lte, min } from "drizzle-orm";
 import { toUser } from "../account/auth";
 import { pickModels } from "../models/pick";
 import { BOT_HISTORY } from "../bots/tools";
@@ -23,8 +23,10 @@ import { DEFAULT_SETTINGS } from "../shared/settings";
 import { dueItems, progressOf } from "../bots/study";
 import type { User } from "../account/users";
 import { nextRun, schedule } from "./schedule";
+import { routinesChanged } from "./store";
 
-const TICK_MS = 60_000;
+const RETRY_MS = 60_000;
+const LONGEST_SLEEP_MS = 60 * 60_000;
 const BATCH = 5;
 const RUN_TIMEOUT_MS = 10 * 60_000;
 const PAUSE_AFTER = 3;
@@ -337,19 +339,39 @@ export async function runDue() {
   await Promise.all(due.map(claimAndRun));
 }
 
+async function nextDueAt() {
+  const [row] = await db
+    .select({ at: min(automations.nextRunAt) })
+    .from(automations)
+    .where(eq(automations.enabled, true));
+  return row?.at;
+}
+
 export function startScheduler() {
+  let timer: ReturnType<typeof setTimeout> | undefined;
   let ticking = false;
-  const tick = async () => {
-    if (ticking) return;
+  let changed = false;
+  const tick = async (): Promise<void> => {
+    clearTimeout(timer);
+    if (ticking) {
+      changed = true;
+      return;
+    }
     ticking = true;
-    await runDue()
-      .catch((err: Error) => {
-        console.error(`automations not checked: ${reasonOf(err)}`);
-      })
-      .finally(() => {
-        ticking = false;
-      });
+    changed = false;
+    const waitMs = await runDue()
+      .then(nextDueAt)
+      .then(
+        (at) => (at ? at.getTime() - Date.now() : LONGEST_SLEEP_MS),
+        (err: Error) => {
+          console.error(`automations not checked: ${reasonOf(err)}`);
+          return RETRY_MS;
+        },
+      );
+    ticking = false;
+    if (changed) return tick();
+    timer = setTimeout(tick, Math.min(Math.max(waitMs, 0), LONGEST_SLEEP_MS));
   };
-  setInterval(tick, TICK_MS);
+  routinesChanged.addEventListener("change", () => void tick());
   void tick();
 }
