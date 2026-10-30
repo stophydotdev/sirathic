@@ -10,18 +10,18 @@ import { withUniwind } from "uniwind";
 const Picture = withUniwind(Svg);
 
 export const BOT_TINTS = {
-  white: "accent-zinc-100",
-  brown: "accent-[#8b5e3c]",
-  red: "accent-red-500",
-  orange: "accent-orange-500",
-  yellow: "accent-amber-400",
-  green: "accent-emerald-400",
-  teal: "accent-teal-500",
-  blue: "accent-blue-500",
-  violet: "accent-violet-500",
-  pink: "accent-pink-500",
-  gray: "accent-neutral-400",
-} as const satisfies Record<(typeof BOT_COLORS)[number], string>;
+  white: { accent: "accent-zinc-100", bubble: "bg-foreground text-background" },
+  brown: { accent: "accent-[#8b5e3c]", bubble: "bg-[#8b5e3c] text-white" },
+  red: { accent: "accent-red-500", bubble: "bg-red-500 text-white" },
+  orange: { accent: "accent-orange-500", bubble: "bg-orange-500 text-orange-950" },
+  yellow: { accent: "accent-amber-400", bubble: "bg-amber-400 text-amber-950" },
+  green: { accent: "accent-emerald-400", bubble: "bg-emerald-400 text-emerald-950" },
+  teal: { accent: "accent-teal-500", bubble: "bg-teal-500 text-teal-950" },
+  blue: { accent: "accent-blue-500", bubble: "bg-blue-500 text-white" },
+  violet: { accent: "accent-violet-500", bubble: "bg-violet-500 text-white" },
+  pink: { accent: "accent-pink-500", bubble: "bg-pink-500 text-white" },
+  gray: { accent: "accent-neutral-400", bubble: "bg-neutral-400 text-neutral-950" },
+} as const satisfies Record<(typeof BOT_COLORS)[number], { accent: string; bubble: string }>;
 
 export const tintOf = (color: string | null) =>
   Object.entries(BOT_TINTS).find(([name]) => name === color)?.[1] ?? BOT_TINTS.teal;
@@ -152,7 +152,7 @@ export const BotAvatar: FC<{
       width={size}
       height={size}
       viewBox="-115 -115 230 230"
-      colorClassName={tintOf(color)}
+      colorClassName={tintOf(color).accent}
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
     >

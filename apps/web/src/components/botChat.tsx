@@ -5,7 +5,9 @@ import { splitQuote } from "@sirathic/app/botQuote";
 import { ReplyError } from "@/components/answer";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { bubblesOf } from "@sirathic/app/botBubbles";
+import { tintOf } from "@/components/botAvatar";
 import { BotEvent, isBotEvent } from "@/components/botEvents";
+import { useBot } from "@/components/botHome";
 import { FormCard, HelpCard } from "@/components/browserCards";
 import { STAMP_GAP, stampText } from "@/components/botStamp";
 import { AttachmentChip } from "@/components/composer";
@@ -291,7 +293,7 @@ const BotUserText: FC<{ text: string }> = ({ text }) => {
   return (
     <>
       {reply.quote !== undefined && (
-        <p className="mb-1 truncate border-s-2 border-white/40 ps-2 text-sm text-white/90">
+        <p className="mb-1 truncate border-s-2 border-current/40 ps-2 text-sm opacity-90">
           {reply.quote}
         </p>
       )}
@@ -302,6 +304,7 @@ const BotUserText: FC<{ text: string }> = ({ text }) => {
 
 const BotYou: FC = () => {
   const t = useT();
+  const bot = useBot();
   const reaction = useAuiState((s) => reactionAfter(s.thread.messages, s.message.id));
   const ownReaction = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.reaction,
@@ -344,7 +347,12 @@ const BotYou: FC = () => {
             (reaction || ownReaction) && "mb-3",
           )}
         >
-          <div className="rounded-3xl bg-sky-700 px-4 py-2 wrap-break-word whitespace-pre-wrap">
+          <div
+            className={cn(
+              "rounded-3xl px-4 py-2 wrap-break-word whitespace-pre-wrap",
+              tintOf(bot?.color ?? null).bubble,
+            )}
+          >
             <MessagePrimitive.Parts components={{ Text: BotUserText }} />
           </div>
           <BotReactions botReaction={reaction} user />

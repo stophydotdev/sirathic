@@ -199,6 +199,7 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
               message={message}
               reply={messages[index + 1]}
               stamp={stampOf(messages, index)}
+              color={bot.color}
             />
           ) : (
             <BotSays
