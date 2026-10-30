@@ -1,18 +1,18 @@
 import { cacheManyFor } from "@sirathic/core/cache";
 import { z } from "zod";
-import { JEV, yesChances } from "./jev";
+import { CLEF, yesChances } from "./clef";
 
 const RELEVANT = 0.3;
 const NEEDS_SOURCES = 0.1;
 const SHORT_MESSAGE_CHARS = 50;
 const WEEK_MS = 7 * 24 * 60 * 60_000;
 
-const scoreCache = cacheManyFor({ namespace: "jev:v1", schema: z.number(), keepMs: WEEK_MS });
+const scoreCache = cacheManyFor({ namespace: "clef:v1", schema: z.number(), keepMs: WEEK_MS });
 
 const digest = (...parts: string[]) =>
   new Bun.CryptoHasher("sha256").update(parts.join("\u0000")).digest("hex");
 
-const askJev = async (search: string, heads: string[]) => {
+const askClef = async (search: string, heads: string[]) => {
   const chance = await yesChances(
     {
       search,
@@ -37,14 +37,14 @@ export const relevant = async <Item>(
   try {
     const entries = items.map((item) => {
       const text = head(item);
-      return { item, text, key: digest(JEV, search, text) };
+      return { item, text, key: digest(CLEF, search, text) };
     });
     const known = await scoreCache.read(entries.map(({ key }) => key));
     const pending = entries.filter((_, index) => known[index] === undefined);
     const asked =
       pending.length === 0
         ? []
-        : await askJev(
+        : await askClef(
             search,
             pending.map(({ text }) => text),
           );

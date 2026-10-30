@@ -133,10 +133,10 @@ test("only public http and https pages can be read", () => {
   ).toEqual(Array(11).fill(false));
 });
 
-test("passages Jev scores below the floor are dropped in our order, and a failed check keeps them all", async () => {
+test("passages Clef scores below the floor are dropped in our order, and a failed check keeps them all", async () => {
   const original = globalThis.fetch;
   const answers = { p1: { noul: 0.9 }, p2: { noul: 0.05 }, p3: { noul: 0.4 } };
-  globalThis.fetch = Object.assign(async () => Response.json({ answers }), {
+  globalThis.fetch = Object.assign(async () => Response.json({ result: { answers } }), {
     preconnect: () => {},
   });
   const search = `wudu ${crypto.randomUUID()}`;
@@ -152,14 +152,14 @@ test("passages Jev scores below the floor are dropped in our order, and a failed
   ]);
 });
 
-test("a short first message skips the forced search only when Jev says it needs no sources", async () => {
+test("a short first message skips the forced search only when Clef says it needs no sources", async () => {
   const original = globalThis.fetch;
   const asked: string[] = [];
   const answering = (noul: number) =>
     Object.assign(
       async (_url: string | URL | Request, init?: RequestInit) => {
         asked.push(String(init?.body));
-        return Response.json({ answers: { sources: { noul } } });
+        return Response.json({ result: { answers: { sources: { noul } } } });
       },
       { preconnect: () => {} },
     );

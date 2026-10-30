@@ -14,8 +14,6 @@ export const env = createEnv({
     VAULT_KMS_KEY_ARN: z.string().startsWith("arn:aws:kms:"),
     VAULT_AWS_ACCESS_KEY_ID: z.string(),
     VAULT_AWS_SECRET_ACCESS_KEY: z.string(),
-    NEON_AI_GATEWAY_TOKEN: z.string(),
-    NEON_AI_GATEWAY_BASE_URL: z.url(),
     ANTHROPIC_API_KEY: z.string(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
