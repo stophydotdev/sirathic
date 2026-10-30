@@ -17,7 +17,7 @@ Resy's web app reads a public JSON API at `https://api.resy.com`. Call it yourse
   const src = [...document.scripts].map((s) => s.src).find((s) => /modules\/app\./.test(s));
   const js = src ? await (await fetch(src)).text() : "";
   return js.match(/apiKey:"([A-Za-z0-9]{30,36})"/)?.[1] ?? "NO_KEY";
-})();
+})()
 ```
 
 Then call the API with `fetch(url, { headers: { Authorization: 'ResyAPI api_key="<key>"' } })` inside an async browser_run_code, and return only the fields below, not the whole response.

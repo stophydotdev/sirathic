@@ -56,9 +56,10 @@ Fill in `T` and run it in browser_run_code on any page. `ret: null` is one way.
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
-})();
-// one way SFO to JFK 2026-07-15 gives "EAAaHhIKMjAyNi0wNy0xNWoHCAESA1NGT3IHCAESA0pGS0ABSAGYAQI"
+})()
 ```
+
+One way SFO to JFK 2026-07-15 gives `EAAaHhIKMjAyNi0wNy0xNWoHCAESA1NGT3IHCAESA0pGS0ABSAGYAQI`.
 
 Results URL. `&curr=USD` forces USD and `&hl=en` forces English. Always append both so the browser's locale does not change currency or language.
 
@@ -79,9 +80,16 @@ Read only. Do not click Select flight. If a captcha, sign-in, or payment wall ap
 
 ### Read the result
 
+All rows, about 3 KB:
+
 ```js
-document.querySelector('[role=main]')?.innerText   // all rows, about 3 KB
-[...document.querySelectorAll('li.pIav2d')].map((li) => li.innerText)   // one string per row
+document.querySelector("[role=main]")?.innerText
+```
+
+One string per row:
+
+```js
+[...document.querySelectorAll("li.pIav2d")].map((li) => li.innerText)
 ```
 
 Each row reads like `2:35 PM` dash `11:20 PM JetBlue 5 hr 45 min SFO` dash `JFK Nonstop 414 kg CO2e ... $205`, where each dash is an en dash (U+2013) on the page. Multi stop rows add `1 stop` and a connection like `50 min PHX`.

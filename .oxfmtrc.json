@@ -1,4 +1,8 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["tools/oxlint/anti-slop/**", "apps/web/AGENTS.md"]
+  "ignorePatterns": [
+    "tools/oxlint/anti-slop/**",
+    "apps/web/AGENTS.md",
+    "apps/server/src/chat/skills/sites/**"
+  ]
 }

@@ -55,7 +55,7 @@ Open `https://www.airbnb.com/s/<City>--<Country>/homes?checkin=<YYYY-MM-DD>&chec
       payment: x.paymentMessages,
     })),
   };
-})();
+})()
 ```
 
 Sort by price, with URLs as `https://www.airbnb.com/rooms/<id>`. Read only. Never click Reserve, Save, or Sign In. If the script returns NO_SSR, or a 429, a 503 Stay tuned page, captcha, sign-in or password, 2FA, or payment wall appears, stop and do not reload.
@@ -119,7 +119,7 @@ Open `https://www.airbnb.com/rooms/<id>?check_in=<YYYY-MM-DD>&check_out=<YYYY-MM
     log: s.metadata.loggingContext.eventDataLogging,
     cap: s.sections.find((x) => x.sectionId === "BOOK_IT_SIDEBAR")?.section?.maxGuestCapacity,
   };
-})();
+})()
 ```
 
 From share take title, propertyType, personCapacity, starRating, reviewCount. From log take listingId, roomType, isSuperhost, guestSatisfactionOverall and the six sub ratings.

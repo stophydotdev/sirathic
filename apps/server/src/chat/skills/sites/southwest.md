@@ -51,7 +51,7 @@ Airport resolution when given a city name. The station list is in the JS bundle 
   return js.match(
     /"emailDisplayName":"[^"]*","cityServed":"Dallas[^"]*","stationName":"[^"]*","id":"[A-Z]{3}"/g,
   );
-})();
+})()
 ```
 
 Southwest serves DAL, not DFW, and does not serve JFK.
