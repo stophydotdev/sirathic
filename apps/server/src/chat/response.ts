@@ -105,7 +105,7 @@ const FIRST_STEP = {
 export function answerAgent({
   model,
   tools,
-  settings,
+  short,
   instructions: system,
   mentioned,
   firstStep,
@@ -117,7 +117,7 @@ export function answerAgent({
 }: {
   model: LanguageModel;
   tools: ToolSet;
-  settings: Settings;
+  short: boolean;
   instructions: ReturnType<typeof instructions>;
   mentioned: string;
   firstStep: keyof typeof FIRST_STEP | undefined;
@@ -200,13 +200,12 @@ export function answerAgent({
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
       };
     },
-    providerOptions:
-      settings.answerLength === "short"
-        ? options
-        : {
-            ...options,
-            openai: { ...options.openai, textVerbosity: "medium" },
-          },
+    providerOptions: short
+      ? options
+      : {
+          ...options,
+          openai: { ...options.openai, textVerbosity: "medium" },
+        },
   });
 }
 
@@ -323,9 +322,6 @@ export function chatResponse({
         ]);
       const opening = forced === "search" && !sourcesNeeded ? undefined : forced;
       const texts = inProject !== undefined;
-      const settings = texts
-        ? ({ ...preferred, answerLength: "short" } satisfies Settings)
-        : preferred;
       const visible = recentTurns(
         messages,
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
@@ -415,12 +411,13 @@ export function chatResponse({
       const agent = answerAgent({
         model: models.model,
         tools: offered,
-        settings,
+        short: texts,
         instructions: instructions({
           now: new Date(),
           timezone: routines?.timezone,
           mode,
-          settings,
+          settings: preferred,
+          short: texts,
           project: inProject,
           unattended: unattended === true,
           offered,

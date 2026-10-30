@@ -127,6 +127,7 @@ export default {
   "Rename chat": "سۆھبەت نامىنى ئۆزگەرتىش",
   Cancel: "بىكار قىلىش",
   Save: "ساقلاش",
+  Saved: "ساقلاندى",
   "Delete chat": "سۆھبەتنى ئۆچۈرۈش",
   Delete: "ئۆچۈرۈش",
   "Session actions": "سۆھبەت مەشغۇلاتلىرى",
@@ -138,7 +139,6 @@ export default {
   "Mark as unread": "ئوقۇلمىدى دەپ بەلگىلەش",
   "Search chats": "سۆھبەتلەردىن ئىزدەش",
   Close: "تاقاش",
-  "Same as my question": "سوئالىمنىڭ تىلى",
   "Same as my browser": "توركۆرگۈچۈمنىڭ تىلى",
   "Not signed in": "كىرمىگەن",
   "Sign in to ask and keep your chats": "سوئال سوراش ۋە سۆھبەتلەرنى ساقلاش ئۈچۈن كىرىڭ",
@@ -173,12 +173,6 @@ export default {
   "Custom instructions": "خاس كۆرسەتمىلەر",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Sirathic ئېسىدە تۇتۇشقا تېگىشلىك ئىشلار، مەسىلەن قانچىلىك بىلىدىغانلىقىڭىز ياكى قانداق جاۋابنى ياقتۇرىدىغانلىقىڭىز",
-  Answers: "جاۋابلار",
-  "Answer language": "جاۋاب تىلى",
-  "Answer length": "جاۋاب ئۇزۇنلۇقى",
-  "Show Arabic text": "ئەرەبچە تېكىستنى كۆرسىتىش",
-  "Quote verses and hadith in Arabic next to the translation":
-    "ئايەت ۋە ھەدىسلەرنى تەرجىمىنىڭ يېنىدا ئەرەبچە نەقىل كەلتۈرۈش",
   "Incognito by default": "كۆڭۈلدىكى يوشۇرۇن ھالەت",
   "New chats start in incognito and aren't saved":
     "يېڭى سۆھبەتلەر يوشۇرۇن ھالەتتە باشلىنىدۇ ۋە ساقلانمايدۇ",
@@ -244,9 +238,6 @@ export default {
   "Timezone for routines": "ئادەتلەر ئۈچۈن ۋاقىت رايونى",
   "Routines run on this clock": "ئادەتلەر مۇشۇ سائەت بويىچە ئىجرا بولىدۇ",
   "Same as this device ({zone})": "بۇ ئۈسكۈنىگە ئوخشاش ({zone})",
-  "Headers and lists": "ماۋزۇ ۋە تىزىملىك",
-  Lists: "تىزىملىكلەر",
-  Paragraphs: "ئابزاسلار",
   "About you": "ئۆزىڭىز ھەققىدە",
   "Your work, your studies, what you already know":
     "خىزمىتىڭىز، ئوقۇشىڭىز ۋە ئاللىبۇرۇن بىلىدىغانلىرىڭىز",
@@ -274,9 +265,7 @@ export default {
   Maliki: "مالىكى",
   "Shafi'i": "شافىئى",
   Hanbali: "ھەنبەلى",
-  Short: "قىسقا",
   Default: "كۆڭۈلدىكى",
-  Detailed: "تەپسىلىي",
   "Settings sections": "تەڭشەك بۆلەكلىرى",
   "No chat models available": "ئىشلەتكىلى بولىدىغان مودېل يوق",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

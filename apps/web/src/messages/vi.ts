@@ -126,6 +126,7 @@ export default {
   "Rename chat": "Đổi tên cuộc trò chuyện",
   Cancel: "Hủy",
   Save: "Lưu",
+  Saved: "Đã lưu",
   "Delete chat": "Xóa cuộc trò chuyện",
   Delete: "Xóa",
   "Session actions": "Thao tác với cuộc trò chuyện",
@@ -137,7 +138,6 @@ export default {
   "Mark as unread": "Đánh dấu chưa đọc",
   "Search chats": "Tìm cuộc trò chuyện",
   Close: "Đóng",
-  "Same as my question": "Giống câu hỏi của tôi",
   "Same as my browser": "Giống trình duyệt của tôi",
   "Not signed in": "Chưa đăng nhập",
   "Sign in to ask and keep your chats": "Đăng nhập để đặt câu hỏi và lưu cuộc trò chuyện",
@@ -172,12 +172,6 @@ export default {
   "Custom instructions": "Hướng dẫn riêng",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Những điều Sirathic nên ghi nhớ, như bạn đã biết bao nhiêu hoặc bạn thích câu trả lời ra sao",
-  Answers: "Câu trả lời",
-  "Answer language": "Ngôn ngữ trả lời",
-  "Answer length": "Độ dài câu trả lời",
-  "Show Arabic text": "Hiện văn bản Ả Rập",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Trích câu kinh và hadith bằng tiếng Ả Rập bên cạnh bản dịch",
   "Incognito by default": "Ẩn danh theo mặc định",
   "New chats start in incognito and aren't saved":
     "Cuộc trò chuyện mới bắt đầu ở chế độ ẩn danh và không được lưu",
@@ -245,9 +239,6 @@ export default {
   "Timezone for routines": "Múi giờ cho thói quen",
   "Routines run on this clock": "Thói quen chạy theo đồng hồ này",
   "Same as this device ({zone})": "Giống thiết bị này ({zone})",
-  "Headers and lists": "Tiêu đề và danh sách",
-  Lists: "Danh sách",
-  Paragraphs: "Đoạn văn",
   "About you": "Về bạn",
   "Your work, your studies, what you already know": "Công việc, việc học và những gì bạn đã biết",
   "Use past chats": "Dùng các cuộc trò chuyện trước",
@@ -273,9 +264,7 @@ export default {
   Maliki: "Maliki",
   "Shafi'i": "Shafi'i",
   Hanbali: "Hanbali",
-  Short: "Ngắn",
   Default: "Mặc định",
-  Detailed: "Chi tiết",
   "Settings sections": "Các mục cài đặt",
   "No chat models available": "Không có mô hình nào",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

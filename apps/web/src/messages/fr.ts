@@ -128,6 +128,7 @@ export default {
   "Rename chat": "Renommer la discussion",
   Cancel: "Annuler",
   Save: "Enregistrer",
+  Saved: "Enregistré",
   "Delete chat": "Supprimer la discussion",
   Delete: "Supprimer",
   "Session actions": "Actions de la discussion",
@@ -139,7 +140,6 @@ export default {
   "Mark as unread": "Marquer comme non lue",
   "Search chats": "Rechercher dans les discussions",
   Close: "Fermer",
-  "Same as my question": "Comme ma question",
   "Same as my browser": "Comme mon navigateur",
   "Not signed in": "Non connecté",
   "Sign in to ask and keep your chats":
@@ -175,12 +175,6 @@ export default {
   "Custom instructions": "Instructions personnalisées",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Ce que Sirathic doit garder en tête, comme votre niveau de connaissance ou la forme de réponse que vous préférez",
-  Answers: "Réponses",
-  "Answer language": "Langue des réponses",
-  "Answer length": "Longueur des réponses",
-  "Show Arabic text": "Afficher le texte arabe",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Citer les versets et les hadiths en arabe à côté de la traduction",
   "Incognito by default": "Navigation privée par défaut",
   "New chats start in incognito and aren't saved":
     "Les nouvelles discussions sont privées et ne sont pas enregistrées",
@@ -248,9 +242,6 @@ export default {
   "Timezone for routines": "Fuseau horaire des routines",
   "Routines run on this clock": "Les routines suivent cette horloge",
   "Same as this device ({zone})": "Comme cet appareil ({zone})",
-  "Headers and lists": "En-têtes et listes",
-  Lists: "Listes",
-  Paragraphs: "Paragraphes",
   "About you": "À propos de vous",
   "Your work, your studies, what you already know":
     "Votre travail, vos études, ce que vous savez déjà",
@@ -277,9 +268,7 @@ export default {
   Maliki: "Malikite",
   "Shafi'i": "Chaféite",
   Hanbali: "Hanbalite",
-  Short: "Courte",
   Default: "Par défaut",
-  Detailed: "Détaillée",
   "Settings sections": "Sections des réglages",
   "No chat models available": "Aucun modèle de discussion disponible",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

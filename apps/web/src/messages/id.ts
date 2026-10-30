@@ -126,6 +126,7 @@ export default {
   "Rename chat": "Ganti nama obrolan",
   Cancel: "Batal",
   Save: "Simpan",
+  Saved: "Tersimpan",
   "Delete chat": "Hapus obrolan",
   Delete: "Hapus",
   "Session actions": "Tindakan obrolan",
@@ -137,7 +138,6 @@ export default {
   "Mark as unread": "Tandai belum dibaca",
   "Search chats": "Cari obrolan",
   Close: "Tutup",
-  "Same as my question": "Sama dengan pertanyaan saya",
   "Same as my browser": "Sama dengan peramban saya",
   "Not signed in": "Belum masuk",
   "Sign in to ask and keep your chats": "Masuk untuk bertanya dan menyimpan obrolan",
@@ -172,12 +172,6 @@ export default {
   "Custom instructions": "Instruksi khusus",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Apa pun yang perlu diingat Sirathic, misalnya seberapa banyak yang Anda ketahui atau jawaban seperti apa yang Anda sukai",
-  Answers: "Jawaban",
-  "Answer language": "Bahasa jawaban",
-  "Answer length": "Panjang jawaban",
-  "Show Arabic text": "Tampilkan teks Arab",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Kutip ayat dan hadis dalam bahasa Arab di samping terjemahan",
   "Incognito by default": "Penyamaran secara bawaan",
   "New chats start in incognito and aren't saved":
     "Obrolan baru dimulai dalam mode penyamaran dan tidak disimpan",
@@ -245,9 +239,6 @@ export default {
   "Timezone for routines": "Zona waktu untuk rutinitas",
   "Routines run on this clock": "Rutinitas berjalan menurut jam ini",
   "Same as this device ({zone})": "Sama dengan perangkat ini ({zone})",
-  "Headers and lists": "Judul dan daftar",
-  Lists: "Daftar",
-  Paragraphs: "Paragraf",
   "About you": "Tentang Anda",
   "Your work, your studies, what you already know":
     "Pekerjaan, studi, dan hal yang sudah Anda ketahui",
@@ -275,9 +266,7 @@ export default {
   Maliki: "Maliki",
   "Shafi'i": "Syafi'i",
   Hanbali: "Hanbali",
-  Short: "Singkat",
   Default: "Bawaan",
-  Detailed: "Rinci",
   "Settings sections": "Bagian pengaturan",
   "No chat models available": "Tidak ada model obrolan",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

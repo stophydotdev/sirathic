@@ -127,6 +127,7 @@ export default {
   "Rename chat": "Суҳбат номини ўзгартириш",
   Cancel: "Бекор қилиш",
   Save: "Сақлаш",
+  Saved: "Сақланди",
   "Delete chat": "Суҳбатни ўчириш",
   Delete: "Ўчириш",
   "Session actions": "Суҳбат амаллари",
@@ -138,7 +139,6 @@ export default {
   "Mark as unread": "Ўқилмаган деб белгилаш",
   "Search chats": "Суҳбатлардан қидириш",
   Close: "Ёпиш",
-  "Same as my question": "Саволим тили",
   "Same as my browser": "Браузерим тили",
   "Not signed in": "Кирилмаган",
   "Sign in to ask and keep your chats": "Савол бериш ва суҳбатларни сақлаш учун киринг",
@@ -173,12 +173,6 @@ export default {
   "Custom instructions": "Шахсий кўрсатмалар",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Sirathic ҳисобга олиши керак бўлган нарсалар, масалан, қанча билишингиз ёки жавобларни қандай ёқтиришингиз",
-  Answers: "Жавоблар",
-  "Answer language": "Жавоб тили",
-  "Answer length": "Жавоб узунлиги",
-  "Show Arabic text": "Арабча матнни кўрсатиш",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Оят ва ҳадисларни таржима ёнида арабча келтириш",
   "Incognito by default": "Асосий ҳолатда инкогнито",
   "New chats start in incognito and aren't saved":
     "Янги суҳбатлар инкогнито режимида бошланади ва сақланмайди",
@@ -245,9 +239,6 @@ export default {
   "Timezone for routines": "Одатлар учун вақт минтақаси",
   "Routines run on this clock": "Одатлар шу соат бўйича ишлайди",
   "Same as this device ({zone})": "Шу қурилмадагидек ({zone})",
-  "Headers and lists": "Сарлавҳалар ва рўйхатлар",
-  Lists: "Рўйхатлар",
-  Paragraphs: "Абзацлар",
   "About you": "Ўзингиз ҳақингизда",
   "Your work, your studies, what you already know":
     "Ишингиз, ўқишингиз, аллақачон биладиганларингиз",
@@ -275,9 +266,7 @@ export default {
   Maliki: "Моликий",
   "Shafi'i": "Шофеъий",
   Hanbali: "Ҳанбалий",
-  Short: "Қисқа",
   Default: "Оддий",
-  Detailed: "Батафсил",
   "Settings sections": "Созламалар бўлимлари",
   "No chat models available": "Суҳбат модели мавжуд эмас",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

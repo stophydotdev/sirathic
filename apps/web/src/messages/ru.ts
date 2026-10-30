@@ -126,6 +126,7 @@ export default {
   "Rename chat": "Переименовать чат",
   Cancel: "Отмена",
   Save: "Сохранить",
+  Saved: "Сохранено",
   "Delete chat": "Удалить чат",
   Delete: "Удалить",
   "Session actions": "Действия с чатом",
@@ -137,7 +138,6 @@ export default {
   "Mark as unread": "Отметить как непрочитанный",
   "Search chats": "Поиск по чатам",
   Close: "Закрыть",
-  "Same as my question": "Как в моём вопросе",
   "Same as my browser": "Как в моём браузере",
   "Not signed in": "Вход не выполнен",
   "Sign in to ask and keep your chats": "Войдите, чтобы задавать вопросы и сохранять чаты",
@@ -172,12 +172,6 @@ export default {
   "Custom instructions": "Свои инструкции",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Что Sirathic стоит учитывать: например, насколько вы знакомы с темой или какие ответы вам удобнее",
-  Answers: "Ответы",
-  "Answer language": "Язык ответов",
-  "Answer length": "Длина ответов",
-  "Show Arabic text": "Показывать арабский текст",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Приводить аяты и хадисы на арабском рядом с переводом",
   "Incognito by default": "Инкогнито по умолчанию",
   "New chats start in incognito and aren't saved":
     "Новые чаты открываются в режиме инкогнито и не сохраняются",
@@ -245,9 +239,6 @@ export default {
   "Timezone for routines": "Часовой пояс для рутин",
   "Routines run on this clock": "Рутины работают по этим часам",
   "Same as this device ({zone})": "Как на этом устройстве ({zone})",
-  "Headers and lists": "Заголовки и списки",
-  Lists: "Списки",
-  Paragraphs: "Абзацы",
   "About you": "О вас",
   "Your work, your studies, what you already know": "Ваша работа, учёба, то, что вы уже знаете",
   "Use past chats": "Использовать прошлые чаты",
@@ -273,9 +264,7 @@ export default {
   Maliki: "Маликитский",
   "Shafi'i": "Шафиитский",
   Hanbali: "Ханбалитский",
-  Short: "Короткий",
   Default: "Обычный",
-  Detailed: "Подробный",
   "Settings sections": "Разделы настроек",
   "No chat models available": "Нет доступных моделей",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

@@ -126,6 +126,7 @@ export default {
   "Rename chat": "チャット名を変更",
   Cancel: "キャンセル",
   Save: "保存",
+  Saved: "保存済み",
   "Delete chat": "チャットを削除",
   Delete: "削除",
   "Session actions": "チャットの操作",
@@ -137,7 +138,6 @@ export default {
   "Mark as unread": "未読にする",
   "Search chats": "チャットを検索",
   Close: "閉じる",
-  "Same as my question": "質問と同じ言語",
   "Same as my browser": "ブラウザと同じ言語",
   "Not signed in": "ログインしていません",
   "Sign in to ask and keep your chats": "ログインすると質問でき、チャットも保存されます",
@@ -172,12 +172,6 @@ export default {
   "Custom instructions": "カスタム指示",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Sirathic に覚えておいてほしいこと（どのくらい知識があるか、どんな回答が好みかなど）",
-  Answers: "回答",
-  "Answer language": "回答の言語",
-  "Answer length": "回答の長さ",
-  "Show Arabic text": "アラビア語の原文を表示",
-  "Quote verses and hadith in Arabic next to the translation":
-    "クルアーンの節やハディースを翻訳の横にアラビア語で引用する",
   "Incognito by default": "既定でシークレットモード",
   "New chats start in incognito and aren't saved":
     "新しいチャットはシークレットモードで始まり、保存されません",
@@ -243,9 +237,6 @@ export default {
   "Timezone for routines": "ルーティンのタイムゾーン",
   "Routines run on this clock": "ルーティンはこの時刻で動きます",
   "Same as this device ({zone})": "この端末と同じ（{zone}）",
-  "Headers and lists": "見出しと箇条書き",
-  Lists: "箇条書き",
-  Paragraphs: "段落",
   "About you": "あなたについて",
   "Your work, your studies, what you already know": "仕事、学業、すでに知っていること",
   "Use past chats": "過去のチャットを使う",
@@ -272,9 +263,7 @@ export default {
   Maliki: "マーリク派",
   "Shafi'i": "シャーフィイー派",
   Hanbali: "ハンバル派",
-  Short: "短め",
   Default: "標準",
-  Detailed: "詳しく",
   "Settings sections": "設定の項目",
   "No chat models available": "利用できるモデルがありません",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

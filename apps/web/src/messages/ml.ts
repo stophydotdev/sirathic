@@ -126,6 +126,7 @@ export default {
   "Rename chat": "ചാറ്റിന്റെ പേര് മാറ്റുക",
   Cancel: "റദ്ദാക്കുക",
   Save: "സേവ് ചെയ്യുക",
+  Saved: "സേവ് ചെയ്തു",
   "Delete chat": "ചാറ്റ് ഇല്ലാതാക്കുക",
   Delete: "ഇല്ലാതാക്കുക",
   "Session actions": "ചാറ്റ് ഓപ്ഷനുകൾ",
@@ -137,7 +138,6 @@ export default {
   "Mark as unread": "വായിക്കാത്തതായി അടയാളപ്പെടുത്തുക",
   "Search chats": "ചാറ്റുകൾ തിരയുക",
   Close: "അടയ്ക്കുക",
-  "Same as my question": "എന്റെ ചോദ്യത്തിന്റെ ഭാഷ",
   "Same as my browser": "എന്റെ ബ്രൗസറിന്റെ ഭാഷ",
   "Not signed in": "സൈൻ ഇൻ ചെയ്തിട്ടില്ല",
   "Sign in to ask and keep your chats": "ചോദിക്കാനും ചാറ്റുകൾ സൂക്ഷിക്കാനും സൈൻ ഇൻ ചെയ്യുക",
@@ -172,12 +172,6 @@ export default {
   "Custom instructions": "സ്വന്തം നിർദേശങ്ങൾ",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Sirathic ഓർത്തിരിക്കേണ്ട എന്തും, നിങ്ങൾക്ക് എത്രത്തോളം അറിയാം, ഏതുതരം മറുപടികൾ ഇഷ്ടമാണ് എന്നിങ്ങനെ",
-  Answers: "മറുപടികൾ",
-  "Answer language": "മറുപടിയുടെ ഭാഷ",
-  "Answer length": "മറുപടിയുടെ നീളം",
-  "Show Arabic text": "അറബി വാചകം കാണിക്കുക",
-  "Quote verses and hadith in Arabic next to the translation":
-    "വിവർത്തനത്തിനടുത്ത് ആയത്തുകളും ഹദീസുകളും അറബിയിൽ ഉദ്ധരിക്കുക",
   "Incognito by default": "ഡിഫോൾട്ടായി ഇൻകോഗ്നിറ്റോ",
   "New chats start in incognito and aren't saved":
     "പുതിയ ചാറ്റുകൾ ഇൻകോഗ്നിറ്റോയിൽ തുടങ്ങും, സേവ് ചെയ്യപ്പെടില്ല",
@@ -243,9 +237,6 @@ export default {
   "Timezone for routines": "ദിനചര്യകൾക്കുള്ള ടൈംസോൺ",
   "Routines run on this clock": "ദിനചര്യകൾ ഈ ക്ലോക്ക് അനുസരിച്ച് ഓടുന്നു",
   "Same as this device ({zone})": "ഈ ഉപകരണത്തിലേതുപോലെ ({zone})",
-  "Headers and lists": "തലക്കെട്ടുകളും ലിസ്റ്റുകളും",
-  Lists: "ലിസ്റ്റുകൾ",
-  Paragraphs: "ഖണ്ഡികകൾ",
   "About you": "നിങ്ങളെക്കുറിച്ച്",
   "Your work, your studies, what you already know": "നിങ്ങളുടെ ജോലി, പഠനം, നിങ്ങൾക്ക് ഇതിനകം അറിയാവുന്നത്",
   "Use past chats": "മുൻ ചാറ്റുകൾ ഉപയോഗിക്കുക",
@@ -271,9 +262,7 @@ export default {
   Maliki: "മാലികി",
   "Shafi'i": "ശാഫിഈ",
   Hanbali: "ഹമ്പലി",
-  Short: "ചുരുക്കം",
   Default: "ഡിഫോൾട്ട്",
-  Detailed: "വിശദമായി",
   "Settings sections": "ക്രമീകരണ വിഭാഗങ്ങൾ",
   "No chat models available": "മോഡലുകളൊന്നും ലഭ്യമല്ല",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

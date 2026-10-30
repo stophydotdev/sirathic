@@ -49,7 +49,6 @@ async function profileOf(by: string, bot: NewBot, language: string | undefined) 
   }).format(new Date());
   const weekday = new Intl.DateTimeFormat("en", { weekday: "long" }).format(new Date());
   const connected = plugins.flatMap((plugin) => (plugin.connected ? [plugin.name] : []));
-  const writeIn = settings.answerLanguage === "auto" ? language : settings.answerLanguage;
   const topics = [
     ...new Set(
       chats.flatMap((chat) =>
@@ -62,7 +61,7 @@ async function profileOf(by: string, bot: NewBot, language: string | undefined) 
     `Your name: ${bot.name}`,
     `Your job: ${bot.instructions || "none yet"}`,
     `Madhab: ${settings.madhab === "none" ? "not set" : settings.madhab}`,
-    `Language: ${writeIn ?? "the language of their recent chats"}`,
+    `Language: ${language ?? "the language of their recent chats"}`,
     `Today: ${weekday}, ${month}`,
     listed("Facts they shared", [
       ...settings.memory,

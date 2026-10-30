@@ -127,6 +127,7 @@ export default {
   "Rename chat": "گۆڕینی ناوی گفتوگۆ",
   Cancel: "هەڵوەشاندنەوە",
   Save: "پاشەکەوتکردن",
+  Saved: "پاشەکەوت کرا",
   "Delete chat": "سڕینەوەی گفتوگۆ",
   Delete: "سڕینەوە",
   "Session actions": "کردارەکانی گفتوگۆ",
@@ -138,7 +139,6 @@ export default {
   "Mark as unread": "وەک نەخوێندراوە نیشانە بکە",
   "Search chats": "گەڕان لە گفتوگۆکان",
   Close: "داخستن",
-  "Same as my question": "وەک زمانی پرسیارەکەم",
   "Same as my browser": "وەک زمانی وێبگەڕەکەم",
   "Not signed in": "نەچوویتە ژوورەوە",
   "Sign in to ask and keep your chats": "بچۆ ژوورەوە بۆ پرسیارکردن و پاراستنی گفتوگۆکانت",
@@ -173,12 +173,6 @@ export default {
   "Custom instructions": "ڕێنمایی تایبەت",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "هەر شتێک کە Sirathic دەبێت لەبەرچاوی بگرێت، وەک ئەوەی چەندە دەزانیت یان چ جۆرە وەڵامێکت پێ خۆشە",
-  Answers: "وەڵامەکان",
-  "Answer language": "زمانی وەڵام",
-  "Answer length": "درێژی وەڵام",
-  "Show Arabic text": "پیشاندانی دەقی عەرەبی",
-  "Quote verses and hadith in Arabic next to the translation":
-    "هێنانەوەی ئایەت و فەرموودە بە عەرەبی لە تەنیشت وەرگێڕانەکە",
   "Incognito by default": "دۆخی نهێنی وەک بنەڕەت",
   "New chats start in incognito and aren't saved":
     "گفتوگۆی نوێ بە دۆخی نهێنی دەست پێدەکات و پاشەکەوت ناکرێت",
@@ -245,9 +239,6 @@ export default {
   "Timezone for routines": "ناوچەی کات بۆ ڕۆتینەکان",
   "Routines run on this clock": "ڕۆتینەکان بەم کاتژمێرە کاردەکەن",
   "Same as this device ({zone})": "وەک ئەم ئامێرە ({zone})",
-  "Headers and lists": "سەردێڕ و لیستەکان",
-  Lists: "لیستەکان",
-  Paragraphs: "بڕگەکان",
   "About you": "دەربارەی تۆ",
   "Your work, your studies, what you already know": "کار و خوێندن و ئەوەی پێشتر دەیزانیت",
   "Use past chats": "بەکارهێنانی گفتوگۆکانی پێشوو",
@@ -274,9 +265,7 @@ export default {
   Maliki: "مالیکی",
   "Shafi'i": "شافیعی",
   Hanbali: "حەنبەلی",
-  Short: "کورت",
   Default: "بنەڕەت",
-  Detailed: "ورد",
   "Settings sections": "بەشەکانی ڕێکخستن",
   "No chat models available": "هیچ مۆدێلێک بەردەست نییە",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

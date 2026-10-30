@@ -142,6 +142,7 @@ export default {
   "Rename chat": "Badilisha jina la gumzo",
   Cancel: "Ghairi",
   Save: "Hifadhi",
+  Saved: "Imehifadhiwa",
   "Delete chat": "Futa gumzo",
   Delete: "Futa",
   "Session actions": "Vitendo vya kikao",
@@ -153,7 +154,6 @@ export default {
   "Mark as unread": "Weka alama kuwa haijasomwa",
   "Search chats": "Tafuta mazungumzo",
   Close: "Funga",
-  "Same as my question": "Sawa na swali langu",
   "Same as my browser": "Sawa na kivinjari changu",
   "Not signed in": "Hujaingia",
   "Sign in to ask and keep your chats": "Ingia ili uulize na kuhifadhi mazungumzo yako",
@@ -188,12 +188,6 @@ export default {
   "Custom instructions": "Maagizo yako",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Chochote ambacho Sirathic inapaswa kukumbuka, kama kiwango cha ujuzi wako au jinsi unavyopenda majibu",
-  Answers: "Majibu",
-  "Answer language": "Lugha ya jibu",
-  "Answer length": "Urefu wa jibu",
-  "Show Arabic text": "Onyesha maandishi ya Kiarabu",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Nukuu aya na hadithi kwa Kiarabu pamoja na tarjama",
   "Incognito by default": "Hali fiche kwa chaguomsingi",
   "New chats start in incognito and aren't saved":
     "Mazungumzo mapya huanza kwa hali fiche na hayahifadhiwi",
@@ -261,9 +255,6 @@ export default {
   "Timezone for routines": "Ukanda wa saa kwa kazi za kujirudia",
   "Routines run on this clock": "Kazi za kujirudia huendeshwa kwa saa hii",
   "Same as this device ({zone})": "Sawa na kifaa hiki ({zone})",
-  "Headers and lists": "Vichwa na orodha",
-  Lists: "Orodha",
-  Paragraphs: "Aya",
   "About you": "Kukuhusu",
   "Your work, your studies, what you already know": "Kazi yako, masomo yako, unachojua tayari",
   "Use past chats": "Tumia gumzo za zamani",
@@ -289,9 +280,7 @@ export default {
   Maliki: "Maliki",
   "Shafi'i": "Shafi'i",
   Hanbali: "Hanbali",
-  Short: "Fupi",
   Default: "Chaguomsingi",
-  Detailed: "Kwa kina",
   "Settings sections": "Sehemu za mipangilio",
   "No chat models available": "Hakuna modeli za gumzo zinazopatikana",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

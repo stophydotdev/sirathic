@@ -126,6 +126,7 @@ export default {
   "Rename chat": "تغییر نام گفتگو",
   Cancel: "لغو",
   Save: "ذخیره",
+  Saved: "ذخیره شد",
   "Delete chat": "حذف گفتگو",
   Delete: "حذف",
   "Session actions": "کارهای گفتگو",
@@ -137,7 +138,6 @@ export default {
   "Mark as unread": "علامت‌گذاری به‌عنوان خوانده‌نشده",
   "Search chats": "جستجو در گفتگوها",
   Close: "بستن",
-  "Same as my question": "مانند زبان پرسشم",
   "Same as my browser": "مانند زبان مرورگرم",
   "Not signed in": "وارد نشده‌اید",
   "Sign in to ask and keep your chats": "برای پرسیدن و نگه‌داشتن گفتگوها وارد شوید",
@@ -172,12 +172,6 @@ export default {
   "Custom instructions": "دستورالعمل‌های شخصی",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "هر چیزی که Sirathic باید در نظر بگیرد، مثل اینکه چقدر می‌دانید یا چه نوع پاسخی را دوست دارید",
-  Answers: "پاسخ‌ها",
-  "Answer language": "زبان پاسخ",
-  "Answer length": "طول پاسخ",
-  "Show Arabic text": "نمایش متن عربی",
-  "Quote verses and hadith in Arabic next to the translation":
-    "آوردن آیات و احادیث به عربی کنار ترجمه",
   "Incognito by default": "حالت ناشناس به‌طور پیش‌فرض",
   "New chats start in incognito and aren't saved":
     "گفتگوهای تازه در حالت ناشناس آغاز می‌شوند و ذخیره نمی‌شوند",
@@ -243,9 +237,6 @@ export default {
   "Timezone for routines": "منطقه زمانی برای روتین‌ها",
   "Routines run on this clock": "روتین‌ها با این ساعت اجرا می‌شوند",
   "Same as this device ({zone})": "مثل این دستگاه ({zone})",
-  "Headers and lists": "عنوان‌ها و فهرست‌ها",
-  Lists: "فهرست‌ها",
-  Paragraphs: "پاراگراف‌ها",
   "About you": "درباره شما",
   "Your work, your studies, what you already know": "کار، تحصیل و چیزهایی که از قبل می‌دانید",
   "Use past chats": "استفاده از گفتگوهای قبلی",
@@ -271,9 +262,7 @@ export default {
   Maliki: "مالکی",
   "Shafi'i": "شافعی",
   Hanbali: "حنبلی",
-  Short: "کوتاه",
   Default: "پیش‌فرض",
-  Detailed: "مفصل",
   "Settings sections": "بخش‌های تنظیمات",
   "No chat models available": "مدلی در دسترس نیست",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

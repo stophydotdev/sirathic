@@ -127,6 +127,7 @@ export default {
   "Rename chat": "Маектин атын өзгөртүү",
   Cancel: "Жокко чыгаруу",
   Save: "Сактоо",
+  Saved: "Сакталды",
   "Delete chat": "Маекти өчүрүү",
   Delete: "Өчүрүү",
   "Session actions": "Маек аракеттери",
@@ -138,7 +139,6 @@ export default {
   "Mark as unread": "Окулбаган деп белгилөө",
   "Search chats": "Маектерден издөө",
   Close: "Жабуу",
-  "Same as my question": "Суроомдун тили",
   "Same as my browser": "Браузеримдин тили",
   "Not signed in": "Кирген жоксуз",
   "Sign in to ask and keep your chats": "Суроо берүү жана маектерди сактоо үчүн кириңиз",
@@ -173,12 +173,6 @@ export default {
   "Custom instructions": "Жеке нускамалар",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Sirathic эске алышы керек болгон нерселер, мисалы, канча билериңиз же жоопторду кандай жактырарыңыз",
-  Answers: "Жооптор",
-  "Answer language": "Жооп тили",
-  "Answer length": "Жооптун узундугу",
-  "Show Arabic text": "Арабча текстти көрсөтүү",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Аяттарды жана хадистерди котормонун жанында арабча келтирүү",
   "Incognito by default": "Демейки боюнча инкогнито",
   "New chats start in incognito and aren't saved":
     "Жаңы маектер инкогнито режиминде башталат жана сакталбайт",
@@ -245,9 +239,6 @@ export default {
   "Timezone for routines": "Күнүмдүк иштер үчүн убакыт алкагы",
   "Routines run on this clock": "Күнүмдүк иштер ушул саат менен иштейт",
   "Same as this device ({zone})": "Бул түзмөктөгүдөй ({zone})",
-  "Headers and lists": "Аталыштар жана тизмелер",
-  Lists: "Тизмелер",
-  Paragraphs: "Абзацтар",
   "About you": "Сиз жөнүндө",
   "Your work, your studies, what you already know": "Жумушуңуз, окууңуз, мурунтан билгениңиз",
   "Use past chats": "Мурунку маектерди колдонуу",
@@ -274,9 +265,7 @@ export default {
   Maliki: "Маликий",
   "Shafi'i": "Шафиий",
   Hanbali: "Ханбалий",
-  Short: "Кыска",
   Default: "Демейки",
-  Detailed: "Толук",
   "Settings sections": "Жөндөөлөр бөлүмдөрү",
   "No chat models available": "Маек модели жок",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":
