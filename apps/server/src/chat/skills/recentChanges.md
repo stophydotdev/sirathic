@@ -6,6 +6,7 @@ When a note explains what the user is asking about, tell them what it says and w
 
 Newest first:
 
+- 2026-10-30: The Sources card no longer stays beside the last answer. The sources button under each answer opens it.
 - 2026-10-30: You can attach Word documents, and Sirathic can hand you a Word file.
 - 2026-10-30: Answers can show pictures of things you can see, like a mosque or a manuscript.
 - 2026-10-30: Answers can draw charts and diagrams, like inheritance shares or an isnad chain.
