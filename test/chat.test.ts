@@ -1,26 +1,20 @@
 import { expect, test } from "bun:test";
+import { validateUIMessages } from "ai";
+import { rehypeBareCitations } from "../apps/web/src/components/citations";
+import { citationRuns, groupedCitations, withoutCitations } from "../apps/mobile/src/lib/sources";
 import { citations, withBareCitations } from "../apps/server/src/chat/citations";
+import { withoutPageText, withStoredPageText } from "../apps/server/src/chat/pageText";
+import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import {
-  bestPieces,
-  hadithBlock,
-  pageText,
-  quranBlock,
-  unvowel,
-} from "../apps/server/src/chat/compact";
-import { convertToModelMessages } from "ai";
-import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
-import { shortenEarlierResults, withReactionNotes } from "../apps/server/src/chat/history";
-import { keepAlive } from "../apps/server/src/chat/keepAlive";
-import { clientOf } from "../apps/server/src/chat/client";
-import { toolFailure } from "../apps/server/src/chat/events";
-import { recentTurns } from "../apps/server/src/bots/tools";
-import { findInChat } from "../apps/server/src/bots/chatSearch";
-import { hadithIdOfSunnahUrl } from "../packages/core/src/tools/hadithLinks";
-import { answered, chatTurn, type MockChunks, toolNames, usage } from "./answerHelpers";
+  type ChatMessage,
+  chatData,
+  messageMetadata,
+  sentMessage,
+} from "../apps/server/src/shared/messages";
+import { unwrappedCitations } from "../packages/app/src/citations";
+import { hadithLink } from "../packages/core/src/tools/hadithLinks";
 
-const linked = async (urls: string[], deltas: string[]) => {
-  const { add, transform } = citations([]);
-  for (const url of urls) add(url);
+const streamed = async (transform: ReturnType<typeof citations>["transform"], deltas: string[]) => {
   const parts = new ReadableStream({
     start(controller) {
       for (const text of deltas) controller.enqueue({ type: "text-delta" as const, id: "1", text });
@@ -30,6 +24,12 @@ const linked = async (urls: string[], deltas: string[]) => {
   let text = "";
   for await (const part of parts) if (part.type === "text-delta") text += part.text;
   return text;
+};
+
+const linked = (urls: string[], deltas: string[]) => {
+  const { add, transform } = citations([]);
+  for (const url of urls) add(url);
+  return streamed(transform, deltas);
 };
 
 const quran = (key: string) => `https://quran.com/${key.replace(":", "/")}`;
@@ -120,323 +120,119 @@ test("a citation after one that used the named verse keeps its own verse", async
   );
 });
 
-test("unvowel drops vowel marks but keeps letters, hamzas and digits", () => {
-  expect(unvowel("إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ ٣")).toBe("إنما الأعمال بالنيات ٣");
+test("an image token split across chunks becomes that image, and an unknown one is dropped", async () => {
+  const { addImage, transform } = citations([]);
+  addImage({ url: "https://img.test/kaaba.jpg", title: "The [Kaaba] (2026)" });
+  expect(await streamed(transform, ["The Kaaba:\n\n[ima", "ge:1]\n\n[image:9]\n"])).toBe(
+    "The Kaaba:\n\n![The Kaaba 2026](https://img.test/kaaba.jpg)\n\n\n",
+  );
 });
 
-test("a verse reaches the model as its translation, and hadith Arabic is unvowelled", () => {
-  const verse = {
-    citation: 1,
-    arabic: "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا",
-    english: "For indeed, with hardship will be ease.",
-    tafsir: null,
+test("an answer never shows an em dash, even one split across chunks", async () => {
+  const { transform } = citations([]);
+  const dash = String.fromCodePoint(0x2014);
+  const deltas = ["Pray Fajr ", `${dash} even late ${dash}`, ` and rest.\n${dash} Ibn al-Qayyim`];
+  expect(await streamed(transform, deltas)).toBe("Pray Fajr, even late, and rest.\nIbn al-Qayyim");
+});
+
+test("citations in parentheses lose the parentheses, and hiding them leaves no empty pair", () => {
+  const wrapped =
+    "Injections break it ([2](https://a.org/2)[3](https://b.org/3)). See ( [4](https://c.org/4) ).";
+  expect(unwrappedCitations(wrapped)).toBe(
+    "Injections break it [2](https://a.org/2)[3](https://b.org/3). See [4](https://c.org/4).",
+  );
+  expect(unwrappedCitations("Hanafis differ (see [1](https://a.org/1)).")).toBe(
+    "Hanafis differ (see [1](https://a.org/1)).",
+  );
+  expect(withoutCitations(wrapped)).toBe("Injections break it. See.");
+});
+
+test("a phone citation pill keeps every source of its own run, even when runs share a first source", () => {
+  const text =
+    "Patience [1](https://quran.com/2/153) [2](https://islamqa.info/a). Prayer [3](https://quran.com/2/153) [4](https://sunnah.com/b). Gift [5](https://quran.com/2/153).";
+  expect(groupedCitations(text)).toBe(
+    "Patience [c0](https://quran.com/2/153). Prayer [c1](https://quran.com/2/153). Gift [c2](https://quran.com/2/153).",
+  );
+  expect(citationRuns(text)).toEqual([
+    ["https://quran.com/2/153", "https://islamqa.info/a"],
+    ["https://quran.com/2/153", "https://sunnah.com/b"],
+    ["https://quran.com/2/153"],
+  ]);
+});
+
+type Tree = Parameters<ReturnType<typeof rehypeBareCitations>>[0];
+
+const sentence = (start: string): Tree => {
+  const url = "https://example.com/a";
+  return {
+    type: "root",
+    children: [
+      {
+        type: "element",
+        tagName: "p",
+        properties: {},
+        children: [
+          { type: "text", value: start },
+          {
+            type: "element",
+            tagName: "a",
+            properties: { href: url, dataUrls: [url] },
+            children: [],
+          },
+          { type: "text", value: ". It is not shared by all." },
+        ],
+      },
+    ],
   };
-  const verses = quranBlock([
-    { ...verse, ref: "Quran 94:5 (Ash-Sharh)" },
-    { ...verse, citation: 2, ref: "Quran 94:6 (Ash-Sharh)" },
-  ]);
-  expect(verses).toBe(
-    "## quran\n[1] Quran 94:5 (Ash-Sharh)\nFor indeed, with hardship will be ease.\n[2] Quran 94:6 (Ash-Sharh)\nFor indeed, with hardship will be ease.",
-  );
-
-  const hadith = hadithBlock([
-    {
-      citation: 3,
-      ref: "Sahih al-Bukhari 1",
-      english: null,
-      arabic: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ",
-      grade: "Sahih",
-    },
-  ]);
-  expect(hadith).toBe("## hadith\n[3] Sahih al-Bukhari 1 (Sahih)\nإنما الأعمال بالنيات");
-});
-
-test("a long hadith reaches the model whole, with the collector's verdict", () => {
-  const narration = "حدثنا قتيبة حدثنا الليث عن ابن شهاب ".repeat(8);
-  const block = hadithBlock([
-    {
-      citation: 4,
-      ref: "Jami' at-Tirmidhi 2107",
-      english: null,
-      arabic: `${narration}قال أبو عيسى هذا حديث حسن صحيح`,
-      grade: null,
-    },
-  ]);
-  expect(block).toContain(`${narration}قال أبو عيسى هذا حديث حسن صحيح`);
-});
-
-test("a page keeps its text with links reduced to their words, up to the limit", () => {
-  const page =
-    "# Combining prayers\n\n\n\nThe [Hanafi school](https://example.com/hanafi) allows it only at Arafah. ![map](https://example.com/map.png)";
-  expect(pageText(page, 1000)).toBe(
-    "# Combining prayers\n\nThe Hanafi school allows it only at Arafah.",
-  );
-  expect(pageText(page, 18)).toBe("# Combining prayer…");
-});
-
-test("a page loses its menus, buttons, footnote links and repeated captions", () => {
-  const page = [
-    "×",
-    "  - [Zakat](https://example.com/zakat)",
-    "[![Quiz](https://example.com/q.jpg)](https://example.com/quiz)",
-    "Share",
-    "A fresco of the battle.",
-    "Badr was fought in 624.[\\[1\\]](https://en.wikipedia.org/wiki/Badr#cite_note-1)",
-    '| Location | [Badr](https://en.wikipedia.org/wiki/Badr_(city) "Badr (city)") |',
-    "A fresco of the battle.",
-  ].join("\n");
-  expect(pageText(page, 1000)).toBe(
-    "A fresco of the battle.\nBadr was fought in 624.\n| Location | Badr |",
-  );
-});
-
-test("a long text keeps the pieces that carry the query words, in page order", () => {
-  const filler = "Prayer times are fixed for every Muslim. ".repeat(12);
-  const ruling = "The traveller may combine Dhuhr and Asr in the time of either one.";
-  const text = `${filler}\n${ruling}\nAnd Allah knows best.`;
-  expect(bestPieces("Short text.", ["combine"], 100)).toBe("Short text.");
-  const kept = bestPieces(text, ["combine dhuhr asr"], 300);
-  expect(kept).toContain(ruling);
-  expect(kept.length).toBeLessThanOrEqual(301);
-  expect(bestPieces(text, ["zakat"], 50)).toBe(`${text.slice(0, 50)}…`);
-});
-
-const searched = (toolCallId: string): ChatMessage["parts"][number] => ({
-  type: "tool-search_web",
-  toolCallId,
-  state: "output-available",
-  input: { queries: ["what breaks wudu"], sources: ["fatwa"] },
-  output: {
-    results: {},
-    sources: [
-      {
-        url: "https://islamqa.info/en/answers/14321",
-        title: "Wudu",
-        snippet: "",
-      },
-      { url: "https://example.com/uncited", title: "Uncited", snippet: "" },
-    ],
-    text: "",
-  },
-});
-
-const history: ChatMessage[] = [
-  {
-    id: "u1",
-    role: "user",
-    parts: [{ type: "text", text: "what breaks wudu" }],
-  },
-  {
-    id: "a1",
-    role: "assistant",
-    parts: [
-      searched("call-1"),
-      {
-        type: "text",
-        text: "Deep sleep breaks wudu.[4](https://islamqa.info/en/answers/14321)",
-      },
-    ],
-  },
-  { id: "u2", role: "user", parts: [{ type: "text", text: "and bleeding?" }] },
-  { id: "a2", role: "assistant", parts: [searched("call-2")] },
-];
-
-const sentOutputs = async (toolCallId: string, chat = history) => {
-  const shorten = shortenEarlierResults(chat);
-  return (await convertToModelMessages(chat))
-    .map(shorten)
-    .flatMap((message) => (message.role === "tool" ? message.content : []))
-    .flatMap((part) =>
-      part.type === "tool-result" && part.toolCallId === toolCallId ? [part.output] : [],
-    );
 };
 
-test("an earlier turn's results reach the model as the sources its answer cited", async () => {
-  expect(await sentOutputs("call-1")).toEqual([
-    {
-      type: "text",
-      value:
-        "Earlier results, removed to save space. Cited in the answer: <untrusted_data>\n[4] Wudu\n</untrusted_data>. Search again if you need their full text.",
-    },
-  ]);
+test("a hidden citation takes the space before it, so the period stays against the word", () => {
+  const tree = sentence("That is the Hanafi view ");
+  rehypeBareCitations()(tree);
+  expect(tree).toEqual(sentence("That is the Hanafi view"));
 });
 
-test("an earlier turn's results read the same after a later answer cites one of them", async () => {
-  const later: ChatMessage[] = [
-    ...history.slice(0, 3),
-    {
-      id: "a2",
-      role: "assistant",
-      parts: [{ type: "text", text: "Also bleeding.[5](https://example.com/uncited)" }],
-    },
-    { id: "u3", role: "user", parts: [{ type: "text", text: "and sleep?" }] },
-  ];
-  expect(await sentOutputs("call-1", later)).toEqual(await sentOutputs("call-1"));
-});
-
-test("a reaction on the bot's message reaches the model as a system note after it", async () => {
-  const reacted: ChatMessage = {
-    id: "a1",
-    role: "assistant",
-    metadata: { reaction: "👍" },
-    parts: [{ type: "text", text: "Salam!" }],
-  };
-  expect(await convertToModelMessages(withReactionNotes([reacted]))).toEqual([
-    { role: "assistant", content: [{ type: "text", text: "Salam!" }] },
-    {
-      role: "system",
-      content: "The user reacted 👍 to your message above. It is a reaction, not text they typed.",
-    },
-  ]);
-});
-
-test("results after the last question reach the model in full", async () => {
-  expect((await sentOutputs("call-2"))[0]).toEqual({
-    type: "json",
-    value: {
-      results: {},
-      sources: [
+test("a loaded chat drops search page text, and the next question gets it back", async () => {
+  const output = {
+    results: {
+      fatwa: [
         {
-          url: "https://islamqa.info/en/answers/14321",
-          title: "Wudu",
-          snippet: "",
+          citation: 1,
+          title: "Witr",
+          site: "islamqa.org",
+          date: null,
+          text: "Witr is three rak'ahs.",
         },
-        { url: "https://example.com/uncited", title: "Uncited", snippet: "" },
       ],
-      text: "",
     },
-  });
-});
-
-test("keepAlive pings while the stream is quiet and passes the data through", async () => {
-  const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
-  const source = writable.getWriter();
-  const piped = readable.pipeThrough(keepAlive(20));
-  const reader = piped.getReader();
-
-  expect(new TextDecoder().decode((await reader.read()).value)).toBe(": ping\n\n");
-
-  reader.releaseLock();
-  await source.write(new TextEncoder().encode("data: {}\n\n"));
-  await source.close();
-  const rest = await Array.fromAsync(piped);
-  expect(new TextDecoder().decode(rest.at(-1))).toBe("data: {}\n\n");
-});
-
-const clientFor = (userAgent: string, country = "") =>
-  clientOf(new Headers({ "user-agent": userAgent, "x-sirathic-country": country }));
-
-test("the operating system and browser come from the user agent", () => {
-  const families = [
-    [
-      "Mozilla/5.0 (iPhone; CPU iPhone OS 26_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.1 Mobile/15E148 Safari/604.1",
-      "iOS",
-      "Safari",
-    ],
-    [
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.1 Safari/605.1.15",
-      "macOS",
-      "Safari",
-    ],
-    [
-      "Mozilla/5.0 (iPhone; CPU iPhone OS 26_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/141.0.7390.96 Mobile/15E148 Safari/604.1",
-      "iOS",
-      "Chrome",
-    ],
-    [
-      "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/28.0 Chrome/130.0.0.0 Mobile Safari/537.36",
-      "Android",
-      "Samsung",
-    ],
-    [
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0",
-      "Windows",
-      "Edge",
-    ],
-    ["Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0", "Linux", "Firefox"],
-    ["curl/8.16.0", "other", "other"],
+    sources: [{ url: "https://islamqa.org/1", title: "Witr", snippet: "Witr is" }],
+    text: "[1] Witr is three rak'ahs.",
+  };
+  const stored: ChatMessage[] = [
+    {
+      id: "answer",
+      role: "assistant",
+      metadata: {},
+      parts: [
+        {
+          type: "tool-search_web",
+          toolCallId: "call",
+          state: "output-available",
+          input: { queries: ["witr"], sources: ["fatwa"] },
+          output,
+        },
+      ],
+    },
   ];
-  expect(
-    families.map(([userAgent = ""]) => {
-      const { os, browser } = clientFor(userAgent);
-      return [userAgent, os, browser];
-    }),
-  ).toEqual(families);
-});
-
-test("the country is kept only as a two-letter code", () => {
-  expect(
-    ["SI", "si", "Slovenia", ""].map((country) => clientFor("curl/8.16.0", country).country),
-  ).toEqual(["SI", undefined, undefined, undefined]);
-});
-
-test("where someone came from is kept only as a site name or a short tag", () => {
-  expect(
-    [
-      "news.ycombinator.com",
-      "X.com",
-      "ramadan_post",
-      "https://x.com/a",
-      "a b",
-      "x".repeat(101),
-    ].map((ref) => clientOf(new Headers({ "x-sirathic-ref": ref })).ref),
-  ).toEqual(["news.ycombinator.com", "x.com", "ramadan_post", undefined, undefined, undefined]);
-});
-
-test("a sunnah.com hadith link maps to our hadith id, and a failed tool gets a kind", () => {
-  expect(hadithIdOfSunnahUrl("https://sunnah.com/bukhari:7191")).toBe("bukhari:7191");
-  expect(hadithIdOfSunnahUrl("https://sunnah.com/nawawi40:3")).toBe("nawawi:3");
-  expect(hadithIdOfSunnahUrl("https://sunnah.com/bukhari/93")).toBeNull();
-  expect(toolFailure("sunnah.com pages can't be read. Search for the hadith instead.")).toBe(
-    "blocked",
-  );
-  expect(toolFailure("Fetching https://a.b found no readable text")).toBe("no-text");
-  expect(toolFailure("Fetching https://a.b failed: That site has no page at that address.")).toBe(
-    "not-found",
-  );
-});
-
-const turn = (i: number) => [
-  { role: "user", id: `q${i}` },
-  { role: "assistant", id: `a${i}` },
-];
-
-test("a long bot chat sends its recent turns, starting at a question", () => {
-  const chat = Array.from({ length: 20 }, (_, i) => turn(i)).flat();
-  const recent = recentTurns(chat, 5);
-  expect(recent.map((message) => message.id)).toEqual(["q18", "a18", "q19", "a19"]);
-  expect(recentTurns(chat.slice(0, 3), 24)).toHaveLength(3);
-});
-
-const said = (id: string, role: ChatMessage["role"], text: string, createdAt?: number) =>
-  ({ id, role, parts: [{ type: "text", text }], metadata: { createdAt } }) satisfies ChatMessage;
-
-test("chat search finds earlier messages with dates, best match first, and skips the question", () => {
-  const chat = [
-    said("1", "user", "Teach me a hadith about intentions", Date.UTC(2026, 9, 12)),
-    said(
-      "2",
-      "assistant",
-      "Today's hadith: actions are judged by intentions.",
-      Date.UTC(2026, 9, 12),
-    ),
-    said("3", "user", "What about patience?", Date.UTC(2026, 9, 13)),
-    said(
-      "4",
-      "assistant",
-      "Patience is half of faith, and a hadith praises it.",
-      Date.UTC(2026, 9, 13),
-    ),
-    said("5", "user", "which hadith about intentions did you teach me"),
-  ];
-  const found = findInChat(chat, "hadith intentions");
-  expect(found.map((match) => match.from)).toEqual(["you", "user", "you"]);
-  expect(found[0]).toEqual({
-    from: "you",
-    date: "2026-10-12",
-    snippet: "Today's hadith: actions are judged by intentions.",
+  const sent = withoutPageText(stored);
+  expect(JSON.stringify(sent)).not.toContain("three rak'ahs");
+  expect(sent[0]?.parts[0]).toMatchObject({ output: { sources: output.sources } });
+  const sentBack = await validateUIMessages<ChatMessage>({
+    messages: JSON.parse(JSON.stringify(sent)),
+    dataSchemas: chatData,
+    metadataSchema: messageMetadata,
   });
-  expect(findInChat(chat, "zakat")).toEqual([]);
+  expect(withStoredPageText(sentBack, stored)).toEqual(stored);
 });
 
 test("a saved chat sent back with the old tool names reaches the agent under the new ones", () => {
@@ -458,9 +254,6 @@ test("a saved chat sent back with the old tool names reaches the agent under the
         },
       },
       { type: "tool-quranGet", toolCallId: "c3", state: "input-available", input: {} },
-      { type: "tool-duaSearch", toolCallId: "c4", state: "input-available", input: {} },
-      { type: "tool-setBotJob", toolCallId: "c5", state: "input-available", input: {} },
-      { type: "text", text: "Done." },
     ],
   });
   expect(sent.parts).toEqual([
@@ -483,41 +276,34 @@ test("a saved chat sent back with the old tool names reaches the agent under the
       },
     },
     { type: "tool-get_verses", toolCallId: "c3", state: "input-available", input: {} },
-    { type: "tool-search_duas", toolCallId: "c4", state: "input-available", input: {} },
-    { type: "tool-set_bot_job", toolCallId: "c5", state: "input-available", input: {} },
-    { type: "text", text: "Done." },
   ]);
 });
 
-const feedbackCall = [
-  { type: "stream-start", warnings: [] },
-  {
-    type: "tool-call",
-    toolCallId: "f1",
-    toolName: "send_feedback",
-    input: JSON.stringify({ message: "The dua search is hard to find." }),
-  },
-  { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
-] satisfies MockChunks;
-
-test.each<[string, Partial<Parameters<typeof chatTurn>[0]>, boolean]>([
-  ["a signed-in chat", { owner: "user-a" }, true],
-  [
-    "a bot",
-    {
-      owner: "user-a",
-      project: Promise.resolve({ name: "Coach", title: "prayer guide", instructions: "" }),
-      bot: Promise.resolve({ id: "22222222-2222-4222-8222-222222222222", owner: "user-a" }),
-    },
-    true,
-  ],
-  ["an incognito chat", { owner: undefined }, false],
-  ["a routine run", { owner: "user-a", unattended: true }, false],
-])("%s offers send_feedback behind a card: %p", async (_, overrides, offered) => {
-  const reply = await chatTurn(overrides, [feedbackCall, answered]);
+test("hadith links follow each collection's own page numbering", () => {
   expect([
-    toolNames(reply[0])?.includes("send_feedback"),
-    reply.body.includes('"type":"tool-approval-request"'),
-    reply.body.includes('"type":"tool-output-available"'),
-  ]).toEqual([offered, offered, false]);
+    hadithLink("malik:1074", null),
+    hadithLink("muslim:1907a", null),
+    hadithLink("bukhari:402.2", null),
+    hadithLink("ahmad:781", "https://ar.wikisource.org/wiki/chapter"),
+  ]).toEqual([
+    "https://sunnah.com/urn/510770",
+    "https://sunnah.com/muslim:1907a",
+    "https://sunnah.com/bukhari:402",
+    "https://ar.wikisource.org/wiki/chapter#781",
+  ]);
+});
+
+test("site: moves into sites, quotes and uppercase operators go, Arabic stays as written", () => {
+  expect(
+    cleanSearch({
+      queries: ['"zakat on jewelry" site:islamqa.info', "zakat OR sadaqah  NOT  gold or silver"],
+      arabic: ["«زكاة الحلي» AND الذهب"],
+      sites: ["https://www.Islamweb.net/ar/"],
+    }),
+  ).toEqual({
+    queries: ["zakat on jewelry", "zakat sadaqah gold or silver"],
+    arabic: ["زكاة الحلي الذهب"],
+    sites: ["islamweb.net", "islamqa.info"],
+    notes: [],
+  });
 });

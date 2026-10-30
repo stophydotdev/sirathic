@@ -35,7 +35,7 @@ const textOf = (node: ElementContent): string => {
   return node.children.map(textOf).join("");
 };
 
-export const rowsOf = (node: Element): string[][] =>
+const rowsOf = (node: Element): string[][] =>
   node.children.flatMap((child) => {
     if (child.type !== "element") return [];
     if (child.tagName !== "tr") return rowsOf(child);
@@ -47,7 +47,7 @@ export const rowsOf = (node: Element): string[][] =>
 const markdownRow = (cells: string[]) =>
   `| ${cells.map((cell) => cell.replaceAll("|", "\\|")).join(" | ")} |`;
 
-export const tableMarkdown = (rows: string[][]) => {
+const tableMarkdown = (rows: string[][]) => {
   const [head = [], ...body] = rows;
   return [markdownRow(head), markdownRow(head.map(() => "---")), ...body.map(markdownRow)].join(
     "\n",
@@ -56,8 +56,7 @@ export const tableMarkdown = (rows: string[][]) => {
 
 const csvCell = (cell: string) => (/[",\n]/u.test(cell) ? `"${cell.replaceAll('"', '""')}"` : cell);
 
-export const tableCsv = (rows: string[][]) =>
-  rows.map((row) => row.map(csvCell).join(",")).join("\n");
+const tableCsv = (rows: string[][]) => rows.map((row) => row.map(csvCell).join(",")).join("\n");
 
 export const MarkdownTable: FC<ComponentProps<"table"> & { node?: Element }> = ({
   node,

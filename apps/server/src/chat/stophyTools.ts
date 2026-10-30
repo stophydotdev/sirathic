@@ -34,7 +34,7 @@ const pageOf = (entry: Row) =>
     return url ? [url] : [];
   })[0];
 
-export const withCitations = (cite: Cite, data: z.infer<typeof json>, fallbackTitle: string) => {
+const withCitations = (cite: Cite, data: z.infer<typeof json>, fallbackTitle: string) => {
   const sources: Source[] = [];
   const cited = (entry: Row): Row => {
     const url = pageOf(entry);
@@ -74,7 +74,7 @@ const sourceKinds = z.object({
   sources: z.array(z.object({ id: z.string(), kind: z.string().optional() })),
 });
 
-export const withoutAiAnswers = (found: Catalog): Catalog => {
+const withoutAiAnswers = (found: Catalog): Catalog => {
   const hidden = new Set(
     sourceKinds.parse(found).sources.flatMap(({ id, kind }) => (kind === "aiAnswers" ? [id] : [])),
   );
@@ -125,7 +125,7 @@ const reply = z.discriminatedUnion("success", [
 
 const singular = (word: string) => word.replace(/s$/u, "");
 
-export const matchingEndpoints = (
+const matchingEndpoints = (
   { sources, endpoints }: Catalog,
   { query, category }: z.infer<typeof searchInput>,
 ) => {

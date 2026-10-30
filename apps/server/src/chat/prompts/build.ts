@@ -27,7 +27,7 @@ const DEFAULT_LENGTH = "Match the length to the question.";
 
 const SHORT = "The user has specified they want short answers.";
 
-export const fill = (template: string, slots: Readonly<Record<string, string>>) =>
+const fill = (template: string, slots: Readonly<Record<string, string>>) =>
   template.replace(/\{(\w+)\}/gu, (_slot, name: string) => {
     if (!Object.hasOwn(slots, name)) throw new Error(`prompt slot {${name}} has no value`);
     return slots[name];

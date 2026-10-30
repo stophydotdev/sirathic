@@ -23,7 +23,7 @@ const SYSTEMS = [
   ["Linux", "Linux"],
 ] as const;
 
-export const deviceOf = (agent: string | null) => {
+const deviceOf = (agent: string | null) => {
   if (!agent) return { kind: "unknown" } as const;
   const system = SYSTEMS.find(([mark]) => agent.includes(mark))?.[1];
   if (!agent.startsWith("Mozilla/") || agent.includes("Electron/")) {

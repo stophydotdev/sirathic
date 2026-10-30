@@ -26,7 +26,7 @@ export const wordsOf = (text: string) =>
     .split(/[^\p{L}\p{N}]+/u)
     .filter(Boolean);
 
-export const matchingPlugins = (plugins: readonly Listed[], query: string | undefined) => {
+const matchingPlugins = (plugins: readonly Listed[], query: string | undefined) => {
   const wanted = wordsOf(query ?? "");
   return plugins
     .flatMap((plugin) => {

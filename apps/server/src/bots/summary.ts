@@ -39,10 +39,7 @@ You get the current summary, if any, and the newest turns that are about to drop
 
 Record what was discussed and decided. Never write a verse, a hadith or a ruling as a fact and never quote one: say that the hadith about intentions was taught, not what it says. Drop small talk.`;
 
-export const fallenOut = <Message extends { role: string }>(
-  messages: Message[],
-  covered: number,
-) => {
+const fallenOut = <Message extends { role: string }>(messages: Message[], covered: number) => {
   const upTo = messages.length - recentTurns(messages, BOT_HISTORY).length;
   return { fresh: messages.slice(covered, upTo), upTo };
 };

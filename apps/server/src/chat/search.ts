@@ -218,7 +218,7 @@ const FIQH_SCHOOLS = ["hanafi", "maliki", "shafii", "hanbali", "comparative"] as
 
 type FiqhHit = Awaited<ReturnType<typeof fiqhSearch>>["passages"][number];
 
-export const onePerPage = (passages: readonly FiqhHit[]) => {
+const onePerPage = (passages: readonly FiqhHit[]) => {
   const pages = new Map<string, { first: FiqhHit; texts: string[] }>();
   for (const passage of passages) {
     const key = passage.url ?? passage.id;

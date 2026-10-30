@@ -414,7 +414,7 @@ const sentEmail = z.object({ id: z.string(), threadId: z.string() });
 
 const base64 = (text: string) => Buffer.from(text).toString("base64");
 
-export const mimeOf = ({ to, cc, bcc, subject, body }: z.infer<typeof outgoingEmail>) =>
+const mimeOf = ({ to, cc, bcc, subject, body }: z.infer<typeof outgoingEmail>) =>
   [
     `To: ${to.join(", ")}`,
     ...(cc?.length ? [`Cc: ${cc.join(", ")}`] : []),

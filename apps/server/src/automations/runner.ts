@@ -103,7 +103,7 @@ const pastTopics = (earlier: ChatMessage[], routine: string) =>
 
 type Due = Awaited<ReturnType<typeof dueItems>>;
 
-export const routineBrief = ({
+const routineBrief = ({
   prompt,
   topics,
   due,

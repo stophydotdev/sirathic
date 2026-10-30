@@ -11,9 +11,9 @@ const REVIEW_DAYS = [1, 3, 7, 14, 30] as const;
 
 const DAY_MS = 86_400_000;
 
-export const isMemorized = (step: number) => step >= REVIEW_DAYS.length;
+const isMemorized = (step: number) => step >= REVIEW_DAYS.length;
 
-export const afterReview = (step: number, right: boolean, now: Date) => {
+const afterReview = (step: number, right: boolean, now: Date) => {
   const next = right ? Math.min(step + 1, REVIEW_DAYS.length) : 0;
   const days = REVIEW_DAYS[Math.min(next, REVIEW_DAYS.length - 1)] ?? 1;
   return { step: next, dueAt: new Date(now.getTime() + days * DAY_MS) };
