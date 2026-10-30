@@ -851,4 +851,12 @@ export default {
   "{count} rows": "Sirroore {count}",
   "This file can't be shown here. Download it to open it.":
     "Fayl ɗu'um waawaa feeñnude ɗo. Aawto ngam ɗum udditaade.",
+  "Auto-review": "Sakkitaago e hoolaare",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic naamnata ma ko adii nde neldi, winndi walla itti ko ngam maa. Ɓesdu laawol ngam accugo mo waɗa ko naamnaay. So laawolji ngoɗti, “Naamno adii” ɗum ardii, e njoɓdi walla yeeso njoɓdi ɗum naamnata ɓannginoo.",
+  "When Sirathic wants to": "Nde Sirathic yiɗi",
+  "Reply to emails for me": "Jaabaago ɗemngal-mbaadi am ngam am",
+  "Allow automatically": "Accu hoolaare",
+  "Ask first": "Naamno adii",
+  "Add rule": "Ɓesdu laawol",
 } satisfies Messages;

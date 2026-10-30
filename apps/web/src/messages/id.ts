@@ -856,4 +856,12 @@ export default {
   "{count} rows": "{count} baris",
   "This file can't be shown here. Download it to open it.":
     "File ini tidak dapat ditampilkan di sini. Unduh untuk membukanya.",
+  "Auto-review": "Tinjauan otomatis",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic bertanya dulu sebelum mengirim, memposting, atau menghapus atas nama Anda. Tambahkan aturan agar ia bertindak tanpa bertanya. Jika aturan bertentangan, “Tanya dulu” yang menang, dan pembayaran atau pengembalian dana selalu ditanyakan.",
+  "When Sirathic wants to": "Saat Sirathic ingin",
+  "Reply to emails for me": "Membalas email untuk saya",
+  "Allow automatically": "Izinkan otomatis",
+  "Ask first": "Tanya dulu",
+  "Add rule": "Tambah aturan",
 } satisfies Messages;

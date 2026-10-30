@@ -38,6 +38,7 @@ import { islamicDates } from "../bots/islamicDates";
 import { prayerTimes } from "../prayer/tool";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
+import { asksFirst } from "./autoReview";
 import { needsApproval, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
@@ -123,7 +124,7 @@ export function answerAgent({
   firstStep: keyof typeof FIRST_STEP | undefined;
   skills: readonly Skill[];
   loaded: readonly string[];
-  confirm: (call: { toolName: string; input: unknown }) => boolean;
+  confirm: (call: { toolName: string; input: unknown }) => Promise<boolean>;
   shorten: ReturnType<typeof shortenEarlierResults>;
   turn: Turn;
 }) {
@@ -175,7 +176,7 @@ export function answerAgent({
       isStepCount(STEP_CAP),
     ],
     timeout: { chunkMs: STALLED_MS },
-    toolApproval: ({ toolCall }) => (confirm(toolCall) ? "user-approval" : undefined),
+    toolApproval: async ({ toolCall }) => ((await confirm(toolCall)) ? "user-approval" : undefined),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
@@ -436,7 +437,8 @@ export function chatResponse({
             : undefined,
         skills: builtIn,
         loaded,
-        confirm: (call) => needsApproval(call, new Set(writes)),
+        confirm: async (call) =>
+          needsApproval(call, new Set(writes)) && (await asksFirst(call, preferred.rules)),
         shorten,
         turn,
       });

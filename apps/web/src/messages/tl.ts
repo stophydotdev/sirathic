@@ -861,4 +861,12 @@ export default {
   "{count} rows": "{count} hilera",
   "This file can't be shown here. Download it to open it.":
     "Hindi maipapakita ang file na ito rito. I-download ito para buksan.",
+  "Auto-review": "Awtomatikong pagsusuri",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Magtatanong muna ang Sirathic bago magpadala, mag-post, o magtanggal para sa iyo. Magdagdag ng patakaran para kumilos ito nang hindi nagtatanong. Kung magkasalungat ang mga patakaran, mananaig ang “Magtanong muna,” at laging magtatanong ang pagbabayad o pag-refund.",
+  "When Sirathic wants to": "Kapag gustong",
+  "Reply to emails for me": "Sagutin ang mga email ko para sa akin",
+  "Allow automatically": "Payagan nang awtomatiko",
+  "Ask first": "Magtanong muna",
+  "Add rule": "Magdagdag ng patakaran",
 } satisfies Messages;

@@ -839,4 +839,12 @@ export default {
   "{count} rows": "පේළි {count}",
   "This file can't be shown here. Download it to open it.":
     "මෙම ගොනුව මෙහි පෙන්විය නොහැක. විවෘත කිරීමට බාගත කරන්න.",
+  "Auto-review": "ස්වයංක්‍රීය සමාලෝචනය",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "ඔබ වෙනුවෙන් යැවීමට, පළ කිරීමට හෝ මැකීමට පෙර Sirathic ඔබෙන් අසයි. නොඅසාම ක්‍රියා කිරීමට ඉඩ දීමට රීතියක් එක් කරන්න. රීති ගැටුණහොත් “මුලින් අසන්න” ජය ගනී, ගෙවීම් සහ ආපසු ගෙවීම් සැමවිටම අසයි.",
+  "When Sirathic wants to": "Sirathic මෙය කිරීමට කැමති වූ විට",
+  "Reply to emails for me": "මා වෙනුවෙන් ඊමේල්වලට පිළිතුරු දෙන්න",
+  "Allow automatically": "ස්වයංක්‍රීයව ඉඩ දෙන්න",
+  "Ask first": "මුලින් අසන්න",
+  "Add rule": "රීතියක් එක් කරන්න",
 } satisfies Messages;

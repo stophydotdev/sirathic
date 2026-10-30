@@ -850,4 +850,12 @@ export default {
   "{count} rows": "{count} قطارونه",
   "This file can't be shown here. Download it to open it.":
     "دا فایل دلته نه شي ښودل کېدای. د خلاصولو لپاره یې ښکته کړئ.",
+  "Auto-review": "اتومات بیاکتنه",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic ستاسو پر ځای د لیږلو، پوسټ کولو یا ړنګولو دمخه له تاسو پوښتي. یو قاعده زیاته کړئ چې پرته له پوښتنې کار وکړي. که قاعدې سره ټکر وکړي، «لومړی وپوښته» بریالی کیږي، او تادیه یا بیرته ورکړه تل پوښتنه کوي.",
+  "When Sirathic wants to": "کله چې Sirathic غواړي",
+  "Reply to emails for me": "زما پر ځای برېښنالیکونو ته ځواب ورکړه",
+  "Allow automatically": "په اتومات ډول اجازه ورکړه",
+  "Ask first": "لومړی وپوښته",
+  "Add rule": "قاعده زیاتول",
 } satisfies Messages;

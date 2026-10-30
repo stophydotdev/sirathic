@@ -781,6 +781,13 @@ export const MESSAGES = [
   "1 row",
   "{count} rows",
   "This file can't be shown here. Download it to open it.",
+  "Auto-review",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.",
+  "When Sirathic wants to",
+  "Reply to emails for me",
+  "Allow automatically",
+  "Ask first",
+  "Add rule",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

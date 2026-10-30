@@ -861,4 +861,12 @@ export default {
   "{count} rows": "{count} та қатор",
   "This file can't be shown here. Download it to open it.":
     "Бу файлни бу ерда кўрсатиб бўлмайди. Очиш учун юклаб олинг.",
+  "Auto-review": "Автоматик текшириш",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic сизнинг номингиздан юборишдан, эълон қилишдан ёки ўчиришдан олдин сиздан сўрайди. Сўрамасдан ишлаши учун қоида қўшинг. Қоидалар бир-бирига зид бўлса, «Аввал сўра» устун туради, тўлов ва пулни қайтариш эса ҳар доим сўралади.",
+  "When Sirathic wants to": "Sirathic буни қилмоқчи бўлганда",
+  "Reply to emails for me": "Менинг ўрнимга электрон хатларга жавоб бер",
+  "Allow automatically": "Автоматик рухсат бер",
+  "Ask first": "Аввал сўра",
+  "Add rule": "Қоида қўшиш",
 } satisfies Messages;

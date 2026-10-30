@@ -853,4 +853,12 @@ export default {
   "{count} rows": "{count} строк",
   "This file can't be shown here. Download it to open it.":
     "Этот файл нельзя показать здесь. Скачайте его, чтобы открыть.",
+  "Auto-review": "Автопроверка",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic спрашивает вас, прежде чем отправить, опубликовать или удалить что-то от вашего имени. Добавьте правило, чтобы он действовал без вопросов. Если правила противоречат друг другу, побеждает «Сначала спросить», а платежи и возвраты всегда требуют подтверждения.",
+  "When Sirathic wants to": "Когда Sirathic хочет",
+  "Reply to emails for me": "Отвечать на мои письма за меня",
+  "Allow automatically": "Разрешать автоматически",
+  "Ask first": "Сначала спросить",
+  "Add rule": "Добавить правило",
 } satisfies Messages;

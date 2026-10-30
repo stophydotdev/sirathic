@@ -852,4 +852,12 @@ export default {
   "{count} rows": "{count} редова",
   "This file can't be shown here. Download it to open it.":
     "Ова датотека не може да се прикаже овде. Преузмите је да бисте је отворили.",
+  "Auto-review": "Аутоматска провера",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic вас пита пре него што нешто пошаље, објави или обрише уместо вас. Додајте правило да му дозволите да ради без питања. Ако се правила сукобе, превладава „Прво питај“, а плаћање и повраћај новца увек траже потврду.",
+  "When Sirathic wants to": "Када Sirathic жели да",
+  "Reply to emails for me": "Одговара на моје мејлове уместо мене",
+  "Allow automatically": "Дозволи аутоматски",
+  "Ask first": "Прво питај",
+  "Add rule": "Додај правило",
 } satisfies Messages;

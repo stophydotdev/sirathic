@@ -836,4 +836,12 @@ export default {
   "{count} rows": "{count} అడ్డు వరుసలు",
   "This file can't be shown here. Download it to open it.":
     "ఈ ఫైల్‌ను ఇక్కడ చూపించలేము. తెరవడానికి డౌన్‌లోడ్ చేయండి.",
+  "Auto-review": "ఆటో-రివ్యూ",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "మీ తరపున పంపడం, పోస్ట్ చేయడం లేదా తొలగించడం చేసే ముందు Sirathic మిమ్మల్ని అడుగుతుంది. అడగకుండానే పని చేయనివ్వడానికి ఒక నియమాన్ని జోడించండి. నియమాలు ఘర్షణ పడితే “ముందు అడుగు” గెలుస్తుంది, చెల్లింపులు లేదా రీఫండ్‌లు ఎప్పుడూ అడుగుతాయి.",
+  "When Sirathic wants to": "Sirathic ఇది చేయాలనుకున్నప్పుడు",
+  "Reply to emails for me": "నా తరపున ఈమెయిల్‌లకు జవాబివ్వు",
+  "Allow automatically": "ఆటోమేటిక్‌గా అనుమతించు",
+  "Ask first": "ముందు అడుగు",
+  "Add rule": "నియమాన్ని జోడించు",
 } satisfies Messages;

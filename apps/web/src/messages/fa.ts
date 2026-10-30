@@ -849,4 +849,12 @@ export default {
   "{count} rows": "{count} ردیف",
   "This file can't be shown here. Download it to open it.":
     "این فایل را نمی‌توان اینجا نشان داد. برای باز کردن آن را دانلود کنید.",
+  "Auto-review": "بازبینی خودکار",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic پیش از ارسال، انتشار یا حذف کردن به‌جای شما از شما می‌پرسد. برای اینکه بدون پرسیدن کاری را انجام دهد، یک قانون اضافه کنید. اگر قانون‌ها با هم تعارض داشته باشند، «اول بپرس» برتری دارد و پرداخت یا استرداد همیشه پرسیده می‌شود.",
+  "When Sirathic wants to": "وقتی Sirathic می‌خواهد",
+  "Reply to emails for me": "به جای من به ایمیل‌ها پاسخ بده",
+  "Allow automatically": "خودکار اجازه بده",
+  "Ask first": "اول بپرس",
+  "Add rule": "افزودن قانون",
 } satisfies Messages;

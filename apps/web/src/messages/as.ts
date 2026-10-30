@@ -839,4 +839,12 @@ export default {
   "{count} rows": "{count}টা শাৰী",
   "This file can't be shown here. Download it to open it.":
     "এই ফাইলটো ইয়াত দেখুৱাব নোৱাৰি। খুলিবলৈ ডাউনল'ড কৰক।",
+  "Auto-review": "স্বয়ংক্ৰিয় পৰ্যালোচনা",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic-এ আপোনাৰ হৈ পঠিয়াবৰ আগতে, পোষ্ট বা মচাৰ আগতে আপোনাক সোধে। নুসুধাকৈ কাম কৰিবলৈ দিবলৈ এটা নিয়ম যোগ কৰক। নিয়ম বিৰোধ হ’লে “আগতে সোধক”ৰ প্ৰাধান্য থাকে, আৰু পৰিশোধ বা ৰিফাণ্ডৰ আগত সদায় সোধে।",
+  "When Sirathic wants to": "Sirathic-এ যেতিয়া কৰিব বিচাৰে",
+  "Reply to emails for me": "মোৰ হৈ ইমেইলৰ উত্তৰ দিয়া",
+  "Allow automatically": "নিজে নিজে অনুমতি দিয়ক",
+  "Ask first": "আগতে সোধক",
+  "Add rule": "নিয়ম যোগ কৰক",
 } satisfies Messages;

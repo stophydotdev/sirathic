@@ -849,4 +849,12 @@ export default {
   "{count} rows": "{count} hàng",
   "This file can't be shown here. Download it to open it.":
     "Không thể hiển thị tệp này ở đây. Hãy tải xuống để mở.",
+  "Auto-review": "Tự động xem xét",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic sẽ hỏi bạn trước khi gửi, đăng hoặc xóa thay bạn. Thêm một quy tắc để cho phép nó hành động mà không cần hỏi. Nếu các quy tắc xung đột, “Hỏi trước” được ưu tiên, còn thanh toán hoặc hoàn tiền luôn phải hỏi.",
+  "When Sirathic wants to": "Khi Sirathic muốn",
+  "Reply to emails for me": "Trả lời email thay tôi",
+  "Allow automatically": "Tự động cho phép",
+  "Ask first": "Hỏi trước",
+  "Add rule": "Thêm quy tắc",
 } satisfies Messages;

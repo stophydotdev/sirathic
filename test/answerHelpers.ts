@@ -62,7 +62,7 @@ export const answerWith = (
     firstStep: undefined,
     skills: [],
     loaded: [],
-    confirm: () => false,
+    confirm: async () => false,
     shorten: (message) => message,
     turn: { effort: "high", sessionId: "chat", by: "user" },
     ...overrides,

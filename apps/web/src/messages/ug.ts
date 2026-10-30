@@ -856,4 +856,12 @@ export default {
   "{count} rows": "{count} قۇر",
   "This file can't be shown here. Download it to open it.":
     "بۇ ھۆججەتنى بۇ يەردە كۆرسەتكىلى بولمايدۇ. ئېچىش ئۈچۈن چۈشۈرۈڭ.",
+  "Auto-review": "ئاپتوماتىك تەكشۈرۈش",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic سىزنىڭ ئورنىڭىزدا ئەۋەتىشتىن، يوللاشتىن ياكى ئۆچۈرۈشتىن بۇرۇن سىزدىن سورايدۇ. سورىماي ئىش قىلىشىغا يول قويۇش ئۈچۈن بىر قائىدە قوشۇڭ. قائىدىلەر توقۇنۇشسا «ئاۋۋال سورا» ئۈستۈنلۈككە ئىگە بولىدۇ، پۇل تۆلەش ياكى قايتۇرۇش بولسا ھەر ۋاقىت سورايدۇ.",
+  "When Sirathic wants to": "Sirathic مۇنداق قىلماقچى بولسا",
+  "Reply to emails for me": "ئورنۇمدا ئېلخەتلەرگە جاۋاب قايتۇر",
+  "Allow automatically": "ئاپتوماتىك رۇخسەت قىل",
+  "Ask first": "ئاۋۋال سورا",
+  "Add rule": "قائىدە قوشۇش",
 } satisfies Messages;

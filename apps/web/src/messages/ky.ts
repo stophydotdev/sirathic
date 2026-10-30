@@ -857,4 +857,12 @@ export default {
   "{count} rows": "{count} сап",
   "This file can't be shown here. Download it to open it.":
     "Бул файлды бул жерде көрсөтүү мүмкүн эмес. Ачуу үчүн жүктөп алыңыз.",
+  "Auto-review": "Автоматтык текшерүү",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic сиздин атыңыздан жиберүүдөн, жарыялоодон же өчүрүүдөн мурун сизден сурайт. Сурабай иштесин десеңиз, эреже кошуңуз. Эрежелер дал келбесе, «Адегенде сура» үстөмдүк кылат, ал эми төлөм же акчаны кайтаруу ар дайым суралат.",
+  "When Sirathic wants to": "Sirathic муну кылгысы келгенде",
+  "Reply to emails for me": "Мен үчүн электрондук каттарга жооп бер",
+  "Allow automatically": "Автоматтык түрдө уруксат бер",
+  "Ask first": "Адегенде сура",
+  "Add rule": "Эреже кошуу",
 } satisfies Messages;

@@ -832,4 +832,12 @@ export default {
   "1 row": "1 แถว",
   "{count} rows": "{count} แถว",
   "This file can't be shown here. Download it to open it.": "ไม่สามารถแสดงไฟล์นี้ที่นี่ได้ ดาวน์โหลดเพื่อเปิด",
+  "Auto-review": "ตรวจสอบอัตโนมัติ",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic จะถามคุณก่อนส่ง โพสต์ หรือลบแทนคุณ เพิ่มกฎเพื่อให้ทำโดยไม่ต้องถาม หากกฎขัดแย้งกัน “ถามก่อน” จะมีผลเหนือกว่า และการชำระเงินหรือการคืนเงินจะถามเสมอ",
+  "When Sirathic wants to": "เมื่อ Sirathic ต้องการ",
+  "Reply to emails for me": "ตอบอีเมลแทนฉัน",
+  "Allow automatically": "อนุญาตอัตโนมัติ",
+  "Ask first": "ถามก่อน",
+  "Add rule": "เพิ่มกฎ",
 } satisfies Messages;
