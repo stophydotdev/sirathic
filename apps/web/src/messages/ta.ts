@@ -150,6 +150,7 @@ export default {
   "Your Google account": "உங்கள் Google கணக்கு",
   "Sign out": "வெளியேறு",
   Commands: "கட்டளைகள்",
+  Actions: "செயல்கள்",
   Results: "முடிவுகள்",
   "New incognito chat": "புதிய மறைநிலை அரட்டை",
   "Type a command or search": "கட்டளையை உள்ளிடவும் அல்லது தேடவும்",

@@ -152,6 +152,7 @@ export default {
   "Your Google account": "Votre compte Google",
   "Sign out": "Se déconnecter",
   Commands: "Commandes",
+  Actions: "Actions",
   Results: "Résultats",
   "New incognito chat": "Nouvelle discussion privée",
   "Type a command or search": "Saisissez une commande ou recherchez",

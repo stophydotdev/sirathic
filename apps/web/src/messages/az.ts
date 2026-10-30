@@ -150,6 +150,7 @@ export default {
   "Your Google account": "Google hesabınız",
   "Sign out": "Çıxış",
   Commands: "Əmrlər",
+  Actions: "Əməliyyatlar",
   Results: "Nəticələr",
   "New incognito chat": "Yeni gizli söhbət",
   "Type a command or search": "Əmr yazın və ya axtarın",

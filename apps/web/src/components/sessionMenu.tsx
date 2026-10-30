@@ -1,9 +1,8 @@
 "use client";
 
 import { prefetchChat } from "@/components/chat";
-import { saveDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
-import { findSessions, type Session, useSessions } from "@/components/sessions";
+import { type Session, useSessions } from "@/components/sessions";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +13,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  Add01Icon,
   Delete02Icon,
-  IncognitoIcon,
   LinkSquare02Icon,
   Loading03Icon,
   Mail01Icon,
@@ -25,12 +22,11 @@ import {
   PencilEdit02Icon,
   PinIcon,
   PinOffIcon,
-  Search01Icon,
 } from "@hugeicons/core-free-icons";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Dialog } from "radix-ui";
-import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "react";
+import { type FC, type FormEvent, type ReactNode, useState } from "react";
 
 export const panel =
   "pop bg-background ring-foreground/7 fixed top-1/2 left-1/2 z-[60] flex w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-[20px] shadow-lg ring-1 outline-none ring-inset";
@@ -289,156 +285,5 @@ export const SessionRow: FC<{
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  );
-};
-
-type Command = {
-  key: string;
-  icon?: ReactNode;
-  label: string;
-  hint?: string;
-  run: () => void;
-};
-
-const heading = "text-muted-foreground px-2 pt-2 pb-1 text-xs";
-
-export const SearchDialog: FC<{
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}> = ({ open, onOpenChange }) => {
-  const [query, setQuery] = useState("");
-  const [found, setFound] = useState<Session[]>([]);
-  const [active, setActive] = useState(0);
-  const t = useT();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!open) return;
-    let current = true;
-    const timer = setTimeout(
-      () =>
-        void findSessions(query.trim()).then((sessions) => {
-          if (current) setFound(sessions);
-        }),
-      150,
-    );
-    return () => {
-      current = false;
-      clearTimeout(timer);
-    };
-  }, [open, query]);
-
-  useEffect(() => {
-    document
-      .querySelector('[data-search-option][aria-selected="true"]')
-      ?.scrollIntoView({ block: "nearest" });
-  }, [active]);
-
-  const asked = query.trim();
-  const commands: Command[] = [
-    ...(asked
-      ? [
-          {
-            key: "ask",
-            icon: <HugeiconsIcon icon={Search01Icon} className="size-4" />,
-            label: t("Ask Sirathic"),
-            hint: asked,
-            run: () => {
-              saveDraft(asked);
-              window.location.assign("/");
-            },
-          },
-        ]
-      : []),
-    {
-      key: "new",
-      icon: <HugeiconsIcon icon={Add01Icon} className="size-4" />,
-      label: t("New chat"),
-      run: () => window.location.assign("/"),
-    },
-    {
-      key: "incognito",
-      icon: <HugeiconsIcon icon={IncognitoIcon} className="size-4" />,
-      label: t("New incognito chat"),
-      run: () => window.location.assign("/?incognito"),
-    },
-  ];
-  const results: Command[] = found.map((session) => ({
-    key: session.id,
-    label: session.title,
-    run: () => {
-      onOpenChange(false);
-      router.push(`/c/${session.id}`);
-    },
-  }));
-  const options = [...commands, ...results];
-  const selected = Math.min(active, options.length - 1);
-
-  const option = (command: Command, index: number) => (
-    <button
-      key={command.key}
-      type="button"
-      role="option"
-      data-search-option
-      aria-selected={index === selected}
-      onMouseMove={() => setActive(index)}
-      onClick={command.run}
-      className={cn(
-        "flex min-h-9 w-full items-center gap-3 rounded-lg px-2 text-start text-base",
-        !command.icon && "min-h-10",
-        index === selected && "bg-foreground/5",
-      )}
-    >
-      {command.icon}
-      <span className="truncate">{command.label}</span>
-      {command.hint && <span className="text-muted-foreground truncate">{command.hint}</span>}
-    </button>
-  );
-
-  return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60]" />
-        <Dialog.Content
-          aria-describedby={undefined}
-          onCloseAutoFocus={(event) => event.preventDefault()}
-          className={cn(panel, "top-[20%] max-w-[620px] translate-y-0 rounded-[16px]")}
-        >
-          <Dialog.Title className="sr-only">{t("Search chats")}</Dialog.Title>
-          <div className="border-border/50 flex h-14 items-center gap-3 border-b px-5">
-            <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-4" />
-            <input
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                setActive(0);
-              }}
-              placeholder={t("Type a command or search")}
-              autoFocus
-              onKeyDown={(event) => {
-                if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-                  event.preventDefault();
-                  const step = event.key === "ArrowDown" ? 1 : -1;
-                  setActive((selected + step + options.length) % options.length);
-                } else if (event.key === "Enter") {
-                  options[selected]?.run();
-                }
-              }}
-              className="placeholder:text-muted-foreground flex-1 bg-transparent text-base outline-none"
-            />
-          </div>
-          <div role="listbox" className="flex max-h-[min(60vh,420px)] flex-col overflow-y-auto p-3">
-            <p className={heading}>{t("Commands")}</p>
-            {commands.map(option)}
-            <p className={cn(heading, "pt-3")}>{t("Results")}</p>
-            {results.length === 0 ? (
-              <p className="text-muted-foreground px-2 py-2 text-sm">{t("No chats found")}</p>
-            ) : (
-              results.map((result, index) => option(result, commands.length + index))
-            )}
-          </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
   );
 };

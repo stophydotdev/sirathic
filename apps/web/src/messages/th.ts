@@ -148,6 +148,7 @@ export default {
   "Your Google account": "บัญชี Google ของคุณ",
   "Sign out": "ออกจากระบบ",
   Commands: "คำสั่ง",
+  Actions: "การดำเนินการ",
   Results: "ผลลัพธ์",
   "New incognito chat": "แชทไม่ระบุตัวตนใหม่",
   "Type a command or search": "พิมพ์คำสั่งหรือค้นหา",

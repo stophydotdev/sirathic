@@ -149,6 +149,7 @@ export default {
   "Your Google account": "Ваш Google налог",
   "Sign out": "Одјави се",
   Commands: "Команде",
+  Actions: "Радње",
   Results: "Резултати",
   "New incognito chat": "Нови анонимни разговор",
   "Type a command or search": "Унесите команду или претражите",

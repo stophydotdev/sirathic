@@ -150,6 +150,7 @@ export default {
   "Your Google account": "Google аккаунтуңуз",
   "Sign out": "Чыгуу",
   Commands: "Буйруктар",
+  Actions: "Аракеттер",
   Results: "Жыйынтыктар",
   "New incognito chat": "Жаңы жашыруун маек",
   "Type a command or search": "Буйрук жазыңыз же издеңиз",

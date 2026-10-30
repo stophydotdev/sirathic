@@ -9,6 +9,8 @@ import { isAnswering } from "./answers";
 
 const TITLE_CHARS = 80;
 const PREVIEW_CHARS = 90;
+const SNIPPET_CHARS = 120;
+const SNIPPET_LEAD_CHARS = 30;
 const RECENT_LIMIT = 50;
 const LIKE_SPECIAL = /[\\%_]/gu;
 const ASK_CHARS = 140;
@@ -70,7 +72,14 @@ export const recentAsks = async (by: string, since: Date, chats: number) => {
   return rows.flatMap(({ asks }) => asked.parse(asks).slice(-ASKS_PER_CHAT));
 };
 
+const hitIn = (query: string, pattern: string) =>
+  sql<
+    string | null
+  >`(select substr(hit.text, greatest(position(lower(${query}) in lower(hit.text)) - ${SNIPPET_LEAD_CHARS}, 1), ${SNIPPET_CHARS} + length(${query})) from (select part->>'text' as text from jsonb_array_elements(${chatSessions.messages}) as message, jsonb_array_elements(message->'parts') as part where part->>'type' = 'text' and part->>'text' ilike ${pattern}) as hit limit 1)`;
+
 export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT) => {
+  const pattern = `%${query.replaceAll(LIKE_SPECIAL, (special) => `\\${special}`)}%`;
+  const hit = query ? hitIn(query, pattern) : sql<null>`null`;
   const rows = await db
     .select({
       id: chatSessions.id,
@@ -80,6 +89,7 @@ export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT)
       published: sql<boolean>`${chatSessions.publishedAt} is not null`,
       projectId: chatSessions.projectId,
       updatedAt: isoTime(chatSessions.updatedAt),
+      snippet: hit,
       preview: sql<string>`left(regexp_replace(coalesce((select string_agg(part->>'text', ' ') from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where part->>'type' = 'text'), ''), '^> [^\n]*\n\n', ''), ${PREVIEW_CHARS})`,
       waiting: sql<
         string | null
@@ -89,12 +99,7 @@ export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT)
     .where(
       and(
         eq(chatSessions.owner, by),
-        query
-          ? ilike(
-              chatSessions.title,
-              `%${query.replaceAll(LIKE_SPECIAL, (special) => `\\${special}`)}%`,
-            )
-          : undefined,
+        query ? or(ilike(chatSessions.title, pattern), sql`${hit} is not null`) : undefined,
       ),
     )
     .orderBy(desc(chatSessions.pinned), desc(chatSessions.updatedAt))

@@ -148,6 +148,7 @@ export default {
   "Your Google account": "మీ Google ఖాతా",
   "Sign out": "సైన్ అవుట్",
   Commands: "ఆదేశాలు",
+  Actions: "చర్యలు",
   Results: "ఫలితాలు",
   "New incognito chat": "కొత్త అజ్ఞాత చాట్",
   "Type a command or search": "ఆదేశం టైప్ చేయండి లేదా వెతకండి",

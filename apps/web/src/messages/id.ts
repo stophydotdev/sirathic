@@ -149,6 +149,7 @@ export default {
   "Your Google account": "Akun Google Anda",
   "Sign out": "Keluar",
   Commands: "Perintah",
+  Actions: "Tindakan",
   Results: "Hasil",
   "New incognito chat": "Obrolan penyamaran baru",
   "Type a command or search": "Ketik perintah atau cari",

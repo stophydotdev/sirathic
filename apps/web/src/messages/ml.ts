@@ -149,6 +149,7 @@ export default {
   "Your Google account": "നിങ്ങളുടെ Google അക്കൗണ്ട്",
   "Sign out": "സൈൻ ഔട്ട്",
   Commands: "കമാൻഡുകൾ",
+  Actions: "പ്രവർത്തനങ്ങൾ",
   Results: "ഫലങ്ങൾ",
   "New incognito chat": "പുതിയ ഇൻകോഗ്നിറ്റോ ചാറ്റ്",
   "Type a command or search": "ഒരു കമാൻഡ് ടൈപ്പ് ചെയ്യുക അല്ലെങ്കിൽ തിരയുക",

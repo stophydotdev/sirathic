@@ -149,6 +149,7 @@ export default {
   "Your Google account": "আপোনাৰ Google একাউণ্ট",
   "Sign out": "ছাইন আউট",
   Commands: "আদেশসমূহ",
+  Actions: "কাৰ্যসমূহ",
   Results: "ফলাফল",
   "New incognito chat": "নতুন ইনক'গনিট' চেট",
   "Type a command or search": "আদেশ লিখক বা সন্ধান কৰক",

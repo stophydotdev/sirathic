@@ -149,6 +149,7 @@ export default {
   "Your Google account": "ستاسو د Google حساب",
   "Sign out": "وتل",
   Commands: "امرونه",
+  Actions: "عملونه",
   Results: "پایلې",
   "New incognito chat": "نوې پټه خبرې",
   "Type a command or search": "امر ولیکئ یا ولټوئ",

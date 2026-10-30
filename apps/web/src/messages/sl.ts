@@ -165,6 +165,7 @@ export default {
   "Your Google account": "Vaš račun Google",
   "Sign out": "Odjava",
   Commands: "Ukazi",
+  Actions: "Dejanja",
   Results: "Rezultati",
   "New incognito chat": "Nov pogovor v načinu inkognito",
   "Type a command or search": "Vnesite ukaz ali iskalni niz",
