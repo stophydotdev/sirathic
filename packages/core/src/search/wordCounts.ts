@@ -2,7 +2,7 @@ import { db } from "@sirathic/db";
 import { getTableName, type SQL, sql } from "drizzle-orm";
 import type { PgTable } from "drizzle-orm/pg-core";
 import { z } from "zod";
-import { cacheFor } from "../cache";
+import { cacheFor, dataVersion } from "../cache";
 
 const MONTH_MS = 30 * 24 * 60 * 60_000;
 
@@ -14,9 +14,9 @@ const counts = cacheFor({
   keepMs: MONTH_MS,
 });
 
-export const countWhere = (table: PgTable, key: string, match: SQL) =>
+export const countWhere = async (table: PgTable, key: string, match: SQL) =>
   counts(
-    `${getTableName(table)}:${key}`,
+    `${await dataVersion()}:${getTableName(table)}:${key}`,
     async () =>
       counted.parse(
         await db.execute(sql`select count(*)::int as count from ${table} where ${match}`),
