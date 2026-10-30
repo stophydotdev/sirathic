@@ -11,6 +11,7 @@ import browser from "./browser.md" with { type: "text" };
 import chart from "./chart.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
 import jobSearch from "./jobSearch.md" with { type: "text" };
+import { muslimSkills } from "./muslim";
 import noConnector from "./noConnector.md" with { type: "text" };
 import onboarding from "./onboarding.md" with { type: "text" };
 import pastContext from "./pastContext.md" with { type: "text" };
@@ -269,6 +270,7 @@ export const skillsFor = ({
             text: recentChanges,
           },
         ]),
+    ...("search_web" in offered ? muslimSkills : []),
   ] satisfies Skill[];
   const taken = new Set(builtIn.map(({ name }) => name.toLowerCase()));
   const own = userSkills
