@@ -5,7 +5,7 @@ import { listAutomations } from "../automations/store";
 import { exportSessions } from "../chat/sessions";
 import { listFiles } from "../files/store";
 import { storage } from "../files/storage";
-import { listProjects } from "../projects/projects";
+import { listProjects, removeProject } from "../projects/projects";
 import { listSkills } from "../skills/skills";
 import { getSettings } from "./settings";
 
@@ -20,6 +20,8 @@ export const exportData = async (owner: string) => ({
 });
 
 export async function deleteAccount(owner: string) {
+  const bots = await listProjects(owner);
+  await Promise.all(bots.map(({ id }) => removeProject(id, owner)));
   const stored = await db.select({ key: files.key }).from(files).where(eq(files.owner, owner));
   await Promise.all(stored.map(({ key }) => storage.remove(key)));
   await db.transaction(async (tx) => {

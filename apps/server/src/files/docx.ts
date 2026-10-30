@@ -1,7 +1,9 @@
-import { strFromU8, unzipSync } from "fflate";
+import { strFromU8, Unzip, UnzipInflate } from "fflate";
 
 const BODY = "word/document.xml";
 const DOCX_CHARS = 60_000;
+const BODY_BYTES = 20_000_000;
+const CHUNK_BYTES = 4_096;
 const ENTITIES = new Map([
   ["amp", "&"],
   ["lt", "<"],
@@ -11,11 +13,27 @@ const ENTITIES = new Map([
 ]);
 
 const bodyOf = (bytes: Uint8Array) => {
+  const parts: Uint8Array[] = [];
+  let size = 0;
+  const unzip = new Unzip((file) => {
+    if (file.name !== BODY) return;
+    file.ondata = (err, chunk) => {
+      if (err) throw err;
+      size += chunk.length;
+      if (size > BODY_BYTES) throw new RangeError("the Word body is too large");
+      parts.push(chunk);
+    };
+    file.start();
+  });
+  unzip.register(UnzipInflate);
   try {
-    return unzipSync(bytes, { filter: (file) => file.name === BODY })[BODY];
+    for (let at = 0; at < bytes.length; at += CHUNK_BYTES) {
+      unzip.push(bytes.subarray(at, at + CHUNK_BYTES), at + CHUNK_BYTES >= bytes.length);
+    }
   } catch {
     return undefined;
   }
+  return parts.length === 0 ? undefined : Buffer.concat(parts);
 };
 
 export const isDocx = (bytes: Uint8Array) =>

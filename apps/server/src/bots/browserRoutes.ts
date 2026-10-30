@@ -6,7 +6,7 @@ import { siteHost } from "@sirathic/core/web/url";
 import { userFor } from "../account/auth";
 import { respond, StatusError } from "../http";
 import { projectId, requireProject } from "../projects/projects";
-import { saveLogin } from "../vault/vault";
+import { saveLogin, vaultLogin } from "../vault/vault";
 import { browserPage, fillBrowser, screenSocket, teachBrowser } from "./browser";
 import { screenTicket, ticketFits } from "./screenTicket";
 
@@ -85,10 +85,13 @@ browserRoutes.post("/:id/browser/fill", (c) =>
     const { botId, owner } = await ownBot(c.req.raw.headers, c.req.param("id"));
     const { fields, submit, domain, save } = await bodyOf(c.req.raw, fillBody);
     const filled = await fillBrowser(botId, { domain, fields, submit });
-    const username = fields.find((field) => !field.secret)?.value;
-    const password = fields.find((field) => field.secret)?.value;
-    if (save && username && password && filled.fields.every((field) => field.filled)) {
-      await saveLogin(owner, { site: domain, username, password });
+    const login = vaultLogin.safeParse({
+      site: domain,
+      username: fields.find((field) => !field.secret)?.value,
+      password: fields.find((field) => field.secret)?.value,
+    });
+    if (save && login.success && filled.fields.every((field) => field.filled)) {
+      await saveLogin(owner, login.data);
     }
     return filled;
   }),

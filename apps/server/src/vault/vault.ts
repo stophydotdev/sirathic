@@ -24,7 +24,12 @@ const opened = async <Schema extends z.ZodType>(
 ) => schema.parse(JSON.parse(await unseal(sealed, owner, site)));
 
 export const saveLogin = async (owner: string, { site, ...login }: z.infer<typeof vaultLogin>) => {
-  const sealed = await seal(JSON.stringify(login), owner, site);
+  const [before] = await db
+    .select({ sealed: vaultLogins.sealed })
+    .from(vaultLogins)
+    .where(and(eq(vaultLogins.owner, owner), eq(vaultLogins.site, site)));
+  const kept = before && (await opened(sealedLogin, { owner, site, ...before }));
+  const sealed = await seal(JSON.stringify({ ...kept, ...login }), owner, site);
   return db
     .insert(vaultLogins)
     .values({ owner, kind: "login", site, sealed })

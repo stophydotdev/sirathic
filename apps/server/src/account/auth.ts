@@ -41,7 +41,6 @@ export const auth = betterAuth({
   },
   session: {
     expiresIn: SESSION_DAYS * 86_400,
-    cookieCache: { enabled: true, maxAge: 300 },
   },
   account: { storeStateStrategy: "cookie", encryptOAuthTokens: true },
   socialProviders: {
