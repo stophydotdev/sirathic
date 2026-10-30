@@ -1,6 +1,5 @@
 import { countOf, countUpBy } from "@sirathic/core/cache";
-import type { LanguageModelUsage, ProviderMetadata } from "ai";
-import { z } from "zod";
+import type { LanguageModelUsage } from "ai";
 import { track } from "../chat/events";
 import { reasonOf, StatusError } from "../http";
 import { noorModel } from "./noor";
@@ -10,29 +9,11 @@ const NOOR_WINDOWS = [
   { seconds: 5 * HOUR, limit: 1_500_000 },
   { seconds: 7 * 24 * HOUR, limit: 4_600_000 },
 ] as const;
-const PRICIER_ABOVE = 100_000;
-
-const hourWrites = z.object({
-  anthropic: z.object({
-    usage: z.object({ cache_creation: z.object({ ephemeral_1h_input_tokens: z.number() }) }),
-  }),
-});
-
-export const countedTokens = (
-  usage: LanguageModelUsage,
-  metadata: ProviderMetadata | undefined,
-) => {
+export const countedTokens = (usage: LanguageModelUsage) => {
   const { noCacheTokens = 0, cacheReadTokens = 0, cacheWriteTokens = 0 } = usage.inputTokenDetails;
-  const hour =
-    hourWrites.safeParse(metadata).data?.anthropic.usage.cache_creation.ephemeral_1h_input_tokens ??
-    0;
-  const counted =
-    noCacheTokens +
-    (cacheWriteTokens - hour) * 1.25 +
-    hour * 2 +
-    cacheReadTokens * 0.1 +
-    (usage.outputTokens ?? 0) * 5;
-  return Math.ceil((usage.inputTokens ?? 0) > PRICIER_ABOVE ? counted * 5 : counted);
+  return Math.ceil(
+    noCacheTokens + cacheWriteTokens + cacheReadTokens * 0.02 + (usage.outputTokens ?? 0) * 4,
+  );
 };
 
 const keyOf = (seconds: number, by: string) => `noor-usage:${seconds}:${by}`;

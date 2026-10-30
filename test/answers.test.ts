@@ -427,7 +427,7 @@ test("the skill list is always in the rules, and a chat with no skills has none"
 });
 
 test.each([
-  ["completes", { stream: simulateReadableStream({ chunks: answered }) }, 6],
+  ["completes", { stream: simulateReadableStream({ chunks: answered }) }, 5],
   ["fails", undefined, 0],
 ])("an answer that %s reports what it cost in counted tokens", async (_, stream, cost) => {
   const spent: number[] = [];
@@ -480,15 +480,11 @@ const usageOf = (inputTokens: number) => ({
   totalTokens: inputTokens + 200,
 });
 
-test("a Noor call counts tokens by what they cost, and a prompt over 100K costs five times as much", () => {
-  const hourWrites = {
-    anthropic: { usage: { cache_creation: { ephemeral_1h_input_tokens: 1000 } } },
-  };
-  expect([
-    countedTokens(usageOf(10_000), hourWrites),
-    countedTokens(usageOf(10_000), undefined),
-    countedTokens(usageOf(104_000), hourWrites),
-  ]).toEqual([1000 + 2000 * 1.25 + 1000 * 2 + 600 + 1000, 1000 + 3750 + 600 + 1000, 5 * 16500]);
+test("a Noor call counts tokens by what DeepSeek charges, and a long prompt costs no extra", () => {
+  expect([countedTokens(usageOf(10_000)), countedTokens(usageOf(104_000))]).toEqual([
+    1000 + 3000 + 6000 * 0.02 + 200 * 4,
+    1000 + 3000 + 100_000 * 0.02 + 200 * 4,
+  ]);
 });
 
 test("Noor stops at 1.5M counted tokens in 5 hours, says when it resets, and other models are not counted", async () => {
