@@ -114,6 +114,12 @@ async function searchFacts(scope: MemoryScope, query: string) {
 }
 
 export function memoryTools(scope: MemoryScope | undefined, saving: boolean) {
+  let saved: Promise<unknown> = Promise.resolve();
+  const inOrder = (to: MemoryScope | undefined, change: z.output<typeof memoryChange>) => {
+    const next = saved.then(() => changeFacts(to, change));
+    saved = next.catch(() => undefined);
+    return next;
+  };
   const description = `Changes the facts saved about the user, which you see in your rules. write saves a fact (deduped); forget drops one by its exact saved text (find it with search_user_memories), so pair it with a write to correct a fact in the same call. Save without asking and mention it in passing.
 
 Use it when the user reveals durable facts: their school of fiqh, language, how long they want answers, where they live, their work, goal, level, pace, being a revert, or preferences. Do not wait for them to ask. Do not store ephemeral instructions, like "make it shorter". In a bot chat, also save the answer to every setup question you ask.
@@ -128,12 +134,12 @@ Before ending your turn, reflect on what new facts you learned about the user. I
             description,
             inputSchema: botMemoryChange,
             execute: ({ scope: to, ...change }) =>
-              changeFacts(to === "user" ? shared(scope) : scope, change),
+              inOrder(to === "user" ? shared(scope) : scope, change),
           })
         : tool({
             description,
             inputSchema: memoryChange,
-            execute: (change) => changeFacts(scope, change),
+            execute: (change) => inOrder(scope, change),
           }),
   };
   return {
