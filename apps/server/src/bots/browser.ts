@@ -1,5 +1,6 @@
 import {
   type Action,
+  acted,
   batchInput,
   browserHelp,
   checked,
@@ -12,7 +13,6 @@ import {
   pageInfo,
   pressInput,
   refillRequest,
-  result,
   runCodeInput,
   type screenMode,
   screenshot,
@@ -22,6 +22,7 @@ import {
   tabsInput,
   taught,
   typeInput,
+  uploadInput,
   userForm,
   waitForInput,
 } from "@sirathic/browser/protocol";
@@ -32,7 +33,9 @@ import { z } from "zod";
 import { fencedText } from "../chat/fence";
 import { StatusError } from "../http";
 import { loginFor } from "../vault/vault";
+import { mediaTypeOf } from "../files/sniff";
 import { contactTools, VAULT_FILL_CONTACT } from "./contactFill";
+import { botDisk } from "./disk";
 import type { BotScope } from "./tools";
 
 const TIMEOUT_MS = 90_000;
@@ -55,6 +58,7 @@ export const BROWSER_TOOLS = [
   "browser_batch",
   "browser_tabs",
   "browser_screenshot",
+  "browser_upload",
   VAULT_SIGN_IN,
   VAULT_FILL_CONTACT,
   USER_FORM,
@@ -83,8 +87,25 @@ const service = async (path: string, body: ServiceRequest) => {
   return response;
 };
 
-const act = async (botId: string, action: Action) =>
-  result.parse(await (await service("/act", { session: sessionOf(botId), action })).json());
+const act = async (botId: string, action: Action) => {
+  const { downloads, ...page } = acted.parse(
+    await (await service("/act", { session: sessionOf(botId), action })).json(),
+  );
+  const disk = botDisk(botId);
+  const saved = await Promise.all(
+    downloads.map(({ name, data }) =>
+      disk.write(name, Buffer.from(data, "base64")).then(
+        (named) => ({ kind: "kept", named }) as const,
+        (error: Error) => ({ kind: "failed", error: error.message }) as const,
+      ),
+    ),
+  );
+  return {
+    ...page,
+    downloaded: saved.flatMap((file) => (file.kind === "kept" ? [file.named] : [])),
+    notKept: saved.flatMap((file) => (file.kind === "failed" ? [file.error] : [])),
+  };
+};
 
 export const fillBrowser = async (botId: string, form: Omit<FillRequest, "session">) =>
   filled.parse(await (await service("/fill", { session: sessionOf(botId), ...form })).json());
@@ -134,9 +155,14 @@ export const screenSocket = (botId: string, mode: z.infer<typeof screenMode>) =>
   return new WebSocket(url, ["screen", env.BROWSER_TOKEN]);
 };
 
-const pageText = (output: z.infer<typeof result>) => ({
+const pageText = (output: Awaited<ReturnType<typeof act>>) => ({
   type: "text" as const,
-  value: `### Page\n${output.url}\n${output.title}\n\n${fencedText(output.page)}`,
+  value:
+    `### Page\n${output.url}\n${output.title}\n\n${fencedText(output.page)}` +
+    (output.downloaded.length > 0
+      ? `\n\nDownloaded to your files: ${output.downloaded.join(", ")}.`
+      : "") +
+    (output.notKept.length > 0 ? `\n\nA download was not kept: ${output.notKept.join(" ")}` : ""),
 });
 
 export function browserTools(scope: BotScope) {
@@ -261,11 +287,20 @@ export function browserTools(scope: BotScope) {
     browser_screenshot: tool({
       description:
         "Takes a picture of the page in your browser, for what the page text can't tell you, like a picture puzzle, a chart or a page drawn without text. It refuses while a password or another private value is on the page. Never use it to check a field you or the user filled.",
-      inputSchema: z.object({}),
-      execute: async () =>
-        screenshot.parse(
+      inputSchema: z.object({
+        show: z
+          .boolean()
+          .optional()
+          .describe(
+            "Also show the picture to the user in the chat, like a boarding pass, a booking or a result they asked to see.",
+          ),
+      }),
+      execute: async ({ show }) => ({
+        ...screenshot.parse(
           await (await service("/screenshot", { session: sessionOf(botId) })).json(),
         ),
+        shown: show === true,
+      }),
       toModelOutput: ({ output }) => ({
         type: "content",
         value: [
@@ -273,6 +308,28 @@ export function browserTools(scope: BotScope) {
           { type: "file", mediaType: "image/jpeg", data: { type: "data", data: output.jpeg } },
         ],
       }),
+    }),
+    browser_upload: tool({
+      description:
+        "Puts files from your files, like a CV the user sent you or a ticket your browser downloaded, into an upload field or button on the page. Returns what changed.",
+      inputSchema: uploadInput,
+      execute: async ({ target, files }) => {
+        const disk = botDisk(botId);
+        const sent = await Promise.all(
+          files.map(async (name) => {
+            const bytes = await disk.read(name).catch(() => {
+              throw new Error(`${name} is not in your files.`);
+            });
+            return {
+              name,
+              mimeType: mediaTypeOf(bytes) ?? "application/octet-stream",
+              data: Buffer.from(bytes).toString("base64"),
+            };
+          }),
+        );
+        return act(botId, { kind: "upload", target, files: sent });
+      },
+      toModelOutput: ({ output }) => pageText(output),
     }),
     [REFILL]: tool({
       description:

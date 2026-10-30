@@ -12,4 +12,6 @@ export const storage = {
   put: (key: string, bytes: Uint8Array, type: string) => client.write(key, bytes, { type }),
   bytes: (key: string) => client.file(key).bytes(),
   remove: (key: string) => client.delete(key),
+  list: async (prefix: string) =>
+    ((await client.list({ prefix })).contents ?? []).map(({ key, size }) => ({ key, size })),
 };
