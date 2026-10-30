@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
 import "katex/dist/katex.min.css";
 
@@ -15,7 +13,7 @@ import { HoverCard } from "radix-ui";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import { type ComponentProps, type FC, memo, type ReactNode, useContext, useState } from "react";
+import { type ComponentProps, type FC, memo, type ReactNode, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { z } from "zod";
@@ -26,17 +24,20 @@ import {
   rehypeCitations,
   rehypeVerses,
 } from "@/components/citations";
-import { Favicon } from "@/components/favicon";
 import { CodeBlock } from "@/components/markdownCode";
 import { unwrappedCitations } from "@sirathic/app/citations";
 import { MarkdownDiagram, markOpenDiagram } from "@/components/markdownDiagram";
+import {
+  LinkCard,
+  PreviewContent,
+  PreviewLink,
+  PreviewRoot,
+  useOpened,
+} from "@/components/linkPreview";
 import { MarkdownMedia } from "@/components/markdownMedia";
 import { Note, rehypeNotes } from "@/components/markdownNote";
 import { MarkdownTable } from "@/components/markdownTable";
-import { useVideoLine } from "@/components/videoLine";
-import { siteName, SourcesContext } from "@/components/sources";
 import { InlineVerse } from "@/components/verseCards";
-import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 
 const withMathDelimiters = (text: string) =>
@@ -84,25 +85,14 @@ const pagerButton =
   "hover:bg-muted hover:text-foreground grid size-6 place-items-center rounded-md disabled:opacity-40";
 
 const Citation: FC<{ urls: string[] }> = ({ urls }) => {
-  const sources = useContext(SourcesContext);
-  const chat = useChatState();
-  const videoLine = useVideoLine();
   const t = useT();
+  const opened = useOpened();
   const [at, setAt] = useState(0);
   const [first, ...more] = urls;
   const url = urls[at] ?? first;
-  const source = sources.get(url);
-  const video = source?.video;
-  const opened = (opening: string) => {
-    const site = URL.parse(opening)?.hostname.replace(/^www\./u, "");
-    if (!chat?.saved || !site) return;
-    void api.events.record
-      .mutate({ name: "source.opened", props: { site, where: "inline" } })
-      .catch(() => undefined);
-  };
 
   return (
-    <HoverCard.Root openDelay={150} closeDelay={100}>
+    <PreviewRoot>
       <HoverCard.Trigger asChild>
         <a
           href={first}
@@ -115,98 +105,49 @@ const Citation: FC<{ urls: string[] }> = ({ urls }) => {
           {more.length > 0 && <span>+{more.length}</span>}
         </a>
       </HoverCard.Trigger>
-      <HoverCard.Portal>
-        <HoverCard.Content
-          side="top"
-          align="start"
-          sideOffset={6}
-          className="bg-card border-border z-50 flex w-80 flex-col rounded-xl border p-1 shadow-lg"
-        >
-          {urls.length > 1 && (
-            <div className="text-muted-foreground flex items-center gap-1 px-1.5 pt-1 text-xs">
-              <button
-                type="button"
-                aria-label={t("Previous source")}
-                disabled={at === 0}
-                onClick={() => setAt(at - 1)}
-                className={pagerButton}
-              >
-                <HugeiconsIcon icon={ArrowLeft01Icon} className="size-3.5 rtl:rotate-180" />
-              </button>
-              <span className="tabular-nums">
-                {at + 1}/{urls.length}
-              </span>
-              <button
-                type="button"
-                aria-label={t("Next source")}
-                disabled={at === urls.length - 1}
-                onClick={() => setAt(at + 1)}
-                className={pagerButton}
-              >
-                <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5 rtl:rotate-180" />
-              </button>
-              <span className="ms-auto">{t("{count} sources", { count: urls.length })}</span>
-            </div>
-          )}
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => opened(url)}
-            className="hover:bg-muted flex flex-col gap-1 rounded-lg p-2 text-sm"
-          >
-            <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
-              <Favicon url={url} size={14} />
-              <span className="line-clamp-1">
-                {siteName(url)}
-                {video && ` · ${video.channel}`}
-              </span>
+      <PreviewContent>
+        {urls.length > 1 && (
+          <div className="text-muted-foreground flex items-center gap-1 px-1.5 pt-1 text-xs">
+            <button
+              type="button"
+              aria-label={t("Previous source")}
+              disabled={at === 0}
+              onClick={() => setAt(at - 1)}
+              className={pagerButton}
+            >
+              <HugeiconsIcon icon={ArrowLeft01Icon} className="size-3.5 rtl:rotate-180" />
+            </button>
+            <span className="tabular-nums">
+              {at + 1}/{urls.length}
             </span>
-            <span className="flex gap-2">
-              {video?.thumbnail ? (
-                <Image
-                  src={video.thumbnail}
-                  alt=""
-                  width={64}
-                  height={36}
-                  unoptimized
-                  className="bg-muted mt-0.5 h-9 w-16 shrink-0 rounded-md object-cover"
-                />
-              ) : null}
-              <span className="flex min-w-0 flex-col">
-                <span className="text-foreground line-clamp-2 font-medium">
-                  {source?.title ?? url}
-                </span>
-                {video && (
-                  <span className="text-muted-foreground text-xs tabular-nums">
-                    {videoLine(video)}
-                  </span>
-                )}
-              </span>
-            </span>
-            {source?.snippet ? (
-              <span className="text-muted-foreground line-clamp-3 text-xs leading-5">
-                {source.snippet}
-              </span>
-            ) : null}
-          </a>
-        </HoverCard.Content>
-      </HoverCard.Portal>
-    </HoverCard.Root>
+            <button
+              type="button"
+              aria-label={t("Next source")}
+              disabled={at === urls.length - 1}
+              onClick={() => setAt(at + 1)}
+              className={pagerButton}
+            >
+              <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5 rtl:rotate-180" />
+            </button>
+            <span className="ms-auto">{t("{count} sources", { count: urls.length })}</span>
+          </div>
+        )}
+        <LinkCard url={url} />
+      </PreviewContent>
+    </PreviewRoot>
   );
 };
+
+const WEB_URL = /^https?:\/\//u;
 
 const Anchor: FC<ComponentProps<"a"> & { node?: Element }> = ({ node, className, ...props }) => {
   const urls = citedUrls.safeParse(node?.properties.dataUrls).data;
   if (urls) return <Citation urls={urls} />;
-  return (
-    <a
-      target="_blank"
-      rel="noreferrer"
-      className={cn("aui-md-a text-super hover:underline", className)}
-      {...props}
-    />
-  );
+  const linkClass = cn("aui-md-a text-super hover:underline", className);
+  if (props.href && WEB_URL.test(props.href)) {
+    return <PreviewLink {...props} href={props.href} className={linkClass} />;
+  }
+  return <a target="_blank" rel="noreferrer" className={linkClass} {...props} />;
 };
 
 const memoized = memoizeMarkdownComponents({
