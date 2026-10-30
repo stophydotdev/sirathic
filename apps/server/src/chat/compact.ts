@@ -5,6 +5,12 @@ const VOWEL_MARKS = /[ؐ-ًؚ-ٰٟۖ-ۭـ]/gu;
 
 export const unvowel = (text: string) => text.replaceAll(VOWEL_MARKS, "");
 
+const LINE_START_DASH = /(?<=\n)[ \t]*\u2014[ \t]*/gu;
+const EM_DASH = /\s*\u2014\s*/gu;
+
+export const withoutEmDashes = (text: string) =>
+  text.replace(LINE_START_DASH, "").replace(EM_DASH, ", ");
+
 const cut = (text: string, chars: number) =>
   text.length > chars ? `${text.slice(0, chars)}…` : text;
 

@@ -1,6 +1,7 @@
 import { type LanguageModel, Output, streamText } from "ai";
 import { z } from "zod";
 import { sideOptions } from "../models/subscription";
+import { withoutEmDashes } from "./compact";
 
 const QUESTION_CHARS = 1_500;
 const ANSWER_CHARS = 4_000;
@@ -33,7 +34,7 @@ export async function relatedQuestions(
     abortSignal: AbortSignal.any([abortSignal, AbortSignal.timeout(WAIT_MS)]),
   }).output;
   return output.questions
-    .map((asked) => asked.trim())
+    .map((asked) => withoutEmDashes(asked).trim())
     .filter(Boolean)
     .slice(0, RELATED_LIMIT);
 }

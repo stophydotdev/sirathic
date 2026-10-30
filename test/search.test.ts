@@ -384,6 +384,24 @@ test("an image token split across chunks becomes that image, and an unknown one 
   expect(text).toBe("The Kaaba:\n\n![The Kaaba 2026](https://img.test/kaaba.jpg)\n\n\n");
 });
 
+test("an answer never shows an em dash, even one split across chunks", async () => {
+  const { transform } = citations([]);
+  const parts = new ReadableStream({
+    start(controller) {
+      for (const text of [
+        "Pray Fajr ",
+        "\u2014 even late \u2014",
+        " and rest.\n\u2014 Ibn al-Qayyim",
+      ])
+        controller.enqueue({ type: "text-delta" as const, id: "1", text });
+      controller.close();
+    },
+  }).pipeThrough(transform()({ tools: {}, stopStream: () => {} }));
+  let text = "";
+  for await (const part of parts) if (part.type === "text-delta") text += part.text;
+  expect(text).toBe("Pray Fajr, even late, and rest.\nIbn al-Qayyim");
+});
+
 test("a page's PDF links are listed so the model can open them", () => {
   const markdown = [
     "[Home](https://masjid.example/) [About](https://masjid.example/about)",

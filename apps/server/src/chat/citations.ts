@@ -1,5 +1,6 @@
 import type { StreamTextTransform, TextStreamPart, ToolSet, UIMessage } from "ai";
 import type { ChatMessage } from "../shared/messages";
+import { withoutEmDashes } from "./compact";
 
 const LINKED = /\[(\d+)\]\(([^)\s]+)\)/g;
 const CITATION = /( ?)\[(\d+)\](?:\(([^)\s]+)\))?/g;
@@ -23,6 +24,7 @@ const QURAN_URL = /^https:\/\/quran\.com\/(\d+)\/(\d+)$/;
 const VERSE_KEY = /\b(\d{1,3}):(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/g;
 const PARAGRAPH = "\n\n";
 const CITED = /\[\d+\](?:\([^)\s]+\))?|\ue200cite\ue202[^\ue201]*\ue201/g;
+const TRAILING = /[\s\u2014]+$/u;
 
 const paragraphOf = (text: string) => {
   const start = text.lastIndexOf(PARAGRAPH);
@@ -40,7 +42,7 @@ function holdFrom(text: string) {
   const bracket = text.lastIndexOf("[");
   const bracketOpen =
     bracket !== -1 && UNFINISHED.test(text.slice(bracket)) ? bracket : text.length;
-  return Math.min(nativeOpen, bracketOpen);
+  return Math.min(nativeOpen, bracketOpen, TRAILING.exec(text)?.index ?? text.length);
 }
 
 export function citations(history: UIMessage[]) {
@@ -95,7 +97,7 @@ export function citations(history: UIMessage[]) {
   };
 
   const link = (text: string, before = "") =>
-    text
+    withoutEmDashes(text)
       .replace(NATIVE, (_, space: string, payload: string) => {
         const number = byUrl.get(payload.trim());
         return number === undefined ? "" : `${space}[${number}](${payload.trim()})`;
