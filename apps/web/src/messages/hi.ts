@@ -849,4 +849,8 @@ export default {
   "Typed “{text}” into {target}": "{target} में “{text}” लिखा",
   "Chose {option} in {target}": "{target} में {option} चुना",
   "Pressed Enter": "Enter दबाया",
+  "1 row": "1 पंक्ति",
+  "{count} rows": "{count} पंक्तियाँ",
+  "This file can't be shown here. Download it to open it.":
+    "यह फ़ाइल यहाँ नहीं दिखाई जा सकती। खोलने के लिए इसे डाउनलोड करें।",
 } satisfies Messages;

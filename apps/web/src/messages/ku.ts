@@ -860,4 +860,8 @@ export default {
   "Typed “{text}” into {target}": "“{text}”م لە {target} نووسی",
   "Chose {option} in {target}": "{option}م لە {target} هەڵبژارد",
   "Pressed Enter": "Enterم داگرت",
+  "1 row": "١ ڕیز",
+  "{count} rows": "{count} ڕیز",
+  "This file can't be shown here. Download it to open it.":
+    "ئەم فایلە لێرە نیشان نادرێت. بۆ کردنەوەی دایبەزێنە.",
 } satisfies Messages;

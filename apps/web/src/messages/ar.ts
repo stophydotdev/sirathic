@@ -849,4 +849,7 @@ export default {
   "Typed “{text}” into {target}": "كتبتُ “{text}” في {target}",
   "Chose {option} in {target}": "اخترتُ {option} في {target}",
   "Pressed Enter": "ضغطتُ Enter",
+  "1 row": "صف واحد",
+  "{count} rows": "{count} صفوف",
+  "This file can't be shown here. Download it to open it.": "لا يمكن عرض هذا الملف هنا. نزّله لفتحه.",
 } satisfies Messages;

@@ -856,4 +856,8 @@ export default {
   "Typed “{text}” into {target}": "{target} に「{text}」と入力した",
   "Chose {option} in {target}": "{target} で {option} を選んだ",
   "Pressed Enter": "Enter を押した",
+  "1 row": "1 行",
+  "{count} rows": "{count} 行",
+  "This file can't be shown here. Download it to open it.":
+    "このファイルはここでは表示できません。ダウンロードして開いてください。",
 } satisfies Messages;

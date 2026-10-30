@@ -862,4 +862,8 @@ export default {
   "Typed “{text}” into {target}": "Mengetik “{text}” di {target}",
   "Chose {option} in {target}": "Memilih {option} di {target}",
   "Pressed Enter": "Menekan Enter",
+  "1 row": "1 baris",
+  "{count} rows": "{count} baris",
+  "This file can't be shown here. Download it to open it.":
+    "File ini tidak dapat ditampilkan di sini. Unduh untuk membukanya.",
 } satisfies Messages;

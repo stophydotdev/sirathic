@@ -867,4 +867,8 @@ export default {
   "Typed “{text}” into {target}": "{target} га “{text}” ёзилди",
   "Chose {option} in {target}": "{target} да {option} танланди",
   "Pressed Enter": "Enter босилди",
+  "1 row": "1 қатор",
+  "{count} rows": "{count} та қатор",
+  "This file can't be shown here. Download it to open it.":
+    "Бу файлни бу ерда кўрсатиб бўлмайди. Очиш учун юклаб олинг.",
 } satisfies Messages;

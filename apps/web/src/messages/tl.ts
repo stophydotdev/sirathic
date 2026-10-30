@@ -867,4 +867,8 @@ export default {
   "Typed “{text}” into {target}": "Nag-type ng “{text}” sa {target}",
   "Chose {option} in {target}": "Pinili ang {option} sa {target}",
   "Pressed Enter": "Pinindot ang Enter",
+  "1 row": "1 hilera",
+  "{count} rows": "{count} hilera",
+  "This file can't be shown here. Download it to open it.":
+    "Hindi maipapakita ang file na ito rito. I-download ito para buksan.",
 } satisfies Messages;

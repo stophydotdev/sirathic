@@ -11,6 +11,7 @@ import {
 import { rehypeBareCitations } from "../apps/web/src/components/citations";
 import { markOpenDiagram } from "../apps/web/src/components/markdownDiagram";
 import { rehypeNotes } from "../apps/web/src/components/markdownNote";
+import { csvRows } from "../apps/web/src/components/csvRows";
 import { rowsOf, tableCsv, tableMarkdown } from "../apps/web/src/components/markdownTable";
 import { botGroups } from "../packages/app/src/botGroups";
 import { bubblesOf } from "../packages/app/src/botBubbles";
@@ -507,5 +508,13 @@ test("a [!WARNING] quote on the phone becomes a note part without its marker", (
     { kind: "text", text: "Join them.\n\n" },
     { kind: "note", note: "warning", text: "Scholars differ.\nAsk one." },
     { kind: "text", text: "\nDone." },
+  ]);
+});
+
+test("a csv file reads into rows, with quoted commas, quotes and line breaks kept", () => {
+  expect(csvRows('name,note\r\n"Ali, Jr.","said ""hi""\nthere"\nOmar,')).toEqual([
+    ["name", "note"],
+    ["Ali, Jr.", 'said "hi"\nthere'],
+    ["Omar", ""],
   ]);
 });

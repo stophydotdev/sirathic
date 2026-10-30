@@ -857,4 +857,8 @@ export default {
   "Typed “{text}” into {target}": "{target}-இல் “{text}” உள்ளிட்டேன்",
   "Chose {option} in {target}": "{target}-இல் {option} தேர்ந்தேன்",
   "Pressed Enter": "Enter அழுத்தினேன்",
+  "1 row": "1 வரிசை",
+  "{count} rows": "{count} வரிசைகள்",
+  "This file can't be shown here. Download it to open it.":
+    "இந்தக் கோப்பை இங்கே காட்ட முடியாது. திறக்க பதிவிறக்கவும்.",
 } satisfies Messages;

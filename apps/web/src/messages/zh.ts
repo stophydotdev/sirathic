@@ -839,4 +839,7 @@ export default {
   "Typed “{text}” into {target}": "在 {target} 中输入了“{text}”",
   "Chose {option} in {target}": "在 {target} 中选择了 {option}",
   "Pressed Enter": "按了 Enter",
+  "1 row": "1 行",
+  "{count} rows": "{count} 行",
+  "This file can't be shown here. Download it to open it.": "此文件无法在此显示。请下载后打开。",
 } satisfies Messages;

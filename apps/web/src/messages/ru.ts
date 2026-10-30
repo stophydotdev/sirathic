@@ -859,4 +859,8 @@ export default {
   "Typed “{text}” into {target}": "Введено «{text}» в {target}",
   "Chose {option} in {target}": "Выбрано {option} в {target}",
   "Pressed Enter": "Нажат Enter",
+  "1 row": "1 строка",
+  "{count} rows": "{count} строк",
+  "This file can't be shown here. Download it to open it.":
+    "Этот файл нельзя показать здесь. Скачайте его, чтобы открыть.",
 } satisfies Messages;

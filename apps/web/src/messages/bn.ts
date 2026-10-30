@@ -848,4 +848,8 @@ export default {
   "Typed “{text}” into {target}": "{target}-এ “{text}” লিখলাম",
   "Chose {option} in {target}": "{target}-এ {option} বেছে নিলাম",
   "Pressed Enter": "Enter চাপলাম",
+  "1 row": "১টি সারি",
+  "{count} rows": "{count}টি সারি",
+  "This file can't be shown here. Download it to open it.":
+    "এই ফাইলটি এখানে দেখানো যাচ্ছে না। খুলতে ডাউনলোড করুন।",
 } satisfies Messages;

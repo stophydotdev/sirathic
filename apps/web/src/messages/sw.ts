@@ -859,4 +859,8 @@ export default {
   "Typed “{text}” into {target}": "Nimeandika “{text}” kwenye {target}",
   "Chose {option} in {target}": "Nimechagua {option} kwenye {target}",
   "Pressed Enter": "Nimebonyeza Enter",
+  "1 row": "Safu 1",
+  "{count} rows": "Safu {count}",
+  "This file can't be shown here. Download it to open it.":
+    "Faili hii haiwezi kuonyeshwa hapa. Ipakue ili uifungue.",
 } satisfies Messages;

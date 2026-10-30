@@ -787,6 +787,9 @@ export const MESSAGES = [
   "Typed “{text}” into {target}",
   "Chose {option} in {target}",
   "Pressed Enter",
+  "1 row",
+  "{count} rows",
+  "This file can't be shown here. Download it to open it.",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

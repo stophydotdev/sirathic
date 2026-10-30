@@ -862,4 +862,8 @@ export default {
   "Typed “{text}” into {target}": "{target} غا “{text}” نى كىرگۈزدۈم",
   "Chose {option} in {target}": "{target} دىن {option} نى تاللىدىم",
   "Pressed Enter": "Enter نى باستىم",
+  "1 row": "1 قۇر",
+  "{count} rows": "{count} قۇر",
+  "This file can't be shown here. Download it to open it.":
+    "بۇ ھۆججەتنى بۇ يەردە كۆرسەتكىلى بولمايدۇ. ئېچىش ئۈچۈن چۈشۈرۈڭ.",
 } satisfies Messages;

@@ -856,4 +856,8 @@ export default {
   "Typed “{text}” into {target}": "په {target} کې مې “{text}” ولیکل",
   "Chose {option} in {target}": "په {target} کې مې {option} وټاکه",
   "Pressed Enter": "Enter مې کېکاږه",
+  "1 row": "۱ قطار",
+  "{count} rows": "{count} قطارونه",
+  "This file can't be shown here. Download it to open it.":
+    "دا فایل دلته نه شي ښودل کېدای. د خلاصولو لپاره یې ښکته کړئ.",
 } satisfies Messages;
