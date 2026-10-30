@@ -12,6 +12,8 @@ import { nextRun, notify, schedule } from "./schedule";
 const MAX_AUTOMATIONS = 10;
 const RUNS_LIMIT = 50;
 
+export const routinesChanged = new EventTarget();
+
 export const automationId = z.uuid();
 
 const name = z.string().trim().min(1).max(60);
@@ -77,6 +79,7 @@ export async function moveRoutines(by: string, zone: string) {
         .where(eq(automations.id, row.id));
     }),
   );
+  routinesChanged.dispatchEvent(new Event("change"));
 }
 
 export async function listAutomations(by: string) {
@@ -101,6 +104,7 @@ export async function createAutomation(by: string, input: z.output<typeof automa
     .insert(automations)
     .values({ owner: by, ...input, nextRunAt: upcoming(input.schedule, input.timezone) })
     .returning();
+  routinesChanged.dispatchEvent(new Event("change"));
   return present(created);
 }
 
@@ -126,6 +130,7 @@ export async function updateAutomation(
     })
     .where(owned(id, by))
     .returning();
+  routinesChanged.dispatchEvent(new Event("change"));
   return present(row);
 }
 
