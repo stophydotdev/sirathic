@@ -9,7 +9,7 @@ import { fill } from "../apps/server/src/chat/prompts/build";
 import { routineTools } from "../apps/server/src/automations/tools";
 import { memoryTools } from "../apps/server/src/account/memory";
 import { botTools } from "../apps/server/src/bots/tools";
-import { codeTools } from "../apps/server/src/chat/codeTools";
+import { codeSandbox } from "../apps/server/src/chat/codeTools";
 import { fileTools } from "../apps/server/src/chat/fileTools";
 import { LOAD_SKILL, loadSkill } from "../apps/server/src/chat/skills/builtIn";
 import { CLARIFYING, routedToStophy, sirathicTools } from "../apps/server/src/chat/tools";
@@ -233,11 +233,10 @@ test("every tool the prompt files name is a real tool", () => {
         owner: "o",
         incognito: false,
         research: true,
-        sandbox: undefined,
+        sandbox: codeSandbox("s"),
         link: (text) => text,
       }),
     ),
-    ...Object.keys(codeTools("sirathic-noor-1-flash")),
     LOAD_SKILL,
     CLARIFYING,
     "gmail_send_email",

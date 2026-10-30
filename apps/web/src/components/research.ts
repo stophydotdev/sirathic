@@ -43,9 +43,7 @@ const fetchResult = z.object({
 const queryArgs = z.object({ query: z.string() });
 const codeArgs = z
   .union([
-    z
-      .object({ type: z.literal("programmatic-tool-call"), code: z.string() })
-      .transform((input) => input.code),
+    z.object({ code: z.string() }).transform((input) => input.code),
     z
       .object({ type: z.literal("bash_code_execution"), command: z.string() })
       .transform((input) => input.command),

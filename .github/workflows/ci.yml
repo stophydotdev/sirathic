@@ -19,6 +19,8 @@ jobs:
       STOPHY_API_KEY: ci
       BROWSER_URL: http://127.0.0.1:8080
       BROWSER_TOKEN: ci
+      SANDBOX_URL: http://127.0.0.1:8787
+      SANDBOX_TOKEN: ci
       VAULT_KMS_KEY_ARN: arn:aws:kms:us-east-1:000000000000:key/ci
       VAULT_AWS_ACCESS_KEY_ID: ci
       VAULT_AWS_SECRET_ACCESS_KEY: ci

@@ -9,6 +9,9 @@
     },
     ".": {
       "entry": ["scripts/*.ts"]
+    },
+    "apps/sandbox": {
+      "ignoreDependencies": ["cloudflare"]
     }
   }
 }

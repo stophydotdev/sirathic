@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sirathic-sandbox",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-27",
+  "observability": { "enabled": true },
+  "containers": [
+    {
+      "class_name": "Sandbox",
+      "scheduling_policy": "durable_object",
+      "images": { "python": { "dockerfile": "./Dockerfile" } },
+    },
+  ],
+  "durable_objects": { "bindings": [{ "class_name": "Sandbox", "name": "SANDBOX" }] },
+  "exports": { "Sandbox": { "type": "durable-object", "storage": "sqlite" } },
+}

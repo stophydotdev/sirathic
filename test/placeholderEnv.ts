@@ -7,6 +7,8 @@ const PLACEHOLDERS = {
   STOPHY_API_KEY: "test",
   BROWSER_URL: "http://127.0.0.1:8080",
   BROWSER_TOKEN: "test",
+  SANDBOX_URL: "http://127.0.0.1:8787",
+  SANDBOX_TOKEN: "test",
   VAULT_KMS_KEY_ARN: "arn:aws:kms:us-east-1:000000000000:key/test",
   VAULT_AWS_ACCESS_KEY_ID: "test",
   VAULT_AWS_SECRET_ACCESS_KEY: "test",

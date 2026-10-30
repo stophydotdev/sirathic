@@ -11,6 +11,8 @@ export const env = createEnv({
     STOPHY_API_KEY: z.string(),
     BROWSER_URL: z.url(),
     BROWSER_TOKEN: z.string(),
+    SANDBOX_URL: z.url(),
+    SANDBOX_TOKEN: z.string(),
     VAULT_KMS_KEY_ARN: z.string().startsWith("arn:aws:kms:"),
     VAULT_AWS_ACCESS_KEY_ID: z.string(),
     VAULT_AWS_SECRET_ACCESS_KEY: z.string(),

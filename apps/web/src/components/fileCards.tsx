@@ -98,7 +98,8 @@ export const FileResult: FC<{ part: ToolCallPart }> = ({ part }) => {
 export const FileCards: FC = () => {
   const parts = useAuiState((s) => s.message.parts);
   return parts.map((part) =>
-    part.type === "tool-call" && FILE_TOOLS.includes(part.toolName) ? (
+    part.type === "tool-call" &&
+    (FILE_TOOLS.includes(part.toolName) || part.toolName === "code_execution") ? (
       <FileResult key={part.toolCallId} part={part} />
     ) : null,
   );
