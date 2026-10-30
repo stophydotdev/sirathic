@@ -56,3 +56,23 @@ export function shortenEarlierResults(history: ChatMessage[]) {
         }
       : message;
 }
+
+export const withReactionNotes = (history: ChatMessage[]) =>
+  history.flatMap((message): ChatMessage[] => {
+    const reaction = message.role === "assistant" ? message.metadata?.reaction : undefined;
+    return reaction
+      ? [
+          message,
+          {
+            id: `reaction-${message.id}`,
+            role: "system",
+            parts: [
+              {
+                type: "text",
+                text: `The user reacted ${reaction} to your message above. It is a reaction, not text they typed.`,
+              },
+            ],
+          },
+        ]
+      : [message];
+  });
