@@ -6,6 +6,7 @@ import { CODE_RULES } from "../codeTools";
 import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
 import { STOPHY_LINK } from "../stophyTools";
+import { bookingSkills } from "./booking";
 import browser from "./browser.md" with { type: "text" };
 import chart from "./chart.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
@@ -179,6 +180,7 @@ export const skillsFor = ({
             text: browser,
             tools: BROWSER_TOOLS,
           },
+          ...bookingSkills,
         ]
       : []),
     ...("code_execution" in offered
