@@ -13,6 +13,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
+  Cancel01Icon,
   Delete02Icon,
   LinkSquare02Icon,
   Loading03Icon,
@@ -39,9 +40,11 @@ export const Modal: FC<{
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
+  icon?: ReactNode;
   children: ReactNode;
   className?: string;
-}> = ({ open, onOpenChange, title, children, className }) => {
+}> = ({ open, onOpenChange, title, icon, children, className }) => {
+  const t = useT();
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -51,8 +54,25 @@ export const Modal: FC<{
           onCloseAutoFocus={(event) => event.preventDefault()}
           className={cn(panel, "max-w-[440px] gap-4 p-5", className)}
         >
-          <Dialog.Title className="text-base font-[470]">{title}</Dialog.Title>
+          {icon ? (
+            <div className="flex items-center gap-3 pe-10">
+              <span className="border-border flex size-10 shrink-0 items-center justify-center rounded-xl border">
+                {icon}
+              </span>
+              <Dialog.Title className="text-base font-[470]">{title}</Dialog.Title>
+            </div>
+          ) : (
+            <Dialog.Title className="text-base font-[470]">{title}</Dialog.Title>
+          )}
           {children}
+          {icon && (
+            <Dialog.Close
+              aria-label={t("Close")}
+              className="text-muted-foreground hover:bg-muted hover:text-foreground absolute end-5 top-6 flex size-8 items-center justify-center rounded-full"
+            >
+              <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+            </Dialog.Close>
+          )}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

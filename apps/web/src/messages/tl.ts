@@ -802,23 +802,11 @@ export default {
   Phone: "Telepono",
   "Email address": "Email address",
   "Save contact": "I-save ang contact",
-  "Your bots can type this in for you":
-    "Puwedeng ilagay ng mga bot mo ang impormasyong ito para sa iyo",
   Website: "Website",
   "Username or email": "Username o email",
   Password: "Password",
-  "Two-step setup key": "Setup key ng two-step",
-  "Your bots enter the code for you.": "Ang mga bot mo ang naglalagay ng code para sa iyo.",
   "Save login": "I-save ang login",
-  "Two-step on": "Naka-on ang two-step",
-  "Create a 1Password service account that can read the vault with the logins your bots may use, then paste its token here.":
-    "Gumawa ng 1Password service account na kayang basahin ang vault na may mga login na puwedeng gamitin ng mga bot mo, saka i-paste dito ang token nito.",
-  "Service account token": "Token ng service account",
-  "1Password didn't accept that token.": "Hindi tinanggap ng 1Password ang token na iyon.",
-  "Connect 1Password": "Ikonekta ang 1Password",
   Browser: "Browser",
-  "Connected. Your bots can sign in with logins from the vault you shared.":
-    "Nakakonekta. Makakapag-sign in ang mga bot mo gamit ang mga login mula sa vault na ibinahagi mo.",
   Continue: "Magpatuloy",
   Dismiss: "Isara",
   Done: "Tapos na",
@@ -828,12 +816,20 @@ export default {
   "Hide password": "Itago ang password",
   "I dismissed the form.": "Isinara ko ang form.",
   Login: "Login",
-  "Logins and contact info your bots can use.":
-    "Impormasyon sa pag-login at pakikipag-ugnayan na magagamit ng mga bot mo.",
   "New item": "Bagong item",
+  Logins: "Mga login",
+  "Search Vault": "Maghanap sa vault",
+  Notes: "Mga tala",
+  "Passwords and contact info your bots can fill in for you.":
+    "Mga password at impormasyon ng contact na mapupunan ng mga bot mo para sa iyo.",
+  "Nothing saved yet. Add a login or contact info with New item.":
+    "Wala pang naka-save. Magdagdag ng login o impormasyon ng contact gamit ang Bagong item.",
+  "Nothing in your vault matches that.": "Walang tumutugma diyan sa vault mo.",
+  Username: "Username",
+  "Edit login": "I-edit ang login",
+  "Edit contact info": "I-edit ang impormasyon ng contact",
+  "Open website": "Buksan ang website",
   "New login": "Bagong login",
-  "Nothing saved yet. Add a login with New item.":
-    "Wala pang naka-save. Magdagdag ng login gamit ang Bagong item.",
   "Show password": "Ipakita ang password",
   "Some fields didn't fill.": "May mga field na hindi napunan.",
   "Waiting for you": "Hinihintay ka",

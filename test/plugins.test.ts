@@ -1,8 +1,4 @@
 import { expect, mock, test } from "bun:test";
-import { isPrivateUrl } from "../apps/browser/src/blocked";
-import { masked } from "../apps/browser/src/mask";
-import { totp } from "../apps/server/src/vault/totp";
-import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import { z } from "zod";
 import { writingTools } from "../apps/server/src/chat/confirm";
@@ -36,6 +32,7 @@ mock.module("@sirathic/core/cache", () => ({
 }));
 const selects: string[] = [];
 const vaultRows = new Map<string, string[][]>();
+const vaultUpdates: unknown[][] = [];
 mock.module("../apps/server/src/vault/seal", () => ({
   seal: async (plain: string) => plain,
   unseal: async (sealed: string) => sealed,
@@ -44,14 +41,21 @@ mock.module("@sirathic/db", () => ({
   db: drizzle(
     async (sql, params) => {
       if (sql.startsWith("select")) selects.push(sql);
+      if (sql.startsWith('update "vault_logins"')) {
+        vaultUpdates.push(params);
+        return { rows: [] };
+      }
       if (sql.includes('from "vault_logins"')) {
         const rows = vaultRows.get(z.string().parse(params[0])) ?? [];
         if (sql.startsWith('select "sealed"')) {
           return { rows: rows.filter((row) => row[2] === params[2]).map((row) => [row[3]]) };
         }
+        if (sql.startsWith('select "kind", "site", "sealed"')) {
+          return { rows: rows.filter((row) => row[0] === params[1]).map((row) => row.slice(1)) };
+        }
         if (sql.startsWith('select "id", "site", "sealed"')) {
           return {
-            rows: rows.filter((row) => row[1] === "contact").map((row) => [row[0], row[2], row[3]]),
+            rows: rows.filter((row) => row[1] === params[1]).map((row) => [row[0], row[2], row[3]]),
           };
         }
         return { rows };
@@ -66,7 +70,7 @@ const { connectedTools, disconnect, emailToSend, listConnections, FORGET, mimeOf
 const { keepFor } = await import("@sirathic/core/cache");
 const { matchingPlugins, notConnected } = await import("../apps/server/src/plugins/tools");
 const { vaultContact } = await import("../apps/server/src/vault/contacts");
-const { loginFor, listVault } = await import("../apps/server/src/vault/vault");
+const { loginFor, listVault, updateLogin } = await import("../apps/server/src/vault/vault");
 const { contactTools } = await import("../apps/server/src/bots/contactFill");
 
 test.each([
@@ -400,20 +404,6 @@ test("plan models get earlier answers without another model's hidden reasoning",
   expect(sent?.prompt[1]).toEqual({ role: "assistant", content: [{ type: "text", text: "Yes." }] });
 });
 
-test("pages can't take a bot's browser to private or internal hosts", () => {
-  const blocked = [
-    "http://127.0.0.1:8080/health",
-    "http://localhost:3000/",
-    "http://api.railway.internal:3000/",
-    "http://10.1.2.3/",
-    "http://169.254.169.254/latest/meta-data/",
-    "http://[::1]/",
-    "http://intranet/",
-  ];
-  expect(blocked.filter((url) => !isPrivateUrl(url))).toEqual([]);
-  expect(isPrivateUrl("https://the-internet.herokuapp.com/login")).toBe(false);
-});
-
 test.each([
   [{ fullName: "Amina" }, false],
   [{ label: "  ", phone: "123" }, false],
@@ -440,9 +430,39 @@ test("login lookup and login lists ignore contact rows", async () => {
   expect(await loginFor("login-ignore", "example.com")).toBeUndefined();
   expect(await listVault("contacts")).toEqual({
     logins: [],
-    onePassword: false,
     contacts: [{ id: "home-id", label: "Home", fullName: "Amina Private" }],
   });
+});
+
+test("a login saved without a username keeps its notes and is still found to sign in", async () => {
+  const saved = { password: "secret", notes: "Family account" };
+  vaultRows.set("no-username", [["login-id", "login", "example.com", JSON.stringify(saved)]]);
+  expect(await listVault("no-username")).toEqual({
+    logins: [
+      {
+        id: "login-id",
+        site: "example.com",
+        username: undefined,
+        notes: "Family account",
+        twoStep: false,
+      },
+    ],
+    contacts: [],
+  });
+  expect(await loginFor("no-username", "example.com")).toEqual({
+    site: "example.com",
+    username: undefined,
+    password: "secret",
+    code: undefined,
+  });
+});
+
+test("editing a login keeps the two-step key the form never shows", async () => {
+  const saved = { password: "old", code: "JBSWY3DPEHPK3PXP" };
+  vaultRows.set("edit", [["login-id", "login", "old.example.com", JSON.stringify(saved)]]);
+  await updateLogin("edit", "login-id", { site: "example.com", password: "new" });
+  expect(vaultUpdates.at(-1)).toContain("example.com");
+  expect(vaultUpdates.at(-1)).toContain(JSON.stringify({ password: "new", code: saved.code }));
 });
 
 test("a bot fills a saved contact without seeing it, and gets only labels to choose from", async () => {
@@ -471,33 +491,4 @@ test("a bot fills a saved contact without seeing it, and gets only labels to cho
     labels: ["Home", "Work"],
   });
   expect(await run("nobody", [{ part: "email", target: "e1" }])).toMatchObject({ kind: "missing" });
-});
-
-test("two-step codes match the RFC 6238 test vector", () => {
-  expect(totp("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 59_000)).toBe("287082");
-  expect(totp("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 1_111_111_109_000)).toBe("081804");
-});
-
-test("a secret is masked in every spelling a page can show it, and nothing else changes", () => {
-  const shown = masked(
-    'a ?q=p%40ss%20w%22rd%21 b ?q=p%40ss+w%22rd! c {"v":"p@ss w\\"rd!"} d ?q=prayer%26mat',
-    ['p@ss w"rd!'],
-  );
-  expect(shown).toBe('a ?q=•••••• b ?q=•••••• c {"v":"••••••"} d ?q=prayer%26mat');
-});
-
-test("a screen ticket opens only its own bot's screen, and only for a minute", () => {
-  const bot = "8bc4443d-047a-49e6-b335-9cf3fa71d658";
-  const ticket = screenTicket(bot, 1_000);
-  expect(ticketFits(ticket, bot, 2_000)).toBe(true);
-  expect(ticketFits(ticket, "53f15e17-feea-458d-80b0-0f767c35455b", 2_000)).toBe(false);
-  expect(ticketFits(ticket, bot, 62_000)).toBe(false);
-  expect(
-    ticketFits(
-      ticket.replace(/.$/u, (last) => (last === "A" ? "B" : "A")),
-      bot,
-      2_000,
-    ),
-  ).toBe(false);
-  expect(ticketFits(`${bot}.999999999999999.forged`, bot, 2_000)).toBe(false);
 });

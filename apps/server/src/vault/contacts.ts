@@ -2,6 +2,7 @@ import { db } from "@sirathic/db";
 import { vaultLogins } from "@sirathic/db/schema";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
+import { StatusError } from "../http";
 import { COUNTRY_CODES } from "../shared/countries";
 import { seal, unseal } from "./seal";
 
@@ -43,6 +44,23 @@ export const saveContact = async (owner: string, contact: z.infer<typeof vaultCo
     .values({ owner, kind: "contact", site, sealed })
     .onConflictDoUpdate({ target: [vaultLogins.owner, vaultLogins.site], set: { sealed } })
     .returning({ id: vaultLogins.id });
+};
+
+export const updateContact = async (
+  owner: string,
+  id: string,
+  contact: z.infer<typeof vaultContact>,
+) => {
+  const site = siteOf(contact.label);
+  const sealed = await seal(JSON.stringify(contact), owner, site);
+  const updated = await db
+    .update(vaultLogins)
+    .set({ site, sealed })
+    .where(
+      and(eq(vaultLogins.owner, owner), eq(vaultLogins.id, id), eq(vaultLogins.kind, "contact")),
+    )
+    .returning({ id: vaultLogins.id });
+  if (updated.length === 0) throw new StatusError(404, "no such vault item");
 };
 
 export const listContacts = async (owner: string) => {

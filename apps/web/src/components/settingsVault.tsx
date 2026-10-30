@@ -1,8 +1,20 @@
 "use client";
 
-import { useLocale, useT } from "@/components/i18n";
-import { Modal, modalButton, modalPrimaryButton } from "@/components/sessionMenu";
-import { control, Group, Row } from "@/components/settingsControls";
+import { Favicon } from "@/components/favicon";
+import { useT } from "@/components/i18n";
+import { Modal } from "@/components/sessionMenu";
+import { Group } from "@/components/settingsControls";
+import {
+  type ContactItem,
+  ContactForm,
+  dangerPill,
+  type Item,
+  type LoginItem,
+  LoginForm,
+  mainPill,
+  quietPill,
+  useCountries,
+} from "@/components/settingsVaultForms";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,369 +22,224 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import { api } from "@/lib/trpc";
+import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ArrowDown01Icon,
+  ArrowRight01Icon,
+  ArrowUpRight01Icon,
   Key01Icon,
-  LockPasswordIcon,
+  Search01Icon,
   UserIcon,
   ViewIcon,
   ViewOffSlashIcon,
 } from "@hugeicons/core-free-icons";
-import { COUNTRY_CODES } from "@sirathic/server/countries";
 import { Dialog } from "radix-ui";
-import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "react";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 
 type Vault = Awaited<ReturnType<typeof api.vault.list.query>>;
 
-type Adding = { kind: "none" } | { kind: "login" } | { kind: "onePassword" } | { kind: "contact" };
+type Shown =
+  | { kind: "none" }
+  | { kind: "newLogin" }
+  | { kind: "newContact" }
+  | { kind: "item"; id: string; title: string; contact: boolean }
+  | { kind: "edit"; item: Item };
 
-const inputClass =
-  "bg-foreground/6 focus-visible:bg-foreground/10 h-10 w-full rounded-xl px-3 text-sm outline-none";
+type Tab = "all" | "logins" | "contacts";
 
-const blank = { site: "", username: "", password: "", code: "" };
+const PASSWORD_DOTS = "•".repeat(14);
 
-const Field: FC<{ label: ReactNode; children: ReactNode }> = ({ label, children }) => (
-  <label className="flex flex-col gap-1.5 text-sm">
-    {label}
-    {children}
-  </label>
+const Detail: FC<{ label: string; children: ReactNode }> = ({ label, children }) => (
+  <div className="flex min-h-13 items-center gap-4 px-4 py-3 text-sm">
+    <span className="text-muted-foreground w-28 shrink-0">{label}</span>
+    <span className="flex min-w-0 flex-1 items-center gap-2 break-words">{children}</span>
+  </div>
 );
 
-const Footer: FC<{ hint?: string; busy: boolean; ready: boolean; save: string }> = ({
-  hint,
-  busy,
-  ready,
-  save,
-}) => {
-  const t = useT();
-  return (
-    <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
-      {hint && <span className="text-muted-foreground me-auto text-xs">{hint}</span>}
-      <Dialog.Close type="button" className={modalButton}>
-        {t("Cancel")}
-      </Dialog.Close>
-      <button type="submit" disabled={busy || !ready} className={modalPrimaryButton}>
-        {save}
-      </button>
-    </div>
-  );
-};
-
-const NewLogin: FC<{ open: boolean; onClose: () => void; onSaved: () => Promise<void> }> = ({
-  open,
-  onClose,
-  onSaved,
-}) => {
-  const [draft, setDraft] = useState(blank);
+const LoginDetails: FC<{ login: LoginItem }> = ({ login }) => {
   const [visible, setVisible] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
   const t = useT();
-
-  const close = () => {
-    setDraft(blank);
-    setVisible(false);
-    setFailed(false);
-    onClose();
-  };
-
-  const save = async (event: FormEvent) => {
-    event.preventDefault();
-    setBusy(true);
-    setFailed(false);
-    const saved = await api.vault.save
-      .mutate({ ...draft, code: draft.code.trim() || undefined })
-      .then(
-        () => true,
-        () => false,
-      );
-    setBusy(false);
-    if (!saved) {
-      setFailed(true);
-      return;
-    }
-    close();
-    await onSaved();
-  };
-
-  const field = (key: keyof typeof blank, placeholder?: string) => (
-    <input
-      type="text"
-      required={key !== "code"}
-      autoComplete="off"
-      placeholder={placeholder}
-      value={draft[key]}
-      onChange={(event) => setDraft({ ...draft, [key]: event.target.value })}
-      className={inputClass}
-    />
-  );
-
   return (
-    <Modal
-      open={open}
-      onOpenChange={(next) => !next && close()}
-      title={t("New login")}
-      className="max-w-130"
-    >
-      <form onSubmit={(event) => void save(event)} className="flex flex-col gap-4">
-        <Field label={t("Website")}>{field("site", "example.com")}</Field>
-        <Field label={t("Username or email")}>{field("username", "name@example.com")}</Field>
-        <Field label={t("Password")}>
-          <span className="bg-foreground/6 focus-within:bg-foreground/10 flex h-10 items-center rounded-xl ps-3 pe-1">
-            <input
-              type={visible ? "text" : "password"}
-              required
-              autoComplete="off"
-              value={draft.password}
-              onChange={(event) => setDraft({ ...draft, password: event.target.value })}
-              className="min-w-0 flex-1 bg-transparent text-sm outline-none"
-            />
-            <button
-              type="button"
-              aria-label={visible ? t("Hide password") : t("Show password")}
-              onClick={() => setVisible(!visible)}
-              className="text-muted-foreground hover:text-foreground flex size-8 items-center justify-center rounded-lg"
-            >
-              <HugeiconsIcon icon={visible ? ViewOffSlashIcon : ViewIcon} className="size-4" />
-            </button>
-          </span>
-        </Field>
-        <Field
-          label={
-            <span>
-              {t("Two-step setup key")}{" "}
-              <span className="text-muted-foreground">({t("Optional")})</span>
-            </span>
-          }
+    <>
+      <Detail label={t("Website")}>
+        <span className="min-w-0 flex-1">{login.site}</span>
+        <a
+          href={`https://${login.site}`}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={t("Open website")}
+          className="text-muted-foreground hover:text-foreground"
         >
-          {field("code")}
-          <span className="text-muted-foreground text-xs">
-            {t("Your bots enter the code for you.")}
-          </span>
-        </Field>
-        {failed && (
-          <p className="text-destructive text-sm">{t("Could not save your changes. Try again.")}</p>
-        )}
-        <Footer
-          hint={t("Your bots can use this login to sign in for you")}
-          busy={busy}
-          ready={draft.site.trim() !== "" && draft.username.trim() !== "" && draft.password !== ""}
-          save={t("Save login")}
-        />
-      </form>
-    </Modal>
+          <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
+        </a>
+      </Detail>
+      {login.username && <Detail label={t("Username")}>{login.username}</Detail>}
+      <Detail label={t("Password")}>
+        <span className="min-w-0 flex-1 font-mono">{visible ? login.password : PASSWORD_DOTS}</span>
+        <button
+          type="button"
+          aria-label={visible ? t("Hide password") : t("Show password")}
+          onClick={() => setVisible(!visible)}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          <HugeiconsIcon icon={visible ? ViewOffSlashIcon : ViewIcon} className="size-4" />
+        </button>
+      </Detail>
+      {login.notes && <Detail label={t("Notes")}>{login.notes}</Detail>}
+    </>
   );
 };
 
-const blankContact = {
-  label: "",
-  fullName: "",
-  address: "",
-  address2: "",
-  city: "",
-  region: "",
-  postalCode: "",
-  country: "",
-  phone: "",
-  email: "",
-};
-
-const NewContact: FC<{ open: boolean; onClose: () => void; onSaved: () => Promise<void> }> = ({
-  open,
-  onClose,
-  onSaved,
-}) => {
-  const [draft, setDraft] = useState(blankContact);
-  const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
+const ContactDetails: FC<{ contact: ContactItem }> = ({ contact }) => {
   const t = useT();
-  const locale = useLocale();
-  const regions = new Intl.DisplayNames([locale], { type: "region" });
-  const countries = COUNTRY_CODES.map((code) => ({
-    code,
-    name: regions.of(code) ?? code,
-  })).toSorted((a, b) => a.name.localeCompare(b.name, locale));
-  const ready =
-    draft.label.trim() !== "" &&
-    Object.entries(draft).some(([key, value]) => key !== "label" && value.trim() !== "");
-
-  const close = () => {
-    setDraft(blankContact);
-    setFailed(false);
-    onClose();
-  };
-
-  const save = async (event: FormEvent) => {
-    event.preventDefault();
-    setBusy(true);
-    setFailed(false);
-    const saved = await api.vault.saveContact
-      .mutate({ ...draft, country: COUNTRY_CODES.find((code) => code === draft.country) })
-      .then(
-        () => true,
-        () => false,
-      );
-    setBusy(false);
-    if (!saved) {
-      setFailed(true);
-      return;
-    }
-    close();
-    await onSaved();
-  };
-
-  const field = (key: keyof typeof blankContact, type = "text", placeholder?: string) => (
-    <input
-      type={type}
-      autoComplete="off"
-      placeholder={placeholder}
-      value={draft[key]}
-      onChange={(event) => setDraft({ ...draft, [key]: event.target.value })}
-      className={inputClass}
-    />
-  );
-
-  return (
-    <Modal
-      open={open}
-      onOpenChange={(next) => !next && close()}
-      title={t("New contact info")}
-      className="max-h-dvh max-w-170 overflow-y-auto"
-    >
-      <form onSubmit={(event) => void save(event)} className="grid grid-cols-2 gap-4">
-        <Field label={t("Label")}>{field("label", "text", t("e.g. Home"))}</Field>
-        <Field label={t("Full name")}>{field("fullName")}</Field>
-        <div className="col-span-2">
-          <Field label={t("Address")}>{field("address")}</Field>
-        </div>
-        <div className="col-span-2">
-          <Field label={t("Address line 2")}>{field("address2")}</Field>
-        </div>
-        <Field label={t("City")}>{field("city")}</Field>
-        <Field label={t("State or region")}>{field("region")}</Field>
-        <Field label={t("ZIP or postal code")}>{field("postalCode")}</Field>
-        <Field label={t("Country")}>
-          <select
-            value={draft.country}
-            onChange={(event) => setDraft({ ...draft, country: event.target.value })}
-            className={`${inputClass} ${draft.country === "" ? "text-muted-foreground" : ""}`}
-          >
-            <option value="">{t("Choose a country")}</option>
-            {countries.map(({ code, name }) => (
-              <option key={code} value={code}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label={t("Phone")}>{field("phone", "tel")}</Field>
-        <Field label={t("Email address")}>{field("email", "email")}</Field>
-        {failed && (
-          <p className="text-destructive text-sm col-span-2">
-            {t("Could not save your changes. Try again.")}
-          </p>
-        )}
-        <div className="col-span-2">
-          <Footer
-            hint={t("Your bots can type this in for you")}
-            busy={busy}
-            ready={ready}
-            save={t("Save contact")}
-          />
-        </div>
-      </form>
-    </Modal>
+  const country = useCountries().find(({ code }) => code === contact.country)?.name;
+  const rows = [
+    [t("Full name"), contact.fullName],
+    [t("Address"), contact.address],
+    [t("Address line 2"), contact.address2],
+    [t("City"), contact.city],
+    [t("State or region"), contact.region],
+    [t("ZIP or postal code"), contact.postalCode],
+    [t("Country"), country],
+    [t("Phone"), contact.phone],
+    [t("Email address"), contact.email],
+  ] as const;
+  return rows.map(
+    ([label, value]) =>
+      value && (
+        <Detail key={label} label={label}>
+          {value}
+        </Detail>
+      ),
   );
 };
 
-const ConnectOnePassword: FC<{
-  open: boolean;
+const ItemView: FC<{
+  shown: Extract<Shown, { kind: "item" }>;
   onClose: () => void;
-  onSaved: () => Promise<void>;
-}> = ({ open, onClose, onSaved }) => {
-  const [token, setToken] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
+  onEdit: (item: Item) => void;
+  onRemoved: () => Promise<void>;
+}> = ({ shown, onClose, onEdit, onRemoved }) => {
+  const [item, setItem] = useState<Item>();
   const t = useT();
 
-  const close = () => {
-    setToken("");
-    setFailed(false);
-    onClose();
-  };
+  useEffect(() => {
+    void api.vault.open.query({ id: shown.id }).then(setItem, onClose);
+  }, [shown.id]);
 
-  const connect = async (event: FormEvent) => {
-    event.preventDefault();
-    setBusy(true);
-    setFailed(false);
-    const done = await api.vault.connectOnePassword.mutate({ token }).then(
-      () => true,
-      () => false,
-    );
-    setBusy(false);
-    if (!done) {
-      setFailed(true);
-      return;
-    }
-    close();
-    await onSaved();
+  const remove = async () => {
+    await api.vault.remove.mutate({ id: shown.id });
+    onClose();
+    await onRemoved();
   };
 
   return (
     <Modal
-      open={open}
-      onOpenChange={(next) => !next && close()}
-      title={t("Connect 1Password")}
+      open
+      onOpenChange={(next) => !next && onClose()}
+      title={shown.title}
+      icon={
+        shown.contact ? (
+          <HugeiconsIcon icon={UserIcon} className="size-4" />
+        ) : (
+          <Favicon url={`https://${shown.title}`} size={16} />
+        )
+      }
       className="max-w-130"
     >
-      <form onSubmit={(event) => void connect(event)} className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
-          {t(
-            "Create a 1Password service account that can read the vault with the logins your bots may use, then paste its token here.",
-          )}
-        </p>
-        <Field label={t("Service account token")}>
-          <input
-            type="password"
-            required
-            autoComplete="off"
-            value={token}
-            onChange={(event) => setToken(event.target.value)}
-            className={inputClass}
-          />
-        </Field>
-        {failed && (
-          <p className="text-destructive text-sm">{t("1Password didn't accept that token.")}</p>
-        )}
-        <Footer busy={busy} ready={token !== ""} save={t("Connect 1Password")} />
-      </form>
+      <div className="border-border divide-border min-h-13 divide-y rounded-xl border">
+        {item?.kind === "login" && <LoginDetails login={item} />}
+        {item?.kind === "contact" && <ContactDetails contact={item} />}
+      </div>
+      <div className="flex items-center justify-end gap-2 pt-1">
+        <button type="button" onClick={() => void remove()} className={dangerPill}>
+          {t("Remove")}
+        </button>
+        <button
+          type="button"
+          disabled={!item}
+          onClick={() => item && onEdit(item)}
+          className={quietPill}
+        >
+          {t("Edit")}
+        </button>
+        <Dialog.Close type="button" className={mainPill}>
+          {t("Done")}
+        </Dialog.Close>
+      </div>
     </Modal>
   );
 };
+
+const ItemRow: FC<{ icon: ReactNode; title: string; detail?: string; onOpen: () => void }> = ({
+  icon,
+  title,
+  detail,
+  onOpen,
+}) => (
+  <button
+    type="button"
+    onClick={onOpen}
+    className="border-border hover:bg-foreground/5 flex w-full items-center gap-3 rounded-2xl border p-3 text-start transition-colors"
+  >
+    <span className="border-border flex size-10 shrink-0 items-center justify-center rounded-xl border">
+      {icon}
+    </span>
+    <span className="flex min-w-0 flex-1 flex-col">
+      <span className="truncate text-sm">{title}</span>
+      {detail && <span className="text-muted-foreground truncate text-sm">{detail}</span>}
+    </span>
+    <HugeiconsIcon
+      icon={ArrowRight01Icon}
+      className="text-muted-foreground size-4 shrink-0 rtl:rotate-180"
+    />
+  </button>
+);
 
 export const VaultSection: FC = () => {
   const [vault, setVault] = useState<Vault>();
-  const [adding, setAdding] = useState<Adding>({ kind: "none" });
+  const [shown, setShown] = useState<Shown>({ kind: "none" });
+  const [tab, setTab] = useState<Tab>("all");
+  const [query, setQuery] = useState("");
   const t = useT();
 
   const load = () =>
     api.vault.list.query().then(setVault, () => {
-      setVault({ logins: [], onePassword: false, contacts: [] });
+      setVault({ logins: [], contacts: [] });
     });
 
   useEffect(() => {
     void load();
   }, []);
 
-  const close = () => setAdding({ kind: "none" });
-  const empty = vault?.logins.length === 0 && vault.contacts.length === 0 && !vault.onePassword;
+  const close = () => setShown({ kind: "none" });
+  const needle = query.trim().toLowerCase();
+  const matches = (...texts: (string | undefined)[]) =>
+    needle === "" || texts.some((text) => text?.toLowerCase().includes(needle));
+  const savedLogins = vault?.logins.length ?? 0;
+  const savedContacts = vault?.contacts.length ?? 0;
+  const logins =
+    tab === "contacts"
+      ? []
+      : (vault?.logins ?? []).filter((login) => matches(login.site, login.username, login.notes));
+  const contacts =
+    tab === "logins"
+      ? []
+      : (vault?.contacts ?? []).filter((contact) => matches(contact.label, contact.fullName));
+  const tabs = [
+    { id: "all", label: t("All"), count: savedLogins + savedContacts },
+    { id: "logins", label: t("Logins"), count: savedLogins },
+    { id: "contacts", label: t("Contact info"), count: savedContacts },
+  ] satisfies { id: Tab; label: string; count: number }[];
+  const empty = vault !== undefined && savedLogins + savedContacts === 0;
+  const unmatched = vault !== undefined && !empty && logins.length + contacts.length === 0;
 
   return (
     <Group>
       <div className="flex items-center gap-4 py-2">
         <p className="text-muted-foreground min-w-0 flex-1 text-sm">
-          {t("Logins and contact info your bots can use.")}
+          {t("Passwords and contact info your bots can fill in for you.")}
         </p>
         <DropdownMenu>
           <DropdownMenuTrigger className="bg-foreground text-background flex h-9 shrink-0 items-center gap-1.5 rounded-full ps-4 pe-3 text-sm font-medium">
@@ -380,76 +247,104 @@ export const VaultSection: FC = () => {
             <HugeiconsIcon icon={ArrowDown01Icon} className="size-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onSelect={() => setAdding({ kind: "login" })}>
+            <DropdownMenuItem onSelect={() => setShown({ kind: "newLogin" })}>
               <HugeiconsIcon icon={Key01Icon} className="size-4" />
               {t("Login")}
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setAdding({ kind: "contact" })}>
+            <DropdownMenuItem onSelect={() => setShown({ kind: "newContact" })}>
               <HugeiconsIcon icon={UserIcon} className="size-4" />
               {t("Contact info")}
             </DropdownMenuItem>
-            {vault && !vault.onePassword && (
-              <DropdownMenuItem onSelect={() => setAdding({ kind: "onePassword" })}>
-                <HugeiconsIcon icon={LockPasswordIcon} className="size-4" />
-                {t("Connect 1Password")}
-              </DropdownMenuItem>
-            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <div className="flex flex-wrap items-center gap-2 py-2">
+        <div role="tablist" className="flex items-center gap-1">
+          {tabs.map(({ id, label, count }) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              onClick={() => setTab(id)}
+              className={cn(
+                "flex h-9 items-center gap-1.5 rounded-full px-4 text-sm",
+                tab === id ? "bg-foreground/10 text-foreground" : "hover:text-foreground",
+              )}
+            >
+              {label}
+              <span className="text-muted-foreground">{count}</span>
+            </button>
+          ))}
+        </div>
+        <label className="border-border ms-auto flex h-9 w-full items-center gap-2 rounded-full border px-3 sm:w-64">
+          <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-4 shrink-0" />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={t("Search Vault")}
+            aria-label={t("Search Vault")}
+            className="min-w-0 flex-1 bg-transparent text-sm outline-none"
+          />
+        </label>
+      </div>
       {empty && (
         <p className="text-muted-foreground py-6 text-center text-sm">
-          {t("Nothing saved yet. Add a login with New item.")}
+          {t("Nothing saved yet. Add a login or contact info with New item.")}
         </p>
       )}
-      {vault?.logins.map((login) => (
-        <Row
-          key={login.id}
-          label={login.site}
-          hint={login.twoStep ? `${login.username} · ${t("Two-step on")}` : login.username}
-        >
-          <button
-            type="button"
-            onClick={() => void api.vault.remove.mutate({ id: login.id }).then(load)}
-            className={control}
-          >
-            {t("Remove")}
-          </button>
-        </Row>
-      ))}
-      {vault?.contacts.map((contact) => (
-        <Row key={contact.id} label={contact.label} hint={contact.fullName}>
-          <button
-            type="button"
-            onClick={() => void api.vault.remove.mutate({ id: contact.id }).then(load)}
-            className={control}
-          >
-            {t("Remove")}
-          </button>
-        </Row>
-      ))}
-      {vault?.onePassword && (
-        <Row
-          label="1Password"
-          hint={t("Connected. Your bots can sign in with logins from the vault you shared.")}
-        >
-          <button
-            type="button"
-            onClick={() => void api.vault.disconnectOnePassword.mutate().then(load)}
-            className={control}
-          >
-            {t("Disconnect")}
-          </button>
-        </Row>
+      {unmatched && (
+        <p className="text-muted-foreground py-6 text-center text-sm">
+          {t("Nothing in your vault matches that.")}
+        </p>
+      )}
+      {logins.length + contacts.length > 0 && (
+        <div className="flex flex-col gap-2 py-2">
+          {logins.map((login) => (
+            <ItemRow
+              key={login.id}
+              icon={<Favicon url={`https://${login.site}`} size={16} />}
+              title={login.site}
+              detail={login.username}
+              onOpen={() =>
+                setShown({ kind: "item", id: login.id, title: login.site, contact: false })
+              }
+            />
+          ))}
+          {contacts.map((contact) => (
+            <ItemRow
+              key={contact.id}
+              icon={<HugeiconsIcon icon={UserIcon} className="size-4" />}
+              title={contact.label}
+              detail={contact.fullName}
+              onOpen={() =>
+                setShown({ kind: "item", id: contact.id, title: contact.label, contact: true })
+              }
+            />
+          ))}
+        </div>
       )}
       <p className="text-muted-foreground py-2 text-xs">
         {t(
           "Your bots only see which websites and labels you saved. Everything else goes straight into the page.",
         )}
       </p>
-      <NewLogin open={adding.kind === "login"} onClose={close} onSaved={load} />
-      <ConnectOnePassword open={adding.kind === "onePassword"} onClose={close} onSaved={load} />
-      <NewContact open={adding.kind === "contact"} onClose={close} onSaved={load} />
+      {shown.kind === "newLogin" && <LoginForm onClose={close} onSaved={load} />}
+      {shown.kind === "newContact" && <ContactForm onClose={close} onSaved={load} />}
+      {shown.kind === "item" && (
+        <ItemView
+          shown={shown}
+          onClose={close}
+          onEdit={(item) => setShown({ kind: "edit", item })}
+          onRemoved={load}
+        />
+      )}
+      {shown.kind === "edit" && shown.item.kind === "login" && (
+        <LoginForm editing={shown.item} onClose={close} onSaved={load} />
+      )}
+      {shown.kind === "edit" && shown.item.kind === "contact" && (
+        <ContactForm editing={shown.item} onClose={close} onSaved={load} />
+      )}
     </Group>
   );
 };
