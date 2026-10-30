@@ -171,19 +171,10 @@ test("the prompt lists what the user told Sirathic about themselves", () => {
   );
 });
 
-test("the prompt gives what the user says about themselves and their layout", () => {
-  const prompt = promptFor({
-    settings: {
-      ...DEFAULT_SETTINGS,
-      about: "Teaches Arabic",
-      listStyle: "paragraphs",
-    },
-  });
-  expect(
-    ["About the user: Teaches Arabic", "prefers paragraphs to lists"].map((line) =>
-      prompt.includes(line),
-    ),
-  ).toEqual([true, true]);
+test("the prompt gives what the user says about themselves", () => {
+  expect(promptFor({ settings: { ...DEFAULT_SETTINGS, about: "Teaches Arabic" } })).toContain(
+    "About the user: Teaches Arabic",
+  );
 });
 
 test("the date line gives the user's own date, and UTC when no zone is known", () => {
@@ -208,7 +199,7 @@ test("a bot's prompt names the bot, and a main chat's names Sirathic", () => {
 test("a school's position is given alone to short answers and first to the others", () => {
   const hanafi = { ...DEFAULT_SETTINGS, madhab: "hanafi" } as const;
   const [short, full] = [
-    promptFor({ settings: { ...hanafi, answerLength: "short" } }),
+    promptFor({ settings: hanafi, short: true }),
     promptFor({ settings: hanafi }),
   ];
   expect(

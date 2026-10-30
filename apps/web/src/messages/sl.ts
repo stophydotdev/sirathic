@@ -142,6 +142,7 @@ export default {
   "Rename chat": "Preimenuj pogovor",
   Cancel: "Prekliči",
   Save: "Shrani",
+  Saved: "Shranjeno",
   "Delete chat": "Izbriši pogovor",
   Delete: "Izbriši",
   "Session actions": "Dejanja pogovora",
@@ -153,7 +154,6 @@ export default {
   "Mark as unread": "Označi kot neprebrano",
   "Search chats": "Išči po pogovorih",
   Close: "Zapri",
-  "Same as my question": "Enako kot moje vprašanje",
   "Same as my browser": "Enako kot moj brskalnik",
   "Not signed in": "Niste prijavljeni",
   "Sign in to ask and keep your chats": "Prijavite se, da lahko sprašujete in hranite pogovore",
@@ -188,12 +188,6 @@ export default {
   "Custom instructions": "Lastna navodila",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Vse, kar naj Sirathic upošteva, na primer koliko znate ali kakšne odgovore imate radi",
-  Answers: "Odgovori",
-  "Answer language": "Jezik odgovorov",
-  "Answer length": "Dolžina odgovorov",
-  "Show Arabic text": "Prikaži arabsko besedilo",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Ajeti in hadisi so navedeni v arabščini poleg prevoda",
   "Incognito by default": "Privzeto inkognito",
   "New chats start in incognito and aren't saved":
     "Novi pogovori se začnejo v načinu inkognito in se ne shranjujejo",
@@ -261,9 +255,6 @@ export default {
   "Timezone for routines": "Časovni pas za rutine",
   "Routines run on this clock": "Rutine tečejo po tej uri",
   "Same as this device ({zone})": "Enako kot ta naprava ({zone})",
-  "Headers and lists": "Naslovi in seznami",
-  Lists: "Seznami",
-  Paragraphs: "Odstavki",
   "About you": "O tebi",
   "Your work, your studies, what you already know": "Tvoje delo, študij, kar že znaš",
   "Use past chats": "Uporabi pretekle pogovore",
@@ -289,9 +280,7 @@ export default {
   Maliki: "Malikijski",
   "Shafi'i": "Šafijski",
   Hanbali: "Hanbelijski",
-  Short: "Kratko",
   Default: "Privzeto",
-  Detailed: "Podrobno",
   "Settings sections": "Razdelki nastavitev",
   "No chat models available": "Ni razpoložljivih modelov",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

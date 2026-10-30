@@ -127,6 +127,7 @@ export default {
   "Rename chat": "Söhbətin adını dəyiş",
   Cancel: "Ləğv et",
   Save: "Saxla",
+  Saved: "Yadda saxlanıldı",
   "Delete chat": "Söhbəti sil",
   Delete: "Sil",
   "Session actions": "Söhbət əməliyyatları",
@@ -138,7 +139,6 @@ export default {
   "Mark as unread": "Oxunmamış kimi qeyd et",
   "Search chats": "Söhbətlərdə axtar",
   Close: "Bağla",
-  "Same as my question": "Sualımın dili",
   "Same as my browser": "Brauzerimin dili",
   "Not signed in": "Giriş edilməyib",
   "Sign in to ask and keep your chats": "Sual vermək və söhbətlərinizi saxlamaq üçün daxil olun",
@@ -173,12 +173,6 @@ export default {
   "Custom instructions": "Xüsusi göstərişlər",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Sirathic-in nəzərə alması lazım olanlar, məsələn, nə qədər bildiyiniz və ya cavabları necə sevdiyiniz",
-  Answers: "Cavablar",
-  "Answer language": "Cavab dili",
-  "Answer length": "Cavabın uzunluğu",
-  "Show Arabic text": "Ərəb mətnini göstər",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Ayə və hədisləri tərcümənin yanında ərəbcə göstər",
   "Incognito by default": "Standart olaraq gizli rejim",
   "New chats start in incognito and aren't saved":
     "Yeni söhbətlər gizli rejimdə başlayır və saxlanmır",
@@ -244,9 +238,6 @@ export default {
   "Timezone for routines": "Rutinlər üçün saat qurşağı",
   "Routines run on this clock": "Rutinlər bu saata görə işləyir",
   "Same as this device ({zone})": "Bu cihazla eyni ({zone})",
-  "Headers and lists": "Başlıqlar və siyahılar",
-  Lists: "Siyahılar",
-  Paragraphs: "Paraqraflar",
   "About you": "Haqqınızda",
   "Your work, your studies, what you already know": "İşiniz, təhsiliniz, artıq bildikləriniz",
   "Use past chats": "Keçmiş söhbətlərdən istifadə et",
@@ -273,9 +264,7 @@ export default {
   Maliki: "Maliki",
   "Shafi'i": "Şafei",
   Hanbali: "Hənbəli",
-  Short: "Qısa",
   Default: "Standart",
-  Detailed: "Ətraflı",
   "Settings sections": "Ayar bölmələri",
   "No chat models available": "Söhbət modeli yoxdur",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

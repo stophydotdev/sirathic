@@ -126,6 +126,7 @@ export default {
   "Rename chat": "Waylu innde yeewtere",
   Cancel: "Haaytu",
   Save: "Danndu",
+  Saved: "Danndaama",
   "Delete chat": "Momtu yeewtere",
   Delete: "Momtu",
   "Session actions": "Cuɓe yeewtere",
@@ -137,7 +138,6 @@ export default {
   "Mark as unread": "Maando no janngaaka",
   "Search chats": "Yiylo yeewtereeji",
   Close: "Uddu",
-  "Same as my question": "Ɗemngal naamnal am",
   "Same as my browser": "Ɗemngal wanngorde am",
   "Not signed in": "A naataaki",
   "Sign in to ask and keep your chats": "Naatu ngam naamnaade e danndude yeewtereeji maa",
@@ -172,12 +172,6 @@ export default {
   "Custom instructions": "Kuulal maa",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Kala ko Sirathic haani siftorde, ko wayi no ko ngandu-ɗaa walla no njiɗ-ɗaa jaabawuuje",
-  Answers: "Jaabawuuje",
-  "Answer language": "Ɗemngal jaabawol",
-  "Answer length": "Juuteendi jaabawol",
-  "Show Arabic text": "Hollu binndol Aarabeere",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Wowlu aaye e hadiisaaji e Aarabeere ɓadii firo",
   "Incognito by default": "Suuɗaa e woowaandi",
   "New chats start in incognito and aren't saved":
     "Yeewtereeji kese ena puɗɗa e suuɗaa, ɗe danndetaake",
@@ -245,9 +239,6 @@ export default {
   "Timezone for routines": "Waktu ngenndi ngam golle ñalnde kala",
   "Routines run on this clock": "Golle ñalnde kala ngollaa e sahaa ndee",
   "Same as this device ({zone})": "Wano kuutiniraade ndee ({zone})",
-  "Headers and lists": "Hoorɗe e limtooje",
-  Lists: "Limtooje",
-  Paragraphs: "Pargaraaf",
   "About you": "Ko woni e maa",
   "Your work, your studies, what you already know": "Golle maa, ekkitaare maa, ko anndaa ko adii",
   "Use past chats": "Huutinir yeewtereeji adanɗi",
@@ -273,9 +264,7 @@ export default {
   Maliki: "Maaliki",
   "Shafi'i": "Shaafi'i",
   Hanbali: "Hanbali",
-  Short: "Rabiiɗo",
   Default: "Woowaandi",
-  Detailed: "Ɓeydaaɗo",
   "Settings sections": "Geɗe teelte",
   "No chat models available": "Alaa model heɓoteeɗo",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

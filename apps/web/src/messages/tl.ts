@@ -127,6 +127,7 @@ export default {
   "Rename chat": "Palitan ang pangalan ng chat",
   Cancel: "Kanselahin",
   Save: "I-save",
+  Saved: "Na-save",
   "Delete chat": "Burahin ang chat",
   Delete: "Burahin",
   "Session actions": "Mga aksiyon sa chat",
@@ -138,7 +139,6 @@ export default {
   "Mark as unread": "Markahang hindi pa nababasa",
   "Search chats": "Maghanap sa mga chat",
   Close: "Isara",
-  "Same as my question": "Kapareho ng tanong ko",
   "Same as my browser": "Kapareho ng browser ko",
   "Not signed in": "Hindi naka-sign in",
   "Sign in to ask and keep your chats": "Mag-sign in para magtanong at itago ang iyong mga chat",
@@ -173,12 +173,6 @@ export default {
   "Custom instructions": "Sariling tagubilin",
   "Anything Sirathic should keep in mind, like how much you know or how you like answers":
     "Anumang dapat tandaan ng Sirathic, gaya ng kung gaano karami ang alam mo o kung paano mo gusto ang mga sagot",
-  Answers: "Mga sagot",
-  "Answer language": "Wika ng sagot",
-  "Answer length": "Haba ng sagot",
-  "Show Arabic text": "Ipakita ang tekstong Arabic",
-  "Quote verses and hadith in Arabic next to the translation":
-    "Isama ang ayah at hadith sa Arabic sa tabi ng salin",
   "Incognito by default": "Incognito bilang default",
   "New chats start in incognito and aren't saved":
     "Nagsisimula ang bagong chat sa incognito at hindi sine-save",
@@ -246,9 +240,6 @@ export default {
   "Timezone for routines": "Timezone para sa mga routine",
   "Routines run on this clock": "Sa orasang ito tumatakbo ang mga routine",
   "Same as this device ({zone})": "Kapareho ng device na ito ({zone})",
-  "Headers and lists": "Mga header at listahan",
-  Lists: "Mga listahan",
-  Paragraphs: "Mga talata",
   "About you": "Tungkol sa iyo",
   "Your work, your studies, what you already know":
     "Ang trabaho mo, pag-aaral mo, at ang alam mo na",
@@ -276,9 +267,7 @@ export default {
   Maliki: "Maliki",
   "Shafi'i": "Shafi'i",
   Hanbali: "Hanbali",
-  Short: "Maikli",
   Default: "Default",
-  Detailed: "Detalyado",
   "Settings sections": "Mga seksiyon ng setting",
   "No chat models available": "Walang available na modelo",
   "First time? Turn on device code sign-in in ChatGPT → Settings → Security. ChatGPT will say Codex, that's expected.":

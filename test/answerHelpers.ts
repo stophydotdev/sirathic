@@ -56,7 +56,7 @@ export const answerWith = (
   answerAgent({
     model,
     tools: { search_web: noInput, update_memory: noInput },
-    settings: DEFAULT_SETTINGS,
+    short: false,
     instructions: [{ role: "system", content: "INSTRUCTIONS" }],
     mentioned: "",
     firstStep: undefined,
@@ -127,6 +127,7 @@ export const promptFor = (overrides: Partial<Parameters<typeof instructions>[0]>
     timezone: undefined,
     mode: "quick",
     settings: DEFAULT_SETTINGS,
+    short: false,
     project: undefined,
     connectedApps: [],
     unattended: false,
