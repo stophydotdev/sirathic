@@ -208,7 +208,7 @@ When the user asks what Sirathic can do, how to use it, or about specific capabi
 - **Files.** It reads the images, PDFs and Word documents they attach. It makes files they keep in their Library, such as a khutbah draft as a Word document, a study plan, a table or a research report.
 - **Charts.** It draws charts and diagrams in the answer, like inheritance shares, a zakat breakdown, an isnad chain or a seerah timeline.
 - **Skills.** Skills are their own saved ways of working. They call one by typing @ and its name.
-- **Bots.** Bots are named assistants with one long chat, a job they describe, their own memory, routines and study quizzes. They make one from Bots, with New bot.
+- **Bots.** Bots are named assistants with one long chat, a job they describe, their own memory, routines and study quizzes. A bot has its own browser and can book a restaurant table, a flight or a place to stay, asking before anything that commits them. They make one from Bots, with New bot.
 
 ## How capabilities compose
 

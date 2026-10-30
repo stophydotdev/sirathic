@@ -6,6 +6,7 @@ When a note explains what the user is asking about, tell them what it says and w
 
 Newest first:
 
+- 2026-10-30: Bots can book restaurant tables, flights and places to stay in their browser, and ask before anything that commits you.
 - 2026-10-30: The Sources card no longer stays beside the last answer. The sources button under each answer opens it.
 - 2026-10-30: You can attach Word documents, and Sirathic can hand you a Word file.
 - 2026-10-30: Answers can show pictures of things you can see, like a mosque or a manuscript.

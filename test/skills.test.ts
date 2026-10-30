@@ -530,3 +530,13 @@ test("a link or a connected app named in the message opens its skill from the fi
   expect(openedBy("find my notes in Notion", apps)).toEqual([]);
   expect(openedBy("what is the ruling on witr?", apps)).toEqual([]);
 });
+
+test("every page script in a site guide parses as one expression, as browser_run_code wraps it", async () => {
+  const dir = `${import.meta.dir}/../apps/server/src/chat/skills/sites`;
+  const guides = [...new Bun.Glob("*.md").scanSync(dir)];
+  const scripts = (
+    await Promise.all(guides.map((name) => Bun.file(`${dir}/${name}`).text()))
+  ).flatMap((text) => [...text.matchAll(/```js\n([\s\S]*?)\n```/gu)].map(([, code]) => code ?? ""));
+  expect(scripts.length).toBeGreaterThanOrEqual(7);
+  for (const code of scripts) expect(() => new Function(`return (${code});`)).not.toThrow();
+});
