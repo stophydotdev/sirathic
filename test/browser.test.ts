@@ -1,5 +1,6 @@
-import { expect, test } from "bun:test";
+import { expect, spyOn, test } from "bun:test";
 import { isPrivateUrl } from "../apps/browser/src/blocked";
+import { exitZone } from "../apps/browser/src/exit";
 import { masked } from "../apps/browser/src/mask";
 import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
 import { totp } from "../apps/server/src/vault/totp";
@@ -16,6 +17,17 @@ test("pages can't take a bot's browser to private or internal hosts", () => {
   ];
   expect(blocked.filter((url) => !isPrivateUrl(url))).toEqual([]);
   expect(isPrivateUrl("https://the-internet.herokuapp.com/login")).toBe(false);
+});
+
+test("a failed timezone lookup is tried again on the next session", async () => {
+  const lookups = spyOn(globalThis, "fetch")
+    .mockResolvedValueOnce(Response.json({ status: 429, error: { title: "Rate limit exceeded" } }))
+    .mockResolvedValueOnce(Response.json({ timezone: "America/New_York" }));
+  expect(await exitZone()).toBeUndefined();
+  expect(await exitZone()).toBe("America/New_York");
+  expect(await exitZone()).toBe("America/New_York");
+  expect(lookups).toHaveBeenCalledTimes(2);
+  lookups.mockRestore();
 });
 
 test("two-step codes match the RFC 6238 test vector", () => {
