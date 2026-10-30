@@ -863,4 +863,12 @@ export default {
   "{count} rows": "{count} lignes",
   "This file can't be shown here. Download it to open it.":
     "Ce fichier ne peut pas être affiché ici. Téléchargez-le pour l'ouvrir.",
+  "Auto-review": "Examen automatique",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic vous demande avant d'envoyer, de publier ou de supprimer quelque chose à votre place. Ajoutez une règle pour qu'il agisse sans demander. Si des règles se contredisent, « Demander d'abord » l'emporte, et un paiement ou un remboursement demande toujours.",
+  "When Sirathic wants to": "Quand Sirathic veut",
+  "Reply to emails for me": "Répondre à mes e-mails à ma place",
+  "Allow automatically": "Autoriser automatiquement",
+  "Ask first": "Demander d'abord",
+  "Add rule": "Ajouter une règle",
 } satisfies Messages;

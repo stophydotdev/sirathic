@@ -836,4 +836,12 @@ export default {
   "{count} rows": "{count} ជួរដេក",
   "This file can't be shown here. Download it to open it.":
     "មិនអាចបង្ហាញឯកសារនេះនៅទីនេះបានទេ។ សូមទាញយកដើម្បីបើក។",
+  "Auto-review": "ការត្រួតពិនិត្យស្វ័យប្រវត្តិ",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic សួរអ្នកមុនពេលផ្ញើ បង្ហោះ ឬលុបជំនួសអ្នក។ បន្ថែមវិធានមួយដើម្បីឱ្យវាធ្វើដោយមិនសួរ។ ប្រសិនបើវិធានប៉ះគ្នា “សួរមុន” មានអាទិភាព ហើយការបង់ប្រាក់ ឬការសងប្រាក់វិញតែងតែសួរ។",
+  "When Sirathic wants to": "នៅពេល Sirathic ចង់",
+  "Reply to emails for me": "ឆ្លើយតបអ៊ីមែលជំនួសខ្ញុំ",
+  "Allow automatically": "អនុញ្ញាតដោយស្វ័យប្រវត្តិ",
+  "Ask first": "សួរមុន",
+  "Add rule": "បន្ថែមវិធាន",
 } satisfies Messages;

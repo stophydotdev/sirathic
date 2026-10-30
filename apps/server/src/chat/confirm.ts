@@ -45,14 +45,19 @@ const spelledOut = z
   })
   .catch({ action: "", command: "", sql: "", sql_statements: [] });
 
-type Call = { toolName: string; input: unknown };
+export type Call = { toolName: string; input: unknown };
 
-export const actionOf = ({ toolName, input }: Call) => {
-  const { action, command, sql, sql_statements } = spelledOut.parse(input);
-  if (CONFIRMED_DELETES.get(toolName)?.includes(action)) return "delete";
-  const spelled = [toolName, action, command.split("{")[0]]
+export const spell = ({ toolName, input }: Call) => {
+  const { action, command } = spelledOut.parse(input);
+  return [toolName, action, command.split("{")[0]]
     .join(" ")
     .replaceAll(/(\p{Ll})(\p{Lu})/gu, "$1 $2");
+};
+
+export const actionOf = (call: Call) => {
+  const { action, sql, sql_statements } = spelledOut.parse(call.input);
+  if (CONFIRMED_DELETES.get(call.toolName)?.includes(action)) return "delete";
+  const spelled = spell(call);
   const named = ACTIONS.find(({ words }) => words.test(spelled))?.kind;
   return named ?? (WIPE_OUT.test([sql, ...sql_statements].join(" ")) ? "delete" : undefined);
 };

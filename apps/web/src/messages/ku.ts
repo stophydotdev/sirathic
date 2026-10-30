@@ -854,4 +854,12 @@ export default {
   "{count} rows": "{count} ڕیز",
   "This file can't be shown here. Download it to open it.":
     "ئەم فایلە لێرە نیشان نادرێت. بۆ کردنەوەی دایبەزێنە.",
+  "Auto-review": "پێداچوونەوەی خۆکار",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic پێش ئەوەی لە جیاتی تۆ بنێرێت، بڵاوی بکاتەوە یان بیسڕێتەوە، لێت دەپرسێت. یاسایەک زیاد بکە تا بێ پرسیار کار بکات. ئەگەر یاساکان پێکدابدەن، «سەرەتا بپرسە» زاڵە، و پارەدان یان گەڕاندنەوەی پارە هەمیشە دەپرسێت.",
+  "When Sirathic wants to": "کاتێک Sirathic دەیەوێت",
+  "Reply to emails for me": "لە جیاتی من وەڵامی ئیمەیڵەکان بدەرەوە",
+  "Allow automatically": "خۆکارانە ڕێگە بدە",
+  "Ask first": "سەرەتا بپرسە",
+  "Add rule": "زیادکردنی یاسا",
 } satisfies Messages;

@@ -833,4 +833,12 @@ export default {
   "1 row": "1 行",
   "{count} rows": "{count} 行",
   "This file can't be shown here. Download it to open it.": "此文件无法在此显示。请下载后打开。",
+  "Auto-review": "自动审核",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic 在代你发送、发布或删除内容前会先问你。添加规则可以让它不经询问直接执行。规则冲突时，“先询问”优先；付款和退款始终会先询问。",
+  "When Sirathic wants to": "当 Sirathic 想要",
+  "Reply to emails for me": "替我回复邮件",
+  "Allow automatically": "自动允许",
+  "Ask first": "先询问",
+  "Add rule": "添加规则",
 } satisfies Messages;

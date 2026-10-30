@@ -853,4 +853,12 @@ export default {
   "{count} rows": "Safu {count}",
   "This file can't be shown here. Download it to open it.":
     "Faili hii haiwezi kuonyeshwa hapa. Ipakue ili uifungue.",
+  "Auto-review": "Ukaguzi wa kiotomatiki",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic hukuuliza kabla ya kutuma, kuchapisha au kufuta kwa niaba yako. Ongeza kanuni ili iweze kufanya bila kuuliza. Kanuni zikigongana, “Uliza kwanza” hushinda, na malipo au kurejesha pesa huuliza kila mara.",
+  "When Sirathic wants to": "Sirathic inapotaka",
+  "Reply to emails for me": "Kujibu barua pepe kwa niaba yangu",
+  "Allow automatically": "Ruhusu kiotomatiki",
+  "Ask first": "Uliza kwanza",
+  "Add rule": "Ongeza kanuni",
 } satisfies Messages;

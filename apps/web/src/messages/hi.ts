@@ -843,4 +843,12 @@ export default {
   "{count} rows": "{count} पंक्तियाँ",
   "This file can't be shown here. Download it to open it.":
     "यह फ़ाइल यहाँ नहीं दिखाई जा सकती। खोलने के लिए इसे डाउनलोड करें।",
+  "Auto-review": "स्वचालित समीक्षा",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic आपकी ओर से कुछ भेजने, पोस्ट करने या हटाने से पहले आपसे पूछता है। बिना पूछे काम करने देने के लिए एक नियम जोड़ें। नियमों में टकराव हो तो “पहले पूछें” को प्राथमिकता मिलती है, और भुगतान या रिफंड से पहले हमेशा पूछा जाता है।",
+  "When Sirathic wants to": "जब Sirathic यह करना चाहे",
+  "Reply to emails for me": "मेरी ओर से ईमेल का जवाब दो",
+  "Allow automatically": "अपने आप अनुमति दें",
+  "Ask first": "पहले पूछें",
+  "Add rule": "नियम जोड़ें",
 } satisfies Messages;

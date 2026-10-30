@@ -856,4 +856,12 @@ export default {
   "{count} rows": "{count} sətir",
   "This file can't be shown here. Download it to open it.":
     "Bu fayl burada göstərilə bilmir. Açmaq üçün yükləyin.",
+  "Auto-review": "Avtomatik yoxlama",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic sizin adınıza göndərməzdən, paylaşmazdan və ya silməzdən əvvəl soruşur. Soruşmadan işləməsi üçün qayda əlavə edin. Qaydalar toqquşarsa, “Əvvəl soruş” üstündür, ödəniş və geri ödəmə isə həmişə soruşur.",
+  "When Sirathic wants to": "Sirathic bunu etmək istəyəndə",
+  "Reply to emails for me": "E-poçtlarıma mənim əvəzimə cavab ver",
+  "Allow automatically": "Avtomatik icazə ver",
+  "Ask first": "Əvvəl soruş",
+  "Add rule": "Qayda əlavə et",
 } satisfies Messages;

@@ -851,4 +851,12 @@ export default {
   "{count} rows": "{count} வரிசைகள்",
   "This file can't be shown here. Download it to open it.":
     "இந்தக் கோப்பை இங்கே காட்ட முடியாது. திறக்க பதிவிறக்கவும்.",
+  "Auto-review": "தானியங்கி மதிப்பாய்வு",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "உங்கள் சார்பாக அனுப்பும், இடுகையிடும் அல்லது நீக்கும் முன் Sirathic உங்களிடம் கேட்கும். கேட்காமல் செயல்பட அனுமதிக்க ஒரு விதியைச் சேர்க்கவும். விதிகள் முரண்பட்டால் “முதலில் கேள்” முன்னுரிமை பெறும்; பணம் செலுத்துதல் அல்லது திருப்பிச் செலுத்துதல் எப்போதும் கேட்கும்.",
+  "When Sirathic wants to": "Sirathic இதைச் செய்ய விரும்பும்போது",
+  "Reply to emails for me": "எனக்காக மின்னஞ்சல்களுக்குப் பதிலளி",
+  "Allow automatically": "தானாக அனுமதி",
+  "Ask first": "முதலில் கேள்",
+  "Add rule": "விதியைச் சேர்",
 } satisfies Messages;

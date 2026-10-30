@@ -842,4 +842,12 @@ export default {
   "{count} rows": "{count}টি সারি",
   "This file can't be shown here. Download it to open it.":
     "এই ফাইলটি এখানে দেখানো যাচ্ছে না। খুলতে ডাউনলোড করুন।",
+  "Auto-review": "স্বয়ংক্রিয় পর্যালোচনা",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathic আপনার হয়ে পাঠানো, পোস্ট করা বা মুছে ফেলার আগে আপনাকে জিজ্ঞাসা করে। জিজ্ঞাসা ছাড়াই কাজ করতে দিতে একটি নিয়ম যোগ করুন। নিয়মে বিরোধ হলে “আগে জিজ্ঞাসা করুন” প্রাধান্য পায়, আর অর্থপ্রদান বা ফেরতের আগে সবসময় জিজ্ঞাসা করে।",
+  "When Sirathic wants to": "Sirathic যখন করতে চায়",
+  "Reply to emails for me": "আমার হয়ে ইমেইলের উত্তর দাও",
+  "Allow automatically": "নিজে থেকে অনুমতি দিন",
+  "Ask first": "আগে জিজ্ঞাসা করুন",
+  "Add rule": "নিয়ম যোগ করুন",
 } satisfies Messages;

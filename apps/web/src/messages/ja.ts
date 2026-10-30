@@ -850,4 +850,12 @@ export default {
   "{count} rows": "{count} 行",
   "This file can't be shown here. Download it to open it.":
     "このファイルはここでは表示できません。ダウンロードして開いてください。",
+  "Auto-review": "自動レビュー",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "Sirathicは、あなたに代わって送信、投稿、削除をする前に確認します。確認なしで実行してよいことは、ルールを追加して許可できます。ルールが競合したときは「先に確認」が優先され、支払いと返金は常に確認します。",
+  "When Sirathic wants to": "Sirathicが次のことをしようとしたとき",
+  "Reply to emails for me": "私の代わりにメールに返信する",
+  "Allow automatically": "自動で許可",
+  "Ask first": "先に確認",
+  "Add rule": "ルールを追加",
 } satisfies Messages;

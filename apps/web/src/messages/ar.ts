@@ -842,4 +842,12 @@ export default {
   "1 row": "صف واحد",
   "{count} rows": "{count} صفوف",
   "This file can't be shown here. Download it to open it.": "لا يمكن عرض هذا الملف هنا. نزّله لفتحه.",
+  "Auto-review": "المراجعة التلقائية",
+  "Sirathic asks before it sends, posts or deletes for you. Add a rule to let it act without asking. Ask first wins if rules conflict, and paying or refunding always asks.":
+    "تسألك Sirathic قبل أن ترسل أو تنشر أو تحذف نيابةً عنك. أضف قاعدة لتسمح لها بالتنفيذ دون سؤال. تكون الغلبة لقاعدة «اسأل أولاً» عند التعارض، وتسألك دائمًا قبل أي دفع أو استرداد.",
+  "When Sirathic wants to": "عندما تريد Sirathic أن",
+  "Reply to emails for me": "الردّ على رسائل بريدي الإلكتروني نيابةً عني",
+  "Allow automatically": "السماح تلقائيًا",
+  "Ask first": "اسأل أولاً",
+  "Add rule": "إضافة قاعدة",
 } satisfies Messages;

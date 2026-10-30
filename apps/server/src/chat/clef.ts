@@ -7,7 +7,7 @@ const WAIT_MS = 2_000;
 type State = string | Readonly<Record<string, string | Readonly<Record<string, string>>>>;
 
 const decided = z.object({
-  result: z.object({ answers: z.record(z.string(), z.object({ noul: z.number() })) }),
+  result: z.object({ answers: z.record(z.string(), z.object({ noul: z.number().min(0).max(1) })) }),
 });
 
 export const yesChances = async (state: State, questions: Readonly<Record<string, string>>) => {
