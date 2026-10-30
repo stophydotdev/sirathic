@@ -646,8 +646,8 @@ export default {
   "Sort by": "Сортировка",
   Order: "Порядок",
   "Sign in to use your library.": "Войдите, чтобы пользоваться библиотекой.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Загружайте изображения, PDF или текстовые файлы UTF-8 до 10 МБ каждый.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Загружайте изображения, PDF, документы Word или текстовые файлы UTF-8 до 10 МБ каждый.",
   "Remove plugin": "Удалить плагин",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Удалить «{name}»? Его адрес и данные входа будут удалены.",

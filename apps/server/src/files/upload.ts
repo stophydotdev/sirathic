@@ -35,7 +35,10 @@ uploadRoutes.post("/", tooLarge, (c) =>
     const bytes = new Uint8Array(await file.arrayBuffer());
     const mediaType = mediaTypeOf(bytes);
     if (!mediaType)
-      throw new StatusError(400, "Only images, PDFs and UTF-8 text files can be uploaded.");
+      throw new StatusError(
+        400,
+        "Only images, PDFs, Word documents and UTF-8 text files can be uploaded.",
+      );
     return saveFile(user.id, {
       name: file.name.trim().slice(-FILE_NAME_MAX) || "file",
       mediaType,

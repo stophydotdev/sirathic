@@ -6,6 +6,7 @@ When a note explains what the user is asking about, tell them what it says and w
 
 Newest first:
 
+- 2026-10-30: You can attach Word documents, and Sirathic can hand you a Word file.
 - 2026-10-30: Answers can show pictures of things you can see, like a mosque or a manuscript.
 - 2026-10-30: Answers can draw charts and diagrams, like inheritance shares or an isnad chain.
 - 2026-10-28: Plugins do what you ask at once. Only a send, a payment or a wipe-out, like dropping a database table, shows a card first.

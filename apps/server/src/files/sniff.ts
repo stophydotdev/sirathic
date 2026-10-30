@@ -1,3 +1,6 @@
+import { DOCX } from "../shared/files";
+import { isDocx } from "./docx";
+
 const startsWith = (bytes: Uint8Array, signature: (number | null)[]) =>
   bytes.length >= signature.length &&
   signature.every((byte, index) => byte === null || bytes[index] === byte);
@@ -25,4 +28,5 @@ const isText = (bytes: Uint8Array) => {
 
 export const mediaTypeOf = (bytes: Uint8Array) =>
   SIGNATURES.find(({ signature }) => startsWith(bytes, signature))?.mediaType ??
+  (isDocx(bytes) ? DOCX : undefined) ??
   (isText(bytes) ? "text/plain" : undefined);

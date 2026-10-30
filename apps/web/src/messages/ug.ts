@@ -650,8 +650,8 @@ export default {
   "Sort by": "تەرتىپلەش ئاساسى",
   Order: "تەرتىپ",
   "Sign in to use your library.": "ئامبىرىڭىزنى ئىشلىتىش ئۈچۈن كىرىڭ.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ھەر بىرى 10 MB غىچە رەسىم، PDF ياكى UTF-8 تېكىست ھۆججىتىنى يۈكلەڭ.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ھەر بىرى 10 MB غىچە رەسىم، PDF، Word ھۆججىتى ياكى UTF-8 تېكىست ھۆججىتىنى يۈكلەڭ.",
   "Remove plugin": "قىستۇرمىنى چىقىرىۋېتىش",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "«{name}» چىقىرىۋېتىلسۇنمۇ؟ ئۇنىڭ ئادرېسى ۋە كىرىش ئۇچۇرى ئۆچۈرۈلىدۇ.",

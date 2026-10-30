@@ -651,8 +651,8 @@ export default {
   "Sort by": "Ordenar por",
   Order: "Orden",
   "Sign in to use your library.": "Inicia sesión para usar tu biblioteca.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Sube imágenes, PDF o archivos de texto UTF-8 de hasta 10 MB cada uno.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Sube imágenes, PDF, documentos de Word o archivos de texto UTF-8 de hasta 10 MB cada uno.",
   "Remove plugin": "Quitar complemento",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "¿Quitar «{name}»? Se borrarán su dirección y su inicio de sesión.",

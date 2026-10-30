@@ -651,8 +651,8 @@ export default {
   "Sort by": "Иреттөө",
   Order: "Тартип",
   "Sign in to use your library.": "Китепканаңызды колдонуу үчүн кириңиз.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Ар бири 10 МБга чейинки сүрөттөрдү, PDF же UTF-8 текст файлдарын жүктөңүз.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Ар бири 10 МБга чейинки сүрөттөрдү, PDF, Word документтерин же UTF-8 текст файлдарын жүктөңүз.",
   "Remove plugin": "Плагинди алып салуу",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "«{name}» алынып салынсынбы? Анын дареги жана кирүү маалыматы өчүрүлөт.",

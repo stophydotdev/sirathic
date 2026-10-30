@@ -653,8 +653,8 @@ export default {
   "Sort by": "Саралаш",
   Order: "Тартиб",
   "Sign in to use your library.": "Кутубхонангиздан фойдаланиш учун киринг.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Ҳар бири 10 МБ гача расм, PDF ёки UTF-8 матн файлларини юкланг.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Ҳар бири 10 МБ гача расм, PDF, Word ҳужжатлари ёки UTF-8 матн файлларини юкланг.",
   "Remove plugin": "Плагинни олиб ташлаш",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "«{name}» олиб ташлансинми? Унинг манзили ва кириш маълумоти ўчирилади.",

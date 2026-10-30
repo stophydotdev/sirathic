@@ -647,8 +647,8 @@ export default {
   "Sort by": "Razvrsti po",
   Order: "Vrstni red",
   "Sign in to use your library.": "Prijavite se, da uporabljate svojo knjižnico.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Naložite slike, datoteke PDF ali besedilne datoteke UTF-8, vsako do 10 MB.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Naložite slike, datoteke PDF, dokumente Word ali besedilne datoteke UTF-8, vsako do 10 MB.",
   "Remove plugin": "Odstrani vtičnik",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Odstraniti „{name}“? Njegov naslov in prijava bosta izbrisana.",

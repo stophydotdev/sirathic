@@ -197,7 +197,7 @@ export const skillsFor = ({
             name: "files",
             when: "Load when the user asks for a file to keep or share, like a khutbah draft, a study plan, a table or a report",
             text: files.text,
-            tools: files.tools,
+            tools: [...files.tools, ...("share_files" in offered ? ["code_execution"] : [])],
           },
         ]
       : []),

@@ -639,8 +639,8 @@ export default {
   "Sort by": "সাজান",
   Order: "ক্রম",
   "Sign in to use your library.": "আপনার লাইব্রেরি ব্যবহার করতে সাইন ইন করুন।",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ছবি, PDF বা UTF-8 টেক্সট ফাইল আপলোড করুন, প্রতিটি সর্বোচ্চ ১০ এমবি।",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ছবি, PDF, Word ডকুমেন্ট বা UTF-8 টেক্সট ফাইল আপলোড করুন, প্রতিটি সর্বোচ্চ ১০ এমবি।",
   "Remove plugin": "প্লাগইন সরান",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}” সরাবেন? এর ঠিকানা ও সাইন-ইন মুছে যাবে।",

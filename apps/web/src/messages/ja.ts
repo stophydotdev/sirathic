@@ -646,8 +646,8 @@ export default {
   "Sort by": "並べ替え",
   Order: "順序",
   "Sign in to use your library.": "ライブラリを使うにはログインしてください。",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "画像、PDF、UTF-8 のテキストファイルをアップロードできます（1 ファイルあたり最大 10 MB）。",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "画像、PDF、Word 文書、UTF-8 のテキストファイルをアップロードできます（1 ファイルあたり最大 10 MB）。",
   "Remove plugin": "プラグインを削除",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "「{name}」を削除しますか？アドレスとサインイン情報も削除されます。",

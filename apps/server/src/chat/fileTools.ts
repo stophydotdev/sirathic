@@ -14,7 +14,7 @@ const INCOGNITO =
 const FILE_RULES = {
   create_text_file: `- create_text_file: only when the user asks for a file they will keep or share, like a khutbah draft, a study plan or a table of rulings. Never for an answer that reads fine in chat.`,
   create_research_report: `- create_research_report: in Research, write the full report here, with headings, citing sources with the same [n] numbers as in chat. They become links to the sources in the file. Your chat answer is then a short summary of three to five sentences that says the full report is below. Do not repeat the report in chat.`,
-  share_files: `- share_files: gives the user files code_execution wrote. When the sandbox computes a table or chart the user wants as a file, have the same script write it (CSV, PNG or PDF) into the folder in the $OUTPUT_DIR environment variable, in that same call, then call share_files with the file names, like zakat.csv. You never see file ids and do not need them. Do not retype sandbox output into create_text_file.`,
+  share_files: `- share_files: gives the user files code_execution wrote. When the sandbox computes a table or chart the user wants as a file, have the same script write it (CSV, PNG or PDF) into the folder in the $OUTPUT_DIR environment variable, in that same call, then call share_files with the file names, like zakat.csv. You never see file ids and do not need them. Do not retype sandbox output into create_text_file. When the user asks for a Word document, like a khutbah or a letter, have code_execution write it as a .docx with python-docx into $OUTPUT_DIR, then call share_files with its name.`,
 };
 
 const FILE_RULES_END = `For all of them: write your answer first, then call the tool last, and do not say a file is saved until the tool has returned. The user gets a card with the file under your answer and finds the file in their Library. After the tool returns, add one short sentence at most. If it returns an error, say so plainly and give the content in chat.`;
@@ -88,7 +88,9 @@ async function keep(by: string, name: string, bytes: Uint8Array) {
   }
   const mediaType = mediaTypeOf(bytes);
   if (!mediaType) {
-    throw new Error(`${name} was not saved: only images, PDFs and UTF-8 text can be kept.`);
+    throw new Error(
+      `${name} was not saved: only images, PDFs, Word documents and UTF-8 text can be kept.`,
+    );
   }
   return saveFile(by, { name, mediaType, bytes });
 }

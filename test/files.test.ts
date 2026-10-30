@@ -1,6 +1,8 @@
 import { expect, mock, test } from "bun:test";
 import { z } from "zod";
 import { fileIdOf, formatSize, shownFiles } from "../apps/server/src/shared/files";
+import { strToU8, zipSync } from "fflate";
+import { docxText } from "../apps/server/src/files/docx";
 import { mediaTypeOf } from "../apps/server/src/files/sniff";
 import { closable, IDLE_MS, MAKE_ROOM_IDLE_MS } from "../apps/browser/src/idle";
 
@@ -161,6 +163,23 @@ test("the type comes from the bytes, not from a name", () => {
     "application/pdf",
     "text/plain",
   ]);
+});
+
+const word = (body: string) =>
+  zipSync({
+    "[Content_Types].xml": strToU8("<Types/>"),
+    "word/document.xml": strToU8(`<w:document><w:body>${body}</w:body></w:document>`),
+  });
+
+test("a Word document is known by its bytes, and its text reads as paragraphs", () => {
+  const docx = word(
+    '<w:p><w:r><w:t>Zakat &amp; sadaqah</w:t></w:r></w:p><w:p><w:pPr><w:tabs><w:tab w:val="left"/></w:tabs></w:pPr><w:r><w:t>Nisab</w:t><w:tab/><w:t xml:space="preserve">85 g</w:t><w:delText>87 g</w:delText></w:r></w:p>',
+  );
+  expect([docx, zipSync({ "notes.txt": strToU8("hi") })].map(mediaTypeOf)).toEqual([
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    undefined,
+  ]);
+  expect(docxText(docx)).toBe("Zakat & sadaqah\nNisab\t85 g");
 });
 
 test("binary data that is no known type is refused", () => {

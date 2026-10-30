@@ -644,8 +644,8 @@ export default {
   "Sort by": "Sắp xếp theo",
   Order: "Thứ tự",
   "Sign in to use your library.": "Đăng nhập để dùng thư viện của bạn.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Tải lên hình ảnh, PDF hoặc tệp văn bản UTF-8, mỗi tệp tối đa 10 MB.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Tải lên hình ảnh, PDF, tài liệu Word hoặc tệp văn bản UTF-8, mỗi tệp tối đa 10 MB.",
   "Remove plugin": "Gỡ tiện ích",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Gỡ “{name}”? Địa chỉ và thông tin đăng nhập của nó sẽ bị xóa.",

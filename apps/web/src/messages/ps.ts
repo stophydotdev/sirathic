@@ -646,8 +646,8 @@ export default {
   "Sort by": "ترتیب په اساس",
   Order: "ترتیب",
   "Sign in to use your library.": "د خپل کتابتون کارولو لپاره ننوځئ.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "انځورونه، PDF یا UTF-8 متني فایلونه تر ۱۰ MB پورې پورته کړئ.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "انځورونه، PDF، د Word اسناد یا UTF-8 متني فایلونه تر ۱۰ MB پورې پورته کړئ.",
   "Remove plugin": "پلګین لرې کړئ",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "«{name}» لرې شي؟ پته او ننوتنه یې به ړنګ شي.",

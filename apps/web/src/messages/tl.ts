@@ -654,8 +654,8 @@ export default {
   "Sort by": "Ayusin ayon sa",
   Order: "Pagkakasunod-sunod",
   "Sign in to use your library.": "Mag-sign in para magamit ang aklatan mo.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Mag-upload ng mga larawan, PDF o UTF-8 text file na hanggang 10 MB bawat isa.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Mag-upload ng mga larawan, PDF, Word document o UTF-8 text file na hanggang 10 MB bawat isa.",
   "Remove plugin": "Alisin ang plugin",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Alisin ang “{name}”? Buburahin ang address at sign-in nito.",
