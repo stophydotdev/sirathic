@@ -12,7 +12,7 @@ Compare providers and order a qurbani (udhiyah) or an aqiqah for the user, then 
 ## Before you start
 
 - Pin down qurbani or aqiqah, how many animals or shares and for whom (the names, when the provider asks for them), where it is done (a local farm or a country abroad), the budget, and whether the meat is delivered or given away.
-- A qurbani is done in the days of Eid al-Adha. Get the dates with islamic_dates when it is in your tools, say they are expected, and order before the provider's deadline. Rulings on who must give it, sharing an animal, and the age and condition of the animal come from search_web with citations, giving the views.
+- A qurbani is slaughtered in the days of Eid al-Adha, starting on the 10th of Dhul Hijjah. Scholars differ on exactly when it starts and on whether the last day is the 12th or the 13th. Get the dates with islamic_dates when it is in your tools, say they are expected, and order before the provider's deadline. Rulings on who must give it, sharing an animal, and the age and condition of the animal come from search_web with citations, giving the views.
 
 ## Flow
 
