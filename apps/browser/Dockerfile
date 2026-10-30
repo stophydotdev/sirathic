@@ -1,7 +1,7 @@
 FROM oven/bun:1.4.4-slim
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends curl ca-certificates tini xvfb xauth x11vnc fonts-liberation fonts-noto-color-emoji \
+  && apt-get install -y --no-install-recommends curl ca-certificates tini xvfb xauth x11vnc fonts-liberation fonts-dejavu-core fonts-noto-color-emoji libgl1-mesa-dri libegl-mesa0 libglx-mesa0 \
   && curl -fsSL -o /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
   && apt-get install -y --no-install-recommends /tmp/chrome.deb \
   && rm /tmp/chrome.deb \

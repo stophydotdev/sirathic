@@ -6,6 +6,7 @@ import {
   type Page,
 } from "patchright";
 import { BLOCKED_URLS, isPrivateUrl } from "./blocked";
+import { exitZone } from "./exit";
 import { closable, HOLD_MS, IDLE_MS, MAKE_ROOM_IDLE_MS, RESTORE_MS } from "./idle";
 import { forgetLogins, saveLogins, savedLogins } from "./logins";
 import type { Download, TaughtStep } from "./protocol";
@@ -14,9 +15,9 @@ import { closeScreen, openScreen, SCREEN, type Screen } from "./screen";
 const CHROME_PATH = "/usr/bin/google-chrome-stable";
 const ARGS = [
   "--disable-dev-shm-usage",
-  "--use-angle=swiftshader",
-  "--enable-unsafe-swiftshader",
-  "--disable-gpu-compositing",
+  "--use-gl=angle",
+  "--use-angle=gl",
+  "--ignore-gpu-blocklist",
   "--disable-background-timer-throttling",
   "--disable-renderer-backgrounding",
   "--disable-backgrounding-occluded-windows",
@@ -26,6 +27,7 @@ const ARGS = [
   "--no-first-run",
   "--no-default-browser-check",
   "--hide-crash-restore-bubble",
+  "--lang=en-US",
   "--window-position=0,0",
   `--window-size=${SCREEN.width},${SCREEN.height}`,
 ];
@@ -120,7 +122,7 @@ const open = async (key: string): Promise<Session> => {
   const saved = await savedLogins(key);
   const context = await browser.newContext({
     viewport: null,
-    locale: "en-US",
+    timezoneId: await exitZone(),
     storageState: saved && { cookies: saved.cookies, origins: saved.origins },
   });
   await context.route(
