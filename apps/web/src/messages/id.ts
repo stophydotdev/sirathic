@@ -649,8 +649,8 @@ export default {
   "Sort by": "Urutkan menurut",
   Order: "Urutan",
   "Sign in to use your library.": "Masuk untuk memakai pustaka Anda.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Unggah gambar, PDF, atau file teks UTF-8 hingga 10 MB per file.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Unggah gambar, PDF, dokumen Word, atau file teks UTF-8 hingga 10 MB per file.",
   "Remove plugin": "Hapus plugin",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Hapus “{name}”? Alamat dan info masuknya akan dihapus.",

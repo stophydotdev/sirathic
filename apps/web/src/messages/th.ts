@@ -633,8 +633,8 @@ export default {
   "Sort by": "เรียงตาม",
   Order: "ลำดับ",
   "Sign in to use your library.": "ลงชื่อเข้าใช้เพื่อใช้ไลบรารีของคุณ",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "อัปโหลดรูปภาพ PDF หรือไฟล์ข้อความ UTF-8 ไฟล์ละไม่เกิน 10 MB",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "อัปโหลดรูปภาพ PDF เอกสาร Word หรือไฟล์ข้อความ UTF-8 ไฟล์ละไม่เกิน 10 MB",
   "Remove plugin": "นำปลั๊กอินออก",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "นำ “{name}” ออกไหม ที่อยู่และการลงชื่อเข้าใช้ของปลั๊กอินจะถูกลบ",

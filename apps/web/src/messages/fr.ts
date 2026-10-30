@@ -654,8 +654,8 @@ export default {
   "Sort by": "Trier par",
   Order: "Ordre",
   "Sign in to use your library.": "Connectez-vous pour utiliser votre bibliothèque.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Importez des images, des PDF ou des fichiers texte UTF-8 de 10 Mo maximum chacun.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Importez des images, des PDF, des documents Word ou des fichiers texte UTF-8 de 10 Mo maximum chacun.",
   "Remove plugin": "Retirer le plugin",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Retirer « {name} » ? Son adresse et sa connexion seront supprimées.",

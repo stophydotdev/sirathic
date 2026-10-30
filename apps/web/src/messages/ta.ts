@@ -646,8 +646,8 @@ export default {
   "Sort by": "இதன்படி வரிசைப்படுத்து",
   Order: "வரிசை",
   "Sign in to use your library.": "உங்கள் நூலகத்தைப் பயன்படுத்த உள்நுழையுங்கள்.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ஒவ்வொன்றும் 10 MB வரையிலான படங்கள், PDF அல்லது UTF-8 உரைக் கோப்புகளைப் பதிவேற்றுங்கள்.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ஒவ்வொன்றும் 10 MB வரையிலான படங்கள், PDF, Word ஆவணங்கள் அல்லது UTF-8 உரைக் கோப்புகளைப் பதிவேற்றுங்கள்.",
   "Remove plugin": "செருகுநிரலை நீக்கு",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}”-ஐ நீக்கவா? அதன் முகவரியும் உள்நுழைவும் நீக்கப்படும்.",

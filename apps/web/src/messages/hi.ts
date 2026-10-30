@@ -640,8 +640,8 @@ export default {
   "Sort by": "इसके अनुसार क्रमबद्ध करें",
   Order: "क्रम",
   "Sign in to use your library.": "अपनी लाइब्रेरी इस्तेमाल करने के लिए साइन इन करें।",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "इमेज, PDF या UTF-8 टेक्स्ट फ़ाइलें अपलोड करें, हर एक अधिकतम 10 MB की।",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "इमेज, PDF, Word दस्तावेज़ या UTF-8 टेक्स्ट फ़ाइलें अपलोड करें, हर एक अधिकतम 10 MB की।",
   "Remove plugin": "प्लगइन हटाएँ",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}” हटाएँ? इसका पता और साइन-इन मिटा दिया जाएगा।",

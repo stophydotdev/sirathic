@@ -637,8 +637,8 @@ export default {
   "Sort by": "এইদৰে সজাওক",
   Order: "ক্ৰম",
   "Sign in to use your library.": "আপোনাৰ লাইব্ৰেৰী ব্যৱহাৰ কৰিবলৈ ছাইন ইন কৰক।",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ছবি, PDF বা UTF-8 টেক্সট ফাইল আপলোড কৰক, প্ৰতিটো সৰ্বোচ্চ ১০ MB।",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ছবি, PDF, Word নথি বা UTF-8 টেক্সট ফাইল আপলোড কৰক, প্ৰতিটো সৰ্বোচ্চ ১০ MB।",
   "Remove plugin": "প্লাগইন আঁতৰাওক",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}” আঁতৰাবনে? ইয়াৰ ঠিকনা আৰু ছাইন-ইন মচি পেলোৱা হ’ব।",

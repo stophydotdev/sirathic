@@ -13,7 +13,7 @@ import { uploadToLibrary } from "@/components/libraryUpload";
 import { api } from "@/lib/trpc";
 import { deviceOf } from "@/lib/visit";
 import { TRPCClientError } from "@trpc/client";
-import { fileUrl } from "@sirathic/server/files";
+import { DOCX, fileUrl } from "@sirathic/server/files";
 import { prependQuote } from "@sirathic/app/botQuote";
 import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
 import { Chat as LiveChat, useChat } from "@ai-sdk/react";
@@ -52,7 +52,7 @@ const attachmentUrl = async (file: File) => {
   return id ? fileUrl(location.origin, id) : dataUrlOf(file);
 };
 
-const storedAttachments = (accept: string, kind: "image" | "pdf"): AttachmentAdapter => ({
+const storedAttachments = (accept: string, kind: "image" | "document"): AttachmentAdapter => ({
   accept,
   add: async ({ file }) => ({
     id: crypto.randomUUID(),
@@ -73,7 +73,10 @@ const storedAttachments = (accept: string, kind: "image" | "pdf"): AttachmentAda
           : {
               type: "file",
               data: url,
-              mimeType: "application/pdf",
+              mimeType:
+                attachment.contentType === DOCX || /\.docx$/iu.test(attachment.name)
+                  ? DOCX
+                  : "application/pdf",
               filename: attachment.name,
             },
       ],
@@ -85,7 +88,7 @@ const storedAttachments = (accept: string, kind: "image" | "pdf"): AttachmentAda
 const attachments = new CompositeAttachmentAdapter([
   storedAttachments("image/png,image/jpeg,image/gif,image/webp", "image"),
   new SimpleTextAttachmentAdapter(),
-  storedAttachments("application/pdf", "pdf"),
+  storedAttachments(`application/pdf,.docx,${DOCX}`, "document"),
 ]);
 
 const transportIn = (projectId: string | undefined) =>

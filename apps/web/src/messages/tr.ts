@@ -648,8 +648,8 @@ export default {
   "Sort by": "Sıralama ölçütü",
   Order: "Sıra",
   "Sign in to use your library.": "Kitaplığınızı kullanmak için giriş yapın.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Her biri en fazla 10 MB olan görselleri, PDF'leri veya UTF-8 metin dosyalarını yükleyin.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Her biri en fazla 10 MB olan görselleri, PDF'leri, Word belgelerini veya UTF-8 metin dosyalarını yükleyin.",
   "Remove plugin": "Eklentiyi kaldır",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}” kaldırılsın mı? Adresi ve girişi silinecek.",

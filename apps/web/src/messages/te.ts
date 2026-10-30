@@ -635,8 +635,8 @@ export default {
   "Sort by": "ఇలా క్రమబద్ధీకరించండి",
   Order: "క్రమం",
   "Sign in to use your library.": "మీ లైబ్రరీని ఉపయోగించడానికి సైన్ ఇన్ చేయండి.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ఒక్కొక్కటి 10 MB వరకు ఉన్న చిత్రాలు, PDFలు లేదా UTF-8 టెక్స్ట్ ఫైల్‌లను అప్‌లోడ్ చేయండి.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ఒక్కొక్కటి 10 MB వరకు ఉన్న చిత్రాలు, PDFలు, Word పత్రాలు లేదా UTF-8 టెక్స్ట్ ఫైల్‌లను అప్‌లోడ్ చేయండి.",
   "Remove plugin": "ప్లగిన్‌ను తీసివేయి",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}”ను తీసివేయాలా? దాని చిరునామా, సైన్-ఇన్ తొలగించబడతాయి.",

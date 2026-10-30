@@ -645,8 +645,8 @@ export default {
   "Sort by": "Сортирај по",
   Order: "Редослед",
   "Sign in to use your library.": "Пријавите се да користите своју библиотеку.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Учитајте слике, PDF-ове или текстуалне датотеке у UTF-8 формату до 10 MB сваку.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Учитајте слике, PDF-ове, Word документе или текстуалне датотеке у UTF-8 формату до 10 MB сваку.",
   "Remove plugin": "Уклони додатак",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Уклонити „{name}”? Његова адреса и пријава биће избрисани.",

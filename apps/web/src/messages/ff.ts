@@ -644,8 +644,8 @@ export default {
   "Sort by": "Sutto no",
   Order: "Tokkindiral",
   "Sign in to use your library.": "Naatu ngam huutoraade suudu defte maa.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Yollu nate, PDF walla fiilaaji binndol UTF-8 haa 10 MB kala.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Yollu nate, PDF, dokimaaji Word walla fiilaaji binndol UTF-8 haa 10 MB kala.",
   "Remove plugin": "Momtu ɓeydaari",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "Momtu “{name}”? Ɗaye maako e dillugol maako ina momtee.",

@@ -613,7 +613,7 @@ export const MESSAGES = [
   "Sort by",
   "Order",
   "Sign in to use your library.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.",
   "Remove plugin",
   'Remove "{name}"? Its address and sign-in are deleted.',
   "Drop files to upload",

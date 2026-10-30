@@ -644,8 +644,8 @@ export default {
   "Sort by": "مرتب‌سازی بر اساس",
   Order: "ترتیب",
   "Sign in to use your library.": "برای استفاده از کتابخانه وارد شوید.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "تصویر، PDF یا پرونده متنی UTF-8 تا ۱۰ مگابایت برای هر پرونده بارگذاری کنید.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "تصویر، PDF، سند Word یا پرونده متنی UTF-8 تا ۱۰ مگابایت برای هر پرونده بارگذاری کنید.",
   "Remove plugin": "حذف افزونه",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "«{name}» حذف شود؟ نشانی و ورود آن پاک می‌شود.",

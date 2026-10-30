@@ -646,8 +646,8 @@ export default {
   "Sort by": "Panga kwa",
   Order: "Mpangilio",
   "Sign in to use your library.": "Ingia ili utumie maktaba yako.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Pakia picha, PDF au faili za maandishi za UTF-8 hadi 10 MB kila moja.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Pakia picha, PDF, hati za Word au faili za maandishi za UTF-8 hadi 10 MB kila moja.",
   "Remove plugin": "Ondoa programu jalizi",
   'Remove "{name}"? Its address and sign-in are deleted.':
     'Ondoa "{name}"? Anwani yake na kuingia kwake vitafutwa.',

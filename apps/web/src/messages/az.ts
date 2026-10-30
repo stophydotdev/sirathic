@@ -650,8 +650,8 @@ export default {
   "Sort by": "Sırala",
   Order: "Sıra",
   "Sign in to use your library.": "Kitabxanadan istifadə üçün daxil olun.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "Hər biri 10 MB-a qədər şəkil, PDF və ya UTF-8 mətn faylları yükləyin.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "Hər biri 10 MB-a qədər şəkil, PDF, Word sənədləri və ya UTF-8 mətn faylları yükləyin.",
   "Remove plugin": "Plaginı sil",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}” silinsin? Onun ünvanı və giriş məlumatı silinəcək.",

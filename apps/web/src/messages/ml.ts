@@ -644,8 +644,8 @@ export default {
   "Sort by": "ഇതനുസരിച്ച് ക്രമീകരിക്കുക",
   Order: "ക്രമം",
   "Sign in to use your library.": "നിങ്ങളുടെ ലൈബ്രറി ഉപയോഗിക്കാൻ സൈൻ ഇൻ ചെയ്യുക.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ഓരോന്നും 10 MB വരെയുള്ള ചിത്രങ്ങളോ PDF-കളോ UTF-8 ടെക്സ്റ്റ് ഫയലുകളോ അപ്‌ലോഡ് ചെയ്യുക.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ഓരോന്നും 10 MB വരെയുള്ള ചിത്രങ്ങളോ PDF-കളോ Word ഡോക്യുമെന്റുകളോ UTF-8 ടെക്സ്റ്റ് ഫയലുകളോ അപ്‌ലോഡ് ചെയ്യുക.",
   "Remove plugin": "പ്ലഗിൻ നീക്കം ചെയ്യുക",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}” നീക്കം ചെയ്യണോ? ഇതിന്റെ വിലാസവും സൈൻ-ഇനും ഇല്ലാതാക്കും.",

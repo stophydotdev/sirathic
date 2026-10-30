@@ -633,8 +633,8 @@ export default {
   "Sort by": "排序方式",
   Order: "顺序",
   "Sign in to use your library.": "登录后即可使用你的资料库。",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "上传图片、PDF 或 UTF-8 文本文件，每个最大 10 MB。",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "上传图片、PDF、Word 文档或 UTF-8 文本文件，每个最大 10 MB。",
   "Remove plugin": "移除插件",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "移除“{name}”？它的地址和登录信息会被删除。",

@@ -649,8 +649,8 @@ export default {
   "Sort by": "ڕیزکردن بەپێی",
   Order: "ڕیز",
   "Sign in to use your library.": "بۆ بەکارهێنانی کتێبخانەکەت بچۆ ژوورەوە.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "وێنە، PDF یان فایلی دەقی UTF-8 باربکە تا ١٠ مێگابایت بۆ هەر یەکێک.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "وێنە، PDF، بەڵگەنامەی Word یان فایلی دەقی UTF-8 باربکە تا ١٠ مێگابایت بۆ هەر یەکێک.",
   "Remove plugin": "لابردنی پێوەکراو",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "«{name}» لابرێت؟ ناونیشان و چوونەژوورەوەکەی دەسڕدرێنەوە.",

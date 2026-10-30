@@ -641,8 +641,8 @@ export default {
   "Sort by": "ترتيب حسب",
   Order: "الترتيب",
   "Sign in to use your library.": "سجّل الدخول لاستخدام مكتبتك.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ارفع صورًا أو ملفات PDF أو ملفات نصية بترميز UTF-8 بحجم يصل إلى 10 ميغابايت لكل ملف.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ارفع صورًا أو ملفات PDF أو مستندات Word أو ملفات نصية بترميز UTF-8 بحجم يصل إلى 10 ميغابايت لكل ملف.",
   "Remove plugin": "إزالة الإضافة",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "هل تريد إزالة «{name}»؟ سيتم حذف عنوانها وتسجيل الدخول إليها.",

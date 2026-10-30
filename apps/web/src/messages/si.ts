@@ -639,8 +639,8 @@ export default {
   "Sort by": "මෙසේ සකසන්න",
   Order: "අනුපිළිවෙල",
   "Sign in to use your library.": "ඔබේ පුස්තකාලය භාවිත කිරීමට පුරනය වන්න.",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "එක් එකක් උපරිම MB 10ක පින්තූර, PDF හෝ UTF-8 පෙළ ගොනු උඩුගත කරන්න.",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "එක් එකක් උපරිම MB 10ක පින්තූර, PDF, Word ලේඛන හෝ UTF-8 පෙළ ගොනු උඩුගත කරන්න.",
   "Remove plugin": "ප්ලගිනය ඉවත් කරන්න",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "“{name}” ඉවත් කරන්නද? එහි ලිපිනය සහ පිවිසුම මැකෙනු ඇත.",

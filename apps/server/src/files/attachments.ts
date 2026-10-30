@@ -1,7 +1,8 @@
 import type { ChatMessage } from "../shared/messages";
 import { reasonOf } from "../http";
-import { fileIdOf } from "../shared/files";
+import { DOCX, fileIdOf } from "../shared/files";
 import { pdfText } from "../chat/pdf";
+import { docxText } from "./docx";
 import { storage } from "./storage";
 import { fileOf } from "./store";
 
@@ -20,13 +21,21 @@ async function bytesOf(url: string, owner: string | undefined) {
 async function readPart(part: Part, owner: string | undefined): Promise<Part> {
   if (part.type !== "file") return part;
   const isPdf = part.mediaType === "application/pdf";
+  const isDocx = part.mediaType === DOCX;
   const isImage = part.mediaType.startsWith("image/");
-  if (!isPdf && !isImage) return part;
+  if (!isPdf && !isDocx && !isImage) return part;
   if (isImage && part.url.startsWith("data:")) return part;
   const bytes = await bytesOf(part.url, owner).catch((err: Error) => {
     console.error(`file not read: ${reasonOf(err)}`);
     return undefined;
   });
+  if (isDocx) {
+    const text = bytes ? docxText(bytes) : "This Word document could not be read.";
+    return {
+      type: "text",
+      text: `<document name="${part.filename ?? "document.docx"}">\n${text}\n</document>`,
+    };
+  }
   if (isPdf) {
     const text = bytes ? await pdfText(bytes) : "This PDF could not be read.";
     return {

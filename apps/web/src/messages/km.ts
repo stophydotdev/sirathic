@@ -637,8 +637,8 @@ export default {
   "Sort by": "តម្រៀបតាម",
   Order: "លំដាប់",
   "Sign in to use your library.": "ចូលគណនីដើម្បីប្រើបណ្ណាល័យរបស់អ្នក។",
-  "Upload images, PDFs or UTF-8 text files up to 10 MB each.":
-    "ផ្ទុកឡើងរូបភាព PDF ឬឯកសារអត្ថបទ UTF-8 ដែលមានទំហំរហូតដល់ 10 MB ក្នុងមួយឯកសារ។",
+  "Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.":
+    "ផ្ទុកឡើងរូបភាព PDF ឯកសារ Word ឬឯកសារអត្ថបទ UTF-8 ដែលមានទំហំរហូតដល់ 10 MB ក្នុងមួយឯកសារ។",
   "Remove plugin": "ដកកម្មវិធីជំនួយចេញ",
   'Remove "{name}"? Its address and sign-in are deleted.':
     "ដក «{name}» ចេញឬ? អាសយដ្ឋាន និងការចូលរបស់វានឹងត្រូវលុប។",

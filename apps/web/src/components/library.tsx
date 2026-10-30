@@ -325,7 +325,7 @@ export const Library: FC<{ tab: Tab }> = ({ tab }) => {
           )}
           {failed && (
             <p className="text-destructive mb-4 text-sm">
-              {t("Upload images, PDFs or UTF-8 text files up to 10 MB each.")}
+              {t("Upload images, PDFs, Word documents or UTF-8 text files up to 10 MB each.")}
             </p>
           )}
           {files && files.length === 0 && (
