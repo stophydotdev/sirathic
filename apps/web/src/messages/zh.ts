@@ -826,6 +826,8 @@ export default {
     "你的机器人只能看到你保存的网站和标签。其他所有信息都会直接填入网页。",
   "{name}'s screen": "{name} 的屏幕",
   "{name} waits while you use it": "你使用时 {name} 会等待",
+  "{name} keeps working while you watch": "你观看时 {name} 会继续工作",
+  "Take control": "接管控制",
   "I'm done": "我完成了",
   Keyboard: "键盘",
   "Teach a task": "教一个任务",

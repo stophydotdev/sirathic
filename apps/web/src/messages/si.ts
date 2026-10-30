@@ -832,6 +832,8 @@ export default {
     "ඔබේ බොට්වලට පෙනෙන්නේ ඔබ සුරැකි වෙබ් අඩවි සහ ලේබල පමණයි. අනෙක් සියලු තොරතුරු කෙළින්ම වෙබ් පිටුවට ඇතුළත් වේ.",
   "{name}'s screen": "{name}ගේ තිරය",
   "{name} waits while you use it": "ඔබ භාවිත කරන අතරතුර {name} රැඳී සිටී",
+  "{name} keeps working while you watch": "ඔබ බලා සිටින අතරතුර {name} දිගටම වැඩ කරයි",
+  "Take control": "පාලනය ගන්න",
   "I'm done": "මම ඉවරයි",
   Keyboard: "යතුරුපුවරුව",
   "Teach a task": "කාර්යයක් උගන්වන්න",

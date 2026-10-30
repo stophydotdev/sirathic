@@ -846,6 +846,8 @@ export default {
     "Vaši boti vidijo le spletna mesta in oznake, ki ste jih shranili. Vsi drugi podatki se vnesejo neposredno na spletno stran.",
   "{name}'s screen": "Zaslon bota {name}",
   "{name} waits while you use it": "{name} čaka, medtem ko ga uporabljate",
+  "{name} keeps working while you watch": "{name} dela naprej, medtem ko gledate",
+  "Take control": "Prevzemi nadzor",
   "I'm done": "Končano",
   Keyboard: "Tipkovnica",
   "Teach a task": "Nauči opravilo",

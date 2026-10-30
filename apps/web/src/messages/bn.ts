@@ -835,6 +835,8 @@ export default {
     "আপনার বটগুলো শুধু আপনার সেভ করা ওয়েবসাইট ও লেবেলগুলোই দেখে। বাকি সব তথ্য সরাসরি ওয়েবপেজে পূরণ করা হয়।",
   "{name}'s screen": "{name}-এর স্ক্রিন",
   "{name} waits while you use it": "আপনি ব্যবহার করার সময় {name} অপেক্ষা করে",
+  "{name} keeps working while you watch": "আপনি দেখার সময় {name} কাজ চালিয়ে যায়",
+  "Take control": "নিয়ন্ত্রণ নিন",
   "I'm done": "আমার হয়ে গেছে",
   Keyboard: "কীবোর্ড",
   "Teach a task": "একটি কাজ শেখান",

@@ -843,6 +843,8 @@ export default {
     "ستاسو بوټونه یوازې هغه وېب‌سایټونه او لېبلونه ویني چې تاسو خوندي کړي دي. نور ټول معلومات نېغ د سایټ په پاڼه کې ډکېږي.",
   "{name}'s screen": "د {name} پرده",
   "{name} waits while you use it": "{name} انتظار کوي تر هغه چې تاسو یې کاروئ",
+  "{name} keeps working while you watch": "{name} کار ته دوام ورکوي پداسې حال کې چې تاسو ګورئ",
+  "Take control": "کنټرول واخلئ",
   "I'm done": "خلاص شوم",
   Keyboard: "کیبورډ",
   "Teach a task": "یوه دنده ور زده کړئ",

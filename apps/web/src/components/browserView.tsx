@@ -101,6 +101,7 @@ const useScreen = (botId: string, mode: Mode, target: RefObject<HTMLDivElement |
       rfb.qualityLevel = 6;
       rfb.addEventListener("connect", () => setLive(true));
       rfb.addEventListener("disconnect", () => {
+        if (stopped) return;
         remote.current = undefined;
         again();
       });
@@ -151,7 +152,8 @@ const FullView: FC<{ botId: string; name: string }> = ({ botId, name }) => {
   const chat = useChatState()?.chat;
   const target = useRef<HTMLDivElement>(null);
   const typing = useRef<HTMLInputElement>(null);
-  const { live, remote } = useScreen(botId, "control", target);
+  const [mode, setMode] = useState<Mode>("watch");
+  const { live, remote } = useScreen(botId, mode, target);
   const [teaching, setTeaching] = useState(false);
   const t = useT();
   const press = (keysym: number, code: string | null) => remote.current?.sendKey(keysym, code);
@@ -215,7 +217,21 @@ const FullView: FC<{ botId: string; name: string }> = ({ botId, name }) => {
         />
       </div>
       <div className="bg-card/95 border-foreground/14 flex h-12 max-w-full shrink-0 items-center gap-2.5 rounded-xl border ps-4 pe-1.5 text-sm backdrop-blur-sm">
-        {teaching ? (
+        {mode === "watch" ? (
+          <>
+            <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+            <span className="text-muted-foreground min-w-0 truncate">
+              {t("{name} keeps working while you watch", { name })}
+            </span>
+            <button
+              type="button"
+              onClick={() => setMode("control")}
+              className="bg-foreground text-background h-9 shrink-0 rounded-full px-4 font-medium"
+            >
+              {t("Take control")}
+            </button>
+          </>
+        ) : teaching ? (
           <>
             <span className="size-2 shrink-0 rounded-full bg-red-500" />
             <span className="min-w-0 truncate">{t("Showing {name} how", { name })}</span>

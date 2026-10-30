@@ -850,6 +850,8 @@ export default {
     "Tus bots solo ven los sitios web y las etiquetas que guardaste. Todo lo demás se introduce directamente en la página.",
   "{name}'s screen": "Pantalla de {name}",
   "{name} waits while you use it": "{name} espera mientras lo usas",
+  "{name} keeps working while you watch": "{name} sigue trabajando mientras miras",
+  "Take control": "Tomar el control",
   "I'm done": "Listo",
   Keyboard: "Teclado",
   "Teach a task": "Enseñar una tarea",

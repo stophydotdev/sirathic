@@ -849,6 +849,8 @@ export default {
     "Botlarınız yalnız saxladığınız saytları və etiketləri görür. Qalan bütün məlumatlar birbaşa saytın səhifəsinə daxil edilir.",
   "{name}'s screen": "{name} ekranı",
   "{name} waits while you use it": "Siz istifadə edərkən {name} gözləyir",
+  "{name} keeps working while you watch": "Siz baxarkən {name} işləməyə davam edir",
+  "Take control": "İdarəni götürün",
   "I'm done": "Hazırdır",
   Keyboard: "Klaviatura",
   "Teach a task": "Tapşırıq öyrət",

@@ -846,6 +846,8 @@ export default {
     "Ваши боты видят только сохранённые вами сайты и метки. Все остальные данные вводятся прямо на странице сайта.",
   "{name}'s screen": "Экран бота {name}",
   "{name} waits while you use it": "{name} ждёт, пока вы пользуетесь",
+  "{name} keeps working while you watch": "{name} продолжает работать, пока вы смотрите",
+  "Take control": "Взять управление",
   "I'm done": "Готово",
   Keyboard: "Клавиатура",
   "Teach a task": "Научить задаче",

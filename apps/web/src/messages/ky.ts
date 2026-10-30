@@ -850,6 +850,8 @@ export default {
     "Ботторуңуз сиз сактаган сайттарды жана энбелгилерди гана көрөт. Калган маалыматтар түз эле сайттын барагына киргизилет.",
   "{name}'s screen": "{name} экраны",
   "{name} waits while you use it": "Сиз колдонуп жатканда {name} күтөт",
+  "{name} keeps working while you watch": "Сиз карап турганда {name} иштей берет",
+  "Take control": "Башкарууну алуу",
   "I'm done": "Бүттүм",
   Keyboard: "Баскычтоп",
   "Teach a task": "Тапшырма үйрөтүү",

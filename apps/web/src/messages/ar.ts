@@ -836,6 +836,8 @@ export default {
     "لا ترى روبوتاتك سوى المواقع والتسميات التي حفظتها. كل ما عدا ذلك يُدخَل مباشرةً في صفحة الموقع.",
   "{name}'s screen": "شاشة {name}",
   "{name} waits while you use it": "{name} ينتظر بينما تستخدمه",
+  "{name} keeps working while you watch": "{name} يواصل العمل بينما تشاهد",
+  "Take control": "تولَّ التحكم",
   "I'm done": "انتهيت",
   Keyboard: "لوحة المفاتيح",
   "Teach a task": "علّم مهمة",

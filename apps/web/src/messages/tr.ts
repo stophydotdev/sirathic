@@ -847,6 +847,8 @@ export default {
     "Botlarınız yalnızca kaydettiğiniz web sitelerini ve etiketleri görür. Diğer tüm bilgiler doğrudan sitenin sayfasına girilir.",
   "{name}'s screen": "{name} ekranı",
   "{name} waits while you use it": "Siz kullanırken {name} bekler",
+  "{name} keeps working while you watch": "Siz izlerken {name} çalışmaya devam eder",
+  "Take control": "Kontrolü al",
   "I'm done": "Bitirdim",
   Keyboard: "Klavye",
   "Teach a task": "Bir görev öğret",
