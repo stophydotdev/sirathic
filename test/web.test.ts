@@ -9,6 +9,9 @@ import {
   hour24Of,
 } from "../apps/web/src/components/automationText";
 import { rehypeBareCitations } from "../apps/web/src/components/citations";
+import { markOpenDiagram } from "../apps/web/src/components/markdownDiagram";
+import { rehypeNotes } from "../apps/web/src/components/markdownNote";
+import { rowsOf, tableCsv, tableMarkdown } from "../apps/web/src/components/markdownTable";
 import { botGroups } from "../packages/app/src/botGroups";
 import { bubblesOf } from "../packages/app/src/botBubbles";
 import { stampText } from "../apps/web/src/components/botStamp";
@@ -298,6 +301,91 @@ test("a hidden citation takes the space before it, so the period stays against t
   const tree = sentence("That is the Hanafi view ");
   rehypeBareCitations()(tree);
   expect(tree).toEqual(sentence("That is the Hanafi view"));
+});
+
+type Hast = Parameters<typeof rowsOf>[0];
+
+const element = (
+  tagName: string,
+  children: Hast["children"],
+  properties: Hast["properties"] = {},
+): Hast => ({ type: "element", tagName, properties, children });
+
+const textNode = (value: string) => ({ type: "text" as const, value });
+
+test("a quote that opens with [!WARNING] becomes a warning note without the marker, a plain quote stays", () => {
+  const tree: Tree = {
+    type: "root",
+    children: [
+      element("blockquote", [
+        textNode("\n"),
+        element("p", [textNode("[!WARNING]\nScholars differ here.")]),
+      ]),
+      element("blockquote", [element("p", [textNode("A plain quote.")])]),
+    ],
+  };
+  rehypeNotes()(tree);
+  expect(tree.children).toEqual([
+    element("aside", [textNode("\n"), element("p", [textNode("Scholars differ here.")])], {
+      dataNote: "warning",
+    }),
+    element("blockquote", [element("p", [textNode("A plain quote.")])]),
+  ]);
+});
+
+test("a copied table leaves out citations, escapes pipes for Markdown and quotes commas for CSV", () => {
+  const url = "https://sunnah.com/muslim:705";
+  const table = element("table", [
+    element("thead", [
+      element("tr", [element("th", [textNode("Heir")]), element("th", [textNode("Share")])]),
+    ]),
+    element("tbody", [
+      element("tr", [
+        element("td", [textNode("Father")]),
+        element("td", [
+          textNode("1/6 + rest, if only daughters "),
+          element("a", [], { href: url, dataUrls: [url] }),
+        ]),
+      ]),
+      element("tr", [element("td", [textNode("A|B")]), element("td", [textNode('say "x"')])]),
+      element("tr", [
+        element("td", [textNode("Mother")]),
+        element("td", [
+          element(
+            "span",
+            [
+              element("span", [
+                element("math", [
+                  element("semantics", [
+                    element("mrow", [textNode("16")]),
+                    element("annotation", [textNode("\\frac{1}{6}")], {
+                      encoding: "application/x-tex",
+                    }),
+                  ]),
+                ]),
+              ]),
+              element("span", [textNode("16")], { className: ["katex-html"] }),
+            ],
+            { className: ["katex"] },
+          ),
+        ]),
+      ]),
+    ]),
+  ]);
+  const rows = rowsOf(table);
+  expect(tableMarkdown(rows)).toBe(
+    '| Heir | Share |\n| --- | --- |\n| Father | 1/6 + rest, if only daughters |\n| A\\|B | say "x" |\n| Mother | $\\frac{1}{6}$ |',
+  );
+  expect(tableCsv(rows)).toBe(
+    'Heir,Share\nFather,"1/6 + rest, if only daughters"\nA|B,"say ""x"""\nMother,$\\frac{1}{6}$',
+  );
+});
+
+test("a mermaid block still streaming stays code, and draws once its fence closes", () => {
+  const open = "Here is the chain:\n\n```mermaid\nflowchart TD\n  A --> B";
+  expect(markOpenDiagram(open)).toBe("Here is the chain:\n\n```diagram\nflowchart TD\n  A --> B");
+  expect(markOpenDiagram(`${open}\n\`\`\``)).toBe(`${open}\n\`\`\``);
+  expect(markOpenDiagram("```ts\nconst a = 1")).toBe("```ts\nconst a = 1");
 });
 
 test("a bot's chosen shape wins, an old icon name falls back to the shape its id picks", () => {
