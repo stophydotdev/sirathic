@@ -26,7 +26,15 @@ const base64 = (buffer: ArrayBuffer) => {
 };
 
 export class Sandbox extends DurableObject<Env> {
-  async run(code: string) {
+  private queue: Promise<unknown> = Promise.resolve();
+
+  run(code: string) {
+    const next = this.queue.then(() => this.runAlone(code));
+    this.queue = next.catch(() => undefined);
+    return next;
+  }
+
+  private async runAlone(code: string) {
     const { container } = this.ctx;
     if (!container) throw new Error("No container is configured for the sandbox");
     if (!container.running) {

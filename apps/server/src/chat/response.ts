@@ -325,7 +325,7 @@ export function chatResponse({
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
       const searchable = inBot && visible.length < messages.length ? inBot : undefined;
-      const sandbox = codeSandbox(turn.sessionId);
+      const sandbox = codeSandbox(`chat:${fileOwner}:${turn.sessionId}`);
       const routines = automate && {
         ...automate,
         timezone: preferred.timezone || automate.timezone,
