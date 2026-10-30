@@ -838,4 +838,7 @@ export default {
   "Typed “{text}” into {target}": "พิมพ์ “{text}” ใน {target}",
   "Chose {option} in {target}": "เลือก {option} ใน {target}",
   "Pressed Enter": "กด Enter",
+  "1 row": "1 แถว",
+  "{count} rows": "{count} แถว",
+  "This file can't be shown here. Download it to open it.": "ไม่สามารถแสดงไฟล์นี้ที่นี่ได้ ดาวน์โหลดเพื่อเปิด",
 } satisfies Messages;

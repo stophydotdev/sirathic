@@ -854,4 +854,8 @@ export default {
   "Typed “{text}” into {target}": "{target}-ൽ “{text}” ടൈപ്പ് ചെയ്തു",
   "Chose {option} in {target}": "{target}-ൽ {option} തിരഞ്ഞെടുത്തു",
   "Pressed Enter": "Enter അമർത്തി",
+  "1 row": "1 വരി",
+  "{count} rows": "{count} വരികൾ",
+  "This file can't be shown here. Download it to open it.":
+    "ഈ ഫയൽ ഇവിടെ കാണിക്കാൻ കഴിയില്ല. തുറക്കാൻ ഡൗൺലോഡ് ചെയ്യുക.",
 } satisfies Messages;

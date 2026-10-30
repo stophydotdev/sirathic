@@ -855,4 +855,8 @@ export default {
   "Typed “{text}” into {target}": "Đã nhập “{text}” vào {target}",
   "Chose {option} in {target}": "Đã chọn {option} trong {target}",
   "Pressed Enter": "Đã nhấn Enter",
+  "1 row": "1 hàng",
+  "{count} rows": "{count} hàng",
+  "This file can't be shown here. Download it to open it.":
+    "Không thể hiển thị tệp này ở đây. Hãy tải xuống để mở.",
 } satisfies Messages;

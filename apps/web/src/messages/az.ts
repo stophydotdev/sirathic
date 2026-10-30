@@ -862,4 +862,8 @@ export default {
   "Typed “{text}” into {target}": "{target} sahəsinə “{text}” yazdım",
   "Chose {option} in {target}": "{target} içində {option} seçdim",
   "Pressed Enter": "Enter basdım",
+  "1 row": "1 sətir",
+  "{count} rows": "{count} sətir",
+  "This file can't be shown here. Download it to open it.":
+    "Bu fayl burada göstərilə bilmir. Açmaq üçün yükləyin.",
 } satisfies Messages;

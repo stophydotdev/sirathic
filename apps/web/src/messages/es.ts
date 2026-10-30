@@ -863,4 +863,8 @@ export default {
   "Typed “{text}” into {target}": "Escribí “{text}” en {target}",
   "Chose {option} in {target}": "Elegí {option} en {target}",
   "Pressed Enter": "Pulsé Enter",
+  "1 row": "1 fila",
+  "{count} rows": "{count} filas",
+  "This file can't be shown here. Download it to open it.":
+    "Este archivo no se puede mostrar aquí. Descárgalo para abrirlo.",
 } satisfies Messages;

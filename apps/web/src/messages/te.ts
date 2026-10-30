@@ -842,4 +842,8 @@ export default {
   "Typed “{text}” into {target}": "{target}లో “{text}” టైప్ చేశాను",
   "Chose {option} in {target}": "{target}లో {option} ఎంచుకున్నాను",
   "Pressed Enter": "Enter నొక్కాను",
+  "1 row": "1 అడ్డు వరుస",
+  "{count} rows": "{count} అడ్డు వరుసలు",
+  "This file can't be shown here. Download it to open it.":
+    "ఈ ఫైల్‌ను ఇక్కడ చూపించలేము. తెరవడానికి డౌన్‌లోడ్ చేయండి.",
 } satisfies Messages;

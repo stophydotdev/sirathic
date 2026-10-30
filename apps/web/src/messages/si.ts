@@ -845,4 +845,8 @@ export default {
   "Typed “{text}” into {target}": "{target} තුළ “{text}” ටයිප් කළා",
   "Chose {option} in {target}": "{target} තුළ {option} තෝරා ගත්තා",
   "Pressed Enter": "Enter එබුවා",
+  "1 row": "පේළි 1",
+  "{count} rows": "පේළි {count}",
+  "This file can't be shown here. Download it to open it.":
+    "මෙම ගොනුව මෙහි පෙන්විය නොහැක. විවෘත කිරීමට බාගත කරන්න.",
 } satisfies Messages;

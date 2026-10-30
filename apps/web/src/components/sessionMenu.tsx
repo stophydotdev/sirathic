@@ -32,7 +32,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, type ReactNode, useEffect, useState } from "react";
 
-const panel =
+export const panel =
   "pop bg-background ring-foreground/7 fixed top-1/2 left-1/2 z-[60] flex w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-[20px] shadow-lg ring-1 outline-none ring-inset";
 export const modalButton =
   "border-border hover:bg-muted flex h-8 items-center justify-center rounded-[8px] border px-3 text-sm font-[470] transition-colors";

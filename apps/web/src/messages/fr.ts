@@ -869,4 +869,8 @@ export default {
   "Typed “{text}” into {target}": "J'ai saisi « {text} » dans {target}",
   "Chose {option} in {target}": "J'ai choisi {option} dans {target}",
   "Pressed Enter": "J'ai appuyé sur Entrée",
+  "1 row": "1 ligne",
+  "{count} rows": "{count} lignes",
+  "This file can't be shown here. Download it to open it.":
+    "Ce fichier ne peut pas être affiché ici. Téléchargez-le pour l'ouvrir.",
 } satisfies Messages;

@@ -845,4 +845,8 @@ export default {
   "Typed “{text}” into {target}": "{target}ত “{text}” টাইপ কৰিলোঁ",
   "Chose {option} in {target}": "{target}ত {option} বাছিলোঁ",
   "Pressed Enter": "Enter টিপিলোঁ",
+  "1 row": "১টা শাৰী",
+  "{count} rows": "{count}টা শাৰী",
+  "This file can't be shown here. Download it to open it.":
+    "এই ফাইলটো ইয়াত দেখুৱাব নোৱাৰি। খুলিবলৈ ডাউনল'ড কৰক।",
 } satisfies Messages;

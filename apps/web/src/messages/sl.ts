@@ -860,4 +860,8 @@ export default {
   "Typed “{text}” into {target}": "V {target} vpisano „{text}“",
   "Chose {option} in {target}": "V {target} izbrano {option}",
   "Pressed Enter": "Pritisnjen Enter",
+  "1 row": "1 vrstica",
+  "{count} rows": "{count} vrstic",
+  "This file can't be shown here. Download it to open it.":
+    "Te datoteke tukaj ni mogoče prikazati. Prenesite jo, da jo odprete.",
 } satisfies Messages;

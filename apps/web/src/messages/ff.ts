@@ -857,4 +857,8 @@ export default {
   "Typed “{text}” into {target}": "Mi winndi “{text}” e {target}",
   "Chose {option} in {target}": "Mi suɓii {option} e {target}",
   "Pressed Enter": "Mi ñoƴƴi Enter",
+  "1 row": "Sirroore 1",
+  "{count} rows": "Sirroore {count}",
+  "This file can't be shown here. Download it to open it.":
+    "Fayl ɗu'um waawaa feeñnude ɗo. Aawto ngam ɗum udditaade.",
 } satisfies Messages;

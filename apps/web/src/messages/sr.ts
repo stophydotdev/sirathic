@@ -858,4 +858,8 @@ export default {
   "Typed “{text}” into {target}": "Уписано „{text}“ у {target}",
   "Chose {option} in {target}": "Изабрано {option} у {target}",
   "Pressed Enter": "Притиснут Enter",
+  "1 row": "1 ред",
+  "{count} rows": "{count} редова",
+  "This file can't be shown here. Download it to open it.":
+    "Ова датотека не може да се прикаже овде. Преузмите је да бисте је отворили.",
 } satisfies Messages;

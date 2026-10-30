@@ -863,4 +863,8 @@ export default {
   "Typed “{text}” into {target}": "{target} талаасына “{text}” жазылды",
   "Chose {option} in {target}": "{target} ичинен {option} тандалды",
   "Pressed Enter": "Enter басылды",
+  "1 row": "1 сап",
+  "{count} rows": "{count} сап",
+  "This file can't be shown here. Download it to open it.":
+    "Бул файлды бул жерде көрсөтүү мүмкүн эмес. Ачуу үчүн жүктөп алыңыз.",
 } satisfies Messages;

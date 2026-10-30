@@ -1,7 +1,8 @@
 "use client";
 
 import { useT } from "@/components/i18n";
-import { FileKindIcon, fileHref } from "@/components/libraryItems";
+import { FileTypeTile, FileViewer } from "@/components/fileViewer";
+import { fileHref } from "@/components/libraryItems";
 import { type ThreadMessage, useAuiState } from "@assistant-ui/react";
 import { Download04Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -32,20 +33,15 @@ const FileCard: FC<{ file: Saved }> = ({ file }) => {
   const t = useT();
   return (
     <div className="bot-card flex items-center gap-3">
-      <a
-        href={fileHref(file)}
-        target="_blank"
-        rel="noopener"
-        className="flex min-w-0 flex-1 items-center gap-3 no-underline!"
-      >
-        <span className="bg-background grid size-10 shrink-0 place-items-center rounded-xl">
-          <FileKindIcon mediaType={file.mediaType} className="size-5" />
-        </span>
-        <span className="flex min-w-0 flex-1 flex-col">
-          <span className="truncate text-sm font-medium">{file.name}</span>
-          <span className="text-muted-foreground text-sm">{formatSize(file.size)}</span>
-        </span>
-      </a>
+      <FileViewer file={file}>
+        <button type="button" className="flex min-w-0 flex-1 items-center gap-3 text-start">
+          <FileTypeTile file={file} />
+          <span className="flex min-w-0 flex-1 flex-col">
+            <span className="truncate text-sm font-medium">{file.name}</span>
+            <span className="text-muted-foreground text-sm">{formatSize(file.size)}</span>
+          </span>
+        </button>
+      </FileViewer>
       <a
         href={fileHref(file)}
         download={file.name}
@@ -66,13 +62,18 @@ const ReportCard: FC<{ file: Saved; title: string; content: string }> = ({
   const t = useT();
   return (
     <div className="bot-card flex flex-col gap-3">
-      <span className="text-muted-foreground text-xs">{t("Research report")}</span>
+      <div className="flex items-center gap-2">
+        <FileTypeTile file={file} className="size-8" />
+        <span className="text-muted-foreground text-xs">{t("Research report")}</span>
+      </div>
       <span className="text-sm font-medium">{title}</span>
       <span className="text-muted-foreground line-clamp-3 text-xs">{previewOf(content)}</span>
       <div className="flex gap-2">
-        <a href={fileHref(file)} target="_blank" rel="noopener" className={button}>
-          {t("Open")}
-        </a>
+        <FileViewer file={file}>
+          <button type="button" className={button}>
+            {t("Open")}
+          </button>
+        </FileViewer>
         <a href={fileHref(file)} download={file.name} className={button}>
           <HugeiconsIcon icon={Download04Icon} className="size-4" />
           {t("Download")}

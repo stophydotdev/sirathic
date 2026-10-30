@@ -855,4 +855,8 @@ export default {
   "Typed “{text}” into {target}": "“{text}” را در {target} نوشتم",
   "Chose {option} in {target}": "{option} را در {target} انتخاب کردم",
   "Pressed Enter": "Enter را زدم",
+  "1 row": "۱ ردیف",
+  "{count} rows": "{count} ردیف",
+  "This file can't be shown here. Download it to open it.":
+    "این فایل را نمی‌توان اینجا نشان داد. برای باز کردن آن را دانلود کنید.",
 } satisfies Messages;

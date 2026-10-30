@@ -842,4 +842,8 @@ export default {
   "Typed “{text}” into {target}": "បានវាយ “{text}” ក្នុង {target}",
   "Chose {option} in {target}": "បានជ្រើស {option} ក្នុង {target}",
   "Pressed Enter": "បានចុច Enter",
+  "1 row": "1 ជួរដេក",
+  "{count} rows": "{count} ជួរដេក",
+  "This file can't be shown here. Download it to open it.":
+    "មិនអាចបង្ហាញឯកសារនេះនៅទីនេះបានទេ។ សូមទាញយកដើម្បីបើក។",
 } satisfies Messages;

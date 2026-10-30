@@ -859,4 +859,8 @@ export default {
   "Typed “{text}” into {target}": "Upisano “{text}” u {target}",
   "Chose {option} in {target}": "Odabrano {option} u {target}",
   "Pressed Enter": "Pritisnut Enter",
+  "1 row": "1 red",
+  "{count} rows": "{count} redova",
+  "This file can't be shown here. Download it to open it.":
+    "Ova datoteka se ovdje ne može prikazati. Preuzmite je da biste je otvorili.",
 } satisfies Messages;

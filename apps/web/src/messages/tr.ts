@@ -860,4 +860,8 @@ export default {
   "Typed “{text}” into {target}": "{target} alanına “{text}” yazıldı",
   "Chose {option} in {target}": "{target} içinde {option} seçildi",
   "Pressed Enter": "Enter'a basıldı",
+  "1 row": "1 satır",
+  "{count} rows": "{count} satır",
+  "This file can't be shown here. Download it to open it.":
+    "Bu dosya burada gösterilemiyor. Açmak için indirin.",
 } satisfies Messages;
