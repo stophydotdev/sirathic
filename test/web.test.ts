@@ -361,9 +361,7 @@ test("a copied table leaves out citations, escapes pipes for Markdown and quotes
 
 test("a mermaid block still streaming stays code, and draws once its fence closes", () => {
   const open = "Here is the chain:\n\n```mermaid\nflowchart TD\n  A --> B";
-  expect(markOpenDiagram(open)).toBe(
-    "Here is the chain:\n\n```mermaid streaming\nflowchart TD\n  A --> B",
-  );
+  expect(markOpenDiagram(open)).toBe("Here is the chain:\n\n```diagram\nflowchart TD\n  A --> B");
   expect(markOpenDiagram(`${open}\n\`\`\``)).toBe(`${open}\n\`\`\``);
   expect(markOpenDiagram("```ts\nconst a = 1")).toBe("```ts\nconst a = 1");
 });

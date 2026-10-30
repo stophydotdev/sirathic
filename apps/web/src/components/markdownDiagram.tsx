@@ -18,14 +18,14 @@ import { TooltipIconButton } from "@/components/tooltipIconButton";
 
 const FENCE = /^ {0,3}(?:`{3,}|~{3,}).*$/gmu;
 const DIAGRAM_FENCE = /^ {0,3}(?:`{3,}|~{3,})\s*mermaid\b/u;
-const OPEN = /\bstreaming\b/u;
+const OPEN_DIAGRAM = "diagram";
 
 export const markOpenDiagram = (text: string) => {
   const fences = [...text.matchAll(FENCE)];
   const last = fences.at(-1);
   if (fences.length % 2 === 0 || !last || !DIAGRAM_FENCE.test(last[0])) return text;
   const end = last.index + last[0].length;
-  return `${text.slice(0, end)} streaming${text.slice(end)}`;
+  return `${text.slice(0, last.index)}${last[0].replace("mermaid", OPEN_DIAGRAM)}${text.slice(end)}`;
 };
 
 const Pele: FC<{ code: string; onError: () => void; className?: string }> = ({
@@ -71,7 +71,7 @@ export const MarkdownDiagram: FC<SyntaxHighlighterProps> = (props) => {
   const [view, setView] = useState<"diagram" | "code" | "failed">("diagram");
   const [full, setFull] = useState(false);
 
-  if (OPEN.test(props.node?.data?.meta ?? "") || view === "failed") return <CodeBlock {...props} />;
+  if (view === "failed") return <CodeBlock {...props} />;
   if (view === "code") {
     return (
       <CodeBlock
