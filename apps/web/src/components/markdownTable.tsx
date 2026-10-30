@@ -19,9 +19,19 @@ import { cn } from "@/lib/utils";
 
 const isCitation = (node: Element) => node.tagName === "a" && "dataUrls" in node.properties;
 
+const isMath = (node: Element) => [node.properties.className].flat().includes("katex");
+
+const texOf = (node: ElementContent): string => {
+  if (node.type !== "element") return "";
+  return node.tagName === "annotation"
+    ? node.children.map(textOf).join("")
+    : node.children.map(texOf).join("");
+};
+
 const textOf = (node: ElementContent): string => {
   if (node.type === "text") return node.value;
   if (node.type !== "element" || isCitation(node) || node.tagName === "figure") return "";
+  if (isMath(node)) return `$${texOf(node)}$`;
   return node.children.map(textOf).join("");
 };
 

@@ -348,14 +348,36 @@ test("a copied table leaves out citations, escapes pipes for Markdown and quotes
         ]),
       ]),
       element("tr", [element("td", [textNode("A|B")]), element("td", [textNode('say "x"')])]),
+      element("tr", [
+        element("td", [textNode("Mother")]),
+        element("td", [
+          element(
+            "span",
+            [
+              element("span", [
+                element("math", [
+                  element("semantics", [
+                    element("mrow", [textNode("16")]),
+                    element("annotation", [textNode("\\frac{1}{6}")], {
+                      encoding: "application/x-tex",
+                    }),
+                  ]),
+                ]),
+              ]),
+              element("span", [textNode("16")], { className: ["katex-html"] }),
+            ],
+            { className: ["katex"] },
+          ),
+        ]),
+      ]),
     ]),
   ]);
   const rows = rowsOf(table);
   expect(tableMarkdown(rows)).toBe(
-    '| Heir | Share |\n| --- | --- |\n| Father | 1/6 + rest, if only daughters |\n| A\\|B | say "x" |',
+    '| Heir | Share |\n| --- | --- |\n| Father | 1/6 + rest, if only daughters |\n| A\\|B | say "x" |\n| Mother | $\\frac{1}{6}$ |',
   );
   expect(tableCsv(rows)).toBe(
-    'Heir,Share\nFather,"1/6 + rest, if only daughters"\nA|B,"say ""x"""',
+    'Heir,Share\nFather,"1/6 + rest, if only daughters"\nA|B,"say ""x"""\nMother,$\\frac{1}{6}$',
   );
 });
 
