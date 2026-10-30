@@ -149,6 +149,7 @@ export default {
   "Your Google account": "Tài khoản Google của bạn",
   "Sign out": "Đăng xuất",
   Commands: "Lệnh",
+  Actions: "Hành động",
   Results: "Kết quả",
   "New incognito chat": "Cuộc trò chuyện ẩn danh mới",
   "Type a command or search": "Nhập lệnh hoặc tìm kiếm",

@@ -149,6 +149,7 @@ export default {
   "Your Google account": "ඔබේ Google ගිණුම",
   "Sign out": "නික්මෙන්න",
   Commands: "විධාන",
+  Actions: "ක්‍රියා",
   Results: "ප්‍රතිඵල",
   "New incognito chat": "නව රහසිගත කතාබහ",
   "Type a command or search": "විධානයක් ටයිප් කරන්න හෝ සොයන්න",

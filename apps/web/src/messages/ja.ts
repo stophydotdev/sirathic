@@ -149,6 +149,7 @@ export default {
   "Your Google account": "あなたの Google アカウント",
   "Sign out": "ログアウト",
   Commands: "コマンド",
+  Actions: "アクション",
   Results: "結果",
   "New incognito chat": "新しいシークレットチャット",
   "Type a command or search": "コマンドを入力するか検索",

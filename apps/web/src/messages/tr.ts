@@ -150,6 +150,7 @@ export default {
   "Your Google account": "Google hesabınız",
   "Sign out": "Çıkış yap",
   Commands: "Komutlar",
+  Actions: "Eylemler",
   Results: "Sonuçlar",
   "New incognito chat": "Yeni gizli sohbet",
   "Type a command or search": "Bir komut yazın veya arayın",

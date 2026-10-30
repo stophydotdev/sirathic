@@ -150,6 +150,7 @@ export default {
   "Your Google account": "Google ҳисобингиз",
   "Sign out": "Чиқиш",
   Commands: "Буйруқлар",
+  Actions: "Амаллар",
   Results: "Натижалар",
   "New incognito chat": "Янги яширин суҳбат",
   "Type a command or search": "Буйруқ ёзинг ёки қидиринг",

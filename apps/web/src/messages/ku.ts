@@ -150,6 +150,7 @@ export default {
   "Your Google account": "هەژماری Googleـەکەت",
   "Sign out": "چوونەدەرەوە",
   Commands: "فەرمانەکان",
+  Actions: "کردارەکان",
   Results: "ئەنجامەکان",
   "New incognito chat": "گفتوگۆی نهێنی نوێ",
   "Type a command or search": "فەرمانێک بنووسە یان بگەڕێ",

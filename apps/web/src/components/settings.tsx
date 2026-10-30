@@ -37,7 +37,7 @@ import { Dialog } from "radix-ui";
 import { type FC, Fragment, useState } from "react";
 import { create } from "zustand";
 
-const SECTIONS = [
+export const SECTIONS = [
   "account",
   "appearance",
   "behavior",
@@ -50,7 +50,7 @@ const SECTIONS = [
 
 type Section = (typeof SECTIONS)[number];
 
-const SECTION_DETAILS = {
+export const SECTION_DETAILS = {
   account: { name: "Account", group: "General", icon: UserIcon, Body: AccountSection },
   appearance: {
     name: "Appearance",

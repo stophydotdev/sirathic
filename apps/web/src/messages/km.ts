@@ -148,6 +148,7 @@ export default {
   "Your Google account": "គណនី Google របស់អ្នក",
   "Sign out": "ចាកចេញ",
   Commands: "ពាក្យបញ្ជា",
+  Actions: "សកម្មភាព",
   Results: "លទ្ធផល",
   "New incognito chat": "ការជជែកអនាមិកថ្មី",
   "Type a command or search": "វាយពាក្យបញ្ជា ឬស្វែងរក",

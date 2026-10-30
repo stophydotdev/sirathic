@@ -165,6 +165,7 @@ export default {
   "Your Google account": "Akaunti yako ya Google",
   "Sign out": "Toka",
   Commands: "Amri",
+  Actions: "Vitendo",
   Results: "Matokeo",
   "New incognito chat": "Gumzo jipya la hali fiche",
   "Type a command or search": "Andika amri au utafute",

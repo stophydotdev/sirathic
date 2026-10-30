@@ -149,6 +149,7 @@ export default {
   "Your Google account": "حسابك في Google",
   "Sign out": "تسجيل الخروج",
   Commands: "الأوامر",
+  Actions: "الإجراءات",
   Results: "النتائج",
   "New incognito chat": "محادثة خفية جديدة",
   "Type a command or search": "اكتب أمرًا أو ابحث",

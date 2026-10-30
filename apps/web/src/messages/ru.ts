@@ -149,6 +149,7 @@ export default {
   "Your Google account": "Ваш аккаунт Google",
   "Sign out": "Выйти",
   Commands: "Команды",
+  Actions: "Действия",
   Results: "Результаты",
   "New incognito chat": "Новый чат инкогнито",
   "Type a command or search": "Введите команду или поиск",

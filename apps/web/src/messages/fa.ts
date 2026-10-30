@@ -149,6 +149,7 @@ export default {
   "Your Google account": "حساب Google شما",
   "Sign out": "خروج",
   Commands: "فرمان‌ها",
+  Actions: "اقدام‌ها",
   Results: "نتایج",
   "New incognito chat": "گفتگوی ناشناس جدید",
   "Type a command or search": "فرمانی بنویسید یا جستجو کنید",

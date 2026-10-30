@@ -173,6 +173,7 @@ export const MESSAGES = [
   "Your Google account",
   "Sign out",
   "Commands",
+  "Actions",
   "Results",
   "New incognito chat",
   "Type a command or search",

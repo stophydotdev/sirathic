@@ -149,6 +149,7 @@ export default {
   "Your Google account": "Konte Google maa",
   "Sign out": "Yaltu",
   Commands: "Yamirooje",
+  Actions: "Golle",
   Results: "Njeñtudi",
   "New incognito chat": "Haala suuɗiinde hesere",
   "Type a command or search": "Winndu yamiroore walla yiylo",

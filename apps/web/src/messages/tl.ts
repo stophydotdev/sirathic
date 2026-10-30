@@ -150,6 +150,7 @@ export default {
   "Your Google account": "Ang iyong Google account",
   "Sign out": "Mag-sign out",
   Commands: "Mga utos",
+  Actions: "Mga aksyon",
   Results: "Mga resulta",
   "New incognito chat": "Bagong incognito na chat",
   "Type a command or search": "Mag-type ng utos o maghanap",

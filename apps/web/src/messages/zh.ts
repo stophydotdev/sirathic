@@ -148,6 +148,7 @@ export default {
   "Your Google account": "你的 Google 账号",
   "Sign out": "退出登录",
   Commands: "命令",
+  Actions: "操作",
   Results: "结果",
   "New incognito chat": "新的无痕对话",
   "Type a command or search": "输入命令或搜索",
