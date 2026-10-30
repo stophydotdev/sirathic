@@ -6,6 +6,7 @@
   "observability": { "enabled": true },
   "containers": [
     {
+      "name": "sirathic-sandbox",
       "class_name": "Sandbox",
       "scheduling_policy": "durable_object",
       "images": { "python": { "dockerfile": "./Dockerfile" } },
