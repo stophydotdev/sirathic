@@ -1,9 +1,10 @@
 import { db } from "@sirathic/db";
 import { automations, chatSessions, projects, users } from "@sirathic/db/schema";
 import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
-import { and, asc, eq, lte, min } from "drizzle-orm";
+import { and, asc, eq, lte, min, sql } from "drizzle-orm";
 import { toUser } from "../account/auth";
 import { pickModels } from "../models/pick";
+import { checkNoorUsage } from "../models/usage";
 import { BOT_HISTORY } from "../bots/tools";
 import { holdShutdown } from "../chat/answers";
 import { chatResponse } from "../chat/response";
@@ -11,7 +12,7 @@ import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
 import { projectOfChat } from "../projects/projects";
 import { reasonOf, StatusError } from "../http";
-import { openSession, saveSession } from "../chat/sessions";
+import { openSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
 import {
   type ChatMessage,
@@ -27,6 +28,7 @@ import { nextRun, schedule } from "./schedule";
 import { routinesChanged } from "./store";
 
 const RETRY_MS = 60_000;
+const runningNow = new Set<string>();
 const LONGEST_SLEEP_MS = 60 * 60_000;
 const BATCH = 5;
 const RUN_TIMEOUT_MS = 10 * 60_000;
@@ -207,7 +209,7 @@ async function runAutomation({
   const runMode = modeSchema.catch("quick").parse(mode);
   const bot = projectId ? await botOf(projectId, owner) : undefined;
   const sessionId = bot?.id ?? crypto.randomUUID();
-  const earlier = bot ? ((await openSession(bot.id, owner)) ?? []) : [];
+  const earlier = bot ? ((await openSession(bot.id, owner, false)) ?? []) : [];
   const asked = textMessage("user", prompt, runMode, bot && name);
   const study = bot ? { id: bot.id, owner } : undefined;
   const [due, progress] = study
@@ -263,11 +265,8 @@ async function runAutomation({
     failures: failedInARow,
     ...(failedInARow >= PAUSE_AFTER && { enabled: false, nextRunAt: null }),
   };
-  const messages = [
-    ...earlier,
-    ...(answered ?? []).map((message) => (message.id === asked.id ? asked : message)),
-  ];
-  const skipped = !answered || (bot && isSkip(textOf(messages.at(-1))));
+  const added = (answered ?? []).map((message) => (message.id === asked.id ? asked : message));
+  const skipped = !answered || isSkip(textOf(added.at(-1)));
   track(
     {
       name: "routine.ran",
@@ -282,22 +281,27 @@ async function runAutomation({
     await db.update(automations).set(finished).where(eq(automations.id, id));
     return;
   }
-  if (bot) {
-    await saveSession(bot.id, owner, messages, bot.id);
-    await db
-      .update(chatSessions)
-      .set({ unread: true, automationId: id })
-      .where(eq(chatSessions.id, bot.id));
-  } else {
-    await db.insert(chatSessions).values({
+  await db
+    .insert(chatSessions)
+    .values({
       id: sessionId,
       owner,
       title: name,
-      messages,
+      messages: added,
+      projectId: bot?.id,
       unread: true,
       automationId: id,
+    })
+    .onConflictDoUpdate({
+      target: chatSessions.id,
+      set: {
+        messages: sql`${chatSessions.messages} || excluded.messages`,
+        unread: true,
+        automationId: id,
+        updatedAt: new Date(),
+      },
+      setWhere: eq(chatSessions.owner, owner),
     });
-  }
   await db.update(automations).set(finished).where(eq(automations.id, id));
 }
 
@@ -307,14 +311,25 @@ export async function runNow(id: string, by: string) {
     .from(automations)
     .where(and(eq(automations.id, id), eq(automations.owner, by)));
   if (!found) throw new StatusError(404, "no such automation");
-  void holdShutdown(runAutomation(found)).catch((err: Error) => {
-    console.error(`automation ${id} not run: ${reasonOf(err)}`);
+  const user = await ownerOf(by);
+  await checkNoorUsage({
+    by,
+    modelName: pickModels(user, undefined).modelName,
+    timeZone: found.timezone,
+    offerGpt: user.via !== "chatgpt",
   });
+  if (runningNow.has(id)) return { started: true };
+  runningNow.add(id);
+  void holdShutdown(runAutomation(found))
+    .catch((err: Error) => {
+      console.error(`automation ${id} not run: ${reasonOf(err)}`);
+    })
+    .finally(() => runningNow.delete(id));
   return { started: true };
 }
 
-async function claimAndRun(due: typeof automations.$inferSelect) {
-  if (!due.nextRunAt) return;
+async function claim(due: typeof automations.$inferSelect) {
+  if (!due.nextRunAt) return false;
   const plan = schedule.safeParse(due.schedule);
   const next = plan.success ? nextRun(plan.data, due.timezone, new Date()) : undefined;
   const [claimed] = await db
@@ -322,10 +337,7 @@ async function claimAndRun(due: typeof automations.$inferSelect) {
     .set({ nextRunAt: next ?? null, enabled: next !== undefined })
     .where(and(eq(automations.id, due.id), eq(automations.nextRunAt, due.nextRunAt)))
     .returning({ id: automations.id });
-  if (!claimed || Date.now() - due.nextRunAt.getTime() > MISSED_AFTER_MS) return;
-  await holdShutdown(runAutomation(due)).catch((err: Error) => {
-    console.error(`automation ${due.id} not run: ${reasonOf(err)}`);
-  });
+  return claimed !== undefined && Date.now() - due.nextRunAt.getTime() <= MISSED_AFTER_MS;
 }
 
 export async function runDue() {
@@ -335,7 +347,14 @@ export async function runDue() {
     .where(and(eq(automations.enabled, true), lte(automations.nextRunAt, new Date())))
     .orderBy(asc(automations.nextRunAt))
     .limit(BATCH);
-  await Promise.all(due.map(claimAndRun));
+  const claimed = await Promise.all(due.map(claim));
+  return due
+    .filter((_, index) => claimed[index])
+    .map((row) =>
+      holdShutdown(runAutomation(row)).catch((err: Error) => {
+        console.error(`automation ${row.id} not run: ${reasonOf(err)}`);
+      }),
+    );
 }
 
 async function nextDueAt() {
@@ -350,27 +369,35 @@ export function startScheduler() {
   let timer: ReturnType<typeof setTimeout> | undefined;
   let ticking = false;
   let changed = false;
+  let stopped = false;
+  let checking: Promise<unknown> = Promise.resolve();
   const tick = async (): Promise<void> => {
     clearTimeout(timer);
+    if (stopped) return;
     if (ticking) {
       changed = true;
       return;
     }
     ticking = true;
     changed = false;
-    const waitMs = await runDue()
-      .then(nextDueAt)
-      .then(
-        (at) => (at ? at.getTime() - Date.now() : LONGEST_SLEEP_MS),
-        (err: Error) => {
-          console.error(`automations not checked: ${reasonOf(err)}`);
-          return RETRY_MS;
-        },
-      );
+    const checked = runDue().then(nextDueAt);
+    checking = checked.catch(() => undefined);
+    const waitMs = await checked.then(
+      (at) => (at ? at.getTime() - Date.now() : LONGEST_SLEEP_MS),
+      (err: Error) => {
+        console.error(`automations not checked: ${reasonOf(err)}`);
+        return RETRY_MS;
+      },
+    );
     ticking = false;
     if (changed) return tick();
     timer = setTimeout(tick, Math.min(Math.max(waitMs, 0), LONGEST_SLEEP_MS));
   };
   routinesChanged.addEventListener("change", () => void tick());
   void tick();
+  return () => {
+    stopped = true;
+    clearTimeout(timer);
+    return checking;
+  };
 }

@@ -162,7 +162,7 @@ test("a run that fails still saves an unread chat with the reason and ends the o
   const logged = console.error;
   console.error = () => {};
   modelError = "529: overloaded";
-  await runDue();
+  await Promise.all(await runDue());
   modelError = undefined;
   console.error = logged;
 
@@ -189,7 +189,7 @@ test("a run that fails still saves an unread chat with the reason and ends the o
 const runDueQuietly = async () => {
   const logged = console.error;
   console.error = () => {};
-  await runDue();
+  await Promise.all(await runDue());
   console.error = logged;
 };
 
@@ -478,7 +478,7 @@ test("a bot routine run sends the model only its brief, numbers citations after 
   modelInputs.length = 0;
   citedInputs.length = 0;
 
-  await runDue();
+  await Promise.all(await runDue());
 
   expect(modelInputs).toHaveLength(1);
   expect(citedInputs).toEqual([earlier]);
@@ -494,11 +494,10 @@ test("a bot routine run sends the model only its brief, numbers citations after 
   );
   expect(lines?.join("")).toContain("Do not repeat any of them.");
 
-  const saved: ChatMessage[] = JSON.parse(String(savedChats[0]?.[3]));
-  expect(saved.map((message) => message.id).slice(0, 64)).toEqual(earlier.map((m) => m.id));
-  expect(saved).toHaveLength(66);
-  expect(saved.at(-2)?.parts).toEqual([{ type: "text", text: "One new verse each morning" }]);
-  expect(saved.at(-1)?.id).toBe("reply-1");
+  const appended: ChatMessage[] = JSON.parse(String(savedChats[0]?.[3]));
+  expect(appended).toHaveLength(2);
+  expect(appended[0]?.parts).toEqual([{ type: "text", text: "One new verse each morning" }]);
+  expect(appended[1]?.id).toBe("reply-1");
 });
 
 const issues = (call: z.input<typeof routineCall>) =>
