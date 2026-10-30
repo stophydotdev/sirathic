@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import type { BrowserContext } from "patchright";
 import { z } from "zod";
 
@@ -34,8 +34,10 @@ const fileOf = (session: string) =>
   `${DIRECTORY}/${createHash("sha256").update(session).digest("hex")}.json`;
 
 export const savedLogins = async (session: string) => {
-  const saved = await readFile(fileOf(session), "utf8").catch(() => undefined);
-  return saved === undefined ? undefined : savedState.safeParse(JSON.parse(saved)).data;
+  const saved = await Bun.file(fileOf(session))
+    .json()
+    .catch(() => undefined);
+  return savedState.safeParse(saved).data;
 };
 
 export const saveLogins = async (session: string, context: BrowserContext, url: string) => {

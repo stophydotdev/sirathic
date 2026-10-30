@@ -74,11 +74,12 @@ export type Session = {
 };
 
 const kept = async (download: Downloading) => {
-  const bytes = await Bun.file(await download.path()).bytes();
+  const file = Bun.file(await download.path());
+  const bytes = file.size > MAX_DOWNLOAD_BYTES ? undefined : await file.bytes();
   await download.delete();
-  return bytes.length > MAX_DOWNLOAD_BYTES
-    ? undefined
-    : { name: download.suggestedFilename(), data: Buffer.from(bytes).toString("base64") };
+  return (
+    bytes && { name: download.suggestedFilename(), data: Buffer.from(bytes).toString("base64") }
+  );
 };
 
 const watch = (session: Session, page: Page) => {
@@ -112,6 +113,7 @@ const blockAdsAndTrackers = async (page: Page) => {
 };
 
 const open = async (key: string): Promise<Session> => {
+  const saved = await savedLogins(key);
   const screen = await openScreen();
   const browser = await chromium
     .launch({ headless: false, executablePath: CHROME_PATH, args: ARGS, env: screen.env })
@@ -119,59 +121,64 @@ const open = async (key: string): Promise<Session> => {
       closeScreen(screen);
       throw error;
     });
-  const saved = await savedLogins(key);
-  const context = await browser.newContext({
-    viewport: null,
-    timezoneId: await exitZone(),
-    storageState: saved && { cookies: saved.cookies, origins: saved.origins },
-  });
-  await context.route(
-    (url) => isPrivateUrl(url.href),
-    (route) => route.abort("blockedbyclient"),
-  );
-  const page = await context.newPage();
-  await blockAdsAndTrackers(page);
-  if (saved?.page && Date.now() - saved.page.at < RESTORE_MS && !isPrivateUrl(saved.page.url)) {
-    await page.goto(saved.page.url, { waitUntil: "domcontentloaded" }).catch(() => undefined);
-  }
-  const session: Session = {
-    browser,
-    context,
-    screen,
-    page,
-    seen: "",
-    lastUsed: Date.now(),
-    queue: Promise.resolve(),
-    inFlight: 0,
-    idleSince: Date.now(),
-    secrets: new Set(),
-    hidden: new Set(),
-    controllers: 0,
-    typedBefore: new Set(),
-    holdUntil: 0,
-    held: new Map(),
-    downloads: [],
-  };
-  watch(session, page);
-  const finished = () => {
-    session.inFlight = Math.max(0, session.inFlight - 1);
-    if (session.inFlight === 0) session.idleSince = Date.now();
-  };
-  context.on("request", () => {
-    session.inFlight += 1;
-  });
-  context.on("requestfinished", finished);
-  context.on("requestfailed", finished);
-  context.on("page", (opened) => {
-    session.page = opened;
-    watch(session, opened);
-    void blockAdsAndTrackers(opened).catch(() => undefined);
-  });
-  browser.on("disconnected", () => {
-    sessions.delete(key);
+  try {
+    const context = await browser.newContext({
+      viewport: null,
+      timezoneId: await exitZone(),
+      storageState: saved && { cookies: saved.cookies, origins: saved.origins },
+    });
+    await context.route(
+      (url) => isPrivateUrl(url.href),
+      (route) => route.abort("blockedbyclient"),
+    );
+    const page = await context.newPage();
+    await blockAdsAndTrackers(page);
+    if (saved?.page && Date.now() - saved.page.at < RESTORE_MS && !isPrivateUrl(saved.page.url)) {
+      await page.goto(saved.page.url, { waitUntil: "domcontentloaded" }).catch(() => undefined);
+    }
+    const session: Session = {
+      browser,
+      context,
+      screen,
+      page,
+      seen: "",
+      lastUsed: Date.now(),
+      queue: Promise.resolve(),
+      inFlight: 0,
+      idleSince: Date.now(),
+      secrets: new Set(),
+      hidden: new Set(),
+      controllers: 0,
+      typedBefore: new Set(),
+      holdUntil: 0,
+      held: new Map(),
+      downloads: [],
+    };
+    watch(session, page);
+    const finished = () => {
+      session.inFlight = Math.max(0, session.inFlight - 1);
+      if (session.inFlight === 0) session.idleSince = Date.now();
+    };
+    context.on("request", () => {
+      session.inFlight += 1;
+    });
+    context.on("requestfinished", finished);
+    context.on("requestfailed", finished);
+    context.on("page", (opened) => {
+      session.page = opened;
+      watch(session, opened);
+      void blockAdsAndTrackers(opened).catch(() => undefined);
+    });
+    browser.on("disconnected", () => {
+      sessions.delete(key);
+      closeScreen(screen);
+    });
+    return session;
+  } catch (error) {
+    await browser.close().catch(() => undefined);
     closeScreen(screen);
-  });
-  return session;
+    throw error;
+  }
 };
 
 const frontPage = async (context: BrowserContext) => {
