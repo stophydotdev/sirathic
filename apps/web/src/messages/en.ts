@@ -297,6 +297,7 @@ export const MESSAGES = [
   "Continue with GitHub",
   "Get a new code",
   "Try again",
+  "This answer stopped before it wrote anything.",
   "Sign In",
   "Account menu",
   "ChatGPT account",

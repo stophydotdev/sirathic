@@ -281,6 +281,7 @@ export default {
   "Continue with GitHub": "使用 GitHub 继续",
   "Get a new code": "获取新代码",
   "Try again": "重试",
+  "This answer stopped before it wrote anything.": "这个回答还没写任何内容就停止了。",
   "Sign In": "登录",
   "Account menu": "账号菜单",
   "ChatGPT account": "ChatGPT 账号",

@@ -284,6 +284,7 @@ export default {
   "Continue with GitHub": "GitHub দিয়ে চালিয়ে যান",
   "Get a new code": "নতুন কোড নিন",
   "Try again": "আবার চেষ্টা করুন",
+  "This answer stopped before it wrote anything.": "এই উত্তরটি কিছু লেখার আগেই থেমে গেছে।",
   "Sign In": "সাইন ইন",
   "Account menu": "অ্যাকাউন্ট মেনু",
   "ChatGPT account": "ChatGPT অ্যাকাউন্ট",

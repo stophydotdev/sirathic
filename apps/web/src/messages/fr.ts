@@ -294,6 +294,8 @@ export default {
   "Continue with GitHub": "Continuer avec GitHub",
   "Get a new code": "Obtenir un nouveau code",
   "Try again": "Réessayer",
+  "This answer stopped before it wrote anything.":
+    "Cette réponse s'est arrêtée avant d'écrire quoi que ce soit.",
   "Sign In": "Se connecter",
   "Account menu": "Menu du compte",
   "ChatGPT account": "Compte ChatGPT",

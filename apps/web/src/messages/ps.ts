@@ -291,6 +291,7 @@ export default {
   "Continue with GitHub": "د GitHub سره دوام",
   "Get a new code": "نوی کوډ واخلئ",
   "Try again": "بیا هڅه وکړئ",
+  "This answer stopped before it wrote anything.": "دا ځواب مخکې له دې چې څه ولیکي ودرېد.",
   "Sign In": "ننوتل",
   "Account menu": "د حساب مینو",
   "ChatGPT account": "د ChatGPT حساب",

@@ -281,6 +281,7 @@ export default {
   "Continue with GitHub": "ดำเนินการต่อด้วย GitHub",
   "Get a new code": "รับรหัสใหม่",
   "Try again": "ลองอีกครั้ง",
+  "This answer stopped before it wrote anything.": "คำตอบนี้หยุดไปก่อนจะเขียนอะไร",
   "Sign In": "ลงชื่อเข้าใช้",
   "Account menu": "เมนูบัญชี",
   "ChatGPT account": "บัญชี ChatGPT",

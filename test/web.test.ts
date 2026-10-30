@@ -18,11 +18,13 @@ import { stampText } from "../apps/web/src/components/botStamp";
 import { whenOf } from "../apps/web/src/components/botTime";
 import { researchOf } from "../apps/web/src/components/research";
 import { refreshing } from "../apps/web/src/lib/refreshing";
-import { type ChatMessage, question } from "../apps/server/src/shared/messages";
+import { type ChatMessage, messageText, question } from "../apps/server/src/shared/messages";
 import { outdated } from "../apps/web/src/components/chat";
 import { nextFollowUp, queueFollowUp } from "../apps/web/src/components/followUps";
 import { importedFacts } from "../apps/web/src/components/memoryImport";
-import { citationRuns, groupedCitations } from "../apps/mobile/src/lib/sources";
+import { citationRuns, groupedCitations, withoutCitations } from "../apps/mobile/src/lib/sources";
+import { unwrappedCitations } from "../packages/app/src/citations";
+import { notesOf } from "../apps/mobile/src/lib/notes";
 import { blobMotion } from "../packages/app/src/blob/engine";
 import { BODIES, bodyOf } from "../packages/app/src/blob/shape";
 
@@ -472,5 +474,38 @@ test("a phone citation pill keeps every source of its own run, even when runs sh
     ["https://quran.com/2/153", "https://islamqa.info/a"],
     ["https://quran.com/2/153", "https://sunnah.com/b"],
     ["https://quran.com/2/153"],
+  ]);
+});
+
+test("an answer written in parts reads as paragraphs, not glued words", () => {
+  const answer: ChatMessage = {
+    id: "a",
+    role: "assistant",
+    parts: [
+      { type: "text", text: "Let me check the sources." },
+      { type: "step-start" },
+      { type: "text", text: "Zakat is 2.5%." },
+    ],
+  };
+  expect(messageText(answer)).toBe("Let me check the sources.\n\nZakat is 2.5%.");
+});
+
+test("citations in parentheses lose the parentheses, and hiding them leaves no empty pair", () => {
+  const wrapped =
+    "Injections break it ([2](https://a.org/2)[3](https://b.org/3)). See ( [4](https://c.org/4) ).";
+  expect(unwrappedCitations(wrapped)).toBe(
+    "Injections break it [2](https://a.org/2)[3](https://b.org/3). See [4](https://c.org/4).",
+  );
+  expect(unwrappedCitations("Hanafis differ (see [1](https://a.org/1)).")).toBe(
+    "Hanafis differ (see [1](https://a.org/1)).",
+  );
+  expect(withoutCitations(wrapped)).toBe("Injections break it. See.");
+});
+
+test("a [!WARNING] quote on the phone becomes a note part without its marker", () => {
+  expect(notesOf("Join them.\n\n> [!WARNING]\n> Scholars differ.\n> Ask one.\n\nDone.")).toEqual([
+    { kind: "text", text: "Join them.\n\n" },
+    { kind: "note", note: "warning", text: "Scholars differ.\nAsk one." },
+    { kind: "text", text: "\nDone." },
   ]);
 });

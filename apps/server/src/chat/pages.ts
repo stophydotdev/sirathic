@@ -3,18 +3,14 @@ import { chatSessions, projects } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
 import { and, eq, isNotNull } from "drizzle-orm";
 import { z } from "zod";
-import type { ChatMessage } from "../shared/messages";
+import { type ChatMessage, messageText } from "../shared/messages";
 import { type Source, source } from "../shared/sources";
 import { keepUpdatedAt, messageSchemas, owned } from "./sessions";
 
 const withSources = z.object({ sources: z.array(source) });
 const CITED_URL = /\]\((https?:\/\/[^)\s]+)\)/gu;
 
-const textOf = (message: ChatMessage) =>
-  message.parts
-    .map((part) => (part.type === "text" ? part.text : ""))
-    .join("")
-    .trim();
+const textOf = (message: ChatMessage) => messageText(message).trim();
 
 const sourcesOf = (messages: ChatMessage[], answers: string) => {
   const found = new Map<string, Source>();

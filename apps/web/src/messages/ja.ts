@@ -289,6 +289,7 @@ export default {
   "Continue with GitHub": "GitHub で続ける",
   "Get a new code": "新しいコードを取得",
   "Try again": "もう一度試す",
+  "This answer stopped before it wrote anything.": "この回答は何も書く前に止まりました。",
   "Sign In": "ログイン",
   "Account menu": "アカウントメニュー",
   "ChatGPT account": "ChatGPT アカウント",

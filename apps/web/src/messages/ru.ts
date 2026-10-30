@@ -290,6 +290,7 @@ export default {
   "Continue with GitHub": "Продолжить с GitHub",
   "Get a new code": "Получить новый код",
   "Try again": "Попробовать снова",
+  "This answer stopped before it wrote anything.": "Этот ответ остановился, ничего не написав.",
   "Sign In": "Войти",
   "Account menu": "Меню аккаунта",
   "ChatGPT account": "Аккаунт ChatGPT",

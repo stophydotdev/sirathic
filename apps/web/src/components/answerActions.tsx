@@ -20,12 +20,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdownMenu";
 import {
-  type ChatMessage,
   feedback as feedbackSchema,
   type Mode,
   MODES,
   mode as modeSchema,
   type Report,
+  messageText,
 } from "@sirathic/server/messages";
 import type { Source } from "@sirathic/server/sources";
 import { answerParts, printAnswer, saveFile, wordAnswer } from "@/lib/answerFile";
@@ -48,9 +48,6 @@ export const actionButton =
 const storedFeedback = z.object({ feedback: feedbackSchema.optional() });
 
 type Feedback = z.infer<typeof feedbackSchema>;
-
-export const messageText = (message: ChatMessage | undefined) =>
-  message?.parts.map((part) => (part.type === "text" ? part.text : "")).join("") ?? "";
 
 export function useAnswer() {
   const chat = useChatState();

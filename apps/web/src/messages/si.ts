@@ -286,6 +286,7 @@ export default {
   "Continue with GitHub": "GitHub සමඟ ඉදිරියට යන්න",
   "Get a new code": "නව කේතයක් ගන්න",
   "Try again": "නැවත උත්සාහ කරන්න",
+  "This answer stopped before it wrote anything.": "මෙම පිළිතුර කිසිවක් ලිවීමට පෙර නතර විය.",
   "Sign In": "පිවිසෙන්න",
   "Account menu": "ගිණුම් මෙනුව",
   "ChatGPT account": "ChatGPT ගිණුම",

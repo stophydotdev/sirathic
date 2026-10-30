@@ -15,7 +15,12 @@ import { deviceOf } from "@/lib/visit";
 import { TRPCClientError } from "@trpc/client";
 import { DOCX, fileUrl } from "@sirathic/server/files";
 import { prependQuote } from "@sirathic/app/botQuote";
-import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
+import {
+  type ChatMessage,
+  chatData,
+  messageMetadata,
+  messageText,
+} from "@sirathic/server/messages";
 import { Chat as LiveChat, useChat } from "@ai-sdk/react";
 import {
   type AttachmentAdapter,
@@ -172,9 +177,7 @@ export const outdated = (kept: readonly ChatMessage[], saved: readonly ChatMessa
 
 const answerText = (messages: readonly ChatMessage[]) => {
   const last = messages.at(-1);
-  return last?.role === "assistant"
-    ? last.parts.map((part) => (part.type === "text" ? part.text : "")).join("")
-    : "";
+  return last?.role === "assistant" ? messageText(last) : "";
 };
 
 const lastAsked = (messages: readonly ChatMessage[]) =>

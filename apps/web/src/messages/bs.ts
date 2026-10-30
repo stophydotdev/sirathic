@@ -288,6 +288,8 @@ export default {
   "Continue with GitHub": "Nastavi putem GitHub-a",
   "Get a new code": "Dobij novi kod",
   "Try again": "Pokušaj ponovo",
+  "This answer stopped before it wrote anything.":
+    "Ovaj odgovor je stao prije nego što je išta napisao.",
   "Sign In": "Prijavi se",
   "Account menu": "Meni računa",
   "ChatGPT account": "ChatGPT račun",

@@ -291,6 +291,7 @@ export default {
   "Continue with GitHub": "GitHub аркылуу улантуу",
   "Get a new code": "Жаңы код алуу",
   "Try again": "Кайра аракет кылуу",
+  "This answer stopped before it wrote anything.": "Бул жооп эч нерсе жазбай туруп токтоп калды.",
   "Sign In": "Кирүү",
   "Account menu": "Аккаунт менюсу",
   "ChatGPT account": "ChatGPT аккаунту",

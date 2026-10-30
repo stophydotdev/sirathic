@@ -288,6 +288,7 @@ export default {
   "Continue with GitHub": "GitHub மூலம் தொடர்",
   "Get a new code": "புதிய குறியீட்டைப் பெறு",
   "Try again": "மீண்டும் முயல்",
+  "This answer stopped before it wrote anything.": "இந்தப் பதில் எதையும் எழுதுவதற்கு முன்பே நின்றுவிட்டது.",
   "Sign In": "உள்நுழை",
   "Account menu": "கணக்கு மெனு",
   "ChatGPT account": "ChatGPT கணக்கு",

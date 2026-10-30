@@ -290,6 +290,8 @@ export default {
   "Continue with GitHub": "Continua con GitHub",
   "Get a new code": "Ottieni un nuovo codice",
   "Try again": "Riprova",
+  "This answer stopped before it wrote anything.":
+    "Questa risposta si è fermata prima di scrivere qualcosa.",
   "Sign In": "Accedi",
   "Account menu": "Menu dell'account",
   "ChatGPT account": "Account ChatGPT",

@@ -16,6 +16,7 @@ import { getSettings } from "../account/settings";
 import {
   type ChatMessage,
   DEFAULT_EFFORT,
+  messageText,
   type Mode,
   mode as modeSchema,
 } from "../shared/messages";
@@ -71,9 +72,7 @@ const NUDGE_ONLY =
   "Do not quiz, teach or grade anything here. Post a short nudge that says what is due and invites them to start. If nothing is due and the job does not call for a new item today, reply with exactly SKIP and nothing else.";
 
 const textOf = (message: ChatMessage | undefined) =>
-  message?.role === "assistant"
-    ? message.parts.map((part) => (part.type === "text" ? part.text : "")).join("")
-    : "";
+  message?.role === "assistant" ? messageText(message) : "";
 
 export const isSkip = (text: string) =>
   text

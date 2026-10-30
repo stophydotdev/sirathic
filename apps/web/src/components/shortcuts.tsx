@@ -1,6 +1,6 @@
 "use client";
 
-import { messageText } from "@/components/answerActions";
+import { messageText } from "@sirathic/server/messages";
 import { useChatState } from "@/components/chat";
 import { useT } from "@/components/i18n";
 import type { PlainKey } from "@/components/locales";

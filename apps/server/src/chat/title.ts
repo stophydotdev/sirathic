@@ -1,7 +1,7 @@
 import { type LanguageModel, Output, streamText } from "ai";
 import { z } from "zod";
 import type { ProviderOptions } from "../models/subscription";
-import type { ChatMessage } from "../shared/messages";
+import { type ChatMessage, messageText } from "../shared/messages";
 
 const ASKED_LIMIT = 6;
 const MESSAGE_CHARS = 1_500;
@@ -27,12 +27,7 @@ Set needsRefinement to true only when the subject is still unknown, such as a gr
 
 const titled = z.object({ title: z.string(), needsRefinement: z.boolean() });
 
-const textOf = (message: ChatMessage) =>
-  message.parts
-    .map((part) => (part.type === "text" ? part.text : ""))
-    .join("")
-    .replaceAll(LINKS, "")
-    .trim();
+const textOf = (message: ChatMessage) => messageText(message).replaceAll(LINKS, "").trim();
 
 const tidy = (raw: string) =>
   (raw.trim().split(/\r?\n/u)[0] ?? "")

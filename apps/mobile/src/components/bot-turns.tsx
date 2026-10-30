@@ -1,5 +1,5 @@
 import { bubblesOf } from "@sirathic/app/botBubbles";
-import { type ChatMessage, currentToolName } from "@sirathic/server/messages";
+import { type ChatMessage, currentToolName, messageText } from "@sirathic/server/messages";
 import type { Source } from "@sirathic/server/sources";
 import * as Clipboard from "expo-clipboard";
 import * as WebBrowser from "expo-web-browser";
@@ -8,7 +8,7 @@ import { Animated, Pressable, Text, View } from "react-native";
 import { useMarkdown } from "react-native-marked";
 import { z } from "zod";
 import { toolOf } from "@/lib/research";
-import { siteName, sourcesOf, textOf, withoutCitations } from "@/lib/sources";
+import { siteName, sourcesOf, withoutCitations } from "@/lib/sources";
 import { type Feedback, useMarkdownLook } from "./answer";
 import { SentFiles } from "./attachment-chip";
 import { AutomationCard, BotEvent, isBotEvent, isCardTool } from "./chat-cards";
@@ -245,7 +245,7 @@ export const BotSays: FC<{
             <View className="mb-2 flex-row items-end gap-1">
               <BotText text={item.text} />
               {!working && index === lastText && (
-                <MoreMenu text={textOf(message)} feedback={feedback} onRate={onRate} />
+                <MoreMenu text={messageText(message)} feedback={feedback} onRate={onRate} />
               )}
             </View>
           ) : currentToolName(item.tool.name) === "clarifying_questions" ? (
@@ -327,7 +327,7 @@ export const BotYou: FC<{
           <SentFiles message={message} />
           <View className={`max-w-[80%] ${reaction ? "mb-3" : ""}`}>
             <Text className="bg-sky-700 font-sans overflow-hidden rounded-3xl px-4 py-2 text-base text-white">
-              {textOf(message)}
+              {messageText(message)}
             </Text>
             {reaction && (
               <Text className="bg-background border-border absolute end-2 -bottom-3 overflow-hidden rounded-full border px-1.5 py-0.5 text-sm">

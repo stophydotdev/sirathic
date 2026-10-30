@@ -1,23 +1,34 @@
-import type { ChatMessage } from "@sirathic/server/messages";
+import { type ChatMessage, messageText } from "@sirathic/server/messages";
 import * as Clipboard from "expo-clipboard";
 import * as WebBrowser from "expo-web-browser";
-import { type FC, type ReactNode, useEffect, useMemo, useState } from "react";
-import { Image, Platform, Pressable, Text, View } from "react-native";
+import {
+  createContext,
+  type FC,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import {
+  Image,
+  Linking,
+  Platform,
+  Pressable,
+  Text,
+  type TextStyle,
+  View,
+  type ViewStyle,
+} from "react-native";
 import { useResolveClassNames, useUniwind } from "uniwind";
 import { Renderer, useMarkdown } from "react-native-marked";
 import { z } from "zod";
 import { type Now, nowOf, summaryOf, toolOf } from "@/lib/research";
-import {
-  citationRuns,
-  faviconUrl,
-  groupedCitations,
-  relatedOf,
-  sourcesOf,
-  textOf,
-} from "@/lib/sources";
+import { citationRuns, faviconUrl, groupedCitations, relatedOf, sourcesOf } from "@/lib/sources";
 import { usePreferences } from "@/lib/preferences";
 import {
   Bulb,
+  ChartBar,
   Check,
   ChevronRight,
   Copy,
@@ -32,6 +43,8 @@ import { Fold, Swap, Turn } from "./motion";
 import { Cited, CitationPill, CitationSheet } from "./citation";
 import { SourcesSheet } from "./sources-sheet";
 import { AutomationCard, isCardTool } from "./chat-cards";
+import { notesOf } from "@/lib/notes";
+import { AnswerNote } from "./answer-note";
 
 const CITATION = /^c\d+$/u;
 
@@ -48,7 +61,33 @@ class AnswerRenderer extends Renderer {
     }
     return <CitationPill key={this.getKey()} href={href} run={Number(label.slice(1))} />;
   }
+
+  code(text: string, language?: string, containerStyle?: ViewStyle, textStyle?: TextStyle) {
+    return language === "mermaid" ? (
+      <ChartCard key={this.getKey()} />
+    ) : (
+      super.code(text, language, containerStyle, textStyle)
+    );
+  }
 }
+
+const ChatLink = createContext("https://sirathic.com");
+
+const ChartCard: FC = () => {
+  const href = useContext(ChatLink);
+  return (
+    <Pressable
+      accessibilityRole="link"
+      onPress={() => void Linking.openURL(href)}
+      className="bg-card border-border active:bg-muted mb-4 flex-row items-center gap-2 rounded-xl border p-3"
+    >
+      <ChartBar size={18} strokeWidth={1.75} colorClassName="accent-muted-foreground" />
+      <Text className="text-foreground font-sans flex-1 text-sm">Chart</Text>
+      <Text className="text-muted-foreground font-sans text-sm">Open</Text>
+      <ChevronRight size={16} strokeWidth={1.75} colorClassName="accent-muted-foreground" />
+    </Pressable>
+  );
+};
 
 const renderer = new AnswerRenderer();
 
@@ -101,6 +140,11 @@ export const useMarkdownLook = () => {
     }),
     [serif, theme, text, link, code, border],
   );
+};
+
+const MarkdownPart: FC<{ text: string }> = ({ text }) => {
+  const look = useMarkdownLook();
+  return useMarkdown(text, { renderer, ...look });
 };
 
 const startTimes = new Map<string, number>();
@@ -190,17 +234,16 @@ const actionButton = "size-9 items-center justify-center rounded-full active:bg-
 export type Feedback = "up" | "down" | null;
 
 export const Answer: FC<{
+  chatId: string;
   message: ChatMessage;
   streaming: boolean;
   feedback: Feedback;
   onRate: (next: Feedback) => void;
   onRetry: () => void;
   onAsk: (question: string) => void;
-}> = ({ message, streaming, feedback, onRate, onRetry, onAsk }) => {
-  const text = textOf(message);
-  const shown = useMemo(() => groupedCitations(text), [text]);
-  const look = useMarkdownLook();
-  const elements = useMarkdown(shown, { renderer, ...look });
+}> = ({ chatId, message, streaming, feedback, onRate, onRetry, onAsk }) => {
+  const text = messageText(message);
+  const parts = useMemo(() => notesOf(groupedCitations(text)), [text]);
   const sources = useMemo(() => sourcesOf(message), [message]);
   const related = relatedOf(message);
   const [showSources, setShowSources] = useState(false);
@@ -208,6 +251,12 @@ export const Answer: FC<{
   const runs = useMemo(() => ({ runs: citationRuns(text), show: setCited }), [text]);
   const [copied, setCopied] = useState(false);
   const working = streaming && text === "";
+  const cards = message.parts.flatMap((part, index) => {
+    const tool = toolOf(part);
+    return tool && isCardTool(tool.name)
+      ? [<AutomationCard key={index} tool={tool.name} output={tool.output} />]
+      : [];
+  });
 
   const copy = () => {
     void Clipboard.setStringAsync(text).then(() => {
@@ -219,13 +268,35 @@ export const Answer: FC<{
   return (
     <View className="pb-4">
       <StatusLine message={message} working={working} />
-      {message.parts.flatMap((part, index) => {
-        const tool = toolOf(part);
-        return tool && isCardTool(tool.name)
-          ? [<AutomationCard key={index} tool={tool.name} output={tool.output} />]
-          : [];
-      })}
-      {text !== "" && <Cited value={runs}>{elements}</Cited>}
+      {cards}
+      {text !== "" && (
+        <Cited value={runs}>
+          <ChatLink value={`https://sirathic.com/c/${chatId}`}>
+            {parts.map((part, index) =>
+              part.kind === "note" ? (
+                <AnswerNote key={index} kind={part.note}>
+                  <MarkdownPart text={part.text} />
+                </AnswerNote>
+              ) : (
+                <MarkdownPart key={index} text={part.text} />
+              ),
+            )}
+          </ChatLink>
+        </Cited>
+      )}
+      {!streaming && text.trim() === "" && cards.length === 0 && (
+        <View className="items-start gap-3">
+          <Text className="text-muted-foreground font-sans text-sm">
+            This answer stopped before it wrote anything.
+          </Text>
+          <Pressable
+            onPress={onRetry}
+            className="bg-muted active:bg-foreground/10 h-8 justify-center rounded-full px-3"
+          >
+            <Text className="text-foreground font-sans text-sm">Try again</Text>
+          </Pressable>
+        </View>
+      )}
       {cited && (
         <CitationSheet urls={cited} sources={sources} onClose={() => setCited(undefined)} />
       )}

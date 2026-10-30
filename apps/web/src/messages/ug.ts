@@ -291,6 +291,7 @@ export default {
   "Continue with GitHub": "GitHub ئارقىلىق داۋاملاشتۇرۇش",
   "Get a new code": "يېڭى كود ئېلىش",
   "Try again": "قايتا سىناش",
+  "This answer stopped before it wrote anything.": "بۇ جاۋاب ھېچنېمە يازماي توختاپ قالدى.",
   "Sign In": "كىرىش",
   "Account menu": "ھېسابات تىزىملىكى",
   "ChatGPT account": "ChatGPT ھېساباتى",

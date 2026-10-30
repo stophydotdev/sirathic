@@ -28,6 +28,7 @@ import {
 } from "@/components/citations";
 import { Favicon } from "@/components/favicon";
 import { CodeBlock } from "@/components/markdownCode";
+import { unwrappedCitations } from "@sirathic/app/citations";
 import { MarkdownDiagram, markOpenDiagram } from "@/components/markdownDiagram";
 import { MarkdownMedia } from "@/components/markdownMedia";
 import { Note, rehypeNotes } from "@/components/markdownNote";
@@ -60,7 +61,9 @@ const MarkdownTextImpl: FC<{ citations?: boolean }> = ({ citations = true }) => 
       ...(citations ? [] : [rehypeBareCitations]),
     ]}
     preprocess={(text) =>
-      markOpenDiagram(withMathDelimiters(closeOpenBold(hidePendingCitation(text))))
+      markOpenDiagram(
+        withMathDelimiters(closeOpenBold(hidePendingCitation(unwrappedCitations(text)))),
+      )
     }
     className="aui-md"
     components={citations ? components : withoutCitations}
