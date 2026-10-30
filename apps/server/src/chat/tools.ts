@@ -16,7 +16,7 @@ import {
   textBlocked,
   verseSource,
 } from "./cite";
-import { pageText } from "./compact";
+import { documentLinks, pageText } from "./compact";
 import { fenced, fencedText } from "./fence";
 import { searchAll, searchInput } from "./search";
 import type { SourceKind } from "../shared/sources";
@@ -98,10 +98,16 @@ const readPage = async (cite: Cite, url: string) => {
     };
   }
   const page = await webFetch({ url });
-  const markdown = pageText(page.markdown, PAGE_CHARS);
+  const text = pageText(page.markdown, PAGE_CHARS);
+  const documents = documentLinks(page.markdown);
   return {
-    page: { url: page.url, title: page.title, markdown, citation: cite(page.url) },
-    source: { url: page.url, title: page.title, snippet: plainText(markdown) },
+    page: {
+      url: page.url,
+      title: page.title,
+      markdown: documents ? `${text}\n\n${documents}` : text,
+      citation: cite(page.url),
+    },
+    source: { url: page.url, title: page.title, snippet: plainText(text) },
   };
 };
 
