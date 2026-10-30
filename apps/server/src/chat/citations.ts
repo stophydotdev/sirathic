@@ -17,7 +17,8 @@ export const withBareCitations = (message: ChatMessage): ChatMessage =>
     : message;
 const NATIVE = /( ?)\ue200cite\ue202([^\ue201]*)\ue201/g;
 const PRIVATE_USE = /[\ue000-\uf8ff]/g;
-const UNFINISHED = /^\[\d*(\](\([^)\s]*)?)?$/;
+const UNFINISHED = /^\[(?:\d*(\](\([^)\s]*)?)?|[a-z]{1,5}(?::\d*\]?)?)$/;
+const IMAGE = /\[image:(\d+)\]/g;
 const QURAN_URL = /^https:\/\/quran\.com\/(\d+)\/(\d+)$/;
 const VERSE_KEY = /\b(\d{1,3}):(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/g;
 const PARAGRAPH = "\n\n";
@@ -66,6 +67,13 @@ export function citations(history: UIMessage[]) {
     return number;
   };
 
+  const images: { url: string; title: string }[] = [];
+  const addImage = (image: { url: string; title: string }) => images.push(image);
+  const imageOf = (number: string) => {
+    const image = images[Number(number) - 1];
+    return image ? `![${image.title.replaceAll(/[[\]()]/gu, "")}](${image.url})` : "";
+  };
+
   const verseCited = (number: number, before: string) => {
     const cited = QURAN_URL.exec(byNumber.get(number) ?? "");
     if (!cited) return number;
@@ -104,7 +112,8 @@ export function citations(history: UIMessage[]) {
           const target = number === undefined ? undefined : byNumber.get(number);
           return target === undefined ? "" : `${space}[${number}](${target})`;
         },
-      );
+      )
+      .replace(IMAGE, (_, number: string) => imageOf(number));
 
   function transform<TOOLS extends ToolSet>(): StreamTextTransform<TOOLS> {
     return () => {
@@ -139,5 +148,5 @@ export function citations(history: UIMessage[]) {
     };
   }
 
-  return { add, link, numberOf: (url: string) => byUrl.get(url), transform };
+  return { add, addImage, link, numberOf: (url: string) => byUrl.get(url), transform };
 }

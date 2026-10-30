@@ -3,6 +3,7 @@ import { validateUIMessages } from "ai";
 import { nearBest, nearFused, withinChars } from "../apps/server/src/chat/cut";
 import { fuse } from "../apps/server/src/chat/fuse";
 import { withoutPageText, withStoredPageText } from "../apps/server/src/chat/pageText";
+import { citations } from "../apps/server/src/chat/citations";
 import { needsSources, relevant } from "../apps/server/src/chat/relevance";
 import { onePerPage } from "../apps/server/src/chat/search";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
@@ -365,4 +366,19 @@ test("a loaded chat drops search page text, and the next question gets it back",
     metadataSchema: messageMetadata,
   });
   expect(withStoredPageText(sentBack, stored)).toEqual(stored);
+});
+
+test("an image token split across chunks becomes that image, and an unknown one is dropped", async () => {
+  const { addImage, transform } = citations([]);
+  addImage({ url: "https://img.test/kaaba.jpg", title: "The [Kaaba] (2026)" });
+  const parts = new ReadableStream({
+    start(controller) {
+      for (const text of ["The Kaaba:\n\n[ima", "ge:1]\n\n[image:9]\n"])
+        controller.enqueue({ type: "text-delta" as const, id: "1", text });
+      controller.close();
+    },
+  }).pipeThrough(transform()({ tools: {}, stopStream: () => {} }));
+  let text = "";
+  for await (const part of parts) if (part.type === "text-delta") text += part.text;
+  expect(text).toBe("The Kaaba:\n\n![The Kaaba 2026](https://img.test/kaaba.jpg)\n\n\n");
 });
