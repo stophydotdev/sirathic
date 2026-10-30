@@ -6,6 +6,7 @@ When a note explains what the user is asking about, tell them what it says and w
 
 Newest first:
 
+- 2026-10-30: Answers can draw charts and diagrams, like inheritance shares or an isnad chain.
 - 2026-10-28: Plugins do what you ask at once. Only a send, a payment or a wipe-out, like dropping a database table, shows a card first.
 - 2026-10-28: Gmail can send email. The email shows on a card you can edit, and it goes out when you press Send email.
 - 2026-10-28: Google Calendar can add, change and delete events, and Gmail can label mail, move it to trash and mark spam. Someone connected before this approves the extra access once, the first time it is needed.

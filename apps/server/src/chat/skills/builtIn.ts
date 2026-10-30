@@ -7,6 +7,7 @@ import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
 import { STOPHY_LINK } from "../stophyTools";
 import browser from "./browser.md" with { type: "text" };
+import chart from "./chart.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
 import jobSearch from "./jobSearch.md" with { type: "text" };
 import noConnector from "./noConnector.md" with { type: "text" };
@@ -133,6 +134,11 @@ export const skillsFor = ({
             name: "writing",
             when: "Load when the user asks you to write, rewrite, translate or draft something, like a khutbah, a reminder, a letter or an email",
             text: writing,
+          },
+          {
+            name: "chart",
+            when: "Load when the user asks for a chart, graph or diagram, or numbers like inheritance shares, zakat or figures across many items would read better drawn",
+            text: chart,
           },
         ]),
     ...(inBot
