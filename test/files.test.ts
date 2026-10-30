@@ -5,6 +5,7 @@ import { strToU8, zipSync } from "fflate";
 import { docxText } from "../apps/server/src/files/docx";
 import { mediaTypeOf } from "../apps/server/src/files/sniff";
 import { closable, IDLE_MS, MAKE_ROOM_IDLE_MS } from "../apps/browser/src/idle";
+import { codeSandbox } from "../apps/server/src/chat/codeTools";
 
 const src = `${import.meta.dir}/../apps/server/src`;
 const fileA = "3f2b8c1e-5d4a-4e6b-9a7c-0d1e2f3a4b5c";
@@ -47,7 +48,7 @@ mock.module(`${src}/files/store.ts`, () => ({
 }));
 
 const { uploadRoutes } = await import(`${src}/files/upload.ts`);
-const { fileTools, sandboxFiles } = await import(`${src}/chat/fileTools.ts`);
+const { fileTools } = await import(`${src}/chat/fileTools.ts`);
 const { citations } = await import(`${src}/chat/citations.ts`);
 
 test("an upload over the limit with no content-length is refused before the body is read", async () => {
@@ -240,80 +241,80 @@ test("an incognito chat saves no file and tells the model why", async () => {
   expect(saved).toEqual([]);
 });
 
-test("Research offers the report tool and the sandbox offers share_files", () => {
-  const names = (options: Partial<typeof asked> & { sandbox?: ReturnType<typeof sandboxFiles> }) =>
-    Object.keys(fileTools({ ...asked, ...options }));
-  expect(names({})).toEqual(["create_text_file"]);
-  expect(names({ research: true })).toEqual(["create_text_file", "create_research_report"]);
-  expect(names({ sandbox: sandboxFiles() })).toEqual(["create_text_file", "share_files"]);
+const ranWith = (files: Record<string, Uint8Array>) => async () => ({
+  stdout: "done",
+  stderr: "",
+  exitCode: 0,
+  files: Object.entries(files).map(([name, content]) => ({ name, bytes: content })),
 });
 
-const sandboxApi = (files: Record<string, { filename: string; text: string; size?: number }>) => {
-  const real = globalThis.fetch;
-  globalThis.fetch = Object.assign(
-    async (input: string | Request | URL) => {
-      const [, ref, content] = /\/files\/(file_\w+)(\/content)?$/u.exec(String(input)) ?? [];
-      const file = ref === undefined ? undefined : files[ref];
-      if (!file) return new Response("missing", { status: 404 });
-      return content
-        ? new Response(file.text)
-        : Response.json({ filename: file.filename, size_bytes: file.size ?? file.text.length });
-    },
-    { preconnect: real.preconnect },
+const names = (options: { research?: boolean; sandbox?: ReturnType<typeof ranWith> }) =>
+  Object.keys(fileTools({ ...asked, ...options }));
+
+test("Research offers the report tool and the sandbox offers code_execution", () => {
+  expect(names({})).toEqual(["create_text_file"]);
+  expect(names({ research: true })).toEqual(["create_text_file", "create_research_report"]);
+  expect(names({ sandbox: ranWith({}) })).toEqual(["create_text_file", "code_execution"]);
+});
+
+const runWith = (files: Record<string, Uint8Array>, incognito = false) =>
+  fileTools({ ...asked, incognito, sandbox: ranWith(files) }).code_execution.execute?.(
+    { code: "print(1)" },
+    call,
   );
-  return () => {
-    globalThis.fetch = real;
-  };
-};
 
-const afterSandbox = async (ids: string[]) => {
-  const sandbox = sandboxFiles();
-  const { writable, readable } = sandbox.transform()({ tools: {}, stopStream: () => {} });
-  const writer = writable.getWriter();
-  void writer.write({
-    type: "tool-result",
-    toolCallId: "code",
-    toolName: "code_execution",
-    input: {},
-    output: { content: ids.map((file_id) => ({ file_id })) },
-    providerExecuted: true,
-  });
-  void writer.write({
-    type: "tool-call",
-    toolCallId: "call",
-    toolName: "share_files",
-    input: {},
-  });
-  void readable.pipeTo(new WritableStream());
-  return fileTools({ ...asked, sandbox }).share_files;
-};
-
-test("share_files saves the newest sandbox file with each requested name", async () => {
+test("code_execution saves every file the script wrote to the Library", async () => {
   saved.length = 0;
-  const restore = sandboxApi({
-    file_old: { filename: "zakat.csv", text: "old" },
-    file_new: { filename: "zakat.csv", text: "5000,0.00" },
-    file_other: { filename: "chart.png", text: "not asked for" },
-  });
-  const share = await afterSandbox(["file_old", "file_new", "file_other"]);
-  const result = await share.execute?.({ files: ["Zakat.csv"] }, call);
-  restore();
+  const result = await runWith({ "zakat.csv": new TextEncoder().encode("5000,0.00") });
   expect(saved).toEqual([
     { by: "user-a", name: "zakat.csv", mediaType: "text/plain", text: "5000,0.00" },
   ]);
-  expect(result).toMatchObject({ files: [{ name: "zakat.csv" }], errors: [] });
+  expect(result).toMatchObject({ stdout: "done", files: [{ name: "zakat.csv" }], errors: [] });
 });
 
-test("share_files refuses a sandbox file over the size limit", async () => {
+test("code_execution keeps no file over the size limit and says why", async () => {
   saved.length = 0;
-  const restore = sandboxApi({
-    file_big: { filename: "big.csv", text: "x", size: 11 * 1024 * 1024 },
-  });
-  const share = await afterSandbox(["file_big"]);
-  const attempt = share.execute?.({ files: ["big.csv"] }, call);
-  await expect(attempt).rejects.toThrow("big.csv is over 10.0 MB");
-  restore();
+  const result = await runWith({ "big.csv": new Uint8Array(11 * 1024 * 1024) });
   expect(saved).toEqual([]);
+  expect(result).toMatchObject({
+    files: [],
+    errors: ["big.csv must be between 1 byte and 10.0 MB."],
+  });
+});
+
+test("an incognito chat runs code but keeps none of its files", async () => {
+  saved.length = 0;
+  const result = await runWith({ "zakat.csv": new TextEncoder().encode("5000,0.00") }, true);
+  expect(saved).toEqual([]);
+  expect(result).toMatchObject({
+    stdout: "done",
+    files: [],
+    errors: [expect.stringContaining("this chat is incognito")],
+  });
+});
+
+test("the sandbox gets the chat's script and its files come back as bytes", async () => {
+  const real = globalThis.fetch;
+  const sent: unknown[] = [];
+  globalThis.fetch = Object.assign(
+    async (_input: string | Request | URL, init?: RequestInit) => {
+      sent.push(JSON.parse(String(init?.body)));
+      return Response.json({
+        stdout: "125",
+        stderr: "",
+        exitCode: 0,
+        files: [{ name: "zakat.csv", data: Buffer.from("5000,0.00").toString("base64") }],
+      });
+    },
+    { preconnect: real.preconnect },
+  );
+  const ran = await codeSandbox("chat-1")("print(5000 * 0.025)", undefined);
+  globalThis.fetch = real;
+  expect(sent).toEqual([{ session: "chat-1", code: "print(5000 * 0.025)" }]);
+  expect(ran.stdout).toBe("125");
+  expect(ran.files.map((file) => [file.name, new TextDecoder().decode(file.bytes)])).toEqual([
+    ["zakat.csv", "5000,0.00"],
+  ]);
 });
 
 test("a bot's browser closes when idle, never while someone uses it or a form waits", () => {

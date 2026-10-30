@@ -1,4 +1,3 @@
-import type { AnthropicLanguageModelOptions } from "@ai-sdk/anthropic";
 import { createOpenAI, type OpenAILanguageModelResponsesOptions } from "@ai-sdk/openai";
 import type { streamText } from "ai";
 import { cacheFor } from "@sirathic/core/cache";
@@ -95,10 +94,6 @@ export const answerOptions = (turn: {
     promptCacheKey: turn.by,
     textVerbosity: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
-  anthropic: {
-    effort: turn.effort,
-    thinking: { type: "adaptive", display: "summarized" },
-  } satisfies AnthropicLanguageModelOptions,
 });
 
 export const sideOptions: ProviderOptions = {
@@ -107,9 +102,6 @@ export const sideOptions: ProviderOptions = {
     forceReasoning: true,
     reasoningEffort: "low",
   } satisfies OpenAILanguageModelResponsesOptions,
-  anthropic: {
-    thinking: { type: "disabled" },
-  } satisfies AnthropicLanguageModelOptions,
 };
 
 const USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";

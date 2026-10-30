@@ -36,11 +36,11 @@ import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { islamicDates } from "../bots/islamicDates";
 import { citations, withBareCitations } from "./citations";
-import { codeTools } from "./codeTools";
+import { codeSandbox } from "./codeTools";
 import { needsApproval, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
-import { fileTools, sandboxFiles } from "./fileTools";
+import { fileTools } from "./fileTools";
 import { imageTools } from "./images";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -325,7 +325,7 @@ export function chatResponse({
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
       const searchable = inBot && visible.length < messages.length ? inBot : undefined;
-      const sandbox = sandboxFiles();
+      const sandbox = codeSandbox(`chat:${fileOwner}:${turn.sessionId}`);
       const routines = automate && {
         ...automate,
         timezone: preferred.timezone || automate.timezone,
@@ -363,7 +363,6 @@ export function chatResponse({
           preferred.usePastChats &&
           pastChatTools(owner, turn.sessionId)),
         ...(inBot && studyTools(inBot)),
-        ...(!inBot && fileOwner !== undefined && codeTools(modelName)),
         ...(!inBot &&
           fileOwner !== undefined &&
           fileTools({
@@ -440,11 +439,7 @@ export function chatResponse({
         ],
         originalMessages: messages,
         abortSignal,
-        experimental_transform: [
-          sources.transform(),
-          sandbox.transform(),
-          smoothStream({ chunking: "word" }),
-        ],
+        experimental_transform: [sources.transform(), smoothStream({ chunking: "word" })],
         onEnd: ({ outcome, finishReason }) => {
           ended = { outcome, finishReason };
         },

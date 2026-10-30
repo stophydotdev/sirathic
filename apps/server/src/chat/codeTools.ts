@@ -1,6 +1,5 @@
-import { anthropic } from "@ai-sdk/anthropic";
-import type { ToolSet } from "ai";
-import { noorModel } from "../models/noor";
+import { env } from "@sirathic/env/server";
+import { z } from "zod";
 
 export const CODE_RULES = `Using the code_execution tool:
 - Use code_execution for meaningful computational work that requires actual calculation, data processing or analysis that you cannot perform directly in your thinking process. Any zakat, inheritance, nisab, hijri date or unit conversion that combines two or more figures counts, even when it looks easy.
@@ -11,5 +10,27 @@ export const CODE_RULES = `Using the code_execution tool:
 - Internet access for the execution environment is disabled. Do NOT make external web requests or API calls as they will fail. Pass it the figures you already have.
 - Minimize comments in the code, only write essential comments that guide your core logic.`;
 
-export const codeTools = (modelName: string): ToolSet =>
-  noorModel(modelName) ? { code_execution: anthropic.tools.codeExecution_20260120() } : {};
+const RUN_MS = 120_000;
+
+const ran = z.object({
+  stdout: z.string(),
+  stderr: z.string(),
+  exitCode: z.number(),
+  files: z.array(z.object({ name: z.string(), data: z.base64() })),
+});
+
+export const codeSandbox =
+  (session: string) => async (code: string, abortSignal: AbortSignal | undefined) => {
+    const response = await fetch(`${env.SANDBOX_URL}/run`, {
+      method: "POST",
+      headers: { authorization: `Bearer ${env.SANDBOX_TOKEN}`, "content-type": "application/json" },
+      body: JSON.stringify({ session, code }),
+      signal: AbortSignal.any([AbortSignal.timeout(RUN_MS), ...(abortSignal ? [abortSignal] : [])]),
+    });
+    if (!response.ok) throw new Error(`The sandbox answered ${response.status}.`);
+    const { files, ...output } = ran.parse(await response.json());
+    return {
+      ...output,
+      files: files.map(({ name, data }) => ({ name, bytes: Buffer.from(data, "base64") })),
+    };
+  };
