@@ -1,9 +1,9 @@
-import { mkdir } from "node:fs/promises";
+import { appendFile, mkdir } from "node:fs/promises";
 import { db } from "@sirathic/db";
 import { fatwas } from "@sirathic/db/schema";
 import { inArray, sql } from "drizzle-orm";
 import { z } from "zod";
-import { DATA_DIR, FATWA_MIRRORS } from "./catalog";
+import { DATA_DIR, FATWA_MIRRORS, REMOVED_URLS_FILE } from "./catalog";
 
 const APPLY = process.argv.includes("--apply");
 
@@ -66,6 +66,7 @@ if (APPLY && pages.size > 0) {
     .delete(fatwas)
     .where(inArray(fatwas.url, urls))
     .returning({ url: fatwas.url });
+  await appendFile(REMOVED_URLS_FILE, deleted.map((row) => `${row.url}\n`).join(""));
   console.log(`saved ${rows.length} rows to ${file}, deleted ${deleted.length} rows`);
 }
 await db.$client.end();

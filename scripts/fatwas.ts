@@ -15,6 +15,7 @@ import {
   sitemapUrls,
   VERSION,
 } from "./fatwaPages";
+import { REMOVED_URLS_FILE } from "./catalog";
 import { SITES } from "./fatwaSites";
 
 const DRY = process.argv.includes("--dry");
@@ -28,6 +29,13 @@ const PARSER = Bun.hash(
   ).join(""),
 ).toString(16);
 const SKIPPED_DIR = `${RAW_DIR}-skipped/${PARSER}`;
+const REMOVED = new Set(
+  (
+    await Bun.file(REMOVED_URLS_FILE)
+      .text()
+      .catch(() => "")
+  ).split("\n"),
+);
 const SAMPLES = process.argv.filter((arg) => arg.startsWith("https://"));
 const LIMIT = Number(process.argv.find((arg) => arg.startsWith("--limit="))?.slice(8) ?? Infinity);
 const ONLY = process.argv
@@ -150,7 +158,7 @@ const crawl = async (site: Site) => {
   );
   if (known.size > 0)
     console.log(`${site.source.name}: ${known.size} pages skipped, they did not parse before`);
-  const queue = urls.filter((url) => !stored.has(url) && !known.has(url));
+  const queue = urls.filter((url) => !stored.has(url) && !known.has(url) && !REMOVED.has(url));
   let saved = 0;
   let skipped = 0;
   let failed = 0;
