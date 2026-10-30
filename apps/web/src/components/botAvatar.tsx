@@ -11,18 +11,18 @@ import { type FC, useCallback, useEffect, useId, useMemo, useRef, useState } fro
 type BotColor = (typeof BOT_COLORS)[number];
 
 export const BOT_TINTS = {
-  white: { text: "text-zinc-100" },
-  brown: { text: "text-[#8b5e3c]" },
-  red: { text: "text-red-500" },
-  orange: { text: "text-orange-500" },
-  yellow: { text: "text-amber-400" },
-  green: { text: "text-emerald-400" },
-  teal: { text: "text-teal-500" },
-  blue: { text: "text-blue-500" },
-  violet: { text: "text-violet-500" },
-  pink: { text: "text-pink-500" },
-  gray: { text: "text-neutral-400" },
-} as const satisfies Record<BotColor, { text: string }>;
+  white: { text: "text-zinc-100", bubble: "bg-foreground text-background" },
+  brown: { text: "text-[#8b5e3c]", bubble: "bg-[#8b5e3c] text-white" },
+  red: { text: "text-red-500", bubble: "bg-red-500 text-white" },
+  orange: { text: "text-orange-500", bubble: "bg-orange-500 text-orange-950" },
+  yellow: { text: "text-amber-400", bubble: "bg-amber-400 text-amber-950" },
+  green: { text: "text-emerald-400", bubble: "bg-emerald-400 text-emerald-950" },
+  teal: { text: "text-teal-500", bubble: "bg-teal-500 text-teal-950" },
+  blue: { text: "text-blue-500", bubble: "bg-blue-500 text-white" },
+  violet: { text: "text-violet-500", bubble: "bg-violet-500 text-white" },
+  pink: { text: "text-pink-500", bubble: "bg-pink-500 text-white" },
+  gray: { text: "text-neutral-400", bubble: "bg-neutral-400 text-neutral-950" },
+} as const satisfies Record<BotColor, { text: string; bubble: string }>;
 
 export const tintOf = (color: string | null) =>
   Object.entries(BOT_TINTS).find(([name]) => name === color)?.[1] ?? BOT_TINTS.teal;

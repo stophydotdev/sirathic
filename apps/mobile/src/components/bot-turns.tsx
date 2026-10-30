@@ -11,6 +11,7 @@ import { toolOf } from "@/lib/research";
 import { siteName, sourcesOf, withoutCitations } from "@/lib/sources";
 import { type Feedback, useMarkdownLook } from "./answer";
 import { SentFiles } from "./attachment-chip";
+import { tintOf } from "./bot-avatar";
 import { AutomationCard, BotEvent, isBotEvent, isCardTool } from "./chat-cards";
 import { Copy, Dots, ThumbDown, ThumbUp } from "./icons";
 import { Menu, menuRow, menuText } from "./menu";
@@ -303,7 +304,8 @@ export const BotYou: FC<{
   message: ChatMessage;
   reply: ChatMessage | undefined;
   stamp: number | undefined;
-}> = ({ message, reply, stamp }) => {
+  color: string | null;
+}> = ({ message, reply, stamp, color }) => {
   const reaction = reply?.parts.flatMap((part) => {
     const tool = toolOf(part);
     return tool && currentToolName(tool.name) === "react_to_message"
@@ -326,7 +328,9 @@ export const BotYou: FC<{
         <View className="items-end pt-4 pb-2">
           <SentFiles message={message} />
           <View className={`max-w-[80%] ${reaction ? "mb-3" : ""}`}>
-            <Text className="bg-sky-700 font-sans overflow-hidden rounded-3xl px-4 py-2 text-base text-white">
+            <Text
+              className={`font-sans overflow-hidden rounded-3xl px-4 py-2 text-base ${tintOf(color).bubble}`}
+            >
               {messageText(message)}
             </Text>
             {reaction && (

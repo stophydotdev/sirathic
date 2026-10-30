@@ -72,7 +72,12 @@ const Picker: FC<{ bot: Bot }> = ({ bot }) => {
             onPress={() => void change(bot.id, { color: name })}
             className={`rounded-full border p-0.5 ${active === BOT_TINTS[name] ? "border-foreground" : "border-transparent"}`}
           >
-            <Glyph width={16} height={16} viewBox="0 0 16 16" colorClassName={BOT_TINTS[name]}>
+            <Glyph
+              width={16}
+              height={16}
+              viewBox="0 0 16 16"
+              colorClassName={BOT_TINTS[name].accent}
+            >
               <Circle cx={8} cy={8} r={8} fill="currentColor" />
             </Glyph>
           </Pressable>
@@ -88,7 +93,12 @@ const Picker: FC<{ bot: Bot }> = ({ bot }) => {
             onPress={() => void change(bot.id, { symbol: name })}
             className={`aspect-square w-1/8 items-center justify-center rounded-lg ${BODIES[name] === current ? "bg-foreground/15" : "active:bg-muted"}`}
           >
-            <Glyph width={20} height={20} viewBox="-115 -115 230 230" colorClassName={active}>
+            <Glyph
+              width={20}
+              height={20}
+              viewBox="-115 -115 230 230"
+              colorClassName={active.accent}
+            >
               <Path
                 d={pathOf({ radii: BODIES[name], rot: 0, cx: 0, cy: 0 }, 100)}
                 fill="currentColor"
