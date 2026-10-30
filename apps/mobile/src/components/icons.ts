@@ -56,6 +56,10 @@ import {
   IconUserEdit,
   IconWorld,
   IconX,
+  IconAlertCircle,
+  IconAlertOctagon,
+  IconAlertTriangle,
+  IconChartBar,
 } from "@tabler/icons-react-native";
 import { withUniwind } from "uniwind";
 
@@ -116,3 +120,7 @@ export const Paperclip = withUniwind(IconPaperclip);
 export const Photo = withUniwind(IconPhoto);
 export const Camera = withUniwind(IconCamera);
 export const Plug = withUniwind(IconPlug);
+export const AlertCircle = withUniwind(IconAlertCircle);
+export const AlertOctagon = withUniwind(IconAlertOctagon);
+export const AlertTriangle = withUniwind(IconAlertTriangle);
+export const ChartBar = withUniwind(IconChartBar);

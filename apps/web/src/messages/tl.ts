@@ -293,6 +293,8 @@ export default {
   "Continue with GitHub": "Magpatuloy gamit ang GitHub",
   "Get a new code": "Kumuha ng bagong code",
   "Try again": "Subukan ulit",
+  "This answer stopped before it wrote anything.":
+    "Huminto ang sagot na ito bago pa ito nakasulat ng kahit ano.",
   "Sign In": "Mag-sign in",
   "Account menu": "Menu ng account",
   "ChatGPT account": "ChatGPT account",

@@ -148,3 +148,6 @@ export type ChatMessage = UIMessage<
   },
   ChatTools
 >;
+
+export const messageText = (message: Pick<ChatMessage, "parts"> | undefined) =>
+  message?.parts.flatMap((part) => (part.type === "text" ? [part.text] : [])).join("\n\n") ?? "";

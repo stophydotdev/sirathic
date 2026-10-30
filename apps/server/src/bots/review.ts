@@ -7,7 +7,7 @@ import { REASON_MAX, setNote, taughtNote } from "./notes";
 import { sideOptions } from "../models/subscription";
 import { reasonOf } from "../http";
 import { messageSchemas } from "../chat/sessions";
-import type { ChatMessage } from "../shared/messages";
+import { type ChatMessage, messageText } from "../shared/messages";
 import { NOTE_MAX, REVIEW_EVERY } from "../shared/projects";
 import type { User } from "../account/users";
 import { pickModels } from "../models/pick";
@@ -36,12 +36,7 @@ export const reviewed = (decided: z.output<typeof verdict>, current: string) => 
 
 type Why = { kind: "down"; messageId: string } | { kind: "turns" };
 
-const textOf = (message: ChatMessage) =>
-  message.parts
-    .map((part) => (part.type === "text" ? part.text : ""))
-    .join("")
-    .trim()
-    .slice(0, MESSAGE_CHARS);
+const textOf = (message: ChatMessage) => messageText(message).trim().slice(0, MESSAGE_CHARS);
 
 const whyText = (why: Why, messages: ChatMessage[]) => {
   if (why.kind === "turns") return "A routine check after several turns.";

@@ -290,6 +290,7 @@ export default {
   "Continue with GitHub": "GitHub ile devam et",
   "Get a new code": "Yeni kod al",
   "Try again": "Tekrar dene",
+  "This answer stopped before it wrote anything.": "Bu yanıt hiçbir şey yazmadan durdu.",
   "Sign In": "Giriş yap",
   "Account menu": "Hesap menüsü",
   "ChatGPT account": "ChatGPT hesabı",

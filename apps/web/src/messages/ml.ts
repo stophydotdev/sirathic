@@ -288,6 +288,7 @@ export default {
   "Continue with GitHub": "GitHub ഉപയോഗിച്ച് തുടരുക",
   "Get a new code": "പുതിയ കോഡ് നേടുക",
   "Try again": "വീണ്ടും ശ്രമിക്കുക",
+  "This answer stopped before it wrote anything.": "ഈ മറുപടി ഒന്നും എഴുതുന്നതിനു മുമ്പേ നിന്നുപോയി.",
   "Sign In": "സൈൻ ഇൻ",
   "Account menu": "അക്കൗണ്ട് മെനു",
   "ChatGPT account": "ChatGPT അക്കൗണ്ട്",

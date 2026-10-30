@@ -1,6 +1,6 @@
 import { useChat } from "@ai-sdk/react";
 import type { BlobState } from "@sirathic/app/blob/states";
-import { type ChatMessage, currentToolName } from "@sirathic/server/messages";
+import { type ChatMessage, currentToolName, messageText } from "@sirathic/server/messages";
 import type { FileUIPart } from "ai";
 import { REVIEW_EVERY } from "@sirathic/server/projects";
 import { type ComponentRef, type FC, useEffect, useRef, useState } from "react";
@@ -9,7 +9,6 @@ import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { api } from "@/lib/api";
 import { type Bot, useBots } from "@/lib/bots";
 import { toolOf } from "@/lib/research";
-import { textOf } from "@/lib/sources";
 import type { Feedback } from "./answer";
 import { BotAvatar } from "./bot-avatar";
 import { BotMenu, useBotPanel } from "./bot-menu";
@@ -34,7 +33,7 @@ const LOOK_AFTER_MS = [4_000, 9_000, 16_000];
 
 const answerAfter = (messages: ChatMessage[], index: number) => {
   const next = messages.slice(index + 1).find((message) => message.role === "user");
-  return next && textOf(next);
+  return next && messageText(next);
 };
 
 const stateOf = (messages: ChatMessage[], status: string): BlobState => {

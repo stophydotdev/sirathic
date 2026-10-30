@@ -290,6 +290,7 @@ export default {
   "Continue with GitHub": "Jokku e GitHub",
   "Get a new code": "Heɓ kod kesol",
   "Try again": "Eto kadi",
+  "This answer stopped before it wrote anything.": "Ngal jaabawol darii hade mbinndi hay huunde.",
   "Sign In": "Naatu",
   "Account menu": "Doggol konte",
   "ChatGPT account": "Konte ChatGPT",

@@ -291,6 +291,7 @@ export default {
   "Continue with GitHub": "بەردەوامبوون بە GitHub",
   "Get a new code": "وەرگرتنی کۆدی نوێ",
   "Try again": "دووبارە هەوڵ بدەرەوە",
+  "This answer stopped before it wrote anything.": "ئەم وەڵامە پێش ئەوەی هیچ بنووسێت وەستا.",
   "Sign In": "چوونەژوورەوە",
   "Account menu": "لیستی هەژمار",
   "ChatGPT account": "هەژماری ChatGPT",

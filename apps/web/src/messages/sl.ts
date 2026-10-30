@@ -306,6 +306,8 @@ export default {
   "Continue with GitHub": "Nadaljuj z GitHubom",
   "Get a new code": "Pridobi novo kodo",
   "Try again": "Poskusi znova",
+  "This answer stopped before it wrote anything.":
+    "Ta odgovor se je ustavil, preden je karkoli napisal.",
   "Sign In": "Prijava",
   "Account menu": "Meni računa",
   "ChatGPT account": "Račun ChatGPT",

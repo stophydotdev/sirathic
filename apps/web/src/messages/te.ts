@@ -282,6 +282,7 @@ export default {
   "Continue with GitHub": "GitHubతో కొనసాగండి",
   "Get a new code": "కొత్త కోడ్ పొందండి",
   "Try again": "మళ్ళీ ప్రయత్నించండి",
+  "This answer stopped before it wrote anything.": "ఈ సమాధానం ఏమీ రాయకముందే ఆగిపోయింది.",
   "Sign In": "సైన్ ఇన్",
   "Account menu": "ఖాతా మెనూ",
   "ChatGPT account": "ChatGPT ఖాతా",

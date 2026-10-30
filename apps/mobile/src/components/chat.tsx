@@ -1,5 +1,10 @@
 import { Chat as LiveChat, useChat } from "@ai-sdk/react";
-import { type ChatMessage, chatData, messageMetadata } from "@sirathic/server/messages";
+import {
+  type ChatMessage,
+  chatData,
+  messageMetadata,
+  messageText,
+} from "@sirathic/server/messages";
 import { DefaultChatTransport, type FileUIPart, validateUIMessages } from "ai";
 import { type ComponentRef, type FC, useEffect, useRef, useState } from "react";
 import {
@@ -15,7 +20,6 @@ import { z } from "zod";
 import { api } from "@/lib/api";
 import { API_URL, sessionHeaders } from "@/lib/auth";
 import { useChatState } from "@/lib/chat-state";
-import { textOf } from "@/lib/sources";
 import { Answer, type Feedback } from "./answer";
 import { SentFiles } from "./attachment-chip";
 import { Composer } from "./composer";
@@ -232,12 +236,13 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
                 <View key={message.id} className="items-end pt-8 pb-6">
                   <SentFiles message={message} />
                   <Text className="bg-bubble text-foreground font-sans max-w-[90%] overflow-hidden rounded-3xl px-4 py-2.5 text-base">
-                    {textOf(message)}
+                    {messageText(message)}
                   </Text>
                 </View>
               ) : (
                 <Answer
                   key={message.id}
+                  chatId={id}
                   message={message}
                   streaming={busy && index === messages.length - 1}
                   feedback={message.metadata?.feedback ?? null}

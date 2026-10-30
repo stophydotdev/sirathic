@@ -4,7 +4,7 @@ import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, MoreMenu, useAnswer } from "@/components/answerActions";
 import { ShareMenu } from "@/components/shareMenu";
-import { AutomationCard } from "@/components/automationCard";
+import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { ConfirmCard } from "@/components/confirmCard";
 import { FILE_TOOLS, FileCards } from "@/components/fileCards";
 import { AskCard } from "@/components/questionCard";
@@ -101,12 +101,14 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
   const [reporting, setReporting] = useState(false);
   const answerFont = usePreferences((s) => s.answerFont);
   const videoLine = useVideoLine();
+  const empty = useAuiState((s) => wroteNothing(s.message));
   const t = useT();
 
   return (
     <div className="pb-4">
       <StreamingResponse
         status={state}
+        showActions={!empty}
         contentClassName={answerFont === "serif" ? "font-serif" : undefined}
         onCopy={copy}
         sources={groupsOf(sources).flatMap((group) =>
@@ -154,8 +156,9 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         </MessagePrimitive.GroupedParts>
         <FileCards />
         <ReplyError />
+        {empty && <EmptyAnswer />}
       </StreamingResponse>
-      {state === "complete" && <Related />}
+      {state === "complete" && !empty && <Related />}
 
       <ReportMistake
         open={reporting}
@@ -209,6 +212,34 @@ const jsonText = z.string().transform((text, ctx) => {
     return z.NEVER;
   }
 });
+
+const wroteNothing = (message: ThreadMessage) =>
+  message.status?.type !== "running" &&
+  !(message.status?.type === "incomplete" && message.status.reason === "error") &&
+  !message.content.some(
+    (part) =>
+      (part.type === "text" && part.text.trim() !== "") ||
+      (part.type === "tool-call" && isCardTool(part.toolName)),
+  );
+
+const EmptyAnswer: FC = () => {
+  const aui = useAui();
+  const t = useT();
+  return (
+    <div className="flex flex-col items-start gap-3">
+      <span className="text-muted-foreground text-sm">
+        {t("This answer stopped before it wrote anything.")}
+      </span>
+      <button
+        type="button"
+        onClick={() => aui.message().reload()}
+        className="bg-muted hover:bg-muted/70 h-8 rounded-full px-3 text-sm transition-colors"
+      >
+        {t("Try again")}
+      </button>
+    </div>
+  );
+};
 
 export const ReplyError: FC = () => {
   const error = useAuiState((s) =>

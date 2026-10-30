@@ -288,6 +288,7 @@ export default {
   "Continue with GitHub": "المتابعة عبر GitHub",
   "Get a new code": "احصل على رمز جديد",
   "Try again": "حاول مرة أخرى",
+  "This answer stopped before it wrote anything.": "توقفت هذه الإجابة قبل أن تكتب أي شيء.",
   "Sign In": "تسجيل الدخول",
   "Account menu": "قائمة الحساب",
   "ChatGPT account": "حساب ChatGPT",

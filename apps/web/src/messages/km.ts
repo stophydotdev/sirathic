@@ -284,6 +284,7 @@ export default {
   "Continue with GitHub": "បន្តជាមួយ GitHub",
   "Get a new code": "យកលេខកូដថ្មី",
   "Try again": "ព្យាយាមម្ដងទៀត",
+  "This answer stopped before it wrote anything.": "ចម្លើយនេះបានឈប់ មុនពេលសរសេរអ្វីទាំងអស់។",
   "Sign In": "ចូលគណនី",
   "Account menu": "ម៉ឺនុយគណនី",
   "ChatGPT account": "គណនី ChatGPT",

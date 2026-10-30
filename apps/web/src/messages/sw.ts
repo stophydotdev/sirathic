@@ -306,6 +306,8 @@ export default {
   "Continue with GitHub": "Endelea na GitHub",
   "Get a new code": "Pata msimbo mpya",
   "Try again": "Jaribu tena",
+  "This answer stopped before it wrote anything.":
+    "Jibu hili lilisimama kabla ya kuandika chochote.",
   "Sign In": "Ingia",
   "Account menu": "Menyu ya akaunti",
   "ChatGPT account": "Akaunti ya ChatGPT",

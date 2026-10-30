@@ -286,6 +286,7 @@ export default {
   "Continue with GitHub": "GitHub के साथ जारी रखें",
   "Get a new code": "नया कोड लें",
   "Try again": "फिर कोशिश करें",
+  "This answer stopped before it wrote anything.": "यह जवाब कुछ लिखने से पहले ही रुक गया।",
   "Sign In": "साइन इन करें",
   "Account menu": "खाता मेन्यू",
   "ChatGPT account": "ChatGPT खाता",

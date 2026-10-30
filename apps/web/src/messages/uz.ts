@@ -292,6 +292,7 @@ export default {
   "Continue with GitHub": "GitHub орқали давом этиш",
   "Get a new code": "Янги код олиш",
   "Try again": "Қайта уриниш",
+  "This answer stopped before it wrote anything.": "Бу жавоб ҳеч нарса ёзмасдан тўхтаб қолди.",
   "Sign In": "Кириш",
   "Account menu": "Ҳисоб менюси",
   "ChatGPT account": "ChatGPT ҳисоби",

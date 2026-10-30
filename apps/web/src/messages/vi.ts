@@ -290,6 +290,8 @@ export default {
   "Continue with GitHub": "Tiếp tục với GitHub",
   "Get a new code": "Lấy mã mới",
   "Try again": "Thử lại",
+  "This answer stopped before it wrote anything.":
+    "Câu trả lời này đã dừng lại trước khi viết được gì.",
   "Sign In": "Đăng nhập",
   "Account menu": "Menu tài khoản",
   "ChatGPT account": "Tài khoản ChatGPT",

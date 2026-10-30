@@ -292,6 +292,7 @@ export default {
   "Continue with GitHub": "Lanjutkan dengan GitHub",
   "Get a new code": "Dapatkan kode baru",
   "Try again": "Coba lagi",
+  "This answer stopped before it wrote anything.": "Jawaban ini berhenti sebelum menulis apa pun.",
   "Sign In": "Masuk",
   "Account menu": "Menu akun",
   "ChatGPT account": "Akun ChatGPT",
