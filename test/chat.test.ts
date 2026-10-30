@@ -9,7 +9,7 @@ import {
 } from "../apps/server/src/chat/compact";
 import { convertToModelMessages } from "ai";
 import { type ChatMessage, sentMessage } from "../apps/server/src/shared/messages";
-import { shortenEarlierResults } from "../apps/server/src/chat/history";
+import { shortenEarlierResults, withReactionNotes } from "../apps/server/src/chat/history";
 import { keepAlive } from "../apps/server/src/chat/keepAlive";
 import { clientOf } from "../apps/server/src/chat/client";
 import { toolFailure } from "../apps/server/src/chat/events";
@@ -272,6 +272,22 @@ test("an earlier turn's results read the same after a later answer cites one of 
     { id: "u3", role: "user", parts: [{ type: "text", text: "and sleep?" }] },
   ];
   expect(await sentOutputs("call-1", later)).toEqual(await sentOutputs("call-1"));
+});
+
+test("a reaction on the bot's message reaches the model as a system note after it", async () => {
+  const reacted: ChatMessage = {
+    id: "a1",
+    role: "assistant",
+    metadata: { reaction: "👍" },
+    parts: [{ type: "text", text: "Salam!" }],
+  };
+  expect(await convertToModelMessages(withReactionNotes([reacted]))).toEqual([
+    { role: "assistant", content: [{ type: "text", text: "Salam!" }] },
+    {
+      role: "system",
+      content: "The user reacted 👍 to your message above. It is a reaction, not text they typed.",
+    },
+  ]);
 });
 
 test("results after the last question reach the model in full", async () => {

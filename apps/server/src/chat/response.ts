@@ -52,7 +52,7 @@ import { pluginTools } from "../plugins/tools";
 import { skillTools } from "../skills/tools";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
-import { shortenEarlierResults } from "./history";
+import { shortenEarlierResults, withReactionNotes } from "./history";
 import { instructions } from "./prompts/build";
 import {
   closedTools,
@@ -447,7 +447,7 @@ export function chatResponse({
         agent,
         uiMessages: [
           ...(inBot ? await summaryNote(inBot) : []),
-          ...(await readFiles(visible.map(withBareCitations), fileOwner)),
+          ...(await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner)),
         ],
         originalMessages: messages,
         abortSignal,
