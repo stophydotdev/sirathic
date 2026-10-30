@@ -26,6 +26,7 @@ import {
   openSessions,
   pageOf,
   startControl,
+  takeDownloads,
 } from "./sessions";
 import { settings } from "./settings";
 import { startTeaching, stopTeaching } from "./teach";
@@ -71,7 +72,10 @@ Bun.serve({
       POST: (incoming) =>
         handled(incoming, request, async ({ session, action }) =>
           Response.json(
-            await inSession(session, (open) => run(open, action)).catch((error: Error) => {
+            await inSession(session, async (open) => ({
+              ...(await run(open, action)),
+              downloads: await takeDownloads(open),
+            })).catch((error: Error) => {
               console.error(
                 JSON.stringify({ kind: action.kind, error: String(error).slice(0, 2_000) }),
               );

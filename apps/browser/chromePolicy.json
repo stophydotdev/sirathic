@@ -14,7 +14,7 @@
   "BrowserAddPersonEnabled": false,
   "BrowserSignin": 0,
   "SyncDisabled": true,
-  "DownloadRestrictions": 3,
+  "DownloadRestrictions": 1,
   "AllowFileSelectionDialogs": false,
   "PrintingEnabled": false,
   "PasswordManagerEnabled": false,

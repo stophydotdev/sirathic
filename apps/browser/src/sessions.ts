@@ -1,8 +1,14 @@
-import { type Browser, type BrowserContext, chromium, type Page } from "patchright";
+import {
+  type Browser,
+  type BrowserContext,
+  chromium,
+  type Download as Downloading,
+  type Page,
+} from "patchright";
 import { BLOCKED_URLS, isPrivateUrl } from "./blocked";
 import { closable, HOLD_MS, IDLE_MS, MAKE_ROOM_IDLE_MS, RESTORE_MS } from "./idle";
 import { forgetLogins, saveLogins, savedLogins } from "./logins";
-import type { TaughtStep } from "./protocol";
+import type { Download, TaughtStep } from "./protocol";
 import { closeScreen, openScreen, SCREEN, type Screen } from "./screen";
 
 const CHROME_PATH = "/usr/bin/google-chrome-stable";
@@ -27,6 +33,8 @@ const MAX_SESSIONS = 25;
 const SAVE_DELAY_MS = 1_000;
 const SWEEP_MS = 15_000;
 const TYPED_MIN_CHARS = 4;
+const MAX_DOWNLOAD_BYTES = 10 * 1024 * 1024;
+const DOWNLOAD_WAIT_MS = 30_000;
 const FIELD_VALUES =
   "(() => [...document.querySelectorAll('input, textarea')].filter((field) => !['hidden', 'submit', 'button', 'checkbox', 'radio', 'file'].includes(field.type)).map((field) => String(field.value)))()";
 
@@ -60,6 +68,34 @@ export type Session = {
   holdUntil: number;
   held: Map<string, { value: string; domain: string }>;
   teaching?: TaughtStep[];
+  downloads: Promise<Download | undefined>[];
+};
+
+const kept = async (download: Downloading) => {
+  const bytes = await Bun.file(await download.path()).bytes();
+  await download.delete();
+  return bytes.length > MAX_DOWNLOAD_BYTES
+    ? undefined
+    : { name: download.suggestedFilename(), data: Buffer.from(bytes).toString("base64") };
+};
+
+const watch = (session: Session, page: Page) => {
+  page.on("download", (download) => {
+    session.downloads.push(kept(download).catch(() => undefined));
+  });
+};
+
+export const takeDownloads = async (session: Session) => {
+  const pending = session.downloads.splice(0);
+  const done = await Promise.race([
+    Promise.all(pending),
+    Bun.sleep(DOWNLOAD_WAIT_MS).then(() => undefined),
+  ]);
+  if (!done) {
+    session.downloads.push(...pending);
+    return [];
+  }
+  return done.filter((file) => file !== undefined);
 };
 
 export const quietFor = (session: Session) =>
@@ -112,7 +148,9 @@ const open = async (key: string): Promise<Session> => {
     typedBefore: new Set(),
     holdUntil: 0,
     held: new Map(),
+    downloads: [],
   };
+  watch(session, page);
   const finished = () => {
     session.inFlight = Math.max(0, session.inFlight - 1);
     if (session.inFlight === 0) session.idleSince = Date.now();
@@ -124,6 +162,7 @@ const open = async (key: string): Promise<Session> => {
   context.on("requestfailed", finished);
   context.on("page", (opened) => {
     session.page = opened;
+    watch(session, opened);
     void blockAdsAndTrackers(opened).catch(() => undefined);
   });
   browser.on("disconnected", () => {

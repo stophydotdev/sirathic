@@ -10,6 +10,8 @@ import { FormCard, HelpCard } from "@/components/browserCards";
 import { STAMP_GAP, stampText } from "@/components/botStamp";
 import { AttachmentChip } from "@/components/composer";
 import { FILE_TOOLS, FileResult } from "@/components/fileCards";
+import { ScreenshotCard, shownScreenshot } from "@/components/botScreenshot";
+import { savedFiles } from "@sirathic/server/files";
 import { useLocale, useT } from "@/components/i18n";
 import { MarkdownText } from "@/components/markdownText";
 import { UserText } from "@/components/mentions";
@@ -36,13 +38,18 @@ type Said =
   | { kind: "text"; text: string }
   | { kind: "tool"; part: Extract<Part, { type: "tool-call" }> };
 
+const shows = (part: Extract<Part, { type: "tool-call" }>) =>
+  shownScreenshot.safeParse(part.result).success ||
+  (part.toolName === "code_execution" &&
+    (savedFiles.safeParse(part.result).data?.files.length ?? 0) > 0);
+
 const saidOf = (content: ThreadMessage["content"]) =>
   content
     .flatMap<Said>((part) => {
       if (part.type === "text") return bubblesOf(part.text).map((text) => ({ kind: "text", text }));
       if (
         part.type === "tool-call" &&
-        (isCardTool(part.toolName) || isBotEvent(part.toolName) || part.approval)
+        (isCardTool(part.toolName) || isBotEvent(part.toolName) || part.approval || shows(part))
       ) {
         return [{ kind: "tool", part }];
       }
@@ -102,6 +109,8 @@ const BotText: FC<{ text: string; last: boolean }> = ({ text, last }) => {
 const Bubble: FC<{ said: Said; last: boolean }> = ({ said, last }) => {
   if (said.kind === "text") return <BotText text={said.text} last={last} />;
   const { toolName, args, result } = said.part;
+  const shot = shownScreenshot.safeParse(result).data;
+  if (shot) return <ScreenshotCard shot={shot} />;
   if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
   if (currentToolName(toolName) === "request_user_form") {
     return <FormCard args={args} result={result} />;
@@ -112,7 +121,9 @@ const Bubble: FC<{ said: Said; last: boolean }> = ({ said, last }) => {
       {said.part.approval && <ConfirmCard call={said.part} />}
       <AutomationCard tool={toolName} result={result} />
       <BotEvent tool={toolName} result={result} />
-      {FILE_TOOLS.includes(toolName) && <FileResult part={said.part} />}
+      {(FILE_TOOLS.includes(toolName) || toolName === "code_execution") && (
+        <FileResult part={said.part} />
+      )}
     </>
   );
 };

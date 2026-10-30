@@ -41,6 +41,7 @@ import { needsApproval, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
 import { fileTools } from "./fileTools";
+import { botDisk, keepAttachments } from "../bots/disk";
 import { imageTools } from "./images";
 import { keepAlive } from "./keepAlive";
 import { readFiles } from "../files/attachments";
@@ -325,7 +326,12 @@ export function chatResponse({
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
       const searchable = inBot && visible.length < messages.length ? inBot : undefined;
-      const sandbox = codeSandbox(`chat:${fileOwner}:${turn.sessionId}`);
+      const disk = inBot && botDisk(inBot.id);
+      if (disk && fileOwner !== undefined) await keepAttachments(disk, asked, fileOwner);
+      const sandbox = codeSandbox(
+        inBot ? `bot:${inBot.id}` : `chat:${fileOwner}:${turn.sessionId}`,
+        disk,
+      );
       const routines = automate && {
         ...automate,
         timezone: preferred.timezone || automate.timezone,
@@ -363,13 +369,13 @@ export function chatResponse({
           preferred.usePastChats &&
           pastChatTools(owner, turn.sessionId)),
         ...(inBot && studyTools(inBot)),
-        ...(!inBot &&
-          fileOwner !== undefined &&
+        ...(fileOwner !== undefined &&
           fileTools({
             owner: fileOwner,
             incognito: owner === undefined,
             research: mode === "research",
             sandbox: noorModel(modelName) !== undefined ? sandbox : undefined,
+            disk,
             link: sources.link,
           })),
         ...connectors.tools,

@@ -8,7 +8,7 @@ import { fileOf } from "./store";
 
 type Part = ChatMessage["parts"][number];
 
-async function bytesOf(url: string, owner: string | undefined) {
+export async function bytesOf(url: string, owner: string | undefined) {
   if (url.startsWith("data:")) {
     return new Uint8Array(Buffer.from(url.slice(url.indexOf(",") + 1), "base64"));
   }

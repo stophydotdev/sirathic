@@ -60,6 +60,21 @@ const step = z.discriminatedUnion("kind", [
   selectInput.extend({ kind: z.literal("select") }),
 ]);
 
+export const uploadInput = z.object({
+  target,
+  files: z
+    .array(z.string().trim().min(1).max(200))
+    .min(1)
+    .max(5)
+    .describe("Names of your files to put in the upload field, like cv.pdf."),
+});
+
+const sentFile = z.object({
+  name: z.string().min(1).max(200),
+  mimeType: z.string(),
+  data: z.base64(),
+});
+
 export const batchInput = z.object({
   steps: z.array(step).min(2).max(10).describe("Actions run in order, each with its kind."),
 });
@@ -99,6 +114,7 @@ export const action = z.discriminatedUnion("kind", [
   runCodeInput.extend({ kind: z.literal("run_code") }),
   batchInput.extend({ kind: z.literal("batch") }),
   tabsInput.extend({ kind: z.literal("tabs") }),
+  z.object({ kind: z.literal("upload"), target, files: z.array(sentFile).min(1).max(5) }),
 ]);
 
 export type Action = z.infer<typeof action>;
@@ -114,6 +130,12 @@ export const result = z.object({
 });
 
 export type Result = z.infer<typeof result>;
+
+export const download = z.object({ name: z.string(), data: z.base64() });
+
+export type Download = z.infer<typeof download>;
+
+export const acted = result.extend({ downloads: z.array(download) });
 
 export const failure = z.object({ error: z.string() });
 

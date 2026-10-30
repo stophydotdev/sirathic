@@ -245,6 +245,8 @@ const ranWith = (files: Record<string, Uint8Array>) => async () => ({
   stdout: "done",
   stderr: "",
   exitCode: 0,
+  kept: [],
+  removed: [],
   files: Object.entries(files).map(([name, content]) => ({ name, bytes: content })),
 });
 
@@ -293,7 +295,9 @@ test("an incognito chat runs code but keeps none of its files", async () => {
   });
 });
 
-test("the sandbox gets the chat's script and its files come back as bytes", async () => {
+const encoded = (text: string) => Buffer.from(text).toString("base64");
+
+test("the sandbox gets the bot's files and keeps what the script changed", async () => {
   const real = globalThis.fetch;
   const sent: unknown[] = [];
   globalThis.fetch = Object.assign(
@@ -303,18 +307,82 @@ test("the sandbox gets the chat's script and its files come back as bytes", asyn
         stdout: "125",
         stderr: "",
         exitCode: 0,
-        files: [{ name: "zakat.csv", data: Buffer.from("5000,0.00").toString("base64") }],
+        files: [{ name: "zakat.csv", data: encoded("5000,0.00") }],
+        changed: [{ name: "ticket.txt", data: encoded("stamped") }],
+        removed: ["old.txt"],
       });
     },
     { preconnect: real.preconnect },
   );
-  const ran = await codeSandbox("chat-1")("print(5000 * 0.025)", undefined);
+  const held = new Map([
+    ["ticket.txt", "plain"],
+    ["old.txt", "x"],
+  ]);
+  const disk = {
+    list: async () => [...held.keys()].map((name) => ({ name, size: 1 })),
+    read: async (name: string) => new TextEncoder().encode(held.get(name)),
+    write: async (name: string, content: Uint8Array) => {
+      held.set(name, new TextDecoder().decode(content));
+      return name;
+    },
+    remove: async (name: string) => {
+      held.delete(name);
+    },
+    clear: async () => held.clear(),
+  };
+  const ran = await codeSandbox("bot-1", disk)("print(5000 * 0.025)", undefined);
   globalThis.fetch = real;
-  expect(sent).toEqual([{ session: "chat-1", code: "print(5000 * 0.025)" }]);
-  expect(ran.stdout).toBe("125");
+  expect(sent).toEqual([
+    {
+      session: "bot-1",
+      code: "print(5000 * 0.025)",
+      files: [
+        { name: "ticket.txt", data: encoded("plain") },
+        { name: "old.txt", data: encoded("x") },
+      ],
+    },
+  ]);
   expect(ran.files.map((file) => [file.name, new TextDecoder().decode(file.bytes)])).toEqual([
     ["zakat.csv", "5000,0.00"],
   ]);
+  expect([ran.kept, ran.removed]).toEqual([["ticket.txt"], ["old.txt"]]);
+  expect([...held]).toEqual([["ticket.txt", "stamped"]]);
+});
+
+test("two code runs in one bot turn take turns, so neither loses the other's change", async () => {
+  const real = globalThis.fetch;
+  globalThis.fetch = Object.assign(
+    async (_input: string | Request | URL, init?: RequestInit) => {
+      const { files } = z
+        .object({ files: z.array(z.object({ name: z.string(), data: z.string() })) })
+        .parse(JSON.parse(String(init?.body)));
+      const count = Number(Buffer.from(files[0]?.data ?? "", "base64").toString());
+      return Response.json({
+        stdout: "",
+        stderr: "",
+        exitCode: 0,
+        files: [],
+        changed: [{ name: "count.txt", data: encoded(String(count + 1)) }],
+        removed: [],
+      });
+    },
+    { preconnect: real.preconnect },
+  );
+  let held = "0";
+  const disk = {
+    list: async () => [{ name: "count.txt", size: 1 }],
+    read: async () => new TextEncoder().encode(held),
+    write: async (name: string, content: Uint8Array) => {
+      held = new TextDecoder().decode(content);
+      return name;
+    },
+    remove: async () => undefined,
+    clear: async () => undefined,
+  };
+  const run = codeSandbox("bot-1", disk);
+  await Promise.all([run("add one", undefined), run("add one", undefined)]);
+  globalThis.fetch = real;
+  expect(held).toBe("2");
 });
 
 test("a bot's browser closes when idle, never while someone uses it or a form waits", () => {
