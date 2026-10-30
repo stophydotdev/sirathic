@@ -10,15 +10,16 @@ Draft an Islamic will for the user to take to a lawyer: the heirs' shares, any b
 
 ## Before you start
 
-- Gather in one round of clarifying_questions: the country they live in, their family (spouse, children by sex, parents, siblings, and who has died before them), their debts, any bequest (up to a third, and not to an heir), guardians for young children, and their burial wishes.
+- Gather in one round of clarifying_questions: the country they live in, their family (spouse, children by sex, parents, siblings, and who has died before them), their debts, any bequest (up to a third of what remains after funeral costs and debts), guardians for young children, and their burial wishes.
 - The shares and who blocks whom come from search_web results, cited, with their madhab first when known, since the schools differ on cases like a grandfather with siblings, radd and distant kindred.
 
 ## Flow
 
 1. Work out the shares with code when you can: the fixed shares, the residue, and any 'awl or radd, as fractions and percentages, in a table. Offer the chart skill for a picture of the shares.
-2. Draft the will: the declaration of faith, paying debts and funeral costs first, the bequest up to a third, the estate divided by the Islamic shares, the executor and guardians, and the burial wishes. Follow the format their country's law requires, found with search_web.
-3. Offer it as a Word file when you can make one.
-4. End with what they must do: have it reviewed by a lawyer who knows Islamic wills in their country, sign it as that law requires, and tell the executor where it is kept.
+2. A bequest to an heir needs care. In the four schools, the main view is that it takes effect only if the other heirs agree. Some scholars say it is void even then. Egypt's Dar al-Ifta, following Egyptian law, allows up to a third without consent. Search and cite the views, and the law where they live.
+3. Draft the will: the declaration of faith, then in order the funeral costs, the debts, the bequest up to a third of what remains, and the rest divided by the Islamic shares, then the executor and guardians, and the burial wishes. Follow the format their country's law requires, found with search_web.
+4. Offer it as a Word file when you can make one.
+5. End with what they must do: have it reviewed by a lawyer who knows Islamic wills in their country, sign it as that law requires, and tell the executor where it is kept.
 
 ## Pitfalls
 

@@ -17,8 +17,8 @@ Plan a Hajj or Umrah trip end to end: the permits and visa, the flights, the sta
 
 ## Flow
 
-1. Build the itinerary first: the days in each city, Umrah on arrival or after Madinah, and for Hajj the 8th to the 13th of Dhul Hijjah. Turn Hijri days into dates with islamic_dates when it is in your tools, and say they are expected dates.
-2. Find the miqat the route crosses before the flight is booked. For a Makkah-first trip by air, ihram is put on before the plane crosses it. Search which miqat applies to their route and how airlines announce it, and cite it.
+1. Build the itinerary first: the days in each city, Umrah on arrival or after Madinah, and for Hajj the 8th to the 12th or 13th of Dhul Hijjah. Turn Hijri days into dates with islamic_dates when it is in your tools, and say they are expected dates.
+2. Before the flight is booked, find the miqat the route crosses and where to enter ihram. Scholars differ on where an air traveller enters ihram. Most say before the plane passes the miqat, and some allow Jeddah. Search the views and cite them, leading with the user's madhab or their country's fatwa body, and say how airlines announce the miqat.
 3. Do the bookings with the booking skills: flights into JED or MED, and a stay near the Haram with the walking time to the gate.
 4. Permits: book a Rawdah or Umrah slot in Nusuk with your browser when the user has an account; their sign-in goes through request_browser_help. Report the slot, the date, the gate and what to bring.
 5. Write the day-by-day plan: each day's rites and their steps from search_web results, cited, with the views of the schools where they differ and the user's madhab first when known. Add prayer_times for Makkah or Madinah on those dates with the UmmAlQura method.
