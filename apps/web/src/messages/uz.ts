@@ -854,6 +854,8 @@ export default {
     "Botlaringiz faqat siz saqlagan saytlar va yorliqlarni ko‘radi. Qolgan barcha ma’lumotlar to‘g‘ridan-to‘g‘ri sayt sahifasiga kiritiladi.",
   "{name}'s screen": "{name} экрани",
   "{name} waits while you use it": "Сиз фойдаланаётганда {name} кутади",
+  "{name} keeps working while you watch": "Сиз кузатаётганда {name} ишлашда давом этади",
+  "Take control": "Бошқарувни олиш",
   "I'm done": "Тайёр",
   Keyboard: "Клавиатура",
   "Teach a task": "Вазифа ўргатиш",

@@ -844,6 +844,8 @@ export default {
     "Botuuji maa njiyata tan lowe geese e inɗe ɗe dannduɗaa. Ko heddii fof naatnetee ɗoon e hello ngoo.",
   "{name}'s screen": "Yaynirde {name}",
   "{name} waits while you use it": "{name} ena habba tuma nde huutortoɗaa ɗum",
+  "{name} keeps working while you watch": "{name} ena jokki golle tuma nde ndaartaa",
+  "Take control": "Jogo wanngorde",
   "I'm done": "Mi gasii",
   Keyboard: "Tappirde",
   "Teach a task": "Ekkit golle",

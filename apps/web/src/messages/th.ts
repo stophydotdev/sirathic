@@ -825,6 +825,8 @@ export default {
     "บอตของคุณจะเห็นเฉพาะเว็บไซต์และป้ายกำกับที่คุณบันทึกไว้ ข้อมูลอื่นทั้งหมดจะถูกกรอกลงในหน้าเว็บโดยตรง",
   "{name}'s screen": "หน้าจอของ {name}",
   "{name} waits while you use it": "{name} รอระหว่างที่คุณใช้งาน",
+  "{name} keeps working while you watch": "{name} ทำงานต่อระหว่างที่คุณดู",
+  "Take control": "ควบคุมเอง",
   "I'm done": "เสร็จแล้ว",
   Keyboard: "แป้นพิมพ์",
   "Teach a task": "สอนงาน",

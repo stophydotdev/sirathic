@@ -855,6 +855,8 @@ export default {
     "Vos bots ne voient que les sites et les libellés que vous avez enregistrés. Tout le reste est saisi directement sur la page.",
   "{name}'s screen": "Écran de {name}",
   "{name} waits while you use it": "{name} attend pendant que vous l'utilisez",
+  "{name} keeps working while you watch": "{name} continue de travailler pendant que vous regardez",
+  "Take control": "Prendre la main",
   "I'm done": "J'ai terminé",
   Keyboard: "Clavier",
   "Teach a task": "Apprendre une tâche",

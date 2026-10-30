@@ -843,6 +843,8 @@ export default {
     "ボットに見えるのは、保存したウェブサイトとラベルだけです。それ以外の情報はウェブページに直接入力されます。",
   "{name}'s screen": "{name}の画面",
   "{name} waits while you use it": "使っている間、{name}は待機します",
+  "{name} keeps working while you watch": "見ている間も{name}は作業を続けます",
+  "Take control": "操作を引き継ぐ",
   "I'm done": "終わりました",
   Keyboard: "キーボード",
   "Teach a task": "タスクを教える",

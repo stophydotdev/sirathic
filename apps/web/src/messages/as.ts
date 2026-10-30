@@ -832,6 +832,8 @@ export default {
     "আপোনাৰ বটসমূহে কেৱল আপুনি সংৰক্ষণ কৰা ৱেবছাইট আৰু লেবেলসমূহহে দেখে। বাকী সকলো তথ্য পোনে পোনে ৱেবপৃষ্ঠাত ভৰোৱা হয়।",
   "{name}'s screen": "{name}ৰ স্ক্ৰীণ",
   "{name} waits while you use it": "আপুনি ব্যৱহাৰ কৰালৈকে {name} অপেক্ষা কৰে",
+  "{name} keeps working while you watch": "আপুনি চাই থাকোঁতে {name}-এ কাম কৰি থাকে",
+  "Take control": "নিয়ন্ত্ৰণ লওক",
   "I'm done": "মোৰ হ'ল",
   Keyboard: "কীবৰ্ড",
   "Teach a task": "এটা কাম শিকাওক",

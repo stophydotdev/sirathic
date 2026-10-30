@@ -847,6 +847,8 @@ export default {
     "Botên te tenê malper û etîketên ku te tomar kirine dibînin. Hemû agahiyên din rasterast di rûpela malperê de tên nivîsandin.",
   "{name}'s screen": "شاشەی {name}",
   "{name} waits while you use it": "{name} چاوەڕێ دەکات تا تۆ بەکاری دەهێنیت",
+  "{name} keeps working while you watch": "{name} بەردەوام کار دەکات کاتێک تۆ سەیر دەکەیت",
+  "Take control": "کۆنترۆڵ وەربگرە",
   "I'm done": "تەواو بووم",
   Keyboard: "تەختەکلیل",
   "Teach a task": "ئەرکێک فێر بکە",

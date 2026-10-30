@@ -842,6 +842,8 @@ export default {
     "Bot của bạn chỉ thấy các trang web và nhãn bạn đã lưu. Mọi thông tin khác được điền thẳng vào trang web.",
   "{name}'s screen": "Màn hình của {name}",
   "{name} waits while you use it": "{name} chờ trong lúc bạn dùng",
+  "{name} keeps working while you watch": "{name} vẫn làm việc trong lúc bạn xem",
+  "Take control": "Nhận quyền điều khiển",
   "I'm done": "Tôi xong rồi",
   Keyboard: "Bàn phím",
   "Teach a task": "Dạy một việc",

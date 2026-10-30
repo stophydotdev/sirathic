@@ -836,6 +836,8 @@ export default {
     "आपके बॉट सिर्फ़ आपकी सेव की हुई वेबसाइटें और लेबल देखते हैं। बाकी सारी जानकारी सीधे वेबसाइट के पेज पर भरी जाती है।",
   "{name}'s screen": "{name} की स्क्रीन",
   "{name} waits while you use it": "जब तक आप इसे इस्तेमाल करते हैं, {name} इंतज़ार करता है",
+  "{name} keeps working while you watch": "जब आप देखते हैं, {name} काम करता रहता है",
+  "Take control": "नियंत्रण लें",
   "I'm done": "हो गया",
   Keyboard: "कीबोर्ड",
   "Teach a task": "कोई काम सिखाएँ",

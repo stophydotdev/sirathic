@@ -846,6 +846,8 @@ export default {
     "Vaši botovi vide samo web-stranice i oznake koje ste sačuvali. Svi ostali podaci unose se direktno na stranicu.",
   "{name}'s screen": "Ekran bota {name}",
   "{name} waits while you use it": "{name} čeka dok ga koristite",
+  "{name} keeps working while you watch": "{name} nastavlja raditi dok gledate",
+  "Take control": "Preuzmite kontrolu",
   "I'm done": "Gotovo",
   Keyboard: "Tastatura",
   "Teach a task": "Nauči zadatak",

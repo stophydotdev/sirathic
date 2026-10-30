@@ -845,6 +845,8 @@ export default {
     "Ваши ботови виде само веб-сајтове и ознаке које сте сачували. Сви остали подаци уносе се директно на страницу сајта.",
   "{name}'s screen": "Екран бота {name}",
   "{name} waits while you use it": "{name} чека док га користите",
+  "{name} keeps working while you watch": "{name} наставља да ради док гледате",
+  "Take control": "Преузми контролу",
   "I'm done": "Готово",
   Keyboard: "Тастатура",
   "Teach a task": "Научи задатак",

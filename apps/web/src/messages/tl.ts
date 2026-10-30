@@ -854,6 +854,8 @@ export default {
     "Nakikita lang ng mga bot mo ang mga website at label na na-save mo. Lahat ng iba pang impormasyon ay direktang inilalagay sa pahina ng website.",
   "{name}'s screen": "Screen ni {name}",
   "{name} waits while you use it": "Naghihintay si {name} habang ginagamit mo ito",
+  "{name} keeps working while you watch": "Patuloy na gumagana si {name} habang nanonood ka",
+  "Take control": "Kunin ang kontrol",
   "I'm done": "Tapos na ako",
   Keyboard: "Keyboard",
   "Teach a task": "Magturo ng gawain",

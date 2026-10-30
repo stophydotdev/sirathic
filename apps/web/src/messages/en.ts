@@ -774,6 +774,8 @@ export const MESSAGES = [
   "Your bots only see which websites and labels you saved. Everything else goes straight into the page.",
   "{name}'s screen",
   "{name} waits while you use it",
+  "{name} keeps working while you watch",
+  "Take control",
   "I'm done",
   "Keyboard",
   "Teach a task",

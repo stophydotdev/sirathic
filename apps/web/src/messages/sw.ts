@@ -846,6 +846,8 @@ export default {
     "Boti zako huona tu tovuti na lebo ulizohifadhi. Taarifa nyingine zote huingizwa moja kwa moja kwenye ukurasa wa tovuti.",
   "{name}'s screen": "Skrini ya {name}",
   "{name} waits while you use it": "{name} anasubiri unapoitumia",
+  "{name} keeps working while you watch": "{name} anaendelea kufanya kazi unapotazama",
+  "Take control": "Chukua udhibiti",
   "I'm done": "Nimemaliza",
   Keyboard: "Kibodi",
   "Teach a task": "Fundisha kazi",

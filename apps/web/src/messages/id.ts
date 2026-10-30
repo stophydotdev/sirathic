@@ -849,6 +849,8 @@ export default {
     "Bot Anda hanya melihat situs web dan label yang Anda simpan. Info lainnya langsung diisikan ke halaman situs.",
   "{name}'s screen": "Layar {name}",
   "{name} waits while you use it": "{name} menunggu selama Anda memakainya",
+  "{name} keeps working while you watch": "{name} tetap bekerja selama Anda menonton",
+  "Take control": "Ambil alih",
   "I'm done": "Sudah selesai",
   Keyboard: "Keyboard",
   "Teach a task": "Ajarkan tugas",
