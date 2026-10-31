@@ -69,6 +69,16 @@ test.each([
   expect(asks).toBe(expected);
 });
 
+test("a bulk action asks even when an allow rule matches it", async () => {
+  const input = {
+    search: { tool: "gmail_search_threads" },
+    rule: "marketing emails",
+    action: { tool: "gmail_trash_thread", idArgument: "threadId" },
+  };
+  const asks = await scoredBy([0.9], () => asksFirst({ toolName: "bulk_action", input }, [allow]));
+  expect(asks).toBe(true);
+});
+
 const calendar = { text: "ask me before changing my calendar", effect: "ask" } as const;
 const changes = new Set(["cal_create_event", "gmail_trash_thread", "gmail_create_draft"]);
 

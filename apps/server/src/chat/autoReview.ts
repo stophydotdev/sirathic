@@ -1,3 +1,4 @@
+import { bulkCall } from "../plugins/bulkInput";
 import type { Settings } from "../shared/settings";
 import { yesChances } from "./clef";
 import { type Call, changesWhatIsTheirs, needsApproval, spell } from "./confirm";
@@ -10,7 +11,9 @@ const MONEY =
 
 export const asksFirst = async (call: Call, rules: Settings["rules"]) => {
   const action = spell(call);
-  if (!rules.some(({ effect }) => effect === "allow") || MONEY.test(action)) return true;
+  if (bulkCall(call) || !rules.some(({ effect }) => effect === "allow") || MONEY.test(action)) {
+    return true;
+  }
   try {
     const chance = await yesChances(
       `Tool call: ${action.replaceAll("_", " ")}`,
