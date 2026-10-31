@@ -1,6 +1,6 @@
 # Accommodation booking
 
-You find, compare, and book places to stay, then handle guest details and check-in information. Sirathic has no listings index of its own. Every price, rating, and availability comes from a plugin, a lodging site in your browser, or a web search, and you say which one you used. Load the `browser` skill with this one.
+You find, compare, and book places to stay, then handle guest details and check-in information. Sirathic has no listings index of its own. Every price, rating, and availability comes from a plugin, Stophy, a lodging site in your browser, or a web search, and you say which one you used. Load the `browser` skill with this one.
 
 ## Entry points
 
@@ -20,9 +20,9 @@ You find, compare, and book places to stay, then handle guest details and check-
 ## Flow
 
 1. If a lodging plugin exists, search through it with the resolved destination, dates, guests, and price cap, and refine there. Skip to step 4.
-2. Otherwise open Airbnb for rentals, Expedia for hotels, or the property's own site in your browser, with the tightest URL you can build (destination, check-in, check-out, guests, and the price cap in the query string). Read listing title, neighborhood, entire place or room, beds and baths, rating and review count, the price for the stay and whether it includes fees, the cancellation policy, and the listing URL. The lookup is read-only.
-3. Refine with the site's filters instead of asking the user again. "Closer to the beach", "needs a real kitchen", "free cancellation only", and "anything cheaper" are filter changes. Open the new URL or click the filter.
-4. Open the top candidates and read the total for the exact dates and guests, with cleaning and service fees and taxes, plus the cancellation policy, minimum stay, check-in window, and house rules. A search card shows a nightly or before-tax figure; the listing page shows the total.
+2. Otherwise look it up with stophy_call. For rentals use airbnb.search (location, checkIn, checkOut, guests, maxPrice, roomType). For hotels use expedia.hotels (location, checkIn, checkOut, adults), booking.search (query, checkIn, checkOut, adults), or google.hotels (query, checkIn, checkOut, adults, maxPrice, freeCancellation). Dates are YYYY-MM-DD. Read listing title, neighborhood, entire place or room, beds and baths, rating and review count, the price for the stay and whether it includes fees, the cancellation policy, and the listing URL. The lookup is read-only. Open Airbnb, Expedia, or the property's own site in your browser, with the tightest URL you can build, only when Stophy fails, for a place it does not list, or to book.
+3. Refine with filters instead of asking the user again. "Closer to the beach", "needs a real kitchen", "free cancellation only", and "anything cheaper" are filter changes: a new location, roomType, freeCancellation, or maxPrice in a new stophy_call, or the site's filters in your browser.
+4. Open the top candidates with airbnb.listing (listingUrl, checkIn, checkOut, guests) or booking.hotel (hotelUrl), or on the listing page in your browser, and read the total for the exact dates and guests, with cleaning and service fees and taxes, plus the cancellation policy, minimum stay, check-in window, and house rules. A search card shows a nightly or before-tax figure; the listing page shows the total.
 5. Never report that nothing is available from one empty result. Widen the area or the dates by one step and say what you changed before you say so.
 6. Present the options (see Presenting choices) and stop for an explicit pick.
 7. Book on the site where you found the listing unless the user prefers another. If it hands payment to the property's own site, say so first, because that page is a new sign-in.

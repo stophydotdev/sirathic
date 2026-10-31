@@ -17,6 +17,8 @@ const SNIPPET_CHARS = 300;
 const PAGE_KEY = /^(?:url|\w+Url)$/u;
 const NOT_A_PAGE = /image|thumbnail|avatar|icon|photo|logo/iu;
 
+export const STOPHY_TOOLS = ["stophy_search_endpoints", "stophy_call"];
+
 export const STOPHY_LINK =
   /https?:\/\/(?:[\w-]+\.)*(?:youtube\.com|youtu\.be|tiktok\.com|instagram\.com|x\.com|twitter\.com|reddit\.com|pinterest\.[a-z.]+|pin\.it|linkedin\.com|threads\.(?:net|com)|tripadvisor\.[a-z.]+|trustpilot\.com|upwork\.com|indeed\.[a-z.]+|amazon\.[a-z.]+|amzn\.to|ebay\.[a-z.]+|zillow\.com|realtor\.com|craigslist\.org|airbnb\.[a-z.]+|booking\.com|expedia\.[a-z.]+|lu\.ma|luma\.com|apps\.apple\.com|play\.google\.com|maps\.google\.[a-z.]+|maps\.app\.goo\.gl)\/|https?:\/\/(?:www\.)?google\.[a-z.]+\/(?:maps|travel)/iu;
 
