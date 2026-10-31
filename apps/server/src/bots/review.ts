@@ -7,7 +7,8 @@ import { REASON_MAX, setNote, taughtNote } from "./notes";
 import { sideOptions } from "../models/subscription";
 import { reasonOf } from "../http";
 import { messageSchemas } from "../chat/sessions";
-import { type ChatMessage, messageText } from "../shared/messages";
+import { type ChatMessage, messageText, type Report } from "../shared/messages";
+import { yesChances } from "../chat/clef";
 import { NOTE_MAX, REVIEW_EVERY } from "../shared/projects";
 import type { User } from "../account/users";
 import { pickModels } from "../models/pick";
@@ -15,6 +16,10 @@ import { pickModels } from "../models/pick";
 const REVIEW_TIMEOUT_MS = 20_000;
 const RECENT_MESSAGES = 12;
 const MESSAGE_CHARS = 700;
+const SKIP_BELOW = 0.2;
+const NOT_STYLE = new Set<Report["reason"]>(["quote", "school", "source", "ruling"]);
+const CHANGES_STYLE =
+  "Does this chat clearly show a lasting preference for how this user wants to be taught or answered (format, length, tone, pace, language or schedule), which the current note does not already cover?";
 
 const REVIEW_PROMPT = `You review one bot's chat to decide if its teaching note should change. The note holds how this user wants to be taught: format, length, tone, pace and schedule. The bot's job is separate and never changes here.
 
@@ -68,6 +73,9 @@ async function reviewPrompt(botId: string, by: string, why: Why) {
     messages: chat.messages,
     ...messageSchemas,
   });
+  const rated = why.kind === "down" ? messages.find(({ id }) => id === why.messageId) : undefined;
+  const reason = rated?.metadata?.report?.reason;
+  if (reason !== undefined && NOT_STYLE.has(reason)) return undefined;
   const prompt = [
     `The bot's job: ${bot.instructions || "none yet"}`,
     `Current note: ${bot.note || "empty"}`,
@@ -80,9 +88,16 @@ async function reviewPrompt(botId: string, by: string, why: Why) {
   return { prompt, note: bot.note };
 }
 
+async function mayChangeStyle(chat: string) {
+  const chance = await yesChances(chat, { change: CHANGES_STYLE }, "clef").catch((err: Error) => {
+    console.warn(`bot review check failed: ${reasonOf(err)}`);
+  });
+  return (chance?.("change") ?? 1) >= SKIP_BELOW;
+}
+
 async function review({ user, botId, why }: { user: User; botId: string; why: Why }) {
   const found = await reviewPrompt(botId, user.id, why);
-  if (!found) return;
+  if (!found || !(await mayChangeStyle(found.prompt))) return;
   const decided = await streamText({
     model: pickModels(user, undefined).models.small,
     instructions: REVIEW_PROMPT,
