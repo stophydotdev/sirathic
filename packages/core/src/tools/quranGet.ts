@@ -2,6 +2,7 @@ import { db } from "@sirathic/db";
 import { surahs, tafsirPassages, texts, verses } from "@sirathic/db/schema";
 import { and, asc, between, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
+import { quranTranslation } from "./quranTranslation";
 
 const MAX_VERSES = 50;
 
@@ -13,6 +14,12 @@ export const quranGetInput = z
     from: z.number().int().min(1).max(LONGEST_SURAH).optional(),
     to: z.number().int().min(1).max(LONGEST_SURAH).optional(),
     context: z.number().int().min(0).max(10).default(0),
+    language: z
+      .string()
+      .optional()
+      .describe(
+        "The language you are answering in, as an ISO 639 code like fr, ur or id. When it is not en, each verse also comes with a published translation in that language: quote it word for word and name the translation.",
+      ),
   })
   .refine(({ from, to }) => to === undefined || (from !== undefined && to >= from), {
     message: "to needs from, and must not be before it",
@@ -69,7 +76,15 @@ export const versesByIds = async (ids: string[]) => {
 };
 
 export const quranGet = async (input: z.input<typeof quranGetInput>) => {
-  const { surah, from, to = from, context } = quranGetInput.parse(input);
+  const { surah, from, to = from, context, language } = quranGetInput.parse(input);
+  const code = language?.toLowerCase().split(/[-_]/u)[0];
+  const translating =
+    code === undefined || code === "en" || code === "ar"
+      ? undefined
+      : quranTranslation(code, surah).catch((err: Error) => {
+          console.warn(`no ${code} Quran translation: ${err.message}`);
+          return undefined;
+        });
   const window =
     from === undefined || to === undefined
       ? undefined
@@ -79,12 +94,15 @@ export const quranGet = async (input: z.input<typeof quranGetInput>) => {
     .orderBy(asc(verses.ayah))
     .limit(MAX_VERSES + 1);
   const shown = rows.slice(0, MAX_VERSES);
+  const translated = await translating;
   return {
     truncated: rows.length > MAX_VERSES,
+    translatedBy: translated?.by,
     tafsirEn: await tafsirEnFor(shown.map((row) => row.id)),
     verses: shown.map((row) =>
       Object.assign(row, {
         isContext: from !== undefined && to !== undefined && (row.ayah < from || row.ayah > to),
+        translation: translated?.verses.get(row.ayah),
       }),
     ),
   };

@@ -139,15 +139,16 @@ If results are incomplete, conflicting, snippet-level, single-sided, or do not c
         description: "Read Quran verses by surah and ayah range.",
         inputSchema: quranGetInput,
         execute: async (input) => {
-          const { verses, truncated } = await quranGet(input);
+          const { verses, truncated, translatedBy } = await quranGet(input);
           const { cited, sources } = numbered(cite, verses, verseSource);
-          return { verses: cited, truncated, sources };
+          return { verses: cited, truncated, translatedBy, sources };
         },
         toModelOutput: ({ output }) => ({
           type: "json",
           value: {
             verses: output.verses.map(({ textAr: _shownByTheCard, ...verse }) => verse),
             truncated: output.truncated,
+            translatedBy: output.translatedBy,
           },
         }),
       }),
