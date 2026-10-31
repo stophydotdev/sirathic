@@ -1,6 +1,6 @@
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
-import { isStepCount, Output, streamText, ToolLoopAgent } from "ai";
+import { Output, streamText, ToolLoopAgent } from "ai";
 import { z } from "zod";
 import { yesChances } from "../apps/server/src/chat/clef";
 import { withoutEmDashes } from "../apps/server/src/chat/compact";
@@ -14,8 +14,6 @@ import { article, type ArticleInput } from "../apps/web/src/content/discover/sch
 
 const FOLDER = join(import.meta.dir, "../apps/web/src/content/discover");
 const TINTS = ["teal", "rose", "amber", "indigo"] as const;
-const STEP_CAP = 20;
-const ANSWER_AT_TOKENS = 40_000;
 const RESULTS_CHARS = 120_000;
 const MARKER = /\s*\[(\d+)\]/gu;
 const RESEARCH_MS = 15 * 60_000;
@@ -104,39 +102,44 @@ async function research(title: string) {
     connectedApps: [],
     toolNotes: [],
   });
+  const read = new Map<string, Source>();
+  const seen = new Map<string, string[]>();
+  let steps = 0;
+  let inputTokens = 0;
   const agent = new ToolLoopAgent({
     model,
     instructions: system,
     tools,
-    stopWhen: isStepCount(STEP_CAP),
-    prepareStep: ({ stepNumber, steps }) =>
-      stepNumber === STEP_CAP - 1 || (steps.at(-1)?.usage.inputTokens ?? 0) > ANSWER_AT_TOKENS
-        ? { toolChoice: "none" as const }
-        : {},
-  });
-  const result = await agent.generate({
-    prompt: brief(title),
-    abortSignal: AbortSignal.timeout(RESEARCH_MS),
-  });
-  const read = new Map<string, Source>();
-  const seen = new Map<string, string[]>();
-  for (const step of result.steps) {
-    for (const call of step.toolResults) {
-      for (const found of withSources.safeParse(call.output).data?.sources ?? []) {
-        read.set(found.url, found);
+    stopWhen: [],
+    onStepFinish: (step) => {
+      steps += 1;
+      inputTokens += step.usage.inputTokens ?? 0;
+      for (const call of step.toolResults) {
+        for (const found of withSources.safeParse(call.output).data?.sources ?? []) {
+          read.set(found.url, found);
+        }
+        for (const { citation, ...rest } of shownResults.safeParse(call.output).data ?? []) {
+          const url = citation ? urls[citation - 1] : undefined;
+          if (url) seen.set(url, [...new Set([...(seen.get(url) ?? []), JSON.stringify(rest)])]);
+        }
       }
-      for (const { citation, ...rest } of shownResults.safeParse(call.output).data ?? []) {
-        const url = citation ? urls[citation - 1] : undefined;
-        if (url) seen.set(url, [...new Set([...(seen.get(url) ?? []), JSON.stringify(rest)])]);
-      }
-    }
-  }
+    },
+  });
+  const answered = await agent
+    .generate({ prompt: brief(title), abortSignal: AbortSignal.timeout(RESEARCH_MS) })
+    .then(
+      (result) => result.text.trim(),
+      (err: Error) => {
+        console.log(`[research] stopped early: ${err.message.slice(0, 160)}`);
+        return "";
+      },
+    );
   const results = [...seen.entries()]
     .map(([url, texts]) => `[${urls.indexOf(url) + 1}] ${url}\n${texts.join("\n")}`)
     .join("\n\n")
     .slice(0, RESULTS_CHARS);
   const text =
-    result.text.trim() ||
+    answered ||
     (await streamText({
       model,
       instructions: system,
@@ -147,8 +150,8 @@ async function research(title: string) {
     urlOf: (number: number) => urls[number - 1],
     read,
     seen,
-    steps: result.steps.length,
-    inputTokens: result.totalUsage.inputTokens ?? 0,
+    steps,
+    inputTokens,
   };
 }
 
