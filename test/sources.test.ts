@@ -1,6 +1,7 @@
-import { expect, test } from "bun:test";
+import { expect, spyOn, test } from "bun:test";
 import { PgDialect } from "drizzle-orm/pg-core";
 import { hadithLink } from "../packages/core/src/tools/hadithLinks";
+import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
 
@@ -41,4 +42,38 @@ test("hadith searches and lookups exclude whole books and the ids sunnah.com con
   expect(/"book" not in \([^)]*\) and [^ ]*"id" not in \(/u.test(sql)).toBe(true);
   expect(params).toEqual(expect.arrayContaining(["ahmad", "nasai:1638", "abudawud:3033"]));
   expect(params).not.toContain("bukhari:1");
+});
+
+test("a verse in French comes from its published translation, without footnote marks, credited", async () => {
+  const listed = {
+    data: [
+      {
+        key: "french_rashid",
+        language: "fr",
+        title: "French Translation - Rachid Maach",
+        version: "1.0.3",
+      },
+    ],
+  };
+  const openData = spyOn(globalThis, "fetch")
+    .mockResolvedValueOnce(Response.json(listed))
+    .mockResolvedValueOnce(
+      Response.json({
+        data: {
+          verses: [{ ayah: 2, translation: "Louange à Allah, Seigneur de la Création[2]," }],
+        },
+      }),
+    )
+    .mockResolvedValueOnce(Response.json(listed));
+  try {
+    const french = await quranTranslation("fr", 1);
+    expect(french?.verses.get(2)).toBe("Louange à Allah, Seigneur de la Création,");
+    expect(french?.by).toBe("French Translation - Rachid Maach, version 1.0.3, from QuranEnc.com");
+    expect(String(openData.mock.calls[1]?.[0])).toBe(
+      "https://api.sirathic.com/v1/quran/translations/french_rashid/1",
+    );
+    await expect(quranTranslation("xx", 1)).rejects.toThrow("none published");
+  } finally {
+    openData.mockRestore();
+  }
 });
