@@ -9,13 +9,17 @@ const ALLOW_AT = 0.6;
 const MONEY =
   /pay|refund|charge|transfer|purchase|checkout|invoice|donat|buy|money|wire|withdraw|deposit/iu;
 
-const leavesInbox = z.object({
-  labelIds: z.array(z.string()).refine((ids) => ids.includes("INBOX")),
-});
+const inboxIds = z.array(z.string()).refine((ids) => ids.includes("INBOX"));
+
+const leavesInbox = z.union([
+  z.object({ labelIds: inboxIds }),
+  z.object({ removeLabelIds: inboxIds }),
+]);
 
 const described = (call: Call) =>
-  /unlabel/iu.test(call.toolName) && leavesInbox.safeParse(call.input).success
-    ? `${spell(call)} (this archives the thread: it takes it out of the inbox)`
+  /unlabel|update[^a-z]+message[^a-z]+labels/iu.test(call.toolName) &&
+  leavesInbox.safeParse(call.input).success
+    ? `${spell(call)} (this archives it: it takes it out of the inbox)`
     : spell(call);
 
 const chancesFor = async (action: string, rules: Settings["rules"]) => {

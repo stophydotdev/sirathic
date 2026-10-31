@@ -80,7 +80,12 @@ test("a bulk action asks even when an allow rule matches it", async () => {
 });
 
 const calendar = { text: "ask me before changing my calendar", effect: "ask" } as const;
-const changes = new Set(["cal_create_event", "gmail_trash_thread", "gmail_create_draft"]);
+const changes = new Set([
+  "cal_create_event",
+  "gmail_trash_thread",
+  "gmail_create_draft",
+  "gmail_update_message_labels",
+]);
 
 test.each([
   ["no rule leaves a calendar change alone", "cal_create_event", [], undefined, false],
@@ -94,6 +99,13 @@ test.each([
   ],
   ["an ask rule that does not match leaves it alone", "cal_create_event", [calendar], [0.1], false],
   ["a failed check asks when a rule asks", "gmail_trash_thread", [calendar], undefined, true],
+  [
+    "an ask rule that matches puts a card on a label update",
+    "gmail_update_message_labels",
+    [calendar],
+    [0.9],
+    true,
+  ],
   ["a rule the check leaves unscored asks", "cal_create_event", [calendar], [], true],
   ["a draft is not a change to their mailbox", "gmail_create_draft", [calendar], [1], false],
 ])("%s", async (_, toolName, rules, scores, expected) => {
