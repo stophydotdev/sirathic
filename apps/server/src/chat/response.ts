@@ -108,7 +108,7 @@ export function chatResponse({
   citedEarlier,
   sourceKinds,
 }: {
-  models: { model: LanguageModel; small: LanguageModel };
+  models: { model: Parameters<typeof answerAgent>[0]["model"]; small: LanguageModel };
   turn: Turn;
   modelName: string;
   messages: ChatMessage[];
