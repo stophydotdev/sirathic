@@ -321,7 +321,7 @@ export const screenshotOf = async (session: Session) => {
   };
 };
 
-export const run = async (session: Session, action: Action): Promise<Result> => {
+export const run = async (session: Session, action: Action, full?: boolean): Promise<Result> => {
   const result = await unmasked(session, action).catch(async (error: Error) => {
     const secrets = await secretsOf(session).catch(() => [...session.secrets]);
     throw new Error(masked(error.message, secrets));
@@ -330,6 +330,6 @@ export const run = async (session: Session, action: Action): Promise<Result> => 
   return {
     url: masked(result.url, secrets),
     title: masked(result.title, secrets),
-    page: masked(result.page, secrets),
+    page: masked(full ? session.seen : result.page, secrets),
   };
 };

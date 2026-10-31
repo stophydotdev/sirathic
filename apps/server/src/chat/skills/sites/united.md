@@ -74,7 +74,7 @@ Start at the award results path with no query parameters. Expect a MileagePlus s
 
 Open `https://www.united.com/ual/en/us/flight-search/book-a-flight/results` (no parameters; do not add award parameters). Snapshot once it loads. If a MileagePlus sign-in form or a sign-in prompt blocks the page, stop. Do not type a username or password yourself.
 
-If a search form renders instead, fill the origin, the destination, the depart date, the return date or none, and the adults, choose the miles or award option, submit once, and snapshot.
+If a search form renders instead, fill the origin, the destination, the depart date, the return date or none, and the adults, choose the miles or award option, submit once, and snapshot. Run that form with browser_task, giving it those values.
 
 For each outbound card read depart time, arrive time (+1d = next day), duration, stops, flight numbers (UA nnn), cabin, miles, and the cash copay. Note a saver or waitlist mark. If the page says no award seats are available, that is an empty result.
 

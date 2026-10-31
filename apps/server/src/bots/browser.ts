@@ -34,6 +34,7 @@ import { fencedText } from "../chat/fence";
 import { StatusError } from "../http";
 import { loginFor } from "../vault/vault";
 import { mediaTypeOf } from "../files/sniff";
+import { driveTask, taskInput } from "./browserTask";
 import { contactTools, VAULT_FILL_CONTACT } from "./contactFill";
 import { botDisk } from "./disk";
 import type { BotScope } from "./tools";
@@ -59,6 +60,7 @@ export const BROWSER_TOOLS = [
   "browser_tabs",
   "browser_screenshot",
   "browser_upload",
+  "browser_task",
   VAULT_SIGN_IN,
   VAULT_FILL_CONTACT,
   USER_FORM,
@@ -87,9 +89,9 @@ const service = async (path: string, body: ServiceRequest) => {
   return response;
 };
 
-const act = async (botId: string, action: Action) => {
+const act = async (botId: string, action: Action, full?: boolean) => {
   const { downloads, ...page } = acted.parse(
-    await (await service("/act", { session: sessionOf(botId), action })).json(),
+    await (await service("/act", { session: sessionOf(botId), action, full })).json(),
   );
   const disk = botDisk(botId);
   const saved = await Promise.all(
@@ -329,6 +331,16 @@ export function browserTools(scope: BotScope) {
         return act(botId, { kind: "upload", target, files: sent });
       },
       toModelOutput: ({ output }) => pageText(output),
+    }),
+    browser_task: tool({
+      description:
+        "Start here, instead of browser_navigate, for a whole multi-step flow in your browser, much faster than one tool call per click: a form with several fields, a search with filters, a date picker, a booking or check-in path, or anything over more than one page. Give it the goal, where to start and any values it will need. It looks at the page, decides each step itself, and stops and hands back to you when it is done, stuck, unsure, needs a value you did not give, or reaches a step that pays, books, sends, submits, signs in or deletes: it never takes that step, so tell the user what it does and ask first, then do it yourself. It returns the steps it took and the page it ended on. For one click, one read or one field, use the other browser tools.",
+      inputSchema: taskInput,
+      execute: (input) => driveTask(input, (action, full) => act(botId, action, full)),
+      toModelOutput: ({ output }) => ({
+        type: "text",
+        value: `### Browser task\n${output.report}\n\n${pageText(output.page).value}`,
+      }),
     }),
     [REFILL]: tool({
       description:
