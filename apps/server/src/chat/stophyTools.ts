@@ -5,6 +5,7 @@ import { z } from "zod";
 import { wordsOf } from "../plugins/tools";
 import type { Source } from "../shared/sources";
 import type { Cite } from "./cite";
+import { yesChances } from "./clef";
 import { fenced } from "./fence";
 import { videoOfRow, withVideos } from "./youtube";
 
@@ -14,6 +15,8 @@ const MAX_ROWS = 20;
 const TIMEOUT_MS = 60_000;
 const RESULT_CHARS = 60_000;
 const SNIPPET_CHARS = 300;
+const MISFIT_BELOW = 0.1;
+const POSTING_CHARS = 400;
 const PAGE_KEY = /^(?:url|\w+Url)$/u;
 const NOT_A_PAGE = /image|thumbnail|avatar|icon|photo|logo/iu;
 
@@ -70,6 +73,35 @@ const withCitations = (cite: Cite, data: z.infer<typeof json>, fallbackTitle: st
   return { data: marked, sources };
 };
 
+export const keepFitting = async (data: z.infer<typeof json>, wants: string) => {
+  const list = listed.safeParse(data);
+  if (!list.success || list.data.results.length === 0) return data;
+  const { results } = list.data;
+  try {
+    const chance = await yesChances(
+      { wants },
+      Object.fromEntries(
+        results.map((posting, index) => [
+          `p${index}`,
+          `Could this job posting fit what the user wants? Answer no only when it clearly does not. ${JSON.stringify(posting).slice(0, POSTING_CHARS)}`,
+        ]),
+      ),
+    );
+    const kept = results.filter((_, index) => (chance(`p${index}`) ?? 1) >= MISFIT_BELOW);
+    const dropped = results.length - kept.length;
+    return dropped === 0
+      ? data
+      : {
+          ...list.data,
+          results: kept,
+          dropped: `Left out ${dropped} of ${results.length} postings that clearly don't fit "${wants}".`,
+        };
+  } catch (err) {
+    console.warn(`fit check failed: ${err instanceof Error ? err.message : String(err)}`);
+    return data;
+  }
+};
+
 type Catalog = Awaited<ReturnType<typeof stophy.endpoints>>;
 
 const sourceKinds = z.object({
@@ -118,6 +150,13 @@ const callInput = z.object({
     .min(1)
     .optional()
     .describe("Cut each text value to this many characters. Omit it for full text."),
+  keepIf: z
+    .string()
+    .max(300)
+    .optional()
+    .describe(
+      "Only for a search that returns job postings: the user's must-haves in one line, like role, seniority, place or remote, and dealbreakers. A quick check drops postings that clearly don't fit before you read them and says how many it dropped. You still judge the fit of the rest.",
+    ),
 });
 
 const reply = z.discriminatedUnion("success", [
@@ -182,7 +221,7 @@ export const stophyTools = (cite: Cite, found: (data: z.infer<typeof json>) => v
   stophy_call: tool({
     description: "Get the data from the endpoint you chose, with the credits used.",
     inputSchema: callInput,
-    execute: async ({ id, input, maxTextLength }) => {
+    execute: async ({ id, input, maxTextLength, keepIf }) => {
       const endpoint = (await loadCatalog()).endpoints.find((entry) => entry.id === id);
       if (!endpoint) throw new Error(`No endpoint ${id}. Find one with stophy_search_endpoints.`);
       const url = new URL(endpoint.path, API);
@@ -198,8 +237,9 @@ export const stophyTools = (cite: Cite, found: (data: z.infer<typeof json>) => v
       });
       const body = reply.parse(await response.json());
       if (!body.success) throw new Error(body.error.message);
-      found(body.data);
-      const marked = withCitations(cite, body.data, endpoint.title);
+      const data = keepIf ? await keepFitting(body.data, keepIf) : body.data;
+      found(data);
+      const marked = withCitations(cite, data, endpoint.title);
       return {
         ...marked,
         sources: await withVideos(marked.sources),

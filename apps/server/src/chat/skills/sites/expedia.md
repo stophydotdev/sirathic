@@ -44,7 +44,7 @@ Flights: open `https://www.expedia.com/Flights-Search?leg1=from:<City>%20(<ORIG>
 
 Stays: open `https://www.expedia.com/Hotel-Search?destination=<City%2C%20State%2C%20Country>&startDate=<YYYY-MM-DD>&endDate=<YYYY-MM-DD>&adults=<N>&rooms=1&sort=PRICE_LOW_TO_HIGH&price=0,<TOTAL_CAP>`. Click "Got it" on the taxes and fees dialog, scroll down 4 times, then read the cards after the "Search results" heading: name, rating, review count, $ nightly, $ total, Fully refundable, badges, detail URL with the h<id>.
 
-Sort by price and keep a 3 item shortlist. Read only. Never click Reserve, Select, or Continue. If a captcha, Akamai block, sign-in or password, 2FA, or payment wall appears, stop.
+Sort by price and keep a 3 item shortlist, with one screenshot of each results page shown with browser_screenshot, show set. Read only. Never click Reserve, Select, or Continue. If a captcha, Akamai block, sign-in or password, 2FA, or payment wall appears, stop.
 
 ### Read the result
 

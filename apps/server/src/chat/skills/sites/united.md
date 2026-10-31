@@ -44,7 +44,7 @@ For each outbound card read depart time, arrive time (+1d = next day), duration,
 
 If you see "No flights available for the dates you selected", that is an empty result. If the date picker reopens, the date was rejected. If the header city is wrong, the IATA code was not recognized. If an error banner renders where the flight cards should be, that is a site error banner; stop.
 
-Read only. Never click Select, Continue, or a fare price. If a captcha, Akamai 403, sign-in or password, 2FA, or payment wall appears, stop.
+Report a table sorted by price with the results URL. Show one screenshot of the results with browser_screenshot, show set. Read only. Never click Select, Continue, or a fare price. If a captcha, Akamai 403, sign-in or password, 2FA, or payment wall appears, stop.
 
 ### Read the result
 
@@ -78,7 +78,7 @@ If a search form renders instead, fill the origin, the destination, the depart d
 
 For each outbound card read depart time, arrive time (+1d = next day), duration, stops, flight numbers (UA nnn), cabin, miles, and the cash copay. Note a saver or waitlist mark. If the page says no award seats are available, that is an empty result.
 
-Read only. Never click Select or Continue. If a captcha, Akamai 403, password, 2FA, or payment wall appears, stop.
+Report a table sorted by miles with the results URL. Show one screenshot of the results with browser_screenshot, show set. Read only. Never click Select or Continue. If a captcha, Akamai 403, password, 2FA, or payment wall appears, stop.
 
 ### Read the result
 

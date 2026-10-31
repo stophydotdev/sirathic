@@ -40,6 +40,11 @@ Use only this tool when clarification is needed. Don't ask clarifying questions 
   execute: async () => ({ shown: true }),
 });
 
+export const botQuestions = {
+  ...clarifyingQuestions,
+  description: `Shows the user one question as a card with two to five short answers to tap and a box for their own. Set multiple when several answers apply, so they can tick more than one. Default to deciding and proceeding; use it only when a decision truly needs the user: a wrong guess has real consequences, remaining ambiguity would materially change the result, or the answer depends on something only the user knows and you couldn't find it. Never use it to ask for the details of a sin. Don't use it to confirm a tool that shows its own card; call the tool. Ask one natural question, and make every answer a real option. The card ends your turn. Their reply comes as their next message. A dismissed question is a decline: don't ask it again in any form.`,
+};
+
 export const SEND_FEEDBACK = "send_feedback";
 
 export const sendFeedback = tool({
@@ -114,7 +119,7 @@ const readPage = async (cite: Cite, url: string) => {
 export function sirathicTools(cite: Cite, kinds?: SourceKind[]) {
   return {
     search_web: tool({
-      description: `Searches the Quran, hadith, fatwas, fiqh books, the web and news for current and factual information, returning relevant results with titles, URLs and content snippets, numbered for citing. Use for questions about up-to-date or externally verified information. Works best with short, keyword-focused queries. Complex multi-step reasoning queries are not supported.
+      description: `Searches the Quran, hadith, fatwas, fiqh books, the web and news for current and factual information, returning relevant results with titles, URLs and content snippets, numbered for citing. Use for questions about up-to-date or externally verified information. Works best with short, keyword-focused queries. Complex multi-step reasoning queries are not supported. Results come from an external search index that some sites block, so a missing or stale result is not evidence a page or fact does not exist. When search comes up empty for something that should exist, try fetch_url on a likely URL, then your browser when you have one.
 
 Best practices:
 - Limit to max 3 queries per request. For multi-part requests, use the query slots to cover distinct entities or aspects.
@@ -149,7 +154,7 @@ If results are incomplete, conflicting, snippet-level, single-sided, or do not c
     }),
     fetch_url: tool({
       description:
-        "Navigate to URLs and extract their content. Returns the page title and text content for each URL. Use this to read the full content of web pages found via search_web. Use it when page-level details would improve the answer. Prefer fetch_url over answering from snippets when the user asks about a specific URL, source, list, policy, fatwa, article, table, exact wording, or any answer that depends on details likely hidden beyond the snippet. Batch fetch when appropriate. When a user pastes a full URL in the query, you must call fetch_url to retrieve that URL's information. A YouTube video comes with its transcript in timed lines like [12:04]; to point to a moment in it, link the time to the video at that second, like [12:04](https://www.youtube.com/watch?v=VIDEO_ID&t=724s).",
+        "Navigate to URLs and extract their content. Returns the page title and text content for each URL. Use this to read the full content of web pages found via search_web. Use it when page-level details would improve the answer. Prefer fetch_url over answering from snippets when the user asks about a specific URL, source, list, policy, fatwa, article, table, exact wording, or any answer that depends on details likely hidden beyond the snippet. Batch fetch when appropriate. When a user pastes a full URL in the query, you must call fetch_url to retrieve that URL's information. A YouTube video comes with its transcript in timed lines like [12:04]; to point to a moment in it, link the time to the video at that second, like [12:04](https://www.youtube.com/watch?v=VIDEO_ID&t=724s). A 403 or block page from a site's firewall is not evidence the page does not exist: fall back to your browser when you have one.",
       inputSchema: fetchUrlInput,
       execute: async ({ urls }) => {
         const read = await Promise.all(

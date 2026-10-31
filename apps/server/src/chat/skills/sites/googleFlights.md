@@ -76,7 +76,7 @@ Open `https://www.google.com/travel/flights/search?tfs=<TFS>&curr=USD&hl=en`. Co
 
 Run `document.querySelector('[role=main]')?.innerText` in browser_run_code and parse every row: depart time, arrive time (+1 = next day), airline, total duration, stops, route, $price. Skip rows without an airline or airport codes, dedupe, and sort by price ascending.
 
-Read only. Do not click Select flight. If a captcha, sign-in, or payment wall appears, stop.
+Report the cheapest few as a table with the results URL. Show one screenshot of the results with browser_screenshot, show set. Read only. Do not click Select flight. If a captcha, sign-in, or payment wall appears, stop.
 
 ### Read the result
 

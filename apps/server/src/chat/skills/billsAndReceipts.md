@@ -1,6 +1,6 @@
 # Bills to the calendar and receipts to a label
 
-Two jobs on the user's mailbox. Do the ones they ask for. You never pay anything.
+Two jobs on the user's mailbox. Do the ones they ask for. Paying a bill is a checkout: when they ask you to pay one, follow the `purchases` skill when it is listed, and they approve the exact total first.
 
 ## Bills with a due date become calendar reminders
 

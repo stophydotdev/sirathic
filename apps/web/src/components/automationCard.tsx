@@ -32,6 +32,8 @@ export const isCardTool = (name: string) => CARD_TOOLS.has(currentToolName(name)
 
 const renamed = z.object({ name: z.string() });
 
+const restyled = z.union([z.object({ color: z.string() }), z.object({ body: z.string() })]);
+
 const ACTIONS = ["create", "edit", "pause", "resume", "delete"] as const;
 
 const row = z.object({
@@ -99,6 +101,7 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
   const name = currentToolName(tool);
   if ((name === "set_bot_job" || name === "update_profile") && bot)
     return <BotRenamed name={bot.name} />;
+  if (name === "update_profile" && restyled.safeParse(result).success) return <BotRenamed />;
   if (name === "update_routine" && change && (made?.projectId || change.action !== "create")) {
     return (
       <EventLine
@@ -124,10 +127,11 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
   return null;
 };
 
-const BotRenamed: FC<{ name: string }> = ({ name }) => {
+const BotRenamed: FC<{ name?: string }> = ({ name }) => {
   const t = useT();
   useEffect(() => {
     void useProjects.getState().refresh();
   }, [name]);
+  if (name === undefined) return null;
   return <EventLine icon={UserEdit01Icon} label={t("Renamed to {name}", { name })} />;
 };

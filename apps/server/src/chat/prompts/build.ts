@@ -112,6 +112,8 @@ const abilitiesOf = ({
     remembers && "Remember what they tell you about themselves, across chats.",
     "create_text_file" in offered &&
       `Make files they keep in their Library, such as a khutbah draft, a study plan or a table${"create_research_report" in offered ? ", and research reports" : ""}.`,
+    "browser_navigate" in offered &&
+      "Use your own browser to open websites, fill in forms and finish tasks on sites no plugin covers.",
     "code_execution" in offered &&
       "Do exact calculations, such as zakat, inheritance shares and dates.",
     "search_plugins" in offered &&

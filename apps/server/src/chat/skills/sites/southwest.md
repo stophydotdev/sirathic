@@ -66,7 +66,7 @@ For each outbound row read flight numbers, routing, depart and arrive times, dur
 
 If the grid stays empty after the wait, reload the page once and wait again. If it is still empty, stop.
 
-Read only. Never click Continue or a fare Select. If you see Access Denied, "There was a problem", a captcha, sign-in or password, 2FA, or payment wall, stop.
+Report the outbound and return rows as two tables. Show one screenshot of the results with browser_screenshot, show set. Read only. Never click Continue or a fare Select. If you see Access Denied, "There was a problem", a captcha, sign-in or password, 2FA, or payment wall, stop.
 
 ### Read the result
 
