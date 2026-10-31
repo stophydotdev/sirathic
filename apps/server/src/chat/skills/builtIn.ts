@@ -52,7 +52,7 @@ type Where = {
 const WHEN_CHARS = 140;
 
 const PLUGIN_RULES =
-  "The tools of the apps the user has connected open with this skill: use them for what the user asks of that app. Never say you don't have access to an app or its data without first calling search_plugins, then connect the app with install_plugin. If no plugin fits, ask the user where the data lives. For a command tool like PostHog's exec, read its help once, then run the query.";
+  "The tools of the apps the user has connected open with this skill: use them for what the user asks of that app. Never say you don't have access to an app or its data without first calling search_plugins, then connect the app with install_plugin. If no plugin fits, ask the user where the data lives. For a command tool like PostHog's exec, read its help once, then run the query. To apply one write to many items, like trashing or labelling every promotion, call bulk_action once instead of the write tool per item: it checks each item against your one-sentence rule, shows the user one card listing what will change and runs the writes. For a few items, call the write tool directly.";
 
 const appTools = (plugins: ToolSet, apps: readonly string[]) =>
   Object.keys(plugins).filter((name) => apps.some((app) => name.startsWith(`${app}_`)));

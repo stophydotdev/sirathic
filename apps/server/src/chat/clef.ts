@@ -43,3 +43,38 @@ export const yesChances = async (
   } = decided.parse(await res.json());
   return (name: string) => answers[name]?.noul;
 };
+
+const DECISION_MODEL = "clef";
+const DECISION_WAIT_MS = 8_000;
+
+export const decisionChances = async (
+  state: State,
+  questions: Readonly<Record<string, string>>,
+) => {
+  const res = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/cloudflare/${DECISION_MODEL}`,
+    {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${env.CLOUDFLARE_AI_TOKEN}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: DECISION_MODEL,
+        state,
+        questions: Object.fromEntries(
+          Object.entries(questions).map(([name, instructions]) => [
+            name,
+            { type: "noul", instructions },
+          ]),
+        ),
+      }),
+      signal: AbortSignal.timeout(DECISION_WAIT_MS),
+    },
+  );
+  if (!res.ok) throw new Error(`Clef answered ${res.status}`);
+  const {
+    result: { answers },
+  } = decided.parse(await res.json());
+  return (name: string) => answers[name]?.noul;
+};

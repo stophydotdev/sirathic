@@ -40,7 +40,7 @@ import { prayerTimes } from "../prayer/tool";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
 import { asksFirst } from "./autoReview";
-import { needsApproval, writingTools } from "./confirm";
+import { needsApproval, withoutOriginalInputs, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
 import { fileTools } from "./fileTools";
@@ -113,6 +113,7 @@ function answerAgent({
   skills,
   loaded,
   confirm,
+  refine,
   shorten,
   turn,
 }: {
@@ -125,6 +126,7 @@ function answerAgent({
   skills: readonly Skill[];
   loaded: readonly string[];
   confirm: (call: { toolName: string; input: unknown }) => Promise<boolean>;
+  refine: Awaited<ReturnType<typeof connectedTools>>["refine"];
   shorten: ReturnType<typeof shortenEarlierResults>;
   turn: Turn;
 }) {
@@ -151,6 +153,7 @@ function answerAgent({
       isStepCount(STEP_CAP),
     ],
     timeout: { chunkMs: STALLED_MS },
+    experimental_refineToolInput: refine,
     toolApproval: async ({ toolCall }) => ((await confirm(toolCall)) ? "user-approval" : undefined),
     allowSystemInMessages: true,
     prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
@@ -415,6 +418,7 @@ export function chatResponse({
         loaded,
         confirm: async (call) =>
           needsApproval(call, new Set(writes)) && (await asksFirst(call, preferred.rules)),
+        refine: connectors.refine,
         shorten,
         turn,
       });
@@ -422,7 +426,9 @@ export function chatResponse({
         agent,
         uiMessages: [
           ...(inBot ? await summaryNote(inBot) : []),
-          ...(await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner)),
+          ...withoutOriginalInputs(
+            await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner),
+          ),
         ],
         originalMessages: messages,
         abortSignal,
