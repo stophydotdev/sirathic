@@ -31,7 +31,7 @@
       "name": "@sirathic/browser",
       "version": "0.0.0",
       "dependencies": {
-        "patchright": "1.63.0",
+        "patchright": "1.64.2",
         "zod": "^4.4.3",
       },
     },
@@ -2762,9 +2762,9 @@
 
     "parseurl": ["parseurl@1.3.3", "", {}, "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ=="],
 
-    "patchright": ["patchright@1.63.0", "", { "dependencies": { "patchright-core": "1.63.0" }, "bin": { "patchright": "cli.js" } }, "sha512-WVXhmNhAJ5I+CmcHEu/I3KMKhOlQaKS1XJsk+5nRIypKJ3Dq9IaQP29p4vB3I1FWCTarUXVRj02Na30wGcuztQ=="],
+    "patchright": ["patchright@1.64.2", "", { "dependencies": { "patchright-core": "1.64.2" }, "bin": { "patchright": "cli.js" } }, "sha512-7bUwQelki5xWotiQUm0J6SfYlUboxtHdBgUfn7rt0+8Pwk/6A7Z5nRoewPRDg9nmiak9ECBF9rmiaBIVzljEag=="],
 
-    "patchright-core": ["patchright-core@1.63.0", "", { "bin": { "patchright-core": "cli.js" } }, "sha512-nuRJVTMVKoOFzY8vmwFqJZR3F0trUCKiPzDSgCOPq/yHHTefm9czILV23dXJsi5mvS7sCy7U1CqG7edA/21DtQ=="],
+    "patchright-core": ["patchright-core@1.64.2", "", { "bin": { "patchright-core": "cli.js" } }, "sha512-j7Hsw8XThZfiGlNPGJZtX4ERLLi4cval4ihCdOScwBgWqElCT4MWQSDmV/Tuuartgy9/a8DColg4gTAtJ27nPQ=="],
 
     "path-browserify": ["path-browserify@1.0.1", "", {}, "sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g=="],
 

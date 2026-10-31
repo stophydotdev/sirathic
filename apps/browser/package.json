@@ -10,7 +10,7 @@
     "start": "bun src/index.ts"
   },
   "dependencies": {
-    "patchright": "1.63.0",
+    "patchright": "1.64.2",
     "zod": "^4.4.3"
   }
 }
