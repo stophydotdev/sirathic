@@ -125,7 +125,7 @@ export const Composer: FC<{
 
   return (
     <>
-      {files.length > 0 && text === "" && !busy && (
+      {!bot && files.length > 0 && text === "" && !busy && (
         <View className="w-full flex-row flex-wrap gap-2 pb-2">
           {FILE_SUGGESTIONS.map((suggestion) => (
             <Pressable

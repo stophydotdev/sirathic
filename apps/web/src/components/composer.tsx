@@ -229,7 +229,7 @@ export const Composer: FC<{
           />
         )}
         {signedIn && noor && <NoorLimitLine running={running} />}
-        <FileSuggestions />
+        {!bot && <FileSuggestions />}
         {bot && <BotReply />}
         <ComposerPrimitive.Root
           className={cn(
