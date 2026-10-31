@@ -81,6 +81,7 @@ const TOTAL_CHARS = 24_000;
 const BUDGETED = new Set<SearchSource>(["hadith", "fatwa", "fiqh"]);
 const WEB_LISTED_PER_QUERY = 10;
 const WEB_READ_PER_QUERY = 5;
+const WEB_PAGE_CAP_MS = 3_000;
 
 export const searchInput = z.object({
   queries: z
@@ -301,14 +302,20 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[], chars:
 const extract = (markdown: string, queries: readonly string[]) =>
   bestPieces(pageText(markdown, Number.POSITIVE_INFINITY), queries, WEB_CHARS);
 
-const readPages = async (hits: Hit[], queries: readonly string[]) => {
+const readPage = async (hit: Hit, queries: readonly string[]) => {
+  const page =
+    (await readVideo(hit.url).catch(() => undefined)) ??
+    (await webFetch({ url: hit.url }).catch(() => undefined));
+  return page && extract(page.markdown, queries);
+};
+
+const readPages = async (hits: Hit[], queries: readonly string[], capMs?: number) => {
   const read = await Promise.all(
-    hits.map(async (hit) => {
-      const page =
-        (await readVideo(hit.url).catch(() => undefined)) ??
-        (await webFetch({ url: hit.url }).catch(() => undefined));
-      return page && extract(page.markdown, queries);
-    }),
+    hits.map((hit) =>
+      capMs === undefined
+        ? readPage(hit, queries)
+        : Promise.race([readPage(hit, queries), Bun.sleep(capMs).then(() => undefined)]),
+    ),
   );
   return new Map(
     hits.flatMap((hit, index) => {
@@ -437,6 +444,7 @@ const searchWeb = async (cite: Cite, queries: string[], sites: string[], time: T
   const fetched = await readPages(
     read.filter((hit) => !scraped.has(hit.url)),
     queries,
+    WEB_PAGE_CAP_MS,
   );
   const passages = new Map([
     ...read.flatMap((hit) => {
