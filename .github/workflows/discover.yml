@@ -61,7 +61,7 @@ jobs:
           FILE: ${{ steps.written.outputs.file }}
         run: |
           title=$(bun -e 'console.log((await import(`./${process.env.FILE}`)).default.title)')
-          branch="discover/$(basename "$FILE" .ts)"
+          branch="discover-$(basename "$FILE" .json)"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
