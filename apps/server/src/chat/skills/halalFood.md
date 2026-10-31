@@ -22,7 +22,7 @@ Finding nothing means unknown, never "not halal".
 ## Flow
 
 1. Resolve the place: its name, branch and city. Chains differ by branch and by country, so check that branch.
-2. Search the certifier lists for the country with search_web, then read the place's own site with fetch_url, then its Google Maps listing and reviews with stophy_search_endpoints and stophy_call (look for "halal" and "alcohol" in the reviews).
+2. Search the certifier lists for the country with search_web, then read the place's own site with fetch_url, then its Google Maps listing and reviews with stophy_call, ids google.maps.search (query, location) and google.maps.reviews (placeUrl) (look for "halal" and "alcohol" in the reviews).
 3. Note what could change the user's decision: alcohol served, pork on the menu, halal and non-halal meat on the same grill, and stunned or unstunned when the certifier says.
 4. For a product, read the maker's ingredient list and its halal statement or certificate for the user's country, since recipes differ by country. For a doubtful ingredient, like gelatin, E471, rennet or alcohol in a flavoring, search the rulings with search_web and cite them; scholars differ on some, so give the views, leading with the user's madhab when known.
 5. Answer with the level, the source and its link, and what you could not check. When it matters, suggest asking the staff to see the certificate.

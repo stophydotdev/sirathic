@@ -16,7 +16,7 @@
     "@sirathic/env": "workspace:*",
     "drizzle-orm": "^0.45.4",
     "linkedom": "^0.18.14",
-    "stophy": "3.0.0",
+    "stophy": "1.2.0",
     "turndown": "^7.2.4",
     "zod": "^4.4.3"
   },

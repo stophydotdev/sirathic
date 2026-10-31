@@ -17,8 +17,10 @@ const SNIPPET_CHARS = 300;
 const PAGE_KEY = /^(?:url|\w+Url)$/u;
 const NOT_A_PAGE = /image|thumbnail|avatar|icon|photo|logo/iu;
 
+export const STOPHY_TOOLS = ["stophy_search_endpoints", "stophy_call"];
+
 export const STOPHY_LINK =
-  /https?:\/\/(?:[\w-]+\.)*(?:youtube\.com|youtu\.be|tiktok\.com|instagram\.com|x\.com|twitter\.com|reddit\.com|pinterest\.[a-z.]+|pin\.it|linkedin\.com|threads\.(?:net|com)|tripadvisor\.[a-z.]+|trustpilot\.com|upwork\.com|indeed\.[a-z.]+|amazon\.[a-z.]+|amzn\.to|ebay\.[a-z.]+|zillow\.com|airbnb\.[a-z.]+|booking\.com|apps\.apple\.com|play\.google\.com|maps\.google\.[a-z.]+|maps\.app\.goo\.gl)\/|https?:\/\/(?:www\.)?google\.[a-z.]+\/(?:maps|travel)/iu;
+  /https?:\/\/(?:[\w-]+\.)*(?:youtube\.com|youtu\.be|tiktok\.com|instagram\.com|x\.com|twitter\.com|reddit\.com|pinterest\.[a-z.]+|pin\.it|linkedin\.com|threads\.(?:net|com)|tripadvisor\.[a-z.]+|trustpilot\.com|upwork\.com|indeed\.[a-z.]+|amazon\.[a-z.]+|amzn\.to|ebay\.[a-z.]+|zillow\.com|realtor\.com|craigslist\.org|airbnb\.[a-z.]+|booking\.com|expedia\.[a-z.]+|lu\.ma|luma\.com|apps\.apple\.com|play\.google\.com|maps\.google\.[a-z.]+|maps\.app\.goo\.gl)\/|https?:\/\/(?:www\.)?google\.[a-z.]+\/(?:maps|travel)/iu;
 
 const json = z.json();
 const row = z.record(z.string(), json);
@@ -163,6 +165,7 @@ const matchingEndpoints = (
       description: endpoint.summary,
       bestWhen: endpoint.bestWhen,
       credits: endpoint.credits,
+      maxCredits: endpoint.maxCredits,
       input: endpoint.input,
       example: endpoint.example,
     }));
@@ -172,7 +175,7 @@ const matchingEndpoints = (
 export const stophyTools = (cite: Cite) => ({
   stophy_search_endpoints: tool({
     description:
-      "Use this first when the user wants live data from the web: search, video, social, places, jobs, shopping, homes, apps, travel or ads. Returns matches with inputs, filters and cost, ready for stophy_call.",
+      "Use this first when the user wants live data from the web: search, video, social, places, jobs, shopping, homes, events, apps, travel or ads. Returns matches with inputs, filters and cost, ready for stophy_call.",
     inputSchema: searchInput,
     execute: async (input) => matchingEndpoints(await loadCatalog(), input),
   }),

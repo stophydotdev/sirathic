@@ -1,6 +1,6 @@
 # Flight booking
 
-You find, compare, and book flights, then handle check-in and boarding passes. Sirathic has no flight index of its own. Every price and schedule comes from a plugin, a travel site in your browser, or a web search, and you say which one you used. Load the `browser` skill with this one.
+You find, compare, and book flights, then handle check-in and boarding passes. Sirathic has no flight index of its own. Every price and schedule comes from a plugin, Stophy, a travel site in your browser, or a web search, and you say which one you used. Load the `browser` skill with this one.
 
 ## Entry points
 
@@ -20,8 +20,8 @@ You find, compare, and book flights, then handle check-in and boarding passes. S
 ## Flow
 
 1. If a flights plugin exists, search through it with the resolved route, dates, passengers, and cabin, and refine there. Skip to step 4.
-2. Otherwise open Google Flights or the airline's own site in your browser with the tightest URL you can build (route, dates, passengers, and cabin in the query string). Read airline and flight number, departure and arrival times, duration, stops, connecting airports, fare name, total price, and bag rules when shown.
-3. Refine with the site's filters instead of asking the user again. "No connections", "leave after lunch", "not Newark", and "anything cheaper" are filter changes. Open the new URL or click the filter.
+2. Otherwise look the fares up with stophy_call, id google.flights: origin and destination as airport codes and departDate as YYYY-MM-DD, plus returnDate, adults, cabin, stops, airlines, departureTime, arrivalTime, or maxPrice when they apply. Read airline and flight number, departure and arrival times, duration, stops, connecting airports, fare name, total price, and bag rules when shown. Open Google Flights or the airline's own site in your browser, with the tightest URL you can build, only when Stophy fails, for a fare it does not show, like an award or a fare class, or to book.
+3. Refine with filters instead of asking the user again. "No connections", "leave after lunch", "not Newark", and "anything cheaper" are filter changes: stops, departureTime, airlines, or maxPrice in a new stophy_call, or the site's filters in your browser.
 4. Treat every time as local wall clock at that airport. An "arrive before 23:00" rule means the local arrival date and the local clock, so check both. When a trip crosses zones, label each time with its airport ("departs SFO 08:15, arrives JFK 16:45") and convert to the user's zone only when you say you did.
 5. Never report that a route has no service from one empty result. Run search_web for the route and check the airline's own site first.
 6. Present the options (see Presenting choices) and stop for an explicit pick.

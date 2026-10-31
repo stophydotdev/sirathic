@@ -1,4 +1,5 @@
 import { BROWSER_TOOLS } from "../../bots/browser";
+import { STOPHY_TOOLS } from "../stophyTools";
 import type { Skill } from "./builtIn";
 import accommodationBooking from "./accommodationBooking.md" with { type: "text" };
 import flightBooking from "./flightBooking.md" with { type: "text" };
@@ -56,13 +57,13 @@ export const bookingSkills: Skill[] = [
     name: "flight_booking",
     when: "Load when the user asks you to find, compare, book, change, or check in for a flight, look up an itinerary, or fetch a boarding pass, before you search any airline or travel site or touch a checkout",
     text: flightBooking,
-    tools: BROWSER_TOOLS,
+    tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
   {
     name: "accommodation_booking",
     when: "Load when the user asks you to find, compare, book, or change a vacation rental, hotel room, or other place to stay for a trip, or asks what a listing costs for their dates, before you open Airbnb, Expedia, or any other lodging site",
     text: accommodationBooking,
-    tools: BROWSER_TOOLS,
+    tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
   ...SITE_GUIDES.map(({ name, when, text }) => ({
     name,

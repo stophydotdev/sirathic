@@ -1,4 +1,5 @@
 import { BROWSER_TOOLS } from "../../bots/browser";
+import { STOPHY_TOOLS } from "../stophyTools";
 import type { Skill } from "./builtIn";
 import breakingHabit from "./breakingHabit.md" with { type: "text" };
 import hajjUmrah from "./hajjUmrah.md" with { type: "text" };
@@ -13,8 +14,6 @@ import ramadan from "./ramadan.md" with { type: "text" };
 import wasiyyah from "./wasiyyah.md" with { type: "text" };
 import waswas from "./waswas.md" with { type: "text" };
 import zakatGiving from "./zakatGiving.md" with { type: "text" };
-
-const STOPHY_TOOLS = ["stophy_search_endpoints", "stophy_call"];
 
 export const muslimSkills: Skill[] = [
   {

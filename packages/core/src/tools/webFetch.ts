@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { cacheFor } from "../cache";
-import { stophy } from "../stophy";
+import { scrapedPage, stophy } from "../stophy";
 import { type WebFetchResult, webFetchResult } from "../web/types";
 import { cleanUrl, publicUrl } from "../web/url";
 
@@ -36,15 +36,16 @@ const fetchLive = async (url: string): Promise<WebFetchResult> => {
     .catch((err: Error) => {
       throw new Error(`Fetching ${url} failed: ${err.message}`);
     });
-  const markdown = data.markdown?.trim() ?? "";
+  const page = scrapedPage.parse(data);
+  const markdown = page.markdown?.trim() ?? "";
   if (markdown.length < MIN_TEXT_CHARS) {
     throw new Error(`Fetching ${url} found no readable text`);
   }
   return {
-    url: data.metadata.sourceURL ?? url,
-    title: data.metadata.title ?? "",
+    url: page.metadata.sourceURL ?? url,
+    title: page.metadata.title ?? "",
     markdown,
-    statusCode: data.metadata.statusCode,
+    statusCode: page.metadata.statusCode,
   };
 };
 
