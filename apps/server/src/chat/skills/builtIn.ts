@@ -26,6 +26,7 @@ import scheduling from "./scheduling.md" with { type: "text" };
 import sendOnBehalf from "./sendOnBehalf.md" with { type: "text" };
 import skillAuthoring from "./skillAuthoring.md" with { type: "text" };
 import stophy from "./stophy.md" with { type: "text" };
+import subscriptionsAudit from "./subscriptionsAudit.md" with { type: "text" };
 import study from "./study.md" with { type: "text" };
 import writing from "./writing.md" with { type: "text" };
 
@@ -228,6 +229,17 @@ export const skillsFor = ({
             when: "Load when the user wants to clear out, clean up or trash a lot of email at once, like old promotions, newsletters or notifications",
             text: inboxCleanup,
             tools: ["search_plugins", "install_plugin", ...appTools(plugins, ["gmail"]), BULK],
+          },
+          {
+            name: "subscriptions_audit",
+            when: "Load when the user asks what they subscribe to or pay for, or wants recurring charges, renewals or receipts found in their email",
+            text: subscriptionsAudit,
+            tools: [
+              "search_plugins",
+              "install_plugin",
+              ...appTools(plugins, ["gmail"]),
+              ...files.tools,
+            ],
           },
           {
             name: "scheduling",
