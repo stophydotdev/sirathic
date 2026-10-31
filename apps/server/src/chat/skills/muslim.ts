@@ -47,7 +47,7 @@ export const muslimSkills: Skill[] = [
   },
   {
     name: "zakat_giving",
-    when: "Load when the user wants their zakat worked out from their own money, or wants to give zakat or sadaqah to a charity",
+    when: "Load when the user wants their zakat worked out from their own money or bank statements, or wants to give zakat or sadaqah to a charity",
     text: zakatGiving,
     tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
