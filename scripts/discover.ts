@@ -17,6 +17,7 @@ const TINTS = ["teal", "rose", "amber", "indigo"] as const;
 const STEP_CAP = 20;
 const ANSWER_AT_TOKENS = 40_000;
 const RESULTS_CHARS = 120_000;
+const MARKER = /\s*\[(\d+)\]/gu;
 const RESEARCH_MS = 15 * 60_000;
 const PASS = 0.5;
 
@@ -199,12 +200,15 @@ async function write(entry: (typeof queue)[number], tint: (typeof TINTS)[number]
     prompt: found.text,
     output: Output.object({ schema: drafted }),
   }).output;
-  const linked = ({ text, citations }: z.infer<typeof paragraph>): Paragraph => ({
-    text: withoutEmDashes(text).trim(),
-    citations: [...new Set(citations.flatMap((number) => found.urlOf(number) ?? []))].filter(
-      (url) => found.seen.has(url),
-    ),
-  });
+  const linked = ({ text, citations }: z.infer<typeof paragraph>): Paragraph => {
+    const marked = [...text.matchAll(MARKER)].map((match) => Number(match[1]));
+    return {
+      text: withoutEmDashes(text.replaceAll(MARKER, "")).trim(),
+      citations: [
+        ...new Set([...citations, ...marked].flatMap((number) => found.urlOf(number) ?? [])),
+      ].filter((url) => found.seen.has(url)),
+    };
+  };
   const reviewed = async (entered: z.infer<typeof paragraph>) => {
     const ready = linked(entered);
     if (ready.citations.length === 0) {
