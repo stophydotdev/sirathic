@@ -154,5 +154,5 @@ export default {
       ],
     },
   ],
-  related: [],
+  related: ["bleeding-and-wudu", "camel-meat-and-wudu"],
 } satisfies ArticleInput;

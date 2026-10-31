@@ -193,5 +193,5 @@ export default {
       ],
     },
   ],
-  related: ["touching-a-woman-and-wudu"],
+  related: ["touching-a-woman-and-wudu", "camel-meat-and-wudu"],
 } satisfies ArticleInput;
