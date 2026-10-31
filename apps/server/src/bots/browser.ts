@@ -28,7 +28,7 @@ import {
 } from "@sirathic/browser/protocol";
 import { publicUrl } from "@sirathic/core/web/url";
 import { env } from "@sirathic/env/server";
-import { tool } from "ai";
+import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import { fencedText } from "../chat/fence";
 import { StatusError } from "../http";
@@ -44,7 +44,7 @@ const TIMEOUT_MS = 90_000;
 export const USER_FORM = "request_user_form";
 export const BROWSER_HELP = "request_browser_help";
 const REFILL = "refill_form_fields";
-export const NEEDS_SOMEONE_THERE: readonly string[] = [USER_FORM, BROWSER_HELP, REFILL];
+const NEEDS_SOMEONE_THERE = new Set([USER_FORM, BROWSER_HELP, REFILL]);
 const VAULT_SIGN_IN = "vault_sign_in";
 
 export const BROWSER_TOOLS = [
@@ -167,7 +167,7 @@ const pageText = (output: Awaited<ReturnType<typeof act>>) => ({
     (output.notKept.length > 0 ? `\n\nA download was not kept: ${output.notKept.join(" ")}` : ""),
 });
 
-export function browserTools(scope: BotScope) {
+function browserTools(scope: BotScope) {
   const botId = scope.id;
   return {
     [VAULT_SIGN_IN]: tool({
@@ -352,5 +352,45 @@ export function browserTools(scope: BotScope) {
           await (await service("/refill", { session: sessionOf(botId), ...input })).json(),
         ),
     }),
+  };
+}
+
+const holders = new Map<string, symbol>();
+
+const BUSY =
+  "Your browser is busy with another job. Do this without it, or after that job finishes.";
+
+export function browserFor(scope: BotScope, unattended: boolean) {
+  const me = Symbol(scope.id);
+  const take = () => {
+    const holder = holders.get(scope.id);
+    if (holder === undefined) holders.set(scope.id, me);
+    return holder === undefined || holder === me;
+  };
+  const own: ToolSet = browserTools(scope);
+  const tools: ToolSet = Object.fromEntries(
+    Object.entries(own)
+      .filter(([name]) => !unattended || !NEEDS_SOMEONE_THERE.has(name))
+      .map(([name, entry]) => {
+        const { execute } = entry;
+        return [
+          name,
+          execute === undefined
+            ? entry
+            : {
+                ...entry,
+                execute: (...call: Parameters<typeof execute>) => {
+                  if (!take()) throw new Error(BUSY);
+                  return execute(...call);
+                },
+              },
+        ];
+      }),
+  );
+  return {
+    tools,
+    release: () => {
+      if (holders.get(scope.id) === me) holders.delete(scope.id);
+    },
   };
 }

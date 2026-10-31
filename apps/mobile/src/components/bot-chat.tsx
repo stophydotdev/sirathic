@@ -7,6 +7,7 @@ import { type ComponentRef, type FC, useEffect, useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { api } from "@/lib/api";
+import { useChatState } from "@/lib/chat-state";
 import { type Bot, useBots } from "@/lib/bots";
 import { latestTodoId, toolOf } from "@/lib/research";
 import type { Feedback } from "./answer";
@@ -14,11 +15,13 @@ import { BotAvatar } from "./bot-avatar";
 import { BotMenu, useBotPanel } from "./bot-menu";
 import { BotSays, BotYou, stampOf } from "./bot-turns";
 import { LatestTodo } from "./todo-card";
-import { liveChat, messageOf } from "./chat";
+import { liveChat, messageOf, savedChat } from "./chat";
 import { Composer } from "./composer";
 import { ComposerDock } from "./composer-dock";
 import { MenuButton } from "./page";
 import { QuestionCard } from "./question-card";
+
+const BACKGROUND_POLL_MS = 4000;
 
 const STARTER_REPLIES = [
   "Study the Quran with me, a few verses a day",
@@ -117,9 +120,32 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
   });
   const setPanel = useBotPanel((s) => s.setOpen);
   const busy = status === "submitted" || status === "streaming";
+  const working = useChatState(
+    (s) => s.sessions?.find((found) => found.id === bot.id)?.working === true,
+  );
   const ask = (text: string, files: FileUIPart[] = []) =>
     void sendMessage({ text, files, metadata: {} });
   const reply = answerAfter(messages, -1);
+
+  useEffect(() => {
+    if (!working) return;
+    const sync = () => {
+      void useChatState.getState().loadSessions();
+      void savedChat(bot.id).then(
+        (saved) => {
+          if (saved.length > session.messages.length && session.status === "ready") {
+            session.messages = saved;
+          }
+        },
+        () => undefined,
+      );
+    };
+    const timer = setInterval(sync, BACKGROUND_POLL_MS);
+    return () => {
+      clearInterval(timer);
+      setTimeout(sync, BACKGROUND_POLL_MS / 2);
+    };
+  }, [working, bot.id, session]);
 
   const rate = (messageId: string, next: Feedback) => {
     setMessages((all) =>

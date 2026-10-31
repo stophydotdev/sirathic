@@ -911,4 +911,14 @@ export default {
   "Check its verses and hadith": "آیات و احادیثش را بررسی کن",
   "Summarize it": "خلاصه‌اش کن",
   "Translate it": "ترجمه‌اش کن",
+  Tasks: "وظایف",
+  "1 task": "۱ وظیفه",
+  "{count} tasks": "{count} وظیفه",
+  Bot: "ربات",
+  "Needs attention": "نیازمند توجه",
+  "In progress": "در حال انجام",
+  "Didn't finish": "تمام نشد",
+  Stopped: "متوقف شد",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "از یک ربات چند کار را هم‌زمان بخواهید و هر کدام اینجا نشان داده می‌شود.",
 } satisfies Messages;

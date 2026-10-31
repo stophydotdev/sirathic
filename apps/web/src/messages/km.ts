@@ -899,4 +899,14 @@ export default {
   "Check its verses and hadith": "ពិនិត្យអាយ៉ាត់ និងហាឌីស",
   "Summarize it": "សង្ខេប",
   "Translate it": "បកប្រែ",
+  Tasks: "កិច្ចការ",
+  "1 task": "កិច្ចការ ១",
+  "{count} tasks": "កិច្ចការ {count}",
+  Bot: "បូត",
+  "Needs attention": "ត្រូវការការយកចិត្តទុកដាក់",
+  "In progress": "កំពុងដំណើរការ",
+  "Didn't finish": "មិនបានបញ្ចប់",
+  Stopped: "បានបញ្ឈប់",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "សុំបូតឱ្យធ្វើច្រើនយ៉ាងក្នុងពេលតែមួយ ហើយរឿងនីមួយៗនឹងបង្ហាញនៅទីនេះ។",
 } satisfies Messages;

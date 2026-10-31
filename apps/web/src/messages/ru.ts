@@ -915,4 +915,14 @@ export default {
   "Check its verses and hadith": "Проверить аяты и хадисы",
   "Summarize it": "Кратко пересказать",
   "Translate it": "Перевести",
+  Tasks: "Задачи",
+  "1 task": "1 задача",
+  "{count} tasks": "Задач: {count}",
+  Bot: "Бот",
+  "Needs attention": "Требуют внимания",
+  "In progress": "В работе",
+  "Didn't finish": "Не завершена",
+  Stopped: "Остановлена",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Попросите бота о нескольких делах сразу, и каждое появится здесь.",
 } satisfies Messages;

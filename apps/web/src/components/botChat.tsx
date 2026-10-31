@@ -282,7 +282,8 @@ const reactionAfter = (messages: readonly ThreadMessage[], id: string) => {
 const stampOf = (messages: readonly ThreadMessage[], id: string) => {
   const message = messages.find((item) => item.id === id);
   if (message?.role !== "user") return undefined;
-  if (messageMetadata.safeParse(message.metadata.custom).data?.formReply) return undefined;
+  const hidden = messageMetadata.safeParse(message.metadata.custom).data;
+  if (hidden?.formReply || hidden?.wake) return undefined;
   const at = sentAt(messages, message);
   const before = messages.slice(0, messages.indexOf(message)).findLast((m) => m.role === "user");
   return before === undefined || at - sentAt(messages, before) > STAMP_GAP ? at : undefined;
@@ -324,10 +325,11 @@ const BotYou: FC = () => {
   const routine = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.routine,
   );
-  const formReply = useAuiState(
-    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.formReply,
-  );
-  if (formReply) return null;
+  const hidden = useAuiState((s) => {
+    const sent = messageMetadata.safeParse(s.message.metadata.custom).data;
+    return sent?.formReply !== undefined || sent?.wake === true;
+  });
+  if (hidden) return null;
   if (routine) {
     return (
       <p className="text-muted-foreground pt-6 pb-1 text-center text-xs">

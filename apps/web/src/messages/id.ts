@@ -918,4 +918,14 @@ export default {
   "Check its verses and hadith": "Periksa ayat dan hadisnya",
   "Summarize it": "Ringkas",
   "Translate it": "Terjemahkan",
+  Tasks: "Tugas",
+  "1 task": "1 tugas",
+  "{count} tasks": "{count} tugas",
+  Bot: "Bot",
+  "Needs attention": "Perlu perhatian",
+  "In progress": "Sedang berjalan",
+  "Didn't finish": "Tidak selesai",
+  Stopped: "Dihentikan",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Minta beberapa hal sekaligus ke bot, dan masing-masing akan muncul di sini.",
 } satisfies Messages;

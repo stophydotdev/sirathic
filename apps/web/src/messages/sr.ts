@@ -914,4 +914,14 @@ export default {
   "Check its verses and hadith": "Провери његове ајете и хадисе",
   "Summarize it": "Сажми",
   "Translate it": "Преведи",
+  Tasks: "Задаци",
+  "1 task": "1 задатак",
+  "{count} tasks": "Задатака: {count}",
+  Bot: "Бот",
+  "Needs attention": "Траже пажњу",
+  "In progress": "У току",
+  "Didn't finish": "Није завршено",
+  Stopped: "Заустављено",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Затражите од бота неколико ствари одједном и свака ће се појавити овде.",
 } satisfies Messages;

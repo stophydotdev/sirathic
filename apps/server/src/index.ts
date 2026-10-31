@@ -15,6 +15,7 @@ import { withoutErrorText } from "./tracing";
 import { drainAnswers, followAnswer, startAnswer } from "./chat/answers";
 import { keepAlive } from "./chat/keepAlive";
 import { refreshSummary } from "./bots/summary";
+import { cutOffTasks } from "./bots/taskRun";
 import { pickModels } from "./models/pick";
 import { checkNoorUsage, spendNoor } from "./models/usage";
 import { chatResponse, KEEPALIVE_MS } from "./chat/response";
@@ -81,7 +82,10 @@ tracing.start();
 const stopScheduler = env.RAILWAY_ENVIRONMENT_NAME === "production" ? startScheduler() : undefined;
 process.on("SIGTERM", () => {
   void Promise.resolve(stopScheduler?.())
-    .then(() => drainAnswers(DRAIN_MS))
+    .then(() => {
+      cutOffTasks();
+      return drainAnswers(DRAIN_MS);
+    })
     .then(() => tracing.shutdown())
     .finally(() => process.exit(0));
 });

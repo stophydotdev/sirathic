@@ -2,6 +2,7 @@ type Answer = {
   controller: AbortController;
   continuing: boolean;
   asker: "connected" | "gone";
+  superseded: boolean;
   sent: string[];
   followers: Set<ReadableStreamDefaultController<string>>;
   done: Promise<void>;
@@ -13,12 +14,17 @@ const keyOf = (owner: string, id: string) => `${owner}:${id}`;
 
 export function startAnswer(owner: string, id: string, { continuing = false } = {}) {
   const key = keyOf(owner, id);
-  running.get(key)?.controller.abort();
+  const previous = running.get(key);
+  if (previous) {
+    previous.superseded = true;
+    previous.controller.abort();
+  }
   const { promise: done, resolve: finish } = Promise.withResolvers<void>();
   const answer: Answer = {
     controller: new AbortController(),
     continuing,
     asker: "connected",
+    superseded: false,
     sent: [],
     followers: new Set(),
     done,
@@ -57,6 +63,7 @@ export function startAnswer(owner: string, id: string, { continuing = false } = 
       });
     },
     unwatched: () => answer.asker === "gone" && answer.followers.size === 0,
+    superseded: () => answer.superseded,
   };
 }
 
@@ -64,6 +71,13 @@ export const stopAnswer = (owner: string, id: string) =>
   running.get(keyOf(owner, id))?.controller.abort();
 
 export const isAnswering = (owner: string, id: string) => running.has(keyOf(owner, id));
+
+export async function whenIdle(owner: string, id: string): Promise<void> {
+  const answer = running.get(keyOf(owner, id));
+  if (!answer) return;
+  await answer.done;
+  return whenIdle(owner, id);
+}
 
 const held = new Set<Promise<void>>();
 

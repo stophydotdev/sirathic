@@ -44,7 +44,7 @@ const failureNote = (failedInARow: number, reason: string) =>
       ? `This run did not finish. ${reason}`
       : undefined;
 
-async function ownerOf(id: string): Promise<User> {
+export async function ownerOf(id: string): Promise<User> {
   const [row] = await db
     .select({
       id: users.id,

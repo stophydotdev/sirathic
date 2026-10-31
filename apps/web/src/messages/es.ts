@@ -919,4 +919,14 @@ export default {
   "Check its verses and hadith": "Revisa sus aleyas y hadices",
   "Summarize it": "Resúmelo",
   "Translate it": "Tradúcelo",
+  Tasks: "Tareas",
+  "1 task": "1 tarea",
+  "{count} tasks": "{count} tareas",
+  Bot: "Bot",
+  "Needs attention": "Requieren atención",
+  "In progress": "En curso",
+  "Didn't finish": "No terminó",
+  Stopped: "Detenida",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Pídele a un bot varias cosas a la vez y cada una aparecerá aquí.",
 } satisfies Messages;

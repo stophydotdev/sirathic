@@ -913,4 +913,14 @@ export default {
   "Check its verses and hadith": "Ƴeewto aayaaje e hadiisaaji mayre",
   "Summarize it": "Raɓɓin ɗum",
   "Translate it": "Firo ɗum",
+  Tasks: "Golle",
+  "1 task": "Gollal 1",
+  "{count} tasks": "Golle {count}",
+  Bot: "Bot",
+  "Needs attention": "Yiɗi hakkiilo",
+  "In progress": "Ina yaha",
+  "Didn't finish": "Timmaay",
+  Stopped: "Haɓɓaama",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Ɗamal bot kuuɗe seeɗa e nder nde go'o, kala wootere ɗum maa ibe ton.",
 } satisfies Messages;

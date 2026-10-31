@@ -913,4 +913,14 @@ export default {
   "Check its verses and hadith": "クルアーンの節とハディースを確認",
   "Summarize it": "要約する",
   "Translate it": "翻訳する",
+  Tasks: "タスク",
+  "1 task": "1件のタスク",
+  "{count} tasks": "{count}件のタスク",
+  Bot: "ボット",
+  "Needs attention": "要確認",
+  "In progress": "進行中",
+  "Didn't finish": "完了しませんでした",
+  Stopped: "停止しました",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "ボットにいくつかの依頼を同時に頼むと、それぞれがここに表示されます。",
 } satisfies Messages;

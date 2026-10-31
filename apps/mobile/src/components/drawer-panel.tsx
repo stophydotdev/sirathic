@@ -12,6 +12,7 @@ import {
   ChevronDown,
   ChevronRight,
   Clock,
+  ListCheck,
   Logout,
   Plus,
   Search,
@@ -30,6 +31,7 @@ const accountRow = "h-12 w-full flex-row items-center gap-3 rounded-[12px] px-2.
 const PAGES = [
   ["/library", "Library", Books],
   ["/automations", "Automations", Clock],
+  ["/tasks", "Tasks", ListCheck],
   ["/plugins", "Plugins", At],
 ] as const satisfies readonly (readonly [Href, string, typeof Books])[];
 

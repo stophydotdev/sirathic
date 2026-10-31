@@ -912,4 +912,14 @@ export default {
   "Check its verses and hadith": "Kiểm tra các câu kinh và hadith",
   "Summarize it": "Tóm tắt",
   "Translate it": "Dịch",
+  Tasks: "Tác vụ",
+  "1 task": "1 tác vụ",
+  "{count} tasks": "{count} tác vụ",
+  Bot: "Bot",
+  "Needs attention": "Cần chú ý",
+  "In progress": "Đang thực hiện",
+  "Didn't finish": "Chưa hoàn tất",
+  Stopped: "Đã dừng",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Nhờ bot làm vài việc cùng lúc, mỗi việc sẽ hiện ở đây.",
 } satisfies Messages;

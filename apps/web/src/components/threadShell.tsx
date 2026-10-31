@@ -33,6 +33,7 @@ import {
   Add01Icon,
   ArrowDown01Icon,
   AtIcon,
+  CheckListIcon,
   LibraryIcon,
   Menu01Icon,
   Search01Icon,
@@ -102,6 +103,16 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
               className="text-foreground me-auto flex size-10 items-center justify-center"
             >
               <Mark size={20} color="currentColor" />
+            </Link>
+          )}
+          {!collapsed && (
+            <Link
+              href="/tasks"
+              title={t("Tasks")}
+              className="text-muted-foreground hover:text-foreground hover:bg-muted flex size-8 items-center justify-center rounded-full transition-colors"
+            >
+              <HugeiconsIcon icon={CheckListIcon} className="size-4" />
+              <span className="sr-only">{t("Tasks")}</span>
             </Link>
           )}
           {!collapsed && (
@@ -216,6 +227,10 @@ export const ThreadShell: FC<{ children: ReactNode }> = ({ children }) => {
             <NavLink href="/automations" className={mobileRow} onDone={() => setMobileOpen(false)}>
               <AutomationsIcon unseen={unseenRuns} className="size-4" />
               <span>{t("Automations")}</span>
+            </NavLink>
+            <NavLink href="/tasks" className={mobileRow} onDone={() => setMobileOpen(false)}>
+              <HugeiconsIcon icon={CheckListIcon} className="size-4 shrink-0" />
+              <span>{t("Tasks")}</span>
             </NavLink>
             <NavLink href="/plugins" className={mobileRow} onDone={() => setMobileOpen(false)}>
               <HugeiconsIcon icon={AtIcon} className="size-4 shrink-0" />

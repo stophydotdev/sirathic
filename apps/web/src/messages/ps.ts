@@ -912,4 +912,14 @@ export default {
   "Check its verses and hadith": "د دې آیتونه او حدیثونه وګوره",
   "Summarize it": "لنډیز یې کړه",
   "Translate it": "ژباړه یې کړه",
+  Tasks: "دندې",
+  "1 task": "۱ دنده",
+  "{count} tasks": "{count} دندې",
+  Bot: "بوټ",
+  "Needs attention": "پاملرنې ته اړتیا لري",
+  "In progress": "روانې",
+  "Didn't finish": "بشپړه نه شوه",
+  Stopped: "ودرول شوه",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "له یو بوټ څخه څو کارونه یو ځل وغواړئ، او هر یو به دلته ښکاره شي.",
 } satisfies Messages;

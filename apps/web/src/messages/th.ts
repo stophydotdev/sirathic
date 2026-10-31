@@ -895,4 +895,14 @@ export default {
   "Check its verses and hadith": "ตรวจสอบอายะฮ์และหะดีษ",
   "Summarize it": "สรุป",
   "Translate it": "แปล",
+  Tasks: "งาน",
+  "1 task": "1 งาน",
+  "{count} tasks": "{count} งาน",
+  Bot: "บอต",
+  "Needs attention": "ต้องการความสนใจ",
+  "In progress": "กำลังทำ",
+  "Didn't finish": "ไม่เสร็จ",
+  Stopped: "หยุดแล้ว",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "ขอให้บอตทำหลายอย่างพร้อมกัน แล้วแต่ละงานจะแสดงที่นี่",
 } satisfies Messages;

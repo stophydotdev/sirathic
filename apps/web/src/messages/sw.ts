@@ -915,4 +915,14 @@ export default {
   "Check its verses and hadith": "Kagua aya na hadithi zake",
   "Summarize it": "Fupisha",
   "Translate it": "Tafsiri",
+  Tasks: "Kazi",
+  "1 task": "Kazi 1",
+  "{count} tasks": "Kazi {count}",
+  Bot: "Bot",
+  "Needs attention": "Zinahitaji umakini",
+  "In progress": "Zinaendelea",
+  "Didn't finish": "Haikukamilika",
+  Stopped: "Imesimamishwa",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Muombe bot mambo kadhaa kwa wakati mmoja na kila moja litaonekana hapa.",
 } satisfies Messages;

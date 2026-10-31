@@ -916,4 +916,14 @@ export default {
   "Check its verses and hadith": "Ayetlerini ve hadislerini kontrol et",
   "Summarize it": "Özetle",
   "Translate it": "Çevir",
+  Tasks: "Görevler",
+  "1 task": "1 görev",
+  "{count} tasks": "{count} görev",
+  Bot: "Bot",
+  "Needs attention": "Dikkat gerektiren",
+  "In progress": "Devam eden",
+  "Didn't finish": "Tamamlanmadı",
+  Stopped: "Durduruldu",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Bir bottan aynı anda birkaç şey isteyin, her biri burada görünür.",
 } satisfies Messages;

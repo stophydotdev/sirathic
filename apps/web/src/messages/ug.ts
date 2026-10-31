@@ -918,4 +918,14 @@ export default {
   "Check its verses and hadith": "ئايەت ۋە ھەدىسلىرىنى تەكشۈر",
   "Summarize it": "خۇلاسىلە",
   "Translate it": "تەرجىمە قىل",
+  Tasks: "ۋەزىپىلەر",
+  "1 task": "1 ۋەزىپە",
+  "{count} tasks": "{count} ۋەزىپە",
+  Bot: "بوت",
+  "Needs attention": "دىققەت تەلەپ قىلىدۇ",
+  "In progress": "ئىجرا بولۇۋاتىدۇ",
+  "Didn't finish": "تاماملانمىدى",
+  Stopped: "توختىتىلدى",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "بىر بوتتىن بىرنەچچە ئىشنى ئايرىم ئىلتىماس قىلىڭ، ھەر بىرى بۇ يەردە كۆرۈنىدۇ.",
 } satisfies Messages;

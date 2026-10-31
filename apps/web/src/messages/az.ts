@@ -918,4 +918,14 @@ export default {
   "Check its verses and hadith": "Ayə və hədislərini yoxla",
   "Summarize it": "Xülasə et",
   "Translate it": "Tərcümə et",
+  Tasks: "Tapşırıqlar",
+  "1 task": "1 tapşırıq",
+  "{count} tasks": "{count} tapşırıq",
+  Bot: "Bot",
+  "Needs attention": "Diqqət tələb edir",
+  "In progress": "Davam edir",
+  "Didn't finish": "Tamamlanmadı",
+  Stopped: "Dayandırıldı",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Botdan eyni anda bir neçə şey istəyin, hər biri burada görünəcək.",
 } satisfies Messages;

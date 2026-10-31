@@ -35,6 +35,7 @@ export default function Layout() {
             <Drawer.Screen name="index" />
             <Drawer.Screen name="library" />
             <Drawer.Screen name="automations" />
+            <Drawer.Screen name="tasks" />
             <Drawer.Screen name="plugins" />
             <Drawer.Screen name="settings" />
             <Drawer.Screen name="bot/[id]" />
