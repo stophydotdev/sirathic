@@ -29,6 +29,8 @@ const TOHED = "https://en.tohed.com/threads/does-wudu-ablution-break-due-to-blee
 
 export default {
   title: "Does bleeding break wudu?",
+  headline: "Two schools say bleeding breaks wudu, and two say it does not",
+  cover: "خروج الدم",
   slug: "bleeding-and-wudu",
   topic: "Purification",
   tint: "rose",
@@ -194,5 +196,5 @@ export default {
       ],
     },
   ],
-  related: ["touching-a-woman-and-wudu", "camel-meat-and-wudu"],
+  related: [],
 } satisfies ArticleInput;

@@ -1,11 +1,9 @@
 import { z } from "zod";
 import bleedingWudu from "./bleedingWudu";
-import camelMeatWudu from "./camelMeatWudu";
 import { article } from "./schema";
-import touchingWudu from "./touchingWudu";
 import { written } from "./written";
 
-const parsed = z.array(article).parse([touchingWudu, bleedingWudu, camelMeatWudu, ...written]);
+const parsed = z.array(article).parse([...written, bleedingWudu]);
 
 const slugs = new Set(parsed.map((found) => found.slug));
 if (slugs.size !== parsed.length) throw new Error("Discover articles share a slug");

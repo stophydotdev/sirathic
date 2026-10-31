@@ -1,0 +1,374 @@
+{
+  "title": "Is music haram?",
+  "headline": "Fiqh texts treat instruments and the bare voice separately, and schools diverge on both",
+  "cover": "المعازف والغناء",
+  "slug": "is-music-haram",
+  "topic": "Daily life",
+  "tint": "rose",
+  "summary": {
+    "text": "The Ḥanbalī al-Buhūtī states that listening to singing is disliked, and that listening to it with an instrument of amusement is forbidden, while the Ḥanbalī Ibn Qudāma reports disagreement among the school's companions on singing, with Abū Bakr al-Khallāl and Abū Bakr ʿAbd al-ʿAzīz holding it permissible. Ibn ʿĀbidīn reports that all of that is disliked according to the Ḥanafīs, and al-Nawawī states that the voice's singing is disliked and listening to it is disliked, neither being forbidden, while al-Shirbīnī says singing is disliked and that using an instrument from the drinking-party's emblem, like a ṭunbūr, is forbidden.",
+    "citations": [
+      "https://shamela.ws/book/622#15:272",
+      "https://shamela.ws/book/6910#14:160",
+      "https://shamela.ws/book/21613#6:349",
+      "https://shamela.ws/book/21604#4:18",
+      "https://shamela.ws/book/21613#5:481",
+      "https://shamela.ws/book/622#12:64",
+      "https://shamela.ws/book/21604#4:166",
+      "https://shamela.ws/book/21613#5:482",
+      "https://shamela.ws/book/21613#6:348",
+      "https://www.dar-alifta.org/ar/Fatwa/Details/11981/الحكم-الشرعي-في-الموسيقى",
+      "https://shamela.ws/book/499#11:222",
+      "https://shamela.ws/book/11444#6:348",
+      "https://shamela.ws/book/11444#6:347",
+      "https://shamela.ws/book/587#3:432"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://shamela.ws/book/622#15:272",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج15 ص272"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#14:160",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج14 ص160"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#6:349",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص349"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#4:18",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج4 ص18"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#5:481",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج5 ص481"
+    },
+    {
+      "url": "https://shamela.ws/book/622#12:64",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج12 ص64"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#4:166",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج4 ص166"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#5:482",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج5 ص482"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#6:348",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص348"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/11981/الحكم-الشرعي-في-الموسيقى",
+      "title": "الحكم الشرعي في الموسيقى"
+    },
+    {
+      "url": "https://shamela.ws/book/499#11:222",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج11 ص222"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#6:348",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج6 ص348"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#6:347",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج6 ص347"
+    },
+    {
+      "url": "https://shamela.ws/book/587#3:432",
+      "title": "المدونة، مالك بن أنس، ج3 ص432"
+    },
+    {
+      "url": "https://quran.com/31/6",
+      "title": "Quran 31:6, Luqman"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%A7%D9%84%D8%A3%D8%AF%D8%A8_%D8%A7%D9%84%D9%85%D9%81%D8%B1%D8%AF/%D8%A7%D9%84%D8%AC%D8%B2%D8%A1_%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%B3#786",
+      "title": "Al-Adab al-Mufrad 786"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%A7%D9%84%D8%A3%D8%AF%D8%A8_%D8%A7%D9%84%D9%85%D9%81%D8%B1%D8%AF/%D8%A7%D9%84%D8%AC%D8%B2%D8%A1_%D8%A7%D9%84%D8%B9%D8%A7%D8%B4%D8%B1#1265",
+      "title": "Al-Adab al-Mufrad 1265"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/5000",
+      "title": "Is Music Haram?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/general-counsel/purchasing-idle-talk/",
+      "title": "“Purchasing idle talk”"
+    },
+    {
+      "url": "https://quran.com/17/64",
+      "title": "Quran 17:64, Al-Israa"
+    },
+    {
+      "url": "https://quran.com/53/61",
+      "title": "Quran 53:61, An-Najm"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/105442/musical-instruments-any-whose-use-permissible",
+      "title": "Musical instruments: Is there any of them whose use is permissible?"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:952",
+      "title": "Sahih al-Bukhari 952: The Two Festivals (Eids)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1593",
+      "title": "Sunan an-Nasa'i 1593: The Book of the Prayer for the Two 'Eids"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:4923",
+      "title": "Sunan Abi Dawud 4923: General Behavior (Kitab Al-Adab)"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/222730",
+      "title": "Ruling on singing and musical instruments"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/32#21190",
+      "title": "Musnad Ahmad 22218"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/34#21275",
+      "title": "Musnad Ahmad 22307"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:3855",
+      "title": "Jami' at-Tirmidhi 3855: Chapters on Virtues"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:4927",
+      "title": "Sunan Abi Dawud 4927: General Behavior (Kitab Al-Adab)"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1089",
+      "title": "Jami' at-Tirmidhi 1089: The Book on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1895",
+      "title": "Sunan Ibn Majah 1895: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:2613",
+      "title": "Sunan Ibn Majah 2613: The Chapters on Legal Punishments"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/169673",
+      "title": "شبهة حول تحريم المعازف وجوابها"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/5000",
+      "title": "حكم الموسيقى والغناء والرقص"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/20406",
+      "title": "When is it permissible to beat the daff?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/124859/did-imam-al-ghazali-consider-music-to-be-permissible/",
+      "title": "Did Imām Al Ghazāli consider music to be permissible?"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/17313/حكم-سماع-الموسيقى-والغناء",
+      "title": "حكم سماع الموسيقى والغناء"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/17376/حكم-الاستماع-إلى-الأغاني-والموسيقى",
+      "title": "حكم الاستماع إلى الأغاني والموسيقى"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/83829/ruling-listening-songs-83829",
+      "title": "The Ruling on Listening to Songs"
+    },
+    {
+      "url": "https://islamqa.org/shafii/darul-iftaa-jordan/228850/what-is-the-ruling-of-islam-on-listening-to-music/",
+      "title": "What is the ruling of Islam on listening to music?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darul-iftaa-chicago/271193/the-islamic-ruling-on-music-in-the-hanafi-madhhab/",
+      "title": "The Islamic Ruling on Music in the Hanafi Madhhab"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband/26106/is-music-prohibited-in-islam/",
+      "title": "Is music prohibited in Islam?"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "No verse states in those words that music is haram; the Companions and Successors read three or four verses as covering it. On \"the amusement of speech\" (Quran 31:6), the translation's own note records that different Companions glossed it as shirk, as misleading stories, as frivolous songs, or as music, and that the verse covers everything that diverts a person from the Quran and the remembrance of Allah. Ibn ʿAbbās said it is \"singing and the like,\" recorded in al-Adab al-Mufrad. Ibn Masʿūd was asked about the verse and said, swearing three times, that it means singing, and Ibn ʿUmar said the same, both with sound chains as Ibn al-Qayyim reports. Mujāhid read it as the drum, and al-Ḥasan al-Baṣrī said the verse was revealed about singing and wind instruments.",
+          "citations": [
+            "https://quran.com/31/6",
+            "https://ar.wikisource.org/wiki/%D8%A7%D9%84%D8%A3%D8%AF%D8%A8_%D8%A7%D9%84%D9%85%D9%81%D8%B1%D8%AF/%D8%A7%D9%84%D8%AC%D8%B2%D8%A1_%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%B3#786",
+            "https://ar.wikisource.org/wiki/%D8%A7%D9%84%D8%A3%D8%AF%D8%A8_%D8%A7%D9%84%D9%85%D9%81%D8%B1%D8%AF/%D8%A7%D9%84%D8%AC%D8%B2%D8%A1_%D8%A7%D9%84%D8%B9%D8%A7%D8%B4%D8%B1#1265",
+            "https://islamqa.info/en/answers/5000",
+            "https://seekersguidance.org/answers/general-counsel/purchasing-idle-talk/"
+          ]
+        },
+        {
+          "text": "The Hanbali al-Mughni adds a second verse to the same file: on \"avoid the word of falsehood\" (Quran 22:30), Ibn al-Ḥanafiyya said it is singing, and it cites Ibn ʿAbbās and Ibn Masʿūd on 31:6 in the same passage. Two further verses are read as allusions rather than rulings. On \"incite whoever you can among them with your voice\" (Quran 17:64), Mujāhid said the voice of Iblīs is singing and falsehood. And on \"while you are proudly sporting\" (Quran 53:61), Ibn ʿAbbās said samidūn means singing in the Himyar dialect: when the pagans heard the Quran they would sing over it.",
+          "citations": [
+            "https://shamela.ws/book/6910#14:160",
+            "https://quran.com/17/64",
+            "https://islamqa.info/en/answers/5000",
+            "https://quran.com/53/61"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The load-bearing hadith is the one al-Bukhārī cited in his chapter on those who permit alcohol under another name: \"From among my followers there will be some people who will consider illegal sexual intercourse, the wearing of silk, the drinking of alcoholic drinks and the use of musical instruments, as lawful\" (Sahih al-Bukhari 5590). It appears in al-Bukhārī as a suspended narration (muʿallaq), though stated with certainty; Abū Dāwūd, Ibn Mājah, al-Ṭabarānī, al-Bayhaqī and Abū Bakr al-Ismāʿīlī connected it, and al-Albānī graded it sahih in al-Silsila al-Ṣaḥīḥa.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/105442/musical-instruments-any-whose-use-permissible",
+            "https://islamqa.info/en/answers/5000"
+          ]
+        },
+        {
+          "text": "The concession hadiths are equally sound: ʿĀ'isha's two Anṣārī girls singing with the duff on Eid while Abū Bakr called it \"musical instruments of Satan,\" and the Prophet ﷺ said, \"O Abu Bakr, every people has an Eid, and this is our Eid\", graded sahih. The Abyssinians playing with spears in the mosque is sahih, and al-Khaṭṭābī notes the girls were young, it was Eid, and they were not professional singers.",
+          "citations": [
+            "https://sunnah.com/bukhari:952",
+            "https://sunnah.com/nasai:1593",
+            "https://sunnah.com/abudawud:4923",
+            "https://islamqa.info/en/answers/222730"
+          ]
+        },
+        {
+          "text": "The supporting narrations need their grades stated plainly. The Prophet's \"wipe out the musical pipes and the lutes\" is hasan by its chains per Shuʿayb al-Arna'ūṭ, and the parallel Ahmad narration is sound through its other chains even though that particular isnad is weak. The Prophet's \"you have been given a flute from the flutes of the family of Dāwūd\" to Abū Mūsā is hasan sahih, but it praises Quran recitation, not instruments. Three commonly quoted reports are weak: \"singing makes hypocrisy grow in the heart\" is daʿīf, very daʿīf in one grading; \"announce the marriage and beat the duff\" is daʿīf; and the story of ʿAmr ibn Qurra asking permission to sing with his tambourine is graded fabricated (mawḍūʿ). The Hanafis nonetheless quote the hypocrisy report, treating it as Ibn Masʿūd's own statement rather than the Prophet's.",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/32#21190",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/34#21275",
+            "https://sunnah.com/tirmidhi:3855",
+            "https://sunnah.com/abudawud:4927",
+            "https://sunnah.com/tirmidhi:1089",
+            "https://sunnah.com/ibnmajah:1895",
+            "https://sunnah.com/ibnmajah:2613",
+            "https://shamela.ws/book/21613#6:348"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafis hold instruments haram: listening to the sound of malāhī is haram, and al-Kasānī says the ʿūd-player's integrity falls \"because it is not permissible in any way\". On the voice alone, al-Baḥr says \"the madhhab is its prohibition absolutely, so the disagreement ended,\" with al-Hidāya's apparent meaning that it is a major sin even for oneself; but what contains admonition and wisdom is permitted by consensus, and Ibn ʿĀbidīn defines the haram by its content.",
+          "citations": [
+            "https://shamela.ws/book/21613#5:481",
+            "https://shamela.ws/book/21613#5:482",
+            "https://shamela.ws/book/21613#6:348",
+            "https://shamela.ws/book/21613#6:349",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/11981/الحكم-الشرعي-في-الموسيقى"
+          ]
+        },
+        {
+          "text": "Mālik disliked the duff and all maʿāzif at weddings; with an instrument it is haram even at a wedding on the relied-upon view; duff and maʿāzif at a wedding are makrūh, at an ʿaqīqa or circumcision haram. The voice alone is makrūh when free of obscene words, incitement and instruments; otherwise haram, in doing and in hearing.",
+          "citations": [
+            "https://shamela.ws/book/587#3:432",
+            "https://shamela.ws/book/21604#4:18",
+            "https://shamela.ws/book/21604#4:166"
+          ]
+        },
+        {
+          "text": "The Shāfiʿīs hold it haram to use and to hear instruments of the wine-drinkers, tunbūr, ʿūd, ṣanj, Iraqi mizmār, and al-Shirbīnī says the more correct view is its prohibition. The voice alone is makrūh, and hearing it makrūh, not haram; stronger from a non-mahram woman; haram without dispute if fitna is feared.",
+          "citations": [
+            "https://shamela.ws/book/499#11:222",
+            "https://shamela.ws/book/11444#6:347",
+            "https://shamela.ws/book/11444#6:348"
+          ]
+        },
+        {
+          "text": "The Ḥanbalīs hold every instrument of amusement haram except the duff: mizmār, tunbūr, rabāb, jank, nāy, miʿzafa, ʿūd, whether for sorrow or joy. The voice alone is makrūh; haram together with an instrument. al-Mughnī records that al-Khallāl and Abū Bakr ʿAbd al-ʿAzīz held singing itself permissible and read Aḥmad's disapproval as aimed at the accompanying behaviour.",
+          "citations": [
+            "https://shamela.ws/book/622#15:272",
+            "https://shamela.ws/book/622#12:64",
+            "https://shamela.ws/book/6910#14:160"
+          ]
+        },
+        {
+          "text": "Two cross-school claims belong here because they are part of the record. Ibn Taymiyya held that the four imams agree all instruments are haram and that none of their followers reported a dispute on it, and Ibn al-Qayyim called the Hanafi position the strictest of the four. Against that, al-Ṭabarī reported agreement that singing is makrūh and to be prevented, naming only Ibrāhīm ibn Saʿd and ʿUbayd Allāh al-Anbārī as dissenters. The Hanbali school's own book recording a permissibility view shows the agreement was not as total as the claim suggests.",
+          "citations": [
+            "https://islamqa.info/ar/answers/169673",
+            "https://islamqa.info/en/answers/5000",
+            "https://shamela.ws/book/6910#14:160"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The verses are not explicit commands, and both sides knew it. The prohibition reading runs through the Companions' glosses, while the same words also cover al-Naḍr ibn al-Ḥārith's Persian king-tales, so Ibn al-Qayyim's reconciliation is that both are idle talk, with singing the more harmful because people incline to it. The verse's own note takes the broader line that it includes all that distracts from the Quran and Allah's remembrance.",
+          "citations": ["https://islamqa.info/en/answers/5000", "https://quran.com/31/6"]
+        },
+        {
+          "text": "The suspension of Bukhari 5590 and its conjunction with zinā and wine drew two answers. The chain objection is met by the connected narrations and al-Albānī's grading. The conjunction objection is answered by al-Shawkānī: if the pairing made the ruling, zinā would only be haram alongside wine and instruments, which no one says, and the prohibition of instruments is established from other evidence.",
+          "citations": [
+            "https://islamqa.info/en/answers/5000",
+            "https://al-fatawa.com/en/fatwa/105442/musical-instruments-any-whose-use-permissible",
+            "https://islamqa.info/ar/answers/5000"
+          ]
+        },
+        {
+          "text": "The Eid and wedding reports are reconciled by restricting them rather than by cancelling the prohibition. The concession is the duff, for women, on Eid, at a wedding, or on a returning traveller's arrival; al-Nawawī limits it to women because of the prohibition on men imitating women, and Abu Bakr's phrase \"musical instruments of Satan\" was left standing, with the Prophet ﷺ giving the occasion as the reason. Ibn Taymiyya's line separates the two questions: no dispute over instruments, dispute only over the bare voice.",
+          "citations": [
+            "https://islamqa.info/en/answers/20406",
+            "https://islamqa.info/en/answers/222730",
+            "https://sunnah.com/bukhari:952",
+            "https://islamqa.info/ar/answers/169673"
+          ]
+        },
+        {
+          "text": "Weak narrations are set aside on both sides, which changes what is actually argued. The fabricated Ibn Mājah report on singing for a living and the weak \"hypocrisy\" and \"beat the duff\" reports cannot carry a ruling, so the duff practice rests on the sahih Eid and wedding reports, and Ibn Masʿūd's saying is used as his own view. The \"flute of Dāwūd\" hadith is read as praise of the reciting voice, and Ibn ʿUmar's fingers in his ears when he heard a flute is explained by the distinction between intending to listen and merely hearing, on which Ibn Taymiyya reports no blame. Where Imām al-Ghazālī is cited for permissibility, the counter-citation is his own remark that calling it \"samāʿ\" without qualification is a looseness in religion.",
+          "citations": [
+            "https://sunnah.com/ibnmajah:2613",
+            "https://sunnah.com/abudawud:4927",
+            "https://sunnah.com/tirmidhi:1089",
+            "https://sunnah.com/tirmidhi:3855",
+            "https://islamqa.info/en/answers/5000",
+            "https://islamqa.org/hanafi/askimam/124859/did-imam-al-ghazali-consider-music-to-be-permissible/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Egypt's Dar al-Iftā issued two condition-based rulings. In fatwa 6596 (1994) Shaykh Muḥammad Sayyid Ṭanṭāwī said songs and music are haram when they stir desire, call to sin, contain something objectionable, distract from Allah's remembrance or an obligation, and halal when free of these and serving learning, good character or urging soldiers to fight. In fatwa 6568 (2004) Shaykh ʿAlī Jumʿa said listening is not permissible unrestrictedly: good words, noble meanings, and no distraction from obligations make it permissible. A separate Dar al-Iftā paper cites al-Kasānī's distinction between the repugnant instrument and the non-repugnant duff, and Shaykh Maḥmūd Shaltūt's fatwa limiting prohibition to what accompanies lewdness, arousal or neglect of duty.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17313/حكم-سماع-الموسيقى-والغناء",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17376/حكم-الاستماع-إلى-الأغاني-والموسيقى",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/11981/الحكم-الشرعي-في-الموسيقى"
+          ]
+        },
+        {
+          "text": "The Saudi Permanent Committee, fatwa 19129, ruled that all instruments of amusement are forbidden and must be destroyed, citing Bukhari 5590, and Ibn Bāz grounded the ruling in Luqman 6-7 and warned it can lead to shirk. Jordan's Dar al-Iftā (2022) stated the prohibition and then noted the scholars' disagreement over music free of evil actions, prohibited content and arousal. Among the Hanafis, Darul Iftaa Chicago (2025) presented music as haram in the madhhab, quoting Fatāwā Qāḍīkhān on the duff at a wedding and on listening to instruments, and Darul Uloom Deoband answered simply that Allah and His Messenger disallowed it. IslamQA maintains the prohibition, citing the same hadith file, and al-Albānī wrote a book on the prohibition of instruments.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/105442/musical-instruments-any-whose-use-permissible",
+            "https://al-fatawa.com/en/fatwa/83829/ruling-listening-songs-83829",
+            "https://islamqa.org/shafii/darul-iftaa-jordan/228850/what-is-the-ruling-of-islam-on-listening-to-music/",
+            "https://islamqa.org/hanafi/darul-iftaa-chicago/271193/the-islamic-ruling-on-music-in-the-hanafi-madhhab/",
+            "https://islamqa.org/hanafi/darulifta-deoband/26106/is-music-prohibited-in-islam/",
+            "https://islamqa.info/en/answers/5000",
+            "https://islamqa.info/en/answers/222730",
+            "https://islamqa.info/ar/answers/5000"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}

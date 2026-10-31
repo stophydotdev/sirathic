@@ -1,0 +1,433 @@
+{
+  "title": "Can Muslims celebrate Christmas?",
+  "headline": "Four schools bar imitating non-Muslim rites, but split on congratulating and gifts at Christmas",
+  "cover": "تهنئة النصارى بأعيادهم",
+  "slug": "can-muslims-celebrate-christmas",
+  "topic": "Daily life",
+  "tint": "teal",
+  "summary": {
+    "text": "The four schools' own books converge on barring imitation of non-Muslim religious rites, though they differ sharply over congratulating, gift-giving and ordinary family kindness. Some fatwas prohibit congratulating on Christmas as an implied approval of disbelief, while Dar al-Ifta al-Misriyyah, the European Council for Fatwa and Research and Bin Bayyah permit it, holding that a greeting carries no acknowledgement of creed.",
+    "citations": [
+      "https://www.amjaonline.org/fatwa/en/77254/non-muslim-holidays",
+      "https://shamela.ws/book/21613#6:753",
+      "https://shamela.ws/book/622#7:247",
+      "https://en.tohed.com/islamic-perspective-on-christmas-greetings-and-its-prohibition/",
+      "https://islamqa.info/en/answers/947",
+      "https://www.dar-alifta.org/en/fatwa/details/6710/permissibility-of-congratulating-non-muslims-on-their-religious-festivals",
+      "https://aboutislam.net/counseling/ask-the-scholar/muslim-and-non-muslim-relations/congratulating-non-muslims-festive-occasions-allowed/",
+      "https://www.almadina.org/studio/articles/merry-christmas-the-fatwa-or-the-fitra"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://www.amjaonline.org/fatwa/en/77254/non-muslim-holidays",
+      "title": "Non-muslim Holidays"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#6:753",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص753"
+    },
+    {
+      "url": "https://shamela.ws/book/622#7:247",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج7 ص247"
+    },
+    {
+      "url": "https://en.tohed.com/islamic-perspective-on-christmas-greetings-and-its-prohibition/",
+      "title": "Islamic Perspective on Christmas Greetings and Its Prohibition"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/947",
+      "title": "Greeting Non-Muslims on Their Festivals"
+    },
+    {
+      "url": "https://www.dar-alifta.org/en/fatwa/details/6710/permissibility-of-congratulating-non-muslims-on-their-religious-festivals",
+      "title": "Permissibility of congratulating non-Muslims on their religious festivals"
+    },
+    {
+      "url": "https://aboutislam.net/counseling/ask-the-scholar/muslim-and-non-muslim-relations/congratulating-non-muslims-festive-occasions-allowed/",
+      "title": "Congratulating Non-Muslims on Their Festive Occasions: Allowed?"
+    },
+    {
+      "url": "https://www.almadina.org/studio/articles/merry-christmas-the-fatwa-or-the-fitra",
+      "title": "Merry Christmas: The Fatwa or the Fitra?"
+    },
+    {
+      "url": "https://quran.com/25/72",
+      "title": "Quran 25:72, Al-Furqaan"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/83628/",
+      "title": "Muslims celebrating Christmas"
+    },
+    {
+      "url": "https://quran.com/25/70",
+      "title": "Quran 25:70, Al-Furqaan"
+    },
+    {
+      "url": "https://quran.com/25/71",
+      "title": "Quran 25:71, Al-Furqaan"
+    },
+    {
+      "url": "https://quran.com/60/8",
+      "title": "Quran 60:8, Al-Mumtahana"
+    },
+    {
+      "url": "https://quran.com/60/9",
+      "title": "Quran 60:9, Al-Mumtahana"
+    },
+    {
+      "url": "https://quran.com/5/2",
+      "title": "Quran 5:2, Al-Maaida"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/12777",
+      "title": "تحريم الاحتفال بأعياد الكفار"
+    },
+    {
+      "url": "https://quran.com/5/51",
+      "title": "Quran 5:51, Al-Maaida"
+    },
+    {
+      "url": "https://quran.com/2/120",
+      "title": "Quran 2:120, Al-Baqara"
+    },
+    {
+      "url": "https://islamqa.info/ge/answers/1130",
+      "title": "Das Urteil über die Teilnahme an den Festen der Nichtmuslime"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/947",
+      "title": "حكم تهنئة الكفار بأعيادهم"
+    },
+    {
+      "url": "https://quran.com/3/85",
+      "title": "Quran 3:85, Aal-i-Imraan"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:4031",
+      "title": "Sunan Abi Dawud 4031: Clothing (Kitab Al-Libas)"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/86828/is-it-permissible-to-send-greeting-cards-during-the-festive-season/",
+      "title": "Is it permissible to send greeting cards during the festive season?"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2419",
+      "title": "Sunan Abi Dawud 2419: Fasting (Kitab Al-Siyam)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3004",
+      "title": "Sunan an-Nasa'i 3004: The Book of Hajj"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:773",
+      "title": "Jami' at-Tirmidhi 773: The Book on Fasting"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%B4%D8%A7%D9%85%D9%8A%D9%8A%D9%86/17#16743",
+      "title": "Musnad Ahmad 17383"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1556",
+      "title": "Sunan an-Nasa'i 1556: The Book of the Prayer for the Two 'Eids"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:3313",
+      "title": "Sunan Abi Dawud 3313: Oaths and Vows (Kitab Al-Aiman Wa Al-Nudhur)"
+    },
+    {
+      "url": "https://en.tohed.com/islamic-ruling-on-celebrating-christmas-guidance-for-muslims/",
+      "title": "Islamic Ruling on Celebrating Christmas: Guidance for Muslims"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/74#22920",
+      "title": "Musnad Ahmad 24049"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/103#24358",
+      "title": "Musnad Ahmad 25534"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/88#23541",
+      "title": "Musnad Ahmad 24683"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:536",
+      "title": "المدونة، مالك بن أنس، ج1 ص536"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:542",
+      "title": "المدونة، مالك بن أنس، ج1 ص542"
+    },
+    {
+      "url": "https://shamela.ws/book/499#10:323",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج10 ص323"
+    },
+    {
+      "url": "https://shamela.ws/book/499#10:64",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج10 ص64"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:606",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص606"
+    },
+    {
+      "url": "https://shamela.ws/book/622#12:15",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج12 ص15"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:596",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص596"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#13:200",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج13 ص200"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#4:114",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج4 ص114"
+    },
+    {
+      "url": "https://shamela.ws/book/622#5:187",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج5 ص187"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#6:405",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج6 ص405"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:308",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص308"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%aa%d9%87%d9%86%d8%a6%d8%a9-%d8%ba%d9%8a%d8%b1-%d8%a7%d9%84%d9%85%d8%b3%d9%84%d9%85%d9%8a%d9%86-%d8%a8%d8%a3%d8%b9%d9%8a%d8%a7%d8%af%d9%87%d9%85-%d8%a7%d9%84%d8%ad%d9%83%d9%85-%d9%88%d8%a7%d9%84/",
+      "title": "تهنئة غير المسلمين بأعيادهم الحكم والضوابط"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/rulings-on-christmas-celebrations/",
+      "title": "Rulings on Christmas Celebrations"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/28592/asked-words-shaykh-al-islam-ibn-taymiyyah-book-iqtida-al-sirat-al-mustaqim-mukhalafat-ahl-al-jahim",
+      "title": "He was asked about the words of Shaykh al-Islam Ibn Taymiyyah in his book (Iqtida' al-Sirat al-Mustaqim Mukhalafat Ahl al-Jahim)"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/54698/reading-author-s-words-commentary-collation-manuscripts-will-mention-if-allah-wills-imitating",
+      "title": "Reading from the author's words with commentary and collation of manuscripts: \"And we will mention, if Allah wills, that imitating them in their festivals is among the forbidden matters"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/44533/what-ruling-dealing-christians-eating-food-sharing-festivals",
+      "title": "What is the ruling on dealing with the Christians, eating their food, and their sharing in our festivals?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/95210/sending-seasonal-greeting-cards-to-non-muslims-permissible-or-not/",
+      "title": "Sending Seasonal Greeting Cards to Non-Muslims: Permissible or Not?"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/13237/حكم-تهنئة-غير-المسلمين-بالأعياد-والمناسبات",
+      "title": "تهنئة غير المسلمين بالأعياد والمناسبات"
+    },
+    {
+      "url": "https://www.dar-alifta.org/en/fatwa/details/6815/39-congratulating-christians-on-the-occasion-of-christmas",
+      "title": "39 Congratulating Christians on the occasion of Christmas"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/christmas-greetings-and-cards-to-non-muslims/",
+      "title": "Christmas Greetings and Cards to Non-Muslims"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/celebrating-christmas-with-ones-non-muslim-family/",
+      "title": "Celebrating Christmas with One’s Non-Muslim Family"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/attending-christmas-with-non-muslim-relatives/",
+      "title": "Attending Christmas with non-Muslim relatives"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The servants of the Most Merciful are described as those who do not testify to falsehood and pass by idle talk with dignity, and many of the early scholars explained falsehood in this verse as the festivals of non-Muslims, which is how Christmas is brought under it. The Quran narrates the birth of Jesus in detail without ever instituting a celebration on that occasion. The preceding verses promise that those who repent, believe and act rightly have their evil deeds replaced with good ones.",
+          "citations": [
+            "https://quran.com/25/72",
+            "https://www.islamweb.net/en/fatwa/83628/",
+            "https://quran.com/25/70",
+            "https://quran.com/25/71"
+          ]
+        },
+        {
+          "text": "Allah does not forbid kindness and justice toward those who neither fought the Muslims nor expelled them, while only alliance with those who did fight is restricted. Cooperation in righteousness is commanded and cooperation in sin and aggression forbidden, which is used as one of two proofs alongside the imitation hadith. A warning is also cited against taking Jews and Christians as allies and against following their religion, together with the statement that no religion other than Islam will be accepted.",
+          "citations": [
+            "https://quran.com/60/8",
+            "https://quran.com/60/9",
+            "https://quran.com/5/2",
+            "https://islamqa.info/ar/answers/12777",
+            "https://quran.com/5/51",
+            "https://quran.com/2/120",
+            "https://islamqa.info/ge/answers/1130",
+            "https://islamqa.info/ar/answers/947",
+            "https://quran.com/3/85"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The central report is that whoever imitates a people is one of them, graded hasan sahih by al-Albani and Muhammad Muhyi al-Din Abdul Hamid and hasan by Zubair Ali Zai. It is quoted by AMJA, by Ibn Uthaymeen through Ibn al-Qayyim's Ahkam Ahl al-Dhimmah, by IslamQA and by the Hanafi fatwa sites. The festival hadith establishes that the day of Arafah, the day of sacrifice and the days of Tashriq are the festival of the Muslims, and it is graded sahih or hasan through several chains. Anas adds that the people of the Jahiliyyah had two days of play each year and the Prophet ﷺ said Allah had replaced them with the day of Fitr and the day of Adha.",
+          "citations": [
+            "https://sunnah.com/abudawud:4031",
+            "https://www.amjaonline.org/fatwa/en/77254/non-muslim-holidays",
+            "https://en.tohed.com/islamic-perspective-on-christmas-greetings-and-its-prohibition/",
+            "https://islamqa.info/ar/answers/12777",
+            "https://islamqa.info/ar/answers/947",
+            "https://islamqa.org/hanafi/askimam/86828/is-it-permissible-to-send-greeting-cards-during-the-festive-season/",
+            "https://sunnah.com/abudawud:2419",
+            "https://sunnah.com/nasai:3004",
+            "https://sunnah.com/tirmidhi:773",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%B4%D8%A7%D9%85%D9%8A%D9%8A%D9%86/17#16743",
+            "https://sunnah.com/nasai:1556"
+          ]
+        },
+        {
+          "text": "The vow hadith of Thabit ibn ad-Dahhak, graded sahih, has the Prophet ﷺ ask whether any idol of the Jahiliyyah was worshipped at the place and whether any festival of theirs was held there before permitting the vow. This gives a criterion by which a place or occasion is judged by whether it carries the marks of shirk or of a non-Muslim festival. Umar ibn al-Khattab said not to enter their churches on their festival days, for Allah's wrath descends upon them, and Abdullah ibn Amr said that a Muslim living among non-Muslims who celebrates their Nowruz or their festivals and dies in that state will be raised with them. These are companion judgments, not the Prophet's ﷺ words, graded by the sources that transmit them.",
+          "citations": [
+            "https://sunnah.com/abudawud:3313",
+            "https://en.tohed.com/islamic-ruling-on-celebrating-christmas-guidance-for-muslims/",
+            "https://islamqa.org/hanafi/askimam/86828/is-it-permissible-to-send-greeting-cards-during-the-festive-season/"
+          ]
+        },
+        {
+          "text": "Aisha describes Abu Bakr rebuking two girls playing tambourines and the Prophet ﷺ saying, leave them, for every people have a festival, with Shu'ayb al-Arna'ut grading its chain sahih, and other versions add that this is our festival. This hadith is cited to show that a festival is a matter of creed, not mere custom, since the Prophet ﷺ identified the day as belonging to the Muslims.",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/74#22920",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/103#24358",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/88#23541",
+            "https://islamqa.info/ge/answers/1130"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "Ibn Abidin states that giving gifts in the name of Nayruz and Mihrajan is not permitted and is haram, and that if the giver intends veneration as the polytheists do he disbelieves, while a gift to a Muslim without intending veneration, following people's custom, does not reach that. He also notes that disliking imitation of people of innovation is established in the school, but in what is blameworthy and what is intended as imitation, not absolutely. Malik disliked eating what Christians slaughter for their festivals and churches and disliked it strongly, and elsewhere he disliked their slaughter and buying meat from their butchers without declaring it haram.",
+          "citations": [
+            "https://shamela.ws/book/21613#6:753",
+            "https://shamela.ws/book/587#1:536",
+            "https://shamela.ws/book/587#1:542"
+          ]
+        },
+        {
+          "text": "Al-Nawawi and al-Shirbini hold that dhimmis are barred from displaying their festivals, cross, wine and pig among Muslims, that walking to the churches with them in their dress such as the zunnar is among acts only a disbeliever does, and that they are not to mix with Muslims in their prayer place. Al-Bahuti states that it is haram to sell or lease them what they make as a church or idol, and haram is everything that singles out their festival and distinguishes them, as it is imitation, and imitation of them is forbidden by consensus, with punishment due on the one who does it. People of virtue are disliked to rush to accept invitations to non-legal banquets.",
+          "citations": [
+            "https://shamela.ws/book/499#10:323",
+            "https://shamela.ws/book/499#10:64",
+            "https://shamela.ws/book/11444#1:606",
+            "https://shamela.ws/book/622#7:247",
+            "https://shamela.ws/book/622#12:15"
+          ]
+        },
+        {
+          "text": "The Shafi'i Mughni al-Muhtaj argues for a general licence to congratulate someone on a new blessing or averted harm, drawing on the legality of the prostration of thanks and of condolence. The Hanbali al-Mughni of Ibn Qudama permits accepting a non-Muslim's gift, citing the Prophet's ﷺ acceptance of the gift of al-Muqawqis, ruler of Egypt, permits voluntary charity to a non-Muslim, and cites the instruction to Asma bint Abi Bakr to be kind to her polytheist mother. The same al-Mughni treats timing a contract by a Christian festival as invalid where Muslims cannot know the date, and the Maliki Dasuqi records that gathering for supplication on the day of Arafah is disliked only if one intends to imitate the pilgrims or makes it a practice of that day.",
+          "citations": [
+            "https://shamela.ws/book/11444#1:596",
+            "https://shamela.ws/book/6910#13:200",
+            "https://shamela.ws/book/6910#4:114",
+            "https://shamela.ws/book/622#5:187",
+            "https://shamela.ws/book/6910#6:405",
+            "https://shamela.ws/book/21604#1:308"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The first reconciliation is a three-way split: ritual celebration, verbal congratulation, and ordinary social kindness. The prohibitive camp treats congratulation as itself an act of approval, since it affirms a ritual of disbelief one does not accept for oneself, while the permissive camp holds that a greeting carries no acknowledgement of creed, so the prohibition attaches only to words that explicitly affirm disbelief. Both sides agree that joining the ritual, or acting as though the day were one's own, is excluded.",
+          "citations": [
+            "https://islamqa.info/ar/answers/947",
+            "https://www.dar-alifta.org/en/fatwa/details/6710/permissibility-of-congratulating-non-muslims-on-their-religious-festivals",
+            "https://www.amjaonline.org/fatwa/en/77254/non-muslim-holidays",
+            "https://fiqh.islamonline.net/%d8%aa%d9%87%d9%86%d8%a6%d8%a9-%d8%ba%d9%8a%d8%b1-%d8%a7%d9%84%d9%85%d8%b3%d9%84%d9%85%d9%8a%d9%86-%d8%a8%d8%a3%d8%b9%d9%8a%d8%a7%d8%af%d9%87%d9%85-%d8%a7%d9%84%d8%ad%d9%83%d9%85-%d9%88%d8%a7%d9%84/",
+            "https://fiqh.islamonline.net/en/rulings-on-christmas-celebrations/"
+          ]
+        },
+        {
+          "text": "The second is the scope of whoever imitates a people. Ibn Abidin restricts the blame to what is intended as imitation rather than to every borrowed custom, and al-Albani, commenting on Ibn Taymiyyah's Iqtida' al-Sirat al-Mustaqim, relays Ibn Taymiyyah's view that a man may attend an occasion of innovation and still be rewarded for his good intention and his ignorance that it contravened the revealed way. Ibn Uthaymeen reads the same book as making imitation in festivals the specific issue intended, so the same passage is read narrowly by one side and broadly by the other.",
+          "citations": [
+            "https://shamela.ws/book/21613#6:753",
+            "https://al-fatawa.com/en/fatwa/28592/asked-words-shaykh-al-islam-ibn-taymiyyah-book-iqtida-al-sirat-al-mustaqim-mukhalafat-ahl-al-jahim",
+            "https://al-fatawa.com/en/fatwa/54698/reading-author-s-words-commentary-collation-manuscripts-will-mention-if-allah-wills-imitating"
+          ]
+        },
+        {
+          "text": "The third is kindness versus allegiance. The prohibitive fatwas do not read the verse on kindness as cancelled; AMJA grounds kindness and justice in it and then permits social celebrations while excluding religious ones. Ibn Qudama's acceptance of al-Muqawqis's gift and the command to Asma to maintain her polytheist mother are the practical precedents the permissive side leans on, and they sit beside the prohibition texts rather than replacing them. The fourth is the Buwanah criterion, which both camps can use: the Prophet ﷺ allowed the vow once the place was cleared of an idol and of a festival of the disbelievers, suggesting the deciding factor is the specific occasion's tie to shirk ritual.",
+          "citations": [
+            "https://www.amjaonline.org/fatwa/en/77254/non-muslim-holidays",
+            "https://shamela.ws/book/6910#13:200",
+            "https://shamela.ws/book/622#5:187",
+            "https://sunnah.com/abudawud:3313"
+          ]
+        },
+        {
+          "text": "One point of friction should be stated plainly: two fatwa bodies describe the prohibition of congratulating as a consensus, while Dar al-Ifta al-Misriyyah, the European Council for Fatwa and Research and Shaykh Abdullah Bin Bayyah permit it. A reader weighing this is looking at a real disagreement among qualified scholars, not at a settled point that one side has overlooked.",
+          "citations": [
+            "https://islamqa.info/ar/answers/947",
+            "https://islamqa.info/en/answers/947",
+            "https://www.dar-alifta.org/en/fatwa/details/6710/permissibility-of-congratulating-non-muslims-on-their-religious-festivals",
+            "https://aboutislam.net/counseling/ask-the-scholar/muslim-and-non-muslim-relations/congratulating-non-muslims-festive-occasions-allowed/",
+            "https://www.almadina.org/studio/articles/merry-christmas-the-fatwa-or-the-fitra"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "AMJA rules that Muslims celebrate only their own days and should neither celebrate, congratulate nor participate in other nations' religious holidays, but that social celebrations such as a returning traveller or recovery from illness are lawful. Ibn Uthaymeen rules congratulating on Christmas haram, citing Ibn al-Qayyim's claim of consensus, and holds that participating in a religious celebration is forbidden because it entails approval of the disbelief they are upon. IslamQA rules that greeting on Christmas and similar holidays is prohibited by consensus since it implies approval of rituals of disbelief, and that participating, showing joy, or taking the day off work is forbidden. Islamweb places Christmas among the falsehoods a Muslim avoids under the verse, with the salaf's explanation of falsehood as non-Muslim feasts, and the Hanafi sites hold that Muslims should strictly avoid seasonal greeting cards.",
+          "citations": [
+            "https://www.amjaonline.org/fatwa/en/77254/non-muslim-holidays",
+            "https://en.tohed.com/islamic-perspective-on-christmas-greetings-and-its-prohibition/",
+            "https://al-fatawa.com/en/fatwa/44533/what-ruling-dealing-christians-eating-food-sharing-festivals",
+            "https://islamqa.info/ar/answers/947",
+            "https://islamqa.info/en/answers/947",
+            "https://islamqa.info/ar/answers/12777",
+            "https://www.islamweb.net/en/fatwa/83628/",
+            "https://islamqa.org/hanafi/muftionline/95210/sending-seasonal-greeting-cards-to-non-muslims-permissible-or-not/",
+            "https://islamqa.org/hanafi/askimam/86828/is-it-permissible-to-send-greeting-cards-during-the-festive-season/"
+          ]
+        },
+        {
+          "text": "Dar al-Ifta al-Misriyyah holds that congratulating non-Muslims and accepting their invitations do not necessitate acknowledging their disbelief or corrupt convictions, and that the prohibition some scholars hold applies only to words acknowledging disbelief. It notes that jurists stated the permissibility of congratulating provided nothing involves religious ritual or practice contradicting Islam, and that the Maliki Shaykh 'Ilish held congratulating is not apostasy since it implies no veneration or admission of disbelief. The European Council for Fatwa and Research holds there is nothing wrong with congratulating non-Muslims on their festive days, and that it becomes closer to an obligation if they greet Muslims on Islamic occasions. Bin Bayyah is reported as ruling it permissible to congratulate non-Muslims on their holidays and to exchange gifts.",
+          "citations": [
+            "https://www.dar-alifta.org/en/fatwa/details/6710/permissibility-of-congratulating-non-muslims-on-their-religious-festivals",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/13237/حكم-تهنئة-غير-المسلمين-بالأعياد-والمناسبات",
+            "https://www.dar-alifta.org/en/fatwa/details/6815/39-congratulating-christians-on-the-occasion-of-christmas",
+            "https://aboutislam.net/counseling/ask-the-scholar/muslim-and-non-muslim-relations/congratulating-non-muslims-festive-occasions-allowed/",
+            "https://www.almadina.org/studio/articles/merry-christmas-the-fatwa-or-the-fitra"
+          ]
+        },
+        {
+          "text": "IslamOnline permits greeting for relatives, neighbours and colleagues but not participating in the celebrations, saying we have our festivals and they have theirs. Dr Jamal Badawi allows joining the non-religious side, such as a family dinner, while avoiding alcohol and religious rituals, and a 2023 answer permits polite greetings but bars Christmas trees and lights at home and calls direct attendance at Christmas parties prohibited.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%aa%d9%87%d9%86%d8%a6%d8%a9-%d8%ba%d9%8a%d8%b1-%d8%a7%d9%84%d9%85%d8%b3%d9%84%d9%85%d9%8a%d9%86-%d8%a8%d8%a3%d8%b9%d9%8a%d8%a7%d8%af%d9%87%d9%85-%d8%a7%d9%84%d8%ad%d9%83%d9%85-%d9%88%d8%a7%d9%84/",
+            "https://fiqh.islamonline.net/en/christmas-greetings-and-cards-to-non-muslims/",
+            "https://fiqh.islamonline.net/en/celebrating-christmas-with-ones-non-muslim-family/",
+            "https://fiqh.islamonline.net/en/attending-christmas-with-non-muslim-relatives/",
+            "https://fiqh.islamonline.net/en/rulings-on-christmas-celebrations/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}

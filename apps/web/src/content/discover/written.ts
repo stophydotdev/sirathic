@@ -1,23 +1,15 @@
-import intentionInWudu from "./intentionInWudu.json";
-import wipingTheHeadInWudu from "./wipingTheHeadInWudu.json";
-import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
+import canMuslimsCelebrateChristmas from "./canMuslimsCelebrateChristmas.json";
+import canMuslimsMarryChristians from "./canMuslimsMarryChristians.json";
+import isMusicHaram from "./isMusicHaram.json";
 import sleepAndWudu from "./sleepAndWudu.json";
+import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
 import wipingOverSocks from "./wipingOverSocks.json";
-import basmalaAloudInPrayer from "./basmalaAloudInPrayer.json";
-import raisingTheHandsInPrayer from "./raisingTheHandsInPrayer.json";
-import fatihaBehindTheImam from "./fatihaBehindTheImam.json";
-import isWitrObligatory from "./isWitrObligatory.json";
-import joiningPrayersWhenTravelling from "./joiningPrayersWhenTravelling.json";
 
 export const written = [
-  intentionInWudu,
-  wipingTheHeadInWudu,
-  touchingPrivatePartsAndWudu,
+  canMuslimsCelebrateChristmas,
+  canMuslimsMarryChristians,
+  isMusicHaram,
   sleepAndWudu,
+  touchingPrivatePartsAndWudu,
   wipingOverSocks,
-  basmalaAloudInPrayer,
-  raisingTheHandsInPrayer,
-  fatihaBehindTheImam,
-  isWitrObligatory,
-  joiningPrayersWhenTravelling,
 ];
