@@ -6,6 +6,7 @@ import { citationRuns, groupedCitations, withoutCitations } from "../apps/mobile
 import { todoBook } from "../apps/server/src/chat/cards";
 import { citations, withBareCitations } from "../apps/server/src/chat/citations";
 import { withoutPageText, withStoredPageText } from "../apps/server/src/chat/pageText";
+import { sharedReports } from "../apps/server/src/chat/reviews";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import {
   type ChatMessage,
@@ -449,4 +450,40 @@ test("two background tasks finish while the bot is answering, and one wake deliv
     ["assistant", "Here is what"],
   ]);
   expect(hasTasks(bot.owner, bot.id)).toBe(false);
+});
+
+const ask = (id: string, text: string): ChatMessage => ({
+  id,
+  role: "user",
+  parts: [{ type: "text", text }],
+});
+
+const reply = (id: string, text: string, shared: boolean): ChatMessage => ({
+  id,
+  role: "assistant",
+  metadata: { createdAt: 1_000, report: { reason: "quote", details: "wrong grade", shared } },
+  parts: [{ type: "text", text }],
+});
+
+test("only a report its writer shared reaches the reviewers, with the question it answers", () => {
+  const reports = sharedReports(
+    [
+      ask("q1", "first?"),
+      reply("a1", "private answer", false),
+      ask("q2", "second?"),
+      reply("a2", "shared answer", true),
+    ],
+    new Date(0),
+  );
+  expect(reports).toEqual([
+    {
+      id: "a2",
+      reason: "quote",
+      details: "wrong grade",
+      question: "second?",
+      answer: "shared answer",
+      sources: [],
+      at: "1970-01-01T00:00:01.000Z",
+    },
+  ]);
 });

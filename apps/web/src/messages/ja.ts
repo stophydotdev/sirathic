@@ -923,4 +923,7 @@ export default {
   Stopped: "停止しました",
   "Ask a bot for a few things at once and each one shows up here.":
     "ボットにいくつかの依頼を同時に頼むと、それぞれがここに表示されます。",
+  "Let Sirathic's reviewers read this answer": "Sirathic のレビュアーがこの回答を読めるようにする",
+  "Shared reports": "共有された報告",
+  "No shared reports yet.": "共有された報告はまだありません。",
 } satisfies Messages;

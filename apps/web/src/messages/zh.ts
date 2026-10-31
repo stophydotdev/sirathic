@@ -904,4 +904,7 @@ export default {
   Stopped: "已停止",
   "Ask a bot for a few things at once and each one shows up here.":
     "一次让机器人做几件事，每件事都会显示在这里。",
+  "Let Sirathic's reviewers read this answer": "允许 Sirathic 的审核员阅读此回答",
+  "Shared reports": "已分享的报告",
+  "No shared reports yet.": "还没有分享的报告。",
 } satisfies Messages;

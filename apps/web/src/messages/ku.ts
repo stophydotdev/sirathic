@@ -926,4 +926,7 @@ export default {
   Stopped: "Hat rawestandin",
   "Ask a bot for a few things at once and each one shows up here.":
     "Ji botekê çend tiştan di heman demê de bixwaze û her yek li vir xuya dibe.",
+  "Let Sirathic's reviewers read this answer": "ڕێگە بدە پێداچووەرانی Sirathic ئەم وەڵامە بخوێننەوە",
+  "Shared reports": "ڕاپۆرتە هاوبەشکراوەکان",
+  "No shared reports yet.": "هێشتا هیچ ڕاپۆرتێکی هاوبەشکراو نییە.",
 } satisfies Messages;

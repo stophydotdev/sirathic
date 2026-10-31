@@ -912,4 +912,7 @@ export default {
   Stopped: "বন্ধ কৰা হ’ল",
   "Ask a bot for a few things at once and each one shows up here.":
     "এটা বটক একেলগে কেইটামান কাম কওক, আৰু প্ৰতিটো ইয়াত দেখা যাব।",
+  "Let Sirathic's reviewers read this answer": "Sirathicৰ পৰ্যালোচকসকলক এই উত্তৰটো পঢ়িবলৈ দিয়ক",
+  "Shared reports": "ভাগ কৰা ৰিপৰ্ট",
+  "No shared reports yet.": "এতিয়ালৈকে কোনো ভাগ কৰা ৰিপৰ্ট নাই।",
 } satisfies Messages;

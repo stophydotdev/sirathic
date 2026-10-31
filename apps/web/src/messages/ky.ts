@@ -929,4 +929,8 @@ export default {
   Stopped: "Токтотулду",
   "Ask a bot for a few things at once and each one shows up here.":
     "Ботко бир эле учурда бир нече нерсе тапшырыңыз, ар бири ушул жерде көрүнөт.",
+  "Let Sirathic's reviewers read this answer":
+    "Sirathic сынчыларына бул жоопту окууга уруксат берүү",
+  "Shared reports": "Бөлүшүлгөн билдирүүлөр",
+  "No shared reports yet.": "Азырынча бөлүшүлгөн билдирүү жок.",
 } satisfies Messages;

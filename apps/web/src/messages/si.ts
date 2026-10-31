@@ -913,4 +913,7 @@ export default {
   Stopped: "නවත්වා ඇත",
   "Ask a bot for a few things at once and each one shows up here.":
     "බොට් කෙනෙකුට එකවර දේවල් කිහිපයක් ඉල්ලන්න, ඒ සෑම එකක්ම මෙහි පෙනේ.",
+  "Let Sirathic's reviewers read this answer": "Sirathic සමාලෝචකයන්ට මෙම පිළිතුර කියවීමට ඉඩ දෙන්න",
+  "Shared reports": "බෙදාගත් වාර්තා",
+  "No shared reports yet.": "තවම බෙදාගත් වාර්තා නැත.",
 } satisfies Messages;

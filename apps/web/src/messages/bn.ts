@@ -913,4 +913,7 @@ export default {
   Stopped: "থামানো হয়েছে",
   "Ask a bot for a few things at once and each one shows up here.":
     "একটি বটকে একসঙ্গে কয়েকটি কাজ দিন, প্রতিটি এখানে দেখা যাবে।",
+  "Let Sirathic's reviewers read this answer": "Sirathic-এর পর্যালোচকদের এই উত্তরটি পড়তে দিন",
+  "Shared reports": "শেয়ার করা রিপোর্ট",
+  "No shared reports yet.": "এখনও কোনো শেয়ার করা রিপোর্ট নেই।",
 } satisfies Messages;

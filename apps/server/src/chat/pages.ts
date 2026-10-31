@@ -12,7 +12,7 @@ const CITED_URL = /\]\((https?:\/\/[^)\s]+)\)/gu;
 
 const textOf = (message: ChatMessage) => messageText(message).trim();
 
-const sourcesOf = (messages: ChatMessage[], answers: string) => {
+export const sourcesOf = (messages: ChatMessage[], answers: string) => {
   const found = new Map<string, Source>();
   for (const part of messages.flatMap((message) => message.parts)) {
     if (!("output" in part)) continue;

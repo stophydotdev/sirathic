@@ -932,4 +932,8 @@ export default {
   Stopped: "To‘xtatildi",
   "Ask a bot for a few things at once and each one shows up here.":
     "Botdan bir vaqtning o‘zida bir nechta ishni so‘rang, har biri shu yerda ko‘rinadi.",
+  "Let Sirathic's reviewers read this answer":
+    "Sirathic кўриб чиқувчиларига бу жавобни ўқишга рухсат бериш",
+  "Shared reports": "Улашилган хабарлар",
+  "No shared reports yet.": "Ҳозирча улашилган хабарлар йўқ.",
 } satisfies Messages;

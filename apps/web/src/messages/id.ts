@@ -928,4 +928,7 @@ export default {
   Stopped: "Dihentikan",
   "Ask a bot for a few things at once and each one shows up here.":
     "Minta beberapa hal sekaligus ke bot, dan masing-masing akan muncul di sini.",
+  "Let Sirathic's reviewers read this answer": "Izinkan peninjau Sirathic membaca jawaban ini",
+  "Shared reports": "Laporan yang dibagikan",
+  "No shared reports yet.": "Belum ada laporan yang dibagikan.",
 } satisfies Messages;

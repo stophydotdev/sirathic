@@ -922,4 +922,8 @@ export default {
   Stopped: "Đã dừng",
   "Ask a bot for a few things at once and each one shows up here.":
     "Nhờ bot làm vài việc cùng lúc, mỗi việc sẽ hiện ở đây.",
+  "Let Sirathic's reviewers read this answer":
+    "Cho phép người đánh giá của Sirathic đọc câu trả lời này",
+  "Shared reports": "Báo cáo đã chia sẻ",
+  "No shared reports yet.": "Chưa có báo cáo nào được chia sẻ.",
 } satisfies Messages;

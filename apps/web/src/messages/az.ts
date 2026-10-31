@@ -928,4 +928,8 @@ export default {
   Stopped: "Dayandırıldı",
   "Ask a bot for a few things at once and each one shows up here.":
     "Botdan eyni anda bir neçə şey istəyin, hər biri burada görünəcək.",
+  "Let Sirathic's reviewers read this answer":
+    "Sirathic rəyçilərinin bu cavabı oxumasına icazə ver",
+  "Shared reports": "Paylaşılan bildirişlər",
+  "No shared reports yet.": "Hələ paylaşılan bildiriş yoxdur.",
 } satisfies Messages;

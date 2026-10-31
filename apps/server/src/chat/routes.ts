@@ -11,6 +11,7 @@ import { browserEvent, track } from "./events";
 import { withoutPageText } from "./pageText";
 import { publishedPage, publishSession } from "./pages";
 import { reactionInput, setReaction } from "./reactions";
+import { listSharedReports, reviewer } from "./reviews";
 import {
   deleteAllSessions,
   deleteSession,
@@ -93,6 +94,9 @@ export const chatRoutes = {
       if (!page) throw new TRPCError({ code: "NOT_FOUND", message: "no such page" });
       return page;
     }),
+  }),
+  review: t.router({
+    reports: reviewer.query(() => listSharedReports()),
   }),
   media: t.router({
     images: signedIn

@@ -922,4 +922,7 @@ export default {
   Stopped: "ودرول شوه",
   "Ask a bot for a few things at once and each one shows up here.":
     "له یو بوټ څخه څو کارونه یو ځل وغواړئ، او هر یو به دلته ښکاره شي.",
+  "Let Sirathic's reviewers read this answer": "د Sirathic کتونکو ته اجازه ورکړئ دا ځواب ولولي",
+  "Shared reports": "شریک شوي راپورونه",
+  "No shared reports yet.": "تر اوسه هیڅ شریک شوی راپور نشته.",
 } satisfies Messages;
