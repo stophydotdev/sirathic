@@ -25,6 +25,7 @@ Use your own database and keys. Never point a local setup at production.
 - `apps/web`: the website (Next.js)
 - `apps/server`: the API that answers questions (Hono)
 - `apps/mobile` and `apps/desktop`: the phone and desktop apps
+- `apps/data`: the open data API at api.sirathic.com/v1 (Cloudflare Worker and R2)
 - `packages/core`: search and the tools the model uses
 - `packages/db`: the database schema
 - `scripts`: the fatwa crawler and small tools
