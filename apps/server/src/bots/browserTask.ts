@@ -239,11 +239,15 @@ const finished = async (task: Task, page: Result, steps: readonly string[]) => {
       goal: task.goal,
       values: task.values ?? "",
       page: { url: page.url, title: page.title, text: textOf(page.page, PAGE_TEXT_CHARS) },
-      elements: elementsOf(page.page).map(({ role, label, value, flags }) => ({
-        role,
-        label,
-        value,
-        flags,
+      elements: elementsOf(page.page).map((element) => ({
+        role: element.role,
+        label: element.label,
+        value: element.value,
+        flags: element.flags,
+        selected:
+          element.kind === "select"
+            ? element.options.filter(({ chosen }) => chosen).map(({ label }) => label)
+            : [],
       })),
       recent_actions: steps.slice(-10),
     },
