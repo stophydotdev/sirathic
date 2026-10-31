@@ -857,6 +857,7 @@ export default {
   "Allow automatically": "Дозволи аутоматски",
   "Ask first": "Прво питај",
   "Add rule": "Додај правило",
+  "{done} of {count} done": "{done} од {count} готово",
   "{count} steps": "Корака: {count}",
   "Step {at} of {count}": "Корак {at} од {count}",
   "One at a time": "Један по један",

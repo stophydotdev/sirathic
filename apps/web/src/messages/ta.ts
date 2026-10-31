@@ -856,6 +856,7 @@ export default {
   "Allow automatically": "தானாக அனுமதி",
   "Ask first": "முதலில் கேள்",
   "Add rule": "விதியைச் சேர்",
+  "{done} of {count} done": "{done}/{count} முடிந்தது",
   "{count} steps": "{count} படிகள்",
   "Step {at} of {count}": "படி {at}/{count}",
   "One at a time": "ஒவ்வொன்றாக",

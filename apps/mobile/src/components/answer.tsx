@@ -259,7 +259,15 @@ export const Answer: FC<{
     return isCardTool(tool.name)
       ? [<AutomationCard key={index} tool={tool.name} output={tool.output} />]
       : isAnswerCard(tool.name)
-        ? [<AnswerCard key={index} name={tool.name} input={tool.input} output={tool.output} />]
+        ? [
+            <AnswerCard
+              key={index}
+              name={tool.name}
+              callId={tool.id}
+              input={tool.input}
+              output={tool.output}
+            />,
+          ]
         : [];
   });
   const research = message.parts.find((part) => part.type === "data-research");

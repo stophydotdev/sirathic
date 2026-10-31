@@ -861,6 +861,7 @@ export default {
   "Allow automatically": "ئاپتوماتىك رۇخسەت قىل",
   "Ask first": "ئاۋۋال سورا",
   "Add rule": "قائىدە قوشۇش",
+  "{done} of {count} done": "{done}/{count} تامام",
   "{count} steps": "{count} قەدەم",
   "Step {at} of {count}": "{count} قەدەمنىڭ {at}-قەدىمى",
   "One at a time": "بىرمۇبىر",

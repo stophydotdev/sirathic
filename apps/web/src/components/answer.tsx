@@ -69,6 +69,7 @@ const researchByType = groupPartByType({
   "tool-call:prayer_times": [],
   "tool-call:islamic_dates": [],
   "tool-call:change_setting": [],
+  "tool-call:todo_write": [],
   "tool-call": ["group-research"],
 });
 
@@ -158,6 +159,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
                     <AutomationCard tool={part.toolName} result={part.result} />
                     <AnswerCard
                       name={currentToolName(part.toolName)}
+                      callId={part.toolCallId}
                       args={part.args}
                       result={part.result}
                     />

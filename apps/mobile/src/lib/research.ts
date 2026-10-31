@@ -1,4 +1,4 @@
-import { ANSWER_CARDS } from "@sirathic/server/cards";
+import { ANSWER_CARDS, todoList } from "@sirathic/server/cards";
 import { type ChatMessage, currentToolName } from "@sirathic/server/messages";
 import { z } from "zod";
 import { siteName } from "./sources";
@@ -32,18 +32,27 @@ const TOOL_NAMES = new Map(
 export const toolOf = (part: Part) => {
   const output = "output" in part ? part.output : undefined;
   return part.type === "dynamic-tool"
-    ? { name: part.toolName, input: part.input, output }
+    ? { id: part.toolCallId, name: part.toolName, input: part.input, output }
     : part.type.startsWith("tool-") && "input" in part
-      ? { name: currentToolName(part.type.slice(5)), input: part.input, output }
+      ? {
+          id: part.toolCallId,
+          name: currentToolName(part.type.slice(5)),
+          input: part.input,
+          output,
+        }
       : undefined;
 };
 
 export type Now = { kind: "think" | "search" | "read" | "tool"; text: string; url?: string };
 
 export function nowOf(message: ChatMessage): Now {
-  const last = message.parts.findLast(
-    (part) => part.type === "reasoning" || toolOf(part) !== undefined,
-  );
+  const last = message.parts.findLast((part) => {
+    const tool = toolOf(part);
+    return (
+      part.type === "reasoning" ||
+      (tool !== undefined && !ANSWER_CARDS.some((card) => card === tool.name))
+    );
+  });
   if (!last || last.type === "reasoning") return { kind: "think", text: "Thinking" };
   const tool = toolOf(last);
   if (!tool) return { kind: "think", text: "Working" };
@@ -88,3 +97,8 @@ export function summaryOf(message: ChatMessage) {
     ...used,
   ];
 }
+
+export const latestTodoId = (messages: readonly ChatMessage[]) =>
+  messages
+    .flatMap((message) => message.parts.flatMap((part) => toolOf(part) ?? []))
+    .findLast((tool) => tool.name === "todo_write" && todoList.safeParse(tool.output).success)?.id;

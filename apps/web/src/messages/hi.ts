@@ -848,6 +848,7 @@ export default {
   "Allow automatically": "अपने आप अनुमति दें",
   "Ask first": "पहले पूछें",
   "Add rule": "नियम जोड़ें",
+  "{done} of {count} done": "{done}/{count} हो गए",
   "{count} steps": "{count} चरण",
   "Step {at} of {count}": "चरण {at}/{count}",
   "One at a time": "एक-एक करके",

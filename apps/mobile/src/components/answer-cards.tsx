@@ -8,6 +8,7 @@ import { Brain, Check, Copy, Pin, Search } from "./icons";
 import { IslamicDatesCard, PrayerTimesCard, SettingChanged } from "./day-cards";
 import { QuizCard } from "./quiz-card";
 import { Swap } from "./motion";
+import { TodoCard } from "./todo-card";
 
 const NAMES = new Set<string>(ANSWER_CARDS);
 
@@ -200,8 +201,9 @@ const PlacesCard: FC<{ output: unknown }> = ({ output }) => {
   );
 };
 
-export const AnswerCard: FC<{ name: string; input: unknown; output: unknown }> = ({
+export const AnswerCard: FC<{ name: string; callId: string; input: unknown; output: unknown }> = ({
   name,
+  callId,
   input,
   output,
 }) => {
@@ -220,6 +222,8 @@ export const AnswerCard: FC<{ name: string; input: unknown; output: unknown }> =
       return <IslamicDatesCard output={output} />;
     case "change_setting":
       return <SettingChanged output={output} />;
+    case "todo_write":
+      return <TodoCard callId={callId} output={output} />;
     default:
       return null;
   }

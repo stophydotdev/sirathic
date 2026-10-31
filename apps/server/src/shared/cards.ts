@@ -9,6 +9,7 @@ export const ANSWER_CARDS = [
   "prayer_times",
   "islamic_dates",
   "change_setting",
+  "todo_write",
 ] as const;
 
 export const PRAYERS = ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"] as const;
@@ -207,3 +208,27 @@ export const islamicDays = z.object({
 export const settingChange = settingsUpdate
   .pick({ madhab: true, name: true, about: true })
   .refine((change) => Object.keys(change).length > 0, "change at least one setting");
+
+export const TODO_STATUSES = ["pending", "in_progress", "completed", "cancelled"] as const;
+
+export const todo = z.object({
+  id: z.string().describe("Unique identifier for the TODO item"),
+  content: z.string().describe("The description/content of the todo item"),
+  status: z.enum(TODO_STATUSES).describe("The current status of the TODO item"),
+});
+
+export const todoWrite = z.object({
+  todos: z.array(todo).min(2).describe("Array of TODO items to update or create"),
+  merge: z
+    .boolean()
+    .describe(
+      "Whether to merge the todos with the existing todos. If true, the todos will be merged into the existing todos based on the id field. If false, the new todos will replace the existing todos.",
+    ),
+});
+
+export const todoList = z.object({ todos: z.array(todo) });
+
+export const mergeTodos = (
+  current: z.infer<typeof todo>[],
+  { todos, merge }: z.infer<typeof todoWrite>,
+) => [...new Map([...(merge ? current : []), ...todos].map((item) => [item.id, item])).values()];

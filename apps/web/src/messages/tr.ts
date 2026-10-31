@@ -859,6 +859,7 @@ export default {
   "Allow automatically": "Otomatik izin ver",
   "Ask first": "Önce sor",
   "Add rule": "Kural ekle",
+  "{done} of {count} done": "{done}/{count} bitti",
   "{count} steps": "{count} adım",
   "Step {at} of {count}": "Adım {at}/{count}",
   "One at a time": "Tek tek",

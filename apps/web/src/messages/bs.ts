@@ -858,6 +858,7 @@ export default {
   "Allow automatically": "Dozvoli automatski",
   "Ask first": "Prvo pitaj",
   "Add rule": "Dodaj pravilo",
+  "{done} of {count} done": "{done} od {count} gotovo",
   "{count} steps": "Koraka: {count}",
   "Step {at} of {count}": "Korak {at} od {count}",
   "One at a time": "Jedan po jedan",

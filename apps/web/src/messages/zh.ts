@@ -839,6 +839,7 @@ export default {
   "Allow automatically": "自动允许",
   "Ask first": "先询问",
   "Add rule": "添加规则",
+  "{done} of {count} done": "已完成 {done}/{count}",
   "{count} steps": "{count} 个步骤",
   "Step {at} of {count}": "第 {at} 步，共 {count} 步",
   "One at a time": "逐步显示",

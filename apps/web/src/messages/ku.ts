@@ -859,6 +859,7 @@ export default {
   "Allow automatically": "خۆکارانە ڕێگە بدە",
   "Ask first": "سەرەتا بپرسە",
   "Add rule": "زیادکردنی یاسا",
+  "{done} of {count} done": "{done} لە {count} تەواو بوو",
   "{count} steps": "{count} هەنگاو",
   "Step {at} of {count}": "هەنگاوی {at} لە {count}",
   "One at a time": "یەک بە یەک",

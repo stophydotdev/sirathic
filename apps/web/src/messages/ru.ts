@@ -858,6 +858,7 @@ export default {
   "Allow automatically": "Разрешать автоматически",
   "Ask first": "Сначала спросить",
   "Add rule": "Добавить правило",
+  "{done} of {count} done": "Готово: {done} из {count}",
   "{count} steps": "Шагов: {count}",
   "Step {at} of {count}": "Шаг {at} из {count}",
   "One at a time": "По одному",
