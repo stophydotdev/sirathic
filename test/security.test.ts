@@ -4,7 +4,7 @@ import { z } from "zod";
 import { publicUrl } from "@sirathic/core/web/url";
 import { isPrivateUrl } from "../apps/browser/src/blocked";
 import { masked } from "../apps/browser/src/mask";
-import { asksFirst } from "../apps/server/src/chat/autoReview";
+import { asksFirst, needsCard } from "../apps/server/src/chat/autoReview";
 import { needsApproval, writingTools } from "../apps/server/src/chat/confirm";
 import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
 import { totp } from "../apps/server/src/vault/totp";
@@ -35,13 +35,7 @@ test.each([
 const allow = { text: "reply to emails for me", effect: "allow" } as const;
 const ask = { text: "email my boss", effect: "ask" } as const;
 
-test.each([
-  ["a matching allow rule skips the card", "gmail_send_email", [allow], [0.9], false],
-  ["a weak match still asks", "gmail_send_email", [allow], [0.5], true],
-  ["an ask rule beats an allow rule", "gmail_send_email", [allow, ask], [0.9, 0.4], true],
-  ["pay always asks", "stripe_create_payout", [allow], [1], true],
-  ["a failed check asks", "gmail_send_email", [allow], undefined, true],
-])("%s", async (_, toolName, rules, scores, expected) => {
+const scoredBy = async <T>(scores: number[] | undefined, run: () => Promise<T>) => {
   const real = globalThis.fetch;
   globalThis.fetch = Object.assign(
     async () =>
@@ -54,8 +48,42 @@ test.each([
         : new Response("down", { status: 500 }),
     { preconnect: real.preconnect },
   );
-  const asks = await asksFirst({ toolName, input: {} }, rules);
-  globalThis.fetch = real;
+  try {
+    return await run();
+  } finally {
+    globalThis.fetch = real;
+  }
+};
+
+test.each([
+  ["a matching allow rule skips the card", "gmail_send_email", [allow], [0.9], false],
+  ["a weak match still asks", "gmail_send_email", [allow], [0.5], true],
+  ["an ask rule beats an allow rule", "gmail_send_email", [allow, ask], [0.9, 0.4], true],
+  ["pay always asks", "stripe_create_payout", [allow], [1], true],
+  ["a failed check asks", "gmail_send_email", [allow], undefined, true],
+])("%s", async (_, toolName, rules, scores, expected) => {
+  const asks = await scoredBy(scores, () => asksFirst({ toolName, input: {} }, rules));
+  expect(asks).toBe(expected);
+});
+
+const calendar = { text: "ask me before changing my calendar", effect: "ask" } as const;
+const changes = new Set(["cal_create_event", "gmail_trash_thread", "gmail_create_draft"]);
+
+test.each([
+  ["no rule leaves a calendar change alone", "cal_create_event", [], undefined, false],
+  ["an allow rule does not ask for a mail change", "gmail_trash_thread", [allow], [1], false],
+  [
+    "an ask rule that matches puts a card on a calendar change",
+    "cal_create_event",
+    [calendar],
+    [0.9],
+    true,
+  ],
+  ["an ask rule that does not match leaves it alone", "cal_create_event", [calendar], [0.1], false],
+  ["a failed check asks when a rule asks", "gmail_trash_thread", [calendar], undefined, true],
+  ["a draft is not a change to their mailbox", "gmail_create_draft", [calendar], [1], false],
+])("%s", async (_, toolName, rules, scores, expected) => {
+  const asks = await scoredBy(scores, () => needsCard({ toolName, input: {} }, changes, rules));
   expect(asks).toBe(expected);
 });
 

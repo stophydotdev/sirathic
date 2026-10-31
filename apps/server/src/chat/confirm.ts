@@ -35,6 +35,9 @@ const ACTIONS = [
 
 export type ActionKind = (typeof ACTIONS)[number]["kind"];
 
+const CHANGES =
+  /(?:^|[^a-z])(?:(?:create|update)[^a-z]+event|trash|archive|label|unlabel)(?=$|[^a-z])/iu;
+
 const WIPE_OUT =
   /(?:^|[^a-z])(?:drop\s+(?:table|database|schema|view|index|column)|truncate|delete\s+from)(?=$|[^a-z])/iu;
 
@@ -75,6 +78,9 @@ export const needsApproval = (call: Call, writes: ReadonlySet<string>) =>
   (writes.has(call.toolName) &&
     (actionOf(call) !== undefined || (bulkCall(call)?.matches?.length ?? 0) > 0)) ||
   confirmedDelete(call);
+
+export const changesWhatIsTheirs = (call: Call, writes: ReadonlySet<string>) =>
+  writes.has(call.toolName) && !bulkCall(call) && CHANGES.test(spell(call));
 
 export const cardDecisions = (messages: readonly ChatMessage[]): Event[] => {
   const last = messages.at(-1);
