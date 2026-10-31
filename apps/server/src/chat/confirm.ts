@@ -24,7 +24,8 @@ const CONFIRMED_DELETES = new Map<string, readonly string[]>([["update_skill", [
 const ACTIONS = [
   {
     kind: "delete",
-    words: /(?:^|[^a-z])(?:destroy|drop|truncate|purge|delete\s+from)(?=$|[^a-z])/iu,
+    words:
+      /(?:^|[^a-z])(?:destroy|drop|truncate|purge|delete\s+from|delete[^a-z]+event)(?=$|[^a-z])/iu,
   },
   { kind: "refund", words: /(?:^|[^a-z])refund(?=$|[^a-z])/iu },
   { kind: "pay", words: /(?:^|[^a-z])(?:pay|charge|payout|transfer)(?=$|[^a-z])/iu },

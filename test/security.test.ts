@@ -18,6 +18,7 @@ test.each([
   ["neon_run_sql_transaction", { sql_statements: ["select 1", "DELETE FROM users"] }, true],
   ["posthog_exec", { command: 'call query-run {"event":"post_created"}' }, false],
   ["posthog_exec", { command: `${" ".repeat(90)}call project-destroy {"id":7}` }, true],
+  ["cal_delete_event", { eventId: "ev1" }, true],
   ["update_skill", { action: "delete" }, true],
   ["update_routine", { action: "delete" }, false],
 ])("the %s call %p needs the user's confirmation: %p", (toolName, input, expected) => {
@@ -28,6 +29,7 @@ test.each([
     "neon_run_sql_transaction",
     "custom_sendEmail",
     "custom_manage_mail",
+    "cal_delete_event",
   ]);
   expect(needsApproval({ toolName, input }, writes)).toBe(expected);
 });
