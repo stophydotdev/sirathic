@@ -2,6 +2,7 @@ import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { Mode } from "../../shared/messages";
 import { BROWSER_TOOLS } from "../../bots/browser";
+import { BULK } from "../../plugins/bulkInput";
 import { CODE_RULES } from "../codeTools";
 import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
@@ -10,6 +11,7 @@ import { bookingSkills } from "./booking";
 import browser from "./browser.md" with { type: "text" };
 import chart from "./chart.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
+import inboxCleanup from "./inboxCleanup.md" with { type: "text" };
 import jobSearch from "./jobSearch.md" with { type: "text" };
 import { muslimSkills } from "./muslim";
 import noConnector from "./noConnector.md" with { type: "text" };
@@ -220,6 +222,12 @@ export const skillsFor = ({
             when: "Load when the user asks to write, draft, reply to or send an email as them, or to leave a draft in Gmail",
             text: sendOnBehalf,
             tools: ["search_plugins", "install_plugin", ...appTools(plugins, ["gmail"])],
+          },
+          {
+            name: "inbox_cleanup",
+            when: "Load when the user wants to clear out, clean up or trash a lot of email at once, like old promotions, newsletters or notifications",
+            text: inboxCleanup,
+            tools: ["search_plugins", "install_plugin", ...appTools(plugins, ["gmail"]), BULK],
           },
           {
             name: "scheduling",
