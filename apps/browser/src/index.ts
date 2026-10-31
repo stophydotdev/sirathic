@@ -70,10 +70,10 @@ Bun.serve({
     "/health": () => Response.json({ sessions: openSessions() }),
     "/act": {
       POST: (incoming) =>
-        handled(incoming, request, async ({ session, action }) =>
+        handled(incoming, request, async ({ session, action, full }) =>
           Response.json(
             await inSession(session, async (open) => ({
-              ...(await run(open, action)),
+              ...(await run(open, action, full)),
               downloads: await takeDownloads(open),
             })).catch((error: Error) => {
               console.error(

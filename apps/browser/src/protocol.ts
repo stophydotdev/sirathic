@@ -121,7 +121,7 @@ export type Action = z.infer<typeof action>;
 
 const session = z.string().min(1).max(100);
 
-export const request = z.object({ session, action });
+export const request = z.object({ session, action, full: z.boolean().optional() });
 
 export const result = z.object({
   url: z.string(),
