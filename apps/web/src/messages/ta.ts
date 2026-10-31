@@ -875,4 +875,11 @@ export default {
   "Places from Google Maps": "Google Maps இலிருந்து இடங்கள்",
   "Research this": "இதை ஆராய்",
   "Used your memory": "உங்கள் நினைவகம் பயன்படுத்தப்பட்டது",
+  Discover: "கண்டறி",
+  "Back to Discover": "கண்டறிவுக்குத் திரும்பு",
+  "Draft, not reviewed": "வரைவு, மதிப்பாய்வு செய்யப்படவில்லை",
+  "Updated {date}": "புதுப்பிக்கப்பட்டது: {date}",
+  "Discover more": "மேலும் கண்டறி",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "கருத்து வேறுபாடுள்ள கேள்விகளுக்கு குர்ஆன், ஹதீஸ், ஃபிக்ஹ் நூல்களிலிருந்து, ஒவ்வொரு ஆதாரத்தையும் குறிப்பிட்டு பதில்.",
 } satisfies Messages;

@@ -876,4 +876,11 @@ export default {
   "Places from Google Maps": "Места са Google мапа",
   "Research this": "Истражи ово",
   "Used your memory": "Коришћена је твоја меморија",
+  Discover: "Откриј",
+  "Back to Discover": "Назад на Откриј",
+  "Draft, not reviewed": "Нацрт, није прегледано",
+  "Updated {date}": "Ажурирано {date}",
+  "Discover more": "Откриј још",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Спорна питања, одговорена из Курана, хадиса и фикхских књига, уз наведене све изворе.",
 } satisfies Messages;

@@ -884,4 +884,11 @@ export default {
   "Places from Google Maps": "Google Maps'даги жойлар",
   "Research this": "Буни тадқиқ қилиш",
   "Used your memory": "Хотирангиздан фойдаланилди",
+  Discover: "Кашф этиш",
+  "Back to Discover": "Кашф этишга қайтиш",
+  "Draft, not reviewed": "Қоралама, кўриб чиқилмаган",
+  "Updated {date}": "Янгиланган: {date}",
+  "Discover more": "Яна кашф этиш",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Баҳсли саволлар Қуръон, ҳадис ва фиқҳ китобларидан, ҳар бир манба кўрсатилган ҳолда жавобланади.",
 } satisfies Messages;

@@ -878,4 +878,11 @@ export default {
   "Places from Google Maps": "Kraji iz Google Zemljevidov",
   "Research this": "Raziskuj to",
   "Used your memory": "Uporabljen je bil vaš spomin",
+  Discover: "Odkrij",
+  "Back to Discover": "Nazaj na Odkrij",
+  "Draft, not reviewed": "Osnutek, ni pregledano",
+  "Updated {date}": "Posodobljeno {date}",
+  "Discover more": "Odkrij več",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Sporna vprašanja z odgovori iz Korana, hadisov in fikhovskih knjig, z navedenimi vsemi viri.",
 } satisfies Messages;

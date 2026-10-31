@@ -862,4 +862,11 @@ export default {
   "Places from Google Maps": "Google Maps నుండి స్థలాలు",
   "Research this": "దీనిపై పరిశోధన చేయండి",
   "Used your memory": "మీ మెమరీ ఉపయోగించబడింది",
+  Discover: "అన్వేషించండి",
+  "Back to Discover": "అన్వేషణకు తిరిగి వెళ్ళండి",
+  "Draft, not reviewed": "ముసాయిదా, సమీక్షించలేదు",
+  "Updated {date}": "నవీకరించినది: {date}",
+  "Discover more": "మరిన్ని అన్వేషించండి",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "భిన్నాభిప్రాయాలున్న ప్రశ్నలకు ఖురాన్, హదీసులు, ఫిఖ్ గ్రంథాల నుండి, ప్రతి మూలాన్ని ఉదహరిస్తూ సమాధానాలు.",
 } satisfies Messages;

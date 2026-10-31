@@ -881,4 +881,11 @@ export default {
   "Places from Google Maps": "Luoghi da Google Maps",
   "Research this": "Approfondisci",
   "Used your memory": "È stata usata la tua memoria",
+  Discover: "Scopri",
+  "Back to Discover": "Torna a Scopri",
+  "Draft, not reviewed": "Bozza, non rivista",
+  "Updated {date}": "Aggiornato il {date}",
+  "Discover more": "Scopri di più",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Questioni controverse, risposte con il Corano, gli hadith e i libri di fiqh, con ogni fonte citata.",
 } satisfies Messages;

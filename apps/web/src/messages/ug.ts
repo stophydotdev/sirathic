@@ -880,4 +880,11 @@ export default {
   "Places from Google Maps": "Google Maps تىكى جايلار",
   "Research this": "بۇنى تەتقىق قىل",
   "Used your memory": "ئەستە ساقلىغانلىرىڭىز ئىشلىتىلدى",
+  Discover: "بايقاش",
+  "Back to Discover": "بايقاشقا قايتىش",
+  "Draft, not reviewed": "لايىھە، تەكشۈرۈلمىگەن",
+  "Updated {date}": "يېڭىلانغان: {date}",
+  "Discover more": "تېخىمۇ كۆپ بايقاش",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "ئىختىلاپلىق مەسىلىلەرگە قۇرئان، ھەدىس ۋە پىقھى كىتابلىرىدىن، ھەر بىر مەنبە كۆرسىتىلگەن ھالدا جاۋاب بېرىلىدۇ.",
 } satisfies Messages;

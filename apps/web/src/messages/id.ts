@@ -880,4 +880,11 @@ export default {
   "Places from Google Maps": "Tempat dari Google Maps",
   "Research this": "Teliti lebih dalam",
   "Used your memory": "Memori Anda digunakan",
+  Discover: "Jelajahi",
+  "Back to Discover": "Kembali ke Jelajahi",
+  "Draft, not reviewed": "Draf, belum ditinjau",
+  "Updated {date}": "Diperbarui {date}",
+  "Discover more": "Jelajahi lainnya",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Pertanyaan yang diperselisihkan, dijawab dari Al-Qur'an, hadis, dan kitab fikih, dengan setiap sumber dicantumkan.",
 } satisfies Messages;

@@ -874,4 +874,11 @@ export default {
   "Places from Google Maps": "له Google Maps څخه ځایونه",
   "Research this": "په دې اړه څیړنه وکړه",
   "Used your memory": "ستاسو حافظه وکارول شوه",
+  Discover: "کشف",
+  "Back to Discover": "کشف ته بېرته تګ",
+  "Draft, not reviewed": "مسوده، بیاکتل شوی نه ده",
+  "Updated {date}": "تازه شوی: {date}",
+  "Discover more": "نور کشف",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "اختلافي پوښتنې، د قرآن، حدیث او فقهې کتابونو څخه ځواب شوې، د هرې سرچینې په یادولو سره.",
 } satisfies Messages;

@@ -858,4 +858,11 @@ export default {
   "Places from Google Maps": "สถานที่จาก Google Maps",
   "Research this": "ค้นคว้าเรื่องนี้",
   "Used your memory": "ใช้ความจำของคุณแล้ว",
+  Discover: "ค้นพบ",
+  "Back to Discover": "กลับไปที่ค้นพบ",
+  "Draft, not reviewed": "ฉบับร่าง ยังไม่ได้ตรวจสอบ",
+  "Updated {date}": "อัปเดต {date}",
+  "Discover more": "ค้นพบเพิ่มเติม",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "คำถามที่มีข้อถกเถียง ตอบจากอัลกุรอาน หะดีษ และตำราฟิกฮ์ พร้อมอ้างอิงทุกแหล่งที่มา",
 } satisfies Messages;

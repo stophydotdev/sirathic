@@ -875,4 +875,11 @@ export default {
   "Places from Google Maps": "Nokkuuje iwde e Google Maps",
   "Research this": "Ɗaɓɓit ɗum",
   "Used your memory": "Teskaaɗe maa kuutoraama",
+  Discover: "Tawtu",
+  "Back to Discover": "Rutto e Tawtu",
+  "Draft, not reviewed": "Binndol, alaa ko ndaarii",
+  "Updated {date}": "Hesɗitinaama: {date}",
+  "Discover more": "Tawtu ɓuri",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Naamnal sentinooɗum, jaabaaɗum ndeen Alqur'aana, hadiisaaji e defte fiqh, e iwdi kala wiyaaɗi.",
 } satisfies Messages;

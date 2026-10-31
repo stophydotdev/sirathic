@@ -866,4 +866,11 @@ export default {
   "Places from Google Maps": "أماكن من خرائط Google",
   "Research this": "ابحث في هذا بعمق",
   "Used your memory": "استُخدمت ذاكرتك",
+  Discover: "اكتشف",
+  "Back to Discover": "العودة إلى اكتشف",
+  "Draft, not reviewed": "مسودة، لم تُراجع",
+  "Updated {date}": "آخر تحديث {date}",
+  "Discover more": "المزيد للاكتشاف",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "مسائل الخلاف، يُجاب عنها من القرآن وكتب الحديث والفقه مع ذكر كل مصدر.",
 } satisfies Messages;

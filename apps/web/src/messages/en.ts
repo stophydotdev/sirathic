@@ -806,6 +806,12 @@ export const MESSAGES = [
   "Places from Google Maps",
   "Research this",
   "Used your memory",
+  "Discover",
+  "Back to Discover",
+  "Draft, not reviewed",
+  "Updated {date}",
+  "Discover more",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

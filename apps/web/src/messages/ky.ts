@@ -881,4 +881,11 @@ export default {
   "Places from Google Maps": "Google Maps'теги жерлер",
   "Research this": "Муну изилдөө",
   "Used your memory": "Эс тутумуңуз колдонулду",
+  Discover: "Изилдөө",
+  "Back to Discover": "Изилдөөгө кайтуу",
+  "Draft, not reviewed": "Долбоор, текшерилген эмес",
+  "Updated {date}": "Жаңыртылды: {date}",
+  "Discover more": "Дагы изилдөө",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Талаштуу суроолорго Куран, хадис жана фикх китептеринен, ар бир булак көрсөтүлүп жооп берилет.",
 } satisfies Messages;

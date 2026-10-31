@@ -884,4 +884,11 @@ export default {
   "Places from Google Maps": "Mga lugar mula sa Google Maps",
   "Research this": "Saliksikin ito",
   "Used your memory": "Ginamit ang iyong memorya",
+  Discover: "Tuklasin",
+  "Back to Discover": "Bumalik sa Tuklasin",
+  "Draft, not reviewed": "Draft, hindi pa nasusuri",
+  "Updated {date}": "Na-update noong {date}",
+  "Discover more": "Tuklasin pa",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Mga pinagtatalunang tanong, sinasagot mula sa Quran, hadith at mga aklat ng fiqh, na may sanggunian sa bawat sagot.",
 } satisfies Messages;

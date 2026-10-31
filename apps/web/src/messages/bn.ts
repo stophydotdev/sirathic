@@ -866,4 +866,11 @@ export default {
   "Places from Google Maps": "Google Maps থেকে স্থান",
   "Research this": "এটি নিয়ে গবেষণা করুন",
   "Used your memory": "আপনার মেমরি ব্যবহার করা হয়েছে",
+  Discover: "আবিষ্কার",
+  "Back to Discover": "আবিষ্কারে ফিরে যান",
+  "Draft, not reviewed": "খসড়া, পর্যালোচনা হয়নি",
+  "Updated {date}": "হালনাগাদ: {date}",
+  "Discover more": "আরও আবিষ্কার করুন",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "মতভেদপূর্ণ প্রশ্নের উত্তর কুরআন, হাদিস ও ফিকহের কিতাব থেকে, প্রতিটি সূত্রসহ।",
 } satisfies Messages;

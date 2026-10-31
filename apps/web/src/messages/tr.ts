@@ -878,4 +878,11 @@ export default {
   "Places from Google Maps": "Google Haritalar'dan yerler",
   "Research this": "Bunu araştır",
   "Used your memory": "Hafızanız kullanıldı",
+  Discover: "Keşfet",
+  "Back to Discover": "Keşfet'e dön",
+  "Draft, not reviewed": "Taslak, incelenmedi",
+  "Updated {date}": "Güncellendi: {date}",
+  "Discover more": "Daha fazla keşfet",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "İhtilaflı sorular; Kur'an, hadis ve fıkıh kitaplarından, her kaynak belirtilerek yanıtlanır.",
 } satisfies Messages;

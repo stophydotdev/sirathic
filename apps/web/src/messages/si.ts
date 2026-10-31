@@ -865,4 +865,11 @@ export default {
   "Places from Google Maps": "Google Maps වෙතින් ස්ථාන",
   "Research this": "මෙය පර්යේෂණය කරන්න",
   "Used your memory": "ඔබේ මතකය භාවිත කළා",
+  Discover: "සොයාගන්න",
+  "Back to Discover": "සොයාගන්න වෙත ආපසු",
+  "Draft, not reviewed": "කෙටුම්පත, සමාලෝචනය කර නැත",
+  "Updated {date}": "යාවත්කාලීන කළේ {date}",
+  "Discover more": "තවත් සොයාගන්න",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "මතභේද ඇති ප්‍රශ්නවලට කුර්ආනය, හදීස් සහ ෆික්හ් ග්‍රන්ථවලින්, සෑම මූලාශ්‍රයක්ම සඳහන් කර පිළිතුරු.",
 } satisfies Messages;

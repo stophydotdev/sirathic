@@ -877,4 +877,11 @@ export default {
   "Places from Google Maps": "Maeneo kutoka Google Maps",
   "Research this": "Chunguza hili",
   "Used your memory": "Kumbukumbu yako imetumika",
+  Discover: "Gundua",
+  "Back to Discover": "Rudi kwa Gundua",
+  "Draft, not reviewed": "Rasimu, haijakaguliwa",
+  "Updated {date}": "Imesasishwa {date}",
+  "Discover more": "Gundua zaidi",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Maswali yenye mjadala, yanajibiwa kutoka Qur'ani, hadithi na vitabu vya fiqh, huku kila chanzo kikitajwa.",
 } satisfies Messages;

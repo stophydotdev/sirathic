@@ -875,4 +875,11 @@ export default {
   "Places from Google Maps": "Google マップの場所",
   "Research this": "詳しく調べる",
   "Used your memory": "メモリーを使用しました",
+  Discover: "発見",
+  "Back to Discover": "発見に戻る",
+  "Draft, not reviewed": "下書き、未確認",
+  "Updated {date}": "{date} 更新",
+  "Discover more": "さらに見る",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "意見が分かれる問いに、クルアーン、ハディース、フィクフの書物から答え、すべての出典を示します。",
 } satisfies Messages;

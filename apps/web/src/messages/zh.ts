@@ -858,4 +858,11 @@ export default {
   "Places from Google Maps": "来自 Google 地图的地点",
   "Research this": "深入研究",
   "Used your memory": "已使用你的记忆",
+  Discover: "发现",
+  "Back to Discover": "返回发现",
+  "Draft, not reviewed": "草稿，未经审核",
+  "Updated {date}": "更新于 {date}",
+  "Discover more": "更多发现",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "有争议的问题，依据《古兰经》、圣训和教法书籍作答，并注明每一个来源。",
 } satisfies Messages;

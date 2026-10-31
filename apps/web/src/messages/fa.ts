@@ -873,4 +873,11 @@ export default {
   "Places from Google Maps": "مکان‌ها از Google Maps",
   "Research this": "این را پژوهش کن",
   "Used your memory": "از حافظهٔ شما استفاده شد",
+  Discover: "کشف",
+  "Back to Discover": "بازگشت به کشف",
+  "Draft, not reviewed": "پیش‌نویس، بازبینی نشده",
+  "Updated {date}": "به‌روزرسانی {date}",
+  "Discover more": "کشف بیشتر",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "مسائل اختلافی، پاسخ‌داده‌شده از قرآن، حدیث و کتاب‌های فقه، با ذکر هر منبع.",
 } satisfies Messages;

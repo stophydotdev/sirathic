@@ -878,4 +878,11 @@ export default {
   "Places from Google Maps": "شوێنەکان لە Google Maps",
   "Research this": "لێکۆڵینەوە لەمە بکە",
   "Used your memory": "بیرەوەرییەکەت بەکارهات",
+  Discover: "دۆزینەوە",
+  "Back to Discover": "گەڕانەوە بۆ دۆزینەوە",
+  "Draft, not reviewed": "ڕەشنووس، پێداچوونەوەی نەکراوە",
+  "Updated {date}": "نوێکراوەتەوە {date}",
+  "Discover more": "دۆزینەوەی زیاتر",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "پرسە جیاوازەکان، لە قورئان و فەرموودە و کتێبەکانی فیقهەوە وەڵام دراونەتەوە، لەگەڵ ناوهێنانی هەموو سەرچاوەیەک.",
 } satisfies Messages;
