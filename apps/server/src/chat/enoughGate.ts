@@ -17,9 +17,7 @@ const FOUND_CHARS = 12_000;
 const readText = z
   .union([
     z.object({ text: z.string() }).transform(({ text }) => text),
-    z
-      .object({ pages: z.array(z.object({ markdown: z.string().optional() })) })
-      .transform(({ pages }) => pages.map(({ markdown = "" }) => markdown).join("\n")),
+    z.object({ pages: z.array(z.looseObject({})) }).transform(({ pages }) => JSON.stringify(pages)),
   ])
   .catch(({ input }) => JSON.stringify(input));
 
@@ -38,7 +36,9 @@ export const researchedEnough = async (
     return false;
   }
   const latest = steps.at(-1)?.toolResults ?? [];
-  if (latest.every(({ output }) => readText.parse(output).trim() === "")) return false;
+  if (latest.length > 0 && latest.every(({ output }) => readText.parse(output).trim() === "")) {
+    return false;
+  }
   const found = steps
     .flatMap((step) => step.toolResults.map(({ output }) => readText.parse(output)))
     .join("\n")
