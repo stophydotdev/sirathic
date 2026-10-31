@@ -14,7 +14,12 @@ const RESEARCH_TOOLS = new Set([
 ]);
 const ENOUGH = 0.6;
 const FOUND_CHARS = 12_000;
-const withText = z.object({ text: z.string() });
+const readText = z
+  .union([
+    z.object({ text: z.string() }).transform(({ text }) => text),
+    z.object({ pages: z.array(z.looseObject({})) }).transform(({ pages }) => JSON.stringify(pages)),
+  ])
+  .catch(({ input }) => JSON.stringify(input));
 
 export const ENOUGH_STEP =
   "You have found enough. Answer now from what you found, and say what you could not check.";
@@ -30,12 +35,12 @@ export const researchedEnough = async (
   if (calls.length === 0 || !calls.every(({ toolName }) => RESEARCH_TOOLS.has(toolName))) {
     return false;
   }
+  const latest = steps.at(-1)?.toolResults ?? [];
+  if (latest.length > 0 && latest.every(({ output }) => readText.parse(output).trim() === "")) {
+    return false;
+  }
   const found = steps
-    .flatMap((step) =>
-      step.toolResults.map(
-        ({ output }) => withText.safeParse(output).data?.text ?? JSON.stringify(output),
-      ),
-    )
+    .flatMap((step) => step.toolResults.map(({ output }) => readText.parse(output)))
     .join("\n")
     .slice(-FOUND_CHARS);
   try {
