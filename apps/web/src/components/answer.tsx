@@ -66,6 +66,9 @@ const researchByType = groupPartByType({
   "tool-call:show_quiz": [],
   "tool-call:show_translation": [],
   "tool-call:show_places": [],
+  "tool-call:prayer_times": [],
+  "tool-call:islamic_dates": [],
+  "tool-call:change_setting": [],
   "tool-call": ["group-research"],
 });
 

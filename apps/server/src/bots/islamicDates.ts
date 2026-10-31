@@ -1,5 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
+import type { ISLAMIC_EVENTS } from "../shared/cards";
 
 const MONTHS = [
   "Muharram",
@@ -22,7 +23,11 @@ const EVENTS = [
   { name: "Day of Arafah", month: 12, day: 9 },
   { name: "Eid al-Adha", month: 12, day: 10 },
   { name: "Ashura", month: 1, day: 10 },
-] as const;
+] as const satisfies readonly {
+  name: (typeof ISLAMIC_EVENTS)[number];
+  month: number;
+  day: number;
+}[];
 
 const DAY_MS = 86_400_000;
 const LOOKAHEAD_DAYS = 400;
@@ -129,7 +134,7 @@ const answer = (date: Date) => ({
 
 export const islamicDates = tool({
   description:
-    "Converts between Hijri and Gregorian dates and lists the next Islamic dates: the start of Ramadan, Eid al-Fitr, the Day of Arafah, Eid al-Adha and Ashura. Pass gregorian (YYYY-MM-DD, the user's local date if you know it) for the Hijri date, hijri to get the Gregorian date, or nothing for today. Dates are calculated and can differ by a day from local sighting, so say a start or an Eid is expected. Use it instead of working out a Hijri date yourself.",
+    "Converts between Hijri and Gregorian dates and lists the next Islamic dates: the start of Ramadan, Eid al-Fitr, the Day of Arafah, Eid al-Adha and Ashura. Pass gregorian (YYYY-MM-DD, the user's local date if you know it) for the Hijri date, hijri to get the Gregorian date, or nothing for today. Dates are calculated and can differ by a day from local sighting, so say a start or an Eid is expected. Use it instead of working out a Hijri date yourself. The user sees today's Hijri date and the next dates as a card, so name only the dates your answer needs.",
   inputSchema: input,
   execute: ({ gregorian, hijri }) => {
     if (!hijri)

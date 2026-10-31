@@ -43,6 +43,8 @@ const LINE = 26;
 const PAD = 11;
 const MAX_LINES = 5;
 
+const FILE_SUGGESTIONS = ["Check its verses and hadith", "Summarize it", "Translate it"] as const;
+
 export const Composer: FC<{
   placeholder: string;
   busy: boolean;
@@ -94,17 +96,17 @@ export const Composer: FC<{
     input.current?.focus();
   };
 
-  const send = async () => {
+  const send = async (said = text) => {
     if (!signedIn) {
       ask();
       return;
     }
-    if (!ready) return;
+    if ((said.trim() === "" && files.length === 0) || sending) return;
     void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setSending(true);
     setError(undefined);
     try {
-      onSend(text.trim(), await filePartsOf(files));
+      onSend(said.trim(), await filePartsOf(files));
       setText("");
       setFiles([]);
     } catch (err) {
@@ -123,6 +125,19 @@ export const Composer: FC<{
 
   return (
     <>
+      {files.length > 0 && text === "" && !busy && (
+        <View className="w-full flex-row flex-wrap gap-2 pb-2">
+          {FILE_SUGGESTIONS.map((suggestion) => (
+            <Pressable
+              key={suggestion}
+              onPress={() => void send(suggestion)}
+              className="bg-muted active:bg-foreground/10 h-8 justify-center rounded-full px-3"
+            >
+              <Text className="text-foreground font-sans text-sm">{suggestion}</Text>
+            </Pressable>
+          ))}
+        </View>
+      )}
       {query !== undefined && (
         <MentionList
           items={mentionables}

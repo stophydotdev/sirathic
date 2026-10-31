@@ -3,7 +3,8 @@ import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { nextRun, schedule, type Schedule } from "../apps/server/src/automations/schedule";
-import { PRAYERS, prayerTimesOn, type PrayerPlace } from "../apps/server/src/prayer/times";
+import { prayerTimesOn, type PrayerPlace } from "../apps/server/src/prayer/times";
+import { PRAYERS } from "../apps/server/src/shared/cards";
 import { timezone } from "../apps/server/src/shared/settings";
 
 const automationId = "11111111-1111-4111-8111-111111111111";

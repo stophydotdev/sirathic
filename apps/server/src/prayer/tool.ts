@@ -1,7 +1,8 @@
 import { tool } from "ai";
 import { z } from "zod";
 import { timezone } from "../shared/settings";
-import { PRAYERS, prayerPlace, prayerTimesOn } from "./times";
+import { PRAYERS } from "../shared/cards";
+import { prayerPlace, prayerTimesOn } from "./times";
 
 const MAX_DAYS = 31;
 
@@ -9,6 +10,7 @@ const NOTE =
   "Calculated, not a masjid timetable. A masjid's times can differ by a few minutes, and Fajr and Isha by more far from the equator. Iqamah and Jumu'ah times are set by each masjid.";
 
 const input = prayerPlace.extend({
+  place: z.string().max(80).optional().describe("The city or masjid, shown on the card."),
   timezone: timezone.describe("The place's IANA time zone, like Europe/London."),
   from: z
     .string()
@@ -26,9 +28,9 @@ const input = prayerPlace.extend({
 
 export const prayerTimes = tool({
   description:
-    "Calculates the prayer times (Fajr, sunrise, Dhuhr, Asr, Maghrib, Isha) for a place over up to 31 days from its coordinates. Use it whenever an answer depends on a prayer time, like suhoor ending at Fajr or iftar at Maghrib, instead of working one out or quoting it from memory. Give the coordinates of the user's city or masjid and the method its local authority uses, and say which method you used.",
+    "Calculates the prayer times (Fajr, sunrise, Dhuhr, Asr, Maghrib, Isha) for a place over up to 31 days from its coordinates. Use it whenever an answer depends on a prayer time, like suhoor ending at Fajr or iftar at Maghrib, instead of working one out or quoting it from memory. Give the coordinates of the user's city or masjid and the method its local authority uses, and say which method you used. The user sees the times as a card, so don't repeat the whole timetable in your answer; name only the times it needs.",
   inputSchema: input,
-  execute: ({ timezone: zone, from, days, ...place }) => {
+  execute: ({ timezone: zone, from, days, place: where, ...place }) => {
     const clock = new Intl.DateTimeFormat("en-GB", {
       timeZone: zone,
       hour: "2-digit",
@@ -38,6 +40,7 @@ export const prayerTimes = tool({
     const start = from ?? new Intl.DateTimeFormat("en-CA", { timeZone: zone }).format(new Date());
     const [year, month, day] = start.split("-").map(Number);
     return {
+      place: where,
       method: place.method,
       asr: place.asr,
       timezone: zone,

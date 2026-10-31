@@ -149,7 +149,7 @@ If results are incomplete, conflicting, snippet-level, single-sided, or do not c
     }),
     fetch_url: tool({
       description:
-        "Navigate to URLs and extract their content. Returns the page title and text content for each URL. Use this to read the full content of web pages found via search_web. Use it when page-level details would improve the answer. Prefer fetch_url over answering from snippets when the user asks about a specific URL, source, list, policy, fatwa, article, table, exact wording, or any answer that depends on details likely hidden beyond the snippet. Batch fetch when appropriate. When a user pastes a full URL in the query, you must call fetch_url to retrieve that URL's information.",
+        "Navigate to URLs and extract their content. Returns the page title and text content for each URL. Use this to read the full content of web pages found via search_web. Use it when page-level details would improve the answer. Prefer fetch_url over answering from snippets when the user asks about a specific URL, source, list, policy, fatwa, article, table, exact wording, or any answer that depends on details likely hidden beyond the snippet. Batch fetch when appropriate. When a user pastes a full URL in the query, you must call fetch_url to retrieve that URL's information. A YouTube video comes with its transcript in timed lines like [12:04]; to point to a moment in it, link the time to the video at that second, like [12:04](https://www.youtube.com/watch?v=VIDEO_ID&t=724s).",
       inputSchema: fetchUrlInput,
       execute: async ({ urls }) => {
         const read = await Promise.all(

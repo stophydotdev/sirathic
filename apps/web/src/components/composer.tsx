@@ -17,6 +17,7 @@ import {
 } from "@/components/mentions";
 import { RecentFiles } from "@/components/libraryRecent";
 import { popoverHeading, popoverIcon, popoverPanel, popoverRow } from "@/components/popover";
+import { FileSuggestions } from "@/components/fileSuggestions";
 import { ModelPicker } from "@/components/modelPicker";
 import { NoorLimitLine } from "@/components/noorLimit";
 import { useSignIn } from "@/components/signIn";
@@ -228,6 +229,7 @@ export const Composer: FC<{
           />
         )}
         {signedIn && noor && <NoorLimitLine running={running} />}
+        <FileSuggestions />
         {bot && <BotReply />}
         <ComposerPrimitive.Root
           className={cn(

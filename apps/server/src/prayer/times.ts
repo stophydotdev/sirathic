@@ -8,8 +8,7 @@ import {
   Rounding,
 } from "adhan";
 import { z } from "zod";
-
-export const PRAYERS = ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"] as const;
+import { PRAYERS } from "../shared/cards";
 
 const METHODS = [
   "Malaysia",
