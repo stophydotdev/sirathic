@@ -40,7 +40,7 @@ import { prayerTimes } from "../prayer/tool";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
 import { needsCard } from "./autoReview";
-import { withoutOriginalInputs, writingTools } from "./confirm";
+import { withDeclineReasons, withoutOriginalInputs, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
 import { fileTools } from "./fileTools";
@@ -425,8 +425,10 @@ export function chatResponse({
         agent,
         uiMessages: [
           ...(inBot ? await summaryNote(inBot) : []),
-          ...withoutOriginalInputs(
-            await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner),
+          ...withDeclineReasons(
+            withoutOriginalInputs(
+              await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner),
+            ),
           ),
         ],
         originalMessages: messages,

@@ -120,3 +120,13 @@ export const withoutOriginalInputs = (messages: ChatMessage[]) => {
   }
   return messages;
 };
+
+const DECLINED =
+  "The user declined this action on its card, so it was not done. Do not try it again, reword it, or reach the same goal another way. The service did not refuse and nothing is wrong with it. Tell the user plainly that they declined it and that nothing was changed.";
+
+export const withDeclineReasons = (messages: ChatMessage[]) => {
+  for (const part of messages.flatMap(({ parts }) => parts)) {
+    if (isToolUIPart(part) && part.approval?.approved === false) part.approval.reason ??= DECLINED;
+  }
+  return messages;
+};

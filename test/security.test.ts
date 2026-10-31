@@ -5,7 +5,8 @@ import { publicUrl } from "@sirathic/core/web/url";
 import { isPrivateUrl } from "../apps/browser/src/blocked";
 import { masked } from "../apps/browser/src/mask";
 import { asksFirst, needsCard } from "../apps/server/src/chat/autoReview";
-import { needsApproval, writingTools } from "../apps/server/src/chat/confirm";
+import { needsApproval, withDeclineReasons, writingTools } from "../apps/server/src/chat/confirm";
+import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
 import { totp } from "../apps/server/src/vault/totp";
 
@@ -87,6 +88,31 @@ test.each([
 ])("%s", async (_, toolName, rules, scores, expected) => {
   const asks = await scoredBy(scores, () => needsCard({ toolName, input: {} }, changes, rules));
   expect(asks).toBe(expected);
+});
+
+const card = (approved: boolean): ChatMessage => ({
+  id: `m-${approved}`,
+  role: "assistant",
+  parts: [
+    {
+      type: "dynamic-tool",
+      toolName: "cal_create_event",
+      toolCallId: "c",
+      state: "approval-responded",
+      input: {},
+      approval: { id: "a", approved },
+    },
+  ],
+});
+
+test("a declined card tells the model the user declined and an approved one adds nothing", () => {
+  const reasons = [false, true].flatMap((approved) =>
+    withDeclineReasons([card(approved)]).flatMap(({ parts }) =>
+      parts.map((part) => (part.type === "dynamic-tool" ? part.approval?.reason : undefined)),
+    ),
+  );
+  expect(reasons[0]).toContain("The user declined this action");
+  expect(reasons[1]).toBeUndefined();
 });
 
 test("a plugin tool needs confirmation unless the plugin marks it read-only", () => {
