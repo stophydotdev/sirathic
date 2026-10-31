@@ -36,7 +36,7 @@ export const muslimSkills: Skill[] = [
   },
   {
     name: "ramadan",
-    when: "Load when the user asks about suhoor or iftar times, a Ramadan timetable or reminders, missed fasts, the last ten nights or zakat al-fitr",
+    when: "Load when the user asks to set up Ramadan, about suhoor or iftar times, a Ramadan timetable or reminders, missed fasts, the last ten nights or zakat al-fitr. To set Ramadan up, load scheduling, routines and quran_plan with it",
     text: ramadan,
   },
   {
