@@ -6,6 +6,7 @@ import { hadithKey } from "./hadithKey";
 
 const MOSTLY_UNCHECKED = 0.9;
 const TEXT_MATCH_BOOKS = new Set(["muslim", "malik"]);
+const ATTRIBUTION_CHARS = 60;
 
 const pagesDir = z.string().parse(Bun.env.SUNNAH_PAGES);
 const summaryFile = z.string().parse(Bun.argv[2]);
@@ -79,6 +80,17 @@ const verdictOf = ({ id, book, textAr }: (typeof rows)[number]): Verdict => {
   if (key === "") return "noArabic";
   const same = copies.get(id);
   if (same?.has(key)) return "checked";
+  if (
+    [...(same ?? [])].some(
+      (copy) =>
+        key.startsWith(copy) &&
+        key.startsWith("رواه", copy.length) &&
+        key.length - copy.length <= ATTRIBUTION_CHARS &&
+        !/روايه|قال|عن|زاد|فيه/u.test(key.slice(copy.length)),
+    )
+  ) {
+    return "checked";
+  }
   if (TEXT_MATCH_BOOKS.has(book) && bookTexts.get(book)?.has(key)) return "textOnly";
   return same === undefined ? "noCopy" : "differs";
 };
