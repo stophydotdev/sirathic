@@ -12,7 +12,7 @@ const ARABIC_RUN = /(\p{scx=Arabic}+(?:\s+\p{scx=Arabic}+)*)/u;
 export const MixedText: FC<{ text: string }> = ({ text }) =>
   text.split(ARABIC_RUN).map((part, index) =>
     index % 2 === 1 ? (
-      <span key={part} lang="ar" dir="rtl" className="font-quran text-xl">
+      <span key={`${index}${part}`} lang="ar" dir="rtl" className="font-quran text-xl">
         {part}
       </span>
     ) : (

@@ -152,7 +152,7 @@ async function research(title: string) {
   };
 }
 
-const cleanHeadline = (text: string) => withoutEmDashes(text).trim();
+const cleanHeadline = (text: string) => withoutEmDashes(text).trim().replace(/\.$/u, "");
 
 async function headlineOf(written: string, title: string) {
   if (cleanHeadline(written).length <= HEADLINE_CHARS) return cleanHeadline(written);
