@@ -921,4 +921,7 @@ export default {
   Stopped: "متوقف شد",
   "Ask a bot for a few things at once and each one shows up here.":
     "از یک ربات چند کار را هم‌زمان بخواهید و هر کدام اینجا نشان داده می‌شود.",
+  "Let Sirathic's reviewers read this answer": "اجازه بده بازبین‌های Sirathic این پاسخ را بخوانند",
+  "Shared reports": "گزارش‌های به‌اشتراک‌گذاشته‌شده",
+  "No shared reports yet.": "هنوز گزارشی به اشتراک گذاشته نشده است.",
 } satisfies Messages;

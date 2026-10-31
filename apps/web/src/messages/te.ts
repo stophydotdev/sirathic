@@ -909,4 +909,7 @@ export default {
   Stopped: "ఆపివేయబడింది",
   "Ask a bot for a few things at once and each one shows up here.":
     "బాట్‌ను ఒకేసారి కొన్ని పనులు అడగండి, ప్రతిదీ ఇక్కడ కనిపిస్తుంది.",
+  "Let Sirathic's reviewers read this answer": "Sirathic సమీక్షకులు ఈ సమాధానాన్ని చదవడానికి అనుమతించండి",
+  "Shared reports": "షేర్ చేసిన నివేదికలు",
+  "No shared reports yet.": "ఇంకా షేర్ చేసిన నివేదికలు లేవు.",
 } satisfies Messages;

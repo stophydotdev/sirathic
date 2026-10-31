@@ -923,4 +923,7 @@ export default {
   Stopped: "நிறுத்தப்பட்டது",
   "Ask a bot for a few things at once and each one shows up here.":
     "ஒரு பாட்டிடம் ஒரே நேரத்தில் பல விஷயங்களைக் கேளுங்கள், ஒவ்வொன்றும் இங்கே தெரியும்.",
+  "Let Sirathic's reviewers read this answer": "Sirathic மதிப்பாய்வாளர்கள் இந்தப் பதிலைப் படிக்க அனுமதி",
+  "Shared reports": "பகிரப்பட்ட புகார்கள்",
+  "No shared reports yet.": "இதுவரை பகிரப்பட்ட புகார்கள் இல்லை.",
 } satisfies Messages;

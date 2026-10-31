@@ -913,4 +913,7 @@ export default {
   Stopped: "متوقفة",
   "Ask a bot for a few things at once and each one shows up here.":
     "اطلب من بوت عدة أشياء دفعة واحدة وستظهر كل واحدة هنا.",
+  "Let Sirathic's reviewers read this answer": "اسمح لمراجعي Sirathic بقراءة هذه الإجابة",
+  "Shared reports": "البلاغات المشاركة",
+  "No shared reports yet.": "لا توجد بلاغات مشاركة بعد.",
 } satisfies Messages;

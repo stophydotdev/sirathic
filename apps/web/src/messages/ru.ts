@@ -925,4 +925,7 @@ export default {
   Stopped: "Остановлена",
   "Ask a bot for a few things at once and each one shows up here.":
     "Попросите бота о нескольких делах сразу, и каждое появится здесь.",
+  "Let Sirathic's reviewers read this answer": "Разрешить проверяющим Sirathic читать этот ответ",
+  "Shared reports": "Переданные жалобы",
+  "No shared reports yet.": "Переданных жалоб пока нет.",
 } satisfies Messages;

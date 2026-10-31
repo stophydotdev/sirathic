@@ -929,4 +929,8 @@ export default {
   Stopped: "Interrotta",
   "Ask a bot for a few things at once and each one shows up here.":
     "Chiedi a un bot più cose insieme e ognuna comparirà qui.",
+  "Let Sirathic's reviewers read this answer":
+    "Consenti ai revisori di Sirathic di leggere questa risposta",
+  "Shared reports": "Segnalazioni condivise",
+  "No shared reports yet.": "Nessuna segnalazione condivisa per ora.",
 } satisfies Messages;

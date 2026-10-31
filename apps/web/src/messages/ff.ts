@@ -923,4 +923,7 @@ export default {
   Stopped: "Haɓɓaama",
   "Ask a bot for a few things at once and each one shows up here.":
     "Ɗamal bot kuuɗe seeɗa e nder nde go'o, kala wootere ɗum maa ibe ton.",
+  "Let Sirathic's reviewers read this answer": "Accu ndaarooɓe Sirathic janngugo ndee jaabawol",
+  "Shared reports": "Habrugol cenndaaɗi",
+  "No shared reports yet.": "Walaa habrugol cenndaaɗi jooni.",
 } satisfies Messages;

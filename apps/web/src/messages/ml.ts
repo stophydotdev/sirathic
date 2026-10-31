@@ -920,4 +920,7 @@ export default {
   Stopped: "നിർത്തി",
   "Ask a bot for a few things at once and each one shows up here.":
     "ഒരു ബോട്ടിനോട് ഒരേസമയം പല കാര്യങ്ങൾ ആവശ്യപ്പെടൂ, ഓരോന്നും ഇവിടെ കാണാം.",
+  "Let Sirathic's reviewers read this answer": "Sirathic-ന്റെ റിവ്യൂവർമാരെ ഈ ഉത്തരം വായിക്കാൻ അനുവദിക്കുക",
+  "Shared reports": "പങ്കിട്ട റിപ്പോർട്ടുകൾ",
+  "No shared reports yet.": "ഇതുവരെ പങ്കിട്ട റിപ്പോർട്ടുകളൊന്നുമില്ല.",
 } satisfies Messages;

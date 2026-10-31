@@ -932,4 +932,8 @@ export default {
   Stopped: "Itinigil",
   "Ask a bot for a few things at once and each one shows up here.":
     "Humingi sa bot ng ilang bagay nang sabay-sabay at lalabas dito ang bawat isa.",
+  "Let Sirathic's reviewers read this answer":
+    "Payagan ang mga reviewer ng Sirathic na basahin ang sagot na ito",
+  "Shared reports": "Mga ibinahaging ulat",
+  "No shared reports yet.": "Wala pang ibinahaging ulat.",
 } satisfies Messages;

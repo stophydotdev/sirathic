@@ -849,6 +849,9 @@ export const MESSAGES = [
   "Didn't finish",
   "Stopped",
   "Ask a bot for a few things at once and each one shows up here.",
+  "Let Sirathic's reviewers read this answer",
+  "Shared reports",
+  "No shared reports yet.",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

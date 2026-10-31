@@ -909,4 +909,7 @@ export default {
   Stopped: "បានបញ្ឈប់",
   "Ask a bot for a few things at once and each one shows up here.":
     "សុំបូតឱ្យធ្វើច្រើនយ៉ាងក្នុងពេលតែមួយ ហើយរឿងនីមួយៗនឹងបង្ហាញនៅទីនេះ។",
+  "Let Sirathic's reviewers read this answer": "អនុញ្ញាតឱ្យអ្នកត្រួតពិនិត្យរបស់ Sirathic អានចម្លើយនេះ",
+  "Shared reports": "របាយការណ៍ដែលបានចែករំលែក",
+  "No shared reports yet.": "មិនទាន់មានរបាយការណ៍ដែលបានចែករំលែកនៅឡើយទេ។",
 } satisfies Messages;

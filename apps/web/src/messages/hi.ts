@@ -915,4 +915,7 @@ export default {
   Stopped: "रोका गया",
   "Ask a bot for a few things at once and each one shows up here.":
     "बॉट से एक साथ कई काम कहें, और हर काम यहाँ दिखेगा।",
+  "Let Sirathic's reviewers read this answer": "Sirathic के समीक्षकों को यह जवाब पढ़ने दें",
+  "Shared reports": "साझा की गई रिपोर्ट",
+  "No shared reports yet.": "अभी तक कोई साझा रिपोर्ट नहीं है।",
 } satisfies Messages;

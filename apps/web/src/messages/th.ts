@@ -905,4 +905,7 @@ export default {
   Stopped: "หยุดแล้ว",
   "Ask a bot for a few things at once and each one shows up here.":
     "ขอให้บอตทำหลายอย่างพร้อมกัน แล้วแต่ละงานจะแสดงที่นี่",
+  "Let Sirathic's reviewers read this answer": "อนุญาตให้ผู้ตรวจสอบของ Sirathic อ่านคำตอบนี้",
+  "Shared reports": "รายงานที่แชร์",
+  "No shared reports yet.": "ยังไม่มีรายงานที่แชร์",
 } satisfies Messages;

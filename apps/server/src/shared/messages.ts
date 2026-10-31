@@ -31,6 +31,7 @@ export const reportReason = z.enum(["quote", "school", "source", "ruling", "othe
 export const report = z.object({
   reason: reportReason,
   details: z.string().trim().max(1000).optional(),
+  shared: z.boolean().default(false),
 });
 
 export type Report = z.infer<typeof report>;

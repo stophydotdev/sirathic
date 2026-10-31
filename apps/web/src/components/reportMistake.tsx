@@ -7,7 +7,7 @@ import type { Report } from "@sirathic/server/messages";
 import { Dialog } from "radix-ui";
 import { type FC, type FormEvent, useState } from "react";
 
-const REASONS = [
+export const REASONS = [
   ["quote", "A verse or hadith is wrong"],
   ["school", "A school's view is wrong"],
   ["source", "A source doesn't say this"],
@@ -22,6 +22,7 @@ export const ReportMistake: FC<{
 }> = ({ open, onOpenChange, onSend }) => {
   const [reason, setReason] = useState<Report["reason"]>();
   const [details, setDetails] = useState("");
+  const [shared, setShared] = useState(false);
   const [sent, setSent] = useState(false);
   const t = useT();
 
@@ -30,13 +31,14 @@ export const ReportMistake: FC<{
     if (next) return;
     setReason(undefined);
     setDetails("");
+    setShared(false);
     setSent(false);
   };
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!reason) return;
-    onSend({ reason, details: details.trim() || undefined });
+    onSend({ reason, details: details.trim() || undefined, shared });
     setSent(true);
   };
 
@@ -85,6 +87,15 @@ export const ReportMistake: FC<{
           rows={3}
           className="border-border placeholder:text-muted-foreground focus:border-foreground/30 resize-none rounded-[12px] border bg-transparent px-3 py-2 text-sm outline-none"
         />
+        <label className="text-muted-foreground flex items-center gap-3 text-sm">
+          <input
+            type="checkbox"
+            checked={shared}
+            onChange={(event) => setShared(event.target.checked)}
+            className="accent-foreground size-4"
+          />
+          {t("Let Sirathic's reviewers read this answer")}
+        </label>
         <div className="flex justify-end gap-2">
           <Dialog.Close type="button" className={modalButton}>
             {t("Cancel")}

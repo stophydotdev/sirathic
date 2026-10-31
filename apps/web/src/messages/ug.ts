@@ -928,4 +928,8 @@ export default {
   Stopped: "توختىتىلدى",
   "Ask a bot for a few things at once and each one shows up here.":
     "بىر بوتتىن بىرنەچچە ئىشنى ئايرىم ئىلتىماس قىلىڭ، ھەر بىرى بۇ يەردە كۆرۈنىدۇ.",
+  "Let Sirathic's reviewers read this answer":
+    "Sirathic كۆزدىن كەچۈرگۈچىلىرىنىڭ بۇ جاۋابنى ئوقۇشىغا يول قويۇش",
+  "Shared reports": "ئورتاقلاشقان دوكلاتلار",
+  "No shared reports yet.": "ھازىرچە ئورتاقلاشقان دوكلات يوق.",
 } satisfies Messages;

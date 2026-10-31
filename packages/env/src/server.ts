@@ -26,6 +26,7 @@ export const env = createEnv({
     STORAGE_ACCESS_KEY_ID: z.string(),
     STORAGE_SECRET_ACCESS_KEY: z.string(),
     SITE_URL: z.url().default("https://sirathic.com"),
+    REVIEWERS: z.string().default(""),
     BETTER_AUTH_SECRET: z.string().min(32),
     PORT: z.coerce.number().default(3000),
     RAILWAY_ENVIRONMENT_NAME: z.string().default("local"),

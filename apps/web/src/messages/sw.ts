@@ -925,4 +925,7 @@ export default {
   Stopped: "Imesimamishwa",
   "Ask a bot for a few things at once and each one shows up here.":
     "Muombe bot mambo kadhaa kwa wakati mmoja na kila moja litaonekana hapa.",
+  "Let Sirathic's reviewers read this answer": "Waruhusu wakaguzi wa Sirathic kusoma jibu hili",
+  "Shared reports": "Ripoti zilizoshirikiwa",
+  "No shared reports yet.": "Bado hakuna ripoti zilizoshirikiwa.",
 } satisfies Messages;

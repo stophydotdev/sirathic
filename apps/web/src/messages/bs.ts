@@ -925,4 +925,8 @@ export default {
   Stopped: "Zaustavljeno",
   "Ask a bot for a few things at once and each one shows up here.":
     "Zatražite od bota nekoliko stvari odjednom i svaka će se pojaviti ovdje.",
+  "Let Sirathic's reviewers read this answer":
+    "Dopusti Sirathicovim recenzentima da pročitaju ovaj odgovor",
+  "Shared reports": "Podijeljene prijave",
+  "No shared reports yet.": "Još nema podijeljenih prijava.",
 } satisfies Messages;
