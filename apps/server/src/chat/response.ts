@@ -24,7 +24,7 @@ import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
 import { type AutomationScope, routineTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
-import { browserTools } from "../bots/browser";
+import { browserTools, NEEDS_SOMEONE_THERE } from "../bots/browser";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
@@ -69,6 +69,7 @@ import { xSearchTools } from "./xSearch";
 import { hasGrok } from "../models/plans";
 import {
   CLARIFYING,
+  botQuestions,
   clarifyingQuestions,
   SEND_FEEDBACK,
   sendFeedback,
@@ -201,7 +202,8 @@ export function chatResponse({
         messages,
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
-      const searchable = inBot && visible.length < messages.length ? inBot : undefined;
+      const searchable =
+        inBot && (unattended || visible.length < messages.length) ? inBot : undefined;
       const disk = inBot && botDisk(inBot.id);
       if (disk && fileOwner !== undefined) await keepAttachments(disk, asked, fileOwner);
       const sandbox = codeSandbox(
@@ -220,7 +222,12 @@ export function chatResponse({
         }),
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
-        ...(inBot && !unattended && browserTools(inBot)),
+        ...(inBot &&
+          Object.fromEntries(
+            Object.entries(browserTools(inBot)).filter(
+              ([name]) => !unattended || !NEEDS_SOMEONE_THERE.includes(name),
+            ),
+          )),
         islamic_dates: islamicDates,
         prayer_times: prayerTimes,
         ...(owner !== undefined && !unattended && settingTools(owner)),
@@ -239,7 +246,10 @@ export function chatResponse({
                 : { kind: "account", owner },
             inBot !== undefined || preferred.saveMemory,
           )),
-        ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
+        ...(!unattended &&
+          (mode === "research" || inBot) && {
+            [CLARIFYING]: inBot ? botQuestions : clarifyingQuestions,
+          }),
         ...(!unattended && answerCards(places)),
         ...(searchable && chatSearchTools(searchable)),
         ...(owner !== undefined &&
@@ -251,7 +261,7 @@ export function chatResponse({
         ...(fileOwner !== undefined &&
           fileTools({
             owner: fileOwner,
-            incognito: owner === undefined,
+            incognito: owner === undefined && !unattended,
             research: mode === "research",
             sandbox: noorModel(modelName) !== undefined ? sandbox : undefined,
             disk,
@@ -307,7 +317,7 @@ export function chatResponse({
         instructions: system,
         mentioned: skillRules(ownSkills, askedText),
         firstStep:
-          opening && !inBot
+          opening && (!inBot || unattended)
             ? opening === "fetch" && noorModel(modelName) && !STOPHY_LINK.test(askedText)
               ? "fetch"
               : "anyTool"

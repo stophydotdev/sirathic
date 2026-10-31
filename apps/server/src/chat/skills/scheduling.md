@@ -9,6 +9,7 @@ Any of these, whatever words the user used:
 - Creating, moving, or cancelling something on their calendar, or finding when they are free.
 - Setting up a meeting with other people, replying on a scheduling thread, or sending someone times.
 - A recurring reminder tied to a time ("every Sunday evening, help me plan the week").
+- An appointment booked on a website first (dentist, salon, class, tickets).
 
 ## The five questions
 
@@ -35,7 +36,7 @@ Ground the request from:
 - The Google Calendar connector: existing events, free and busy times, who is already on an event.
 - The Gmail connector: the thread being scheduled. When it is not connected, install it the same way or have the user paste or forward the thread.
 
-History is a lead, not consent. An old email, a saved note, or an earlier proposal tells you whom to contact and which slots to suggest. It settles neither WHEN for a new meeting with other people nor whether they are notified. Another attendee's time counts as agreed only when it comes from the current request, the live thread you are scheduling in, a calendar result fetched for this task, or a confirmation received during this coordination.
+History is a lead, not consent. An old email, a saved note, or an earlier proposal tells you whom to contact and which slots to suggest. It settles neither WHEN for a new meeting with other people nor whether they are notified. Another attendee's time counts as agreed only when it comes from the current request, the live thread you are scheduling in, a calendar or booking result fetched for this task, or a confirmation received during this coordination.
 
 ## Load-bearing vs defaultable
 
@@ -104,6 +105,17 @@ Changing an event that already has attendees is load-bearing. Fetch it, read who
 - A forwarded thread with no instruction. Propose what you think it means and wait for the answer before writing anything.
 - A routine firing on a schedule, created with update_routine: "every Sunday evening, plan the week". Offer one when the user describes a recurring reminder rather than a one-off event.
 
+## When the booking happens on a website
+
+A dentist, salon, gym class, government office, or ticketed event is reserved on its own site. A calendar hold alone tells the user something is booked when it is not.
+
+- Run search_plugins for the service first and use a plugin when one exists.
+- Otherwise, when you have a browser, do the reservation there with the exact URL, the slot or preference, and what to report back. Confirm with clarifying_questions before it places the reservation.
+- When the site wants a sign-in, a one-time code, or a verify-you-are-human check, follow the browser skill's Sign-ins and private details steps in their order, which end with the Secure Form (request_user_form) and then handing over your browser with request_browser_help and one instruction ("Sign in to your `<service>` account"). Never send clarifying_questions before these; the tool is the ask. After a receipt or a hand-back, take a fresh snapshot; the session persists across turns.
+- For the other typed fields (name, phone, a booking note), call vault_fill_contact first, then request_user_form for what isn't saved.
+- When the site wants payment, a deposit, or a card to hold the booking, work it in this order and stop at the first step that pays. First, a payment method already saved on the account: select it, and when several are saved, ask which one in the confirmation question. Next, send the Secure Form (request_user_form, reason "checkout", the site's domain) for the card inputs the live checkout shows, such as card number, expiry, CVC, name, and billing ZIP; never tell them you can't take their card, and never predict that the form can't reach card inputs embedded from a payment provider. Last, when the form fails or its receipt says a card field failed, or the user would rather type on the page, hand your browser to the user with request_browser_help and one instruction ("Add your card and confirm the payment on `<service>`"); the same handoff covers a CVC re-entry and any 2FA, 3DS, or bank prompt. The user finishes the payment inside that handoff, so when the browser comes back, skip any later confirm or place-order click and read the confirmation page. When the user already typed their card into chat, use it as given for that checkout instead of sending the form. Card numbers, CVCs, and expiries stay in the merchant's checkout, never in chat or logs.
+- Once the site confirms, put the appointment on the calendar through the plugin, confirmation number included, and share the event link.
+
 ## Constraints
 
 - Write a concrete event only after the load-bearing details are grounded, defaulted as safe preferences, or explicitly wanted as placeholders. When the owning calendar is ambiguous, ask instead of using the default calendar.
@@ -111,5 +123,5 @@ Changing an event that already has attendees is load-bearing. Fetch it, read who
 - A message to another person, whether an availability proposal or a confirmation, goes out on the user's behalf. Write it in the user's voice and send it with gmail_send_email; its card is the user's confirmation.
 - The event link is the proof. Put the link the connector returns in your report.
 - Do not read the event title back. Confirm the time, the people, and that it is done.
-- Never invent availability or a confirmation. When a source is missing, say so and offer the real path.
+- Never invent availability or a confirmation number. When a source is missing, say so and offer the real path.
 - An explicit instruction beats any default here.

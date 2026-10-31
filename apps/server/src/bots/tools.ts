@@ -2,6 +2,7 @@ import { tool } from "ai";
 import { z } from "zod";
 import { botTitle, projectInstructions, projectName, updateProject } from "../projects/projects";
 import { oneEmoji } from "../shared/messages";
+import { BOT_BODIES, BOT_COLORS } from "../shared/projects";
 
 export type BotScope = { id: string; owner: string };
 
@@ -43,21 +44,31 @@ export function botTools({ id, owner }: BotScope) {
     }),
     update_profile: tool({
       description:
-        "Changes this bot's name, title or description. Only the fields you pass change. The title is a short role label beside the name. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Use it when the user asks to rename the bot or to change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
+        "Changes this bot's name, title, description, avatar color or avatar body. Only the fields you pass change. The title is a short role label beside the name. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Change the avatar color or body only when the user asks. Use it when the user asks to rename the bot, change how it looks or change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
       inputSchema: z.object({
         name: projectName.optional(),
         title: botTitle.optional(),
         description: projectInstructions.min(1).optional(),
+        color: z.enum(BOT_COLORS).optional(),
+        body: z.enum(BOT_BODIES).optional(),
       }),
-      execute: async ({ name, title, description }) => {
-        if (name === undefined && title === undefined && description === undefined) {
+      execute: async ({ name, title, description, color, body }) => {
+        if ([name, title, description, color, body].every((field) => field === undefined)) {
           return "Nothing to change.";
         }
-        const bot = await updateProject(id, owner, { name, title, instructions: description });
+        const bot = await updateProject(id, owner, {
+          name,
+          title,
+          instructions: description,
+          color,
+          symbol: body,
+        });
         return {
           ...(name !== undefined && { name: bot.name }),
           ...(title !== undefined && { title: bot.title }),
           ...(description !== undefined && { description: bot.instructions }),
+          ...(color !== undefined && { color: bot.color }),
+          ...(body !== undefined && { body: bot.symbol }),
         };
       },
     }),

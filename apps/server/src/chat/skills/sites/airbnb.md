@@ -6,7 +6,7 @@ Read this before you open this site in your browser. Follow the Fastest path, fi
 
 ### When to use
 
-The user wants short term rentals in a place for a date window, filtered by guests, price, place type, bedrooms, amenities, or booking options, or everything inside a map bounding box. You need location, checkin and checkout, and guest counts. The user gets per listing id, title, name, bedrooms, beds, baths, price lines, rating, review count, badges, and the `/rooms/{id}` URL.
+The user wants short term rentals in a place for a date window, filtered by guests, price, place type, bedrooms, amenities, or booking options, or everything inside a map bounding box. You need location, checkin and checkout, and guest counts. The user gets per listing id, title, name, bedrooms, beds, baths, price lines, rating, review count, badges, photos, coordinates, and the `/rooms/{id}` URL.
 
 ### Fastest path
 
@@ -21,7 +21,7 @@ browser_navigate a `/s/{slug}/homes` URL with filters as query params, then read
 
 Always end the slug with `/homes`. Plain `/s/{slug}` sometimes 301s to `/{city}/stays`, which can return a "Stay tuned · Error 503" maintenance page.
 
-Filter params (snake_case in the URL, camelCase in the cache key echo). `checkin`, `checkout` (required for accurate pricing), `flexible_trip_lengths[]=weekend|week|month`, `flexible_date_search_filter_type=0|1|2|3` (exact, ±1, ±3, ±7 days), `adults`, `children` (age 2 to 12), `infants` (under 2), `pets`, `min_bedrooms`, `min_beds`, `min_bathrooms`, `price_min`, `price_max` (storefront currency, total per night including fees by default), `display_currency=USD|EUR|GBP|…`, `room_types[]=Entire%20home%2Fapt|Private%20room|Shared%20room|Hotel%20room`, `property_type_id[]=N`, `amenities[]=N` (undocumented, `4` Wi-Fi, `8` Kitchen), `ib=true` Instant Book, `fc=true` free cancellation, `self_check_in=true`, `allows_pets=true`, `superhost=true`, `accessibility_features[]=N`, `host_languages[]={iso-2}`, `category_tag=Tag:NNNN` (`Tag:8536` is Amazing views), `ne_lat`, `ne_lng`, `sw_lat`, `sw_lng`, `search_by_map=true`, `items_offset=N` (0, 18, 36, ...), `section_offset=0`, `pagination_search=true`, `query=`, `refinement_paths[]=%2Fhomes`. Unknown params are dropped silently. Discover enum values by clicking the control in the Filters modal once and reading the param it appends to the URL.
+Filter params (snake_case in the URL, camelCase in the cache key echo). `checkin`, `checkout` (required for accurate pricing), `flexible_trip_lengths[]=weekend|week|month`, `flexible_date_search_filter_type=0|1|2|3` (exact, ±1, ±3, ±7 days), `adults`, `children` (age 2 to 12), `infants` (under 2), `pets`, `min_bedrooms`, `min_beds`, `min_bathrooms`, `price_min`, `price_max` (storefront currency, total per night including fees by default), `display_currency=USD|EUR|GBP|…`, `room_types[]=Entire%20home%2Fapt|Private%20room|Shared%20room|Hotel%20room`, `property_type_id[]=N`, `amenities[]=N` (undocumented, `4` Wi-Fi, `8` Kitchen), `ib=true` Instant Book, `fc=true` free cancellation, `self_check_in=true`, `allows_pets=true`, `superhost=true`, `l_disaster_ready=true` (Luxe), `accessibility_features[]=N`, `host_languages[]={iso-2}`, `category_tag=Tag:NNNN` (`Tag:8536` is Amazing views), `ne_lat`, `ne_lng`, `sw_lat`, `sw_lng`, `search_by_map=true`, `items_offset=N` (0, 18, 36, ...), `section_offset=0`, `pagination_search=true`, `query=`, `refinement_paths[]=%2Fhomes`. Unknown params are dropped silently. Discover enum values by clicking the control in the Filters modal once and reading the param it appends to the URL.
 
 Worked example.
 
@@ -41,6 +41,7 @@ Open `https://www.airbnb.com/s/<City>--<Country>/homes?checkin=<YYYY-MM-DD>&chec
   const r = d[1].data.presentation.staysSearch.results;
   return {
     cacheKey: d[0],
+    paginationCursors: r.paginationInfo.pageCursors,
     pageTitle:
       r.sectionConfiguration?.pageTitleSections?.sections?.[0]?.sectionData?.structuredTitle,
     results: r.searchResults.map((x) => ({
@@ -53,12 +54,15 @@ Open `https://www.airbnb.com/s/<City>--<Country>/homes?checkin=<YYYY-MM-DD>&chec
       rating: x.avgRatingLocalized,
       badges: x.badges?.map((b) => b.loggingContext?.badgeType),
       payment: x.paymentMessages,
+      lat: x.demandStayListing?.location?.coordinate?.latitude,
+      lng: x.demandStayListing?.location?.coordinate?.longitude,
+      photo: x.contextualPictures?.[0]?.picture,
     })),
   };
 })()
 ```
 
-Sort by price, with URLs as `https://www.airbnb.com/rooms/<id>`. Read only. Never click Reserve, Save, or Sign In. If the script returns NO_SSR, or a 429, a 503 Stay tuned page, captcha, sign-in or password, 2FA, or payment wall appears, stop and do not reload.
+Report the page title count and the cacheKey, then a table sorted by price, with URLs as `https://www.airbnb.com/rooms/<id>`. Show one screenshot of the results with browser_screenshot, show set. Read only. Never click Reserve, Save, or Sign In. If the script returns NO_SSR, or a 429, a 503 Stay tuned page, captcha, sign-in or password, 2FA, or payment wall appears, stop and do not reload.
 
 ### Read the result
 
@@ -77,10 +81,12 @@ The script's `cacheKey` is `"StaysSearch:" + JSON.stringify({...})` and echoes e
 | total before taxes        | `details[].items[]`, the `HighlightExplanationLineItem` with description "Price after discount" or "Total before taxes"   | Breakdown also holds cleaning fee, service fee, long stay discount |
 | rating, review count      | parse `rating` ("4.85 (132)")                                                                                             | null for new listings                                              |
 | badges                    | `badges`                                                                                                                  | `GUEST_FAVORITE`, `TOP_TIER_FAVORITE`, `SUPERHOST`, `NEW_LISTING`  |
+| coordinates               | `lat`, `lng`                                                                                                              | Fuzzed by about 150 m                                              |
+| photo                     | `photo`                                                                                                                   | The listing's first picture                                        |
 | payment messages          | `payment`                                                                                                                 | Strings like "Free cancellation"                                   |
 | max guests, host name     | Not in the search payload                                                                                                 | Listing page only                                                  |
 
-Totals. `pageTitle` reads "60 homes in Lisbon" and is fuzzed past about 270 to "Over 1,000 homes in Paris".
+Totals. `pageTitle` reads "60 homes in Lisbon" and is fuzzed past about 270 to "Over 1,000 homes in Paris". A map bound search returns a precise "167 homes within map area" and `mapResults.staysInViewport[]`; for sweeps over 270, subdivide the box into quadrants.
 
 ### When blocked
 
@@ -122,15 +128,15 @@ Open `https://www.airbnb.com/rooms/<id>?check_in=<YYYY-MM-DD>&check_out=<YYYY-MM
 })()
 ```
 
-From share take title, propertyType, personCapacity, starRating, reviewCount. From log take listingId, roomType, isSuperhost, guestSatisfactionOverall and the six sub ratings.
+From share take title, propertyType, personCapacity, starRating, reviewCount. From log take listingId, listingLat, listingLng, roomType, isSuperhost, guestSatisfactionOverall and the six sub ratings.
 
 Then read the rendered page once: the booking sidebar's nightly price, nights, cleaning fee, service fee and total before taxes for the dates in the URL, and the sleeping arrangement, amenities, house rules and cancellation policy as page text. A field the page does not show is unreadable, never a guess.
 
-Read only. Never click Reserve, Save, or Sign In, and do not change the dates. If the script returns NO_SSR, or a 429, a 503 Stay tuned page, captcha, sign-in or password, 2FA, or payment wall appears, stop and do not reload.
+Show one screenshot of the listing with browser_screenshot, show set. Read only. Never click Reserve, Save, or Sign In, and do not change the dates. If the script returns NO_SSR, or a 429, a 503 Stay tuned page, captcha, sign-in or password, 2FA, or payment wall appears, stop and do not reload.
 
 ### Read the result
 
-- `sharingConfig.title` is one string with property type, rating, bedrooms, beds, and baths. `eventDataLogging` carries `listingId`, `roomType`, `isSuperhost`, and the six sub ratings.
+- `sharingConfig.title` is one string with property type, rating, bedrooms, beds, and baths. `eventDataLogging` carries `listingId`, `listingLat`, `listingLng`, `roomType`, `isSuperhost`, and the six sub ratings.
 - The cache key's `dateRange` confirms the dates in the URL were honored. A price you can't read means the sidebar had not rendered one; do not fill it from the search card.
 
 ### When blocked

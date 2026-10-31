@@ -8,11 +8,13 @@ import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
 import { STOPHY_LINK, STOPHY_TOOLS } from "../stophyTools";
 import { bookingSkills } from "./booking";
+import { errandSkills } from "./errands";
 import billsAndReceipts from "./billsAndReceipts.md" with { type: "text" };
 import browser from "./browser.md" with { type: "text" };
 import chart from "./chart.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
 import inboxCleanup from "./inboxCleanup.md" with { type: "text" };
+import jobApplication from "./jobApplication.md" with { type: "text" };
 import jobSearch from "./jobSearch.md" with { type: "text" };
 import { muslimSkills } from "./muslim";
 import noConnector from "./noConnector.md" with { type: "text" };
@@ -114,7 +116,12 @@ export const skillsFor = ({
             name: "job_search",
             when: "Load when the user wants job openings, what a company is hiring for, or new postings for a role, before searching any job site",
             text: jobSearch,
-            tools: ["stophy_search_endpoints", "stophy_call"],
+            tools: [
+              ...STOPHY_TOOLS,
+              "search_plugins",
+              "install_plugin",
+              ...("browser_navigate" in offered ? BROWSER_TOOLS : []),
+            ],
           },
           {
             name: "people_search",
@@ -186,7 +193,14 @@ export const skillsFor = ({
             text: browser,
             tools: BROWSER_TOOLS,
           },
+          {
+            name: "job_application",
+            when: "Load when the user asks you to apply to a job posting, or to find jobs and apply, before you open an application form or email an employer",
+            text: jobApplication,
+            tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
+          },
           ...bookingSkills,
+          ...errandSkills,
         ]
       : []),
     ...("code_execution" in offered
@@ -260,6 +274,7 @@ export const skillsFor = ({
             tools: [
               "search_plugins",
               "install_plugin",
+              ...("browser_navigate" in offered ? BROWSER_TOOLS : []),
               ...appTools(plugins, ["googlecalendar", "gmail"]),
             ],
           },
@@ -267,7 +282,11 @@ export const skillsFor = ({
             name: "no_plugin_fallback",
             when: "Load when an app or service the user wants has no plugin, a plugin needs sign-in, or you are about to say you cannot reach something",
             text: noConnector,
-            tools: ["search_plugins", "install_plugin"],
+            tools: [
+              "search_plugins",
+              "install_plugin",
+              ...("browser_navigate" in offered ? BROWSER_TOOLS : []),
+            ],
           },
         ]
       : []),

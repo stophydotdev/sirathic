@@ -22,7 +22,7 @@ const PAGE_TEXT_CHARS = 1_500;
 const MAX_OPTIONS = 255;
 const END_PAGE_CHARS = 15_000;
 const NEEDS_THE_USER =
-  /\b(?:pay(?:ment)?|give|buy|purchase|place order|order now|book|reserve|submit|send|confirm|check ?out|subscribe|sign up|register|delete|cancel|post|publish|donate|apply|sign in|log ?in)\b/iu;
+  /\b(?:pay(?:ment)?|give|buy|purchase|place order|order now|book|reserve|submit|send|confirm|check ?out|subscribe|sign up|register|delete|cancel|post|publish|donate|apply)\b/iu;
 const SECRET_FIELD =
   /pass(?:word|code)|card number|cvv|cvc|security code|verification code|one-time|otp|\bpin\b/iu;
 
@@ -281,7 +281,7 @@ type Progress<Shown extends Result> = {
 const holdBack = (decision: Decision) => {
   if (decision.kind === "click" && NEEDS_THE_USER.test(decision.element.label)) {
     return {
-      why: "The next step is a control that pays, books, sends, submits, signs in or deletes. Tell the user what it does and ask first.",
+      why: "The next step is a control that pays, books, sends, submits or deletes. Take it yourself if the user already asked for exactly this; otherwise tell them what it does and ask first.",
       seen: `The control: ${describe(decision.element)}`,
     };
   }

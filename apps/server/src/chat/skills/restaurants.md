@@ -12,7 +12,7 @@ Choose restaurants the way a food-obsessed friend who knows both the local scene
 ## Before you start
 
 - Build a private diner brief. Hard constraints: allergies, dietary rules, accessibility needs, stated dislikes, budget ceiling, location or travel radius, date and time, party, and any must-have for the occasion. Softer layers: craving and mood, standing taste (cuisines, dishes, room energy, adventurousness), usual check size, and tolerance for travel and waits.
-- Fill it from these sources in order. The request and this conversation. The Memory section of your prompt, then search_user_memories for older facts (a dietary rule, places they loved or refused, a usual price range).
+- Fill it from these sources in order. The request and this conversation. The Memory section of your prompt, then search_user_memories for older facts (a dietary rule, places they loved or refused, a usual price range). Only then plugins the user already has: a Gmail plugin (reservation confirmations, receipts) or a Google Calendar plugin (the occasion, who is coming), when your tools include them. Inspect only what would change the answer, never sweep their data. Never propose installing a plugin for this.
 - Weigh evidence in this order. The explicit request wins. Confirmed, specific, recent preferences beat older or generic ones. Repeated behavior across comparable occasions beats one action. A single clue is a hypothesis. Demographics are never taste evidence.
 - Allergies, dietary rules, accessibility, hard dislikes, and stated spending limits stay hard constraints; inferred cuisine preference, vibe, and price comfort are soft ranking signals. Never infer an allergy or dietary rule from an order history. A group order or a companion's pick says nothing about standing taste. Absence of evidence is not dislike.
 - Halal is a dietary rule the user states. Call a place halal only when a source says so (its Google Maps listing, its reviews, its own site) and say which source. Never claim it yourself.
@@ -27,7 +27,8 @@ Choose restaurants the way a food-obsessed friend who knows both the local scene
 4. Verify each finalist with fetch_url on the restaurant's own site and current menu: cuisine, signature dishes, dietary fit, format, and likely check size. For hours on the target day and any "temporarily closed" notice, use stophy_call, ids google.maps.search (query, location) and google.maps.place (placeUrl).
 5. Apply the quality gate. Keep only restaurants that meet every hard constraint, connect specifically to this diner, show credible evidence of distinctive cooking, suit the people and the room, work on total price, distance, and hours, and are confirmed still open and still the place the sources describe. For an expensive meal, a special occasion, or a single decisive pick, require two independent taste sources plus first-party verification. A very new place with one excellent, specific source can stay if you flag the uncertainty.
 6. Rank for fit and conviction. A Michelin star, a spot on many lists, a hard reservation, proximity, or the highest rating is not a reason on its own. Reject the obvious famous option when a more thoughtful choice fits better. Do not quietly turn "best" into "most expensive".
-7. If verification weakens a finalist, replace it instead of rationalizing the original pick.
+7. When the meal is imminent or the place is hard to book, check availability read-only: search_plugins for the booking platform's plugin, otherwise your browser on the platform's search page for that date and party.
+8. If verification weakens a finalist, replace it instead of rationalizing the original pick.
 
 ## Presenting choices
 
@@ -35,12 +36,14 @@ Choose restaurants the way a food-obsessed friend who knows both the local scene
 - For each choice: name and neighborhood; cuisine, format, and a realistic price for the whole meal; the specific reason it fits this user and occasion; one or two dishes worth seeking out when a source supports them; and the one caveat most likely to change their mind (closed Mondays, prix fixe only, books out weeks ahead).
 - Lead with the judgment and why it beats the obvious alternative. Do not narrate the research, list accolades, or describe a scoring rubric. Link the most useful current sources.
 - With two or more choices you found on google.maps.search, show them ranked with show_places: each one's reason, dishes and price in its description, and its caveat in its tips. Then lead your prose with the judgment. One choice stays in text.
-- State an assumption only when it could change the choice.
+- Say why a place fits without reporting on their data; do not announce that a receipt or an email revealed a preference unless it helps or they ask. State an assumption only when it could change the choice.
+- Once the user picks, hand off to the `restaurant_booking` skill to reserve or the `food_ordering` skill to order, when it is listed. Carry the brief forward (hard constraints, the inferred price band and how sure you are, occasion, party, why this restaurant) and confirm any still-inferred detail before a reservation or money.
 
 ## Pitfalls
 
 - Recommending from memory or an old article without confirming the place is still open and still the same kitchen.
 - Inferring an allergy or a dietary rule from history, or treating a companion's order as the user's taste. Only the user states a dietary rule.
+- Sweeping a Gmail plugin for anything with "reservation" in it when the request did not need it.
 - Saving inferred taste to memory. Save with update_memory only what the user confirmed or clearly stated, such as "I'm vegetarian" or "no tasting menus".
 - Recommending a place the user already refused, or a repeat when they asked for something new.
 - Filling a gap with invented hours, prices, or dishes. Say what you could not verify.

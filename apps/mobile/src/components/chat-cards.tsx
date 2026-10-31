@@ -27,6 +27,8 @@ const changed = row.partial().extend({
 
 const renamed = z.object({ name: z.string() });
 
+const restyled = z.union([z.object({ color: z.string() }), z.object({ body: z.string() })]);
+
 const skillSaved = z.object({ action: z.enum(["write", "delete"]), name: z.string() });
 
 const memorySaved = z.string().regex(/^(Saved|Forgot)/u);
@@ -84,10 +86,11 @@ const EventLine: FC<{
   );
 };
 
-const BotRenamed: FC<{ name: string }> = ({ name }) => {
+const BotRenamed: FC<{ name?: string }> = ({ name }) => {
   useEffect(() => {
     void useBots.getState().refresh();
   }, [name]);
+  if (name === undefined) return null;
   return <EventLine Icon={UserEdit} label={`Renamed to ${name}`} />;
 };
 
@@ -99,6 +102,7 @@ export const AutomationCard: FC<{ tool: string; output: unknown }> = ({ tool, ou
   if ((name === "set_bot_job" || name === "update_profile") && bot) {
     return <BotRenamed name={bot.name} />;
   }
+  if (name === "update_profile" && restyled.safeParse(output).success) return <BotRenamed />;
   if (name === "update_routine" && change && (made?.projectId || change.action !== "create")) {
     return (
       <EventLine

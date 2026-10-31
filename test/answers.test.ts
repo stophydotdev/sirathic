@@ -1,4 +1,4 @@
-import { expect, mock, test } from "bun:test";
+import { expect, mock, spyOn, test } from "bun:test";
 import { SpanStatusCode } from "@opentelemetry/api";
 import {
   InMemorySpanExporter,
@@ -15,6 +15,7 @@ import {
 } from "../apps/server/src/chat/answers";
 import { afterAnswer } from "../apps/server/src/chat/afterAnswer";
 import { chatResponse } from "../apps/server/src/chat/response";
+import { keepFitting } from "../apps/server/src/chat/stophyTools";
 import server from "../apps/server/src/index";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { withoutErrorText } from "../apps/server/src/tracing";
@@ -292,4 +293,28 @@ test("after an answer, Research is offered only in chats and memory use is marke
     memory,
   ]);
   expect(await written(false)).toEqual([memory]);
+});
+
+test("a job search drops only postings Clef calls clear misfits, and keeps them all when Clef fails", async () => {
+  const found = {
+    results: [{ title: "Backend engineer" }, { title: "Night nurse" }, { title: "AI engineer" }],
+    page: 1,
+  };
+  const clef = spyOn(globalThis, "fetch")
+    .mockResolvedValueOnce(
+      Response.json({
+        result: { answers: { p0: { noul: 0.9 }, p1: { noul: 0.05 }, p2: { noul: 0.4 } } },
+      }),
+    )
+    .mockRejectedValueOnce(new Error("Clef is down"));
+  try {
+    expect(await keepFitting(found, "backend or AI engineer, remote")).toEqual({
+      results: [{ title: "Backend engineer" }, { title: "AI engineer" }],
+      page: 1,
+      dropped: 'Left out 1 of 3 postings that clearly don\'t fit "backend or AI engineer, remote".',
+    });
+    expect(await keepFitting(found, "backend or AI engineer, remote")).toEqual(found);
+  } finally {
+    clef.mockRestore();
+  }
 });

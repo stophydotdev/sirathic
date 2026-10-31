@@ -165,6 +165,7 @@ async function answerPrompt(
     }),
     connected: connectedTools(by, project?.kind === "bot" ? project.plugins : undefined),
     project: Promise.resolve(project),
+    bot: Promise.resolve(inProject === null ? undefined : { id: inProject, owner: by }),
     userSkills: Promise.resolve([]),
     turn: {
       effort: project?.kind === "bot" ? "high" : DEFAULT_EFFORT[runMode],
@@ -176,6 +177,7 @@ async function answerPrompt(
       answered = messages;
     },
     record: (event) => track(event, by),
+    fileOwner: inProject === null ? undefined : by,
     owner: undefined,
     automate: undefined,
     historyLimit: inProject ? BOT_HISTORY : undefined,
