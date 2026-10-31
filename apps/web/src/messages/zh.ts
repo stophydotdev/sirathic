@@ -907,4 +907,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "允许 Sirathic 的审核员阅读此回答",
   "Shared reports": "已分享的报告",
   "No shared reports yet.": "还没有分享的报告。",
+  Messaged: "已发送消息",
+  "Created bot": "已创建机器人",
+  Groups: "群组",
+  "New group": "新建群组",
+  "Group name": "群组名称",
+  "Create group": "创建群组",
+  "Delete group": "删除群组",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    "删除群组“{name}”？其对话也会被删除。",
+  "Pick at least two bots": "至少选择两个机器人",
 } satisfies Messages;

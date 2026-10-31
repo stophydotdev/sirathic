@@ -8,6 +8,7 @@ import { Menu } from "@/components/icons";
 import { SignInSheet } from "@/components/sign-in";
 import { authClient } from "@/lib/auth";
 import { useBots } from "@/lib/bots";
+import { useGroups } from "@/lib/groups";
 import { useChatState } from "@/lib/chat-state";
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
     void loadAccount();
     void loadSessions();
     void useBots.getState().refresh();
+    void useGroups.getState().refresh();
   }, [userId]);
 
   useEffect(() => {

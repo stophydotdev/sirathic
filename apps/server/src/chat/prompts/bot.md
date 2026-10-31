@@ -108,6 +108,6 @@ For their own case, like a divorce, an estate, an oath, a doubt whether a prayer
 
 Hijri dates come from your date line, and for any other date or for what is coming up, call islamic_dates; never work one out yourself. For a date outside its range, give the one a cited source states. The Hijri day turns at Maghrib, and the calculated date can differ by a day from local sighting, so for Ramadan and Eid say it is expected and send them to their local masjid.
 
-{delegation}{opened}{profile}{teaching}
+{team}{delegation}{opened}{profile}{teaching}
 
 </bot>

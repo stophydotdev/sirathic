@@ -6,6 +6,7 @@ import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
 import { nextFollowUp } from "@/components/followUps";
 import { usePreferences } from "@/components/preferences";
+import { useGroups, useGroupTyping } from "@/components/groups";
 import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { Thread } from "@/components/thread";
@@ -223,6 +224,22 @@ const syncBackground = async (chat: LiveChat<ChatMessage>) => {
   }
 };
 
+const TEAMMATE_POLL_MS = 3000;
+
+const adoptTeammateMessages = (chat: LiveChat<ChatMessage>) => {
+  if (answering(chat) || (useProjects.getState().bots?.length ?? 0) < 2) return;
+  void savedChat(chat.id, true).then(
+    (saved) => {
+      useGroupTyping.setState({ [chat.id]: saved.unfinished });
+      if (!answering(chat) && saved.messages.length > chat.messages.length) {
+        chat.messages = saved.messages;
+        if (seen(chat.id)) markAnswered(chat.id);
+      }
+    },
+    () => undefined,
+  );
+};
+
 const RESUME_GRACE_MS = 5000;
 
 const useLimitResume = create<Record<string, number>>(() => ({}));
@@ -279,6 +296,10 @@ const liveChat = (
     onFinish: ({ message, isAbort, isError }) => {
       markAnswered(id);
       if (isAbort || isError) return;
+      if (useGroups.getState().groups?.some((group) => group.id === id)) {
+        adoptTeammateMessages(created);
+        return;
+      }
       announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
       const waiting = message.parts.some(
         (part) => isToolUIPart(part) && part.state === "approval-requested",
@@ -357,9 +378,10 @@ export const Chat: FC<{
   );
   const [session] = useState(() => liveChat(chatId, initialMessages, projectId, unfinished));
   const chat = useChat<ChatMessage>({ chat: session, resume: session.messages.length > 0 });
+  const inGroup = useGroups((s) => s.groups?.some((group) => group.id === chatId) === true);
   const runtime = useAISDKRuntime(
     projectId === chatId ? { ...chat, sendMessage: botSendMessage(chat.sendMessage) } : chat,
-    { adapters: { attachments } },
+    { adapters: { attachments }, joinStrategy: inGroup ? "none" : "concat-content" },
   );
   const started = chat.messages.length > 0;
   const streaming = chat.status === "streaming";
@@ -388,6 +410,14 @@ export const Chat: FC<{
       setTimeout(() => void syncBackground(session), BACKGROUND_POLL_MS / 2);
     };
   }, [busyInBackground, projectId, chatId, session]);
+
+  useEffect(() => {
+    if (projectId !== chatId || incognito) return;
+    const timer = setInterval(() => {
+      if (document.visibilityState === "visible") adoptTeammateMessages(session);
+    }, TEAMMATE_POLL_MS);
+    return () => clearInterval(timer);
+  }, [projectId, chatId, incognito, session]);
 
   useEffect(() => {
     const { sessions, change } = useSessions.getState();

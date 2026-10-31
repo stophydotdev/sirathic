@@ -924,4 +924,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "اجازه بده بازبین‌های Sirathic این پاسخ را بخوانند",
   "Shared reports": "گزارش‌های به‌اشتراک‌گذاشته‌شده",
   "No shared reports yet.": "هنوز گزارشی به اشتراک گذاشته نشده است.",
+  Messaged: "پیام فرستاده شد",
+  "Created bot": "بات ساخته شد",
+  Groups: "گروه‌ها",
+  "New group": "گروه تازه",
+  "Group name": "نام گروه",
+  "Create group": "ساخت گروه",
+  "Delete group": "حذف گروه",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    "گروه «{name}» حذف شود؟ گفتگوی آن هم حذف می‌شود.",
+  "Pick at least two bots": "دست‌کم دو بات انتخاب کنید",
 } satisfies Messages;

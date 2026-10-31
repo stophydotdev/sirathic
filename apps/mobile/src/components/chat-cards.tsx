@@ -6,7 +6,7 @@ import { Pressable, Text, View } from "react-native";
 import { z } from "zod";
 import { describeSchedule } from "@/lib/automations";
 import { useBots } from "@/lib/bots";
-import { ArrowUpRight, Brain, CalendarTime, Sparkles, UserEdit } from "./icons";
+import { ArrowUpRight, Brain, CalendarTime, Send, Sparkles, UserEdit, UserPlus } from "./icons";
 import { ProjectIcon } from "./project-icon";
 
 const ACTIONS = ["create", "edit", "pause", "resume", "delete"] as const;
@@ -29,6 +29,10 @@ const renamed = z.object({ name: z.string() });
 
 const restyled = z.union([z.object({ color: z.string() }), z.object({ body: z.string() })]);
 
+const botRef = renamed.extend({ id: z.string() });
+
+const sentTo = z.object({ sentTo: z.string(), id: z.string() });
+
 const skillSaved = z.object({ action: z.enum(["write", "delete"]), name: z.string() });
 
 const memorySaved = z.string().regex(/^(Saved|Forgot)/u);
@@ -41,7 +45,15 @@ const DONE = {
   delete: "Deleted routine",
 } satisfies Record<(typeof ACTIONS)[number], string>;
 
-const CARD_TOOLS = new Set(["update_routine", "list_routines", "set_bot_job", "update_profile"]);
+const CARD_TOOLS = new Set([
+  "update_routine",
+  "list_routines",
+  "set_bot_job",
+  "update_profile",
+  "create_bot",
+  "update_bot",
+  "message_bot",
+]);
 
 const EVENT_TOOLS = new Set(["update_memory", "update_skill"]);
 
@@ -94,15 +106,28 @@ const BotRenamed: FC<{ name?: string }> = ({ name }) => {
   return <EventLine Icon={UserEdit} label={`Renamed to ${name}`} />;
 };
 
+const BotCreated: FC<{ id: string; name: string }> = ({ id, name }) => {
+  useEffect(() => {
+    void useBots.getState().refresh();
+  }, [id]);
+  return <EventLine Icon={UserPlus} label="Created bot" name={name} href={`/bot/${id}`} />;
+};
+
 export const AutomationCard: FC<{ tool: string; output: unknown }> = ({ tool, output }) => {
   const name = currentToolName(tool);
   const made = row.safeParse(output).data;
   const change = changed.safeParse(output).data;
   const bot = renamed.safeParse(output).data;
-  if ((name === "set_bot_job" || name === "update_profile") && bot) {
+  if ((name === "set_bot_job" || name === "update_profile" || name === "update_bot") && bot) {
     return <BotRenamed name={bot.name} />;
   }
   if (name === "update_profile" && restyled.safeParse(output).success) return <BotRenamed />;
+  const created = botRef.safeParse(output).data;
+  if (name === "create_bot" && created) return <BotCreated id={created.id} name={created.name} />;
+  const sent = sentTo.safeParse(output).data;
+  if (name === "message_bot" && sent) {
+    return <EventLine Icon={Send} label="Messaged" name={sent.sentTo} href={`/bot/${sent.id}`} />;
+  }
   if (name === "update_routine" && change && (made?.projectId || change.action !== "create")) {
     return (
       <EventLine

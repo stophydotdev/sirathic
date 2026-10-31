@@ -34,6 +34,7 @@ import study from "./study.md" with { type: "text" };
 import writing from "./writing.md" with { type: "text" };
 
 export const LOAD_SKILL = "load_skill";
+export const RESEARCH_OPENS = ["research", "calculate", "files"];
 
 export type Skill = {
   name: string;

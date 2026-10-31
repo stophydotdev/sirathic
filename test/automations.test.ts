@@ -71,7 +71,7 @@ const fakeDb = drizzle(
       return { rows: [["user-a", "a@example.com", null, null, null]] };
     }
     if (sql.startsWith("select count(*)")) return { rows: [[0]] };
-    if (sql.startsWith('select "id" from "projects"')) return { rows: [[botId]] };
+    if (sql.startsWith('select "id", "name" from "projects"')) return { rows: [[botId, "Bot"]] };
     if (sql.startsWith('select "messages"')) return { rows: [[storedBotChat, false, botId]] };
     if (sql.startsWith('select "project_id" from "chat_sessions"')) return { rows: [] };
     if (sql.includes('from "bot_items"') || sql.includes('from "projects"')) return { rows: [] };

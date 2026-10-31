@@ -916,4 +916,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Sirathic සමාලෝචකයන්ට මෙම පිළිතුර කියවීමට ඉඩ දෙන්න",
   "Shared reports": "බෙදාගත් වාර්තා",
   "No shared reports yet.": "තවම බෙදාගත් වාර්තා නැත.",
+  Messaged: "පණිවිඩය යැව්වා",
+  "Created bot": "බොට් සෑදුවා",
+  Groups: "කණ්ඩායම්",
+  "New group": "නව කණ්ඩායම",
+  "Group name": "කණ්ඩායමේ නම",
+  "Create group": "කණ්ඩායම සාදන්න",
+  "Delete group": "කණ්ඩායම මකන්න",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" කණ්ඩායම මකන්නද? එහි සංවාදයද මැකේ.',
+  "Pick at least two bots": "අවම වශයෙන් බොට් දෙදෙනෙක් තෝරන්න",
 } satisfies Messages;

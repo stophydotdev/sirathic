@@ -1,16 +1,16 @@
 import { db } from "@sirathic/db";
-import { automations, chatSessions, projects, users } from "@sirathic/db/schema";
-import { parseJsonEventStream, uiMessageChunkSchema } from "ai";
+import { automations, chatSessions, users } from "@sirathic/db/schema";
 import { and, asc, eq, lte, min, sql } from "drizzle-orm";
 import { toUser } from "../account/auth";
 import { pickModels } from "../models/pick";
 import { checkNoorUsage } from "../models/usage";
 import { BOT_HISTORY } from "../bots/tools";
 import { holdShutdown } from "../chat/answers";
+import { streamFailure } from "../chat/drain";
 import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
-import { projectOfChat } from "../projects/projects";
+import { botOf, projectOfChat } from "../projects/projects";
 import { reasonOf, StatusError } from "../http";
 import { openSession } from "../chat/sessions";
 import { getSettings } from "../account/settings";
@@ -132,14 +132,6 @@ const routineBrief = ({
   return parts.flatMap((part) => (part ? [part] : [])).join("\n\n");
 };
 
-async function botOf(projectId: string, owner: string) {
-  const [bot] = await db
-    .select({ id: projects.id })
-    .from(projects)
-    .where(and(eq(projects.id, projectId), eq(projects.owner, owner), eq(projects.kind, "bot")));
-  return bot;
-}
-
 async function answerPrompt(
   by: string,
   conversation: ChatMessage[],
@@ -183,17 +175,7 @@ async function answerPrompt(
     historyLimit: inProject ? BOT_HISTORY : undefined,
     citedEarlier: earlier,
   });
-  let failure: string | undefined;
-  await parseJsonEventStream({
-    stream: response.body ?? new ReadableStream(),
-    schema: uiMessageChunkSchema,
-  }).pipeTo(
-    new WritableStream({
-      write: (chunk) => {
-        if (chunk.success && chunk.value.type === "error") failure = chunk.value.errorText;
-      },
-    }),
-  );
+  const failure = await streamFailure(response);
   if (failure !== undefined) throw new Error(failure);
   if (!textOf(answered.at(-1)).trim()) throw new Error("the model gave no answer");
   return answered;

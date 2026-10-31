@@ -915,4 +915,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Sirathicৰ পৰ্যালোচকসকলক এই উত্তৰটো পঢ়িবলৈ দিয়ক",
   "Shared reports": "ভাগ কৰা ৰিপৰ্ট",
   "No shared reports yet.": "এতিয়ালৈকে কোনো ভাগ কৰা ৰিপৰ্ট নাই।",
+  Messaged: "বাৰ্তা পঠিওৱা হ'ল",
+  "Created bot": "বট সৃষ্টি কৰা হ'ল",
+  Groups: "গ্ৰুপসমূহ",
+  "New group": "নতুন গ্ৰুপ",
+  "Group name": "গ্ৰুপৰ নাম",
+  "Create group": "গ্ৰুপ সৃষ্টি কৰক",
+  "Delete group": "গ্ৰুপ মচক",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" গ্ৰুপটো মচিবনে? ইয়াৰ কথোপকথনো মচি পেলোৱা হ\'ব।',
+  "Pick at least two bots": "কমেও দুটা বট বাছনি কৰক",
 } satisfies Messages;

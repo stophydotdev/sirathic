@@ -918,4 +918,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Sirathic के समीक्षकों को यह जवाब पढ़ने दें",
   "Shared reports": "साझा की गई रिपोर्ट",
   "No shared reports yet.": "अभी तक कोई साझा रिपोर्ट नहीं है।",
+  Messaged: "संदेश भेजा गया",
+  "Created bot": "बॉट बनाया गया",
+  Groups: "ग्रुप",
+  "New group": "नया ग्रुप",
+  "Group name": "ग्रुप का नाम",
+  "Create group": "ग्रुप बनाएँ",
+  "Delete group": "ग्रुप हटाएँ",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" ग्रुप हटाएँ? इसकी बातचीत भी हट जाएगी।',
+  "Pick at least two bots": "कम से कम दो बॉट चुनें",
 } satisfies Messages;

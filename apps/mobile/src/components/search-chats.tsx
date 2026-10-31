@@ -3,6 +3,7 @@ import { type FC, type ReactNode, useEffect, useState } from "react";
 import { Modal, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { api } from "@/lib/api";
 import { type Session, useChatState } from "@/lib/chat-state";
+import { useGroups } from "@/lib/groups";
 import { Plus, Search, Spy } from "./icons";
 import { Dim, Pop } from "./motion";
 
@@ -96,7 +97,11 @@ export const SearchChats: FC<{ open: boolean; onClose: () => void }> = ({ open, 
     run: () => {
       close();
       if (session.projectId) {
-        router.navigate({ pathname: "/bot/[id]", params: { id: session.projectId } });
+        const room = useGroups.getState().groups?.some((group) => group.id === session.projectId);
+        router.navigate({
+          pathname: room ? "/group/[id]" : "/bot/[id]",
+          params: { id: session.projectId },
+        });
         return;
       }
       useChatState.getState().open(session.id);

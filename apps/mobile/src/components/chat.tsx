@@ -88,14 +88,17 @@ export const liveChat = (id: string, messages: ChatMessage[] | undefined, projec
   return created;
 };
 
-export const savedChat = (id: string) =>
-  api.sessions.get.query({ id }).then(({ messages }) =>
-    validateUIMessages<ChatMessage>({
+export const savedRoom = (id: string) =>
+  api.sessions.get.query({ id }).then(async ({ messages, answering: working }) => ({
+    working,
+    messages: await validateUIMessages<ChatMessage>({
       messages,
       dataSchemas: chatData,
       metadataSchema: messageMetadata,
     }),
-  );
+  }));
+
+export const savedChat = (id: string) => savedRoom(id).then(({ messages }) => messages);
 
 const jsonText = z.string().transform((text, ctx) => {
   try {

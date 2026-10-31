@@ -5,6 +5,7 @@ import { useBotPanel } from "@/components/botSettings";
 import { saveDraft } from "@/components/draft";
 import { useT } from "@/components/i18n";
 import { THEME_NAMES, usePreferences } from "@/components/preferences";
+import { useGroups } from "@/components/groups";
 import { useProjects } from "@/components/projects";
 import { findSessions, type Session } from "@/components/sessions";
 import { panel } from "@/components/sessionMenu";
@@ -64,6 +65,7 @@ export const SearchDialog: FC<{
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [active, setActive] = useState(0);
   const bots = useProjects((s) => s.bots);
+  const rooms = useGroups((s) => s.groups);
   const t = useT();
   const router = useRouter();
 
@@ -215,7 +217,13 @@ export const SearchDialog: FC<{
     label: session.title,
     snippet: matches(session.title) ? undefined : session.snippet,
     run: () =>
-      go(bots?.some((bot) => bot.id === session.id) ? `/bot/${session.id}` : `/c/${session.id}`),
+      go(
+        bots?.some((bot) => bot.id === session.id)
+          ? `/bot/${session.id}`
+          : rooms?.some((room) => room.id === session.id)
+            ? `/group/${session.id}`
+            : `/c/${session.id}`,
+      ),
   }));
 
   const groups = [

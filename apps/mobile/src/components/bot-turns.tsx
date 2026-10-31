@@ -11,7 +11,8 @@ import { toolOf } from "@/lib/research";
 import { siteName, sourcesOf, withoutCitations } from "@/lib/sources";
 import { type Feedback, useMarkdownLook } from "./answer";
 import { SentFiles } from "./attachment-chip";
-import { tintOf } from "./bot-avatar";
+import { useBots } from "@/lib/bots";
+import { BotAvatar, tintOf } from "./bot-avatar";
 import { AnswerCard, isAnswerCard, MemoryUsed } from "./answer-cards";
 import { AutomationCard, BotEvent, isBotEvent, isCardTool } from "./chat-cards";
 import { Copy, Dots, ThumbDown, ThumbUp } from "./icons";
@@ -82,6 +83,9 @@ const TOOL_LINES = new Map([
   ["update_profile", "Setting it up…"],
   ["update_memory", "Setting it up…"],
   ["set_bot_job", "Setting it up…"],
+  ["create_bot", "Setting it up…"],
+  ["update_bot", "Setting it up…"],
+  ["message_bot", "Setting it up…"],
   ["install_plugin", "Setting it up…"],
   ["stophy_search_endpoints", "Checking Stophy…"],
   ["stophy_call", "Checking Stophy…"],
@@ -118,7 +122,7 @@ const Dot: FC<{ delay: number }> = ({ delay }) => {
   );
 };
 
-const Working: FC<{ step: string | undefined }> = ({ step }) => (
+export const Working: FC<{ step: string | undefined }> = ({ step }) => (
   <View
     accessibilityRole="progressbar"
     accessibilityLabel="Typing…"
@@ -240,8 +244,10 @@ export const BotSays: FC<{
     : [];
   const step = open.at(-1);
   const lastText = said.findLastIndex((item) => item.kind === "text");
+  const from = message.metadata?.from;
   return (
     <View className="items-start pt-2">
+      {from && <SenderLine from={from} />}
       {said.slice(0, shown).map((item, index) => (
         <Fragment key={index}>
           {item.kind === "text" ? (
@@ -309,6 +315,23 @@ export const stampOf = (messages: readonly ChatMessage[], index: number) => {
   return previous === undefined || at - previous > STAMP_GAP ? at : undefined;
 };
 
+const SenderLine: FC<{ from: { id: string; name: string } }> = ({ from }) => {
+  const sender = useBots((s) => s.bots?.find((bot) => bot.id === from.id));
+  return (
+    <View className="mt-2 mb-1 ms-1 flex-row items-center gap-1.5">
+      <BotAvatar
+        color={sender?.color ?? null}
+        body={sender?.symbol ?? null}
+        seed={from.id}
+        size={16}
+      />
+      <Text className="text-muted-foreground font-sans text-xs font-medium">
+        {sender?.name ?? from.name}
+      </Text>
+    </View>
+  );
+};
+
 export const BotYou: FC<{
   message: ChatMessage;
   reply: ChatMessage | undefined;
@@ -323,6 +346,7 @@ export const BotYou: FC<{
   })[0];
   const routine = message.metadata?.routine;
   if (message.metadata?.wake) return null;
+  const from = message.metadata?.from;
   return (
     <>
       {stamp !== undefined && (
@@ -330,7 +354,12 @@ export const BotYou: FC<{
           {stampText(stamp)}
         </Text>
       )}
-      {routine ? (
+      {from ? (
+        <View className="items-start pt-2 pb-2">
+          <SenderLine from={from} />
+          <BotText text={messageText(message)} />
+        </View>
+      ) : routine ? (
         <Text className="text-muted-foreground font-sans pt-6 pb-1 text-center text-xs">
           {`Routine · ${routine}`}
         </Text>

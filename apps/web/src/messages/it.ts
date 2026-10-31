@@ -933,4 +933,14 @@ export default {
     "Consenti ai revisori di Sirathic di leggere questa risposta",
   "Shared reports": "Segnalazioni condivise",
   "No shared reports yet.": "Nessuna segnalazione condivisa per ora.",
+  Messaged: "Messaggio inviato",
+  "Created bot": "Bot creato",
+  Groups: "Gruppi",
+  "New group": "Nuovo gruppo",
+  "Group name": "Nome del gruppo",
+  "Create group": "Crea gruppo",
+  "Delete group": "Elimina gruppo",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Eliminare il gruppo "{name}"? Anche la sua conversazione viene eliminata.',
+  "Pick at least two bots": "Scegli almeno due bot",
 } satisfies Messages;

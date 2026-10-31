@@ -926,4 +926,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Sirathic மதிப்பாய்வாளர்கள் இந்தப் பதிலைப் படிக்க அனுமதி",
   "Shared reports": "பகிரப்பட்ட புகார்கள்",
   "No shared reports yet.": "இதுவரை பகிரப்பட்ட புகார்கள் இல்லை.",
+  Messaged: "செய்தி அனுப்பப்பட்டது",
+  "Created bot": "பாட் உருவாக்கப்பட்டது",
+  Groups: "குழுக்கள்",
+  "New group": "புதிய குழு",
+  "Group name": "குழுவின் பெயர்",
+  "Create group": "குழுவை உருவாக்கு",
+  "Delete group": "குழுவை நீக்கு",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" குழுவை நீக்கவா? அதன் உரையாடலும் நீக்கப்படும்.',
+  "Pick at least two bots": "குறைந்தது இரண்டு பாட்களைத் தேர்ந்தெடுக்கவும்",
 } satisfies Messages;

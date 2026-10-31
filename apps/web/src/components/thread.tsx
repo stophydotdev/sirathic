@@ -7,7 +7,8 @@ import { Mark } from "@/components/logo";
 import { useNewChatClick } from "@/components/newChat";
 import { UserText } from "@/components/mentions";
 import { useOpenSources } from "@/components/openSources";
-import { BotTurn } from "@/components/botChat";
+import { BotTurn, GroupTyping } from "@/components/botChat";
+import { GroupHome, GroupTitle, useGroup } from "@/components/groupHome";
 import { BotGreeting, BotHeaderMenu, BotHome, BotTitle, useBot } from "@/components/botHome";
 import { BotLearned } from "@/components/botLearned";
 import { ThreadKeys } from "@/components/shortcuts";
@@ -88,6 +89,7 @@ const TurnRow: FC<{ children: ReactNode; layout?: "column" | "edge" }> = ({
 
 const TopBar: FC = () => {
   const bot = useBot();
+  const group = useGroup();
   const t = useT();
   const newChatClick = useNewChatClick();
 
@@ -95,13 +97,13 @@ const TopBar: FC = () => {
     <div
       className={cn(
         "bg-background after:from-background sticky top-0 z-20 pe-6 ps-14 after:pointer-events-none after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-linear-to-b after:to-transparent print:hidden",
-        bot ? "lg:ps-4" : "lg:ps-6",
+        bot || group ? "lg:ps-4" : "lg:ps-6",
       )}
     >
       <div className="absolute top-0 end-4 flex h-14 items-center">
-        {bot ? <BotHeaderMenu /> : <HeaderActions />}
+        {bot ? <BotHeaderMenu /> : group ? null : <HeaderActions />}
       </div>
-      <TurnRow layout={bot ? "edge" : "column"}>
+      <TurnRow layout={bot || group ? "edge" : "column"}>
         <div className="flex h-14 items-center gap-4">
           <Link
             href="/"
@@ -112,7 +114,8 @@ const TopBar: FC = () => {
             <HugeiconsIcon icon={Add01Icon} className="size-4.5" />
           </Link>
           <BotTitle />
-          {!bot && <ViewTabs />}
+          {group && <GroupTitle group={group} />}
+          {!bot && !group && <ViewTabs />}
         </div>
       </TurnRow>
     </div>
@@ -200,6 +203,7 @@ const ViewTabs: FC = () => {
 const ThreadBody: FC = () => {
   const t = useT();
   const bot = useBot();
+  const group = useGroup();
   const sourcesOpen = useOpenSources((s) => s.id !== undefined);
   const view = useThreadView((s) => s.view);
   const shifted = cn(
@@ -212,13 +216,14 @@ const ThreadBody: FC = () => {
       <div className={cn("px-6 pb-8", shifted)}>
         <TurnRow>
           <BotGreeting />
-          {view === "links" && !bot ? (
+          {view === "links" && !bot && !group ? (
             <LinksView />
           ) : (
             <ThreadPrimitive.Messages>
-              {() => (bot ? <BotTurn /> : <Turn />)}
+              {() => (bot || group ? <BotTurn /> : <Turn />)}
             </ThreadPrimitive.Messages>
           )}
+          {group && <GroupTyping />}
           <BotLearned />
         </TurnRow>
       </div>
@@ -236,9 +241,13 @@ const ThreadBody: FC = () => {
               </ThreadPrimitive.ScrollToBottom>
             )}
             <Composer
-              placeholder={bot ? t("Message {name}", { name: bot.name }) : t("Ask a follow-up")}
+              placeholder={
+                bot || group
+                  ? t("Message {name}", { name: (bot ?? group)?.name ?? "" })
+                  : t("Ask a follow-up")
+              }
               menuSide="top"
-              bot={!!bot}
+              bot={!!bot || !!group}
               compact
             />
             <Caution />
@@ -261,7 +270,9 @@ const Caution: FC = () => {
 const EmptyState: FC = () => {
   const t = useT();
   const bot = useBot();
+  const group = useGroup();
   if (bot) return <BotHome bot={bot} />;
+  if (group) return <GroupHome group={group} />;
   return (
     <div className="relative flex h-full flex-col px-4 pb-5 md:justify-center md:px-6 md:pb-[16vh]">
       <div className="absolute top-3 end-4">

@@ -53,6 +53,7 @@ export const messageMetadata = z.object({
   formReply: z.enum(["filled", "missed", "dismissed"]).optional(),
   wake: z.literal(true).optional(),
   memory: z.boolean().optional(),
+  from: z.object({ id: z.uuid(), name: z.string() }).optional(),
 });
 
 type MessageMetadata = z.infer<typeof messageMetadata>;

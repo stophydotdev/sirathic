@@ -923,4 +923,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Sirathic-ന്റെ റിവ്യൂവർമാരെ ഈ ഉത്തരം വായിക്കാൻ അനുവദിക്കുക",
   "Shared reports": "പങ്കിട്ട റിപ്പോർട്ടുകൾ",
   "No shared reports yet.": "ഇതുവരെ പങ്കിട്ട റിപ്പോർട്ടുകളൊന്നുമില്ല.",
+  Messaged: "സന്ദേശം അയച്ചു",
+  "Created bot": "ബോട്ട് സൃഷ്ടിച്ചു",
+  Groups: "ഗ്രൂപ്പുകൾ",
+  "New group": "പുതിയ ഗ്രൂപ്പ്",
+  "Group name": "ഗ്രൂപ്പിന്റെ പേര്",
+  "Create group": "ഗ്രൂപ്പ് സൃഷ്ടിക്കുക",
+  "Delete group": "ഗ്രൂപ്പ് ഇല്ലാതാക്കുക",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" ഗ്രൂപ്പ് ഇല്ലാതാക്കണോ? അതിന്റെ സംഭാഷണവും ഇല്ലാതാകും.',
+  "Pick at least two bots": "കുറഞ്ഞത് രണ്ട് ബോട്ടുകൾ തിരഞ്ഞെടുക്കുക",
 } satisfies Messages;

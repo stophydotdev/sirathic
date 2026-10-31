@@ -926,4 +926,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Sirathic のレビュアーがこの回答を読めるようにする",
   "Shared reports": "共有された報告",
   "No shared reports yet.": "共有された報告はまだありません。",
+  Messaged: "メッセージを送信",
+  "Created bot": "ボットを作成しました",
+  Groups: "グループ",
+  "New group": "新しいグループ",
+  "Group name": "グループ名",
+  "Create group": "グループを作成",
+  "Delete group": "グループを削除",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    "グループ「{name}」を削除しますか？会話も削除されます。",
+  "Pick at least two bots": "ボットを2つ以上選んでください",
 } satisfies Messages;

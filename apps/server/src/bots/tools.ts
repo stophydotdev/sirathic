@@ -10,6 +10,9 @@ export const BOT_HISTORY = 40;
 
 const CHUNK_SHARE = 0.6;
 
+export const NAMING =
+  "Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name.";
+
 export const recentTurns = <Message extends { role: string }>(
   messages: Message[],
   limit: number,
@@ -24,8 +27,7 @@ export const recentTurns = <Message extends { role: string }>(
 export function botTools({ id, owner }: BotScope) {
   return {
     set_bot_job: tool({
-      description:
-        "Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. Keep the job to what the user asked, without rulings, and without limits they did not ask for. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.",
+      description: `Sets this bot's name, title and job. Call it when the bot has no job yet and the user says what they want from it, or when the user asks to change them. The name is one to three words, like Ramadan Coach or Arabic Tutor. The title is a short role, like Quranic Arabic tutor. ${NAMING} Keep the job to what the user asked, without rulings, and without limits they did not ask for. The job is a few sentences in the user's words that tell the bot what to do in every reply. The user sees a line saying the bot was renamed, so don't repeat it.`,
       inputSchema: z.object({
         name: projectName,
         title: botTitle,
@@ -43,8 +45,7 @@ export function botTools({ id, owner }: BotScope) {
       execute: async ({ emoji }) => ({ emoji }),
     }),
     update_profile: tool({
-      description:
-        "Changes this bot's name, title, description, avatar color or avatar body. Only the fields you pass change. The title is a short role label beside the name. Never a title of scholarship like Shaykh, Imam or Mufti, nor a name only Allah carries, like Allah, ar-Rahman or al-Khaliq. A shared name like Hakim or Karim, or a prophet's or companion's name, is fine as a plain name. The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Change the avatar color or body only when the user asks. Use it when the user asks to rename the bot, change how it looks or change what it does. The user sees a line saying the bot was renamed, so don't repeat it.",
+      description: `Changes this bot's name, title, description, avatar color or avatar body. Only the fields you pass change. The title is a short role label beside the name. ${NAMING} The description is the job text the user sees under Description in the bot's settings, so keep it in the user's words, and only what the bot does, never limits. Change the avatar color or body only when the user asks. Use it when the user asks to rename the bot, change how it looks or change what it does. The user sees a line saying the bot was renamed, so don't repeat it.`,
       inputSchema: z.object({
         name: projectName.optional(),
         title: botTitle.optional(),

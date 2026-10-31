@@ -76,3 +76,17 @@ export const withReactionNotes = (history: ChatMessage[]) =>
         ]
       : [message];
   });
+
+export const withSenderNote = (message: ChatMessage): ChatMessage => {
+  const from = message.role === "user" ? message.metadata?.from : undefined;
+  return from
+    ? {
+        ...message,
+        parts: message.parts.map((part) =>
+          part.type === "text"
+            ? { ...part, text: `[agent] ${from.name} (id: ${from.id}): ${part.text}` }
+            : part,
+        ),
+      }
+    : message;
+};

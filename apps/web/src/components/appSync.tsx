@@ -1,6 +1,7 @@
 "use client";
 
 import { useAccount } from "@/components/account";
+import { useGroups } from "@/components/groups";
 import { useProjects } from "@/components/projects";
 import { useSessions } from "@/components/sessions";
 import { api } from "@/lib/trpc";
@@ -20,6 +21,7 @@ export const AppSync = () => {
         });
       void useSessions.getState().refresh();
       void useProjects.getState().refresh();
+      void useGroups.getState().refresh();
     };
     void Promise.all([
       useAccount.persist.rehydrate(),

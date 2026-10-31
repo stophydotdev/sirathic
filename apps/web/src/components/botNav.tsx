@@ -6,6 +6,8 @@ import { prefetchChat } from "@/components/chat";
 import { botGroups, botLabel, SIDEBAR_LIMIT } from "@sirathic/app/botGroups";
 import { BotMenu } from "@/components/botMenu";
 import { BotSwitcher } from "@/components/botSwitcher";
+import { GroupDialog } from "@/components/groupDialog";
+import { GroupList } from "@/components/groupNav";
 import { whenOf } from "@/components/botTime";
 import { useLocale, useT } from "@/components/i18n";
 import { type Project, useProjects } from "@/components/projects";
@@ -13,7 +15,7 @@ import { useSessions } from "@/components/sessions";
 import { Fold } from "@/components/fold";
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Add01Icon, ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { Add01Icon, ArrowDown01Icon, UserGroupIcon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type FC, useEffect, useState } from "react";
@@ -124,6 +126,7 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
   const [all, setAll] = useState(false);
   const [showHidden, setShowHidden] = useState(false);
   const [picking, setPicking] = useState(false);
+  const [grouping, setGrouping] = useState(false);
   const t = useT();
 
   useEffect(() => {
@@ -156,6 +159,17 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
             )}
           />
         </button>
+        {(bots?.length ?? 0) >= 2 && (
+          <button
+            type="button"
+            aria-label={t("New group")}
+            title={t("New group")}
+            onClick={() => setGrouping(true)}
+            className="hover:bg-muted hover:text-foreground flex size-5 items-center justify-center rounded-md opacity-0 group-hover/sidebar:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
+          >
+            <HugeiconsIcon icon={UserGroupIcon} className="size-3.5" />
+          </button>
+        )}
         <button
           type="button"
           aria-label={t("Search or create bots")}
@@ -225,7 +239,9 @@ export const BotList: FC<{ onDone?: () => void }> = ({ onDone }) => {
           </>
         )}
       </Fold>
+      <GroupList onDone={onDone} />
       <BotSwitcher open={picking} onOpenChange={setPicking} onDone={onDone} />
+      <GroupDialog open={grouping} onOpenChange={setGrouping} onDone={onDone} />
     </>
   );
 };

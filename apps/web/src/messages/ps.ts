@@ -925,4 +925,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "د Sirathic کتونکو ته اجازه ورکړئ دا ځواب ولولي",
   "Shared reports": "شریک شوي راپورونه",
   "No shared reports yet.": "تر اوسه هیڅ شریک شوی راپور نشته.",
+  Messaged: "پیغام ولېږل شو",
+  "Created bot": "بوټ جوړ شو",
+  Groups: "ډلې",
+  "New group": "نوې ډله",
+  "Group name": "د ډلې نوم",
+  "Create group": "ډله جوړه کړه",
+  "Delete group": "ډله ړنګه کړه",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'د "{name}" ډله ړنګه شي؟ خبرې اترې یې هم ړنګېږي.',
+  "Pick at least two bots": "لږ تر لږه دوه بوټونه وټاکئ",
 } satisfies Messages;

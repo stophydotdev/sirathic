@@ -5,7 +5,12 @@ import { BatchSpanProcessor } from "@opentelemetry/sdk-trace";
 import { trpcServer } from "@hono/trpc-server";
 import { websocket } from "hono/bun";
 import { env } from "@sirathic/env/server";
-import { UI_MESSAGE_STREAM_HEADERS, validateUIMessages } from "ai";
+import {
+  createUIMessageStream,
+  createUIMessageStreamResponse,
+  UI_MESSAGE_STREAM_HEADERS,
+  validateUIMessages,
+} from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
 import { auth, userFor } from "./account/auth";
@@ -20,6 +25,7 @@ import { pickModels } from "./models/pick";
 import { checkNoorUsage, spendNoor } from "./models/usage";
 import { chatResponse, KEEPALIVE_MS } from "./chat/response";
 import { reviewEvery } from "./bots/review";
+import { summonFor, wakeGroup } from "./bots/wake";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
 import { connectedTools, finishConnect } from "./plugins/connections";
@@ -27,6 +33,7 @@ import { track } from "./chat/events";
 import { cardDecisions } from "./chat/confirm";
 import { uploadRoutes } from "./files/upload";
 import { browserRoutes } from "./bots/browserRoutes";
+import { groupOf } from "./projects/groups";
 import { projectOfChat } from "./projects/projects";
 import {
   appLanguage,
@@ -126,6 +133,17 @@ app.post("/api/chat", (c) =>
       timeZone: input.timezone,
       offerGpt: user.via !== "chatgpt",
     });
+    const group =
+      input.incognito || input.projectId === undefined ? undefined : await groupOf(input.id, by);
+    if (group) {
+      if (validated.at(-1)?.role === "user") {
+        await saveSession(input.id, by, validated, group.id);
+        wakeGroup(user, group.id, true);
+      }
+      return createUIMessageStreamResponse({
+        stream: createUIMessageStream({ execute: () => undefined }),
+      });
+    }
     const asked = validated.findLast((message) => message.role === "user");
     const regenerate = input.trigger === "regenerate-message";
     const project = projectOfChat(input.id, by, input.projectId).catch((err: Error) => {
@@ -248,6 +266,7 @@ app.post("/api/chat", (c) =>
           : { owner, timezone: input.timezone },
       owner,
       sourceKinds: input.sources,
+      summon: input.incognito ? undefined : summonFor(user),
     });
     return new Response(response.body && answer.toAsker(response.body), response);
   }),

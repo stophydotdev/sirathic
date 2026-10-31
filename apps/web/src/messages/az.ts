@@ -932,4 +932,14 @@ export default {
     "Sirathic rəyçilərinin bu cavabı oxumasına icazə ver",
   "Shared reports": "Paylaşılan bildirişlər",
   "No shared reports yet.": "Hələ paylaşılan bildiriş yoxdur.",
+  Messaged: "Mesaj göndərildi",
+  "Created bot": "Bot yaradıldı",
+  Groups: "Qruplar",
+  "New group": "Yeni qrup",
+  "Group name": "Qrupun adı",
+  "Create group": "Qrup yarat",
+  "Delete group": "Qrupu sil",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" qrupu silinsin? Söhbəti də silinəcək.',
+  "Pick at least two bots": "Ən azı iki bot seçin",
 } satisfies Messages;

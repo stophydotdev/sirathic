@@ -1,10 +1,29 @@
 import { expect, mock, test } from "bun:test";
 import { drizzle } from "drizzle-orm/pg-proxy";
+import { z } from "zod";
+import { finalReply, isSilent, mentionedBots, roomHistory } from "../apps/server/src/bots/room";
+import { withSenderNote } from "../apps/server/src/chat/history";
+import { type ChatMessage, messageText } from "../apps/server/src/shared/messages";
 import { profileRejection } from "../apps/server/src/bots/profile";
 import { changedFacts } from "../apps/server/src/account/memory";
 
 const botId = "22222222-2222-4222-8222-222222222222";
 const deleted: string[] = [];
+const scoutId = "33333333-3333-4333-8333-333333333333";
+const busyId = "44444444-4444-4444-8444-444444444444";
+const teammates = new Map([
+  [botId, "Ramadan Coach"],
+  [scoutId, "Scout"],
+  [busyId, "Busy"],
+]);
+const storedList = z
+  .string()
+  .startsWith("[")
+  .transform((text) =>
+    z.array(z.looseObject({ metadata: z.unknown(), parts: z.unknown() })).parse(JSON.parse(text)),
+  );
+const chats = new Map<string, unknown[]>();
+const delivered: { chat: string; message: unknown }[] = [];
 let accountFacts = ["Prays at the mosque on Fridays", "Is 28"];
 let botProfile = [
   { text: "Goal: memorize Juz Amma", source: "guessed", at: 1 },
@@ -27,6 +46,23 @@ mock.module("@sirathic/db", () => ({
         return { rows: [] };
       }
       if (sql.startsWith('select "id" from "projects"')) return { rows: [[botId]] };
+      if (sql.startsWith('select "id", "name" from "projects"')) {
+        const name = teammates.get(String(params[0]));
+        return { rows: name ? [[params[0], name]] : [] };
+      }
+      if (sql.startsWith('select "id", "name", "members" from "projects"')) return { rows: [] };
+      if (sql.startsWith('select "messages", "unread"')) {
+        const stored = chats.get(String(params[0]));
+        return { rows: stored ? [[stored, false, null]] : [] };
+      }
+      if (sql.startsWith('insert into "chat_sessions"')) {
+        const sent = params.flatMap((param) => {
+          const list = storedList.safeParse(param);
+          return list.success ? [list.data] : [];
+        });
+        delivered.push({ chat: String(params[0]), message: sent[0][0] });
+        return { rows: [[params[0]]] };
+      }
       if (sql.startsWith('delete from "chat_sessions"')) {
         deleted.push("chat history");
         return { rows: [] };
@@ -43,6 +79,7 @@ mock.module("@sirathic/db", () => ({
 const { memoryTools } = await import("../apps/server/src/account/memory");
 const { islamicDates } = await import("../apps/server/src/bots/islamicDates");
 const { removeProject } = await import("../apps/server/src/projects/projects");
+const { teamTools } = await import("../apps/server/src/bots/team");
 
 const call = { toolCallId: "call", messages: [], context: {} };
 
@@ -159,4 +196,94 @@ test("islamic_dates converts both ways with the Umm al-Qura calendar and marks u
 test("deleting a bot deletes its chat history first", async () => {
   expect(await removeProject(botId, "user-a")).toEqual({ deleted: true });
   expect(deleted).toEqual(["chat history", "bot"]);
+});
+
+const fromScout = (id: string): ChatMessage => ({
+  id,
+  role: "user",
+  metadata: { from: { id: scoutId, name: "Scout" } },
+  parts: [{ type: "text", text: "Any update?" }],
+});
+
+test("message_bot lands in the teammate's chat as the sender's message, and a priority send wakes only while the user is in the loop", async () => {
+  const { message_bot } = teamTools(
+    { id: botId, owner: "user-a" },
+    (target) => target.id !== busyId,
+    undefined,
+    true,
+  );
+  const send = (target: string, priority: boolean) =>
+    message_bot.execute?.({ id: target, message: "Check the Fajr times", priority }, call);
+
+  expect(await send(scoutId, true)).toEqual({ sentTo: "Scout", id: scoutId });
+  expect(delivered.at(-1)).toMatchObject({
+    chat: scoutId,
+    message: {
+      metadata: { from: { id: botId, name: "Ramadan Coach" } },
+      parts: [{ type: "text", text: "Check the Fajr times" }],
+    },
+  });
+
+  expect(await send(busyId, true)).toMatchObject({ held: expect.stringContaining("busy") });
+  expect(await send(busyId, false)).toEqual({ sentTo: "Busy", id: busyId });
+
+  chats.set(scoutId, ["a", "b", "c"].map(fromScout));
+  expect(await send(scoutId, true)).toMatchObject({
+    held: expect.stringContaining("several bot messages"),
+  });
+  chats.set(scoutId, [...["a", "b", "c"].map(fromScout), { ...fromScout("d"), metadata: {} }]);
+  expect(await send(scoutId, true)).toEqual({ sentTo: "Scout", id: scoutId });
+
+  expect(
+    Object.keys(teamTools({ id: botId, owner: "user-a" }, () => true, undefined, false)),
+  ).toEqual(["message_bot"]);
+
+  expect(messageText(withSenderNote(fromScout("e")))).toBe(
+    `[agent] Scout (id: ${scoutId}): Any update?`,
+  );
+  expect(messageText(withSenderNote({ ...fromScout("f"), role: "assistant" }))).toBe("Any update?");
+});
+
+const said = (id: string, parts: ChatMessage["parts"], from?: { id: string; name: string }) =>
+  ({ id, role: from ? "assistant" : "user", metadata: { from }, parts }) satisfies ChatMessage;
+
+const noura = { id: botId, name: "Noura" };
+const scout = { id: scoutId, name: "Scout" };
+
+test("in a group chat a bot reads the others as labeled lines, posts only its last words, and stays silent on SKIP", () => {
+  const room = [
+    said("1", [{ type: "text", text: "Which surah is the heart?" }]),
+    said("2", [{ type: "text", text: "Yasin." }], noura),
+    said("3", [{ type: "text", text: "Agreed." }], scout),
+  ];
+  expect(roomHistory(room, "Study circle", scoutId).map((m) => [m.role, messageText(m)])).toEqual([
+    ["user", '[Group chat: "Study circle"] User: Which surah is the heart?'],
+    ["user", `[agent] Noura (id: ${botId}) [Group chat: "Study circle"]: Yasin.`],
+    ["assistant", "Agreed."],
+  ]);
+
+  const worked = said(
+    "4",
+    [
+      { type: "text", text: "Checking now." },
+      {
+        type: "tool-get_verses",
+        toolCallId: "c1",
+        state: "input-available",
+        input: { surah: 36, context: 0 },
+      },
+      { type: "text", text: "It is Surah Ya-Sin." },
+    ],
+    scout,
+  );
+  expect(finalReply(worked).parts.map((part) => part.type)).toEqual(["tool-get_verses", "text"]);
+
+  expect(
+    ["SKIP", " skip. ", "", "Skip this one"].map((text) =>
+      isSilent(said("5", [{ type: "text", text }], scout)),
+    ),
+  ).toEqual([true, true, true, false]);
+
+  expect(mentionedBots("@scout, can you check?", [noura, scout], botId)).toEqual([scout]);
+  expect(mentionedBots("@everyone thoughts?", [noura, scout], botId)).toEqual([scout]);
 });

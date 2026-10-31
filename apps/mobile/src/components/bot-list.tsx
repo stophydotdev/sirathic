@@ -4,11 +4,13 @@ import { type FC, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { type Bot, useBots } from "@/lib/bots";
 import { useChatState } from "@/lib/chat-state";
+import { type Group, useGroups } from "@/lib/groups";
 import { BotAvatar } from "./bot-avatar";
 import { BotMenu } from "./bot-menu";
 import { BotSwitcher, openBot } from "./bot-switcher";
+import { GroupDialog, openGroup } from "./group-dialog";
 import { Fold, Turn } from "./motion";
-import { ChevronDown, Plus } from "./icons";
+import { ChevronDown, Plus, Trash, UsersGroup } from "./icons";
 
 const DAY_MS = 86_400_000;
 const WORKING_POLL_MS = 10_000;
@@ -81,9 +83,55 @@ const BotRow: FC<{ bot: Bot; onOpen: () => void }> = ({ bot, onOpen }) => {
   );
 };
 
+const GroupRow: FC<{ group: Group; onOpen: () => void }> = ({ group, onOpen }) => {
+  const bots = useBots((s) => s.bots);
+  const session = useChatState((s) => s.sessions?.find((found) => found.id === group.id));
+  const current = useGlobalSearchParams<{ id?: string }>().id === group.id;
+  const members = (group.members ?? []).flatMap((id) => bots?.find((bot) => bot.id === id) ?? []);
+  return (
+    <View className={`rounded-xl ${current ? "bg-muted" : ""}`}>
+      <Pressable
+        onPress={() => {
+          openGroup(group.id);
+          onOpen();
+        }}
+        className="active:bg-muted flex-row items-center gap-2.5 rounded-xl px-2.5 py-2"
+      >
+        <View className="w-11 flex-row">
+          {members.slice(0, 3).map((bot, index) => (
+            <View key={bot.id} className={index > 0 ? "-ms-3" : undefined}>
+              <BotAvatar color={bot.color} body={bot.symbol} seed={bot.id} size={28} />
+            </View>
+          ))}
+        </View>
+        <View className="flex-1">
+          <Text
+            numberOfLines={1}
+            className={`text-foreground text-base ${session?.unread ? "font-medium" : "font-sans"}`}
+          >
+            {group.name}
+          </Text>
+          <Text numberOfLines={1} className="text-muted-foreground font-sans pe-6 text-xs">
+            {session?.preview ?? ""}
+          </Text>
+        </View>
+      </Pressable>
+      <Pressable
+        accessibilityLabel="Delete group"
+        onPress={() => void useGroups.getState().remove(group.id)}
+        className="active:bg-foreground/10 absolute end-2 bottom-2 size-7 items-center justify-center rounded-full"
+      >
+        <Trash size={18} strokeWidth={1.75} colorClassName="accent-muted-foreground" />
+      </Pressable>
+    </View>
+  );
+};
+
 export const BotList: FC<{ onOpen: () => void }> = ({ onOpen }) => {
   const signedIn = useChatState((s) => s.account?.signedIn === true);
   const bots = useBots((s) => s.bots);
+  const groupList = useGroups((s) => s.groups) ?? [];
+  const [grouping, setGrouping] = useState(false);
   const anyWorking = useChatState((s) => s.sessions?.some((session) => session.working));
   const [open, setOpen] = useState(true);
   const [all, setAll] = useState(false);
@@ -114,6 +162,15 @@ export const BotList: FC<{ onOpen: () => void }> = ({ onOpen }) => {
             <ChevronDown size={18} strokeWidth={1.75} colorClassName="accent-muted-foreground" />
           </Turn>
         </Pressable>
+        {(bots?.length ?? 0) >= 2 && (
+          <Pressable
+            accessibilityLabel="New group"
+            onPress={() => setGrouping(true)}
+            className="active:bg-muted size-9 items-center justify-center rounded-full"
+          >
+            <UsersGroup size={22} strokeWidth={1.75} colorClassName="accent-muted-foreground" />
+          </Pressable>
+        )}
         <Pressable
           accessibilityLabel="Search or create bots"
           onPress={() => setPicking(true)}
@@ -170,6 +227,23 @@ export const BotList: FC<{ onOpen: () => void }> = ({ onOpen }) => {
           )}
         </View>
       </Fold>
+      {groupList.length > 0 && (
+        <>
+          <Text className="text-muted-foreground font-sans ps-2.5 pt-6 pb-1 text-sm">Groups</Text>
+          <View className="gap-0.5">
+            {groupList.map((group) => (
+              <GroupRow key={group.id} group={group} onOpen={onOpen} />
+            ))}
+          </View>
+        </>
+      )}
+      <GroupDialog
+        open={grouping}
+        onClose={() => {
+          setGrouping(false);
+          onOpen();
+        }}
+      />
       <BotSwitcher
         open={picking}
         onClose={() => {

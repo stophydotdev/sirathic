@@ -933,4 +933,14 @@ export default {
     "Sirathic сынчыларына бул жоопту окууга уруксат берүү",
   "Shared reports": "Бөлүшүлгөн билдирүүлөр",
   "No shared reports yet.": "Азырынча бөлүшүлгөн билдирүү жок.",
+  Messaged: "Билдирүү жөнөтүлдү",
+  "Created bot": "Бот түзүлдү",
+  Groups: "Топтор",
+  "New group": "Жаңы топ",
+  "Group name": "Топтун аты",
+  "Create group": "Топ түзүү",
+  "Delete group": "Топту өчүрүү",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" тобун өчүрөсүзбү? Анын маеги да өчүрүлөт.',
+  "Pick at least two bots": "Эң аз дегенде эки бот тандаңыз",
 } satisfies Messages;

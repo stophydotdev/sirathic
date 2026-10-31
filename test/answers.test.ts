@@ -184,7 +184,12 @@ test("a chat request with a system message is refused before anything runs", asy
   expect(res.status).toBe(400);
 });
 
-const COACH = { name: "Coach", title: "prayer guide", instructions: "Daily tips." };
+const COACH = {
+  id: "22222222-2222-4222-8222-222222222222",
+  name: "Coach",
+  title: "prayer guide",
+  instructions: "Daily tips.",
+};
 const BOT = { id: "22222222-2222-4222-8222-222222222222", owner: "user-a" };
 
 const offeredToBot = async (unattended: true | undefined) => {

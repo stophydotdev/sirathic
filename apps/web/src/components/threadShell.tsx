@@ -6,6 +6,7 @@ import { useChatOptions } from "@/components/chatOptions";
 import { useLocale, useT } from "@/components/i18n";
 import { isRtl } from "@/components/locales";
 import { Mark } from "@/components/logo";
+import { useGroups } from "@/components/groups";
 import { useProjects } from "@/components/projects";
 import { useBot } from "@/components/botHome";
 import { BotList } from "@/components/botNav";
@@ -312,9 +313,13 @@ const Recents: FC<{ onDone?: () => void; onSeeAll: () => void }> = ({ onDone, on
   const t = useT();
   const [open, setOpen] = useState(true);
   const bots = useProjects((s) => s.bots);
+  const rooms = useGroups((s) => s.groups);
   const chats =
     sessions?.filter((session) =>
-      bots ? !bots.some((bot) => bot.id === session.projectId) : !session.projectId,
+      bots && rooms
+        ? !bots.some((bot) => bot.id === session.projectId) &&
+          !rooms.some((room) => room.id === session.projectId)
+        : !session.projectId,
     ) ?? [];
   const ordered = [
     ...chats.filter((session) => session.pinned),

@@ -25,7 +25,9 @@ import { type Event, toolFailure } from "./events";
 import { type AutomationScope, routineTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
 import { browserFor } from "../bots/browser";
+import type { Room } from "../bots/room";
 import { readingOnly, taskTools } from "../bots/taskTools";
+import { type Summon, teamTools, teammatesOf } from "../bots/team";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
@@ -49,13 +51,14 @@ import { pluginTools } from "../plugins/tools";
 import { skillTools } from "../skills/tools";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
-import { shortenEarlierResults, withReactionNotes } from "./history";
+import { shortenEarlierResults, withReactionNotes, withSenderNote } from "./history";
 import { instructions, userFacts } from "./prompts/build";
 import {
   loadedNames,
   loadSkill,
   LOAD_SKILL,
   openedBy,
+  RESEARCH_OPENS,
   type UserSkill,
   skillsFor,
 } from "./skills/builtIn";
@@ -81,7 +84,6 @@ export const KEEPALIVE_MS = 15_000;
 const FALLBACK_MS = 120_000;
 const withText = z.object({ text: z.string() });
 const connectCard = z.object({ status: z.literal("redirect") });
-const RESEARCH_OPENS = ["research", "calculate", "files"];
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
 export function chatResponse({
@@ -111,6 +113,9 @@ export function chatResponse({
   historyLimit,
   citedEarlier,
   sourceKinds,
+  summon,
+  room,
+  byBot,
 }: {
   models: { model: Parameters<typeof answerAgent>[0]["model"]; small: LanguageModel };
   turn: Turn;
@@ -138,6 +143,9 @@ export function chatResponse({
   historyLimit?: number;
   citedEarlier?: ChatMessage[];
   sourceKinds?: SourceKind[];
+  summon?: Summon;
+  room?: Room;
+  byBot?: true;
 }) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
@@ -193,26 +201,44 @@ export function chatResponse({
       const stopped = new Promise<never>((_, reject) => {
         abortSignal.addEventListener("abort", () => reject(abortSignal.reason), { once: true });
       });
-      const [preferred, connectors, inProject, ownSkills, inBot, sourcesNeeded, plugins, grok] =
-        await Promise.all([
-          preferences,
-          Promise.race([connected, stopped]),
-          project,
-          userSkills,
-          bot,
-          lookup,
-          owner !== undefined && !unattended
-            ? listConnections(owner).catch(() => [])
-            : Promise.resolve([]),
-          owner !== undefined && !unattended && hasGrok(owner).catch(() => false),
-        ]);
+      const [
+        preferred,
+        connectors,
+        inProject,
+        ownSkills,
+        inBot,
+        sourcesNeeded,
+        plugins,
+        grok,
+        team,
+      ] = await Promise.all([
+        preferences,
+        Promise.race([connected, stopped]),
+        project,
+        userSkills,
+        bot,
+        lookup,
+        owner !== undefined && !unattended
+          ? listConnections(owner).catch(() => [])
+          : Promise.resolve([]),
+        owner !== undefined && !unattended && hasGrok(owner).catch(() => false),
+        Promise.resolve(bot).then((found) =>
+          owner !== undefined && found && summon && !unattended
+            ? teammatesOf(owner, found.id)
+            : undefined,
+        ),
+      ]);
+      const teammates = inBot ? team : undefined;
+      const fromUser = room === undefined && !byBot;
+      const cardsOk = !unattended && fromUser;
+      const connectedHere = fromUser ? connectors.tools : readingOnly(connectors.tools);
       const opening = forced === "search" && !sourcesNeeded ? undefined : forced;
       const texts = inProject !== undefined;
       const visible = recentTurns(
         messages,
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
-      browser = inBot && browserFor(inBot, unattended === true);
+      browser = inBot && browserFor(inBot, unattended === true, byBot === true);
       const searchable =
         inBot && (unattended || visible.length < messages.length) ? inBot : undefined;
       const disk = inBot && botDisk(inBot.id);
@@ -233,6 +259,7 @@ export function chatResponse({
         }),
         ...(routines && !wake && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && handsOn && botTools(inBot)),
+        ...(inBot && teammates && summon && teamTools(inBot, summon, room?.id, handsOn)),
         ...(inBot &&
           handsOn &&
           taskTools(inBot, { modelName, effort: turn.effort, timezone: routines?.timezone })),
@@ -242,11 +269,12 @@ export function chatResponse({
         ...(owner !== undefined && handsOn && settingTools(owner)),
         ...(owner !== undefined && handsOn && skillTools(owner)),
         ...(owner !== undefined && grok && xSearchTools(owner, sources.add)),
-        ...(owner !== undefined && !unattended && { [SEND_FEEDBACK]: sendFeedback }),
+        ...(owner !== undefined && cardsOk && { [SEND_FEEDBACK]: sendFeedback }),
         ...(owner !== undefined &&
-          !unattended &&
+          cardsOk &&
           pluginTools(owner, inBot ? `/bot/${inBot.id}` : `/c/${turn.sessionId}`)),
         ...((!unattended || task) &&
+          !byBot &&
           memoryTools(
             owner === undefined
               ? undefined
@@ -255,7 +283,7 @@ export function chatResponse({
                 : { kind: "account", owner },
             handsOn && (inBot !== undefined || preferred.saveMemory),
           )),
-        ...(!unattended &&
+        ...(cardsOk &&
           (mode === "research" || inBot) && {
             [CLARIFYING]: inBot ? botQuestions : clarifyingQuestions,
           }),
@@ -276,7 +304,7 @@ export function chatResponse({
             disk,
             link: sources.link,
           })),
-        ...(task ? readingOnly(connectors.tools) : connectors.tools),
+        ...(task ? readingOnly(connectors.tools) : connectedHere),
       };
       const builtIn = skillsFor({
         mode,
@@ -286,7 +314,7 @@ export function chatResponse({
         canWriteSkills: owner !== undefined && handsOn,
         userSkills: ownSkills,
         offered: available,
-        plugins: connectors.tools,
+        plugins: connectedHere,
       });
       const offered = {
         ...available,
@@ -315,10 +343,11 @@ export function chatResponse({
         task: task === true,
         offered,
         skills: builtIn,
-        remembers:
-          owner !== undefined && !unattended && (inBot !== undefined || preferred.saveMemory),
+        remembers: owner !== undefined && handsOn && (inBot !== undefined || preferred.saveMemory),
         connectedApps: plugins.flatMap((plugin) => (plugin.connected ? [plugin.name] : [])),
         toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
+        teammates,
+        room,
       });
       const agent = answerAgent({
         model: models.model,
@@ -346,7 +375,10 @@ export function chatResponse({
           ...(inBot ? await summaryNote(inBot) : []),
           ...withDeclineReasons(
             withoutOriginalInputs(
-              await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner),
+              await readFiles(
+                withReactionNotes(visible).map(withSenderNote).map(withBareCitations),
+                fileOwner,
+              ),
             ),
           ),
         ],

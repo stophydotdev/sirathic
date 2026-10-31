@@ -35,6 +35,8 @@ const STARTER_REPLIES = [
 
 const LOOK_AFTER_MS = [4_000, 9_000, 16_000];
 
+const TEAMMATE_POLL_MS = 4_000;
+
 const answerAfter = (messages: ChatMessage[], index: number) => {
   const next = messages.slice(index + 1).find((message) => message.role === "user");
   return next && messageText(next);
@@ -123,6 +125,19 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
   const working = useChatState(
     (s) => s.sessions?.find((found) => found.id === bot.id)?.working === true,
   );
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if ((useBots.getState().bots?.length ?? 0) < 2) return;
+      void savedChat(bot.id).then(
+        (saved) => {
+          const active = session.status === "submitted" || session.status === "streaming";
+          if (!active && saved.length > session.messages.length) session.messages = saved;
+        },
+        () => undefined,
+      );
+    }, TEAMMATE_POLL_MS);
+    return () => clearInterval(timer);
+  }, [bot.id, session]);
   const ask = (text: string, files: FileUIPart[] = []) =>
     void sendMessage({ text, files, metadata: {} });
   const reply = answerAfter(messages, -1);

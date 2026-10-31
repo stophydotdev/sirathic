@@ -85,7 +85,7 @@ const projectColumns = {
   updatedAt: millis(projects.updatedAt),
 };
 
-const owned = (id: string, by: string) => and(eq(projects.id, id), eq(projects.owner, by));
+export const owned = (id: string, by: string) => and(eq(projects.id, id), eq(projects.owner, by));
 
 const ownedBots = (by: string) => and(eq(projects.owner, by), eq(projects.kind, "bot"));
 
@@ -102,6 +102,14 @@ const bots = ownerCache<Awaited<ReturnType<typeof loadBot>>>();
 const botKey = (id: string, by: string) => `${by}:${id}`;
 
 export const forgetBot = (id: string, by: string) => bots.clear(botKey(id, by));
+
+export async function botOf(id: string, by: string) {
+  const [bot] = await db
+    .select({ id: projects.id, name: projects.name })
+    .from(projects)
+    .where(and(owned(id, by), eq(projects.kind, "bot")));
+  return bot;
+}
 
 export const listProjects = (by: string) =>
   db

@@ -926,4 +926,14 @@ export default {
     "Cho phép người đánh giá của Sirathic đọc câu trả lời này",
   "Shared reports": "Báo cáo đã chia sẻ",
   "No shared reports yet.": "Chưa có báo cáo nào được chia sẻ.",
+  Messaged: "Đã gửi tin nhắn",
+  "Created bot": "Đã tạo bot",
+  Groups: "Nhóm",
+  "New group": "Nhóm mới",
+  "Group name": "Tên nhóm",
+  "Create group": "Tạo nhóm",
+  "Delete group": "Xóa nhóm",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Xóa nhóm "{name}"? Cuộc trò chuyện của nhóm cũng bị xóa.',
+  "Pick at least two bots": "Chọn ít nhất hai bot",
 } satisfies Messages;

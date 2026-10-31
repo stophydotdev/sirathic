@@ -929,4 +929,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "ڕێگە بدە پێداچووەرانی Sirathic ئەم وەڵامە بخوێننەوە",
   "Shared reports": "ڕاپۆرتە هاوبەشکراوەکان",
   "No shared reports yet.": "هێشتا هیچ ڕاپۆرتێکی هاوبەشکراو نییە.",
+  Messaged: "نامە نێردرا",
+  "Created bot": "بۆت دروست کرا",
+  Groups: "گروپەکان",
+  "New group": "گروپی نوێ",
+  "Group name": "ناوی گروپ",
+  "Create group": "دروستکردنی گروپ",
+  "Delete group": "سڕینەوەی گروپ",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'گروپی "{name}" بسڕدرێتەوە؟ گفتوگۆکەشی دەسڕدرێتەوە.',
+  "Pick at least two bots": "لانیکەم دوو بۆت هەڵبژێرە",
 } satisfies Messages;

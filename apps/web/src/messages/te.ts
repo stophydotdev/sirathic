@@ -912,4 +912,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Sirathic సమీక్షకులు ఈ సమాధానాన్ని చదవడానికి అనుమతించండి",
   "Shared reports": "షేర్ చేసిన నివేదికలు",
   "No shared reports yet.": "ఇంకా షేర్ చేసిన నివేదికలు లేవు.",
+  Messaged: "సందేశం పంపబడింది",
+  "Created bot": "బాట్ సృష్టించబడింది",
+  Groups: "గ్రూప్‌లు",
+  "New group": "కొత్త గ్రూప్",
+  "Group name": "గ్రూప్ పేరు",
+  "Create group": "గ్రూప్‌ను సృష్టించండి",
+  "Delete group": "గ్రూప్‌ను తొలగించండి",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" గ్రూప్‌ను తొలగించాలా? దాని సంభాషణ కూడా తొలగించబడుతుంది.',
+  "Pick at least two bots": "కనీసం రెండు బాట్‌లను ఎంచుకోండి",
 } satisfies Messages;

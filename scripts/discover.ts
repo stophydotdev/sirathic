@@ -101,6 +101,8 @@ async function research(title: string) {
     remembers: false,
     connectedApps: [],
     toolNotes: [],
+    teammates: undefined,
+    room: undefined,
   });
   const read = new Map<string, Source>();
   const seen = new Map<string, string[]>();

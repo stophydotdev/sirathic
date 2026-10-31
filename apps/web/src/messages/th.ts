@@ -908,4 +908,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "อนุญาตให้ผู้ตรวจสอบของ Sirathic อ่านคำตอบนี้",
   "Shared reports": "รายงานที่แชร์",
   "No shared reports yet.": "ยังไม่มีรายงานที่แชร์",
+  Messaged: "ส่งข้อความแล้ว",
+  "Created bot": "สร้างบอตแล้ว",
+  Groups: "กลุ่ม",
+  "New group": "กลุ่มใหม่",
+  "Group name": "ชื่อกลุ่ม",
+  "Create group": "สร้างกลุ่ม",
+  "Delete group": "ลบกลุ่ม",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'ลบกลุ่ม "{name}" ไหม การสนทนาของกลุ่มจะถูกลบด้วย',
+  "Pick at least two bots": "เลือกบอตอย่างน้อยสองตัว",
 } satisfies Messages;
