@@ -220,7 +220,7 @@ export function chatResponse({
   connected: ReturnType<typeof connectedTools>;
   project: Promise<RulesProject | undefined>;
   userSkills: Promise<UserSkill[]>;
-  title: Promise<string | undefined> | undefined;
+  title: ((sourcesNeeded: Promise<boolean>) => Promise<string | undefined>) | undefined;
   save: (messages: ChatMessage[]) => Promise<void>;
   record: (event: Event) => void;
   owner: string | undefined;
@@ -260,6 +260,7 @@ export function chatResponse({
       : messages.filter((message) => message.role === "user").length === 1
         ? "search"
         : undefined;
+  const lookup = forced === "search" ? needsSources(askedText) : Promise.resolve(true);
   const messageId = createIdGenerator({ prefix: "msg", size: 16 });
   const stream = createUIMessageStream<ChatMessage>({
     originalMessages: messages,
@@ -271,7 +272,7 @@ export function chatResponse({
         messageMetadata: { createdAt: Date.now(), mode, model: modelName },
       });
       let streaming = true;
-      void title?.then((named) => {
+      void title?.(lookup).then((named) => {
         if (streaming && named) {
           writer.write({
             type: "data-title",
@@ -290,7 +291,7 @@ export function chatResponse({
           project,
           userSkills,
           bot,
-          forced === "search" ? needsSources(askedText) : true,
+          lookup,
           owner !== undefined && !unattended
             ? listConnections(owner).catch(() => [])
             : Promise.resolve([]),
@@ -494,7 +495,7 @@ export function chatResponse({
           console.error(`memory not saved: ${reasonOf(err)}`);
         });
       }
-      if (!inBot && !unattended && ended?.finishReason === "stop" && text.trim()) {
+      if (!inBot && !unattended && ended?.finishReason === "stop" && text.trim() && sourcesNeeded) {
         const questions = await relatedQuestions(models.small, askedText, text, abortSignal).catch(
           () => [],
         );

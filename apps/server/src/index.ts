@@ -188,16 +188,19 @@ app.post("/api/chat", (c) =>
     });
     const title = input.incognito
       ? undefined
-      : saved
-          .then(() =>
-            titleSession(input.id, by, validated, () =>
-              chatTitle(models.small, validated, sideOptions),
-            ),
-          )
-          .catch((err: Error) => {
-            console.error(`title not set: ${reasonOf(err)}`);
-            return undefined;
-          });
+      : (sourcesNeeded: Promise<boolean>) =>
+          Promise.all([saved, sourcesNeeded])
+            .then(([, needed]) =>
+              needed
+                ? titleSession(input.id, by, validated, () =>
+                    chatTitle(models.small, validated, sideOptions),
+                  )
+                : undefined,
+            )
+            .catch((err: Error) => {
+              console.error(`title not set: ${reasonOf(err)}`);
+              return undefined;
+            });
     const answer = startAnswer(by, input.id, {
       continuing: validated.at(-1)?.role === "assistant",
     });
