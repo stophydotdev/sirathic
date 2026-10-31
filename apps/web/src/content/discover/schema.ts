@@ -24,6 +24,7 @@ export const article = z
     title: z.string().min(1),
     slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u),
     topic: z.string().min(1),
+    tint: z.enum(["teal", "rose", "amber", "indigo"]),
     summary: paragraph,
     updated: z.iso.date(),
     reviewed: z.boolean(),

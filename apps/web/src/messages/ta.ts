@@ -877,9 +877,12 @@ export default {
   "Used your memory": "உங்கள் நினைவகம் பயன்படுத்தப்பட்டது",
   Discover: "கண்டறி",
   "Back to Discover": "கண்டறிவுக்குத் திரும்பு",
-  "Draft, not reviewed": "வரைவு, மதிப்பாய்வு செய்யப்படவில்லை",
+  "Checked against its sources": "மூலங்களுடன் சரிபார்க்கப்பட்டது",
   "Updated {date}": "புதுப்பிக்கப்பட்டது: {date}",
   "Discover more": "மேலும் கண்டறி",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "கருத்து வேறுபாடுள்ள கேள்விகளுக்கு குர்ஆன், ஹதீஸ், ஃபிக்ஹ் நூல்களிலிருந்து, ஒவ்வொரு ஆதாரத்தையும் குறிப்பிட்டு பதில்.",
+  "How Discover works": "கண்டறி எப்படி செயல்படுகிறது",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "உம்முல் குரா தேதிகள். பிறை பார்த்தல் ஒரு நாள் வேறுபடலாம்.",
 } satisfies Messages;

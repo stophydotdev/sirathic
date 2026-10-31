@@ -880,9 +880,12 @@ export default {
   "Used your memory": "Hafızanız kullanıldı",
   Discover: "Keşfet",
   "Back to Discover": "Keşfet'e dön",
-  "Draft, not reviewed": "Taslak, incelenmedi",
+  "Checked against its sources": "Kaynaklarıyla karşılaştırıldı",
   "Updated {date}": "Güncellendi: {date}",
   "Discover more": "Daha fazla keşfet",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "İhtilaflı sorular; Kur'an, hadis ve fıkıh kitaplarından, her kaynak belirtilerek yanıtlanır.",
+  "How Discover works": "Keşfet nasıl çalışır",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Ümmü'l-Kurâ tarihleri. Hilalin görülmesi bir gün farklı olabilir.",
 } satisfies Messages;

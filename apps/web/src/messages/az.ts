@@ -882,9 +882,12 @@ export default {
   "Used your memory": "Yaddaşınız istifadə olundu",
   Discover: "Kəşf et",
   "Back to Discover": "Kəşf et bölməsinə qayıt",
-  "Draft, not reviewed": "Qaralama, yoxlanmayıb",
+  "Checked against its sources": "Mənbələri ilə yoxlanılıb",
   "Updated {date}": "Yenilənib: {date}",
   "Discover more": "Daha çox kəşf et",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Mübahisəli suallar Quran, hədis və fiqh kitablarından, hər mənbə göstərilməklə cavablandırılır.",
+  "How Discover works": "Kəşf et necə işləyir",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Ümmül-Qura tarixləri. Hilalın görünməsi bir gün fərqlənə bilər.",
 } satisfies Messages;

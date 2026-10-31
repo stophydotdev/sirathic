@@ -31,6 +31,7 @@ export default {
   title: "Does bleeding break wudu?",
   slug: "bleeding-and-wudu",
   topic: "Purification",
+  tint: "rose",
   updated: "2026-10-31",
   reviewed: false,
   summary: {

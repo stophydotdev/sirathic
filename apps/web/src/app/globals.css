@@ -390,6 +390,20 @@
   }
 }
 
+@utility star-pattern {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' fill='none' stroke='white' stroke-opacity='.16'%3E%3Cpath d='M12 12h24v24H12zM24 7l17 17-17 17L7 24zM24 0v7M48 24h-7M24 48v-7M0 24h7M0 0l12 12M48 0 36 12M48 48 36 36M0 48l12-12'/%3E%3C/svg%3E");
+    background-position: center;
+    mask-image: radial-gradient(circle, transparent 15%, black 75%);
+  }
+}
+
 @utility scroll-fade {
   @supports (animation-timeline: scroll()) {
     mask-image: linear-gradient(

@@ -878,9 +878,12 @@ export default {
   "Used your memory": "Коришћена је твоја меморија",
   Discover: "Откриј",
   "Back to Discover": "Назад на Откриј",
-  "Draft, not reviewed": "Нацрт, није прегледано",
+  "Checked against its sources": "Проверено према изворима",
   "Updated {date}": "Ажурирано {date}",
   "Discover more": "Откриј још",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Спорна питања, одговорена из Курана, хадиса и фикхских књига, уз наведене све изворе.",
+  "How Discover works": "Како ради Откриј",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Датуми по Умм ал-Кура календару. Виђење младог месеца може се разликовати за један дан.",
 } satisfies Messages;

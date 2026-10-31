@@ -867,9 +867,12 @@ export default {
   "Used your memory": "ඔබේ මතකය භාවිත කළා",
   Discover: "සොයාගන්න",
   "Back to Discover": "සොයාගන්න වෙත ආපසු",
-  "Draft, not reviewed": "කෙටුම්පත, සමාලෝචනය කර නැත",
+  "Checked against its sources": "මූලාශ්‍ර සමඟ සසඳා පරීක්ෂා කළා",
   "Updated {date}": "යාවත්කාලීන කළේ {date}",
   "Discover more": "තවත් සොයාගන්න",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "මතභේද ඇති ප්‍රශ්නවලට කුර්ආනය, හදීස් සහ ෆික්හ් ග්‍රන්ථවලින්, සෑම මූලාශ්‍රයක්ම සඳහන් කර පිළිතුරු.",
+  "How Discover works": "සොයාගන්න ක්‍රියා කරන ආකාරය",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "උම් අල්-කුරා දින. සඳ දැකීම අනුව දිනයක වෙනසක් විය හැක.",
 } satisfies Messages;

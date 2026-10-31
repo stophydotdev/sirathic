@@ -883,9 +883,12 @@ export default {
   "Used your memory": "Эс тутумуңуз колдонулду",
   Discover: "Изилдөө",
   "Back to Discover": "Изилдөөгө кайтуу",
-  "Draft, not reviewed": "Долбоор, текшерилген эмес",
+  "Checked against its sources": "Булактары менен текшерилген",
   "Updated {date}": "Жаңыртылды: {date}",
   "Discover more": "Дагы изилдөө",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Талаштуу суроолорго Куран, хадис жана фикх китептеринен, ар бир булак көрсөтүлүп жооп берилет.",
+  "How Discover works": "Изилдөө кантип иштейт",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Умм аль-Кура даталары. Айдын көрүнүшү бир күнгө айырмаланышы мүмкүн.",
 } satisfies Messages;

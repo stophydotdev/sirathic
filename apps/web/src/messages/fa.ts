@@ -875,9 +875,12 @@ export default {
   "Used your memory": "از حافظهٔ شما استفاده شد",
   Discover: "کشف",
   "Back to Discover": "بازگشت به کشف",
-  "Draft, not reviewed": "پیش‌نویس، بازبینی نشده",
+  "Checked against its sources": "با منابعش بررسی شده",
   "Updated {date}": "به‌روزرسانی {date}",
   "Discover more": "کشف بیشتر",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "مسائل اختلافی، پاسخ‌داده‌شده از قرآن، حدیث و کتاب‌های فقه، با ذکر هر منبع.",
+  "How Discover works": "کشف چطور کار می‌کند",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "تاریخ‌های ام‌القری. رؤیت هلال ممکن است یک روز فرق کند.",
 } satisfies Messages;

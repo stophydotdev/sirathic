@@ -877,9 +877,12 @@ export default {
   "Used your memory": "Teskaaɗe maa kuutoraama",
   Discover: "Tawtu",
   "Back to Discover": "Rutto e Tawtu",
-  "Draft, not reviewed": "Binndol, alaa ko ndaarii",
+  "Checked against its sources": "Ƴeewtaama e ɗaɗɗe mum",
   "Updated {date}": "Hesɗitinaama: {date}",
   "Discover more": "Tawtu ɓuri",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Naamnal sentinooɗum, jaabaaɗum ndeen Alqur'aana, hadiisaaji e defte fiqh, e iwdi kala wiyaaɗi.",
+  "How Discover works": "No Tawtu golloto",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Ñalɗi Umm al-Qura. Yiyde lewru ena waawi seertude ñalawma gooto.",
 } satisfies Messages;

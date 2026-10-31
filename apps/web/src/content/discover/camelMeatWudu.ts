@@ -58,6 +58,7 @@ export default {
   title: "Does eating camel meat break wudu?",
   slug: "camel-meat-and-wudu",
   topic: "Purification",
+  tint: "amber",
   updated: "2026-10-31",
   reviewed: false,
   summary: {

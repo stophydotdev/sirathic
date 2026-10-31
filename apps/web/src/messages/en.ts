@@ -808,10 +808,12 @@ export const MESSAGES = [
   "Used your memory",
   "Discover",
   "Back to Discover",
-  "Draft, not reviewed",
+  "Checked against its sources",
   "Updated {date}",
   "Discover more",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.",
+  "How Discover works",
+  "Umm al-Qura dates. Moon sighting can differ by a day.",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

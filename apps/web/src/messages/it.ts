@@ -883,9 +883,12 @@ export default {
   "Used your memory": "È stata usata la tua memoria",
   Discover: "Scopri",
   "Back to Discover": "Torna a Scopri",
-  "Draft, not reviewed": "Bozza, non rivista",
+  "Checked against its sources": "Verificato sulle sue fonti",
   "Updated {date}": "Aggiornato il {date}",
   "Discover more": "Scopri di più",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Questioni controverse, risposte con il Corano, gli hadith e i libri di fiqh, con ogni fonte citata.",
+  "How Discover works": "Come funziona Scopri",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Date Umm al-Qura. L'avvistamento della luna può differire di un giorno.",
 } satisfies Messages;

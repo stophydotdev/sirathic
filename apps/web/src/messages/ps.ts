@@ -876,9 +876,12 @@ export default {
   "Used your memory": "ستاسو حافظه وکارول شوه",
   Discover: "کشف",
   "Back to Discover": "کشف ته بېرته تګ",
-  "Draft, not reviewed": "مسوده، بیاکتل شوی نه ده",
+  "Checked against its sources": "د سرچینو سره کتل شوی",
   "Updated {date}": "تازه شوی: {date}",
   "Discover more": "نور کشف",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "اختلافي پوښتنې، د قرآن، حدیث او فقهې کتابونو څخه ځواب شوې، د هرې سرچینې په یادولو سره.",
+  "How Discover works": "کشف څنګه کار کوي",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "د ام القرى نېټې. د سپوږمۍ لیدل کېدای شي یوه ورځ توپیر ولري.",
 } satisfies Messages;

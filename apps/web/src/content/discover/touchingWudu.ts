@@ -29,6 +29,7 @@ export default {
   title: "Does touching a woman break wudu?",
   slug: "touching-a-woman-and-wudu",
   topic: "Purification",
+  tint: "teal",
   updated: "2026-10-31",
   reviewed: false,
   summary: {

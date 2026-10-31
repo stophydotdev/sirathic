@@ -880,9 +880,12 @@ export default {
   "Used your memory": "بیرەوەرییەکەت بەکارهات",
   Discover: "دۆزینەوە",
   "Back to Discover": "گەڕانەوە بۆ دۆزینەوە",
-  "Draft, not reviewed": "ڕەشنووس، پێداچوونەوەی نەکراوە",
+  "Checked against its sources": "بەراورد کراوە لەگەڵ سەرچاوەکانی",
   "Updated {date}": "نوێکراوەتەوە {date}",
   "Discover more": "دۆزینەوەی زیاتر",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "پرسە جیاوازەکان، لە قورئان و فەرموودە و کتێبەکانی فیقهەوە وەڵام دراونەتەوە، لەگەڵ ناوهێنانی هەموو سەرچاوەیەک.",
+  "How Discover works": "دۆزینەوە چۆن کار دەکات",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "بەروارەکانی ئوم ئەلقورا. بینینی مانگ لەوانەیە بە ڕۆژێک جیاواز بێت.",
 } satisfies Messages;

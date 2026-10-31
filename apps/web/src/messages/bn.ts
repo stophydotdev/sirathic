@@ -868,9 +868,12 @@ export default {
   "Used your memory": "আপনার মেমরি ব্যবহার করা হয়েছে",
   Discover: "আবিষ্কার",
   "Back to Discover": "আবিষ্কারে ফিরে যান",
-  "Draft, not reviewed": "খসড়া, পর্যালোচনা হয়নি",
+  "Checked against its sources": "উৎসের সাথে মিলিয়ে দেখা হয়েছে",
   "Updated {date}": "হালনাগাদ: {date}",
   "Discover more": "আরও আবিষ্কার করুন",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "মতভেদপূর্ণ প্রশ্নের উত্তর কুরআন, হাদিস ও ফিকহের কিতাব থেকে, প্রতিটি সূত্রসহ।",
+  "How Discover works": "আবিষ্কার কীভাবে কাজ করে",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "উম্মুল কুরা তারিখ। চাঁদ দেখার ভিত্তিতে এক দিন পার্থক্য হতে পারে।",
 } satisfies Messages;
