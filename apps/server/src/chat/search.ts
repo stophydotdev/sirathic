@@ -211,7 +211,12 @@ const searchDuas = async (queries: string[]) => {
     found.map((result) => result.duas),
     (dua) => dua.id,
   ).slice(0, SEARCH_LIMITS.duas);
-  return { results: duas, sources: [], text: duaBlock(duas) };
+  const { kept } = await relevant(
+    queries.join("; "),
+    duas,
+    (dua) => `${dua.title}\n${clip(dua.textEn, HEAD_CHARS)}`,
+  );
+  return { results: kept, sources: [], text: duaBlock(kept) };
 };
 
 const FIQH_SCHOOLS = ["hanafi", "maliki", "shafii", "hanbali", "comparative"] as const;
@@ -476,8 +481,18 @@ const searchNews = async (cite: Cite, queries: string[], time: Time) => {
     title: article.title,
     description: article.description ?? "",
   }));
-  const pages = citedPages(cite, hits, await readPages(hits, queries), dates);
-  return { ...pages, text: pagesBlock("news", pages.results) };
+  const passages = await readPages(hits, queries);
+  const { kept, dropped } = await relevant(
+    queries.join("; "),
+    hits,
+    (hit) => `${hit.title}\n${clip(passages.get(hit.url) ?? hit.description, HEAD_CHARS)}`,
+  );
+  const pages = citedPages(cite, kept, passages, dates);
+  return {
+    ...pages,
+    sources: [...pages.sources, ...dropped.map(hitSource)],
+    text: pagesBlock("news", pages.results),
+  };
 };
 
 export const searchAll = async (
