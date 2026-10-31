@@ -2,6 +2,7 @@ import { db } from "@sirathic/db";
 import { hadithGrades, hadiths, sources, texts } from "@sirathic/db/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { hadithLink } from "./hadithLinks";
+import { trustedHadith } from "./trustedHadith";
 
 const LICENSED = "hadeethenc-en";
 const MACHINE_TRANSLATED = "sirathic-en";
@@ -24,7 +25,7 @@ export const hadithsByIds = async (ids: string[]) => {
       })
       .from(hadiths)
       .leftJoin(sources, eq(sources.name, hadiths.source))
-      .where(inArray(hadiths.id, ids)),
+      .where(and(inArray(hadiths.id, ids), trustedHadith.where)),
     db
       .select({
         hadithId: hadithGrades.hadithId,

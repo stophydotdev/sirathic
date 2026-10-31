@@ -1,10 +1,11 @@
 import { db } from "@sirathic/db";
 import { duas, hadiths } from "@sirathic/db/schema";
-import { eq, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { hybridIds } from "../search/hybridSearch";
 import { SEARCHABLE } from "../search/searchable";
 import { citableId } from "./hadithGet";
+import { trustedHadith } from "./trustedHadith";
 
 const DUA_WORDS =
   /(?<=^|\s)(دعاء|الدعاء|أدعية|ادعية|ذكر|أذكار|اذكار|dua|duaa|du'a|supplications?|dhikr|adhkar)(?=\s|$)/giu;
@@ -43,7 +44,7 @@ export const duaSearch = async (input: z.input<typeof duaSearchInput>) => {
       },
     })
     .from(duas)
-    .leftJoin(hadiths, eq(hadiths.id, duas.hadithId))
+    .leftJoin(hadiths, and(eq(hadiths.id, duas.hadithId), trustedHadith.where))
     .where(inArray(duas.id, ids));
   const byId = new Map(
     rows.map(({ hadith, ...dua }) => [dua.id, { ...dua, hadithId: hadith && citableId(hadith) }]),
