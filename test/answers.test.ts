@@ -325,10 +325,12 @@ test("a job search drops only postings Clef calls clear misfits, and keeps them 
   }
 });
 
+const clefSaysEnough = () => Response.json({ result: { answers: { enough: { noul: 0.9 } } } });
+
 test("Quick research stops once Clef says the results answer the question", async () => {
-  const clef = spyOn(globalThis, "fetch").mockResolvedValue(
-    Response.json({ result: { answers: { enough: { noul: 0.9 } } } }),
-  );
+  const clef = spyOn(globalThis, "fetch")
+    .mockResolvedValueOnce(clefSaysEnough())
+    .mockResolvedValueOnce(clefSaysEnough());
   try {
     const searched = {
       toolCalls: [{ toolName: "search_web" }],
@@ -342,7 +344,27 @@ test("Quick research stops once Clef says the results answer the question", asyn
     );
     const emailed = { toolCalls: [{ toolName: "send_email" }], toolResults: [] };
     expect(await researchedEnough("email my imam", [searched, emailed])).toBe(false);
+    const nothing = {
+      toolCalls: [{ toolName: "search_web" }],
+      toolResults: [{ output: { text: "" } }],
+    };
+    expect(await researchedEnough("what is fard in wudu", [nothing])).toBe(false);
     expect(clef).toHaveBeenCalledTimes(1);
+    const read = {
+      toolCalls: [{ toolName: "fetch_url" }],
+      toolResults: [
+        {
+          output: {
+            pages: [{ url: "https://example.com", markdown: "The page says wudu has four parts." }],
+            sources: [{ snippet: "y".repeat(13_000) }],
+          },
+        },
+      ],
+    };
+    expect(await researchedEnough("what does this page say", [read])).toBe(true);
+    expect(clef.mock.calls[1]?.[1]?.body).toEqual(
+      expect.stringContaining("The page says wudu has four parts."),
+    );
   } finally {
     clef.mockRestore();
   }
