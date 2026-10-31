@@ -15,6 +15,7 @@ import { article, type ArticleInput } from "../apps/web/src/content/discover/sch
 const FOLDER = join(import.meta.dir, "../apps/web/src/content/discover");
 const TINTS = ["teal", "rose", "amber", "indigo"] as const;
 const STEP_CAP = 20;
+const ANSWER_AT_TOKENS = 40_000;
 const RESEARCH_MS = 15 * 60_000;
 const PASS = 0.5;
 
@@ -99,15 +100,17 @@ async function research(title: string) {
     }),
     tools,
     stopWhen: isStepCount(STEP_CAP),
-    prepareStep: ({ stepNumber }) =>
-      stepNumber === STEP_CAP - 1 ? { toolChoice: "none" as const } : {},
+    prepareStep: ({ stepNumber, steps }) =>
+      stepNumber === STEP_CAP - 1 || (steps.at(-1)?.usage.inputTokens ?? 0) > ANSWER_AT_TOKENS
+        ? { toolChoice: "none" as const }
+        : {},
   });
   const result = await agent.generate({
     prompt: brief(title),
     abortSignal: AbortSignal.timeout(RESEARCH_MS),
   });
   const read = new Map<string, Source>();
-  const seen = new Map<string, string>();
+  const seen = new Map<string, string[]>();
   for (const step of result.steps) {
     for (const call of step.toolResults) {
       for (const found of withSources.safeParse(call.output).data?.sources ?? []) {
@@ -115,7 +118,7 @@ async function research(title: string) {
       }
       for (const { citation, ...rest } of shownResults.safeParse(call.output).data ?? []) {
         const url = citation ? urls[citation - 1] : undefined;
-        if (url) seen.set(url, JSON.stringify(rest));
+        if (url) seen.set(url, [...new Set([...(seen.get(url) ?? []), JSON.stringify(rest)])]);
       }
     }
   }
@@ -131,13 +134,13 @@ async function research(title: string) {
 
 async function review(
   draft: Paragraph,
-  seen: Map<string, string>,
+  seen: Map<string, string[]>,
   log: (line: string) => void,
 ): Promise<Paragraph | undefined> {
   const sources = Object.fromEntries(
     draft.citations.flatMap((url, at) => {
-      const text = seen.get(url);
-      return text ? [[`source ${at + 1}`, text]] : [];
+      const texts = seen.get(url);
+      return texts ? [[`source ${at + 1}`, texts.join("\n\n")]] : [];
     }),
   );
   const check = async (text: string) => {
@@ -239,8 +242,8 @@ async function write(entry: (typeof queue)[number], tint: (typeof TINTS)[number]
   const parsed = article.safeParse(input);
   if (!parsed.success) return log(`FAILED: ${parsed.error.message}`);
   await Bun.write(
-    join(FOLDER, `${camelOf(entry.slug)}.ts`),
-    `import type { ArticleInput } from "./schema";\n\nexport default ${JSON.stringify(input, null, 2)} satisfies ArticleInput;\n`,
+    join(FOLDER, `${camelOf(entry.slug)}.json`),
+    `${JSON.stringify(input, null, 2)}\n`,
   );
   log(
     `WRITTEN: ${sections.length} sections, ${cited.size} sources, battle ${battle.toFixed(2)}, ${Math.round((performance.now() - startedAt) / 1000)} s`,
@@ -249,17 +252,19 @@ async function write(entry: (typeof queue)[number], tint: (typeof TINTS)[number]
 
 const present = new Set(await readdir(FOLDER));
 const waiting = queue
-  .filter((entry) => !present.has(`${camelOf(entry.slug)}.ts`))
+  .filter((entry) => !present.has(`${camelOf(entry.slug)}.json`))
   .slice(0, Number(Bun.argv[2] ?? queue.length));
-await inOrder(waiting, (entry, at) =>
-  write(entry, TINTS[at % TINTS.length] ?? "teal").catch((err: Error) =>
+await inOrder(waiting, (entry) =>
+  write(entry, TINTS[queue.indexOf(entry) % TINTS.length] ?? "teal").catch((err: Error) =>
     console.log(`[${entry.slug}] FAILED: ${err.message}`),
   ),
 );
 const done = new Set(await readdir(FOLDER));
-const written = queue.map((entry) => camelOf(entry.slug)).filter((name) => done.has(`${name}.ts`));
+const written = queue
+  .map((entry) => camelOf(entry.slug))
+  .filter((name) => done.has(`${name}.json`));
 await Bun.write(
   join(FOLDER, "written.ts"),
-  `${written.map((name) => `import ${name} from "./${name}";`).join("\n")}\n\nexport const written = [${written.join(", ")}];\n`,
+  `${written.map((name) => `import ${name} from "./${name}.json";`).join("\n")}\n\nexport const written = [${written.join(", ")}];\n`,
 );
 process.exit(0);

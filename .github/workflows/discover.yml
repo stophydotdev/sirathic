@@ -23,7 +23,7 @@ jobs:
       NEXT_PUBLIC_SERVER: http://localhost:3000
       DATABASE_URL: ${{ secrets.DISCOVER_DATABASE_URL }}
       REDIS_URL: redis://127.0.0.1:6379
-      OPENAI_API_KEY: ci
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
       STOPHY_API_KEY: ci
