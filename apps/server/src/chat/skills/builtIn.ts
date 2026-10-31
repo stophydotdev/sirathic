@@ -8,6 +8,7 @@ import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
 import { STOPHY_LINK, STOPHY_TOOLS } from "../stophyTools";
 import { bookingSkills } from "./booking";
+import billsAndReceipts from "./billsAndReceipts.md" with { type: "text" };
 import browser from "./browser.md" with { type: "text" };
 import chart from "./chart.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
@@ -239,6 +240,17 @@ export const skillsFor = ({
               "install_plugin",
               ...appTools(plugins, ["gmail"]),
               ...files.tools,
+            ],
+          },
+          {
+            name: "bills_receipts",
+            when: "Load when the user wants their bills on their calendar as reminders, or their receipts labeled in Gmail or listed in a Drive folder",
+            text: billsAndReceipts,
+            tools: [
+              "search_plugins",
+              "install_plugin",
+              ...appTools(plugins, ["gmail", "googlecalendar", "googledrive"]),
+              BULK,
             ],
           },
           {
