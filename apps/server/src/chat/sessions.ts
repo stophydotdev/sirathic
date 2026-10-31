@@ -254,6 +254,10 @@ export async function forkSession(
   const end = messages.findIndex((message) => message.id === messageId);
   if (end === -1) throw new StatusError(404, "no such message");
   const copied = messages.slice(0, end + 1);
+  for (const message of copied) {
+    const { report: _report, ...metadata } = message.metadata ?? {};
+    message.metadata = metadata;
+  }
   const forked = crypto.randomUUID();
   await db.insert(chatSessions).values({
     id: forked,

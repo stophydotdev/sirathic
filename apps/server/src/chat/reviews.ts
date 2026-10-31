@@ -54,13 +54,11 @@ export async function listSharedReports() {
       sql`jsonb_path_exists(${chatSessions.messages}, '$[*].metadata.report ? (@.shared == true)')`,
     );
   const reports = await Promise.all(
-    rows.map(async (row) => {
-      const messages = await validateUIMessages<ChatMessage>({
-        messages: row.messages,
-        ...messageSchemas,
-      }).catch(() => []);
-      return sharedReports(messages, row.createdAt);
-    }),
+    rows.map((row) =>
+      validateUIMessages<ChatMessage>({ messages: row.messages, ...messageSchemas })
+        .then((messages) => sharedReports(messages, row.createdAt))
+        .catch(() => []),
+    ),
   );
   return reports.flat().toSorted((a, b) => b.at.localeCompare(a.at));
 }
