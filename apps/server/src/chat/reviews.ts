@@ -1,9 +1,9 @@
 import { db } from "@sirathic/db";
-import { chatSessions } from "@sirathic/db/schema";
+import { chatSessions, users } from "@sirathic/db/schema";
 import { env } from "@sirathic/env/server";
 import { TRPCError } from "@trpc/server";
 import { validateUIMessages } from "ai";
-import { sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { type ChatMessage, messageText } from "../shared/messages";
 import { procedure } from "../trpc";
 import { sourcesOf } from "./pages";
@@ -15,10 +15,15 @@ const reviewers = new Set(
     .filter(Boolean),
 );
 
-export const reviewer = procedure.use(({ ctx, next }) => {
-  if (!ctx.user?.email || !reviewers.has(ctx.user.email.toLowerCase())) {
-    throw new TRPCError({ code: "NOT_FOUND", message: "not found" });
-  }
+export const reviewer = procedure.use(async ({ ctx, next }) => {
+  const [verified] =
+    ctx.user?.email && reviewers.has(ctx.user.email.toLowerCase())
+      ? await db
+          .select({ id: users.id })
+          .from(users)
+          .where(and(eq(users.id, ctx.user.id), eq(users.emailVerified, true)))
+      : [];
+  if (!verified) throw new TRPCError({ code: "NOT_FOUND", message: "not found" });
   return next();
 });
 
