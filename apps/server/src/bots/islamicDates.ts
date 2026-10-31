@@ -114,6 +114,12 @@ const upcoming = (from: Date) => {
   }).toSorted((a, b) => a.gregorian.localeCompare(b.gregorian));
 };
 
+export const dayState = (gregorian: string) => {
+  const date = new Date(`${gregorian}T00:00:00Z`);
+  const { year, month, day } = hijriOf(date);
+  return { ...dated(date), hijri: { day, month: MONTHS[month - 1], monthNumber: month, year } };
+};
+
 const answer = (date: Date) => ({
   ...dated(date),
   hijri: hijriText(hijriOf(date)),

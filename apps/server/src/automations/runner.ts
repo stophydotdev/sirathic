@@ -24,6 +24,7 @@ import {
 import { DEFAULT_SETTINGS } from "../shared/settings";
 import { dueItems, progressOf } from "../bots/study";
 import type { User } from "../account/users";
+import { postsToday } from "./postsToday";
 import { nextRun, schedule } from "./schedule";
 import { routinesChanged } from "./store";
 
@@ -203,9 +204,24 @@ async function runAutomation({
   prompt,
   projectId,
   mode,
+  timezone,
   failures,
 }: typeof automations.$inferSelect) {
   const startedAt = performance.now();
+  if (!(await postsToday(prompt, timezone))) {
+    track(
+      {
+        name: "routine.ran",
+        props: { outcome: "skipped", ms: Math.round(performance.now() - startedAt) },
+      },
+      owner,
+    );
+    await db
+      .update(automations)
+      .set({ lastRunAt: new Date(), failures: 0 })
+      .where(eq(automations.id, id));
+    return;
+  }
   const runMode = modeSchema.catch("quick").parse(mode);
   const bot = projectId ? await botOf(projectId, owner) : undefined;
   const sessionId = bot?.id ?? crypto.randomUUID();
