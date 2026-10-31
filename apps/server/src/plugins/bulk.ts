@@ -1,7 +1,7 @@
 import type { CallToolResult } from "@ai-sdk/mcp";
 import { type Tool, tool } from "ai";
 import { z } from "zod";
-import { decisionChances } from "../chat/clef";
+import { yesChances } from "../chat/clef";
 import { actionOf, isReadOnly } from "../chat/confirm";
 import { BULK, type BulkInput, bulkInput } from "./bulkInput";
 
@@ -79,7 +79,7 @@ const chancesFor = async (rule: string, items: readonly Row[]) => {
   );
   const asked = await Promise.all(
     batches.map(async (batch) => {
-      const chance = await decisionChances(
+      const chance = await yesChances(
         {
           rule,
           items: Object.fromEntries(batch.map((item, index) => [`i${index}`, factsOf(item)])),
@@ -87,6 +87,7 @@ const chancesFor = async (rule: string, items: readonly Row[]) => {
         Object.fromEntries(
           batch.map((_, index) => [`i${index}`, `Does item i${index} match the rule?`]),
         ),
+        "clef",
       );
       return batch.map((_, index) => chance(`i${index}`) ?? 0);
     }),

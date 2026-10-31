@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const CLEF = "clef-flash";
 type ClefModel = "clef" | typeof CLEF;
-const WAIT_MS = 2_000;
+const WAIT_MS = { [CLEF]: 2_000, clef: 8_000 } as const satisfies Record<ClefModel, number>;
 
 type State = string | number | readonly State[] | { readonly [key: string]: State };
 
@@ -34,42 +34,7 @@ export const yesChances = async (
           ]),
         ),
       }),
-      signal: AbortSignal.timeout(WAIT_MS),
-    },
-  );
-  if (!res.ok) throw new Error(`Clef answered ${res.status}`);
-  const {
-    result: { answers },
-  } = decided.parse(await res.json());
-  return (name: string) => answers[name]?.noul;
-};
-
-const DECISION_MODEL = "clef";
-const DECISION_WAIT_MS = 8_000;
-
-export const decisionChances = async (
-  state: State,
-  questions: Readonly<Record<string, string>>,
-) => {
-  const res = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/cloudflare/${DECISION_MODEL}`,
-    {
-      method: "POST",
-      headers: {
-        authorization: `Bearer ${env.CLOUDFLARE_AI_TOKEN}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        model: DECISION_MODEL,
-        state,
-        questions: Object.fromEntries(
-          Object.entries(questions).map(([name, instructions]) => [
-            name,
-            { type: "noul", instructions },
-          ]),
-        ),
-      }),
-      signal: AbortSignal.timeout(DECISION_WAIT_MS),
+      signal: AbortSignal.timeout(WAIT_MS[model]),
     },
   );
   if (!res.ok) throw new Error(`Clef answered ${res.status}`);
