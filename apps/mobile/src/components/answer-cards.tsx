@@ -5,6 +5,7 @@ import * as WebBrowser from "expo-web-browser";
 import { type FC, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { Brain, Check, Copy, Pin, Search } from "./icons";
+import { IslamicDatesCard, PrayerTimesCard, SettingChanged } from "./day-cards";
 import { QuizCard } from "./quiz-card";
 import { Swap } from "./motion";
 
@@ -213,6 +214,12 @@ export const AnswerCard: FC<{ name: string; input: unknown; output: unknown }> =
       return <TranslationCard input={input} />;
     case "show_places":
       return <PlacesCard output={output} />;
+    case "prayer_times":
+      return <PrayerTimesCard output={output} />;
+    case "islamic_dates":
+      return <IslamicDatesCard output={output} />;
+    case "change_setting":
+      return <SettingChanged output={output} />;
     default:
       return null;
   }

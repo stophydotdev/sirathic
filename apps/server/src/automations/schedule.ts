@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { PRAYERS, prayerPlace, prayerTimesOn } from "../prayer/times";
+import { PRAYERS } from "../shared/cards";
+import { prayerPlace, prayerTimesOn } from "../prayer/times";
 
 const SEARCH_DAYS = 366;
 

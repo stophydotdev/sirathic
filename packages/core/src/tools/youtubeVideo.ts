@@ -30,7 +30,7 @@ const videoCache = cacheFor({
 });
 
 const transcriptCache = cacheFor({
-  namespace: "youtube-transcript:v1",
+  namespace: "youtube-transcript:v2",
   schema: z.object({ text: z.string() }),
   freshMs: 7 * DAY_MS,
   keepMs: 30 * DAY_MS,
@@ -56,11 +56,28 @@ export const youtubeVideo = (videoId: string) =>
     };
   });
 
+const LINE_SECONDS = 30;
+
+const clock = (seconds: number) =>
+  `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
+
+export const timedLines = (segments: readonly { startSeconds: number; text?: string }[]) =>
+  segments
+    .reduce<{ start: number; words: string[] }[]>((lines, { startSeconds, text }) => {
+      const last = lines.at(-1);
+      if (!text) return lines;
+      if (last && startSeconds - last.start < LINE_SECONDS) last.words.push(text);
+      else lines.push({ start: startSeconds, words: [text] });
+      return lines;
+    }, [])
+    .map(({ start, words }) => `[${clock(start)}] ${words.join(" ")}`)
+    .join("\n");
+
 export const youtubeTranscript = (videoId: string) =>
   transcriptCache(videoId, async () => {
     const { data } = await stophy.youtube.transcript(
-      { videoId },
+      { videoId, includeTimestamps: true },
       { signal: AbortSignal.timeout(TIMEOUT_MS) },
     );
-    return { text: data.text ?? "" };
+    return { text: data.segments ? timedLines(data.segments) : (data.text ?? "") };
   });

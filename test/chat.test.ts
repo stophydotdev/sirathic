@@ -13,6 +13,7 @@ import {
 } from "../apps/server/src/shared/messages";
 import { unwrappedCitations } from "../packages/app/src/citations";
 import { hadithLink } from "../packages/core/src/tools/hadithLinks";
+import { timedLines } from "../packages/core/src/tools/youtubeVideo";
 
 const streamed = async (transform: ReturnType<typeof citations>["transform"], deltas: string[]) => {
   const parts = new ReadableStream({
@@ -306,4 +307,16 @@ test("site: moves into sites, quotes and uppercase operators go, Arabic stays as
     sites: ["islamweb.net", "islamqa.info"],
     notes: [],
   });
+});
+
+test("a video transcript comes in 30-second lines that start with their time", () => {
+  const segments = [
+    { startSeconds: 2, text: "Bismillah." },
+    { startSeconds: 15, text: "Patience is light." },
+    { startSeconds: 95, text: "Trust His timing." },
+    { startSeconds: 100 },
+  ];
+  expect(timedLines(segments)).toBe(
+    "[0:02] Bismillah. Patience is light.\n[1:35] Trust His timing.",
+  );
 });

@@ -1,6 +1,25 @@
 import { z } from "zod";
+import { settingsUpdate } from "./settings";
 
-export const ANSWER_CARDS = ["show_steps", "show_quiz", "show_translation", "show_places"] as const;
+export const ANSWER_CARDS = [
+  "show_steps",
+  "show_quiz",
+  "show_translation",
+  "show_places",
+  "prayer_times",
+  "islamic_dates",
+  "change_setting",
+] as const;
+
+export const PRAYERS = ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"] as const;
+
+export const ISLAMIC_EVENTS = [
+  "Ramadan begins",
+  "Eid al-Fitr",
+  "Day of Arafah",
+  "Eid al-Adha",
+  "Ashura",
+] as const;
 
 const summary = z
   .string()
@@ -170,3 +189,21 @@ export const shuffledOptions = ({ prompt, options }: Question) => {
   shuffled.sort((a, b) => hashOf(prompt + a) - hashOf(prompt + b));
   return shuffled;
 };
+
+export const prayerTimetable = z.object({
+  place: z.string().optional(),
+  timezone: z.string(),
+  days: z.array(z.object({ date: z.iso.date() }).and(z.record(z.enum(PRAYERS), z.string()))),
+});
+
+export const islamicDays = z.object({
+  gregorian: z.iso.date(),
+  hijri: z.string(),
+  upcoming: z.array(
+    z.object({ name: z.enum(ISLAMIC_EVENTS), gregorian: z.iso.date(), hijri: z.string() }),
+  ),
+});
+
+export const settingChange = settingsUpdate
+  .pick({ madhab: true, name: true, about: true })
+  .refine((change) => Object.keys(change).length > 0, "change at least one setting");

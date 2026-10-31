@@ -10,7 +10,7 @@ import { type Draft, draftOf, sameDraft } from "@sirathic/app/customize";
 import { MADHABS } from "@sirathic/server/settings";
 import { type FC, useEffect, useState } from "react";
 
-const MADHAB_NAMES = {
+export const MADHAB_NAMES = {
   none: "No preference",
   hanafi: "Hanafi",
   maliki: "Maliki",

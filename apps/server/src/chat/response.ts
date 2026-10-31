@@ -29,6 +29,7 @@ import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { islamicDates } from "../bots/islamicDates";
 import { prayerTimes } from "../prayer/tool";
+import { settingTools } from "../account/settingTools";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
 import { needsCard } from "./autoReview";
@@ -214,8 +215,9 @@ export function chatResponse({
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
         ...(inBot && !unattended && botTools(inBot)),
         ...(inBot && !unattended && browserTools(inBot)),
-        ...(inBot && { islamic_dates: islamicDates }),
+        islamic_dates: islamicDates,
         prayer_times: prayerTimes,
+        ...(owner !== undefined && !unattended && settingTools(owner)),
         ...(owner !== undefined && !unattended && skillTools(owner)),
         ...(owner !== undefined && grok && xSearchTools(owner, sources.add)),
         ...(owner !== undefined && !unattended && { [SEND_FEEDBACK]: sendFeedback }),

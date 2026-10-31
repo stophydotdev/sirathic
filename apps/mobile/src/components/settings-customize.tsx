@@ -5,7 +5,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { api } from "@/lib/api";
 import { Group, Segmented, Setting } from "./settings-controls";
 
-const MADHAB_NAMES = {
+export const MADHAB_NAMES = {
   none: "No preference",
   hanafi: "Hanafi",
   maliki: "Maliki",
