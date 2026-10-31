@@ -14,6 +14,7 @@ import {
   stopAnswer,
 } from "../apps/server/src/chat/answers";
 import { afterAnswer } from "../apps/server/src/chat/afterAnswer";
+import { researchedEnough } from "../apps/server/src/chat/enoughGate";
 import { chatResponse } from "../apps/server/src/chat/response";
 import { keepFitting } from "../apps/server/src/chat/stophyTools";
 import server from "../apps/server/src/index";
@@ -324,21 +325,57 @@ test("a job search drops only postings Clef calls clear misfits, and keeps them 
   }
 });
 
-test("a step that goes silent after a tool result is retried once with a nudge, and the answer arrives", async () => {
-  const datesCall = [
-    { type: "stream-start", warnings: [] },
-    { type: "tool-call", toolCallId: "d1", toolName: "islamic_dates", input: JSON.stringify({}) },
-    { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
-  ] satisfies MockChunks;
-  const silent = [
-    { type: "stream-start", warnings: [] },
-    { type: "finish", finishReason: { unified: "stop", raw: undefined }, usage },
-  ] satisfies MockChunks;
-  const seen = await chatTurn({}, [datesCall, silent, answered]);
-  expect(seen[1]?.prompt.at(-1)).toMatchObject({ role: "tool" });
-  expect(seen[2]?.prompt.at(-1)).toMatchObject({
-    role: "system",
-    content: expect.stringContaining("You stopped without saying anything"),
-  });
-  expect(seen.body).toContain("Done.");
+test("Quick research stops once Clef says the results answer the question", async () => {
+  const clef = spyOn(globalThis, "fetch").mockResolvedValue(
+    Response.json({ result: { answers: { enough: { noul: 0.9 } } } }),
+  );
+  try {
+    const searched = {
+      toolCalls: [{ toolName: "search_web" }],
+      toolResults: [
+        { output: { results: ["x".repeat(4_000)], text: "Wudu has four obligatory parts." } },
+      ],
+    };
+    expect(await researchedEnough("what is fard in wudu", [searched])).toBe(true);
+    expect(clef.mock.calls[0]?.[1]?.body).toEqual(
+      expect.stringContaining("Wudu has four obligatory parts."),
+    );
+    const emailed = { toolCalls: [{ toolName: "send_email" }], toolResults: [] };
+    expect(await researchedEnough("email my imam", [searched, emailed])).toBe(false);
+    expect(clef).toHaveBeenCalledTimes(1);
+  } finally {
+    clef.mockRestore();
+  }
 });
+
+test.each([
+  ["no", 0.1, "tool"],
+  ["yes", 0.9, "system"],
+] as const)(
+  "a step that goes silent after a tool result is retried once with a nudge when Clef says %s to enough",
+  async (_, enough, lastBeforeSilence) => {
+    const datesCall = [
+      { type: "stream-start", warnings: [] },
+      { type: "tool-call", toolCallId: "d1", toolName: "islamic_dates", input: JSON.stringify({}) },
+      { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
+    ] satisfies MockChunks;
+    const silent = [
+      { type: "stream-start", warnings: [] },
+      { type: "finish", finishReason: { unified: "stop", raw: undefined }, usage },
+    ] satisfies MockChunks;
+    const clef = spyOn(globalThis, "fetch").mockResolvedValue(
+      Response.json({ result: { answers: { enough: { noul: enough } } } }),
+    );
+    try {
+      const seen = await chatTurn({}, [datesCall, silent, answered]);
+      expect(seen[1]?.prompt.at(-1)).toMatchObject({ role: lastBeforeSilence });
+      expect(seen[2]?.prompt.at(-1)).toMatchObject({
+        role: "system",
+        content: expect.stringContaining("You stopped without saying anything"),
+      });
+      expect(seen.body).toContain("Done.");
+    } finally {
+      clef.mockRestore();
+    }
+  },
+);

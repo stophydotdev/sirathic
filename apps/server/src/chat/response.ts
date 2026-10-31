@@ -360,6 +360,7 @@ export function chatResponse({
         shorten,
         turn,
         steer,
+        quickly: mode === "quick" && !inBot && !unattended ? { asked: askedText } : undefined,
       });
       const answer = await createAgentUIStream({
         agent,

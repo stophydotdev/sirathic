@@ -16,7 +16,7 @@ const sum = (a: number | undefined, b: number | undefined) =>
 export const noSilentStop: LanguageModelMiddleware = {
   wrapStream: async ({ doStream, params, model }) => {
     const first = await doStream();
-    const last = params.prompt.at(-1);
+    const last = params.prompt.findLast((message) => message.role !== "system");
     if (last?.role !== "tool" || last.content.some((part) => connectCard.safeParse(part).success)) {
       return first;
     }
