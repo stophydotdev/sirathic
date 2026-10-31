@@ -179,6 +179,7 @@ Fact-check each claim with search_web, fetch_url and get_verses, and calculation
 - Prefer authoritative sources when relevant (e.g., SEC filings, investor relations pages on company domains).
 - Break multi-entity questions into separate single-entity queries.
 - A quoted verse: look it up with get_verses by its reference and compare the wording and the reference. A quoted hadith: search the hadith sources and compare the wording, the collection and the number. Follow the citation rules in your prompt, and give a hadith's grade only from a source.
+- A claim about a study or a paper: check it with stophy_call, id google.scholar (query: its title or authors, yearFrom, yearTo), and compare the title, authors, year and what it found. Scholar checks papers, never rulings.
 - When the document states a ruling, do not judge it yourself: say what your sources say about it and cite them. When the schools differ, name each school only from a source in front of you.
 - Be pragmatic: if a claim cannot be verified after 2-3 search attempts with different query formulations, mark it as inconclusive and move on. Do not spend unlimited turns chasing a single claim.
 

@@ -18,7 +18,7 @@ Set up a daily Quran portion that finishes by a date the user picks, keep their 
 1. Work out the pace: the pages left divided by the days left, rounded up, and say it, like 20 pages a day for 30 days. Turn a Hijri end date, like the end of Ramadan, into a date with islamic_dates when it is in your tools.
 2. Save the goal, the end date, the pace and their place with update_memory, and update the place when they say how far they got.
 3. Offer a daily routine with the routines skill, tied to a prayer when they named one, like after Fajr. Its prompt asks for today's portion from their saved place and pace, names the pages and the surahs they cover, and gives a short reflection on one ayah from search_web with its citation.
-4. Memorizing: in a bot, add each passage they finish with the study skill so it comes back for review.
+4. Memorizing: in a bot, add each passage they finish with the study skill so it comes back for review. To listen along, find a recitation with stophy_call, id youtube.search (query: the surah and the reciter they name, type videos) and give its title, channel and link. They choose the reciter. The text of the ayah still comes from search_web.
 
 ## Pitfalls
 

@@ -5,7 +5,7 @@ import { BROWSER_TOOLS } from "../../bots/browser";
 import { CODE_RULES } from "../codeTools";
 import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
-import { STOPHY_LINK } from "../stophyTools";
+import { STOPHY_LINK, STOPHY_TOOLS } from "../stophyTools";
 import { bookingSkills } from "./booking";
 import browser from "./browser.md" with { type: "text" };
 import chart from "./chart.md" with { type: "text" };
@@ -126,6 +126,7 @@ export const skillsFor = ({
             name: "research",
             when: "Research methodology for conducting thorough, multi-round investigations. Defines how to gather context first (memories, then clarifying questions), then gather evidence from authoritative sources in rounds until the question is resolved, cross-validate findings and produce comprehensive answers with inline citations",
             text: research,
+            tools: STOPHY_TOOLS,
           },
         ]
       : []),
@@ -263,6 +264,7 @@ export const skillsFor = ({
             name: "document_review",
             when: "Load when the user attaches a document and asks to review, proofread, fact-check or find errors, including its verses and hadith",
             text: documentReview,
+            tools: STOPHY_TOOLS,
           },
           {
             name: "recent_changes",

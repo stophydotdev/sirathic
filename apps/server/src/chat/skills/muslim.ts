@@ -32,7 +32,7 @@ export const muslimSkills: Skill[] = [
     name: "hajj_umrah",
     when: "Load when the user plans, books or asks how to do Hajj or Umrah, or wants a Nusuk permit like a Rawdah slot",
     text: hajjUmrah,
-    tools: BROWSER_TOOLS,
+    tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
   {
     name: "ramadan",
@@ -43,18 +43,19 @@ export const muslimSkills: Skill[] = [
     name: "qurbani",
     when: "Load when the user wants to order or compare a qurbani (udhiyah) or an aqiqah",
     text: qurbani,
-    tools: BROWSER_TOOLS,
+    tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
   {
     name: "zakat_giving",
     when: "Load when the user wants their zakat worked out from their own money, or wants to give zakat or sadaqah to a charity",
     text: zakatGiving,
-    tools: BROWSER_TOOLS,
+    tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
   {
     name: "quran_plan",
     when: "Load when the user wants a daily Quran reading or memorization plan, to finish the Quran by a date, or asks where they are up to",
     text: quranPlan,
+    tools: STOPHY_TOOLS,
   },
   {
     name: "wasiyyah",
