@@ -154,14 +154,6 @@ export const BotHome: FC<{ bot: Project }> = ({ bot }) => {
     if (signedOut) window.location.replace("/");
   }, [signedOut]);
 
-  useEffect(() => {
-    const previous = document.title;
-    document.title = `${bot.name} - Sirathic`;
-    return () => {
-      document.title = previous;
-    };
-  }, [bot.name]);
-
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-14 shrink-0 items-center justify-between ps-14 pe-4 lg:ps-4">
