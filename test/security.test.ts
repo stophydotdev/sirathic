@@ -94,6 +94,7 @@ test.each([
   ],
   ["an ask rule that does not match leaves it alone", "cal_create_event", [calendar], [0.1], false],
   ["a failed check asks when a rule asks", "gmail_trash_thread", [calendar], undefined, true],
+  ["a rule the check leaves unscored asks", "cal_create_event", [calendar], [], true],
   ["a draft is not a change to their mailbox", "gmail_create_draft", [calendar], [1], false],
 ])("%s", async (_, toolName, rules, scores, expected) => {
   const asks = await scoredBy(scores, () => needsCard({ toolName, input: {} }, changes, rules));
