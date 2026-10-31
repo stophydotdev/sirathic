@@ -16,7 +16,7 @@ const PAGE_TEXT_CHARS = 1_500;
 const MAX_OPTIONS = 255;
 const END_PAGE_CHARS = 15_000;
 const NEEDS_THE_USER =
-  /\b(?:pay|buy|purchase|place order|order now|book|reserve|submit|send|confirm|check ?out|subscribe|sign up|register|delete|cancel|post|publish|donate|apply|sign in|log ?in)\b/iu;
+  /\b(?:pay(?:ment)?|give|buy|purchase|place order|order now|book|reserve|submit|send|confirm|check ?out|subscribe|sign up|register|delete|cancel|post|publish|donate|apply|sign in|log ?in)\b/iu;
 const SECRET_FIELD = /pass(?:word|code)|card number|cvv|cvc|security code|one-time|otp/iu;
 
 export const taskInput = z.object({
