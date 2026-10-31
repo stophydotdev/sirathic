@@ -1,11 +1,12 @@
 import type { z } from "zod";
 import type { hadithReason } from "../../apps/data/src/schema";
-
-const similarityThreshold = 0.95;
+import { hadithKey } from "../hadithKey";
 
 export type HadithReason = z.infer<typeof hadithReason>;
 
 export type Copy = { number: string; arabic: string };
+
+type SecondCopy = { number: string | null; arabic: string };
 
 export type Check =
   | { kind: "verified"; similarity: number }
@@ -40,15 +41,20 @@ const similarity = (first: string, second: string) => {
   return (2 * shared) / (a.length - 1 + (b.length - 1));
 };
 
-export const checkCopies = (copy: Copy, second: Copy | null): Check => {
+const spellingKey = (text: string) => hadithKey(text).replace(/[ؤئ]/gu, "ء");
+
+export const checkCopies = (copy: Copy, second: SecondCopy | null): Check => {
   if (copy.arabic.trim() === "")
     return { kind: "unverified", reason: "empty_arabic", similarity: null };
   if (!second || second.arabic.trim() === "") {
     return { kind: "unverified", reason: "no_second_copy", similarity: null };
   }
   const score = Math.round(similarity(copy.arabic, second.arabic) * 10_000) / 10_000;
-  if (score < similarityThreshold) {
+  if (spellingKey(copy.arabic) !== spellingKey(second.arabic)) {
     return { kind: "unverified", reason: "arabic_mismatch", similarity: score };
+  }
+  if (second.number === null) {
+    return { kind: "unverified", reason: "number_unchecked", similarity: score };
   }
   if (second.number !== copy.number) {
     return { kind: "unverified", reason: "number_mismatch", similarity: score };

@@ -60,6 +60,7 @@ export const hadithReason = z.enum([
   "no_second_copy",
   "number_mismatch",
   "arabic_mismatch",
+  "number_unchecked",
 ]);
 
 export const hadithRecord = z.object({
@@ -101,6 +102,7 @@ const curatedTranslation = z.object({
   hints: z.array(z.string()),
   grade: z.string(),
   attribution: z.string(),
+  translatedArabic: z.string(),
   arabicVersion: z.number(),
   released: z.string(),
 });

@@ -13,11 +13,14 @@ type Env = { DATA: R2Bucket };
 
 type Context = { request: Request; env: Env; url: URL };
 
+const MAX_TRANSLATIONS = 10;
+
 const cacheControl = "public, max-age=86400, s-maxage=2592000, stale-while-revalidate=86400";
 
 const baseHeaders = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, HEAD, OPTIONS",
+  "access-control-allow-headers": "*",
   "access-control-expose-headers": "etag",
   "x-content-type-options": "nosniff",
 };
@@ -36,7 +39,8 @@ const stream = async ({ request, env }: Context, key: string) => {
   const headers = new Headers({ ...baseHeaders, "cache-control": cacheControl });
   object.writeHttpMetadata(headers);
   headers.set("etag", object.httpEtag);
-  if (request.headers.get("if-none-match") === object.httpEtag) {
+  const sent = (request.headers.get("if-none-match") ?? "").split(",");
+  if (sent.some((tag) => tag.trim().replace(/^W\//u, "") === object.httpEtag)) {
     return new Response(null, { status: 304, headers });
   }
   return new Response(object.body, { headers });
@@ -58,7 +62,11 @@ const verse = async (context: Context, surah: string, ayah: string) => {
   const file = await readFile(context.env, `quran/surahs/${surah}.json`, quranSurahFile);
   const found = file?.data.verses.find((entry) => entry.ayah === Number(ayah));
   if (!file || !found) return failure(404, "verse not found");
-  const keys = (context.url.searchParams.get("translations") ?? "").split(",").filter(Boolean);
+  const keys = [
+    ...new Set((context.url.searchParams.get("translations") ?? "").split(",").filter(Boolean)),
+  ];
+  if (keys.length > MAX_TRANSLATIONS)
+    return failure(400, `at most ${MAX_TRANSLATIONS} translations`);
   if (!keys.every((key) => /^[a-z0-9_]+$/.test(key))) return failure(400, "bad translation key");
   const files = await Promise.all(
     keys.map((key) =>

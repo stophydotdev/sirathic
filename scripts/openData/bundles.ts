@@ -69,6 +69,12 @@ export const buildDownloads = async (
     fillSources(db, quranSources);
     fill(
       db,
+      "notices",
+      ["source text", "notice text"],
+      quran.tanzil.notices.map((notice) => ["tanzil", notice]),
+    );
+    fill(
+      db,
       "surahs",
       [
         "number integer",
@@ -138,6 +144,7 @@ export const buildDownloads = async (
   writes.push(
     output.json("downloads/quran.json", {
       sources: [quran.tanzil.source],
+      notice: quran.tanzil.notices.join("\n\n"),
       surahs: quran.surahFiles.map(({ data }) => ({
         number: data.number,
         name: data.name,

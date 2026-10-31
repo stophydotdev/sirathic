@@ -59,7 +59,7 @@ const parsePage = (text: string) => {
       continue;
     }
     if (/\p{L}/u.test(line) && !line.startsWith("|"))
-      paragraphs.push(line.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1"));
+      paragraphs.push(line.replace(/\[((?:\\.|[^\]\\])*)\]\([^)]*\)/g, "$1"));
     index++;
   }
   return entries;

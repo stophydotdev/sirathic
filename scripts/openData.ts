@@ -1,3 +1,4 @@
+import { readdirSync, statSync } from "node:fs";
 import { parseArgs } from "node:util";
 import { collectionSlugs } from "../apps/data/src/resolve";
 import { buildCatalog } from "./openData/catalog";
@@ -22,7 +23,12 @@ const output = createOutput(values.out);
 
 if (!values["skip-build"]) {
   if (!values.sunnah) throw new Error("pass --sunnah <folder of cached sunnah.com pages>");
-  const cachedOn = /\d{4}-\d{2}-\d{2}/.exec(values.sunnah)?.[0] ?? "unknown";
+  const sunnahDir = values.sunnah;
+  const cachedOn = new Date(
+    Math.max(...readdirSync(sunnahDir).map((name) => statSync(`${sunnahDir}/${name}`).mtimeMs)),
+  )
+    .toISOString()
+    .slice(0, 10);
   const quran = await buildQuran(values.raw, output);
   const hadith = await buildHadith(values.raw, values.sunnah, cachedOn, output);
   const curated = await buildCurated(values.raw, output);

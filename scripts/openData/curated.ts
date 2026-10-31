@@ -37,6 +37,7 @@ const translatedRow = z.object({
   hints: jsonList(z.string()),
   grade: z.string(),
   attribution: z.string(),
+  hadeeth_ar: z.string(),
   ar_version: z.number(),
 });
 
@@ -111,7 +112,7 @@ export const buildCurated = async (rawDir: string, output: Output) => {
           .parse(
             entry.db
               .query(
-                "select id, title, hadeeth, explanation, hints, grade, attribution, ar_version from hadeeths",
+                "select id, title, hadeeth, explanation, hints, grade, attribution, hadeeth_ar, ar_version from hadeeths",
               )
               .all(),
           )
@@ -141,6 +142,7 @@ export const buildCurated = async (rawDir: string, output: Output) => {
               hints: found.hints,
               grade: found.grade,
               attribution: found.attribution,
+              translatedArabic: found.hadeeth_ar,
               arabicVersion: found.ar_version,
               released: dates.get(code) ?? arabic.date,
             },

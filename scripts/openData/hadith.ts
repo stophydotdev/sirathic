@@ -24,9 +24,7 @@ const numberOrder = (a: string, b: string) => {
 };
 
 const agreedNumber = (partner: SecondCopy, number: string) =>
-  partner.numbers.length === 0 || partner.numbers.includes(number)
-    ? number
-    : (partner.numbers[0] ?? number);
+  partner.numbers.includes(number) ? number : (partner.numbers[0] ?? null);
 
 const pairWithSecondCopies = (
   firstCopy: { number: string; inBook: { book: number; hadith: number } }[],
@@ -183,8 +181,10 @@ export const buildHadith = async (
         empty_arabic: "the first copy has no Arabic text for this number",
         no_second_copy: "no independent second copy of this hadith was found",
         arabic_mismatch:
-          "the second copy at the same book and hadith number has different Arabic (similarity below 0.95)",
+          "the second copy at the same book and hadith number has different Arabic letters, spelling aside",
         number_mismatch: "the Arabic agrees but the two copies number the hadith differently",
+        number_unchecked:
+          "the Arabic agrees with a second copy at the same book and hadith place, but that copy has no hadith number to check",
       },
       hadith: unverified,
       secondCopyOnly,
