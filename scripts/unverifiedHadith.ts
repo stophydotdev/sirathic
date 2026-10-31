@@ -86,7 +86,7 @@ const verdictOf = ({ id, book, textAr }: (typeof rows)[number]): Verdict => {
         key.startsWith(copy) &&
         key.startsWith("رواه", copy.length) &&
         key.length - copy.length <= ATTRIBUTION_CHARS &&
-        !/روايه|قال/u.test(key.slice(copy.length)),
+        !/روايه|قال|عن|زاد|فيه/u.test(key.slice(copy.length)),
     )
   ) {
     return "checked";
