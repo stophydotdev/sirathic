@@ -42,6 +42,7 @@ import {
 import { Fold, Swap, Turn } from "./motion";
 import { Cited, CitationPill, CitationSheet } from "./citation";
 import { SourcesSheet } from "./sources-sheet";
+import { AnswerCard, isAnswerCard, MemoryUsed, ResearchCard } from "./answer-cards";
 import { AutomationCard, isCardTool } from "./chat-cards";
 import { notesOf } from "@/lib/notes";
 import { AnswerNote } from "./answer-note";
@@ -240,8 +241,9 @@ export const Answer: FC<{
   feedback: Feedback;
   onRate: (next: Feedback) => void;
   onRetry: () => void;
+  onResearch?: () => void;
   onAsk: (question: string) => void;
-}> = ({ chatId, message, streaming, feedback, onRate, onRetry, onAsk }) => {
+}> = ({ chatId, message, streaming, feedback, onRate, onRetry, onResearch, onAsk }) => {
   const text = messageText(message);
   const parts = useMemo(() => notesOf(groupedCitations(text)), [text]);
   const sources = useMemo(() => sourcesOf(message), [message]);
@@ -253,10 +255,14 @@ export const Answer: FC<{
   const working = streaming && text === "";
   const cards = message.parts.flatMap((part, index) => {
     const tool = toolOf(part);
-    return tool && isCardTool(tool.name)
+    if (!tool) return [];
+    return isCardTool(tool.name)
       ? [<AutomationCard key={index} tool={tool.name} output={tool.output} />]
-      : [];
+      : isAnswerCard(tool.name)
+        ? [<AnswerCard key={index} name={tool.name} input={tool.input} output={tool.output} />]
+        : [];
   });
+  const research = message.parts.find((part) => part.type === "data-research");
 
   const copy = () => {
     void Clipboard.setStringAsync(text).then(() => {
@@ -297,6 +303,10 @@ export const Answer: FC<{
           </Pressable>
         </View>
       )}
+      {!streaming && research && onResearch && (
+        <ResearchCard rationale={research.data.rationale} onResearch={onResearch} />
+      )}
+      {!streaming && message.metadata?.memory && <MemoryUsed />}
       {cited && (
         <CitationSheet urls={cited} sources={sources} onClose={() => setCited(undefined)} />
       )}

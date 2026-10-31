@@ -13,6 +13,7 @@ import {
   startAnswer,
   stopAnswer,
 } from "../apps/server/src/chat/answers";
+import { afterAnswer } from "../apps/server/src/chat/afterAnswer";
 import { chatResponse } from "../apps/server/src/chat/response";
 import server from "../apps/server/src/index";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
@@ -254,4 +255,41 @@ test("traces drop error text, which can hold a fetched URL", async () => {
   const [sent] = exporter.getFinishedSpans();
   expect(sent?.status).toEqual({ code: SpanStatusCode.ERROR });
   expect(JSON.stringify(sent?.events)).not.toContain("private");
+});
+
+test("after an answer, Research is offered only in chats and memory use is marked", async () => {
+  const verdict = JSON.stringify({ memory: true, research: "Comparing all four schools" });
+  const model = new MockLanguageModelV4({
+    doStream: async () => ({
+      stream: simulateReadableStream({
+        chunks: [
+          { type: "stream-start", warnings: [] },
+          { type: "text-start", id: "1" },
+          { type: "text-delta", id: "1", delta: verdict },
+          { type: "text-end", id: "1" },
+          { type: "finish", finishReason: { unified: "stop", raw: undefined }, usage },
+        ] satisfies MockChunks,
+      }),
+    }),
+  });
+  const written = async (research: boolean) => {
+    const chunks: unknown[] = [];
+    await afterAnswer({
+      writer: { write: (chunk) => chunks.push(chunk), merge: () => {}, onError: undefined },
+      model,
+      asked: "wiping over socks",
+      answer: "As a Shafi'i, you wipe over leather khuffs.",
+      related: false,
+      research,
+      facts: ["Follows the Shafi'i school"],
+      abortSignal: new AbortController().signal,
+    });
+    return chunks;
+  };
+  const memory = { type: "message-metadata", messageMetadata: { memory: true } };
+  expect(await written(true)).toEqual([
+    { type: "data-research", data: { rationale: "Comparing all four schools" } },
+    memory,
+  ]);
+  expect(await written(false)).toEqual([memory]);
 });

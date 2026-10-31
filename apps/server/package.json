@@ -6,6 +6,7 @@
   "main": "src/index.ts",
   "exports": {
     "./automations": "./src/automations/schedule.ts",
+    "./cards": "./src/shared/cards.ts",
     "./catalog": "./src/plugins/catalog.ts",
     "./confirm": "./src/chat/confirm.ts",
     "./countries": "./src/shared/countries.ts",

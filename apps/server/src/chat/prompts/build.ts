@@ -79,6 +79,12 @@ const background = ({ name, about, madhab, instructions, memory }: Settings, sho
       `What the user has told you about themselves:\n${memory.map((fact) => `- ${fact}`).join("\n")}`,
   ].flatMap((line) => (line ? [line] : []));
 
+export const userFacts = ({ about, madhab, memory }: Settings) => [
+  ...(madhab === "none" ? [] : [`Follows the ${SCHOOLS[madhab]} school`]),
+  ...(about ? [about] : []),
+  ...memory,
+];
+
 const personalization = (settings: Settings, short: boolean) => {
   const lines = background(settings, short);
   return lines.length > 0

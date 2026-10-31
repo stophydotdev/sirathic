@@ -12,6 +12,7 @@ import { siteName, sourcesOf, withoutCitations } from "@/lib/sources";
 import { type Feedback, useMarkdownLook } from "./answer";
 import { SentFiles } from "./attachment-chip";
 import { tintOf } from "./bot-avatar";
+import { AnswerCard, isAnswerCard, MemoryUsed } from "./answer-cards";
 import { AutomationCard, BotEvent, isBotEvent, isCardTool } from "./chat-cards";
 import { Copy, Dots, ThumbDown, ThumbUp } from "./icons";
 import { Menu, menuRow, menuText } from "./menu";
@@ -33,6 +34,7 @@ const saidOf = (message: ChatMessage) =>
       const tool = toolOf(part);
       return tool &&
         (isCardTool(tool.name) ||
+          isAnswerCard(tool.name) ||
           isBotEvent(tool.name) ||
           currentToolName(tool.name) === "clarifying_questions")
         ? [{ kind: "tool", tool }]
@@ -254,10 +256,12 @@ export const BotSays: FC<{
           ) : (
             <>
               <AutomationCard tool={item.tool.name} output={item.tool.output} />
+              <AnswerCard name={item.tool.name} input={item.tool.input} output={item.tool.output} />
               <BotEvent tool={item.tool.name} output={item.tool.output} />
             </>
           )}
           {!working && index === lastText && <SourceLine sources={sourcesOf(message)} />}
+          {!working && index === lastText && message.metadata?.memory && <MemoryUsed />}
         </Fragment>
       ))}
       {working && <Working step={step && stepLineOf(step)} />}

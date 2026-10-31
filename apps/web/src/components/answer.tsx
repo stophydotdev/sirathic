@@ -4,6 +4,8 @@ import { useAccount } from "@/components/account";
 import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, MoreMenu, useAnswer } from "@/components/answerActions";
 import { ShareMenu } from "@/components/shareMenu";
+import { AnswerCard, MemoryUsed } from "@/components/answerCard";
+import { ResearchCard } from "@/components/researchCard";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { ConfirmCard } from "@/components/confirmCard";
 import { FILE_TOOLS, FileCards } from "@/components/fileCards";
@@ -60,6 +62,10 @@ const researchByType = groupPartByType({
   "tool-call:set_bot_job": [],
   "tool-call:askUser": [],
   "tool-call:clarifying_questions": [],
+  "tool-call:show_steps": [],
+  "tool-call:show_quiz": [],
+  "tool-call:show_translation": [],
+  "tool-call:show_places": [],
   "tool-call": ["group-research"],
 });
 
@@ -147,6 +153,11 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
                   <>
                     {part.approval && <ConfirmCard call={part} />}
                     <AutomationCard tool={part.toolName} result={part.result} />
+                    <AnswerCard
+                      name={currentToolName(part.toolName)}
+                      args={part.args}
+                      result={part.result}
+                    />
                   </>
                 );
               default:
@@ -155,6 +166,8 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
           }}
         </MessagePrimitive.GroupedParts>
         <FileCards />
+        <MemoryUsed />
+        <ResearchCard />
         <ReplyError />
         {empty && <EmptyAnswer />}
       </StreamingResponse>

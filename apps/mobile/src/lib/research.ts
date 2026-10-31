@@ -1,3 +1,4 @@
+import { ANSWER_CARDS } from "@sirathic/server/cards";
 import { type ChatMessage, currentToolName } from "@sirathic/server/messages";
 import { z } from "zod";
 import { siteName } from "./sources";
@@ -73,7 +74,12 @@ export function summaryOf(message: ChatMessage) {
     .reduce((count, tool) => count + fetchInput.parse(tool.input).urls.length, 0);
   const used = new Set(
     tools
-      .filter((tool) => tool.name !== "search_web" && tool.name !== "fetch_url")
+      .filter(
+        (tool) =>
+          tool.name !== "search_web" &&
+          tool.name !== "fetch_url" &&
+          !ANSWER_CARDS.some((card) => card === tool.name),
+      )
       .map((tool) => TOOL_NAMES.get(tool.name)?.done ?? `Used ${tool.name.replaceAll("_", " ")}`),
   );
   return [

@@ -55,7 +55,7 @@ import { skillTools } from "../skills/tools";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults, withReactionNotes } from "./history";
-import { instructions } from "./prompts/build";
+import { instructions, userFacts } from "./prompts/build";
 import {
   closedTools,
   loadedNames,
@@ -69,7 +69,8 @@ import {
   skillsFor,
 } from "./skills/builtIn";
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
-import { relatedQuestions } from "./related";
+import { answerCards, placeBook } from "./cards";
+import { afterAnswer } from "./afterAnswer";
 import type { SourceKind } from "../shared/sources";
 import { xSearchTools } from "./xSearch";
 import { hasGrok } from "../models/plans";
@@ -250,6 +251,7 @@ export function chatResponse({
   const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages);
   const tools = sirathicTools(sources.add, sourceKinds);
+  const places = placeBook(messages);
   const asked = messages.findLast((message) => message.role === "user");
   const askedText =
     asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "";
@@ -320,7 +322,7 @@ export function chatResponse({
       const available = {
         ...tools,
         ...((!sourceKinds || sourceKinds.includes("web")) && {
-          ...stophyTools(sources.add),
+          ...stophyTools(sources.add, places.add),
           ...imageTools(sources.addImage),
         }),
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
@@ -344,6 +346,7 @@ export function chatResponse({
             inBot !== undefined || preferred.saveMemory,
           )),
         ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
+        ...(!unattended && answerCards(places)),
         ...(searchable && chatSearchTools(searchable)),
         ...(owner !== undefined &&
           !unattended &&
@@ -502,11 +505,17 @@ export function chatResponse({
           console.error(`memory not saved: ${reasonOf(err)}`);
         });
       }
-      if (!inBot && !unattended && ended?.finishReason === "stop" && text.trim() && sourcesNeeded) {
-        const questions = await relatedQuestions(models.small, askedText, text, abortSignal).catch(
-          () => [],
-        );
-        if (questions.length > 0) writer.write({ type: "data-related", data: { questions } });
+      if (!unattended && ended?.finishReason === "stop" && text.trim()) {
+        await afterAnswer({
+          writer,
+          model: models.small,
+          asked: askedText,
+          answer: text,
+          related: !inBot && sourcesNeeded,
+          research: !inBot && mode === "quick",
+          facts: userFacts(preferred),
+          abortSignal,
+        });
       }
       streaming = false;
       if (finish) writer.write(finish);
