@@ -334,7 +334,7 @@ export function browserTools(scope: BotScope) {
     }),
     browser_task: tool({
       description:
-        "Runs a whole multi-step flow in your browser for you, much faster than one tool call per click: a form with several fields, a search with filters, a date picker, a booking path. Give it the goal, where to start and any values it will need. It looks at the page, decides each step itself, and stops and hands back to you when it is done, stuck, unsure, needs a value you did not give, or reaches a step that pays, books, sends, submits, signs in or deletes: it never takes that step, so tell the user what it does and ask first, then do it yourself. It returns the steps it took and the page it ended on. For one click, one read or one field, use the other browser tools.",
+        "Start here, instead of browser_navigate, for a whole multi-step flow in your browser, much faster than one tool call per click: a form with several fields, a search with filters, a date picker, a booking or check-in path, or anything over more than one page. Give it the goal, where to start and any values it will need. It looks at the page, decides each step itself, and stops and hands back to you when it is done, stuck, unsure, needs a value you did not give, or reaches a step that pays, books, sends, submits, signs in or deletes: it never takes that step, so tell the user what it does and ask first, then do it yourself. It returns the steps it took and the page it ended on. For one click, one read or one field, use the other browser tools.",
       inputSchema: taskInput,
       execute: (input) => driveTask(input, (action, full) => act(botId, action, full)),
       toModelOutput: ({ output }) => ({
