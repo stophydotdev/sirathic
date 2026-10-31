@@ -43,11 +43,15 @@ export const noSilentStop: LanguageModelMiddleware = {
         try {
           let said = false;
           let finish: Part | undefined;
-          for await (const part of first.stream) {
-            said ||= says(part);
-            if (part.type === "finish") finish = part;
-            else controller.enqueue(part);
-          }
+          await first.stream.pipeTo(
+            new WritableStream({
+              write: (part) => {
+                said ||= says(part);
+                if (part.type === "finish") finish = part;
+                else controller.enqueue(part);
+              },
+            }),
+          );
           const silent =
             !said && finish?.type === "finish" && finish.finishReason.unified === "stop";
           const retried = silent
@@ -62,14 +66,18 @@ export const noSilentStop: LanguageModelMiddleware = {
             if (finish) controller.enqueue(finish);
           } else {
             console.warn("a silent step after a tool result was retried");
-            for await (const part of retried.stream) {
-              if (part.type === "stream-start" || part.type === "response-metadata") continue;
-              controller.enqueue(
-                part.type === "finish" && finish?.type === "finish"
-                  ? { ...part, usage: added(finish.usage, part.usage) }
-                  : part,
-              );
-            }
+            await retried.stream.pipeTo(
+              new WritableStream({
+                write: (part) => {
+                  if (part.type === "stream-start" || part.type === "response-metadata") return;
+                  controller.enqueue(
+                    part.type === "finish" && finish?.type === "finish"
+                      ? { ...part, usage: added(finish.usage, part.usage) }
+                      : part,
+                  );
+                },
+              }),
+            );
           }
           controller.close();
         } catch (err) {
