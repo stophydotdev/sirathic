@@ -2,14 +2,17 @@ import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { Mode } from "../../shared/messages";
 import { BROWSER_TOOLS } from "../../bots/browser";
+import { BULK } from "../../plugins/bulkInput";
 import { CODE_RULES } from "../codeTools";
 import { CONFIRM_RULES, writingTools } from "../confirm";
 import { fileRules } from "../fileTools";
 import { STOPHY_LINK, STOPHY_TOOLS } from "../stophyTools";
 import { bookingSkills } from "./booking";
+import billsAndReceipts from "./billsAndReceipts.md" with { type: "text" };
 import browser from "./browser.md" with { type: "text" };
 import chart from "./chart.md" with { type: "text" };
 import documentReview from "./documentReview.md" with { type: "text" };
+import inboxCleanup from "./inboxCleanup.md" with { type: "text" };
 import jobSearch from "./jobSearch.md" with { type: "text" };
 import { muslimSkills } from "./muslim";
 import noConnector from "./noConnector.md" with { type: "text" };
@@ -24,6 +27,7 @@ import scheduling from "./scheduling.md" with { type: "text" };
 import sendOnBehalf from "./sendOnBehalf.md" with { type: "text" };
 import skillAuthoring from "./skillAuthoring.md" with { type: "text" };
 import stophy from "./stophy.md" with { type: "text" };
+import subscriptionsAudit from "./subscriptionsAudit.md" with { type: "text" };
 import study from "./study.md" with { type: "text" };
 import writing from "./writing.md" with { type: "text" };
 
@@ -52,7 +56,7 @@ type Where = {
 const WHEN_CHARS = 140;
 
 const PLUGIN_RULES =
-  "The tools of the apps the user has connected open with this skill: use them for what the user asks of that app. Never say you don't have access to an app or its data without first calling search_plugins, then connect the app with install_plugin. If no plugin fits, ask the user where the data lives. For a command tool like PostHog's exec, read its help once, then run the query.";
+  "The tools of the apps the user has connected open with this skill: use them for what the user asks of that app. Never say you don't have access to an app or its data without first calling search_plugins, then connect the app with install_plugin. If no plugin fits, ask the user where the data lives. For a command tool like PostHog's exec, read its help once, then run the query. To apply one write to many items, like trashing or labelling every promotion, call bulk_action once instead of the write tool per item: it checks each item against your one-sentence rule, shows the user one card listing what will change and runs the writes. For a few items, call the write tool directly.";
 
 const appTools = (plugins: ToolSet, apps: readonly string[]) =>
   Object.keys(plugins).filter((name) => apps.some((app) => name.startsWith(`${app}_`)));
@@ -220,6 +224,34 @@ export const skillsFor = ({
             when: "Load when the user asks to write, draft, reply to or send an email as them, or to leave a draft in Gmail",
             text: sendOnBehalf,
             tools: ["search_plugins", "install_plugin", ...appTools(plugins, ["gmail"])],
+          },
+          {
+            name: "inbox_cleanup",
+            when: "Load when the user wants to clear out, clean up or trash a lot of email at once, like old promotions, newsletters or notifications",
+            text: inboxCleanup,
+            tools: ["search_plugins", "install_plugin", ...appTools(plugins, ["gmail"]), BULK],
+          },
+          {
+            name: "subscriptions_audit",
+            when: "Load when the user asks what they subscribe to or pay for, or wants recurring charges, renewals or receipts found in their email",
+            text: subscriptionsAudit,
+            tools: [
+              "search_plugins",
+              "install_plugin",
+              ...appTools(plugins, ["gmail"]),
+              ...files.tools,
+            ],
+          },
+          {
+            name: "bills_receipts",
+            when: "Load when the user wants their bills on their calendar as reminders, or their receipts labeled in Gmail or listed in a Drive folder",
+            text: billsAndReceipts,
+            tools: [
+              "search_plugins",
+              "install_plugin",
+              ...appTools(plugins, ["gmail", "googlecalendar", "googledrive"]),
+              BULK,
+            ],
           },
           {
             name: "scheduling",

@@ -17,6 +17,7 @@ import { reasonOf, StatusError } from "../http";
 import { ownerCache } from "../account/ownerCache";
 import { seal, unseal } from "../account/vault";
 import { publicUrl } from "./address";
+import { bulkTools } from "./bulk";
 import { emailEditKey, outgoingEmail } from "./outgoingEmail";
 import { type Event, track } from "../chat/events";
 import { fenced } from "../chat/fence";
@@ -531,11 +532,13 @@ async function connectorTools(owner: string, row: ConnectionRow) {
     },
   });
   const listed = (await toolsFromSaved).toolsFromDefinitions(await savedToolLists(key, list));
+  const lazies = Object.entries(listed).map(
+    ([name, entry]) => [toolName(row.connector, name), lazy(name, entry)] as const,
+  );
   return {
+    lazies,
     tools: [
-      ...Object.entries(listed).map(
-        ([name, entry]) => [toolName(row.connector, name), lazy(name, entry)] as const,
-      ),
+      ...lazies,
       ...(row.connector === "gmail"
         ? [[toolName(row.connector, "send_email"), gmailSendTool(owner, row.connector)] as const]
         : []),
@@ -572,8 +575,10 @@ export async function connectedTools(owner: string, only?: readonly string[] | n
     ),
   );
   const ready = opened.filter((connector) => connector !== undefined);
+  const bulk = ready.length > 0 && bulkTools(Object.fromEntries(ready.flatMap((c) => c.lazies)));
   return {
-    tools: Object.fromEntries(ready.flatMap(({ tools }) => tools)),
+    tools: { ...Object.fromEntries(ready.flatMap(({ tools }) => tools)), ...(bulk && bulk.tools) },
+    ...(bulk && { refine: bulk.refine }),
     close: () => Promise.allSettled(ready.map(({ close }) => close())),
   };
 }

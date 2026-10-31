@@ -172,3 +172,61 @@ test("a bot fills a saved contact without seeing it, and gets only labels to cho
   });
   expect(await run("nobody", [{ part: "email", target: "e1" }])).toMatchObject({ kind: "missing" });
 });
+
+test("a bulk action lets Clef pick the matches, asks once, and runs the write only on them, naming failures", async () => {
+  const { bulkTools } = await import("../apps/server/src/plugins/bulk");
+  const { needsApproval } = await import("../apps/server/src/chat/confirm");
+  const real = globalThis.fetch;
+  globalThis.fetch = Object.assign(
+    async () =>
+      Response.json({
+        result: {
+          answers: { i0: { noul: 0.9 }, i1: { noul: 0.1 }, i2: { noul: 0.8 }, i3: { noul: 0.7 } },
+        },
+      }),
+    { preconnect: real.preconnect },
+  );
+  type Listed = Parameters<typeof bulkTools>[0][string];
+  const trashed: string[] = [];
+  const threads = ["a", "b", "c", "d"].map((id) => ({ id, messages: [{ subject: `mail ${id}` }] }));
+  const options = { toolCallId: "bulk", messages: [], context: {} };
+  const search: Listed = {
+    inputSchema: z.unknown(),
+    metadata: { annotations: { readOnlyHint: true } },
+    execute: async () => ({ content: [], structuredContent: { threads } }),
+  };
+  const trash: Listed = {
+    inputSchema: z.unknown(),
+    execute: async (args) => {
+      const { threadId } = z.object({ threadId: z.string() }).parse(args);
+      if (threadId === "c")
+        return { content: [{ type: "text" as const, text: "locked" }], isError: true };
+      trashed.push(threadId);
+      return { content: [] };
+    },
+  };
+  const bulk = bulkTools({ gmail_search_threads: search, gmail_trash_thread: trash });
+  const asked = {
+    search: { tool: "gmail_search_threads" },
+    rule: "marketing emails",
+    action: { tool: "gmail_trash_thread", idArgument: "threadId" },
+  };
+  const planned = await bulk.refine.bulk_action(asked);
+  globalThis.fetch = real;
+  expect(await bulk.refine.bulk_action(planned)).toBe(planned);
+  expect(planned.matches?.map(({ label }) => label)).toEqual(["mail a", "mail c", "mail d"]);
+  const call = { toolName: "bulk_action", input: planned };
+  expect(needsApproval(call, new Set(["bulk_action"]))).toBe(true);
+  expect(
+    needsApproval({ ...call, input: { ...planned, matches: [] } }, new Set(["bulk_action"])),
+  ).toBe(false);
+  expect(await bulk.tools.bulk_action.execute?.(planned, options)).toEqual({
+    action: "gmail_trash_thread",
+    checked: 4,
+    changed: 2,
+    leftAlone: 1,
+    failedCount: 1,
+    failed: [{ id: "c", label: "mail c", error: "locked" }],
+  });
+  expect(trashed.toSorted()).toEqual(["a", "d"]);
+});

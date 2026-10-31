@@ -28,6 +28,8 @@ const install = z.object({ id: connectorId });
 
 const shown = z.union([z.string(), z.number(), z.boolean()]);
 
+const matched = z.array(z.object({ label: z.string() }));
+
 const sentEmail = z.object({ to: z.array(z.string()) });
 
 const GMAIL_SEND = toolName("gmail", "send_email");
@@ -57,15 +59,20 @@ const Details: FC<{ call: ToolCall }> = ({ call }) => {
       </div>
     );
   }
-  return Object.entries(call.args).map(([key, value]) => (
-    <Row key={key} label={nameOf(key)}>
-      <span
-        className={`${call.toolName === "send_feedback" ? "" : "line-clamp-6"} min-w-0 flex-1 py-1.5 wrap-break-word whitespace-pre-line`}
-      >
-        {shown.safeParse(value).data?.toString() ?? JSON.stringify(value)}
-      </span>
-    </Row>
-  ));
+  return Object.entries(call.args).map(([key, value]) => {
+    const labels = key === "matches" ? matched.safeParse(value).data : undefined;
+    return (
+      <Row key={key} label={nameOf(key)}>
+        <span
+          className={`${call.toolName === "send_feedback" || labels ? "" : "line-clamp-6"} ${labels ? "max-h-64 overflow-y-auto" : ""} min-w-0 flex-1 py-1.5 wrap-break-word whitespace-pre-line`}
+        >
+          {labels
+            ? labels.map(({ label }) => label).join("\n")
+            : (shown.safeParse(value).data?.toString() ?? JSON.stringify(value))}
+        </span>
+      </Row>
+    );
+  });
 };
 
 export const ConfirmCard: FC<{ call: ToolCall }> = ({ call }) => {

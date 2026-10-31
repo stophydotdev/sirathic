@@ -1,6 +1,7 @@
 import { getToolName, isToolUIPart, type ToolSet } from "ai";
 import { z } from "zod";
 import type { Event } from "./events";
+import { bulkCall } from "../plugins/bulkInput";
 import type { ChatMessage } from "../shared/messages";
 
 export const CONFIRM_RULES = `Act without asking when the action is reversible and inside what the user asked for, or when they told you to do it. Ask first only when a wrong guess has real consequences: deleting, sending or posting anything outside this chat, and similar.
@@ -12,10 +13,11 @@ An email, message or post to anyone but the user goes out under their name and c
 
 const readOnlyTool = z.object({ annotations: z.object({ readOnlyHint: z.literal(true) }) });
 
+export const isReadOnly = (entry: ToolSet[string]) =>
+  readOnlyTool.safeParse(entry.metadata).success;
+
 export const writingTools = (tools: ToolSet) =>
-  Object.entries(tools).flatMap(([name, entry]) =>
-    readOnlyTool.safeParse(entry.metadata).success ? [] : [name],
-  );
+  Object.entries(tools).flatMap(([name, entry]) => (isReadOnly(entry) ? [] : [name]));
 
 const CONFIRMED_DELETES = new Map<string, readonly string[]>([["update_skill", ["delete"]]]);
 
@@ -47,7 +49,11 @@ const spelledOut = z
 
 export type Call = { toolName: string; input: unknown };
 
-export const spell = ({ toolName, input }: Call) => {
+export const spell = (call: Call) => {
+  const bulk = bulkCall(call);
+  const { toolName, input } = bulk
+    ? { toolName: bulk.action.tool, input: bulk.action.arguments }
+    : call;
   const { action, command } = spelledOut.parse(input);
   return [toolName, action, command.split("{")[0]]
     .join(" ")
@@ -66,7 +72,9 @@ const confirmedDelete = ({ toolName, input }: Call) =>
   CONFIRMED_DELETES.get(toolName)?.includes(spelledOut.parse(input).action) ?? false;
 
 export const needsApproval = (call: Call, writes: ReadonlySet<string>) =>
-  (writes.has(call.toolName) && actionOf(call) !== undefined) || confirmedDelete(call);
+  (writes.has(call.toolName) &&
+    (actionOf(call) !== undefined || (bulkCall(call)?.matches?.length ?? 0) > 0)) ||
+  confirmedDelete(call);
 
 export const cardDecisions = (messages: readonly ChatMessage[]): Event[] => {
   const last = messages.at(-1);
@@ -97,4 +105,11 @@ export const cardDecisions = (messages: readonly ChatMessage[]): Event[] => {
       },
     ];
   });
+};
+
+export const withoutOriginalInputs = (messages: ChatMessage[]) => {
+  for (const part of messages.flatMap(({ parts }) => parts)) {
+    if (isToolUIPart(part) && part.approval) delete part.approval.inputSchemaInput;
+  }
+  return messages;
 };

@@ -24,7 +24,7 @@ export const muslimSkills: Skill[] = [
   },
   {
     name: "masjid",
-    when: "Load when the user wants a masjid nearby, a masjid's prayer or Jumu'ah times, or Jumu'ah in their calendar",
+    when: "Load when the user wants a masjid nearby, a masjid's prayer or Jumu'ah times, Jumu'ah in their calendar, or their masjid's times kept in their calendar. To keep them there, load scheduling and routines with it",
     text: masjid,
     tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
@@ -36,7 +36,7 @@ export const muslimSkills: Skill[] = [
   },
   {
     name: "ramadan",
-    when: "Load when the user asks about suhoor or iftar times, a Ramadan timetable or reminders, missed fasts, the last ten nights or zakat al-fitr",
+    when: "Load when the user asks to set up Ramadan, about suhoor or iftar times, a Ramadan timetable or reminders, missed fasts, the last ten nights or zakat al-fitr. To set Ramadan up, load scheduling, routines and quran_plan with it",
     text: ramadan,
   },
   {
@@ -47,7 +47,7 @@ export const muslimSkills: Skill[] = [
   },
   {
     name: "zakat_giving",
-    when: "Load when the user wants their zakat worked out from their own money, or wants to give zakat or sadaqah to a charity",
+    when: "Load when the user wants their zakat worked out from their own money or bank statements, or wants to give zakat or sadaqah to a charity",
     text: zakatGiving,
     tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },

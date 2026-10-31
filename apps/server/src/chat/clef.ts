@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const CLEF = "clef-flash";
 type ClefModel = "clef" | typeof CLEF;
-const WAIT_MS = 2_000;
+const WAIT_MS = { [CLEF]: 2_000, clef: 8_000 } as const satisfies Record<ClefModel, number>;
 
 type State = string | number | readonly State[] | { readonly [key: string]: State };
 
@@ -34,7 +34,7 @@ export const yesChances = async (
           ]),
         ),
       }),
-      signal: AbortSignal.timeout(WAIT_MS),
+      signal: AbortSignal.timeout(WAIT_MS[model]),
     },
   );
   if (!res.ok) throw new Error(`Clef answered ${res.status}`);
