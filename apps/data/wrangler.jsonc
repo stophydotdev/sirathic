@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sirathic-data",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-27",
+  "observability": { "enabled": true },
+  "r2_buckets": [{ "binding": "DATA", "bucket_name": "sirathic-data" }],
+}

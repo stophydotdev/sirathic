@@ -13,5 +13,5 @@
     "types": ["node", "bun"]
   },
   "include": ["apps", "packages", "scripts", "test"],
-  "exclude": ["apps/web", "apps/mobile", "apps/sandbox", "test/web.test.ts"]
+  "exclude": ["apps/web", "apps/mobile", "apps/sandbox", "apps/data", "test/web.test.ts"]
 }

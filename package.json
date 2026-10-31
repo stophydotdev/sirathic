@@ -13,7 +13,7 @@
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
     "check": "oxlint && oxfmt --write && ! git grep -nIP --untracked '\\x{2014}' -- ':!apps/web/AGENTS.md' && ! git grep -nIP --untracked '[^\\s\\d(] - [^\\s\\d)]' -- 'apps/server/src/chat/prompts/*.md' 'apps/server/src/chat/skills/*.md'",
     "check-slop": "oxlint --deny-warnings",
-    "check-types": "tsc-rs --noEmit && tsc-rs --noEmit -p apps/mobile && tsc-rs --noEmit -p apps/sandbox && bun run --filter web check-types",
+    "check-types": "tsc-rs --noEmit && tsc-rs --noEmit -p apps/mobile && tsc-rs --noEmit -p apps/sandbox && tsc-rs --noEmit -p apps/data && bun run --filter web check-types",
     "check-dead": "bun run env ./node_modules/.bin/knip --no-progress",
     "env": "bun --env-file=apps/server/.env --env-file=apps/server/.env.local",
     "db:crawl": "bun run env scripts/fatwas.ts && bun run env scripts/dedupeFatwas.ts --apply && bun run env scripts/embed.ts && bun run env scripts/searchVersion.ts"
@@ -38,6 +38,7 @@
     "oxfmt": "0.63.0",
     "oxlint": "1.89.0",
     "tsc-rs": "0.8.0",
-    "typescript": "7"
+    "typescript": "7",
+    "wrangler": "4.153.0"
   }
 }
