@@ -318,3 +318,22 @@ test("a job search drops only postings Clef calls clear misfits, and keeps them 
     clef.mockRestore();
   }
 });
+
+test("a step that goes silent after a tool result is retried once with a nudge, and the answer arrives", async () => {
+  const datesCall = [
+    { type: "stream-start", warnings: [] },
+    { type: "tool-call", toolCallId: "d1", toolName: "islamic_dates", input: JSON.stringify({}) },
+    { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
+  ] satisfies MockChunks;
+  const silent = [
+    { type: "stream-start", warnings: [] },
+    { type: "finish", finishReason: { unified: "stop", raw: undefined }, usage },
+  ] satisfies MockChunks;
+  const seen = await chatTurn({}, [datesCall, silent, answered]);
+  expect(seen[1]?.prompt.at(-1)).toMatchObject({ role: "tool" });
+  expect(seen[2]?.prompt.at(-1)).toMatchObject({
+    role: "system",
+    content: expect.stringContaining("You stopped without saying anything"),
+  });
+  expect(seen.body).toContain("Done.");
+});

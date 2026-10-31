@@ -1,10 +1,11 @@
 import { OpenTelemetry } from "@ai-sdk/otel";
-import { hasToolCall, type LanguageModel, ToolLoopAgent, type ToolSet } from "ai";
+import { hasToolCall, ToolLoopAgent, type ToolSet, wrapLanguageModel } from "ai";
 import { z } from "zod";
 import { BROWSER_HELP, USER_FORM } from "../bots/browser";
 import { answerOptions } from "../models/subscription";
 import type { connectedTools } from "../plugins/connections";
 import type { shortenEarlierResults } from "./history";
+import { noSilentStop } from "./noSilentStop";
 import type { instructions } from "./prompts/build";
 import { limitRepeats } from "./repeatGuard";
 import { closedTools, loadedNames, loadedText, type Skill, skillIndex } from "./skills/builtIn";
@@ -40,7 +41,7 @@ export function answerAgent({
   shorten,
   turn,
 }: {
-  model: LanguageModel;
+  model: Parameters<typeof wrapLanguageModel>[0]["model"];
   tools: ToolSet;
   short: boolean;
   instructions: ReturnType<typeof instructions>;
@@ -55,7 +56,7 @@ export function answerAgent({
 }) {
   const options = answerOptions(turn);
   return new ToolLoopAgent({
-    model,
+    model: wrapLanguageModel({ model, middleware: noSilentStop }),
     experimental_telemetry: {
       functionId: "answer",
       recordInputs: false,
