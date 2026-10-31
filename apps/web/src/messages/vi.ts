@@ -936,4 +936,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'Xóa nhóm "{name}"? Cuộc trò chuyện của nhóm cũng bị xóa.',
   "Pick at least two bots": "Chọn ít nhất hai bot",
+  "Checking your memory": "Đang xem bộ nhớ của bạn",
+  "Checked your memory": "Đã xem bộ nhớ của bạn",
 } satisfies Messages;

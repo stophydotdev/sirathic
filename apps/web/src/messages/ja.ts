@@ -936,4 +936,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     "グループ「{name}」を削除しますか？会話も削除されます。",
   "Pick at least two bots": "ボットを2つ以上選んでください",
+  "Checking your memory": "メモリーを確認中",
+  "Checked your memory": "メモリーを確認しました",
 } satisfies Messages;

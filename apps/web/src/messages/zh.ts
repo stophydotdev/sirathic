@@ -917,4 +917,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     "删除群组“{name}”？其对话也会被删除。",
   "Pick at least two bots": "至少选择两个机器人",
+  "Checking your memory": "正在查看你的记忆",
+  "Checked your memory": "已查看你的记忆",
 } satisfies Messages;

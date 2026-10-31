@@ -922,4 +922,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" గ్రూప్‌ను తొలగించాలా? దాని సంభాషణ కూడా తొలగించబడుతుంది.',
   "Pick at least two bots": "కనీసం రెండు బాట్‌లను ఎంచుకోండి",
+  "Checking your memory": "మీ మెమరీని చూస్తున్నాను",
+  "Checked your memory": "మీ మెమరీని చూశాను",
 } satisfies Messages;

@@ -15,6 +15,7 @@ import {
   ArrowRight01Icon,
   Book02Icon,
   Bookmark02Icon,
+  BrainIcon,
   BulbIcon,
   Clock04Icon,
   FavouriteIcon,
@@ -71,6 +72,14 @@ const TOOLS = new Map<
       Icon: Clock04Icon,
       label: (t) => t("Searching your past chats"),
       done: (t) => t("Searched your past chats"),
+    },
+  ],
+  [
+    "search_user_memories",
+    {
+      Icon: BrainIcon,
+      label: (t) => t("Checking your memory"),
+      done: (t) => t("Checked your memory"),
     },
   ],
   [
@@ -223,16 +232,29 @@ export const Research: FC<{ indices: readonly number[]; startedAt: number }> = (
   if (steps.length === 0 && !working) return null;
 
   if (working) {
-    const step = steps.at(-1);
-    const now = step ? nowOf(t, step, targetOf) : undefined;
+    const rows = steps.length > 0 ? steps.map((step) => nowOf(t, step, targetOf)) : [undefined];
     return (
-      <p className="text-muted-foreground mb-4 flex h-6 min-w-0 items-center gap-2 text-sm">
-        {now?.icon}
-        <span className="shimmer min-w-0 truncate">{now?.text ?? t("Working")}</span>
-        <span className="text-muted-foreground/70 shrink-0 tabular-nums">
-          {t("{seconds}s", { seconds: Math.max(1, Math.round(elapsed)) })}
-        </span>
-      </p>
+      <div className="mb-4 flex flex-col gap-1.5">
+        {rows.map((now, index) => {
+          const current = index === rows.length - 1;
+          return (
+            <div
+              key={index}
+              className="text-muted-foreground flex h-6 min-w-0 items-center gap-2 text-sm"
+            >
+              {now?.icon}
+              <span className={cn("min-w-0 truncate", current && "shimmer")}>
+                {now?.text ?? t("Working")}
+              </span>
+              {current && (
+                <span className="text-muted-foreground/70 shrink-0 tabular-nums">
+                  {t("{seconds}s", { seconds: Math.max(1, Math.round(elapsed)) })}
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
     );
   }
 

@@ -940,4 +940,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" grubu silinsin mi? Sohbeti de silinir.',
   "Pick at least two bots": "En az iki bot seçin",
+  "Checking your memory": "Hafızanız kontrol ediliyor",
+  "Checked your memory": "Hafızanız kontrol edildi",
 } satisfies Messages;

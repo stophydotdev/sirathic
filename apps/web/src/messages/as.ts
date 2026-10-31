@@ -925,4 +925,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" গ্ৰুপটো মচিবনে? ইয়াৰ কথোপকথনো মচি পেলোৱা হ\'ব।',
   "Pick at least two bots": "কমেও দুটা বট বাছনি কৰক",
+  "Checking your memory": "আপোনাৰ মেমৰি চাই আছোঁ",
+  "Checked your memory": "আপোনাৰ মেমৰি চালোঁ",
 } satisfies Messages;

@@ -922,4 +922,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'លុបក្រុម "{name}" ឬ? ការសន្ទនារបស់វាក៏នឹងត្រូវលុបដែរ។',
   "Pick at least two bots": "ជ្រើសរើសបូតយ៉ាងហោចណាស់ពីរ",
+  "Checking your memory": "កំពុងពិនិត្យការចងចាំរបស់អ្នក",
+  "Checked your memory": "បានពិនិត្យការចងចាំរបស់អ្នក",
 } satisfies Messages;

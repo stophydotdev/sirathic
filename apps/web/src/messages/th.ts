@@ -918,4 +918,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'ลบกลุ่ม "{name}" ไหม การสนทนาของกลุ่มจะถูกลบด้วย',
   "Pick at least two bots": "เลือกบอตอย่างน้อยสองตัว",
+  "Checking your memory": "กำลังตรวจความจำของคุณ",
+  "Checked your memory": "ตรวจความจำของคุณแล้ว",
 } satisfies Messages;

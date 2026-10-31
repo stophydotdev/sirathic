@@ -942,4 +942,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" گۇرۇپپىسىنى ئۆچۈرەمسىز؟ ئۇنىڭ سۆھبىتىمۇ ئۆچۈرۈلىدۇ.',
   "Pick at least two bots": "كەم دېگەندە ئىككى بوت تاللاڭ",
+  "Checking your memory": "ئەستە ساقلىغانلىرىڭىز تەكشۈرۈلۈۋاتىدۇ",
+  "Checked your memory": "ئەستە ساقلىغانلىرىڭىز تەكشۈرۈلدى",
 } satisfies Messages;

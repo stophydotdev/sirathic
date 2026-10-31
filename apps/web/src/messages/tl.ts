@@ -946,4 +946,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'Burahin ang grupong "{name}"? Mabubura rin ang usapan nito.',
   "Pick at least two bots": "Pumili ng hindi bababa sa dalawang bot",
+  "Checking your memory": "Sinusuri ang iyong memorya",
+  "Checked your memory": "Nasuri ang iyong memorya",
 } satisfies Messages;

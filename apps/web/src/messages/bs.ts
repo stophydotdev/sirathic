@@ -939,4 +939,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'Obrisati grupu "{name}"? Njen razgovor se također briše.',
   "Pick at least two bots": "Odaberi najmanje dva bota",
+  "Checking your memory": "Provjeravam tvoju memoriju",
+  "Checked your memory": "Provjerio tvoju memoriju",
 } satisfies Messages;

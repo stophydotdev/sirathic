@@ -928,4 +928,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" ग्रुप हटाएँ? इसकी बातचीत भी हट जाएगी।',
   "Pick at least two bots": "कम से कम दो बॉट चुनें",
+  "Checking your memory": "आपकी मेमोरी देख रहा हूँ",
+  "Checked your memory": "आपकी मेमोरी देखी",
 } satisfies Messages;

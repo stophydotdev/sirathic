@@ -936,4 +936,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'Momtugo gurupu "{name}"? Haala maako momtetee ko.',
   "Pick at least two bots": "Suɓtu bot-ji ɗiɗi ɗum fuu",
+  "Checking your memory": "Ina ƴeewa teskaaɗe maa",
+  "Checked your memory": "Ƴeewii teskaaɗe maa",
 } satisfies Messages;

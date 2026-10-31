@@ -938,4 +938,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     "Удалить группу «{name}»? Её переписка тоже удалится.",
   "Pick at least two bots": "Выберите хотя бы двух ботов",
+  "Checking your memory": "Проверяю вашу память",
+  "Checked your memory": "Память проверена",
 } satisfies Messages;
