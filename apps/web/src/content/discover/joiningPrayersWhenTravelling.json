@@ -1,0 +1,514 @@
+{
+  "title": "Can you join prayers when you travel?",
+  "slug": "joining-prayers-when-travelling",
+  "topic": "Prayer",
+  "tint": "rose",
+  "summary": {
+    "text": "The Maliki, Shafi'i and Hanbali schools allow a traveller to combine Dhuhr with Asr and Maghrib with Isha, while the Hanafi school allows no actual combining outside Arafah and Muzdalifah. The Quran speaks explicitly of shortening on a journey, not of joining, and the joining reports are prophetic actions rather than verses.",
+    "citations": [
+      "https://www.dar-alifta.org/ar/Fatwa/Details/12466/حكم-الجمع-في-المطار-للمسافر",
+      "https://fiqh.islamonline.net/%d9%85%d8%a7-%d9%8a%d8%a8%d9%8a%d8%ad-%d8%a7%d9%84%d8%ac%d9%85%d8%b9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b5%d9%84%d8%a7%d8%aa%d9%8a%d9%86-2/",
+      "https://quran.com/4/101",
+      "https://shamela.ws/book/21739#1:181"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/12466/حكم-الجمع-في-المطار-للمسافر",
+      "title": "الجمع في المطار للمسافر"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d8%a7-%d9%8a%d8%a8%d9%8a%d8%ad-%d8%a7%d9%84%d8%ac%d9%85%d8%b9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b5%d9%84%d8%a7%d8%aa%d9%8a%d9%86-2/",
+      "title": "ما يبيح الجمع بين الصلاتين"
+    },
+    {
+      "url": "https://quran.com/4/101",
+      "title": "Quran 4:101, An-Nisaa"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:181",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص181"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1466",
+      "title": "Sunan ad-Darimi 1466"
+    },
+    {
+      "url": "https://quran.com/4/102",
+      "title": "Quran 4:102, An-Nisaa"
+    },
+    {
+      "url": "https://quran.com/4/103",
+      "title": "Quran 4:103, An-Nisaa"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/103047/hadith-combining-prayers-without-presence-cause",
+      "title": "The hadith of combining prayers without the presence of its cause"
+    },
+    {
+      "url": "https://quran.com/2/185",
+      "title": "Quran 2:185, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/5/6",
+      "title": "Quran 5:6, Al-Maaida"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:1091",
+      "title": "Sahih al-Bukhari 1091"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:1092",
+      "title": "Sahih al-Bukhari 1092: Shortening the Prayers (At-Taqseer)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:705c",
+      "title": "Sahih Muslim 705c: The Book of Prayer - Travellers"
+    },
+    {
+      "url": "https://sunnah.com/muslim:705d",
+      "title": "Sahih Muslim 705d: The Book of Prayer - Travellers"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:187",
+      "title": "Jami' at-Tirmidhi 187: The Book on Salat (Prayer)"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2822%29#3152",
+      "title": "Musnad Ahmad 3323"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2811%29#2426",
+      "title": "Musnad Ahmad 2557"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1070",
+      "title": "Sunan Ibn Majah 1070: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://sunnah.com/nasai:594",
+      "title": "Sunan an-Nasa'i 594: The Book of the Times (of Prayer)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:586",
+      "title": "Sunan an-Nasa'i 586: The Book of the Times (of Prayer)"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2824%29#3300",
+      "title": "Musnad Ahmad 3480"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1217",
+      "title": "Sunan Abi Dawud 1217: Prayer (Kitab Al-Salat): Detailed Rules of Law about the Prayer during Journey"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:555",
+      "title": "Jami' at-Tirmidhi 555: The Book on Traveling"
+    },
+    {
+      "url": "https://sunnah.com/nasai:600",
+      "title": "Sunan an-Nasa'i 600: The Book of the Times (of Prayer)"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/23#6087",
+      "title": "Musnad Ahmad 6375"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2823%29#3223",
+      "title": "Musnad Ahmad 3397"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2821%29#3065",
+      "title": "Musnad Ahmad 3235"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/16#5574",
+      "title": "Musnad Ahmad 5838"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:188",
+      "title": "Jami' at-Tirmidhi 188: The Book on Salat (Prayer)"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/77390/hadith-on-combining-two-prayers-without-an-excuse/",
+      "title": "Hadith on combining two prayers without an excuse"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/19#18023",
+      "title": "Musnad Ahmad 18774"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/19#18022",
+      "title": "Musnad Ahmad 18773"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/14868/can-we-combine-salat-of-zuhr-and-asr-and-maghrib-and-esha-during-travel-as-hadiths-attached-from-sahih-bukhari-volume-2-book-20-number-209/",
+      "title": "Can we combine salat of [ Zuhr and asr] and [ maghrib and esha ] during travel as hadiths attached From Sahih Bukhari Volume 2, Book 20, Number 209"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband/25876/is-it-permissible-to-combine-two-prayers-while-on-a-journey/",
+      "title": "Is it permissible to combine two prayers while on a journey?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-azaadville/165028/combining-two-salaahs-while-travelling/",
+      "title": "Combining Two Salaahs While Travelling"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#1:382",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص382"
+    },
+    {
+      "url": "https://shamela.ws/book/11820#1:134",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص134"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:205",
+      "title": "المدونة، مالك بن أنس، ج1 ص205"
+    },
+    {
+      "url": "https://daruliftaa.us/fatwa/246/",
+      "title": "Combining Prayers"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:367",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص367"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:369",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص369"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:529",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص529"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:395",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص395"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:530",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص530"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:403",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص403"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:533",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص533"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:399",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص399"
+    },
+    {
+      "url": "https://shamela.ws/book/622#3:287",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج3 ص287"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#3:131",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج3 ص131"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#3:136",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج3 ص136"
+    },
+    {
+      "url": "https://shamela.ws/book/1679#0:145",
+      "title": "الروض المربع شرح زاد المستقنع - ط المؤيد والرسالة، البهوتي، ج0 ص145"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/102505",
+      "title": "الجمع بين الصلاتين في الحضر"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/45781/fact-prophet-peace-blessings-upon-combined-prayers-madinah-without-fear-travel-other-wording-without",
+      "title": "In it is the fact that the Prophet (peace and blessings be upon him) combined prayers in Madinah without fear or travel, and in the other wording, without fear or rain; the second is more appropriate."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/114940/why-did-prophet-peace-blessings-upon-combine-prayers-madinah-without-fear-rain-travel",
+      "title": "Why did the Prophet (peace and blessings be upon him) combine prayers in Madinah without fear, rain, or travel?"
+    },
+    {
+      "url": "https://en.tohed.com/is-it-permissible-to-combine-prayers-without-fear-or-danger/",
+      "title": "Is It Permissible to Combine Prayers Without Fear or Danger?"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/111916",
+      "title": "هل يجوز للمسافر أن يجمع بين الصلاتين أحيانا ، ولا يجمع أحياناً؟"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/22283/permissible-traveler-combine-two-prayers-while-staying-place-travel-what-evidence",
+      "title": "Is it permissible for a traveler to combine the two prayers while he is staying in his place of travel? And what is the evidence for that?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/61247/ruling-traveler-combining-prayers-last-day",
+      "title": "Ruling on the traveler combining prayers on the last day"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/98015/when-does-traveler-shorten-prayer",
+      "title": "When does a traveler shorten the prayer?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/103037/combining-two-obligatory-prayers-due-travel-forgetfulness",
+      "title": "Combining two obligatory prayers due to travel or forgetfulness"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/103048/criterion-travel-entitles-traveler-combine-shorten-prayers",
+      "title": "The criterion for travel that entitles a traveler to combine and shorten the prayers"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/102794/combining-two-prayers-when-stopping-town-during-travel",
+      "title": "Combining two prayers when stopping in a town during travel"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/102780/criterion-travel-permits-combining-shortening-prayer",
+      "title": "The criterion for travel that permits combining and shortening the prayer"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/22255",
+      "title": "Ruling on a traveller joining his prayers at the end of the day"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/123985/combining-prayers-while-traveling-method",
+      "title": "Combining Prayers While Traveling and Its Method"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/44312/when-permissible-combine-two-prayers-city-without-rain-fear-what-ibn-abbas-s-statement-regarding",
+      "title": "When is it permissible to combine the two prayers in the city without rain or fear, and what was Ibn Abbas's statement regarding this?"
+    },
+    {
+      "url": "https://islamqa.org/shafii/darul-iftaa-jordan/225988/for-how-long-is-a-traveler-allowed-to-shorten-and-combine-prayers/",
+      "title": "For how long is a Traveler Allowed to Shorten and Combine Prayers?"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/90615/",
+      "title": "Combining prayers while working offshore"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/83866/",
+      "title": "Combining prayers in Jama'at while on a journey"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "Quran 4:101 names travel and adds fear; the translation's own note says the practice of the Prophet and his companions shows fear is not the condition, merely travel, and that the four-rak'ah prayers become two. The companion who pressed this exact point was Ya'la ibn Umayyah, who asked Umar ibn al-Khattab why people shorten when they are now safe; Umar said he had wondered the same, asked the Messenger of Allah, and was told it is a charity Allah gave, so accept it (Sunan al-Darimi 1466, for which the record gives no grade).",
+          "citations": [
+            "https://quran.com/4/101",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1466"
+          ]
+        },
+        {
+          "text": "Quran 4:102 describes the prayer of fear in battle, showing that prayer is never dropped even under attack. Quran 4:103 then states that prayer is \"a decree of specified times,\" and this is the verse the Permanent Committee cites against joining without a cause. The wider principle of ease appears in 2:185, \"Allāh intends for you ease and does not intend for you hardship,\" and in 5:6, \"Allāh does not intend to make difficulty for you\".",
+          "citations": [
+            "https://quran.com/4/102",
+            "https://quran.com/4/103",
+            "https://al-fatawa.com/en/fatwa/103047/hadith-combining-prayers-without-presence-cause",
+            "https://quran.com/2/185",
+            "https://quran.com/5/6"
+          ]
+        },
+        {
+          "text": "Ibn Rushd al-Hafid identifies the structural reason the schools diverge: shortening was transmitted both as speech and as action, whereas joining was transmitted only as action, so those who confined it to the type of journey in which the Prophet joined kept the report narrow.",
+          "citations": ["https://shamela.ws/book/21739#1:181"]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "Ibn Umar reported that when travel pressed the Prophet, he delayed Maghrib until he joined it with Isha (Sahih al-Bukhari 1091 and 1092, Sahih). Ibn Abbas reported that on the Tabuk expedition he combined Dhuhr with Asr and Maghrib with Isha, and said he wanted not to cause hardship for his community (Sahih Muslim 705c, Sahih). Ibn Abbas also reported combining in Madinah \"without fear or rain,\" giving the same reason (Sahih Muslim 705d, Sahih; Jami' at-Tirmidhi 187, graded Sahih by Shakir and al-Albani and Sahih Muslim by Zubair Ali Zai).",
+          "citations": [
+            "https://sunnah.com/bukhari:1091",
+            "https://sunnah.com/bukhari:1092",
+            "https://sunnah.com/muslim:705c",
+            "https://sunnah.com/muslim:705d",
+            "https://sunnah.com/tirmidhi:187"
+          ]
+        },
+        {
+          "text": "The same Madinah report comes through other routes: Musnad Ahmad 3323, isnad Sahih with narrators of the two Shaykhs; Musnad Ahmad 2557, Sahih on Muslim's condition. Mu'adh ibn Jabal reported combining during the Tabuk expedition while travelling (Sunan Ibn Majah 1070, graded Sahih by al-Albani, Abd al-Baqi and al-Arna'ut). Anas reported that when he was hurried in travel he delayed Dhuhr to the time of Asr and Maghrib to the time of Isha (Sunan an-Nasa'i 594, Sahih; see also 586, Sahih).",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2822%29#3152",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2811%29#2426",
+            "https://sunnah.com/ibnmajah:1070",
+            "https://sunnah.com/nasai:594",
+            "https://sunnah.com/nasai:586"
+          ]
+        },
+        {
+          "text": "Ibn Abbas described the travel prayer in detail, combining while still at his lodging before mounting (Musnad Ahmad 3480, Sahih). Ibn Umar's practice and its attribution to the Prophet are recorded (Sunan Abi Dawud 1217, Sahih; Jami' at-Tirmidhi 555, hasan sahih; Sunan an-Nasa'i 600, Sahih; Musnad Ahmad 6375, isnad Sahih on the two Shaykhs' condition). Two Ahmad reports on the same theme are graded sahih in meaning but weak in isnad: Musnad Ahmad 3397, \"sahih, and this isnad is weak because of Layth ibn Abi Sulaym,\" and Musnad Ahmad 3235, \"sahih, and this isnad is weak\". Musnad Ahmad 5838 is likewise judged sahih with a weak isnad because of al-'Umari.",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2824%29#3300",
+            "https://sunnah.com/abudawud:1217",
+            "https://sunnah.com/tirmidhi:555",
+            "https://sunnah.com/nasai:600",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/23#6087",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2823%29#3223",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%2821%29#3065",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/16#5574"
+          ]
+        },
+        {
+          "text": "The prohibition report, \"Whoever combines two prayers without an excuse has come to one of the doors of the major sins,\" is graded very da'if by Shakir and al-Albani and da'if by Bashar Awad, and at-Tirmidhi himself notes that its narrator Hanash was declared weak by Ahmad and others (Jami' at-Tirmidhi 188). The Hajj texts anchor the one joining all schools accept: \"Hajj is Arafah\" (Musnad Ahmad 18774 and 18773, Sahih).",
+          "citations": [
+            "https://sunnah.com/tirmidhi:188",
+            "https://islamqa.org/hanafi/askimam/77390/hadith-on-combining-two-prayers-without-an-excuse/",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/19#18023",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/19#18022"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafi school holds that joining is not permitted; only Arafah (advance) and Muzdalifah (delay) are allowed. What looks like joining is delaying the first prayer to the end of its time and praying the second at the start of its time; Ibn Abidin quotes Ibn Arabi that prayer times are established without dispute and no prayer leaves its time except by an unequivocal text. Al-Hidaya makes congregation with the imam a condition at Arafah, with Abu Hanifa requiring the imam for both prayers and Zufar only for Asr; Dar al-Ifta al-Misriyyah summarises the same; IslamOnline adds the condition of the general imam or his deputy.",
+          "citations": [
+            "https://islamqa.org/hanafi/askimam/14868/can-we-combine-salat-of-zuhr-and-asr-and-maghrib-and-esha-during-travel-as-hadiths-attached-from-sahih-bukhari-volume-2-book-20-number-209/",
+            "https://islamqa.org/hanafi/darulifta-deoband/25876/is-it-permissible-to-combine-two-prayers-while-on-a-journey/",
+            "https://islamqa.org/hanafi/darulifta-azaadville/165028/combining-two-salaahs-while-travelling/",
+            "https://shamela.ws/book/21613#1:382",
+            "https://shamela.ws/book/11820#1:134",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/12466/حكم-الجمع-في-المطار-للمسافر",
+            "https://fiqh.islamonline.net/%d9%85%d8%a7-%d9%8a%d8%a8%d9%8a%d8%ad-%d8%a7%d9%84%d8%ac%d9%85%d8%b9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b5%d9%84%d8%a7%d8%aa%d9%8a%d9%86-2/"
+          ]
+        },
+        {
+          "text": "The Maliki school permits joining for travel, but the mashhur restricts it to a pressing journey. Malik in al-Mudawwana said he does not join unless the journey presses him, then he delays Dhuhr to the last of its time and prays Asr at the first of its time; al-Dasuqi lists six causes and says the permission is khilaf al-awla, and that \"apparent\" joining forfeits the virtue of the earliest time. Ibn Rushd records Ashhab's unrestricted view and a report that joining is makruh; IslamOnline reports Malikis allowing it for travel long or short, for the sick who fears fainting, and for rain or mud with darkness in congregational prayer at the mosque.",
+          "citations": [
+            "https://shamela.ws/book/587#1:205",
+            "https://daruliftaa.us/fatwa/246/",
+            "https://shamela.ws/book/21604#1:367",
+            "https://shamela.ws/book/21604#1:369",
+            "https://fiqh.islamonline.net/%d9%85%d8%a7-%d9%8a%d8%a8%d9%8a%d8%ad-%d8%a7%d9%84%d8%ac%d9%85%d8%b9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b5%d9%84%d8%a7%d8%aa%d9%8a%d9%86-2/"
+          ]
+        },
+        {
+          "text": "The Shafi'i school permits joining in long travel, advance or delay. Mughni al-Muhtaj allows Dhuhr with Asr and Maghrib with Isha, and treats Jumu'ah like Dhuhr for advance joining; short travel is allowed only in an old view. Rawdat al-Talibin restricts it to long travel on the stronger view, excludes sinful travel, and excludes Fajr joined to anything and Asr joined to Maghrib, with order, continuity and intention as conditions for advance joining; al-Nawawi states that leaving the joining is better without disagreement, since Abu Hanifa and a group of the Tabi'in disallow it; if the traveller becomes resident the joining is invalidated; Ibn Rushd notes al-Shafi'i forbade joining for the sick resident.",
+          "citations": [
+            "https://shamela.ws/book/11444#1:529",
+            "https://shamela.ws/book/499#1:395",
+            "https://shamela.ws/book/11444#1:530",
+            "https://shamela.ws/book/499#1:403",
+            "https://shamela.ws/book/11444#1:533",
+            "https://shamela.ws/book/499#1:399",
+            "https://shamela.ws/book/21739#1:181"
+          ]
+        },
+        {
+          "text": "The Hanbali school permits joining for the traveller who may shorten, and it is not itself preferred. Kashshaf al-Qina' states that joining is not mustahabb and leaving it is better, except at Arafah and Muzdalifah, and it is allowed for a traveller permitted to shorten; Ibn Qudama in al-Mughni calls the Tabuk report the clearest proof against those who say one may not join unless the journey presses, since he joined while stopped in his tent. Ahmad allowed joining Maghrib and Isha in rain once darkness mixes, and al-Rawd al-Murbi' extends this to rain that wets clothes, snow, cold, mud and a cold strong wind, even for one praying at home.",
+          "citations": [
+            "https://shamela.ws/book/622#3:287",
+            "https://shamela.ws/book/6910#3:131",
+            "https://shamela.ws/book/6910#3:136",
+            "https://shamela.ws/book/1679#0:145"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The Madinah report against Quran 4:103 is the sharpest tension. Three reconciliations exist: restrict it to an unstated excuse such as illness, cold or mud, as the Permanent Committee, Ibn Baz, Ibn Uthaymeen and al-Albani do; read it as a broad licence wherever hardship exists, as the Tohed summary presents; or deny that any of these reports describe taking a prayer out of its time, which is the Hanafi reading of \"apparent\" joining at the two time boundaries.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/103047/hadith-combining-prayers-without-presence-cause",
+            "https://islamqa.info/ar/answers/102505",
+            "https://al-fatawa.com/en/fatwa/45781/fact-prophet-peace-blessings-upon-combined-prayers-madinah-without-fear-travel-other-wording-without",
+            "https://al-fatawa.com/en/fatwa/114940/why-did-prophet-peace-blessings-upon-combine-prayers-madinah-without-fear-rain-travel",
+            "https://en.tohed.com/is-it-permissible-to-combine-prayers-without-fear-or-danger/",
+            "https://islamqa.org/hanafi/askimam/14868/can-we-combine-salat-of-zuhr-and-asr-and-maghrib-and-esha-during-travel-as-hadiths-attached-from-sahih-bukhari-volume-2-book-20-number-209/",
+            "https://islamqa.org/hanafi/darulifta-azaadville/165028/combining-two-salaahs-while-travelling/",
+            "https://shamela.ws/book/21739#1:181"
+          ]
+        },
+        {
+          "text": "The Hanafi and Maliki mashhur positions dissolve the conflict rather than answer it, since on their reading each prayer stays inside its own time. The Maliki difference is that a pressing journey makes even this tight form a recognised concession. The Tabuk report answers those who limited joining to a pressing journey, because the Prophet combined while stationary with his tents pitched; that is why Ibn Qudama calls it the strongest argument on the point.",
+          "citations": [
+            "https://islamqa.org/hanafi/askimam/14868/can-we-combine-salat-of-zuhr-and-asr-and-maghrib-and-esha-during-travel-as-hadiths-attached-from-sahih-bukhari-volume-2-book-20-number-209/",
+            "https://shamela.ws/book/587#1:205",
+            "https://shamela.ws/book/21604#1:369",
+            "https://shamela.ws/book/6910#3:131",
+            "https://islamqa.info/ar/answers/111916",
+            "https://al-fatawa.com/en/fatwa/22283/permissible-traveler-combine-two-prayers-while-staying-place-travel-what-evidence"
+          ]
+        },
+        {
+          "text": "The prohibition hadith cannot carry the weight placed on it, since its narrator was declared weak and the graders call it very da'if. On shortening, the apparent conflict inside 4:101 was settled by the Prophet's own answer to Umar, so fear is not a condition. Joining never received an equivalent explicit verbal text, which is why Ibn Rushd grounds the whole disagreement in transmission: speech and action for shortening, action only for joining.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:188",
+            "https://islamqa.org/hanafi/askimam/77390/hadith-on-combining-two-prayers-without-an-excuse/",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1466",
+            "https://quran.com/4/101",
+            "https://shamela.ws/book/21739#1:181"
+          ]
+        },
+        {
+          "text": "The schools converge on several limits: only Dhuhr with Asr and Maghrib with Isha, never Fajr with anything and never Asr with Maghrib; the travel must be permissible rather than sinful; and the concession ends when residence begins.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/61247/ruling-traveler-combining-prayers-last-day",
+            "https://shamela.ws/book/11444#1:530",
+            "https://shamela.ws/book/499#1:395",
+            "https://shamela.ws/book/622#3:287",
+            "https://shamela.ws/book/11444#1:533",
+            "https://shamela.ws/book/499#1:399",
+            "https://al-fatawa.com/en/fatwa/98015/when-does-traveler-shorten-prayer"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "The Permanent Committee (fatwa 17883) holds that the Madinah report does not indicate joining at all, because it conflicts with the practical Sunnah and with the texts specifying prayer times, and that scholars agreed to leave acting on it. In fatwa 16371 it states each prayer must be prayed in its time except in travel, and in illness where separating causes hardship. The same committee treats 80 km daily as qualifying travel for both shortening and joining (fatwa 17264), prefers that one who stops during travel pray each prayer shortened in its own time (fatwa 17900), and allows shortening and joining for a stay of four days or less (fatwa 21702).",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/103047/hadith-combining-prayers-without-presence-cause",
+            "https://al-fatawa.com/en/fatwa/103037/combining-two-obligatory-prayers-due-travel-forgetfulness",
+            "https://al-fatawa.com/en/fatwa/103048/criterion-travel-entitles-traveler-combine-shorten-prayers",
+            "https://al-fatawa.com/en/fatwa/102794/combining-two-prayers-when-stopping-town-during-travel",
+            "https://al-fatawa.com/en/fatwa/102780/criterion-travel-permits-combining-shortening-prayer"
+          ]
+        },
+        {
+          "text": "Ibn Baz calls joining at the end of the day \"a great abomination that no scholar has ever said,\" limiting Dhuhr with Asr to before sunset, Maghrib with Isha to before midnight, and stating Fajr is never joined (also carried by IslamQA). Ibn Uthaymeen holds joining for the traveller is a sunnah when the road is difficult, that the correct view is that joining is not permissible except for a cause, and that the slightest hardship is a sufficient cause; he also notes the wording \"without travel\" is implied by \"in Madinah\". Al-Albani reads the Madinah report as establishing that residents may join when hardship occurs, not as an absolute licence, and argues from the Tabuk report, where the tents were pitched, that joining while settled at the place of travel is established.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/61247/ruling-traveler-combining-prayers-last-day",
+            "https://islamqa.info/en/answers/22255",
+            "https://al-fatawa.com/en/fatwa/123985/combining-prayers-while-traveling-method",
+            "https://al-fatawa.com/en/fatwa/45781/fact-prophet-peace-blessings-upon-combined-prayers-madinah-without-fear-travel-other-wording-without",
+            "https://al-fatawa.com/en/fatwa/44312/when-permissible-combine-two-prayers-city-without-rain-fear-what-ibn-abbas-s-statement-regarding",
+            "https://al-fatawa.com/en/fatwa/114940/why-did-prophet-peace-blessings-upon-combine-prayers-madinah-without-fear-rain-travel",
+            "https://al-fatawa.com/en/fatwa/22283/permissible-traveler-combine-two-prayers-while-staying-place-travel-what-evidence"
+          ]
+        },
+        {
+          "text": "Ibn Fawzan holds that a stay of four days or less permits shortening, and more than four means he completes the prayer as a resident. Dar al-Ifta al-Misriyyah (Shaykh Ahmad al-Tayyib, 2003) sets out the split plainly: the Hanafis forbid joining even for an excuse except at Arafah, while the Malikis, Shafi'is and Ahmad permit it for travel, illness, rain and the pilgrim's stay at Arafah or Muzdalifah. Darul Iftaa Jordan allows shortening and joining for four days, and up to eighteen days where an expected stay overran; Darul Iftaa Deoband states it is not allowed in journey or residence except at Arafah and Muzdalifah.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/98015/when-does-traveler-shorten-prayer",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/12466/حكم-الجمع-في-المطار-للمسافر",
+            "https://islamqa.org/shafii/darul-iftaa-jordan/225988/for-how-long-is-a-traveler-allowed-to-shorten-and-combine-prayers/",
+            "https://islamqa.org/hanafi/darulifta-deoband/25876/is-it-permissible-to-combine-two-prayers-while-on-a-journey/"
+          ]
+        },
+        {
+          "text": "Islamweb allows a navigator or offshore worker whose journey meets the customary distance to combine, and sets out four ways for a traveller needing Maghrib to join a congregation already praying Isha. IslamQA notes the traveller may join or separate but that not joining without hardship is better, that the Prophet joined while settled at Tabuk, and that since congregation is obligatory he should not join and then pray alone.",
+          "citations": [
+            "https://www.islamweb.net/en/fatwa/90615/",
+            "https://www.islamweb.net/en/fatwa/83866/",
+            "https://islamqa.info/ar/answers/111916"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}

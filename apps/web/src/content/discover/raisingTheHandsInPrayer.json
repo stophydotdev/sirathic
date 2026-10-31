@@ -1,0 +1,430 @@
+{
+  "title": "Do you raise your hands before and after ruku'?",
+  "slug": "raising-the-hands-in-prayer",
+  "topic": "Prayer",
+  "tint": "amber",
+  "summary": {
+    "text": "Raising the hands when going down into ruku' and when rising from it is reported from the Prophet in several authentic chains, and the schools differ over whether it is done: the Shafi'i and Hanbali books prescribe it, while the Hanafi and Maliki books restrict the raising to the opening takbir.",
+    "citations": [
+      "https://shamela.ws/book/499#1:249",
+      "https://shamela.ws/book/6910#2:136",
+      "https://shamela.ws/book/21613#1:506",
+      "https://shamela.ws/book/587#1:165"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://shamela.ws/book/499#1:249",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص249"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#2:136",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص136"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#1:506",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص506"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:165",
+      "title": "المدونة، مالك بن أنس، ج1 ص165"
+    },
+    {
+      "url": "https://quran.com/2/43",
+      "title": "Quran 2:43, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/22/77",
+      "title": "Quran 22:77, Al-Hajj"
+    },
+    {
+      "url": "https://quran.com/59/7",
+      "title": "Quran 59:7, Al-Hashr"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/21439",
+      "title": "رفع اليدين في الصلاة"
+    },
+    {
+      "url": "https://quran.com/84/21",
+      "title": "Quran 84:21, Al-Inshiqaaq"
+    },
+    {
+      "url": "https://sunnah.com/muslim:390b",
+      "title": "Sahih Muslim 390b: The Book of Prayers"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1182",
+      "title": "Sunan an-Nasa'i 1182: The Book of Forgetfulness (In Prayer)"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:255",
+      "title": "Jami' at-Tirmidhi 255: The Book on Salat (Prayer)"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:858",
+      "title": "Sunan Ibn Majah 858: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:721",
+      "title": "Sunan Abi Dawud 721: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/15#5502",
+      "title": "Musnad Ahmad 5762"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:867",
+      "title": "Sunan Ibn Majah 867: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:726",
+      "title": "Sunan Abi Dawud 726: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1265",
+      "title": "Sunan an-Nasa'i 1265: The Book of Forgetfulness (In Prayer)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1263",
+      "title": "Sunan an-Nasa'i 1263: The Book of Forgetfulness (In Prayer)"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:957",
+      "title": "Sunan Abi Dawud 957: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:889",
+      "title": "Sunan an-Nasa'i 889: The Book of the Commencement of the Prayer"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/22#18103",
+      "title": "Musnad Ahmad 18858"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:859",
+      "title": "Sunan Ibn Majah 859: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:868",
+      "title": "Sunan Ibn Majah 868: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:862",
+      "title": "Sunan Ibn Majah 862: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:863",
+      "title": "Sunan Ibn Majah 863: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:734",
+      "title": "Sunan Abi Dawud 734: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:257",
+      "title": "Jami' at-Tirmidhi 257: The Book on Salat (Prayer)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1058",
+      "title": "Sunan an-Nasa'i 1058: The Book of The At-Tatbiq (Clasping One's Hands Together)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1026",
+      "title": "Sunan an-Nasa'i 1026: The Book of the Commencement of the Prayer"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:752",
+      "title": "Sunan Abi Dawud 752: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:750",
+      "title": "Sunan Abi Dawud 750: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://sunnah.com/urn/501671",
+      "title": "Muwatta Malik 166: Prayer"
+    },
+    {
+      "url": "https://en.tohed.com/a-glance-at-hadith-of-ibn-masud-ra-on-raising-hands-and-the-hadith-of/",
+      "title": "A Glance at Hadith of Ibn Masud (RA) on Raising Hands and the Hadith of Salat al-Tasbih"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/222435",
+      "title": "ما ورد عن ابن عمر رضي الله عنهما من أنه كان لا يرفع يديه في الصلاة إلا عند افتتاحها : لا يصح عنه ."
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/337561/",
+      "title": "Ibn ‘Umar throwing pebbles at person who would miss Raf'ul-Yadayn"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#2:6",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص6"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:229",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص229"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:367",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص367"
+    },
+    {
+      "url": "https://shamela.ws/book/622#2:287",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج2 ص287"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:141",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص141"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/87198/",
+      "title": "Raising the hands in prayer"
+    },
+    {
+      "url": "https://en.tohed.com/imam-maliks-final-position-on-raf-al-yadayn-explained/",
+      "title": "Imam Malik’s Final Position on Raf‘ al-Yadayn Explained"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/24389/ruling-raising-hands-when-bowing-when-rising-affirmative-report-preferred-over-negative-one-not",
+      "title": "The ruling on raising the hands when bowing and when rising from it. Is the affirmative report preferred over the negative one, or not?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/zamzam-academy/20464/raising-of-the-hands-in-salah/",
+      "title": "Raising of The Hands in Salah"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/11920/i-know-that-in-hanafi-prayer-books-it-says-that-you-are-not-supposed-to-raise-your-hand-when-going-into-ruku-and-when-coming-up-from-rukuhowever/",
+      "title": "I know that in hanafi prayer books, it says that you are not supposed to raise your hand when going into ruku, and when coming up from ruku,however"
+    },
+    {
+      "url": "https://en.tohed.com/authentic-hadith-of-ibn-umar-on-raf-al-yadayn-explained/",
+      "title": "Authentic Hadith of Ibn Umar on Raf al-Yadayn Explained"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/72639/places-raising-hands-takbir-prayer",
+      "title": "The Places of Raising the Hands at the Takbir in Prayer"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/raising-ones-hands-after-ruku-mandatory/",
+      "title": "Raising One’s Hands After Ruku`: Mandatory?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftisays/10195/is-raising-hands-during-ruku-and-other-positions-makrooh-for-hanafis-and-why-don-t-they-do-it/",
+      "title": "Is raising hands during ruku and other positions Makrooh for Hanafis and why don’t they do it?"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/186625",
+      "title": "حكم رفع اليدين في السجود ."
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b1%d9%81%d8%b9-%d8%a7%d9%84%d9%8a%d8%af%d9%8a-%d8%b9%d9%86%d8%af-%d8%a7%d9%84%d8%b3%d8%ac%d9%88%d8%af/",
+      "title": "رفع اليدين عند السجود"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/299804",
+      "title": "متى يرفع المصلي يديه عند الرفع من الركوع؟"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/121624",
+      "title": "صفة رفع اليدين عند التكبير في الصلاة"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/69886/what-ruling-raising-hands-supplication-69886",
+      "title": "What is the ruling on raising the hands in supplication?"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/130387",
+      "title": "هل يطيع والده في ترك بعض سنن الصلاة ؟"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/298825",
+      "title": "صفة رفع اليدين في الصلاة ، وماذا على المصلي لو أخطأ فيها ؟"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/128038",
+      "title": "إذا انتهى من التشهد الأول هل يرفع يديه وهو جالس ثم يقوم أو يقوم ثم يرفع يديه؟"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/298777",
+      "title": "حكم رفع اليدين للركوع قبل إتمام قراءة الفاتحة أو السورة"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The Quran commands the bowing itself but never describes the movement of the hands, so the details were taken from the Prophet's practice. \"And establish prayer and give zakāh and bow with those who bow\" (Quran 2:43), and \"O you who have believed, bow and prostrate and worship your Lord and do good - that you may succeed\" (Quran 22:77).",
+          "citations": ["https://quran.com/2/43", "https://quran.com/22/77"]
+        },
+        {
+          "text": "Two further verses frame how the Companions and scholars argued. The command \"And whatever the Messenger has given you - take; and what he has forbidden you - refrain from\" (Quran 59:7) is the principle by which the schools treated the hadith reports as binding detail, and the Prophet's instruction \"Pray as you have seen me pray\" (Sahih al-Bukhari 631, as cited by IslamQA) is the one the scholars quote when they compare narrations of his prayer. A third verse that appeared in the search, \"And when the Qur'an is recited to them, they do not prostrate\" (Quran 84:21), concerns prostration at recitation and does not bear on raising the hands.",
+          "citations": [
+            "https://quran.com/59/7",
+            "https://islamqa.info/ar/answers/21439",
+            "https://quran.com/84/21"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The affirmers rest on Ibn 'Umar, Wa'il ibn Hujr, Malik ibn al-Huwayrith, Jabir and Abu Humayd, and the negators on Ibn Mas'ud and al-Bara' ibn 'Azib. \"The Messenger of Allah used to raise his hands in line with his shoulders when commencing the prayer, when saying Takbīr for Rukū', and when raising his head from Rukū' he would raise them as well\" (Sahih Muslim 390b).",
+          "citations": ["https://sunnah.com/muslim:390b"]
+        },
+        {
+          "text": "Ibn 'Umar raises at the opening, at the takbir for ruku', and on rising from it, and this is sahih in every route and \"agreed upon\". Wa'il ibn Hujr raises to the ears at the opening, when bowing and when rising, and this is sahih, while Ahmad's route hasan. Malik ibn al-Huwayrith raises near the ears at the takbir, at ruku' and on rising, and this is sahih.",
+          "citations": [
+            "https://sunnah.com/muslim:390b",
+            "https://sunnah.com/nasai:1182",
+            "https://sunnah.com/tirmidhi:255",
+            "https://sunnah.com/ibnmajah:858",
+            "https://sunnah.com/abudawud:721",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/15#5502",
+            "https://sunnah.com/ibnmajah:867",
+            "https://sunnah.com/abudawud:726",
+            "https://sunnah.com/nasai:1265",
+            "https://sunnah.com/nasai:1263",
+            "https://sunnah.com/abudawud:957",
+            "https://sunnah.com/nasai:889",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/22#18103",
+            "https://sunnah.com/ibnmajah:859"
+          ]
+        },
+        {
+          "text": "Jabir did the same and said he saw the Prophet do it, and this is sahih, hasan by one grader. Abu Humayd al-Sa'idi, before ten Companions, describes the raising at ruku' and on rising, and this is sahih. Ibn Mas'ud said \"He prayed and did not raise his hands except the first time\": this is hasan per al-Tirmidhi, sahih per Shakir and al-Albani, da'if per Zubair Ali Zai, with a sahih/da'if split again in an-Nasa'i.",
+          "citations": [
+            "https://sunnah.com/ibnmajah:868",
+            "https://sunnah.com/ibnmajah:862",
+            "https://sunnah.com/ibnmajah:863",
+            "https://sunnah.com/abudawud:734",
+            "https://sunnah.com/tirmidhi:257",
+            "https://sunnah.com/nasai:1058",
+            "https://sunnah.com/nasai:1026"
+          ]
+        },
+        {
+          "text": "Al-Bara' ibn 'Azib raised only at the opening, then not again, but this is da'if; Abu Dawud himself said \"this hadith is not authentic\". Al-Tirmidhi adds that a number of the Companions and the Tabi'in held the Ibn Mas'ud position, and that it was the view of Sufyan al-Thawri and the people of Kufa.",
+          "citations": [
+            "https://sunnah.com/abudawud:752",
+            "https://sunnah.com/abudawud:750",
+            "https://sunnah.com/tirmidhi:257"
+          ]
+        },
+        {
+          "text": "Ibn 'Umar's own practice is recorded in the Muwatta: he raised level with the shoulders at the opening, and on rising from ruku' raised them \"lower than that\". Al-Bukhari's assessment, as reported, is that the preserved version of the Ibn Mas'ud narration is the one showing he did raise, and one fatwa site argues the report that Ibn 'Umar himself abandoned the raising is not authentic. A separate report has Ibn 'Umar throwing pebbles at a man who prayed without raising, which Islamweb explains was done outside his own prayer, to alert him.",
+          "citations": [
+            "https://sunnah.com/urn/501671",
+            "https://en.tohed.com/a-glance-at-hadith-of-ibn-masud-ra-on-raising-hands-and-the-hadith-of/",
+            "https://islamqa.info/ar/answers/222435",
+            "https://www.islamweb.net/en/fatwa/337561/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafi school holds that raising before and after ruku' is not prescribed; the raising belongs to the opening takbir, and doing it at the transitions is makruh and does not invalidate the prayer except in one report. Ibn 'Abidin, Radd al-Muhtar: \"he does not raise at the takbirs of the transitions, contrary to al-Shafi'i and Ahmad\"; the raising at takbirat al-ihram is to the ears.",
+          "citations": ["https://shamela.ws/book/21613#1:506", "https://shamela.ws/book/21613#2:6"]
+        },
+        {
+          "text": "The Maliki school restricts it to the opening takbir, and even there done lightly. al-Mudawwana: Malik said \"I do not know raising of the hands in any of the takbirs of prayer, neither in lowering nor raising, except at the opening,\" and Ibn al-Qasim said it was \"weak\" with Malik apart from the ihram takbir.",
+          "citations": ["https://shamela.ws/book/587#1:165"]
+        },
+        {
+          "text": "The Shafi'i school holds it recommended at the opening, at ruku' and on rising from it, for every praying person. al-Nawawi, Rawdat al-Talibin: \"it is recommended to raise the hands at takbirat al-ihram, the ruku' and the rising from it,\" and he stated it in al-Umm; the raising begins with the beginning of the movement.",
+          "citations": [
+            "https://shamela.ws/book/499#1:249",
+            "https://shamela.ws/book/499#1:229",
+            "https://shamela.ws/book/11444#1:367"
+          ]
+        },
+        {
+          "text": "The Hanbali school holds it prescribed at the opening, at ruku' and on rising, to the earlobes or the shoulders at the person's choice. Ibn Qudama, al-Mughni, citing the agreed-upon Ibn 'Umar hadith and reporting no disagreement over the opening; al-Bahuti, Kashshaf al-Qina', on its being mandub and not wajib.",
+          "citations": ["https://shamela.ws/book/6910#2:136", "https://shamela.ws/book/622#2:287"]
+        },
+        {
+          "text": "Ibn Rushd summarises the root of the split: the Kufans (Abu Hanifa and Sufyan al-Thawri) restricted the raising to the ihram by preferring the reports of Ibn Mas'ud and al-Bara', and Malik did so \"for the agreement of the practice in Madinah with it,\" while others preferred the hadith of Ibn 'Umar. On the Maliki side, Ibn 'Abd al-Barr is reported as saying that no one transmitted from Malik that the Prophet prayed without raising except Ibn al-Qasim, and that the view they adopt is raising, per the hadith of Ibn 'Umar; Ashhab is also reported as seeing Malik raise at the opening, at ruku' and at \"Sami'a Allahu liman hamidah\" in the year before his death.",
+          "citations": [
+            "https://shamela.ws/book/21739#1:141",
+            "https://www.islamweb.net/en/fatwa/87198/",
+            "https://en.tohed.com/imam-maliks-final-position-on-raf-al-yadayn-explained/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The central conflict is a positive report against a negative one. Al-Albani argues that the affirmative narration takes precedence, since the raising is described by Ibn 'Umar, Malik ibn al-Huwayrith and Abu Humayd with ten Companions present, and that the reports of not raising are weak. The Hanafi response, in the Zamzam Academy answer, is that their proof was never these narrations but reports whose narrators were consistent, chiefly Ibn Mas'ud's, together with the hadiths that describe the whole prayer without mentioning a raising after the opening; a Mufti Desai answer adds that the difference is over which is more virtuous, not over permissibility, and that both views are substantiated in the Shari'ah.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/24389/ruling-raising-hands-when-bowing-when-rising-affirmative-report-preferred-over-negative-one-not",
+            "https://islamqa.info/ar/answers/21439",
+            "https://islamqa.org/hanafi/zamzam-academy/20464/raising-of-the-hands-in-salah/",
+            "https://islamqa.org/hanafi/askimam/11920/i-know-that-in-hanafi-prayer-books-it-says-that-you-are-not-supposed-to-raise-your-hand-when-going-into-ruku-and-when-coming-up-from-rukuhowever/"
+          ]
+        },
+        {
+          "text": "Two principles do most of the reconciling work. The first is that non-mention is not proof of negation, so a narration that omits the raising does not deny it. The second is that the raising is a sunnah and not a pillar, so its absence does not affect validity, a Hanafi answer states plainly that a person who raises before or after ruku' does not invalidate his prayer and it remains correct and complete, even though Radd al-Muhtar's text calls the act makruh in the Hanafi school.",
+          "citations": [
+            "https://en.tohed.com/authentic-hadith-of-ibn-umar-on-raf-al-yadayn-explained/",
+            "https://al-fatawa.com/en/fatwa/72639/places-raising-hands-takbir-prayer",
+            "https://fiqh.islamonline.net/en/raising-ones-hands-after-ruku-mandatory/",
+            "https://islamqa.org/hanafi/muftisays/10195/is-raising-hands-during-ruku-and-other-positions-makrooh-for-hanafis-and-why-don-t-they-do-it/",
+            "https://shamela.ws/book/21613#1:506"
+          ]
+        },
+        {
+          "text": "A third dispute concerns the prostration: some scholars judged the reports of raising at sujud and rising from it anomalous against the more reliable Ibn 'Umar narration, which explicitly denies it there. A fourth concerns where the hands stop, shoulders or earlobes, both of which are narrated and both of which the Hanbali book allows as a choice. A fifth concerns timing on the way up: the Shafi'i book has the raising begin with the beginning of the rising, while a second Hanbali narration has it after the person is fully upright.",
+          "citations": [
+            "https://islamqa.info/ar/answers/186625",
+            "https://fiqh.islamonline.net/%d8%b1%d9%81%d8%b9-%d8%a7%d9%84%d9%8a%d8%af%d9%8a-%d8%b9%d9%86%d8%af-%d8%a7%d9%84%d8%b3%d8%ac%d9%88%d8%af/",
+            "https://sunnah.com/muslim:390b",
+            "https://shamela.ws/book/6910#2:136",
+            "https://sunnah.com/ibnmajah:859",
+            "https://sunnah.com/ibnmajah:867",
+            "https://shamela.ws/book/11444#1:367",
+            "https://islamqa.info/ar/answers/299804"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Ibn Baz answered that it is a sunnah, not an obligation, to raise at the takbirat al-ihram, at the ruku', on rising from it, and on standing for the third rak'ah, and that men and women share the ruling; he described the hands as going to the shoulders or the ears with the palms toward the qibla, and said about a congregation raising to the chest that \"the matter is easy, if Allah wills\".",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/72639/places-raising-hands-takbir-prayer",
+            "https://islamqa.info/ar/answers/121624",
+            "https://al-fatawa.com/en/fatwa/69886/what-ruling-raising-hands-supplication-69886"
+          ]
+        },
+        {
+          "text": "Shaykh 'Atiyyah Saqr, former head of al-Azhar's fatwa committee, is quoted that raising the hands is not mandatory but a sunnah, on four occasions including before and after ruku'. IslamQA states that raising before and after ruku' is among the emphasized sunnahs, that the majority of jurists from the Shafi'is and Hanbalis, and a report from Malik, held it established, and cites al-Suyuti that it is established from fifty Companions.",
+          "citations": [
+            "https://fiqh.islamonline.net/en/raising-ones-hands-after-ruku-mandatory/",
+            "https://islamqa.info/ar/answers/130387",
+            "https://islamqa.info/ar/answers/298825"
+          ]
+        },
+        {
+          "text": "The Permanent Committee's answer places the fourth raising with the beginning of the movement from the first tashahhud to standing, and another answer notes that raising during the recitation of al-Fatiha is not legislated but does not invalidate the prayer.",
+          "citations": [
+            "https://islamqa.info/ar/answers/128038",
+            "https://islamqa.info/ar/answers/298777"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}

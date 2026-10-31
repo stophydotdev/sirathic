@@ -1,0 +1,481 @@
+{
+  "title": "Is the basmala said aloud in prayer?",
+  "slug": "basmala-aloud-in-prayer",
+  "topic": "Prayer",
+  "tint": "rose",
+  "summary": {
+    "text": "The four schools disagree over whether the basmala is said aloud in the loud prayers: the Hanafi and Hanbali schools hold it is recited quietly, the Maliki school leaves it out of the obligatory prayer, and the Shafi'i school says it aloud in the loud prayers. The disagreement rests on whether the basmala is a verse of al-Fatihah at all. Later scholars read the reports of it being said aloud as weak, occasional, or done to teach, and modern fatwas from Saudi Arabia's Permanent Committee, Ibn Baz and al-Albani favour quiet recitation.",
+    "citations": [
+      "https://shamela.ws/book/11820#1:47",
+      "https://shamela.ws/book/587#1:161",
+      "https://shamela.ws/book/622#2:316",
+      "https://shamela.ws/book/11444#1:354",
+      "https://seekersguidance.org/answers/general-counsel/is-the-basmala-part-of-the-quran/",
+      "https://al-fatawa.com/en/fatwa/31335/number-verses-surat-al-fatihah-whether-basmala-one",
+      "https://al-fatawa.com/en/fatwa/111267/recitation-basmala-low-voice-evidence",
+      "https://al-fatawa.com/en/fatwa/72781/what-ruling-reciting-basmala-aloud-prayer-when-reciting-al-fatihah-other-surahs",
+      "https://al-fatawa.com/en/fatwa/121598/ruling-reciting-basmala-seeking-refuge-allah-audibly-audible-prayers"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://shamela.ws/book/11820#1:47",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص47"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:161",
+      "title": "المدونة، مالك بن أنس، ج1 ص161"
+    },
+    {
+      "url": "https://shamela.ws/book/622#2:316",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج2 ص316"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:354",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص354"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/general-counsel/is-the-basmala-part-of-the-quran/",
+      "title": "Is the Basmala Part of the Qur’an?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/31335/number-verses-surat-al-fatihah-whether-basmala-one",
+      "title": "The number of verses in Surat al-Fatihah and whether the Basmala is one of them."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/111267/recitation-basmala-low-voice-evidence",
+      "title": "The Recitation of the Basmala in a Low Voice and the Evidence for It"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/72781/what-ruling-reciting-basmala-aloud-prayer-when-reciting-al-fatihah-other-surahs",
+      "title": "What is the ruling on reciting the Basmala aloud in prayer when reciting al-Fatihah and other surahs?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/121598/ruling-reciting-basmala-seeking-refuge-allah-audibly-audible-prayers",
+      "title": "The Ruling on Reciting the Basmala and Seeking Refuge with Allah Audibly in the Audible Prayers"
+    },
+    {
+      "url": "https://quran.com/1/1",
+      "title": "Quran 1:1, Al-Faatiha"
+    },
+    {
+      "url": "https://quran.com/27/30",
+      "title": "Quran 27:30, An-Naml"
+    },
+    {
+      "url": "https://quran.com/27/29",
+      "title": "Quran 27:29, An-Naml"
+    },
+    {
+      "url": "https://quran.com/27/31",
+      "title": "Quran 27:31, An-Naml"
+    },
+    {
+      "url": "https://quran.com/15/87",
+      "title": "Quran 15:87, Al-Hijr"
+    },
+    {
+      "url": "https://quran.com/1/2",
+      "title": "Quran 1:2, Al-Faatiha"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/36461/basmala-verse-surat-al-fatihah-what-ruling-one-who-does-not-recite-prayer",
+      "title": "Is the Basmala a verse of Surat al-Fatihah, and what is the ruling on one who does not recite it in the prayer?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/42990/saying-allah-exalted-indeed-who-have-sent-down-reminder-indeed-guardians-how-do-address-disagreement",
+      "title": "The saying of Allah the Exalted: “Indeed, it is We who have sent down the Reminder, and indeed, We are its guardians.” How do we address the disagreement among scholars regarding whether the Basmala is a verse of the Qur'an or not?"
+    },
+    {
+      "url": "https://quran.com/17/110",
+      "title": "Quran 17:110, Al-Israa"
+    },
+    {
+      "url": "https://quran.com/7/205",
+      "title": "Quran 7:205, Al-A'raaf"
+    },
+    {
+      "url": "https://quran.com/7/204",
+      "title": "Quran 7:204, Al-A'raaf"
+    },
+    {
+      "url": "https://quran.com/73/4",
+      "title": "Quran 73:4, Al-Muzzammil"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5045",
+      "title": "Sahih al-Bukhari 5045: Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/muslim:399a",
+      "title": "Sahih Muslim 399a: The Book of Prayers"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D9%86%D8%B3_%D8%A8%D9%86_%D9%85%D8%A7%D9%84%D9%83/11#12345",
+      "title": "Musnad Ahmad 12813"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D9%86%D8%B3_%D8%A8%D9%86_%D9%85%D8%A7%D9%84%D9%83/12#12380",
+      "title": "Musnad Ahmad 12845"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D9%86%D8%B3_%D8%A8%D9%86_%D9%85%D8%A7%D9%84%D9%83/25#13406",
+      "title": "Musnad Ahmad 13915"
+    },
+    {
+      "url": "https://sunnah.com/muslim:399c",
+      "title": "Sahih Muslim 399c: The Book of Prayers"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/122#25198",
+      "title": "Musnad Ahmad 26402"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1208",
+      "title": "Sunan ad-Darimi 1208"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/101#24213",
+      "title": "Musnad Ahmad 25382"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:774",
+      "title": "Sahih al-Bukhari 774: Call to Prayers (Adhaan)"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:772",
+      "title": "Sahih al-Bukhari 772: Call to Prayers (Adhaan)"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/128#25371",
+      "title": "Musnad Ahmad 26583"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:815",
+      "title": "Sunan Ibn Majah 815: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A8%D8%B5%D8%B1%D9%8A%D9%8A%D9%86/22#19650",
+      "title": "Musnad Ahmad 20559"
+    },
+    {
+      "url": "https://sunnah.com/nasai:920",
+      "title": "Sunan an-Nasa'i 920: The Book of the Commencement of the Prayer"
+    },
+    {
+      "url": "https://sunnah.com/nasai:905",
+      "title": "Sunan an-Nasa'i 905: The Book of the Commencement of the Prayer"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/45#10045",
+      "title": "Musnad Ahmad 10449"
+    },
+    {
+      "url": "https://en.tohed.com/reciting-bismillah-aloud/",
+      "title": "Reciting Bismillah Aloud"
+    },
+    {
+      "url": "https://en.tohed.com/authentic-proofs-for-the-imam-reciting-bismillah-aloud-in-audible-prayers/",
+      "title": "Authentic Proofs for the Imam Reciting Bismillah Aloud in Audible Prayers"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/17864/reported-al-bukhari-some-wives-prophet-peace-blessings-upon-prophet-peace-blessings-upon-used-recite",
+      "title": "It is reported in al-Bukhari from some of the wives of the Prophet (peace and blessings be upon him) that the Prophet (peace and blessings be upon him) used to recite \"Bismillah\" and prolong \"al-Rahman al-Rahim\""
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/9548/mentioned-hadith-umm-salama-prophet-peace-blessings-upon-used-pray-house-recite-bismillah-al-rahman",
+      "title": "It is mentioned in the hadith of Umm Salama: (That the Prophet (peace and blessings be upon him) used to pray in her house and recite Bismillah al-Rahman al-Rahim). Is his recitation of the Basmala"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/3242/why-does-some-scholars-count-bismillah-of-surah-fatiha-and-some-doesnt-which-is-the-correct-one/",
+      "title": "Why does some scholars count Bismillah of Surah Fatiha, and some doesn’t? Which is the correct one?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/saying-basmala-before-after-the-fatiha-the-position-of-the-hanafi-school/",
+      "title": "Saying Basmala Before & After the Fatiha: The Position of the Hanafi School"
+    },
+    {
+      "url": "https://islamqa.org/shafii/shafiifiqh/30206/the-proofs-for-saying-the-basmalah-aloud-in-the-salah/",
+      "title": "The Proofs for Saying the Basmalah Aloud in the Salah"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:357",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص357"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#2:149",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص149"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:129",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص129"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/29099/do-recite-basmala-quietly-aloud-before-al-fatihah-prayer",
+      "title": "Do we recite the Basmala quietly or aloud before al-Fatihah in prayer?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/125816/ruling-reciting-basmala-audibly-prayer-125816",
+      "title": "The Ruling on Reciting the Basmala Audibly in Prayer"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/92701/reciting-basmala-aloud-when-reciting-al-fatihah",
+      "title": "Reciting the Basmala aloud when reciting al-Fatihah"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/78252/ruling-praying-behind-one-who-recites-basmala-aloud-loud-prayers",
+      "title": "The ruling on praying behind one who recites the Basmala aloud in the loud prayers"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/111283/ruling-reciting-basmala-audibly-prayer",
+      "title": "The Ruling on Reciting the Basmala Audibly in Prayer"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110959/reciting-basmala-aloud-reciting-silently",
+      "title": "Reciting the Basmala aloud and reciting it silently"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/111264/pronouncement-secrecy-basmala-beginning-prayer",
+      "title": "The Pronouncement and Secrecy of the Basmala at the Beginning of the Prayer"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110957/ruling-reciting-basmala-prayer",
+      "title": "The Ruling on Reciting the Basmala in Prayer"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/81220/sunnah-recite-basmalah-aloud-quietly-prayer",
+      "title": "Is the Sunnah to recite the Basmalah aloud or quietly in prayer?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/81577/ruling-reciting-basmalah-quietly-loud-prayers",
+      "title": "The ruling on reciting the Basmalah quietly in the loud prayers"
+    },
+    {
+      "url": "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=1180",
+      "title": "Basmalah quietly in Prayer is Better"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/75999/what-ruling-one-who-recites-basmala-aloud-prayer",
+      "title": "What is the ruling on one who recites the Basmala aloud in his prayer?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/65440/disliked-recite-basmala-aloud-prayer",
+      "title": "Is it disliked to recite the Basmala aloud in prayer?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/70930/ruling-reciting-basmala-aloud-tarawih-prayer",
+      "title": "The ruling on reciting the Basmala aloud in the Tarawih prayer"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/16017/what-ruling-reciting-basmala-aloud-surahs-other-al-fatihah-meaning-when-one-intends-move-one-surah",
+      "title": "What is the ruling on reciting the Basmala aloud in surahs other than al-Fatihah, meaning when one intends to move from one surah to another?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/128370/ruling-reciting-basmala-audibly-audible-prayers",
+      "title": "The Ruling on Reciting the Basmala Audibly in the Audible Prayers"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/quran/what-are-the-rulings-on-seeking-refuge-al-istiadha-and-the-basmala/",
+      "title": "What Are the Rulings on Seeking Refuge (Al-Isti‘adha) and the Basmala?"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The basmala stands at the head of al-Fatihah in the written text, and it is the opening line of the surah as the Quran presents it. Its second Quranic appearance is inside Solomon's letter to the Queen of Sheba, where the Quran quotes the letter's opening words, a passage the commentators read as showing the basmala was used to open correspondence.",
+          "citations": [
+            "https://quran.com/1/1",
+            "https://quran.com/27/30",
+            "https://quran.com/27/29",
+            "https://quran.com/27/31"
+          ]
+        },
+        {
+          "text": "The counting dispute turns on the \"seven of the often repeated verses\" given to the Prophet ﷺ, which the tafsir identifies as al-Fatihah. Those who count the basmala as one of the seven reach seven by including it; those who exclude it count from \"All praise is due to Allah, Lord of the worlds\" and reach seven without it. Ibn Uthaymeen argued that al-Fatihah is agreed to have seven verses, so counting the basmala inside it would give eight, and concluded it is not a verse of the surah. He also stressed that the disagreement is over counting, not over whether the basmala was revealed or preserved.",
+          "citations": [
+            "https://quran.com/15/87",
+            "https://quran.com/1/2",
+            "https://al-fatawa.com/en/fatwa/31335/number-verses-surat-al-fatihah-whether-basmala-one",
+            "https://al-fatawa.com/en/fatwa/36461/basmala-verse-surat-al-fatihah-what-ruling-one-who-does-not-recite-prayer",
+            "https://al-fatawa.com/en/fatwa/42990/saying-allah-exalted-indeed-who-have-sent-down-reminder-indeed-guardians-how-do-address-disagreement"
+          ]
+        },
+        {
+          "text": "Two further verses frame the manner of recitation. The command not to recite too loudly nor too quietly but to seek a middle way, and the instruction to remember the Lord within oneself, in humility, \"without being apparent in speech\", are both cited in discussions of voice level in prayer. The command to listen when the Quran is recited underlies the Hanafi insistence that the follower stays silent, and the command to recite with measured slowness underlies the reports about the Prophet ﷺ elongating his recitation.",
+          "citations": [
+            "https://quran.com/17/110",
+            "https://quran.com/7/205",
+            "https://quran.com/7/204",
+            "https://quran.com/73/4",
+            "https://sunnah.com/bukhari:5045"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The strongest cluster is from Anas ibn Malik, who prayed behind four successive leaders and reported that none of them said the basmala aloud. Ahmad's version adds Uthman and is graded sahih with a strong chain by Shu'ayb al-Arna'ut, and two further Ahmad routes state plainly that \"they did not recite it aloud,\" graded sahih on the condition of the two Shaykhs. Muslim's version adds that they used to begin the prayer with \"All praise is due to Allah, Lord of the worlds\".",
+          "citations": [
+            "https://sunnah.com/muslim:399a",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D9%86%D8%B3_%D8%A8%D9%86_%D9%85%D8%A7%D9%84%D9%83/11#12345",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D9%86%D8%B3_%D8%A8%D9%86_%D9%85%D8%A7%D9%84%D9%83/12#12380",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D9%86%D8%B3_%D8%A8%D9%86_%D9%85%D8%A7%D9%84%D9%83/25#13406",
+            "https://sunnah.com/muslim:399c"
+          ]
+        },
+        {
+          "text": "Aisha's report follows the same line: the Prophet ﷺ opened the prayer with the takbir and opened the recitation with \"All praise is due to Allah,\" graded sahih or hasan by al-Arna'ut in Ahmad, with parallel versions in al-Darimi and Ahmad. Ibn Abbas's statement that the Prophet ﷺ recited aloud where he was commanded and was silent where he was commanded is sahih in al-Bukhari, and Abu Hurayrah's report that whatever the Prophet ﷺ let them hear they passed on, and whatever he hid they hid, is also sahih.",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/122#25198",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1208",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/101#24213",
+            "https://sunnah.com/bukhari:774",
+            "https://sunnah.com/bukhari:772"
+          ]
+        },
+        {
+          "text": "On the other side, Umm Salamah described the Prophet ﷺ reciting verse by verse beginning with the basmala, with a chain al-Arna'ut graded sahih. Ibn Mughaffal's rebuke, \"beware of innovation,\" over hearing the basmala recited is graded da'if by al-Albani, Abd al-Baqi and Zubair Ali Zai in Ibn Majah, while the same meaning in Ahmad carries a chain graded sahih on the condition of the two Shaykhs. Ubadah's report that nothing should be recited behind a loud imam except the Mother of the Quran is graded da'if by Abu Ghuddah and al-Albani, though Zubair Ali Zai graded its chain sahih. Abu Hurayrah's own practice of reciting it aloud is in al-Nasa'i, graded da'if by Abu Ghuddah and al-Albani and sahih by Zubair Ali Zai; the Ahmad version carries the same \"closest to the Prophet's prayer\" statement but al-Arna'ut called its chain weak, and it does not mention the basmala.",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/128#25371",
+            "https://sunnah.com/ibnmajah:815",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A8%D8%B5%D8%B1%D9%8A%D9%8A%D9%86/22#19650",
+            "https://sunnah.com/nasai:920",
+            "https://sunnah.com/nasai:905",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/45#10045"
+          ]
+        },
+        {
+          "text": "The reports split along a clear line. Anas, Aisha and Ibn Mughaffal place the basmala in the silent category, and Anas's statement is the one the later schools lean on most heavily. Against that, a report from Abd al-Rahman ibn Abza says he prayed behind Umar and Umar recited the basmala aloud, cited to Ibn Abi Shaybah, al-Tahawi and al-Bayhaqi. Ibn Abbas and Ibn al-Zubayr are likewise reported to have recited it aloud, with al-Dhahabi grading the narration sahih. Abu Hurayrah's practice of reciting it aloud is in the Sunan.",
+          "citations": [
+            "https://sunnah.com/muslim:399a",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/122#25198",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A8%D8%B5%D8%B1%D9%8A%D9%8A%D9%86/22#19650",
+            "https://en.tohed.com/reciting-bismillah-aloud/",
+            "https://en.tohed.com/authentic-proofs-for-the-imam-reciting-bismillah-aloud-in-audible-prayers/",
+            "https://sunnah.com/nasai:905"
+          ]
+        },
+        {
+          "text": "The Shafi'i school answers Anas's report in two ways recorded in Mughni al-Muhtaj: that \"they used to begin with Surat al-Hamd\" means they began the surah, and that al-Daraqutni's report has Anas himself reciting it aloud and saying he spared no effort to follow the Prophet's prayer ﷺ. The same passage argues that the wording \"I did not hear\" is a narration by meaning, and had it come in the original wording as in al-Bukhari the narrator would have been accurate. On the other side, al-Albani noted that the hadith about the Prophet ﷺ reciting the basmala and prolonging it contains no mention of prayer at all, so it cannot settle the question of praying aloud, and that Umm Salamah's \"he recited\" does not mean \"he recited aloud,\" since a companion standing nearby can follow a quiet reciter.",
+          "citations": [
+            "https://shamela.ws/book/11444#1:354",
+            "https://al-fatawa.com/en/fatwa/17864/reported-al-bukhari-some-wives-prophet-peace-blessings-upon-prophet-peace-blessings-upon-used-recite",
+            "https://al-fatawa.com/en/fatwa/9548/mentioned-hadith-umm-salama-prophet-peace-blessings-upon-used-pray-house-recite-bismillah-al-rahman"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafi school holds the basmala is recited but concealed. Al-Marginani's al-Hidaya states the imam recites the basmala and recites it quietly, citing Ibn Mas'ud's list of what the imam hides, and answers the Shafi'i proof that the Prophet ﷺ recited it aloud by saying that was for teaching, since Anas reported he did not recite it aloud. The school also holds it is not a verse of al-Fatihah but a verse for separating surahs, as quoted from Bada'i al-Sana'i and al-Fatawa al-Hindiyya.",
+          "citations": [
+            "https://shamela.ws/book/11820#1:47",
+            "https://islamqa.org/hanafi/askimam/3242/why-does-some-scholars-count-bismillah-of-surah-fatiha-and-some-doesnt-which-is-the-correct-one/"
+          ]
+        },
+        {
+          "text": "The Maliki school leaves it out in the obligatory prayer. Al-Mudawwana reports Malik saying the matter is to abandon reciting the basmala in the obligatory prayer, neither quietly nor aloud, neither by the imam nor anyone else, while in the voluntary prayer one may do either. A SeekersGuidance answer reports that the Maliki riwaya of Qalun does not count it in al-Fatihah, and that scholars differed over whether it is part of the surah, a separator, or neither; another answer notes that some held it is not from the Quran at all, attributing that to Ibn Mas'ud, Malik and the early Hanafis.",
+          "citations": [
+            "https://shamela.ws/book/587#1:161",
+            "https://seekersguidance.org/answers/general-counsel/is-the-basmala-part-of-the-quran/",
+            "https://seekersguidance.org/answers/hanafi-fiqh/saying-basmala-before-after-the-fatiha-the-position-of-the-hanafi-school/"
+          ]
+        },
+        {
+          "text": "The Shafi'i school says it aloud in the loud prayers. Mughni al-Muhtaj sets out the school's proofs and its answers to the Anas reports, and the school counts the basmala as a verse of al-Fatihah, which is why its proof texts treat it as one of the seven. Mughni al-Muhtaj also shows the school counting the basmala when a person must substitute seven verses for al-Fatihah.",
+          "citations": [
+            "https://shamela.ws/book/11444#1:354",
+            "https://islamqa.org/shafii/shafiifiqh/30206/the-proofs-for-saying-the-basmalah-aloud-in-the-salah/",
+            "https://shamela.ws/book/11444#1:357"
+          ]
+        },
+        {
+          "text": "The Hanbali school recites it quietly, not aloud. Kashshaf al-Qina' states plainly that he then recites the basmala secretly. Ibn Qudama in al-Mughni says the narration from Ahmad does not differ that reciting it aloud is not sunna, and lists Abu Bakr, Umar, Uthman, Ali, Ibn Mas'ud, Ibn al-Zubayr and Ammar on that side, along with al-Awza'i, al-Thawri, Ibn al-Mubarak and the people of opinion.",
+          "citations": ["https://shamela.ws/book/622#2:316", "https://shamela.ws/book/6910#2:149"]
+        },
+        {
+          "text": "Ibn Rushd's Bidaya places the whole question among the disputed elements of the prayer's spoken parts, which is where the difference over the basmala belongs. The comparative picture is that three of the four schools land on silence and one on audible recitation in the loud prayers, with the underlying cause being the verse-count dispute rather than the reports of practice alone.",
+          "citations": [
+            "https://shamela.ws/book/21739#1:129",
+            "https://seekersguidance.org/answers/general-counsel/is-the-basmala-part-of-the-quran/",
+            "https://al-fatawa.com/en/fatwa/31335/number-verses-surat-al-fatihah-whether-basmala-one"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The reconciliation the scholars reached runs along three lines. First, the reports of \"I did not hear\" are treated as reports about audibility, not about omission, so they do not contradict the reports that the basmala was recited. Second, the reports of the Prophet ﷺ saying it aloud are read as teaching occasions rather than a standing practice, which is how al-Marginani answered the Shafi'i proof and how al-Albani explained the narration. Third, where the two sets could not be joined, some scholars weakened the audible narrations as anomalous, while others accepted them and still held the quiet practice better, leaving room for both without censure.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/111267/recitation-basmala-low-voice-evidence",
+            "https://shamela.ws/book/11820#1:47",
+            "https://al-fatawa.com/en/fatwa/29099/do-recite-basmala-quietly-aloud-before-al-fatihah-prayer",
+            "https://al-fatawa.com/en/fatwa/9548/mentioned-hadith-umm-salama-prophet-peace-blessings-upon-used-pray-house-recite-bismillah-al-rahman",
+            "https://al-fatawa.com/en/fatwa/125816/ruling-reciting-basmala-audibly-prayer-125816",
+            "https://al-fatawa.com/en/fatwa/92701/reciting-basmala-aloud-when-reciting-al-fatihah",
+            "https://al-fatawa.com/en/fatwa/78252/ruling-praying-behind-one-who-recites-basmala-aloud-loud-prayers"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Saudi Arabia's Permanent Committee ruled in Fatwa 4683 that the correct view is silent recitation before al-Fatihah in every rak'ah, whether the prayer is silent or loud, citing Anas in Sahih Muslim, and repeated the same in Fatwa 8861. In Fatwa 389 the Committee gave the reasoning: reciting it quietly in the loud prayers distinguishes it from the surah and joins the evidences that seem to omit it with those that establish it, and the reports of not hearing it are read as meaning not hearing it aloud, not that it was dropped. Fatwa 2428 states there is no evidence the Prophet ﷺ opened the loud prayers with the basmala aloud, and that the authentic reports have him beginning with \"All praise is due to Allah\" aloud while concealing the basmala. The Committee also noted that the disagreement exists within Malik's own school.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/111283/ruling-reciting-basmala-audibly-prayer",
+            "https://al-fatawa.com/en/fatwa/110959/reciting-basmala-aloud-reciting-silently",
+            "https://al-fatawa.com/en/fatwa/111267/recitation-basmala-low-voice-evidence",
+            "https://al-fatawa.com/en/fatwa/111264/pronouncement-secrecy-basmala-beginning-prayer",
+            "https://al-fatawa.com/en/fatwa/110957/ruling-reciting-basmala-prayer"
+          ]
+        },
+        {
+          "text": "Ibn Baz took the same position repeatedly: the Sunnah is to recite it quietly, as the Prophet ﷺ, Abu Bakr and Umar did, beginning the audible recitation with \"All praise is due to Allah\", and the hadiths suggesting it was said aloud are weak with nothing authentic and explicit on the point. He nonetheless held that one who recites it aloud commits no wrong, only leaving what is better, that praying behind such an imam is valid because some scholars consider it prescribed, that doing it occasionally to teach the congregation is acceptable, and that the same ruling applies in Tarawih.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/81220/sunnah-recite-basmalah-aloud-quietly-prayer",
+            "https://al-fatawa.com/en/fatwa/81577/ruling-reciting-basmalah-quietly-loud-prayers",
+            "https://al-fatawa.com/en/fatwa/72781/what-ruling-reciting-basmala-aloud-prayer-when-reciting-al-fatihah-other-surahs",
+            "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=1180",
+            "https://al-fatawa.com/en/fatwa/92701/reciting-basmala-aloud-when-reciting-al-fatihah",
+            "https://al-fatawa.com/en/fatwa/75999/what-ruling-one-who-recites-basmala-aloud-prayer",
+            "https://al-fatawa.com/en/fatwa/78252/ruling-praying-behind-one-who-recites-basmala-aloud-loud-prayers",
+            "https://al-fatawa.com/en/fatwa/65440/disliked-recite-basmala-aloud-prayer",
+            "https://al-fatawa.com/en/fatwa/70930/ruling-reciting-basmala-aloud-tarawih-prayer"
+          ]
+        },
+        {
+          "text": "Al-Albani was firmer: the hadiths on audible recitation are weak and not proof, and the correct Sunnah is quiet, with no authentic report of reciting it aloud except for the purpose of teaching. Ibn Uthaymeen said both were reported but the quiet narrations are more numerous, some scholars declaring the audible ones anomalous and therefore not acted upon, and that the closest view is that the disagreement is not major: do not criticize an imam who recites it aloud, and reciting it aloud occasionally to reconcile hearts is harmless. He also held that the basmala is not a verse of al-Fatihah and is not recited aloud, tying the two questions together.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/121598/ruling-reciting-basmala-seeking-refuge-allah-audibly-audible-prayers",
+            "https://al-fatawa.com/en/fatwa/16017/what-ruling-reciting-basmala-aloud-surahs-other-al-fatihah-meaning-when-one-intends-move-one-surah",
+            "https://al-fatawa.com/en/fatwa/29099/do-recite-basmala-quietly-aloud-before-al-fatihah-prayer",
+            "https://al-fatawa.com/en/fatwa/125816/ruling-reciting-basmala-audibly-prayer-125816",
+            "https://al-fatawa.com/en/fatwa/128370/ruling-reciting-basmala-audibly-audible-prayers"
+          ]
+        },
+        {
+          "text": "On the audible side, the Shafi'i proof collection assembles Abu Hurayrah's statement that it is a verse from the Book of Allah and part of the seven, along with reports of companions reciting it aloud, and a contemporary presentation of Zubair Ali Zai's work argues from Ibn Abza behind Umar and from Ibn Abbas and Ibn al-Zubayr, with al-Dhahabi's authentication, that the aloud practice is established. A 2024 SeekersGuidance answer on the basmala and seeking refuge lists silent recitation among the rulings, giving as the reason the need to distinguish Quran from non-Quran.",
+          "citations": [
+            "https://islamqa.org/shafii/shafiifiqh/30206/the-proofs-for-saying-the-basmalah-aloud-in-the-salah/",
+            "https://en.tohed.com/authentic-proofs-for-the-imam-reciting-bismillah-aloud-in-audible-prayers/",
+            "https://en.tohed.com/reciting-bismillah-aloud/",
+            "https://seekersguidance.org/answers/quran/what-are-the-rulings-on-seeking-refuge-al-istiadha-and-the-basmala/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}

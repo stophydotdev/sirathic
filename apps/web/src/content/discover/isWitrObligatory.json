@@ -1,0 +1,485 @@
+{
+  "title": "Is witr prayer obligatory?",
+  "slug": "is-witr-obligatory",
+  "topic": "Prayer",
+  "tint": "teal",
+  "summary": {
+    "text": "The answer reports that most scholars across the schools call Witr a confirmed Sunnah, while the Hanafi school holds it to be wajib, a duty established by the Sunnah but ranked below fard. It presents the Quranic verses and hadith both sides use, the ruling each of the four schools gives in its own book, the way each school reconciled the conflicting reports, and recent fatwas from several sources.",
+    "citations": [
+      "https://islamqa.info/en/answers/36793",
+      "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d8%ad%d9%83%d9%85%d9%87%d8%a7-%d9%88%d9%83%d9%8a%d9%81%d9%8a%d8%aa%d9%87%d8%a7-%d9%88%d8%a7%d9%84%d9%82%d9%86%d9%88%d8%aa-%d9%81%d9%8a%d9%87/",
+      "https://shamela.ws/book/21739#1:96"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://islamqa.info/en/answers/36793",
+      "title": "Is Witr Compulsory?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d8%ad%d9%83%d9%85%d9%87%d8%a7-%d9%88%d9%83%d9%8a%d9%81%d9%8a%d8%aa%d9%87%d8%a7-%d9%88%d8%a7%d9%84%d9%82%d9%86%d9%88%d8%aa-%d9%81%d9%8a%d9%87/",
+      "title": "صلاة الوتر حكمها وكيفيتها والقنوت فيها"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:96",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص96"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#2:4",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص4"
+    },
+    {
+      "url": "https://quran.com/2/238",
+      "title": "Quran 2:238, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/17/79",
+      "title": "Quran 17:79, Al-Israa"
+    },
+    {
+      "url": "https://quran.com/73/20",
+      "title": "Quran 73:20, Al-Muzzammil"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1304",
+      "title": "Sunan Abi Dawud 1304: Prayer (Kitab Al-Salat): Voluntary Prayers"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/45991/continuation-reading-previous-hadith-ibn-abbas-came-asked-witr-messenger-allah-peace-blessings-upon",
+      "title": "Continuation of the reading of the previous hadith: (… so Ibn 'Abbas came and asked him about the witr of the Messenger of Allah (peace and blessings be upon him), and Ibn 'Abbas said:"
+    },
+    {
+      "url": "https://islamonline.net/%d9%81%d9%88%d8%a7%d8%a6%d8%af-%d9%85%d9%86-%d8%b3%d9%88%d8%b1%d8%a9-%d8%a7%d9%84%d9%85%d8%b2%d9%85%d9%84/",
+      "title": "فوائد من سورة المزمل"
+    },
+    {
+      "url": "https://quran.com/89/3",
+      "title": "Quran 89:3, Al-Fajr"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:3342",
+      "title": "Jami' at-Tirmidhi 3342: Chapters on Tafsir"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1416",
+      "title": "Sunan Abi Dawud 1416: Prayer (Kitab Al-Salat): Detailed Injunctions about Witr"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1675",
+      "title": "Sunan an-Nasa'i 1675: The Book of Qiyam Al-Lail (The Night Prayer) and Voluntary Prayers During the Day"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1170",
+      "title": "Sunan Ibn Majah 1170: Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1162",
+      "title": "Musnad Ahmad 1162"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1151",
+      "title": "Musnad Ahmad 1151"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1165",
+      "title": "Musnad Ahmad 1165"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1422",
+      "title": "Sunan Abi Dawud 1422: Prayer (Kitab Al-Salat): Detailed Injunctions about Witr"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1712",
+      "title": "Sunan an-Nasa'i 1712: The Book of Qiyam Al-Lail (The Night Prayer) and Voluntary Prayers During the Day"
+    },
+    {
+      "url": "https://shamela.ws/book/622#3:17",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج3 ص17"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1419",
+      "title": "Sunan Abi Dawud 1419: Prayer (Kitab Al-Salat): Detailed Injunctions about Witr"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/51#21941",
+      "title": "Musnad Ahmad 23019"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/36#9340",
+      "title": "Musnad Ahmad 9717"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/472907",
+      "title": "ما معنى حديث (من لم يوتر فليس منا)؟"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%87%d9%84-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d9%88%d8%a7%d8%ac%d8%a8-%d8%a3%d9%85-%d8%b3%d9%86%d8%a9/",
+      "title": "صلاة الوتر واجبة أم سنة"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1%D9%88_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A7%D8%B5/7#6647",
+      "title": "Musnad Ahmad 6941"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#2:529",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص529"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:998",
+      "title": "Sahih al-Bukhari 998: Witr Prayer"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:1134",
+      "title": "Riyad as-Salihin 1134"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/16#5532",
+      "title": "Musnad Ahmad 5797"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/22#6018",
+      "title": "Musnad Ahmad 6300"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:1891",
+      "title": "Sahih al-Bukhari 1891: Fasting"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:6956",
+      "title": "Sahih al-Bukhari 6956: Tricks"
+    },
+    {
+      "url": "https://sunnah.com/nasai:2090",
+      "title": "Sunan an-Nasa'i 2090: The Book of Fasting"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/36793",
+      "title": "حكم التهاون في أداء الوتر"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:472",
+      "title": "Jami' at-Tirmidhi 472: The Book on Al-Witr"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:1132",
+      "title": "Riyad as-Salihin 1132"
+    },
+    {
+      "url": "https://sunnah.com/nasai:1676",
+      "title": "Sunan an-Nasa'i 1676: The Book of Qiyam Al-Lail (The Night Prayer) and Voluntary Prayers During the Day"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1169",
+      "title": "Musnad Ahmad 1169"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1533",
+      "title": "Sunan ad-Darimi 1533"
+    },
+    {
+      "url": "https://sunnah.com/nasai:461",
+      "title": "Sunan an-Nasa'i 461: The Book of Salah"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:209",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص209"
+    },
+    {
+      "url": "https://shamela.ws/book/11820#1:66",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص66"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:316",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص316"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:212",
+      "title": "المدونة، مالك بن أنس، ج1 ص212"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#2:2",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج2 ص2"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:328",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص328"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#1:451",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص451"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#2:594",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص594"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#2:591",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص591"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/127742",
+      "title": "تحريم حلق اللحية والفرق بين الفرض والواجب عند الحنفية"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#2:5",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص5"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%82%d8%b6%d8%a7%d8%a1-%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%88%d8%aa%d8%b1/",
+      "title": "قضاء صلاة الوتر"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/24332/what-ruling-witr-prayer",
+      "title": "What is the ruling on the witr prayer?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/18560/please-provide-proof-from-hadith-that-witr-prayer-is-waajib/",
+      "title": "Please provide proof from Hadith that Witr prayer is waajib."
+    },
+    {
+      "url": "https://islamqa.org/hanafi/fatwacentre/270609/method-of-witr-in-the-hanafi-school/",
+      "title": "Method of Witr in the Hanafi school"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/21574/حكم-نقض-الوتر-وكيفية-الصلاة-بعده",
+      "title": "حكم نقض الوتر وكيفية الصلاة بعده"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/17798/تأخير-صلاة-الوتر-لآخر-الليل-وأداؤها-في-البيت",
+      "title": "تأخير صلاة الوتر لآخر الليل وأداؤها في البيت"
+    },
+    {
+      "url": "https://aboutislam.net/counseling/ask-the-scholar/prayer/is-witr-obligatory/",
+      "title": "Is Witr Obligatory?"
+    },
+    {
+      "url": "https://en.tohed.com/ruling-on-witr-prayer-sunnah-muakkadah-or-wajib/",
+      "title": "Ruling on Witr Prayer: Sunnah Muakkadah or Wajib?"
+    },
+    {
+      "url": "https://en.tohed.com/the-ruling-of-witr-prayer-in-islam/",
+      "title": "The Ruling of Witr Prayer in Islam"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/34078/discussion-witr-ruling-time-number",
+      "title": "Discussion of Witr: Its Ruling, Time, and Number"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/65692",
+      "title": "حكم صلاة الوتر بعد أذان الفجر"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/85627/what-prayer-al-shaf-al-witr-how-many-rak-ahs-does-have",
+      "title": "What is the prayer of al-Shaf' and al-Witr? And how many rak'ahs does it have?"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "No verse of the Quran names Witr, and the Hanafi reference work describes Witr as sunnah in its establishment, meaning its obligation is known from the Sunnah and not from the Quran. Both sides argue from verses about prayer in general. The tafsir attached to the verse commanding care for the prayers and the middle prayer notes that the plural denotes three or more and concludes that prayer is obligatory five times a day, and those who deny Witr's obligation read this as the complete list of what is owed.",
+          "citations": ["https://shamela.ws/book/21613#2:4", "https://quran.com/2/238"]
+        },
+        {
+          "text": "The night prayer is described as an addition, not a duty, in the verse calling it an additional worship, where the word is nafilah, an extra. The tafsir on the later verse draws the same line, listing the post-midnight prayer as voluntary alongside the five compulsory prayers.",
+          "citations": ["https://quran.com/17/79", "https://quran.com/73/20"]
+        },
+        {
+          "text": "The strongest Quranic argument in the sources is abrogation. Ibn Abbas said the command to stand at night was replaced by the later verse of concession, and Aisha's account says night prayer became voluntary after having been obligatory, with the five prayers as what replaced the obligation.",
+          "citations": [
+            "https://sunnah.com/abudawud:1304",
+            "https://al-fatawa.com/en/fatwa/45991/continuation-reading-previous-hadith-ibn-abbas-came-asked-witr-messenger-allah-peace-blessings-upon",
+            "https://islamonline.net/%d9%81%d9%88%d8%a7%d8%a6%d8%af-%d9%85%d9%86-%d8%b3%d9%88%d8%b1%d8%a9-%d8%a7%d9%84%d9%85%d8%b2%d9%85%d9%84/"
+          ]
+        },
+        {
+          "text": "One verse sometimes invoked, the oath by the even and the odd, is not evidence of obligation. The report in which the Prophet explains the even and the odd as the prayer is graded weak of chain by the hadith critics.",
+          "citations": ["https://quran.com/89/3", "https://sunnah.com/tirmidhi:3342"]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The command texts are authentic by the standards of most critics. The command to perform the Witr prayer because Allah is Witr and loves the witr is graded sahih by al-Albani, sahih by Muhammad Muhyi al-Din Abd al-Hamid, and sahih through another route by Shu'ayb al-Arna'ut, while Zubair Ali Zai graded it daif; the same wording comes from Ibn Mas'ud with a similar spread of gradings and is repeated across the Musnad of Ahmad.",
+          "citations": [
+            "https://sunnah.com/abudawud:1416",
+            "https://sunnah.com/nasai:1675",
+            "https://sunnah.com/ibnmajah:1170",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1162",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1151",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1165"
+          ]
+        },
+        {
+          "text": "Abu Ayyub's report that Witr is a duty upon every Muslim, with a choice of five, three or one rak'ahs, is graded sahih by al-Albani and Abd al-Hamid and sahih of chain by Zubair Ali Zai. Al-Buhuti notes that al-Nasa'i preferred the version stopping at Abu Ayyub rather than raised to the Prophet.",
+          "citations": [
+            "https://sunnah.com/abudawud:1422",
+            "https://sunnah.com/nasai:1712",
+            "https://shamela.ws/book/622#3:17"
+          ]
+        },
+        {
+          "text": "The most quoted proof for obligation has the weakest standing. The report that Witr is a right and that whoever does not pray it is not one of us, said three times, is graded daif by al-Albani, Abd al-Hamid and Zubair Ali Zai in Sunan Abi Dawud, while Shu'ayb al-Arna'ut graded the Ahmad route's chain sahih and the Abu Hurayrah route is daif of chain. IslamQA concludes the report is weak, and IslamOnline records that al-Bukhari said its narrator had munkarat, al-Nasa'i weakened him, and others declared him trustworthy.",
+          "citations": [
+            "https://sunnah.com/abudawud:1419",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/51#21941",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/36#9340",
+            "https://islamqa.info/ar/answers/472907",
+            "https://fiqh.islamonline.net/%d9%87%d9%84-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d9%88%d8%a7%d8%ac%d8%a8-%d8%a3%d9%85-%d8%b3%d9%86%d8%a9/"
+          ]
+        },
+        {
+          "text": "The report that Allah has added a prayer, the Witr, is graded hasan by Shu'ayb al-Arna'ut in the Musnad, and Ibn Rushd cites the fuller version with the instruction to guard it, while Ibn Qudamah cites the Abu Basra al-Ghifari version that Ahmad used as proof. IslamQA argues that added for you is not added against you, so it carries no proof of obligation, and cites al-Marwazi's report of consensus on that point.",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1%D9%88_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A7%D8%B5/7#6647",
+            "https://shamela.ws/book/21739#1:96",
+            "https://shamela.ws/book/6910#2:529",
+            "https://islamqa.info/ar/answers/472907"
+          ]
+        },
+        {
+          "text": "Three further reports shape the discussion. The instruction to make the Witr the last of the night prayers is sahih in al-Bukhari, agreed upon, and sahih on the condition of the two shaykhs in the Musnad. The Bedouin's question about what Allah has made obligatory of the prayer, answered with the five prayers unless one wishes to perform voluntary prayers, is sahih; al-Nawawi said it shows Witr is not obligatory, and al-Hafiz in al-Fath said it shows nothing beyond the five is obligatory, contrary to those who obligate Witr or the two Sunnah rak'ahs of Fajr. Ibn Umar saw the Prophet pray Witr on his mount, which jurists read as a sign it is not fard, since an obligatory prayer is not performed on a riding animal without excuse.",
+          "citations": [
+            "https://sunnah.com/bukhari:998",
+            "https://sunnah.com/riyadussalihin:1134",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/16#5532",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/22#6018",
+            "https://sunnah.com/bukhari:1891",
+            "https://sunnah.com/bukhari:6956",
+            "https://sunnah.com/nasai:2090",
+            "https://islamqa.info/ar/answers/36793",
+            "https://islamqa.info/en/answers/36793",
+            "https://sunnah.com/tirmidhi:472",
+            "https://shamela.ws/book/622#3:17"
+          ]
+        },
+        {
+          "text": "The Companions spoke to the question directly. Ali said that the Witr prayer is not obligatory like the prescribed prayer, but the Messenger of Allah established it as a Sunnah, a report graded hasan where it appears in Riyad as-Salihin and sahih in Sunan an-Nasa'i, with the Musnad and Darimi versions adding, so do not abandon it. Ubadah ibn as-Samit, told by a man in Syria that Witr is obligatory, replied that Abu Muhammad is wrong and quoted the Prophet on the five prayers Allah has made obligatory, graded sahih. Ibn Rushd summarises the whole dispute as one driven by conflicting reports, and notes that each position on how many rak'ahs Witr has was held by some of the Companions and Successors.",
+          "citations": [
+            "https://sunnah.com/riyadussalihin:1132",
+            "https://sunnah.com/nasai:1676",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%2810%29#1169",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1533",
+            "https://sunnah.com/nasai:461",
+            "https://shamela.ws/book/21739#1:209",
+            "https://shamela.ws/book/21739#1:96"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafi school holds Witr to be wajib, not fard, while Abu Yusuf and Muhammad held it Sunnah. Al-Marghinani's al-Hidayah states that Witr is wajib according to Abu Hanifa and the two said Sunnah, with the proof being the command that Allah has added a prayer to be prayed between 'Isha and the rise of dawn, since a command indicates obligation, and it is made up by consensus; the denier is not a disbeliever because its obligation rests on the Sunnah. Ibn Abidin adds the command to pray Witr before the morning, reads the command as obligation, and notes three narrations from Abu Hanifa, including one calling it fard.",
+          "citations": ["https://shamela.ws/book/11820#1:66", "https://shamela.ws/book/21613#2:4"]
+        },
+        {
+          "text": "The Maliki school holds Witr to be Sunnah, and the most confirmed of the Sunnahs. Al-Dasuqi's gloss on al-Sharh al-Kabir says Witr is the most confirmed of Sunnahs, then the Eid prayer, then eclipse, then the rain prayer, with its time running from a valid 'Isha after the twilight until dawn. Malik in al-Mudawwana held Witr to be one rak'ah, reciting al-Ikhlas and the two Mu'awwidhat in it, though Ibn al-Qasim said he would not give a fatwa of it to anyone and kept it for himself, and Maliki sources also use the phrase sunnah mu'akkadah like Witr.",
+          "citations": [
+            "https://shamela.ws/book/21604#1:316",
+            "https://shamela.ws/book/587#1:212",
+            "https://shamela.ws/book/21604#2:2"
+          ]
+        },
+        {
+          "text": "The Shafi'i school holds Witr to be Sunnah. Al-Nawawi's Rawdat al-Talibin opens that Witr is Sunnah and enumerates one, three, five, seven, nine or eleven rak'ahs. Al-Shirbini's Mughni al-Muhtaj says it is sought by consensus, then answers the Hanafi argument by carrying the command to emphasis because of the Bedouin hadith and Mu'adh's hadith that Allah has enjoined five prayers.",
+          "citations": ["https://shamela.ws/book/499#1:328", "https://shamela.ws/book/11444#1:451"]
+        },
+        {
+          "text": "The Hanbali school holds Witr to be Sunnah mu'akkadah, not fard. Ibn Qudamah's al-Mughni states that Witr is not obligatory and that this is the view of Malik and al-Shafi'i, while Abu Bakr said it is obligatory and Abu Hanifa held that, citing the command texts; his reply rests on Ali's report and the Bedouin's hadith. Ahmad called one who abandons it deliberately a bad man whose testimony should not be accepted, but Ibn Qudamah explains this as emphasis, and Ahmad stated in the narration of Hanbal that Witr is not on the level of fard. Al-Buhuti's Kashshaf al-Qina' calls the not one of us report weak, notes al-Nasa'i's preference for the stopped version of Abu Ayyub's report, and carries it to emphasis of recommendation.",
+          "citations": [
+            "https://shamela.ws/book/6910#2:594",
+            "https://shamela.ws/book/6910#2:591",
+            "https://shamela.ws/book/622#3:17"
+          ]
+        },
+        {
+          "text": "The Hanafi wording needs one clarification from the sources: in that school fard is what is established by definitive proof, so its denier disbelieves, while wajib is what is established by probabilistic proof, so its denier does not; but the one who abandons either is sinful. Ibn Abidin applies this to Witr, distinguishing denial out of contempt from neglect out of laziness.",
+          "citations": [
+            "https://islamqa.info/ar/answers/127742",
+            "https://shamela.ws/book/21613#2:5"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "Ibn Rushd names the cause exactly: the reports conflict, some carrying the sense of obligation and some the sense of recommendation, and the argument over whether to call what is established by the Sunnah wajib or fard has no substance. Each school then handles the tension with a different tool.",
+          "citations": ["https://shamela.ws/book/21739#1:96"]
+        },
+        {
+          "text": "The Shafi'i reconciliation in Mughni al-Muhtaj is to restrict the command, reading it as emphasis because the Bedouin was told nothing beyond the five is owed and Mu'adh's hadith fixes the number at five. The Hanbali reconciliation in al-Mughni and Kashshaf al-Qina' is a mix of grading and restriction: the not one of us report is weak, the Abu Ayyub report is read as emphasis, and Ali's statement plus the Bedouin's hadith limit the commands. The Hanafi reconciliation keeps the command on its apparent obligation, so that it must be made up, while holding that because the proof is from the Sunnah the denier is not put outside the faith.",
+          "citations": [
+            "https://shamela.ws/book/11444#1:451",
+            "https://shamela.ws/book/6910#2:591",
+            "https://shamela.ws/book/622#3:17",
+            "https://shamela.ws/book/11820#1:66",
+            "https://shamela.ws/book/21613#2:4",
+            "https://shamela.ws/book/21613#2:5"
+          ]
+        },
+        {
+          "text": "The practical result converges far more than the labels suggest. All four schools hold Witr to be legislated and to be kept up: the Malikis rank it the most confirmed Sunnah, Ahmad warns that one who leaves it deliberately is a bad man, Ali says do not abandon it, and the Permanent Committee advises constancy while saying the intermittent performer is not blamed. All agree it may be made up if missed, which IslamOnline calls a point of agreement between those who call it wajib and those who call it Sunnah, and its summary is that the difference is one of the degree of demand, not of whether Witr is part of the religion.",
+          "citations": [
+            "https://shamela.ws/book/21604#1:316",
+            "https://shamela.ws/book/6910#2:594",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B5%D9%84%D8%A7%D8%A9#1533",
+            "https://islamqa.info/ar/answers/36793",
+            "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d8%ad%d9%83%d9%85%d9%87%d8%a7-%d9%88%d9%83%d9%8a%d9%81%d9%8a%d8%aa%d9%87%d8%a7-%d9%88%d8%a7%d9%84%d9%82%d9%86%d9%88%d8%aa-%d9%81%d9%8a%d9%87/",
+            "https://fiqh.islamonline.net/%d9%82%d8%b6%d8%a7%d8%a1-%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%88%d8%aa%d8%b1/",
+            "https://fiqh.islamonline.net/%d9%87%d9%84-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d9%88%d8%a7%d8%ac%d8%a8-%d8%a3%d9%85-%d8%b3%d9%86%d8%a9/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "IslamQA states Witr is a confirmed Sunnah according to the majority, and some jurists regarded it as obligatory. It quotes the Permanent Committee's fatwa that a person who prays it one day and leaves it another is not blamed, while advising constancy, and that one may pray in the day what was missed, as an even number. Al-Albani's position is that Witr is a recommended practice and not obligatory.",
+          "citations": [
+            "https://islamqa.info/ar/answers/36793",
+            "https://islamqa.info/en/answers/36793",
+            "https://al-fatawa.com/en/fatwa/24332/what-ruling-witr-prayer"
+          ]
+        },
+        {
+          "text": "From the Hanafi side, Askimam (Mufti Ebrahim Desai) answers the claim that Witr is only an emphasized Sunnah by citing the report that whoever does not perform Witr is not from among us. FatwaCentre's Hanafi answer on the method of Witr cites Ibn Mas'ud's report that the night Witr is three like Maghrib, while recording al-Daruqutni's and al-Bayhaqi's criticism of its being raised to the Prophet.",
+          "citations": [
+            "https://islamqa.org/hanafi/askimam/18560/please-provide-proof-from-hadith-that-witr-prayer-is-waajib/",
+            "https://islamqa.org/hanafi/fatwacentre/270609/method-of-witr-in-the-hanafi-school/"
+          ]
+        },
+        {
+          "text": "Two recent surveys put the schools side by side. IslamOnline says the Malikis, Shafi'is and Hanbalis agreed it is Sunnah or Sunnah mu'akkadah while the Hanafis held it wajib, and that in their verification abandoning a wajib does not bring the punishment of abandoning a definitive fard, but brings deprivation of the Prophet's intercession; its companion answer says that when Abu Hanifa called it wajib and the others Sunnah, the meaning is not that Sunnah cancels fard, but that Witr is sought in every school, with a stronger degree of demand in the Hanafi view.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d8%ad%d9%83%d9%85%d9%87%d8%a7-%d9%88%d9%83%d9%8a%d9%81%d9%8a%d8%aa%d9%87%d8%a7-%d9%88%d8%a7%d9%84%d9%82%d9%86%d9%88%d8%aa-%d9%81%d9%8a%d9%87/",
+            "https://fiqh.islamonline.net/%d9%87%d9%84-%d8%a7%d9%84%d9%88%d8%aa%d8%b1-%d9%88%d8%a7%d8%ac%d8%a8-%d8%a3%d9%85-%d8%b3%d9%86%d8%a9/"
+          ]
+        },
+        {
+          "text": "Egypt's Dar al-Ifta al-Misriyyah states Witr is a confirmed Sunnah according to the majority of jurists, performed between 'Isha and dawn in one, three or more rak'ahs, and advises delaying it to the end of the night for one who expects to wake, and praying it at home. AboutIslam, in the answer of Sheikh Atiyyah Saqr, says it is highly recommended but not obligatory like the five prayers. A contemporary fatwa collection reports the consensus wording of Qadi Iyad, that Witr with us is a confirmed Sunnah, not obligatory, and this is the saying of all the scholars and the Salaf, and al-Khattabi's statement that the scholars agreed Witr is not an obligation. Al-Uthaymeen notes that some scholars held it obligatory and that one who does not perform it sins, before presenting the majority view, while Ibn Baz discusses its time ending at dawn, with one who missed it delaying to mid-morning, and explains shaf' as two rak'ahs and witr as one.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/21574/حكم-نقض-الوتر-وكيفية-الصلاة-بعده",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17798/تأخير-صلاة-الوتر-لآخر-الليل-وأداؤها-في-البيت",
+            "https://aboutislam.net/counseling/ask-the-scholar/prayer/is-witr-obligatory/",
+            "https://en.tohed.com/ruling-on-witr-prayer-sunnah-muakkadah-or-wajib/",
+            "https://en.tohed.com/the-ruling-of-witr-prayer-in-islam/",
+            "https://al-fatawa.com/en/fatwa/34078/discussion-witr-ruling-time-number",
+            "https://islamqa.info/ar/answers/65692",
+            "https://al-fatawa.com/en/fatwa/85627/what-prayer-al-shaf-al-witr-how-many-rak-ahs-does-have"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
