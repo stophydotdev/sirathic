@@ -2,7 +2,7 @@
 
 import { type ChatMessage } from "@sirathic/server/messages";
 import { TRPCClientError } from "@trpc/client";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   Chat,
@@ -18,6 +18,7 @@ const NO_MESSAGES = { messages: [], unfinished: false };
 
 export default function BotPage() {
   const { id } = useParams<{ id: string }>();
+  const home = usePathname();
   const [kept, setKept] = useState(() => keptMessages(id));
   const [saved, setSaved] = useState<{ messages: ChatMessage[]; unfinished: boolean }>();
   const [resumed] = useState(() => isAnswering(id));
@@ -54,7 +55,7 @@ export default function BotPage() {
       projectId={id}
       initialMessages={shown?.messages}
       unfinished={shown?.unfinished}
-      home={`/bot/${id}`}
+      home={home}
     />
   ) : (
     <EmptyThread />

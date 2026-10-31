@@ -936,4 +936,14 @@ export default {
     "Payagan ang mga reviewer ng Sirathic na basahin ang sagot na ito",
   "Shared reports": "Mga ibinahaging ulat",
   "No shared reports yet.": "Wala pang ibinahaging ulat.",
+  Messaged: "Naipadala ang mensahe",
+  "Created bot": "Nagawa ang bot",
+  Groups: "Mga grupo",
+  "New group": "Bagong grupo",
+  "Group name": "Pangalan ng grupo",
+  "Create group": "Gumawa ng grupo",
+  "Delete group": "Burahin ang grupo",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Burahin ang grupong "{name}"? Mabubura rin ang usapan nito.',
+  "Pick at least two bots": "Pumili ng hindi bababa sa dalawang bot",
 } satisfies Messages;

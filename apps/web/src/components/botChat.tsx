@@ -8,6 +8,9 @@ import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { bubblesOf } from "@sirathic/app/botBubbles";
 import { tintOf } from "@/components/botAvatar";
 import { BotEvent, isBotEvent } from "@/components/botEvents";
+import { BotFrom, SenderLine } from "@/components/botFrom";
+import { useChatState } from "@/components/chat";
+import { useGroups, useGroupTyping } from "@/components/groups";
 import { useBot } from "@/components/botHome";
 import { FormCard, HelpCard } from "@/components/browserCards";
 import { STAMP_GAP, stampText } from "@/components/botStamp";
@@ -170,6 +173,9 @@ const TOOL_LINES = new Map<string, StepLine>([
   ["update_profile", "Setting it up…"],
   ["update_memory", "Setting it up…"],
   ["set_bot_job", "Setting it up…"],
+  ["create_bot", "Setting it up…"],
+  ["update_bot", "Setting it up…"],
+  ["message_bot", "Setting it up…"],
   ["install_plugin", "Setting it up…"],
   ["stophy_search_endpoints", "Checking Stophy…"],
   ["stophy_call", "Checking Stophy…"],
@@ -252,9 +258,20 @@ const BotSays: FC = () => {
         .at(-1)
     : undefined;
   const lastText = said.findLastIndex((item) => item.kind === "text");
+  const fromId = useAuiState(
+    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.from?.id,
+  );
+  const fromName = useAuiState(
+    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.from?.name,
+  );
   return (
     <SourcesContext value={new Map(sources.map((source) => [source.url, source]))}>
       <div className="flex flex-col items-start pt-2">
+        {fromId !== undefined && fromName !== undefined && (
+          <div className="pt-2">
+            <SenderLine from={{ id: fromId, name: fromName }} />
+          </div>
+        )}
         {said.slice(0, shown).map((item, index) => (
           <Fragment key={index}>
             <Bubble said={item} last={index === lastText} />
@@ -315,6 +332,8 @@ const BotUserText: FC<{ text: string }> = ({ text }) => {
 const BotYou: FC = () => {
   const t = useT();
   const bot = useBot();
+  const projectId = useChatState()?.projectId;
+  const inGroup = useGroups((s) => s.groups?.some((group) => group.id === projectId) === true);
   const reaction = useAuiState((s) => reactionAfter(s.thread.messages, s.message.id));
   const ownReaction = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.reaction,
@@ -329,7 +348,16 @@ const BotYou: FC = () => {
     const sent = messageMetadata.safeParse(s.message.metadata.custom).data;
     return sent?.formReply !== undefined || sent?.wake === true;
   });
+  const fromId = useAuiState(
+    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.from?.id,
+  );
+  const fromName = useAuiState(
+    (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.from?.name,
+  );
   if (hidden) return null;
+  if (fromId !== undefined && fromName !== undefined) {
+    return <BotFrom from={{ id: fromId, name: fromName }} text={text} />;
+  }
   if (routine) {
     return (
       <p className="text-muted-foreground pt-6 pb-1 text-center text-xs">
@@ -361,7 +389,7 @@ const BotYou: FC = () => {
           <div
             className={cn(
               "rounded-3xl px-4 py-2 wrap-break-word whitespace-pre-wrap",
-              tintOf(bot?.color ?? null).bubble,
+              tintOf(bot?.color ?? (inGroup ? "white" : null)).bubble,
             )}
           >
             <MessagePrimitive.Parts components={{ Text: BotUserText }} />
@@ -371,6 +399,12 @@ const BotYou: FC = () => {
       </div>
     </div>
   );
+};
+
+export const GroupTyping: FC = () => {
+  const id = useChatState()?.id;
+  const typing = useGroupTyping((s) => id !== undefined && s[id] === true);
+  return typing ? <Working step={undefined} /> : null;
 };
 
 export const BotTurn: FC = () => {

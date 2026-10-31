@@ -931,4 +931,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Izinkan peninjau Sirathic membaca jawaban ini",
   "Shared reports": "Laporan yang dibagikan",
   "No shared reports yet.": "Belum ada laporan yang dibagikan.",
+  Messaged: "Pesan terkirim",
+  "Created bot": "Bot dibuat",
+  Groups: "Grup",
+  "New group": "Grup baru",
+  "Group name": "Nama grup",
+  "Create group": "Buat grup",
+  "Delete group": "Hapus grup",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Hapus grup "{name}"? Percakapannya juga dihapus.',
+  "Pick at least two bots": "Pilih setidaknya dua bot",
 } satisfies Messages;

@@ -929,4 +929,14 @@ export default {
     "Dopusti Sirathicovim recenzentima da pročitaju ovaj odgovor",
   "Shared reports": "Podijeljene prijave",
   "No shared reports yet.": "Još nema podijeljenih prijava.",
+  Messaged: "Poruka poslana",
+  "Created bot": "Bot kreiran",
+  Groups: "Grupe",
+  "New group": "Nova grupa",
+  "Group name": "Naziv grupe",
+  "Create group": "Kreiraj grupu",
+  "Delete group": "Obriši grupu",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Obrisati grupu "{name}"? Njen razgovor se također briše.',
+  "Pick at least two bots": "Odaberi najmanje dva bota",
 } satisfies Messages;

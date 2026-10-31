@@ -930,4 +930,14 @@ export default {
     "Sirathic incelemecilerinin bu yanıtı okumasına izin ver",
   "Shared reports": "Paylaşılan bildirimler",
   "No shared reports yet.": "Henüz paylaşılan bildirim yok.",
+  Messaged: "Mesaj gönderildi",
+  "Created bot": "Bot oluşturuldu",
+  Groups: "Gruplar",
+  "New group": "Yeni grup",
+  "Group name": "Grup adı",
+  "Create group": "Grup oluştur",
+  "Delete group": "Grubu sil",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" grubu silinsin mi? Sohbeti de silinir.',
+  "Pick at least two bots": "En az iki bot seçin",
 } satisfies Messages;

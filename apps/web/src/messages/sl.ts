@@ -930,4 +930,14 @@ export default {
     "Dovoli pregledovalcem Sirathic, da preberejo ta odgovor",
   "Shared reports": "Deljene prijave",
   "No shared reports yet.": "Deljenih prijav še ni.",
+  Messaged: "Sporočilo poslano",
+  "Created bot": "Bot ustvarjen",
+  Groups: "Skupine",
+  "New group": "Nova skupina",
+  "Group name": "Ime skupine",
+  "Create group": "Ustvari skupino",
+  "Delete group": "Izbriši skupino",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Izbrišem skupino "{name}"? Izbriše se tudi njen pogovor.',
+  "Pick at least two bots": "Izberi vsaj dva bota",
 } satisfies Messages;

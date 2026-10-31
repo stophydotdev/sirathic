@@ -912,4 +912,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "អនុញ្ញាតឱ្យអ្នកត្រួតពិនិត្យរបស់ Sirathic អានចម្លើយនេះ",
   "Shared reports": "របាយការណ៍ដែលបានចែករំលែក",
   "No shared reports yet.": "មិនទាន់មានរបាយការណ៍ដែលបានចែករំលែកនៅឡើយទេ។",
+  Messaged: "បានផ្ញើសារ",
+  "Created bot": "បានបង្កើតបូត",
+  Groups: "ក្រុម",
+  "New group": "ក្រុមថ្មី",
+  "Group name": "ឈ្មោះក្រុម",
+  "Create group": "បង្កើតក្រុម",
+  "Delete group": "លុបក្រុម",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'លុបក្រុម "{name}" ឬ? ការសន្ទនារបស់វាក៏នឹងត្រូវលុបដែរ។',
+  "Pick at least two bots": "ជ្រើសរើសបូតយ៉ាងហោចណាស់ពីរ",
 } satisfies Messages;

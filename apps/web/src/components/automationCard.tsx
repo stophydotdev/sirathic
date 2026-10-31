@@ -10,7 +10,13 @@ import { schedule } from "@sirathic/server/automations";
 import { ANSWER_CARDS } from "@sirathic/server/cards";
 import { currentToolName } from "@sirathic/server/messages";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUpRight01Icon, TimeScheduleIcon, UserEdit01Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowUpRight01Icon,
+  SentIcon,
+  TimeScheduleIcon,
+  UserAdd01Icon,
+  UserEdit01Icon,
+} from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { type FC, useEffect } from "react";
 import { z } from "zod";
@@ -20,6 +26,9 @@ const CARD_TOOLS = new Set([
   "list_routines",
   "set_bot_job",
   "update_profile",
+  "create_bot",
+  "update_bot",
+  "message_bot",
   "install_plugin",
   "clarifying_questions",
   "request_user_form",
@@ -33,6 +42,10 @@ export const isCardTool = (name: string) => CARD_TOOLS.has(currentToolName(name)
 const renamed = z.object({ name: z.string() });
 
 const restyled = z.union([z.object({ color: z.string() }), z.object({ body: z.string() })]);
+
+const botRef = renamed.extend({ id: z.string() });
+
+const sentTo = z.object({ sentTo: z.string(), id: z.string() });
 
 const ACTIONS = ["create", "edit", "pause", "resume", "delete"] as const;
 
@@ -99,9 +112,22 @@ export const AutomationCard: FC<{ tool: string; result: unknown }> = ({ tool, re
   const change = changed.safeParse(result).data;
   const bot = renamed.safeParse(result).data;
   const name = currentToolName(tool);
-  if ((name === "set_bot_job" || name === "update_profile") && bot)
+  if ((name === "set_bot_job" || name === "update_profile" || name === "update_bot") && bot)
     return <BotRenamed name={bot.name} />;
   if (name === "update_profile" && restyled.safeParse(result).success) return <BotRenamed />;
+  const created = botRef.safeParse(result).data;
+  if (name === "create_bot" && created) return <BotCreated id={created.id} name={created.name} />;
+  const sent = sentTo.safeParse(result).data;
+  if (name === "message_bot" && sent) {
+    return (
+      <EventLine
+        icon={SentIcon}
+        label={t("Messaged")}
+        name={sent.sentTo}
+        href={`/bot/${sent.id}`}
+      />
+    );
+  }
   if (name === "update_routine" && change && (made?.projectId || change.action !== "create")) {
     return (
       <EventLine
@@ -134,4 +160,14 @@ const BotRenamed: FC<{ name?: string }> = ({ name }) => {
   }, [name]);
   if (name === undefined) return null;
   return <EventLine icon={UserEdit01Icon} label={t("Renamed to {name}", { name })} />;
+};
+
+const BotCreated: FC<{ id: string; name: string }> = ({ id, name }) => {
+  const t = useT();
+  useEffect(() => {
+    void useProjects.getState().refresh();
+  }, [id]);
+  return (
+    <EventLine icon={UserAdd01Icon} label={t("Created bot")} name={name} href={`/bot/${id}`} />
+  );
 };

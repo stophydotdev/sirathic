@@ -2,6 +2,7 @@ import { z } from "zod";
 import { openBot } from "../bots/opener";
 import { appLanguage } from "../shared/messages";
 import { signedIn, t } from "../trpc";
+import { createGroup, groupInput, listGroups } from "./groups";
 import {
   createProject,
   listProjects,
@@ -13,6 +14,10 @@ import {
 } from "./projects";
 
 export const projectRoutes = {
+  groups: t.router({
+    list: signedIn.query(({ ctx }) => listGroups(ctx.owner)),
+    create: signedIn.input(groupInput).mutation(({ ctx, input }) => createGroup(ctx.owner, input)),
+  }),
   projects: t.router({
     list: signedIn.query(({ ctx }) => listProjects(ctx.owner)),
     create: signedIn

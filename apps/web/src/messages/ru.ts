@@ -928,4 +928,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Разрешить проверяющим Sirathic читать этот ответ",
   "Shared reports": "Переданные жалобы",
   "No shared reports yet.": "Переданных жалоб пока нет.",
+  Messaged: "Сообщение отправлено",
+  "Created bot": "Бот создан",
+  Groups: "Группы",
+  "New group": "Новая группа",
+  "Group name": "Название группы",
+  "Create group": "Создать группу",
+  "Delete group": "Удалить группу",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    "Удалить группу «{name}»? Её переписка тоже удалится.",
+  "Pick at least two bots": "Выберите хотя бы двух ботов",
 } satisfies Messages;

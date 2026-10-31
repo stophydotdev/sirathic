@@ -916,4 +916,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "اسمح لمراجعي Sirathic بقراءة هذه الإجابة",
   "Shared reports": "البلاغات المشاركة",
   "No shared reports yet.": "لا توجد بلاغات مشاركة بعد.",
+  Messaged: "تمت مراسلة",
+  "Created bot": "تم إنشاء بوت",
+  Groups: "مجموعات",
+  "New group": "مجموعة جديدة",
+  "Group name": "اسم المجموعة",
+  "Create group": "إنشاء مجموعة",
+  "Delete group": "حذف المجموعة",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    "هل تريد حذف المجموعة «{name}»؟ ستُحذف محادثتها أيضًا.",
+  "Pick at least two bots": "اختر بوتين على الأقل",
 } satisfies Messages;

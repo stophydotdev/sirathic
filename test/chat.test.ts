@@ -384,11 +384,11 @@ mock.module("@sirathic/db", () => ({
       if (sql.startsWith('select "messages"')) return { rows: [[earlier, false, botId]] };
       if (sql.startsWith('select "id", "name"')) return { rows: [[...botRow, ...botRowEnd]] };
       if (sql.startsWith('select "project_id"')) return { rows: [] };
-      if (sql.startsWith('update "chat_sessions"')) return { rows: [[botId, "Bot", false, true]] };
-      if (sql.startsWith('insert into "chat_sessions"')) {
+      if (sql.startsWith('update "chat_sessions" set "messages"')) {
         savedChats.push(params);
         return { rows: [[botId]] };
       }
+      if (sql.startsWith('update "chat_sessions"')) return { rows: [[botId, "Bot", false, true]] };
       throw new Error(`unexpected query: ${sql}`);
     },
     { casing: "snake_case" },
@@ -442,7 +442,7 @@ test("two background tasks finish while the bot is answering, and one wake deliv
   expect(wakes).toHaveLength(1);
   expect(messageText(wakes[0]?.at(-1))).toContain("Done: Find hajj visa rules");
   expect(messageText(wakes[0]?.at(-1))).toContain("Done: Find umrah costs");
-  const saved: ChatMessage[] = JSON.parse(String(savedChats.at(-1)?.[3]));
+  const saved: ChatMessage[] = JSON.parse(String(savedChats.at(-1)?.[0]));
   expect(saved.map((message) => [message.role, messageText(message).slice(0, 12)])).toEqual([
     ["user", "Research haj"],
     ["assistant", "Starting."],

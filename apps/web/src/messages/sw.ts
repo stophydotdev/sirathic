@@ -928,4 +928,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Waruhusu wakaguzi wa Sirathic kusoma jibu hili",
   "Shared reports": "Ripoti zilizoshirikiwa",
   "No shared reports yet.": "Bado hakuna ripoti zilizoshirikiwa.",
+  Messaged: "Ujumbe umetumwa",
+  "Created bot": "Bot imeundwa",
+  Groups: "Vikundi",
+  "New group": "Kikundi kipya",
+  "Group name": "Jina la kikundi",
+  "Create group": "Unda kikundi",
+  "Delete group": "Futa kikundi",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Futa kikundi "{name}"? Mazungumzo yake pia yatafutwa.',
+  "Pick at least two bots": "Chagua bot angalau mbili",
 } satisfies Messages;

@@ -1,6 +1,7 @@
 import type { ProfileEntry } from "../bots/profile";
 
 export type RulesProject = {
+  id: string;
   name: string;
   title: string;
   instructions: string;
@@ -23,3 +24,25 @@ export const teachingRules = (note: string | undefined) =>
 
 export const botIdentity = ({ name, title }: { name: string; title: string }) =>
   title ? `"${name}", ${title}` : `"${name}"`;
+
+export type Teammates = {
+  bots: readonly { id: string; name: string; title: string; instructions: string }[];
+  groups: readonly { id: string; name: string }[];
+};
+
+export const teammateLines = ({ bots, groups }: Teammates) =>
+  [
+    bots.length > 0
+      ? `Teammates you can message right now:\n${bots
+          .map(
+            ({ id, name, title, instructions }) =>
+              `- ${name} (id: ${id}): ${title || instructions.slice(0, 80) || "no job yet"}`,
+          )
+          .join("\n")}`
+      : "You have no teammates yet.",
+    groups.length > 0
+      ? `Groups you are in:\n${groups.map(({ id, name }) => `- ${name} (id: ${id})`).join("\n")}`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n\n");

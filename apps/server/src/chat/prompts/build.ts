@@ -1,6 +1,14 @@
 import type { ToolSet } from "ai";
 import { profileRules } from "../../bots/profile";
-import { botIdentity, openedWith, type RulesProject, teachingRules } from "../../projects/rules";
+import type { Room } from "../../bots/room";
+import {
+  botIdentity,
+  openedWith,
+  type RulesProject,
+  type Teammates,
+  teachingRules,
+  teammateLines,
+} from "../../projects/rules";
 import type { Mode } from "../../shared/messages";
 import type { Settings } from "../../shared/settings";
 import type { Skill } from "../skills/builtIn";
@@ -12,7 +20,9 @@ import newBot from "./newBot.md" with { type: "text" };
 import quick from "./quick.md" with { type: "text" };
 import research from "./research.md" with { type: "text" };
 import routine from "./routine.md" with { type: "text" };
+import room from "./room.md" with { type: "text" };
 import taskRules from "./task.md" with { type: "text" };
+import team from "./team.md" with { type: "text" };
 
 const MODES = { quick, research } as const satisfies Record<Mode, string>;
 
@@ -123,9 +133,30 @@ const abilitiesOf = ({
     "update_skill" in offered && "Save their own skills, ways of working you reuse.",
   ].flatMap((line) => (line ? [`- ${line}`] : []));
 
-const botPrompt = (project: RulesProject, live: boolean, delegates: boolean) =>
+const teamRules = (teammates: Teammates | undefined) =>
+  teammates === undefined ? "" : `\n\n${fill(team, { teammates: teammateLines(teammates) })}`;
+
+const roomRules = (inRoom: Room | undefined, self: string) =>
+  inRoom === undefined
+    ? ""
+    : `\n\n${fill(room, {
+        room: inRoom.name,
+        others: inRoom.members
+          .filter((member) => member.id !== self)
+          .map((member) => member.name)
+          .join(", "),
+      })}`;
+
+const botPrompt = (
+  project: RulesProject,
+  live: boolean,
+  delegates: boolean,
+  teammates: Teammates | undefined,
+  inRoom: Room | undefined,
+) =>
   fill(bot, {
     delegation: delegates ? `${delegation}\n\n` : "",
+    team: teamRules(teammates) + roomRules(inRoom, project.id),
     identity: botIdentity(project),
     job: project.instructions ? `Your job:\n${project.instructions}` : live ? newBot : "",
     opened: live ? openedWith(project) : "",
@@ -147,6 +178,8 @@ export const instructions = ({
   remembers,
   connectedApps,
   toolNotes,
+  teammates,
+  room: inRoom,
 }: {
   now: Date;
   timezone: string | undefined;
@@ -161,6 +194,8 @@ export const instructions = ({
   remembers: boolean;
   connectedApps: readonly string[];
   toolNotes: readonly string[];
+  teammates: Teammates | undefined;
+  room: Room | undefined;
 }) => {
   const abilities = abilitiesOf({
     offered,
@@ -180,7 +215,9 @@ export const instructions = ({
     length: short ? SHORT : DEFAULT_LENGTH,
     format: project ? "" : answer,
     surface: [
-      project ? botPrompt(project, !unattended, "start_task" in offered) : MODES[mode],
+      project
+        ? botPrompt(project, !unattended, "start_task" in offered, teammates, inRoom)
+        : MODES[mode],
       unattended && (task ? taskRules : routine),
     ]
       .flatMap((part) => (part ? [part] : []))

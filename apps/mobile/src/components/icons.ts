@@ -55,6 +55,9 @@ import {
   IconUser,
   IconUserCircle,
   IconUserEdit,
+  IconUserPlus,
+  IconSend,
+  IconUsersGroup,
   IconWorld,
   IconX,
   IconAlertCircle,
@@ -114,6 +117,9 @@ export const Trash = withUniwind(IconTrash);
 export const User = withUniwind(IconUser);
 export const UserCircle = withUniwind(IconUserCircle);
 export const UserEdit = withUniwind(IconUserEdit);
+export const UserPlus = withUniwind(IconUserPlus);
+export const Send = withUniwind(IconSend);
+export const UsersGroup = withUniwind(IconUsersGroup);
 export const World = withUniwind(IconWorld);
 export const X = withUniwind(IconX);
 export const File = withUniwind(IconFile);

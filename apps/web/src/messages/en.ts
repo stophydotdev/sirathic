@@ -852,6 +852,15 @@ export const MESSAGES = [
   "Let Sirathic's reviewers read this answer",
   "Shared reports",
   "No shared reports yet.",
+  "Messaged",
+  "Created bot",
+  "Groups",
+  "New group",
+  "Group name",
+  "Create group",
+  "Delete group",
+  'Delete the group "{name}"? Its conversation is deleted too.',
+  "Pick at least two bots",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

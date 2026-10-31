@@ -932,4 +932,14 @@ export default {
     "Sirathic كۆزدىن كەچۈرگۈچىلىرىنىڭ بۇ جاۋابنى ئوقۇشىغا يول قويۇش",
   "Shared reports": "ئورتاقلاشقان دوكلاتلار",
   "No shared reports yet.": "ھازىرچە ئورتاقلاشقان دوكلات يوق.",
+  Messaged: "ئۇچۇر ئەۋەتىلدى",
+  "Created bot": "بوت قۇرۇلدى",
+  Groups: "گۇرۇپپىلار",
+  "New group": "يېڭى گۇرۇپپا",
+  "Group name": "گۇرۇپپا نامى",
+  "Create group": "گۇرۇپپا قۇرۇش",
+  "Delete group": "گۇرۇپپىنى ئۆچۈرۈش",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" گۇرۇپپىسىنى ئۆچۈرەمسىز؟ ئۇنىڭ سۆھبىتىمۇ ئۆچۈرۈلىدۇ.',
+  "Pick at least two bots": "كەم دېگەندە ئىككى بوت تاللاڭ",
 } satisfies Messages;

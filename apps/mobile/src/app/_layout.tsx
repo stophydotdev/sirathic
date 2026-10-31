@@ -39,6 +39,7 @@ export default function Layout() {
             <Drawer.Screen name="plugins" />
             <Drawer.Screen name="settings" />
             <Drawer.Screen name="bot/[id]" />
+            <Drawer.Screen name="group/[id]" />
           </Drawer>
           <ConfirmDialog />
           <OverlayHost />

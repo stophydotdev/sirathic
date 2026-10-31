@@ -137,18 +137,96 @@ export async function openSession(id: string, by: string, markRead = true) {
   });
 }
 
+const withArrived = (stored: readonly ChatMessage[], sent: ChatMessage[]) =>
+  stored.reduce(
+    (merged, message, index) => {
+      if (!message.metadata?.from || merged.some((kept) => kept.id === message.id)) return merged;
+      const after = stored
+        .slice(0, index)
+        .findLast((earlier) => merged.some((kept) => kept.id === earlier.id));
+      const at = after ? merged.findIndex((kept) => kept.id === after.id) + 1 : merged.length;
+      return [...merged.slice(0, at), message, ...merged.slice(at)];
+    },
+    [...sent],
+  );
+
+const SAVE_TRIES = 5;
+
 export async function saveSession(
   id: string,
   by: string,
   messages: ChatMessage[],
   project?: string,
 ) {
+  const title = titleOf(messages);
+  if (!project) {
+    const [saved] = await db
+      .insert(chatSessions)
+      .values({ id, owner: by, title, messages })
+      .onConflictDoUpdate({
+        target: chatSessions.id,
+        set: { messages, updatedAt: new Date() },
+        setWhere: eq(chatSessions.owner, by),
+      })
+      .returning({ id: chatSessions.id });
+    if (!saved) throw new StatusError(404, "no such session");
+    return;
+  }
+  const attempt = async (left: number): Promise<boolean> => {
+    if (left === 0) return false;
+    const [row] = await db
+      .select({
+        messages: chatSessions.messages,
+        version: sql<string>`md5(${chatSessions.messages}::text)`,
+      })
+      .from(chatSessions)
+      .where(owned(id, by));
+    if (!row) {
+      const [made] = await db
+        .insert(chatSessions)
+        .values({ id, owner: by, title, messages, projectId: project })
+        .onConflictDoNothing()
+        .returning({ id: chatSessions.id });
+      return made !== undefined || attempt(left - 1);
+    }
+    const stored = await validateUIMessages<ChatMessage>({
+      messages: row.messages,
+      ...messageSchemas,
+    }).catch(() => []);
+    const [updated] = await db
+      .update(chatSessions)
+      .set({ messages: withArrived(stored, messages), updatedAt: new Date() })
+      .where(and(owned(id, by), sql`md5(${chatSessions.messages}::text) = ${row.version}`))
+      .returning({ id: chatSessions.id });
+    return updated !== undefined || attempt(left - 1);
+  };
+  const saved = await attempt(SAVE_TRIES);
+  if (!saved) throw new StatusError(404, "no such session");
+}
+
+export async function appendMessages(
+  id: string,
+  by: string,
+  added: ChatMessage[],
+  chat: { title: string; project: string },
+) {
   const [saved] = await db
     .insert(chatSessions)
-    .values({ id, owner: by, title: titleOf(messages), messages, projectId: project })
+    .values({
+      id,
+      owner: by,
+      title: chat.title,
+      messages: added,
+      projectId: chat.project,
+      unread: true,
+    })
     .onConflictDoUpdate({
       target: chatSessions.id,
-      set: { messages, updatedAt: new Date() },
+      set: {
+        messages: sql`${chatSessions.messages} || excluded.messages`,
+        unread: true,
+        updatedAt: new Date(),
+      },
       setWhere: eq(chatSessions.owner, by),
     })
     .returning({ id: chatSessions.id });

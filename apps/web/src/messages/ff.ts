@@ -926,4 +926,14 @@ export default {
   "Let Sirathic's reviewers read this answer": "Accu ndaarooɓe Sirathic janngugo ndee jaabawol",
   "Shared reports": "Habrugol cenndaaɗi",
   "No shared reports yet.": "Walaa habrugol cenndaaɗi jooni.",
+  Messaged: "Mesaas neldaama",
+  "Created bot": "Bot sosaama",
+  Groups: "Gurupu-ji",
+  "New group": "Gurupu hesere",
+  "Group name": "Innde gurupu",
+  "Create group": "Sos gurupu",
+  "Delete group": "Momtu gurupu",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    'Momtugo gurupu "{name}"? Haala maako momtetee ko.',
+  "Pick at least two bots": "Suɓtu bot-ji ɗiɗi ɗum fuu",
 } satisfies Messages;

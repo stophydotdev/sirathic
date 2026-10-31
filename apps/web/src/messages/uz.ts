@@ -936,4 +936,14 @@ export default {
     "Sirathic кўриб чиқувчиларига бу жавобни ўқишга рухсат бериш",
   "Shared reports": "Улашилган хабарлар",
   "No shared reports yet.": "Ҳозирча улашилган хабарлар йўқ.",
+  Messaged: "Хабар юборилди",
+  "Created bot": "Бот яратилди",
+  Groups: "Гуруҳлар",
+  "New group": "Янги гуруҳ",
+  "Group name": "Гуруҳ номи",
+  "Create group": "Гуруҳ яратиш",
+  "Delete group": "Гуруҳни ўчириш",
+  'Delete the group "{name}"? Its conversation is deleted too.':
+    '"{name}" гуруҳи ўчирилсинми? Унинг суҳбати ҳам ўчирилади.',
+  "Pick at least two bots": "Камида иккита бот танланг",
 } satisfies Messages;

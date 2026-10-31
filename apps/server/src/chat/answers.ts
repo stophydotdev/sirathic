@@ -67,6 +67,38 @@ export function startAnswer(owner: string, id: string, { continuing = false } = 
   };
 }
 
+let draining = false;
+
+export function startRound(
+  owner: string,
+  id: string,
+  work: (signal: AbortSignal) => Promise<void>,
+) {
+  if (draining) return false;
+  const key = keyOf(owner, id);
+  const previous = running.get(key);
+  if (previous) {
+    previous.superseded = true;
+    previous.controller.abort();
+  }
+  const { promise: done, resolve: finish } = Promise.withResolvers<void>();
+  const round: Answer = {
+    controller: new AbortController(),
+    continuing: true,
+    asker: "gone",
+    superseded: false,
+    sent: [],
+    followers: new Set(),
+    done,
+  };
+  running.set(key, round);
+  void holdShutdown(work(round.controller.signal)).finally(() => {
+    if (running.get(key) === round) running.delete(key);
+    finish();
+  });
+  return true;
+}
+
 export const stopAnswer = (owner: string, id: string) =>
   running.get(keyOf(owner, id))?.controller.abort();
 
@@ -92,6 +124,7 @@ export function holdShutdown<Result>(work: Promise<Result>) {
 }
 
 export async function drainAnswers(withinMs: number) {
+  draining = true;
   console.log(`stopping: waiting for ${running.size} answers and ${held.size} routine runs`);
   await Promise.race([
     Promise.all([...[...running.values()].map((answer) => answer.done), ...held]),
