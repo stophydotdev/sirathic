@@ -33,7 +33,7 @@ Check Resy availability for the restaurant, the party, and the weekday and date.
 
 Open `https://resy.com/cities/<city>/venues/<slug>?date=<YYYY-MM-DD>&seats=<N>`. Read the venue name and each open time within the window with its seating type, and whether a Notify option shows.
 
-The URL sets the date and party size, so read the times on that page. Use the page's date or party controls only if it shows something else, and only once. Never build other Resy URLs. The times load after the page itself, so wait once for them, then take one snapshot; do not snapshot a loading page again and again. If no time appears, read what the page shows instead, such as a sold-out message or a Notify option. If the tab crashes or goes blank without an error code, open the same URL once more. Access Denied or a bot check will not clear on reload, so stop. On an availability check, do not click a time or Notify. On an availability check, stop as soon as the times are on screen.
+The URL sets the date and party size, so read the times on that page. Use the page's date or party controls only if it shows something else, and only once, setting them with browser_task. Never build other Resy URLs. The times load after the page itself, so wait once for them, then take one snapshot; do not snapshot a loading page again and again. If no time appears, read what the page shows instead, such as a sold-out message or a Notify option. If the tab crashes or goes blank without an error code, open the same URL once more. Access Denied or a bot check will not clear on reload, so stop. On an availability check, do not click a time or Notify. On an availability check, stop as soon as the times are on screen.
 
 ### Read the result
 
