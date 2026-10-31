@@ -860,7 +860,6 @@ export default {
   "Used your memory": "ใช้ความจำของคุณแล้ว",
   Discover: "ค้นพบ",
   "Back to Discover": "กลับไปที่ค้นพบ",
-  "Checked against its sources": "ตรวจสอบกับแหล่งที่มาแล้ว",
   "Updated {date}": "อัปเดต {date}",
   "Discover more": "ค้นพบเพิ่มเติม",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -868,4 +867,7 @@ export default {
   "How Discover works": "ค้นพบทำงานอย่างไร",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "วันที่ตามปฏิทินอุมมุลกุรอ การเห็นจันทร์เสี้ยวอาจต่างกันหนึ่งวัน",
+  Top: "ยอดนิยม",
+  Topics: "หัวข้อ",
+  "Published {when}": "เผยแพร่ {when}",
 } satisfies Messages;

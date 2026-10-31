@@ -879,7 +879,6 @@ export default {
   "Used your memory": "Kumbukumbu yako imetumika",
   Discover: "Gundua",
   "Back to Discover": "Rudi kwa Gundua",
-  "Checked against its sources": "Imekaguliwa dhidi ya vyanzo vyake",
   "Updated {date}": "Imesasishwa {date}",
   "Discover more": "Gundua zaidi",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -887,4 +886,7 @@ export default {
   "How Discover works": "Jinsi Gundua inavyofanya kazi",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "Tarehe za Umm al-Qura. Kuonekana kwa mwezi kunaweza kutofautiana kwa siku moja.",
+  Top: "Bora",
+  Topics: "Mada",
+  "Published {when}": "Ilichapishwa {when}",
 } satisfies Messages;

@@ -880,7 +880,6 @@ export default {
   "Used your memory": "Uporabljen je bil vaš spomin",
   Discover: "Odkrij",
   "Back to Discover": "Nazaj na Odkrij",
-  "Checked against its sources": "Preverjeno z viri",
   "Updated {date}": "Posodobljeno {date}",
   "Discover more": "Odkrij več",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -888,4 +887,7 @@ export default {
   "How Discover works": "Kako deluje Odkrij",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "Datumi po koledarju Umm al-Qura. Opazovanje lune se lahko razlikuje za en dan.",
+  Top: "Izpostavljeno",
+  Topics: "Teme",
+  "Published {when}": "Objavljeno {when}",
 } satisfies Messages;

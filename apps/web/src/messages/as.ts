@@ -866,7 +866,6 @@ export default {
   "Used your memory": "আপোনাৰ মেমৰি ব্যৱহাৰ কৰা হৈছে",
   Discover: "আৱিষ্কাৰ",
   "Back to Discover": "আৱিষ্কাৰলৈ উভতি যাওক",
-  "Checked against its sources": "উৎসৰ সৈতে মিলাই চোৱা হৈছে",
   "Updated {date}": "আপডেট: {date}",
   "Discover more": "অধিক আৱিষ্কাৰ কৰক",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -874,4 +873,7 @@ export default {
   "How Discover works": "আৱিষ্কাৰে কেনেকৈ কাম কৰে",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "উম্ম আল-কুৰা তাৰিখ। চন্দ্ৰ দৰ্শনত এদিনৰ পাৰ্থক্য হ'ব পাৰে।",
+  Top: "শীৰ্ষ",
+  Topics: "বিষয়",
+  "Published {when}": "প্ৰকাশিত {when}",
 } satisfies Messages;

@@ -44,15 +44,6 @@ export function useSourceCount() {
   return (count: number) => (count === 1 ? t("1 source") : t("{count} sources", { count }));
 }
 
-export const DraftBadge: FC = () => {
-  const t = useT();
-  return (
-    <span className="border-border text-muted-foreground rounded-full border px-2 py-0.5 text-xs">
-      {t("Checked against its sources")}
-    </span>
-  );
-};
-
 export const SourceStack: FC<{ sources: Article["sources"] }> = ({ sources }) => (
   <span className="flex">
     {sources
@@ -175,7 +166,6 @@ export const ArticleBody: FC<{ article: Article }> = ({ article }) => {
         <span className="text-foreground flex items-center gap-2">
           <Mark size={18} color="currentColor" />
           Sirathic
-          {!article.reviewed && <DraftBadge />}
         </span>
         <span>{t("Updated {date}", { date: dateOf(article.updated) })}</span>
       </div>

@@ -864,7 +864,6 @@ export default {
   "Used your memory": "បានប្រើការចងចាំរបស់អ្នក",
   Discover: "ស្វែងយល់",
   "Back to Discover": "ត្រឡប់ទៅស្វែងយល់",
-  "Checked against its sources": "បានផ្ទៀងផ្ទាត់ជាមួយប្រភពរបស់វា",
   "Updated {date}": "ធ្វើបច្ចុប្បន្នភាព {date}",
   "Discover more": "ស្វែងយល់បន្ថែម",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -872,4 +871,7 @@ export default {
   "How Discover works": "របៀបដែលស្វែងយល់ដំណើរការ",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "កាលបរិច្ឆេទ Umm al-Qura។ ការមើលឃើញព្រះចន្ទអាចខុសគ្នាមួយថ្ងៃ។",
+  Top: "កំពូល",
+  Topics: "ប្រធានបទ",
+  "Published {when}": "បានផ្សាយ {when}",
 } satisfies Messages;

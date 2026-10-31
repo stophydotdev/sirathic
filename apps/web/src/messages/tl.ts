@@ -886,7 +886,6 @@ export default {
   "Used your memory": "Ginamit ang iyong memorya",
   Discover: "Tuklasin",
   "Back to Discover": "Bumalik sa Tuklasin",
-  "Checked against its sources": "Sinuri laban sa mga pinagmulan nito",
   "Updated {date}": "Na-update noong {date}",
   "Discover more": "Tuklasin pa",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -894,4 +893,7 @@ export default {
   "How Discover works": "Paano gumagana ang Tuklasin",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "Mga petsa ng Umm al-Qura. Maaaring magkaiba nang isang araw ang pagkakita sa buwan.",
+  Top: "Nangunguna",
+  Topics: "Mga Paksa",
+  "Published {when}": "Nailathala {when}",
 } satisfies Messages;

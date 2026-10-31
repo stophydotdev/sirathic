@@ -886,7 +886,6 @@ export default {
   "Used your memory": "Хотирангиздан фойдаланилди",
   Discover: "Кашф этиш",
   "Back to Discover": "Кашф этишга қайтиш",
-  "Checked against its sources": "Манбалари билан текширилган",
   "Updated {date}": "Янгиланган: {date}",
   "Discover more": "Яна кашф этиш",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -894,4 +893,7 @@ export default {
   "How Discover works": "Кашф этиш қандай ишлайди",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "Умм ал-Қуро саналари. Ой кўриниши бир кунга фарқ қилиши мумкин.",
+  Top: "Энг яхшилари",
+  Topics: "Мавзулар",
+  "Published {when}": "Чоп этилди: {when}",
 } satisfies Messages;

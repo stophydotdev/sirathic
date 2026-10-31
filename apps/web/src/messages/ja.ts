@@ -877,7 +877,6 @@ export default {
   "Used your memory": "メモリーを使用しました",
   Discover: "発見",
   "Back to Discover": "発見に戻る",
-  "Checked against its sources": "出典と照合済み",
   "Updated {date}": "{date} 更新",
   "Discover more": "さらに見る",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -885,4 +884,7 @@ export default {
   "How Discover works": "発見の仕組み",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "ウンム・アル＝クラー暦の日付です。月の目視により1日ずれることがあります。",
+  Top: "トップ",
+  Topics: "トピック",
+  "Published {when}": "{when}に公開",
 } satisfies Messages;

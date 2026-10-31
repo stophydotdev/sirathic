@@ -860,11 +860,13 @@ export default {
   "Used your memory": "已使用你的记忆",
   Discover: "发现",
   "Back to Discover": "返回发现",
-  "Checked against its sources": "已对照其来源核查",
   "Updated {date}": "更新于 {date}",
   "Discover more": "更多发现",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "有争议的问题，依据《古兰经》、圣训和教法书籍作答，并注明每一个来源。",
   "How Discover works": "发现如何运作",
   "Umm al-Qura dates. Moon sighting can differ by a day.": "乌姆古拉历日期。新月观测可能相差一天。",
+  Top: "热门",
+  Topics: "主题",
+  "Published {when}": "发布于{when}",
 } satisfies Messages;

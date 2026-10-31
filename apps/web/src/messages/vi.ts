@@ -876,7 +876,6 @@ export default {
   "Used your memory": "Đã dùng bộ nhớ của bạn",
   Discover: "Khám phá",
   "Back to Discover": "Quay lại Khám phá",
-  "Checked against its sources": "Đã đối chiếu với nguồn",
   "Updated {date}": "Cập nhật {date}",
   "Discover more": "Khám phá thêm",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -884,4 +883,7 @@ export default {
   "How Discover works": "Khám phá hoạt động thế nào",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "Ngày theo lịch Umm al-Qura. Việc nhìn thấy trăng có thể lệch một ngày.",
+  Top: "Nổi bật",
+  Topics: "Chủ đề",
+  "Published {when}": "Đã đăng {when}",
 } satisfies Messages;

@@ -877,7 +877,6 @@ export default {
   "Used your memory": "Teskaaɗe maa kuutoraama",
   Discover: "Tawtu",
   "Back to Discover": "Rutto e Tawtu",
-  "Checked against its sources": "Ƴeewtaama e ɗaɗɗe mum",
   "Updated {date}": "Hesɗitinaama: {date}",
   "Discover more": "Tawtu ɓuri",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -885,4 +884,7 @@ export default {
   "How Discover works": "No Tawtu golloto",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "Ñalɗi Umm al-Qura. Yiyde lewru ena waawi seertude ñalawma gooto.",
+  Top: "Ɓurɗe",
+  Topics: "Tiitooɗe",
+  "Published {when}": "Yaltinaama {when}",
 } satisfies Messages;

@@ -874,7 +874,6 @@ export default {
   "Used your memory": "നിങ്ങളുടെ മെമ്മറി ഉപയോഗിച്ചു",
   Discover: "കണ്ടെത്തുക",
   "Back to Discover": "കണ്ടെത്തുകയിലേക്ക് മടങ്ങുക",
-  "Checked against its sources": "ഉറവിടങ്ങളുമായി ഒത്തുനോക്കിയത്",
   "Updated {date}": "പുതുക്കിയത്: {date}",
   "Discover more": "കൂടുതൽ കണ്ടെത്തുക",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -882,4 +881,7 @@ export default {
   "How Discover works": "കണ്ടെത്തുക എങ്ങനെ പ്രവർത്തിക്കുന്നു",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "ഉമ്മുൽ ഖുറാ തീയതികൾ. ചന്ദ്രദർശനം അനുസരിച്ച് ഒരു ദിവസം വ്യത്യാസപ്പെടാം.",
+  Top: "മുൻനിര",
+  Topics: "വിഷയങ്ങൾ",
+  "Published {when}": "പ്രസിദ്ധീകരിച്ചത് {when}",
 } satisfies Messages;

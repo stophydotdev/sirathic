@@ -882,7 +882,6 @@ export default {
   "Used your memory": "ئەستە ساقلىغانلىرىڭىز ئىشلىتىلدى",
   Discover: "بايقاش",
   "Back to Discover": "بايقاشقا قايتىش",
-  "Checked against its sources": "مەنبەلىرى بىلەن سېلىشتۇرۇلغان",
   "Updated {date}": "يېڭىلانغان: {date}",
   "Discover more": "تېخىمۇ كۆپ بايقاش",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -890,4 +889,7 @@ export default {
   "How Discover works": "بايقاش قانداق ئىشلەيدۇ",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "ئۇممۇلقۇرا چېسلالىرى. ئاي كۆرۈش بىر كۈن پەرقلىنىشى مۇمكىن.",
+  Top: "ئالدىنقى",
+  Topics: "تېمىلار",
+  "Published {when}": "ئېلان قىلىندى {when}",
 } satisfies Messages;

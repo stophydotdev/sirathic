@@ -864,7 +864,6 @@ export default {
   "Used your memory": "మీ మెమరీ ఉపయోగించబడింది",
   Discover: "అన్వేషించండి",
   "Back to Discover": "అన్వేషణకు తిరిగి వెళ్ళండి",
-  "Checked against its sources": "మూలాలతో సరిచూడబడింది",
   "Updated {date}": "నవీకరించినది: {date}",
   "Discover more": "మరిన్ని అన్వేషించండి",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
@@ -872,4 +871,7 @@ export default {
   "How Discover works": "అన్వేషించండి ఎలా పనిచేస్తుంది",
   "Umm al-Qura dates. Moon sighting can differ by a day.":
     "ఉమ్ అల్-ఖురా తేదీలు. చంద్ర దర్శనం ఒక రోజు తేడా ఉండవచ్చు.",
+  Top: "అగ్రస్థానం",
+  Topics: "అంశాలు",
+  "Published {when}": "ప్రచురించబడింది {when}",
 } satisfies Messages;
