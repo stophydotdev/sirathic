@@ -1,0 +1,441 @@
+{
+  "title": "Does touching your private parts break wudu?",
+  "headline": "Three schools say touching the private part breaks wudu, and the Hanafis say it does not",
+  "cover": "مس الفرج",
+  "slug": "touching-private-parts-and-wudu",
+  "topic": "Purification",
+  "tint": "amber",
+  "summary": {
+    "text": "The Maliki, Shafi'i and Hanbali schools hold that touching the private part directly with the bare hand breaks wudu, while the Hanafi school holds that it does not. Both sides have Companions and Successors behind them.",
+    "citations": [
+      "https://www.islamweb.net/en/fatwa/396289/",
+      "https://fiqh.islamonline.net/%d9%86%d9%82%d8%b6-%d8%a7%d9%84%d9%88%d8%b6%d9%88%d8%a1-%d8%a8%d9%85%d8%b3-%d8%a7%d9%84%d8%b9%d9%88%d8%b1%d8%a9/",
+      "https://shamela.ws/book/21739#1:40",
+      "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://www.islamweb.net/en/fatwa/396289/",
+      "title": "Touching the Private Parts Invalidates Ablution"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%86%d9%82%d8%b6-%d8%a7%d9%84%d9%88%d8%b6%d9%88%d8%a1-%d8%a8%d9%85%d8%b3-%d8%a7%d9%84%d8%b9%d9%88%d8%b1%d8%a9/",
+      "title": "نقض الوضوء بمس العورة"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:40",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص40"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+      "title": "مس الذكر بين اللامس والملموس"
+    },
+    {
+      "url": "https://quran.com/5/6",
+      "title": "Quran 5:6, Al-Maaida"
+    },
+    {
+      "url": "https://quran.com/4/43",
+      "title": "Quran 4:43, An-Nisaa"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110659/intended-meaning-al-malamsah-verse-women",
+      "title": "The intended meaning of al-malamsah in the verse from the women"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#1:256",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص256"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/breaking-wudu-for-touching-a-person-from-the-other-sex/",
+      "title": "Breaking Wudu for Touching a Person from the Other Sex"
+    },
+    {
+      "url": "https://sunnah.com/nasai:445",
+      "title": "Sunan an-Nasa'i 445: The Book of Ghusl and Tayammum"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B7%D9%87%D8%A7%D8%B1%D8%A9#719",
+      "title": "Sunan ad-Darimi 719"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/20#20700",
+      "title": "Musnad Ahmad 21689"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%82%D8%A8%D8%A7%D8%A6%D9%84/5#26030",
+      "title": "Musnad Ahmad 27293"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110647/touching-private-parts-small-child",
+      "title": "Touching the private parts of a small child"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/19#8053",
+      "title": "Musnad Ahmad 8404"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:85",
+      "title": "Jami' at-Tirmidhi 85: The Book on Purification"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:483",
+      "title": "Sunan Ibn Majah 483: The Book of Purification and its Sunnah"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%D9%8A%D9%86/5#15700",
+      "title": "Musnad Ahmad 15700"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d9%88%d9%86%d9%82%d8%b6-%d8%a7%d9%84%d9%88%d8%b6%d9%88%d8%a1/",
+      "title": "مس الذكر ونقض الوضوء"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110651/majority-s-view-touching-private-parts-invalidates-ablution",
+      "title": "The majority's view: touching the private parts invalidates the ablution"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/28885/what-authenticity-hadith-whoever-touches-private-part-another-let-perform-wudu-explanation-ruling",
+      "title": "What is the authenticity of the hadith: \"Whoever touches the private part of another, let him perform wudu,\" and an explanation of the ruling on one who touches his own private part: does it invalidate the wudu or not, with discussion"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/18584/response-who-said-hadith-talq-ibn-ali-not-piece-abrogated-hadith-basrah-whoever-touches-private",
+      "title": "A Response to Those Who Said That the Hadith of Talq ibn 'Ali (Is it not a piece of you?) Is Abrogated by the Hadith of Basrah (Whoever touches his private parts, let him perform wudu)"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:118",
+      "title": "المدونة، مالك بن أنس، ج1 ص118"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a3%d8%ab%d8%b1%d9%87-%d8%b9%d9%84%d9%89-%d9%88%d8%b6%d9%88%d8%a1-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+      "title": "مس الذكر : حكمه وأثر ذلك على الوضوء اللامس والملموس"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/en/3880/touching-the-genitals-does-it-nullify-ablution",
+      "title": "Touching The Genitals: Does It Nullify Ablution?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/18567/how-reconcile-two-hadiths-anything-but-part-whoever-touches-private-part-let-perform-wudu",
+      "title": "How to reconcile the two hadiths: “Is it anything but a part of you?” and “Whoever touches his private part, let him perform wudu’”?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/qibla-hanafi/35866/does-touching-ones-private-part-invalidate-wudu/",
+      "title": "Does Touching One’s Private Part Invalidate Wudu?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/shafii-fiqh/does-touching-private-parts-always-break-ones-ablution/",
+      "title": "Does Touching Private Parts Always Break One’s Ablution?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/daruliftaa/178509/ruling-on-touching-ones-private-parts/",
+      "title": "Ruling on Touching One’s Private Parts?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/106452/does-wudhu-break-through-touching-ones-private-part/",
+      "title": "Does wudhu break through touching one’s private part?"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:123",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص123"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:122",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص122"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:120",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص120"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:72",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص72"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/breaking-wudu-by-touching-private-parts/",
+      "title": "Breaking Wudu by Touching Private Parts"
+    },
+    {
+      "url": "https://shamela.ws/book/622#1:283",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج1 ص283"
+    },
+    {
+      "url": "https://shamela.ws/book/1679#0:36",
+      "title": "الروض المربع شرح زاد المستقنع - ط المؤيد والرسالة، البهوتي، ج0 ص36"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#1:243",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص243"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#1:244",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص244"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/50788/does-touching-private-parts-invalidate-ablution",
+      "title": "Does touching the private parts invalidate the ablution?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/35507/clarification-touching-private-parts-does-not-invalidate-ablution-unless-done-sake-sexual-pleasure",
+      "title": "Clarification that touching the private parts does not invalidate the ablution unless it is done for the sake of sexual pleasure, with evidence."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/119127/commentary-book-risalah-shaykh-al-islam-ibn-taymiyyah-may-allah-have-mercy-regarding-fasting-119127",
+      "title": "In your commentary on the book \\*Risalah\\* of Shaykh al-Islam Ibn Taymiyyah (may Allah have mercy on him) regarding fasting, you mentioned that touching the private part is..."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/47079/does-washing-child-s-private-parts-invalidate-ablution",
+      "title": "Does washing a child's private parts invalidate the ablution?"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/99468",
+      "title": "هل لمس الذكر ينقض الوضوء؟"
+    },
+    {
+      "url": "https://en.tohed.com/touching-the-private-part-and-its-effect-on-wudu-scholarly-ruling/",
+      "title": "Touching the Private Part and Its Effect on Wudu"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/37459/some-mentioned-hadith-talq-contains-no-evidence-regarding-invalidation-wudu-touching-private-parts",
+      "title": "Some mentioned that the hadith of Talq contains no evidence regarding the invalidation of wudu' by touching the private parts, because it was over a barrier."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/82696/what-ruling-performing-wudu-after-touching-private-parts",
+      "title": "What is the ruling on performing wudu' after touching the private parts?"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/15549/مدى-تأثير-لمس-الفرج-على-الوضوء",
+      "title": "هل لمس الفرج ينقض الوضوء"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/76340/ruling-ablution-one-who-touches-private-parts-hand",
+      "title": "Ruling on the ablution of one who touches his private parts with his hand"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/84129/ruling-touching-private-parts-children-one-who-state-ritual-purity",
+      "title": "The ruling on touching the private parts of children for one who is in a state of ritual purity"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/5446/also-asks-what-ruling-touching-private-parts-whether-front-back-especially-passage-two-passages",
+      "title": "Also, he asks: What is the ruling on touching the private parts, whether the front or the back, especially the passage or the two passages?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/55518/addendum-benefits-hadith-whoever-touches-private-part-let-perform-wudu",
+      "title": "Addendum to the benefits of the hadith (Whoever touches his private part, let him perform wudu)."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/22955/does-touching-private-parts-invalidate-ablution-discussion-students-knowledge-matter",
+      "title": "Does touching the private parts invalidate the ablution? With a discussion by students of knowledge on the matter."
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/131831/does-touching-the-private-part-break-wudhu/",
+      "title": "Does touching the private part break wudhu?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/131249/will-touching-the-private-part-break-wudhu/",
+      "title": "Will touching the private part break wudhu?"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The two verses usually brought into this discussion are 5:6 and its parallel in 4:43, and neither one names touching the private part. The contested phrase is \"contacted women\" (lamastum al-nisa'). Ibn Abbas read it as sexual intercourse, and this was narrated from Ali, Ubayy ibn Ka'b, Mujahid, Tawus, al-Hasan, Ubayd ibn Umar, Sa'id ibn Jubayr, al-Sha'bi, Qatadah and Muqatil ibn Hayyan, while Ibn Mas'ud and a group of scholars read it as actual bodily touching and held that it breaks wudu. The translation of 4:43 itself carries the gloss \"i.e., had sexual intercourse\" in its footnote.",
+          "citations": [
+            "https://quran.com/5/6",
+            "https://quran.com/4/43",
+            "https://al-fatawa.com/en/fatwa/110659/intended-meaning-al-malamsah-verse-women"
+          ]
+        },
+        {
+          "text": "Ibn Rushd explains that Arabic uses the word for touching both for the hand and as a euphemism for intercourse, so the verse carries two possible senses. Ibn Qudamah adds that the form mufa'alah in the verse requires two parties and therefore points to intercourse. On the other side, no Companion is reported to have renewed wudu merely on touching his wife, and no hadith from the Prophet ﷺ supports it.",
+          "citations": [
+            "https://shamela.ws/book/21739#1:40",
+            "https://shamela.ws/book/6910#1:256",
+            "https://fiqh.islamonline.net/en/breaking-wudu-for-touching-a-person-from-the-other-sex/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The reports fall into two clusters, one commanding wudu after touching and one denying it. Busrah bint Safwan reports the command \"If any one of you touches his private part with his hand, let him perform ablution,\" graded Sahih Isnaad by Abu Ghuddah and al-Albani and Sahih by Zubair Ali Zai; other routes carry \"Whoever touches his private part should perform ablution\". Umm Habibah reports \"Whoever touches his sexual organ then let him perform ablution,\" graded Hasan by Darussalam, and Abu Hurayrah reports a similar command whose text Shu'ayb al-Arna'ut grades sahih but which he says is from the hadith of Abu Sa'id, the narrator likely having erred in attributing it to Abu Hurayrah.",
+          "citations": [
+            "https://sunnah.com/nasai:445",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B7%D9%87%D8%A7%D8%B1%D8%A9#719",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/20#20700",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%82%D8%A8%D8%A7%D8%A6%D9%84/5#26030",
+            "https://al-fatawa.com/en/fatwa/110647/touching-private-parts-small-child",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/19#8053"
+          ]
+        },
+        {
+          "text": "On the other side, Talq ibn Ali reports \"Is it not but a piece of him,\" graded Sahih by Ahmad Muhammad Shakir and al-Albani and Isnaad Sahih by Zubair Ali Zai, and \"There is no wudu in it; it is only a part of you,\" graded Sahih by al-Albani, Muhammad Fouad Abd al-Baqi and Zubair Ali Zai. The strength of the Talq report is itself disputed: al-Shafi'i, Abu Hatim, Abu Zur'ah, al-Darqutni, al-Bayhaqi and Ibn al-Jawzi weakened it, while Ibn Hibban and al-Tabari held it abrogated, arguing that Talq first heard the no-nullification ruling and later heard the nullification one. The Permanent Committee takes the same line, calling it weak and abrogated, while al-Albani counters that more than ten Companions narrate the wudu command, that the default in usul al-fiqh is to reconcile two acceptable reports rather than abrogate, and that the wording \"whoever touches the private part of another\" is anomalous (shadhdh).",
+          "citations": [
+            "https://sunnah.com/tirmidhi:85",
+            "https://sunnah.com/ibnmajah:483",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%D9%8A%D9%86/5#15700",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d9%88%d9%86%d9%82%d8%b6-%d8%a7%d9%84%d9%88%d8%b6%d9%88%d8%a1/",
+            "https://al-fatawa.com/en/fatwa/110651/majority-s-view-touching-private-parts-invalidates-ablution",
+            "https://al-fatawa.com/en/fatwa/28885/what-authenticity-hadith-whoever-touches-private-part-another-let-perform-wudu-explanation-ruling",
+            "https://al-fatawa.com/en/fatwa/18584/response-who-said-hadith-talq-ibn-ali-not-piece-abrogated-hadith-basrah-whoever-touches-private"
+          ]
+        },
+        {
+          "text": "Among the Companions, Sa'd ibn Abi Waqqas used to say wudu is due from touching the penis, and Urwah ibn al-Zubayr said whoever touches his penis has wudu obligatory upon him; yet the same Urwah first told Marwan there was no wudu in it, then accepted Busrah's report when Marwan sent to verify it. The opposite view is reported from Ali, Ibn Mas'ud, Ammar, Hudhayfah, Imran ibn Husayn and Abu al-Darda', and Ibn Abbas's statement \"whether you touched it or my nose\" is cited for it.",
+          "citations": [
+            "https://shamela.ws/book/587#1:118",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%82%D8%A8%D8%A7%D8%A6%D9%84/5#26030",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a3%d8%ab%d8%b1%d9%87-%d8%b9%d9%84%d9%89-%d9%88%d8%b6%d9%88%d8%a1-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+            "https://www.amjaonline.org/fatwa/en/3880/touching-the-genitals-does-it-nullify-ablution",
+            "https://al-fatawa.com/en/fatwa/18567/how-reconcile-two-hadiths-anything-but-part-whoever-touches-private-part-let-perform-wudu"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafi school holds that touching the male organ, the anus or the female organ does not nullify ablution, with or without a barrier, with palm or outer hand. Rad al-Muhtar has \"it is not broken by touching a penis\" but recommends washing the hand, joining the two hadiths.",
+          "citations": [
+            "https://islamqa.org/hanafi/qibla-hanafi/35866/does-touching-ones-private-part-invalidate-wudu/",
+            "https://seekersguidance.org/answers/shafii-fiqh/does-touching-private-parts-always-break-ones-ablution/",
+            "https://islamqa.org/hanafi/daruliftaa/178509/ruling-on-touching-ones-private-parts/",
+            "https://islamqa.org/hanafi/muftionline/106452/does-wudhu-break-through-touching-ones-private-part/"
+          ]
+        },
+        {
+          "text": "The Maliki school holds that nothing breaks wudu \"except touching the penis alone with the inner palm\"; the back of the hand or the forearm does not, and the inner fingers count as the inner palm. Al-Dasuqi adds that it is not broken by the anus, the testicles, or a small girl's private part unless one actually takes pleasure, and the absolute rule covers one's own attached penis, deliberate or forgetful, pleasured or not, but not another's, not a severed one, and not over a barrier. Ibn Rushd reports that what settled among the Maghribi Malikis is that the wudu is sunna, not obligatory, and that reports from Malik are disordered.",
+          "citations": [
+            "https://shamela.ws/book/587#1:118",
+            "https://shamela.ws/book/21604#1:123",
+            "https://shamela.ws/book/21604#1:122",
+            "https://shamela.ws/book/21604#1:120",
+            "https://shamela.ws/book/21739#1:40"
+          ]
+        },
+        {
+          "text": "The Shafi'i school holds that the fourth nullifier is touching a human private part with the inner palm, one's own or another's, male or female, small or large, living or dead, front or back. SeekersGuidance adds the palm or inner surface of the fingers, and that a thick layer of cream is a barrier while a thin one is not.",
+          "citations": [
+            "https://shamela.ws/book/499#1:72",
+            "https://seekersguidance.org/answers/breaking-wudu-by-touching-private-parts/",
+            "https://seekersguidance.org/answers/shafii-fiqh/does-touching-private-parts-always-break-ones-ablution/"
+          ]
+        },
+        {
+          "text": "The Hanbali school holds that touching the penis of a human down to the base of the testicles breaks wudu, absolutely, whether the toucher is male or female, with desire or not, one's own or another's; the one touched is not affected, and a severed penis and the site after removal do not break it. Al-Rawd al-Murbi' specifies any part of the hand, back or front, from the fingertips to the wrist, but not the nail; Ibn Qudamah says not with the forearm, and the dead person's private part is like the living person's.",
+          "citations": [
+            "https://shamela.ws/book/622#1:283",
+            "https://shamela.ws/book/1679#0:36",
+            "https://shamela.ws/book/6910#1:243",
+            "https://shamela.ws/book/6910#1:244"
+          ]
+        },
+        {
+          "text": "The schools also split on the anus: the Malikis do not count it, the Shafi'is and Hanbalis give it the ruling of the private part, and the Hanafis do not count it. Ibn Qudamah reports that the Shafi'i and Hanbali position affects only the one who touches, not the one touched.",
+          "citations": [
+            "https://shamela.ws/book/21604#1:123",
+            "https://shamela.ws/book/21604#1:122",
+            "https://fiqh.islamonline.net/%d9%86%d9%82%d8%b6-%d8%a7%d9%84%d9%88%d8%b6%d9%88%d8%a1-%d8%a8%d9%85%d8%b3-%d8%a7%d9%84%d8%b9%d9%88%d8%b1%d8%a9/",
+            "https://shamela.ws/book/499#1:72",
+            "https://shamela.ws/book/622#1:283"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The sources present reconciling the command with recommendation, joining Busrah's command with Talq's denial, and note that Ahmad held this in one narration. Another reconciliation restricts Busrah's hadith to touching with desire and Talq's to touching without it; Ibn Uthaymeen argues the man in Talq's hadith was asking about touching during prayer, where desire is inconceivable. IslamQA calls this strong.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/18567/how-reconcile-two-hadiths-anything-but-part-whoever-touches-private-part-let-perform-wudu",
+            "https://al-fatawa.com/en/fatwa/50788/does-touching-private-parts-invalidate-ablution",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a3%d8%ab%d8%b1%d9%87-%d8%b9%d9%84%d9%89-%d9%88%d8%b6%d9%88%d8%a1-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+            "https://al-fatawa.com/en/fatwa/35507/clarification-touching-private-parts-does-not-invalidate-ablution-unless-done-sake-sexual-pleasure",
+            "https://al-fatawa.com/en/fatwa/119127/commentary-book-risalah-shaykh-al-islam-ibn-taymiyyah-may-allah-have-mercy-regarding-fasting-119127",
+            "https://al-fatawa.com/en/fatwa/47079/does-washing-child-s-private-parts-invalidate-ablution",
+            "https://islamqa.info/ar/answers/99468"
+          ]
+        },
+        {
+          "text": "A third route is reading the wudu in the command as the linguistic wudu, meaning washing the hand; this is the Hanafi reply, and Rad al-Muhtar states it as \"let him wash his hand,\" joining the two reports. A fourth is reading Talq's hadith as touching over a barrier, which some hold, though Ibn Uthaymeen rejects it outright. A fifth is abrogation: the Permanent Committee and Ibn Hibban and al-Tabari before them hold Busrah's report abrogates Talq's, while al-Albani insists reconciliation is the default and that claims about which came first are just claims.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d9%88%d9%86%d9%82%d8%b6-%d8%a7%d9%84%d9%88%d8%b6%d9%88%d8%a1/",
+            "https://islamqa.org/hanafi/muftionline/106452/does-wudhu-break-through-touching-ones-private-part/",
+            "https://en.tohed.com/touching-the-private-part-and-its-effect-on-wudu-scholarly-ruling/",
+            "https://al-fatawa.com/en/fatwa/37459/some-mentioned-hadith-talq-contains-no-evidence-regarding-invalidation-wudu-touching-private-parts",
+            "https://al-fatawa.com/en/fatwa/110651/majority-s-view-touching-private-parts-invalidates-ablution",
+            "https://al-fatawa.com/en/fatwa/28885/what-authenticity-hadith-whoever-touches-private-part-another-let-perform-wudu-explanation-ruling",
+            "https://al-fatawa.com/en/fatwa/18584/response-who-said-hadith-talq-ibn-ali-not-piece-abrogated-hadith-basrah-whoever-touches-private"
+          ]
+        },
+        {
+          "text": "On the strength of Busrah's report, al-Bukhari's statement that it is \"the most authentic thing in this chapter\" is quoted by al-Bahuti, while it is argued that the phrase means the best available and not necessarily authentic, noting the report is in neither Sahih. On what counts as touching, the Malikis, Shafi'is and Hanbalis restrict it to the palm or inner hand and require skin contact, so a barrier prevents nullification, and Ibn Qudamah argues the forearm is not the hand in the Sharia's usage.",
+          "citations": [
+            "https://shamela.ws/book/622#1:283",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a3%d8%ab%d8%b1%d9%87-%d8%b9%d9%84%d9%89-%d9%88%d8%b6%d9%88%d8%a1-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+            "https://shamela.ws/book/587#1:118",
+            "https://shamela.ws/book/499#1:72",
+            "https://seekersguidance.org/answers/breaking-wudu-by-touching-private-parts/",
+            "https://al-fatawa.com/en/fatwa/82696/what-ruling-performing-wudu-after-touching-private-parts",
+            "https://shamela.ws/book/6910#1:243"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Egypt's Dar al-Ifta, in fatwa 4904 of 30 December 2003, states that the Hanafis hold touching the private part does not break wudu when one is safe from desire, that the majority hold it breaks whether or not desire is involved, and that there is no objection to the questioner following either school. The Permanent Committee holds the majority view, that touching the private part without a barrier breaks wudu whether the one touched is a child or an adult, and it reads the verse's \"touching\" as intercourse.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/15549/مدى-تأثير-لمس-الفرج-على-الوضوء",
+            "https://al-fatawa.com/en/fatwa/110647/touching-private-parts-small-child",
+            "https://al-fatawa.com/en/fatwa/110651/majority-s-view-touching-private-parts-invalidates-ablution",
+            "https://al-fatawa.com/en/fatwa/110659/intended-meaning-al-malamsah-verse-women"
+          ]
+        },
+        {
+          "text": "Shaykh Ibn Baz holds that touching the front or the back private part breaks wudu for a man and for a woman, that skin-to-skin contact is what counts and clothing does not, and that a child's private parts are included. Shaykh Ibn Uthaymeen's fatwas show two lines: in one he says the correct view is that touching does not break wudu at all, whether for desire or not, though renewing it is better, and in others he restricts nullification to touching for desire and recommends wudu otherwise as a precaution, adding that the anus does not break it; he also rejects the claim that Talq's hadith was over a barrier, since a barrier is not called touching.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/76340/ruling-ablution-one-who-touches-private-parts-hand",
+            "https://al-fatawa.com/en/fatwa/82696/what-ruling-performing-wudu-after-touching-private-parts",
+            "https://al-fatawa.com/en/fatwa/84129/ruling-touching-private-parts-children-one-who-state-ritual-purity",
+            "https://al-fatawa.com/en/fatwa/50788/does-touching-private-parts-invalidate-ablution",
+            "https://al-fatawa.com/en/fatwa/5446/also-asks-what-ruling-touching-private-parts-whether-front-back-especially-passage-two-passages",
+            "https://al-fatawa.com/en/fatwa/35507/clarification-touching-private-parts-does-not-invalidate-ablution-unless-done-sake-sexual-pleasure",
+            "https://al-fatawa.com/en/fatwa/55518/addendum-benefits-hadith-whoever-touches-private-part-let-perform-wudu",
+            "https://al-fatawa.com/en/fatwa/47079/does-washing-child-s-private-parts-invalidate-ablution",
+            "https://al-fatawa.com/en/fatwa/37459/some-mentioned-hadith-talq-contains-no-evidence-regarding-invalidation-wudu-touching-private-parts"
+          ]
+        },
+        {
+          "text": "Al-Albani's position is that the command in Busrah's hadith is carried to recommendation, that the two hadiths are reconciled rather than abrogated, and that touching for desire does break wudu. IslamQA relays that many Companions and Successors and the Imams Malik, al-Shafi'i and Ahmad held nullification, that Abu Hanifa held otherwise, and that differentiating desire is a strong position favoured by Ibn Uthaymeen, while AMJA transmits Ibn Qudamah's report of the difference and the second view attributed to Ali, Ammar, Ibn Mas'ud, Hudhayfah, Imran ibn Husayn and Abu al-Darda'. Shaykh Qaradawi concludes that touching the penis does not break wudu in any case, and that wudu is recommended if it was with desire, reasoning that a matter affecting everyone so commonly must have been taught publicly rather than known to one or two people; Hanafi fatwa sources simply state that it does not break wudu, directly or through clothing.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/18567/how-reconcile-two-hadiths-anything-but-part-whoever-touches-private-part-let-perform-wudu",
+            "https://al-fatawa.com/en/fatwa/18584/response-who-said-hadith-talq-ibn-ali-not-piece-abrogated-hadith-basrah-whoever-touches-private",
+            "https://al-fatawa.com/en/fatwa/22955/does-touching-private-parts-invalidate-ablution-discussion-students-knowledge-matter",
+            "https://al-fatawa.com/en/fatwa/119127/commentary-book-risalah-shaykh-al-islam-ibn-taymiyyah-may-allah-have-mercy-regarding-fasting-119127",
+            "https://islamqa.info/ar/answers/99468",
+            "https://www.amjaonline.org/fatwa/en/3880/touching-the-genitals-does-it-nullify-ablution",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a3%d8%ab%d8%b1%d9%87-%d8%b9%d9%84%d9%89-%d9%88%d8%b6%d9%88%d8%a1-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d9%84%d8%a7%d9%85%d8%b3-%d9%88%d8%a7%d9%84%d9%85%d9%84%d9%85%d9%88%d8%b3/",
+            "https://fiqh.islamonline.net/%d9%85%d8%b3-%d8%a7%d9%84%d8%b0%d9%83%d8%b1-%d9%88%d9%86%d9%82%d8%b6-%d8%a7%d9%84%d9%88%d8%b6%d9%88%d8%a1/",
+            "https://islamqa.org/hanafi/muftionline/131831/does-touching-the-private-part-break-wudhu/",
+            "https://islamqa.org/hanafi/muftionline/131249/will-touching-the-private-part-break-wudhu/",
+            "https://islamqa.org/hanafi/muftionline/106452/does-wudhu-break-through-touching-ones-private-part/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}

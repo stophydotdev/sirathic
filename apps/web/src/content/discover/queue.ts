@@ -1,0 +1,41 @@
+import type { ArticleInput } from "./schema";
+
+export const queue = [
+  {
+    title: "Can Muslims celebrate Christmas?",
+    slug: "can-muslims-celebrate-christmas",
+    topic: "Daily life",
+  },
+  { title: "Is music haram?", slug: "is-music-haram", topic: "Daily life" },
+  { title: "Can Muslims marry Christians?", slug: "can-muslims-marry-christians", topic: "Family" },
+  { title: "Is shrimp halal?", slug: "is-shrimp-halal", topic: "Food" },
+  { title: "Can Muslims have dogs?", slug: "can-muslims-have-dogs", topic: "Daily life" },
+  { title: "Is kosher meat halal?", slug: "is-kosher-meat-halal", topic: "Food" },
+  { title: "Are tattoos haram?", slug: "are-tattoos-haram", topic: "Daily life" },
+  { title: "Is smoking haram?", slug: "is-smoking-haram", topic: "Daily life" },
+  { title: "Is vanilla extract halal?", slug: "is-vanilla-extract-halal", topic: "Food" },
+  { title: "Is life insurance haram?", slug: "is-life-insurance-haram", topic: "Money" },
+  { title: "Is gelatin halal?", slug: "is-gelatin-halal", topic: "Food" },
+  { title: "Is dating haram?", slug: "is-dating-haram", topic: "Family" },
+  { title: "Is vaping haram?", slug: "is-vaping-haram", topic: "Daily life" },
+  { title: "Is lobster halal?", slug: "is-lobster-halal", topic: "Food" },
+  {
+    title: "Can you read the Quran without wudu?",
+    slug: "reading-quran-without-wudu",
+    topic: "Purification",
+  },
+  {
+    title: "Does brushing your teeth break the fast?",
+    slug: "brushing-teeth-while-fasting",
+    topic: "Fasting",
+  },
+  { title: "How many rak'ahs is taraweeh?", slug: "taraweeh-rakahs", topic: "Prayer" },
+  { title: "Is drawing haram?", slug: "is-drawing-haram", topic: "Daily life" },
+  { title: "Are birthdays haram?", slug: "are-birthdays-haram", topic: "Daily life" },
+  { title: "Is crypto haram?", slug: "is-crypto-haram", topic: "Money" },
+  { title: "Is a mortgage haram?", slug: "is-a-mortgage-haram", topic: "Money" },
+  { title: "Is there zakat on gold?", slug: "zakat-on-gold", topic: "Zakat" },
+  { title: "Do you pay zakat on a 401k?", slug: "zakat-on-401k", topic: "Zakat" },
+  { title: "Do you pay zakat on stocks?", slug: "zakat-on-stocks", topic: "Zakat" },
+  { title: "Who can receive zakat?", slug: "who-can-receive-zakat", topic: "Zakat" },
+] as const satisfies readonly Pick<ArticleInput, "title" | "slug" | "topic">[];

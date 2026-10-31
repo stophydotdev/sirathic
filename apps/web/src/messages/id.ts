@@ -880,4 +880,16 @@ export default {
   "Places from Google Maps": "Tempat dari Google Maps",
   "Research this": "Teliti lebih dalam",
   "Used your memory": "Memori Anda digunakan",
+  Discover: "Jelajahi",
+  "Back to Discover": "Kembali ke Jelajahi",
+  "Updated {date}": "Diperbarui {date}",
+  "Discover more": "Jelajahi lainnya",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Pertanyaan yang diperselisihkan, dijawab dari Al-Qur'an, hadis, dan kitab fikih, dengan setiap sumber dicantumkan.",
+  "How Discover works": "Cara kerja Jelajahi",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Tanggal Umm al-Qura. Rukyat hilal bisa berbeda satu hari.",
+  Top: "Teratas",
+  Topics: "Topik",
+  "Published {when}": "Diterbitkan {when}",
 } satisfies Messages;

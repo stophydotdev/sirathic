@@ -872,4 +872,16 @@ export default {
   "Places from Google Maps": "Google Maps-ൽ നിന്നുള്ള സ്ഥലങ്ങൾ",
   "Research this": "ഇത് ഗവേഷണം ചെയ്യുക",
   "Used your memory": "നിങ്ങളുടെ മെമ്മറി ഉപയോഗിച്ചു",
+  Discover: "കണ്ടെത്തുക",
+  "Back to Discover": "കണ്ടെത്തുകയിലേക്ക് മടങ്ങുക",
+  "Updated {date}": "പുതുക്കിയത്: {date}",
+  "Discover more": "കൂടുതൽ കണ്ടെത്തുക",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "അഭിപ്രായഭിന്നതയുള്ള ചോദ്യങ്ങൾക്ക് ഖുർആൻ, ഹദീസ്, ഫിഖ്ഹ് ഗ്രന്ഥങ്ങൾ എന്നിവയിൽ നിന്ന് ഓരോ ഉറവിടവും ഉദ്ധരിച്ച് ഉത്തരം.",
+  "How Discover works": "കണ്ടെത്തുക എങ്ങനെ പ്രവർത്തിക്കുന്നു",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "ഉമ്മുൽ ഖുറാ തീയതികൾ. ചന്ദ്രദർശനം അനുസരിച്ച് ഒരു ദിവസം വ്യത്യാസപ്പെടാം.",
+  Top: "മുൻനിര",
+  Topics: "വിഷയങ്ങൾ",
+  "Published {when}": "പ്രസിദ്ധീകരിച്ചത് {when}",
 } satisfies Messages;

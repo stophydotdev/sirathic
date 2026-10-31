@@ -880,4 +880,16 @@ export default {
   "Places from Google Maps": "Google Maps تىكى جايلار",
   "Research this": "بۇنى تەتقىق قىل",
   "Used your memory": "ئەستە ساقلىغانلىرىڭىز ئىشلىتىلدى",
+  Discover: "بايقاش",
+  "Back to Discover": "بايقاشقا قايتىش",
+  "Updated {date}": "يېڭىلانغان: {date}",
+  "Discover more": "تېخىمۇ كۆپ بايقاش",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "ئىختىلاپلىق مەسىلىلەرگە قۇرئان، ھەدىس ۋە پىقھى كىتابلىرىدىن، ھەر بىر مەنبە كۆرسىتىلگەن ھالدا جاۋاب بېرىلىدۇ.",
+  "How Discover works": "بايقاش قانداق ئىشلەيدۇ",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "ئۇممۇلقۇرا چېسلالىرى. ئاي كۆرۈش بىر كۈن پەرقلىنىشى مۇمكىن.",
+  Top: "ئالدىنقى",
+  Topics: "تېمىلار",
+  "Published {when}": "ئېلان قىلىندى {when}",
 } satisfies Messages;

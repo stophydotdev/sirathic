@@ -877,4 +877,16 @@ export default {
   "Places from Google Maps": "Места из Google Карт",
   "Research this": "Исследовать подробнее",
   "Used your memory": "Использована ваша память",
+  Discover: "Интересное",
+  "Back to Discover": "Назад к разделу «Интересное»",
+  "Updated {date}": "Обновлено {date}",
+  "Discover more": "Ещё в разделе",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Спорные вопросы с ответами из Корана, хадисов и книг по фикху, с указанием каждого источника.",
+  "How Discover works": "Как работает «Интересное»",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Даты по календарю Умм аль-Кура. Наблюдение луны может дать разницу в один день.",
+  Top: "Главное",
+  Topics: "Темы",
+  "Published {when}": "Опубликовано {when}",
 } satisfies Messages;

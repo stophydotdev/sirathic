@@ -887,4 +887,16 @@ export default {
   "Places from Google Maps": "Lieux issus de Google Maps",
   "Research this": "Rechercher en profondeur",
   "Used your memory": "Votre mémoire a été utilisée",
+  Discover: "Découvrir",
+  "Back to Discover": "Retour à Découvrir",
+  "Updated {date}": "Mis à jour le {date}",
+  "Discover more": "Autres à découvrir",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Des questions débattues, traitées à partir du Coran, des hadiths et des livres de fiqh, avec chaque source citée.",
+  "How Discover works": "Comment fonctionne Découvrir",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Dates Umm al-Qura. L'observation du croissant peut différer d'un jour.",
+  Top: "À la une",
+  Topics: "Sujets",
+  "Published {when}": "Publié {when}",
 } satisfies Messages;

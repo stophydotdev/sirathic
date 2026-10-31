@@ -881,4 +881,16 @@ export default {
   "Places from Google Maps": "Lugares de Google Maps",
   "Research this": "Investigar esto",
   "Used your memory": "Se usó tu memoria",
+  Discover: "Descubrir",
+  "Back to Discover": "Volver a Descubrir",
+  "Updated {date}": "Actualizado el {date}",
+  "Discover more": "Descubrir más",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Cuestiones disputadas, respondidas con el Corán, los hadices y los libros de fiqh, con cada fuente citada.",
+  "How Discover works": "Cómo funciona Descubrir",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Fechas de Umm al-Qura. El avistamiento de la luna puede variar un día.",
+  Top: "Destacado",
+  Topics: "Temas",
+  "Published {when}": "Publicado {when}",
 } satisfies Messages;

@@ -866,4 +866,16 @@ export default {
   "Places from Google Maps": "أماكن من خرائط Google",
   "Research this": "ابحث في هذا بعمق",
   "Used your memory": "استُخدمت ذاكرتك",
+  Discover: "اكتشف",
+  "Back to Discover": "العودة إلى اكتشف",
+  "Updated {date}": "آخر تحديث {date}",
+  "Discover more": "المزيد للاكتشاف",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "مسائل الخلاف، يُجاب عنها من القرآن وكتب الحديث والفقه مع ذكر كل مصدر.",
+  "How Discover works": "كيف يعمل اكتشف",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "تواريخ أم القرى. قد تختلف رؤية الهلال بيوم.",
+  Top: "الأبرز",
+  Topics: "المواضيع",
+  "Published {when}": "نُشر {when}",
 } satisfies Messages;

@@ -1,0 +1,72 @@
+name: Discover
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: discover
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+    env:
+      NEXT_PUBLIC_SERVER: http://localhost:3000
+      DATABASE_URL: ${{ secrets.DISCOVER_DATABASE_URL }}
+      REDIS_URL: redis://127.0.0.1:6379
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+      STOPHY_API_KEY: ci
+      BROWSER_URL: http://127.0.0.1:8080
+      BROWSER_TOKEN: ci
+      SANDBOX_URL: http://127.0.0.1:8787
+      SANDBOX_TOKEN: ci
+      VAULT_KMS_KEY_ARN: arn:aws:kms:us-east-1:000000000000:key/ci
+      VAULT_AWS_ACCESS_KEY_ID: ci
+      VAULT_AWS_SECRET_ACCESS_KEY: ci
+      GOOGLE_CLIENT_ID: ci
+      GOOGLE_CLIENT_SECRET: ci
+      GITHUB_CLIENT_ID: ci
+      GITHUB_CLIENT_SECRET: ci
+      STORAGE_ENDPOINT: http://127.0.0.1:9000
+      STORAGE_REGION: ci
+      STORAGE_BUCKET: ci
+      STORAGE_ACCESS_KEY_ID: ci
+      STORAGE_SECRET_ACCESS_KEY: ci
+      BETTER_AUTH_SECRET: ci-only-placeholder-secret-32-chars
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
+      - run: bun install --frozen-lockfile
+      - run: bun scripts/discover.ts 1
+      - id: written
+        run: echo "file=$(git ls-files --others --exclude-standard apps/web/src/content/discover | head -1)" >> "$GITHUB_OUTPUT"
+      - if: steps.written.outputs.file != ''
+        run: bun run check && bun run check-slop && bun run check-types && bun run test
+      - if: steps.written.outputs.file != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FILE: ${{ steps.written.outputs.file }}
+        run: |
+          title=$(bun -e 'console.log((await import(`./${process.env.FILE}`)).default.title)')
+          branch="discover/$(basename "$FILE" .ts)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add apps/web/src/content/discover
+          git commit -m "feat(web): Discover answers \"$title\"" -m "Written by Noor from our Quran, hadith, fiqh and fatwa search. Clef checked every paragraph against the sources it cites before it was kept." -m "Built by Noor 1 Flash in the Discover job"
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" --title "feat(web): Discover answers \"$title\"" --body "Written by the daily Discover job. Clef checked every paragraph against the sources it cites, and the repo checks passed in the job. Built by Noor 1 Flash in the Discover job"
+          gh pr merge "$branch" --squash

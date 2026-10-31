@@ -876,4 +876,16 @@ export default {
   "Places from Google Maps": "Места са Google мапа",
   "Research this": "Истражи ово",
   "Used your memory": "Коришћена је твоја меморија",
+  Discover: "Откриј",
+  "Back to Discover": "Назад на Откриј",
+  "Updated {date}": "Ажурирано {date}",
+  "Discover more": "Откриј још",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Спорна питања, одговорена из Курана, хадиса и фикхских књига, уз наведене све изворе.",
+  "How Discover works": "Како ради Откриј",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Датуми по Умм ал-Кура календару. Виђење младог месеца може се разликовати за један дан.",
+  Top: "Издвојено",
+  Topics: "Теме",
+  "Published {when}": "Објављено {when}",
 } satisfies Messages;

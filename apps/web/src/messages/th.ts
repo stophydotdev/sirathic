@@ -858,4 +858,16 @@ export default {
   "Places from Google Maps": "สถานที่จาก Google Maps",
   "Research this": "ค้นคว้าเรื่องนี้",
   "Used your memory": "ใช้ความจำของคุณแล้ว",
+  Discover: "ค้นพบ",
+  "Back to Discover": "กลับไปที่ค้นพบ",
+  "Updated {date}": "อัปเดต {date}",
+  "Discover more": "ค้นพบเพิ่มเติม",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "คำถามที่มีข้อถกเถียง ตอบจากอัลกุรอาน หะดีษ และตำราฟิกฮ์ พร้อมอ้างอิงทุกแหล่งที่มา",
+  "How Discover works": "ค้นพบทำงานอย่างไร",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "วันที่ตามปฏิทินอุมมุลกุรอ การเห็นจันทร์เสี้ยวอาจต่างกันหนึ่งวัน",
+  Top: "ยอดนิยม",
+  Topics: "หัวข้อ",
+  "Published {when}": "เผยแพร่ {when}",
 } satisfies Messages;

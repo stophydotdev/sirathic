@@ -865,4 +865,16 @@ export default {
   "Places from Google Maps": "Google Maps වෙතින් ස්ථාන",
   "Research this": "මෙය පර්යේෂණය කරන්න",
   "Used your memory": "ඔබේ මතකය භාවිත කළා",
+  Discover: "සොයාගන්න",
+  "Back to Discover": "සොයාගන්න වෙත ආපසු",
+  "Updated {date}": "යාවත්කාලීන කළේ {date}",
+  "Discover more": "තවත් සොයාගන්න",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "මතභේද ඇති ප්‍රශ්නවලට කුර්ආනය, හදීස් සහ ෆික්හ් ග්‍රන්ථවලින්, සෑම මූලාශ්‍රයක්ම සඳහන් කර පිළිතුරු.",
+  "How Discover works": "සොයාගන්න ක්‍රියා කරන ආකාරය",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "උම් අල්-කුරා දින. සඳ දැකීම අනුව දිනයක වෙනසක් විය හැක.",
+  Top: "ඉහළම",
+  Topics: "මාතෘකා",
+  "Published {when}": "ප්‍රකාශිතයි {when}",
 } satisfies Messages;

@@ -1,0 +1,15 @@
+import canMuslimsCelebrateChristmas from "./canMuslimsCelebrateChristmas.json";
+import canMuslimsMarryChristians from "./canMuslimsMarryChristians.json";
+import isMusicHaram from "./isMusicHaram.json";
+import sleepAndWudu from "./sleepAndWudu.json";
+import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
+import wipingOverSocks from "./wipingOverSocks.json";
+
+export const written = [
+  canMuslimsCelebrateChristmas,
+  canMuslimsMarryChristians,
+  isMusicHaram,
+  sleepAndWudu,
+  touchingPrivatePartsAndWudu,
+  wipingOverSocks,
+];

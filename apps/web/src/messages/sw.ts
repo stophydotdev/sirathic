@@ -877,4 +877,16 @@ export default {
   "Places from Google Maps": "Maeneo kutoka Google Maps",
   "Research this": "Chunguza hili",
   "Used your memory": "Kumbukumbu yako imetumika",
+  Discover: "Gundua",
+  "Back to Discover": "Rudi kwa Gundua",
+  "Updated {date}": "Imesasishwa {date}",
+  "Discover more": "Gundua zaidi",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Maswali yenye mjadala, yanajibiwa kutoka Qur'ani, hadithi na vitabu vya fiqh, huku kila chanzo kikitajwa.",
+  "How Discover works": "Jinsi Gundua inavyofanya kazi",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Tarehe za Umm al-Qura. Kuonekana kwa mwezi kunaweza kutofautiana kwa siku moja.",
+  Top: "Bora",
+  Topics: "Mada",
+  "Published {when}": "Ilichapishwa {when}",
 } satisfies Messages;

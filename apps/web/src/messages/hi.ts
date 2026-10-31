@@ -867,4 +867,16 @@ export default {
   "Places from Google Maps": "Google Maps से जगहें",
   "Research this": "इस पर रिसर्च करें",
   "Used your memory": "आपकी मेमोरी का उपयोग हुआ",
+  Discover: "खोजें",
+  "Back to Discover": "खोजें पर वापस जाएँ",
+  "Updated {date}": "अपडेट किया गया: {date}",
+  "Discover more": "और खोजें",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "विवादित सवालों के जवाब कुरआन, हदीस और फ़िक़्ह की किताबों से, हर स्रोत के हवाले के साथ।",
+  "How Discover works": "खोजें कैसे काम करता है",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "उम्म अल-क़ुरा तिथियाँ। चाँद दिखने से एक दिन का अंतर हो सकता है।",
+  Top: "शीर्ष",
+  Topics: "विषय",
+  "Published {when}": "प्रकाशित {when}",
 } satisfies Messages;

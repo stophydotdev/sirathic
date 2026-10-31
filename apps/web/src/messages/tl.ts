@@ -884,4 +884,16 @@ export default {
   "Places from Google Maps": "Mga lugar mula sa Google Maps",
   "Research this": "Saliksikin ito",
   "Used your memory": "Ginamit ang iyong memorya",
+  Discover: "Tuklasin",
+  "Back to Discover": "Bumalik sa Tuklasin",
+  "Updated {date}": "Na-update noong {date}",
+  "Discover more": "Tuklasin pa",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "Mga pinagtatalunang tanong, sinasagot mula sa Quran, hadith at mga aklat ng fiqh, na may sanggunian sa bawat sagot.",
+  "How Discover works": "Paano gumagana ang Tuklasin",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Mga petsa ng Umm al-Qura. Maaaring magkaiba nang isang araw ang pagkakita sa buwan.",
+  Top: "Nangunguna",
+  Topics: "Mga Paksa",
+  "Published {when}": "Nailathala {when}",
 } satisfies Messages;

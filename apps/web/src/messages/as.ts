@@ -864,4 +864,16 @@ export default {
   "Places from Google Maps": "Google Mapsৰ পৰা ঠাইসমূহ",
   "Research this": "এইটো গৱেষণা কৰক",
   "Used your memory": "আপোনাৰ মেমৰি ব্যৱহাৰ কৰা হৈছে",
+  Discover: "আৱিষ্কাৰ",
+  "Back to Discover": "আৱিষ্কাৰলৈ উভতি যাওক",
+  "Updated {date}": "আপডেট: {date}",
+  "Discover more": "অধিক আৱিষ্কাৰ কৰক",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "মতভেদ থকা প্ৰশ্নৰ উত্তৰ কুৰআন, হাদীছ আৰু ফিকহৰ কিতাপৰ পৰা, প্ৰতিটো উৎস উল্লেখ কৰি।",
+  "How Discover works": "আৱিষ্কাৰে কেনেকৈ কাম কৰে",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "উম্ম আল-কুৰা তাৰিখ। চন্দ্ৰ দৰ্শনত এদিনৰ পাৰ্থক্য হ'ব পাৰে।",
+  Top: "শীৰ্ষ",
+  Topics: "বিষয়",
+  "Published {when}": "প্ৰকাশিত {when}",
 } satisfies Messages;

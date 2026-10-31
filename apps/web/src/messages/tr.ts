@@ -878,4 +878,16 @@ export default {
   "Places from Google Maps": "Google Haritalar'dan yerler",
   "Research this": "Bunu araştır",
   "Used your memory": "Hafızanız kullanıldı",
+  Discover: "Keşfet",
+  "Back to Discover": "Keşfet'e dön",
+  "Updated {date}": "Güncellendi: {date}",
+  "Discover more": "Daha fazla keşfet",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "İhtilaflı sorular; Kur'an, hadis ve fıkıh kitaplarından, her kaynak belirtilerek yanıtlanır.",
+  "How Discover works": "Keşfet nasıl çalışır",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "Ümmü'l-Kurâ tarihleri. Hilalin görülmesi bir gün farklı olabilir.",
+  Top: "Öne çıkanlar",
+  Topics: "Konular",
+  "Published {when}": "Yayınlandı: {when}",
 } satisfies Messages;

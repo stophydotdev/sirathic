@@ -862,4 +862,16 @@ export default {
   "Places from Google Maps": "ទីកន្លែងពី Google Maps",
   "Research this": "ស្រាវជ្រាវរឿងនេះ",
   "Used your memory": "បានប្រើការចងចាំរបស់អ្នក",
+  Discover: "ស្វែងយល់",
+  "Back to Discover": "ត្រឡប់ទៅស្វែងយល់",
+  "Updated {date}": "ធ្វើបច្ចុប្បន្នភាព {date}",
+  "Discover more": "ស្វែងយល់បន្ថែម",
+  "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
+    "សំណួរដែលមានការជជែកដេញដោល ឆ្លើយពីគម្ពីរគួរអាន ហាទីស និងសៀវភៅហ្វិក្ហ៍ ដោយមានដកស្រង់គ្រប់ប្រភព។",
+  "How Discover works": "របៀបដែលស្វែងយល់ដំណើរការ",
+  "Umm al-Qura dates. Moon sighting can differ by a day.":
+    "កាលបរិច្ឆេទ Umm al-Qura។ ការមើលឃើញព្រះចន្ទអាចខុសគ្នាមួយថ្ងៃ។",
+  Top: "កំពូល",
+  Topics: "ប្រធានបទ",
+  "Published {when}": "បានផ្សាយ {when}",
 } satisfies Messages;

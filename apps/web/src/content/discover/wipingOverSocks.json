@@ -1,0 +1,401 @@
+{
+  "title": "Can you wipe over cotton socks in wudu?",
+  "headline": "All four schools allow wiping over leather socks, and they split over cotton ones",
+  "cover": "المسح على الجوربين",
+  "slug": "wiping-over-socks",
+  "topic": "Purification",
+  "tint": "teal",
+  "summary": {
+    "text": "The four schools agree that wiping over leather socks is permitted, but differ over ordinary cotton socks: the Hanafi and Maliki schools require leather or leather-soled footwear (or, for the Hanafis, very thick cloth), while the Shafi'i and Hanbali schools do not require leather and ask instead that the sock be thick enough to walk in. A separate line of fatwas drawing on Ibn Hazm and Ibn Taymiyyah permits wiping over thin cotton socks outright.",
+    "citations": [
+      "https://shamela.ws/book/499#1:124",
+      "https://shamela.ws/book/6910#1:373",
+      "https://shamela.ws/book/21604#1:141",
+      "https://shamela.ws/book/21613#1:262",
+      "https://www.dar-alifta.org/ar/Fatwa/Details/19843/شروط-المسح-على-الجورب-وكيفيته",
+      "https://www.amjaonline.org/fatwa/en/76757/wiping-over-cotton-socks-division-in-a-mosque"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://shamela.ws/book/499#1:124",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص124"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#1:373",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص373"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:141",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص141"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#1:262",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص262"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/19843/شروط-المسح-على-الجورب-وكيفيته",
+      "title": "شروط المسح على الجورب وكيفيته"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/en/76757/wiping-over-cotton-socks-division-in-a-mosque",
+      "title": "Wiping Over Cotton Socks & Division In A Mosque"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:15",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص15"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/prayer-shafii-fiqh/how-are-the-verses-about-wudu-interpreted/",
+      "title": "How Are the Verses About Wudu Interpreted?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/34047/evidence-legitimacy-wiping-over-leather-socks-cotton-socks-noble-book",
+      "title": "Evidence for the Legitimacy of Wiping over Leather Socks and Cotton Socks from the Noble Book"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/316320",
+      "title": "هل القول بمسح القدمين في الوضوء بدل غسلهما معتبر ؟"
+    },
+    {
+      "url": "https://shamela.ws/book/622#1:255",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج1 ص255"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/578120",
+      "title": "هل ثبت في السنة المسح على الجوربين؟"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/13954",
+      "title": "لا يشترط أن يكون الجورب من الجلد"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:99",
+      "title": "Jami' at-Tirmidhi 99: The Book on Purification"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/3#17496",
+      "title": "Musnad Ahmad 18206"
+    },
+    {
+      "url": "https://sunnah.com/nasai:125b",
+      "title": "Sunan an-Nasa'i 125b: The Book of Purification"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:560",
+      "title": "Sunan Ibn Majah 560: The Book of Purification and its Sunnah"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/79887/أحكام-المسح-على-الجوربين",
+      "title": "أحكام  المسح على الجوربين"
+    },
+    {
+      "url": "https://sunnah.com/muslim:274c",
+      "title": "Sahih Muslim 274c: The Book of Purification"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/38#21448",
+      "title": "Musnad Ahmad 22486"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:155",
+      "title": "Sunan Abi Dawud 155: Purification (Kitab Al-Taharah)"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/50#21903",
+      "title": "Musnad Ahmad 22981"
+    },
+    {
+      "url": "https://sunnah.com/muslim:274k",
+      "title": "Sahih Muslim 274k: The Book of Purification"
+    },
+    {
+      "url": "https://sunnah.com/nasai:107",
+      "title": "Sunan an-Nasa'i 107: The Book of Purification"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/4#17524",
+      "title": "Musnad Ahmad 18234"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:164",
+      "title": "Sunan Abi Dawud 164: Purification (Kitab Al-Taharah)"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:550",
+      "title": "Sunan Ibn Majah 550: The Book of Purification and its Sunnah"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%284%29#741",
+      "title": "Musnad Ahmad 780"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/tafseer-raheemi/51563/is-it-permissible-to-wipe-over-thin-cotton-socks-during-wudhu/",
+      "title": "Is it permissible to wipe over thin cotton socks during wudhu?"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:24",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص24"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#1:270",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص270"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband/109932/is-it-permissible-to-wipe-feet-when-wearing-cotton-woolen-socks-or-only-on-leather/",
+      "title": "Is it permissible to wipe feet when wearing cotton/woolen socks, or only on leather?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d9%85%d8%b3%d8%ad-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%ac%d9%88%d8%b1%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b4%d8%b1%d9%88%d8%b7-%d9%88%d8%a7%d9%84%d8%ad%d9%83%d9%85/",
+      "title": "المسح على الجوربين الشروط والحكم"
+    },
+    {
+      "url": "https://www.britishfatwacouncil.org/wiping-during-wudu-over-cotton-socks/",
+      "title": "Wiping (during Wudu) over cotton socks"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#1:142",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص142"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/1256/im-sick-of-putting-everytime-my-feets-into-the-sink-on-work-to-wash-them-i-heard-that-according-to-imam-muhammad-and-imam-abu-yusuf-its-aloud-to-make-masah-over-socks/",
+      "title": "Im sick of putting everytime my feets into the sink on work to wash them…I heard that according to Imam Muhammad and Imam Abu Yusuf its aloud to make masah over socks…"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%ad%d9%83%d9%85-%d8%a7%d9%84%d9%85%d8%b3%d8%ad-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%ac%d9%88%d8%b1%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b1%d9%82%d9%8a%d9%82%d9%8a%d9%86/",
+      "title": "حكم المسح على الجوربين الرقيقين"
+    },
+    {
+      "url": "https://shamela.ws/book/1679#0:32",
+      "title": "الروض المربع شرح زاد المستقنع - ط المؤيد والرسالة، البهوتي، ج0 ص32"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/tafseer-raheemi/179334/a-query-regarding-the-fatwa-of-masah-over-cotton-socks/",
+      "title": "A query regarding the fatwa of masah over cotton socks."
+    },
+    {
+      "url": "https://shamela.ws/book/6910#1:375",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص375"
+    },
+    {
+      "url": "https://daruliftaa.us/fatwa/1902/",
+      "title": "Praying Behind Hanbali Imam Wiping Over Thin Socks"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110795/conditions-sock-over-which-wiping-valid",
+      "title": "Conditions of the sock over which wiping is valid"
+    },
+    {
+      "url": "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=1232",
+      "title": "The Ruling on Wiping over Thin Socks"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/78081/المسح-على-الجوربين",
+      "title": "المسح على الجوربين"
+    },
+    {
+      "url": "https://aboutislam.net/counseling/ask-the-scholar/prayer/is-it-permissible-to-wipe-over-socks-in-wudu/",
+      "title": "Wiping Over Cotton Socks"
+    },
+    {
+      "url": "https://aboutislam.net/counseling/ask-the-scholar/prayer/is-wiping-over-cloth-socks-valid-for-wudu/",
+      "title": "Is Wiping Over Cloth Socks Valid for Wudu?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/102640/ruling-wiping-over-socks",
+      "title": "Ruling on Wiping Over Socks"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The verse that governs wudu never mentions socks; it commands washing the feet, and the permission to wipe over footwear comes from the Sunnah. The dispute begins with the last word: Ibn Rushd explains that the two famous recitations differ on the vowel of \"feet\", the accusative reading joining the feet to what is washed and the genitive reading joining them to the head that is wiped, so one reading is plain for washing and the other plain for wiping. A group of scholars concluded from this that either washing or wiping is permissible by the person's choice, since both recitations are established. The majority answered differently: SeekersGuidance reports that the more commonly recited reading is understood by all to mean washing the face, arms and feet while wiping the head, and that the majority did not take the second reading to change the ruling, holding that both readings yield the same law, with al-Zamakhshari explaining the variation as a subtle pointer against wasting water.",
+          "citations": [
+            "https://shamela.ws/book/21739#1:15",
+            "https://seekersguidance.org/answers/prayer-shafii-fiqh/how-are-the-verses-about-wudu-interpreted/"
+          ]
+        },
+        {
+          "text": "Shaykh al-Uthaymeen makes the same point from the other direction: the genitive reading is a seven-recitation reading established from the Prophet ﷺ and is conjoined to \"your heads\", meaning \"and wipe your feet\", yet the Sunnah fixes washing as the actual obligation. The Companions were read both ways: Ibn Abbas is reported to have said \"they are only two washings and two wipings\", and Anas, when al-Hajjaj preached that the verse orders washing the feet, answered that Allah spoke the truth and al-Hajjaj lied, reciting the genitive. The same report is then reconciled: the strongest explanation among the Hanbalis is that Anas was denying that the verse itself proves washing specifically, not denying washing, which he knew from the Sunnah, and Anas himself used to wash his feet.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/34047/evidence-legitimacy-wiping-over-leather-socks-cotton-socks-noble-book",
+            "https://islamqa.info/ar/answers/316320"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "Separate from the recitation question, the practice of wiping over socks is reported from nine Companions, among them Ali, Ammar, Ibn Mas'ud, Anas, Ibn Umar, al-Bara', Bilal, Ibn Abi Awfa and Sahl ibn Sa'd, and other lists put the number at thirteen. Umar wiped over his socks and sandals on a Friday, and Ibn Umar said wiping over socks is like wiping over leather socks. The central narration is al-Mughirah's: \"The Prophet ﷺ performed ablution and wiped over his socks and his sandals\" (Jami' at-Tirmidhi 99).",
+          "citations": [
+            "https://shamela.ws/book/622#1:255",
+            "https://islamqa.info/ar/answers/578120",
+            "https://islamqa.info/ar/answers/13954",
+            "https://sunnah.com/tirmidhi:99"
+          ]
+        },
+        {
+          "text": "Its gradings are not uniform: Tirmidhi called it hasan sahih and reported that this was the view of Sufyan al-Thawri, Ibn al-Mubarak, al-Shafi'i, Ahmad and Ishaq, who allowed wiping over socks even when not soled provided they are thick. Ahmad Muhammad Shakir and al-Albani graded it sahih, Bashar Awad called it hasan sahih, and Zubair Ali Zai graded it daif. Shu'ayb al-Arna'ut graded the Ahmad route sahih with trustworthy narrators. Against that, al-Nasa'i said no one corroborated Abu Qais in this narration, and that the authentic report from al-Mughirah is that the Prophet ﷺ wiped over the two leather socks.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:99",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/3#17496",
+            "https://sunnah.com/nasai:125b"
+          ]
+        },
+        {
+          "text": "Supporting reports carry similar mixed verdicts: Abu Musa al-Ash'ari narrated the same act, and Ibn Majah 560 is sahih by al-Albani and Abd al-Baqi, sahih lighairihi by Shu'ayb al-Arna'ut, and daif by Zubair Ali Zai. Anas wiped over woollen socks and, when questioned, said they are leather socks, only of wool; Ahmad Shakir declared its chain sahih. The leather-sock narrations are firmly established: Sahih Muslim 274c, Musnad Ahmad 22486 graded hasan or sahih by Shu'ayb, Abu Dawud 155 on the black leather socks sent by the Negus, graded hasan by al-Albani and hasan lighairihi by Shu'ayb, and Musnad Ahmad 22981 graded sahih by Shu'ayb. Wiping over the forelock, turban and leather socks together appears in Sahih Muslim 274k, Sunan an-Nasa'i 107 and Musnad Ahmad 18234.",
+          "citations": [
+            "https://sunnah.com/ibnmajah:560",
+            "https://www.amjaonline.org/fatwa/ar/79887/أحكام-المسح-على-الجوربين",
+            "https://sunnah.com/muslim:274c",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/38#21448",
+            "https://sunnah.com/abudawud:155",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D8%A3%D9%86%D8%B5%D8%A7%D8%B1/50#21903",
+            "https://sunnah.com/muslim:274k",
+            "https://sunnah.com/nasai:107",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A7%D9%84%D9%83%D9%88%D9%81%D9%8A%D9%8A%D9%86/4#17524"
+          ]
+        },
+        {
+          "text": "Ali's reasoning is the classic argument from the text over analogy: \"If the religion were based on opinion, the underside of the feet would be more deserving of wiping than the top. Yet the Prophet ﷺ wiped over the tops of his leather socks\" (Sunan Abi Dawud 164, graded sahih by al-Albani). Ibn Majah 550, on wiping the top and bottom of the leather sock, is graded daif by al-Albani, Abd al-Baqi, Shu'ayb and Zubair Ali Zai. The time limit is one day and night for the resident and three days and nights for the traveller, from Ali via Musnad Ahmad 780 with a chain Shu'ayb called sahih; AMJA adds that the period starts from the first wiping after breaking wudu, citing a report from Umar that al-Albani declared sahih on the criterion of the two Shaykhs, and al-Nawawi's preference for this in al-Majmu'.",
+          "citations": [
+            "https://sunnah.com/abudawud:164",
+            "https://sunnah.com/ibnmajah:550",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D9%84%D9%8A_%D8%A8%D9%86_%D8%A3%D8%A8%D9%8A_%D8%B7%D8%A7%D9%84%D8%A8_%284%29#741",
+            "https://www.amjaonline.org/fatwa/ar/79887/أحكام-المسح-على-الجوربين"
+          ]
+        },
+        {
+          "text": "One Hanafi treatment states the problem bluntly: quoting Tuhfat al-Ahwazi, it says there is no marfu' hadith in the chapter of wiping over socks that is sahih and free of dispute. Ibn Rushd frames the whole disagreement the same way, noting that Bukhari and Muslim did not transmit this report while Tirmidhi graded it sahih, and that whoever's report was not authentic to him, or who rejected analogy on leather socks, restricted wiping to leather.",
+          "citations": [
+            "https://islamqa.org/hanafi/tafseer-raheemi/51563/is-it-permissible-to-wipe-over-thin-cotton-socks-during-wudhu/",
+            "https://shamela.ws/book/21739#1:24"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafi books require all-leather or leather-soled socks, or thick cloth that can be walked in without soling; thin cotton is excluded, and Radd al-Muhtar records a view excluding even leathered socks if not thick. Badai' al-Sana'i states that thin socks letting water through are not wiped by consensus. The fatwa follows Abu Yusuf and Muhammad on thick socks, and Abu Hanifa's retraction in his final illness is reported. Ordinary thin cotton is not wiped over; thick walkable cloth may be, on the position the fatwa follows.",
+          "citations": [
+            "https://shamela.ws/book/21613#1:262",
+            "https://shamela.ws/book/21613#1:270",
+            "https://islamqa.org/hanafi/darulifta-deoband/109932/is-it-permissible-to-wipe-feet-when-wearing-cotton-woolen-socks-or-only-on-leather/",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/19843/شروط-المسح-على-الجورب-وكيفيته",
+            "https://sunnah.com/tirmidhi:99",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d9%85%d8%b3%d8%ad-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%ac%d9%88%d8%b1%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b4%d8%b1%d9%88%d8%b7-%d9%88%d8%a7%d9%84%d8%ad%d9%83%d9%85/",
+            "https://www.britishfatwacouncil.org/wiping-during-wudu-over-cotton-socks/",
+            "https://islamqa.org/hanafi/tafseer-raheemi/51563/is-it-permissible-to-wipe-over-thin-cotton-socks-during-wudhu/"
+          ]
+        },
+        {
+          "text": "The Maliki school makes leather a stated condition: what is made in its shape from felt, cotton or linen is not wiped over, and the sock must allow continuous walking. Thin cotton is not wiped over. The Shafi'i school has no leather requirement, but the sock must be strong enough for a traveller to walk in; wrappings, wool and felt socks are excluded unless walkable, and Tirmidhi lists al-Shafi'i among those permitting thick non-soled socks. Thick cotton may be wiped over; thin does not qualify.",
+          "citations": [
+            "https://shamela.ws/book/21604#1:141",
+            "https://shamela.ws/book/21604#1:142",
+            "https://islamqa.org/hanafi/askimam/1256/im-sick-of-putting-everytime-my-feets-into-the-sink-on-work-to-wash-them-i-heard-that-according-to-imam-muhammad-and-imam-abu-yusuf-its-aloud-to-make-masah-over-socks/",
+            "https://shamela.ws/book/499#1:124",
+            "https://sunnah.com/tirmidhi:99",
+            "https://fiqh.islamonline.net/%d8%ad%d9%83%d9%85-%d8%a7%d9%84%d9%85%d8%b3%d8%ad-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%ac%d9%88%d8%b1%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b1%d9%82%d9%8a%d9%82%d9%8a%d9%86/"
+          ]
+        },
+        {
+          "text": "The Hanbali school requires a thick (safiq) sock of wool or other material, showing nothing of the foot, and walkable. A reported Hanbali position holds that waterproofness is not a condition, making thin socks valid, with a weak contrary view. Thick cotton is wiped over; on the famous Hanbali report, thin also. Ibn al-Mundhir's list of nine Companions is cited in Kashshaf al-Qina' as the basis for the Hanbali position, and Ibn Qudamah adds that if the sock stays only with the shoe, wiping is allowed and the state of purity ends when the shoe comes off. Dar al-Iftaa Chicago sets out seven conditions for the Hanbali position in a fatwa on praying behind such an imam, and notes that a Hanafi may pray behind a Hanbali imam who wipes over socks that do not meet Hanafi conditions.",
+          "citations": [
+            "https://shamela.ws/book/6910#1:373",
+            "https://shamela.ws/book/1679#0:32",
+            "https://shamela.ws/book/622#1:255",
+            "https://islamqa.org/hanafi/tafseer-raheemi/179334/a-query-regarding-the-fatwa-of-masah-over-cotton-socks/",
+            "https://shamela.ws/book/6910#1:375",
+            "https://daruliftaa.us/fatwa/1902/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "Three separate disagreements are often run together. The first is textual: whether the genitive reading of Quran 5:6 establishes wiping of the feet. The majority resolved it by holding that both readings carry one ruling and that the Sunnah fixes washing, and the report from Anas was reinterpreted as a dispute about proof rather than about practice. Ibn Rushd records the minority who made it a genuine choice.",
+          "citations": [
+            "https://seekersguidance.org/answers/prayer-shafii-fiqh/how-are-the-verses-about-wudu-interpreted/",
+            "https://islamqa.info/ar/answers/316320",
+            "https://shamela.ws/book/21739#1:15"
+          ]
+        },
+        {
+          "text": "The second is isnad-based: Ibn Rushd's diagnosis is that the difference over socks follows from whether the socks-and-sandals report was authentic to a given jurist and whether he allowed analogy on leather socks; whoever accepted the report or the analogy permitted socks, and whoever did neither restricted wiping to leather. That is why Tirmidhi's hasan sahih grading sits alongside al-Nasa'i's remark that Abu Qais was uncorroborated, and why the Hanafi literature could say no undisputed marfu' report exists in the chapter while the same chapter's practice is still reported from nine or thirteen Companions.",
+          "citations": [
+            "https://shamela.ws/book/21739#1:24",
+            "https://sunnah.com/nasai:125b",
+            "https://sunnah.com/tirmidhi:99",
+            "https://islamqa.org/hanafi/tafseer-raheemi/51563/is-it-permissible-to-wipe-over-thin-cotton-socks-during-wudhu/",
+            "https://shamela.ws/book/622#1:255",
+            "https://islamqa.info/ar/answers/578120"
+          ]
+        },
+        {
+          "text": "The third is about conditions: those who require leather read the texts' word \"khuff\" strictly, while those who require thickness instead treat the sock as joining leather by analogy or by the explicit narration, which is exactly how Tirmidhi presents al-Shafi'i's and Ahmad's view. The thickness condition itself is then read two ways: a physical property of the garment, as the Permanent Committee and Ibn Baz read it, or a proxy for durability and need, as AMJA argues, noting that al-Mabsut's own definition fits modern socks. Dar al-Ifta's practical resolution is that the matter is differed over, so a person facing genuine difficulty may follow those who permit without being censured, and AMJA's fatwa on a divided community points the same way, citing Ahmad's willingness to pray behind Malik and Sa'id ibn al-Musayyab despite differences.",
+          "citations": [
+            "https://shamela.ws/book/21604#1:141",
+            "https://shamela.ws/book/21613#1:262",
+            "https://sunnah.com/tirmidhi:99",
+            "https://shamela.ws/book/499#1:124",
+            "https://shamela.ws/book/6910#1:373",
+            "https://al-fatawa.com/en/fatwa/110795/conditions-sock-over-which-wiping-valid",
+            "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=1232",
+            "https://www.amjaonline.org/fatwa/ar/78081/المسح-على-الجوربين",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/19843/شروط-المسح-على-الجورب-وكيفيته"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "The contemporary bodies divide along the same lines. The British Fatwa Council rules that wiping over the cotton and wool socks commonly worn today is not permissible, since they are neither leather, nor leather-soled, nor thick enough to travel in, stand on the ankle unsupported, or hold back water. Darulifta Deoband and Askimam reach the same result, with Askimam stating that all four schools agree thin socks may not be wiped over, and that salah performed that way must be repeated.",
+          "citations": [
+            "https://www.britishfatwacouncil.org/wiping-during-wudu-over-cotton-socks/",
+            "https://islamqa.org/hanafi/darulifta-deoband/109932/is-it-permissible-to-wipe-feet-when-wearing-cotton-woolen-socks-or-only-on-leather/",
+            "https://islamqa.org/hanafi/tafseer-raheemi/51563/is-it-permissible-to-wipe-over-thin-cotton-socks-during-wudhu/",
+            "https://islamqa.org/hanafi/askimam/1256/im-sick-of-putting-everytime-my-feets-into-the-sink-on-work-to-wash-them-i-heard-that-according-to-imam-muhammad-and-imam-abu-yusuf-its-aloud-to-make-masah-over-socks/"
+          ]
+        },
+        {
+          "text": "AMJA takes the opposite view on the thickness condition, calling it a descriptive attribute rather than the point of the law: what matters is people's need to wear such socks, al-Mabsut defines thick as staying on the shin without being tied, which is the state of today's socks, and even on al-Mughni's stricter definition most socks qualify, since many of the Companions' leather socks were torn. AMJA also reports Ibn Taymiyyah's position that the only agreed condition is wearing the socks after a complete wudu, and that leather is not a valid condition, cotton and cloth being acceptable.",
+          "citations": [
+            "https://www.amjaonline.org/fatwa/ar/78081/المسح-على-الجوربين",
+            "https://www.amjaonline.org/fatwa/en/76757/wiping-over-cotton-socks-division-in-a-mosque"
+          ]
+        },
+        {
+          "text": "Egypt's Dar al-Ifta summarises the majority as allowing socks that are leathered, walkable, cover the ankles, are pure, and were put on in purity, and then adds that some jurists, including Ibn Hazm and Ibn Taymiyyah, allowed wiping without restriction even over thin socks; it invokes the principle that there is no denunciation in a matter differed over, so someone in need who has only thin socks may wipe following those who permit. The same fatwa describes the wiping as over the top obligatorily and the bottom as recommended, never the bottom alone.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/19843/شروط-المسح-على-الجورب-وكيفيته"
+          ]
+        },
+        {
+          "text": "Shaykh Ahmad Kutty and Dr Zulfiqar Ali Shah of the Fiqh Council of North America allow cloth socks provided they are thick and not transparent, while Shaykh Ibn Baz and the Permanent Committee require thickness and opacity, ruling that a thin sock leaves the foot effectively uncovered, though the Committee elsewhere permits wiping over anything that covers the feet, leather or thick socks. Shaykh al-Uthaymeen states that wiping over leather or cotton socks is indicated by the Book and the Sunnah.",
+          "citations": [
+            "https://aboutislam.net/counseling/ask-the-scholar/prayer/is-it-permissible-to-wipe-over-socks-in-wudu/",
+            "https://aboutislam.net/counseling/ask-the-scholar/prayer/is-wiping-over-cloth-socks-valid-for-wudu/",
+            "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=1232",
+            "https://al-fatawa.com/en/fatwa/110795/conditions-sock-over-which-wiping-valid",
+            "https://al-fatawa.com/en/fatwa/102640/ruling-wiping-over-socks",
+            "https://al-fatawa.com/en/fatwa/34047/evidence-legitimacy-wiping-over-leather-socks-cotton-socks-noble-book"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
