@@ -1,5 +1,5 @@
 import { OpenTelemetry } from "@ai-sdk/otel";
-import { hasToolCall, isStepCount, type LanguageModel, ToolLoopAgent, type ToolSet } from "ai";
+import { hasToolCall, type LanguageModel, ToolLoopAgent, type ToolSet } from "ai";
 import { z } from "zod";
 import { BROWSER_HELP, USER_FORM } from "../bots/browser";
 import { answerOptions } from "../models/subscription";
@@ -14,9 +14,6 @@ const shownForm = z.object({ shown: z.literal(true) });
 
 const tracing = new OpenTelemetry({ agentSpanName: "functionId" });
 
-const STEP_CAP = 20;
-const LAST_STEP =
-  "You have no research steps left. Answer now from what you found, and say what you could not check.";
 const STALLED_MS = 120_000;
 
 export type Turn = Parameters<typeof answerOptions>[0];
@@ -76,7 +73,6 @@ export function answerAgent({
             (part) => part.toolName === USER_FORM && shownForm.safeParse(part.output).success,
           ) ?? false,
       hasToolCall(BROWSER_HELP),
-      isStepCount(STEP_CAP),
     ],
     timeout: { chunkMs: STALLED_MS },
     experimental_refineToolInput: refine,
@@ -92,16 +88,14 @@ export function answerAgent({
       const skillText = (index + loadedText(skills, open) + mentioned).trim();
       const earlier = initialMessages.map(shorten);
       const asked = earlier.findLastIndex((message) => message.role === "user") + 1;
-      const last = stepNumber === STEP_CAP - 1;
       return {
         messages: [
           ...earlier.slice(0, asked),
           ...(skillText ? [{ role: "system" as const, content: RULES_HEADER + skillText }] : []),
           ...earlier.slice(asked),
           ...responseMessages,
-          ...(last ? [{ role: "system" as const, content: LAST_STEP }] : []),
         ],
-        activeTools: last ? [] : Object.keys(tools).filter((name) => !closed.has(name)),
+        activeTools: Object.keys(tools).filter((name) => !closed.has(name)),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
       };
     },

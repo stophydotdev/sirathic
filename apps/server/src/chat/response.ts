@@ -14,6 +14,7 @@ import {
   smoothStream,
   type UIMessageStreamOutcome,
 } from "ai";
+import { z } from "zod";
 import { memoryTools, rememberAfterAnswer } from "../account/memory";
 import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
@@ -59,6 +60,8 @@ import {
 } from "./skills/builtIn";
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
 import { answerAgent, type Turn } from "./answerAgent";
+import { answerFromResults } from "./answerFromResults";
+import { answerOptions } from "../models/subscription";
 import { answerCards, placeBook } from "./cards";
 import { afterAnswer } from "./afterAnswer";
 import type { SourceKind } from "../shared/sources";
@@ -73,6 +76,9 @@ import {
 } from "./tools";
 
 export const KEEPALIVE_MS = 15_000;
+const FALLBACK_MS = 120_000;
+const withText = z.object({ text: z.string() });
+const connectCard = z.object({ status: z.literal("redirect") });
 const RESEARCH_OPENS = ["research", "calculate", "files"];
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
@@ -279,25 +285,26 @@ export function chatResponse({
         ...openedBy(askedText, plugins),
       ];
       const writes = unattended ? [] : [...writingTools(connectors.tools), SEND_FEEDBACK];
+      const system = instructions({
+        now: new Date(),
+        timezone: routines?.timezone,
+        mode,
+        settings: preferred,
+        short: texts,
+        project: inProject,
+        unattended: unattended === true,
+        offered,
+        skills: builtIn,
+        remembers:
+          owner !== undefined && !unattended && (inBot !== undefined || preferred.saveMemory),
+        connectedApps: plugins.flatMap((plugin) => (plugin.connected ? [plugin.name] : [])),
+        toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
+      });
       const agent = answerAgent({
         model: models.model,
         tools: offered,
         short: texts,
-        instructions: instructions({
-          now: new Date(),
-          timezone: routines?.timezone,
-          mode,
-          settings: preferred,
-          short: texts,
-          project: inProject,
-          unattended: unattended === true,
-          offered,
-          skills: builtIn,
-          remembers:
-            owner !== undefined && !unattended && (inBot !== undefined || preferred.saveMemory),
-          connectedApps: plugins.flatMap((plugin) => (plugin.connected ? [plugin.name] : [])),
-          toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
-        }),
+        instructions: system,
         mentioned: skillRules(ownSkills, askedText),
         firstStep:
           opening && !inBot
@@ -342,10 +349,23 @@ export function chatResponse({
         },
       });
       let finish: InferUIMessageChunk<ChatMessage> | undefined;
+      let failure: InferUIMessageChunk<ChatMessage> | undefined;
+      const results: string[] = [];
+      let connecting = false;
       for await (const chunk of answer) {
         if (chunk.type === "start") continue;
         if (chunk.type === "finish") finish = chunk;
+        else if (chunk.type === "error") failure = chunk;
         else writer.write(chunk);
+        if (chunk.type === "tool-output-available") {
+          results.push(withText.safeParse(chunk.output).data?.text ?? JSON.stringify(chunk.output));
+          if (
+            calls.get(chunk.toolCallId)?.tool === "install_plugin" &&
+            connectCard.safeParse(chunk.output).success
+          ) {
+            connecting = true;
+          }
+        }
         if (chunk.type === "text-delta") {
           firstTextMs ??= since();
           text += chunk.delta;
@@ -375,6 +395,34 @@ export function chatResponse({
           }
         }
       }
+      const unanswered =
+        !text.trim() &&
+        ended?.finishReason !== "tool-calls" &&
+        !connecting &&
+        (!abortSignal.aborted || unattended === true) &&
+        results.length > 0;
+      if (unanswered) {
+        const fallback = await answerFromResults({
+          model: models.model,
+          system,
+          asked: askedText,
+          earlier: visible.slice(
+            0,
+            visible.findLastIndex((message) => message.role === "user"),
+          ),
+          results,
+          writer,
+          transform: sources.transform(),
+          abortSignal: abortSignal.aborted ? AbortSignal.timeout(FALLBACK_MS) : abortSignal,
+          providerOptions: answerOptions(turn),
+        }).catch((err: Error) => {
+          console.error(`answer from results failed: ${reasonOf(err)}`);
+          return undefined;
+        });
+        text = fallback?.text ?? "";
+        if (fallback) counted += countedTokens(fallback.usage);
+      }
+      if (failure && !(unanswered && text.trim())) writer.write(failure);
       const calledMemory = [...calls.values()].some(({ tool }) => tool === "update_memory");
       if (
         owner !== undefined &&
