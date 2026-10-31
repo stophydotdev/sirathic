@@ -16,6 +16,7 @@ const FOLDER = join(import.meta.dir, "../apps/web/src/content/discover");
 const TINTS = ["teal", "rose", "amber", "indigo"] as const;
 const STEP_CAP = 20;
 const ANSWER_AT_TOKENS = 40_000;
+const RESULTS_CHARS = 120_000;
 const RESEARCH_MS = 15 * 60_000;
 const PASS = 0.5;
 
@@ -82,22 +83,23 @@ async function research(title: string) {
   const tools = sirathicTools(cite, ["quran", "hadith", "fatwa", "book"]);
   const model = noorModel(DEFAULT_NOOR);
   if (!model) throw new Error("Noor is not set up");
+  const system = instructions({
+    now: new Date(),
+    timezone: undefined,
+    mode: "research",
+    settings: DEFAULT_SETTINGS,
+    short: false,
+    project: undefined,
+    unattended: true,
+    offered: tools,
+    skills: [],
+    remembers: false,
+    connectedApps: [],
+    toolNotes: [],
+  });
   const agent = new ToolLoopAgent({
     model,
-    instructions: instructions({
-      now: new Date(),
-      timezone: undefined,
-      mode: "research",
-      settings: DEFAULT_SETTINGS,
-      short: false,
-      project: undefined,
-      unattended: true,
-      offered: tools,
-      skills: [],
-      remembers: false,
-      connectedApps: [],
-      toolNotes: [],
-    }),
+    instructions: system,
     tools,
     stopWhen: isStepCount(STEP_CAP),
     prepareStep: ({ stepNumber, steps }) =>
@@ -122,8 +124,19 @@ async function research(title: string) {
       }
     }
   }
+  const results = [...seen.entries()]
+    .map(([url, texts]) => `[${urls.indexOf(url) + 1}] ${url}\n${texts.join("\n")}`)
+    .join("\n\n")
+    .slice(0, RESULTS_CHARS);
+  const text =
+    result.text.trim() ||
+    (await streamText({
+      model,
+      instructions: system,
+      prompt: `${brief(title)}\n\nThe searches are done. These are their results, numbered for citing:\n\n${results}\n\nWrite the answer now from these results only, citing them by number in square brackets.`,
+    }).text);
   return {
-    text: result.text,
+    text,
     urlOf: (number: number) => urls[number - 1],
     read,
     seen,
