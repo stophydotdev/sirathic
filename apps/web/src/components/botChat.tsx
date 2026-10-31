@@ -1,5 +1,6 @@
 "use client";
 
+import { AnswerCard, MemoryUsed } from "@/components/answerCard";
 import { BotMessageActions, BotReactions, sentAt } from "@/components/botMessageActions";
 import { splitQuote } from "@sirathic/app/botQuote";
 import { ReplyError } from "@/components/answer";
@@ -123,6 +124,7 @@ const Bubble: FC<{ said: Said; last: boolean }> = ({ said, last }) => {
     <>
       {said.part.approval && <ConfirmCard call={said.part} />}
       <AutomationCard tool={toolName} result={result} />
+      <AnswerCard name={currentToolName(toolName)} args={args} result={result} />
       <BotEvent tool={toolName} result={result} />
       {(FILE_TOOLS.includes(toolName) || toolName === "code_execution") && (
         <FileResult part={said.part} />
@@ -252,6 +254,7 @@ const BotSays: FC = () => {
           <Fragment key={index}>
             <Bubble said={item} last={index === lastText} />
             {!working && index === lastText && <SourceLine sources={sources} />}
+            {!working && index === lastText && <MemoryUsed />}
           </Fragment>
         ))}
         {working && <Working step={step && stepLineOf(step)} />}

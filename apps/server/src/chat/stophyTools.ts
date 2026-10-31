@@ -172,7 +172,7 @@ const matchingEndpoints = (
   return matches.length > 0 ? { endpoints: matches } : { endpoints: [], sources };
 };
 
-export const stophyTools = (cite: Cite) => ({
+export const stophyTools = (cite: Cite, found: (data: z.infer<typeof json>) => void) => ({
   stophy_search_endpoints: tool({
     description:
       "Use this first when the user wants live data from the web: search, video, social, places, jobs, shopping, homes, events, apps, travel or ads. Returns matches with inputs, filters and cost, ready for stophy_call.",
@@ -198,6 +198,7 @@ export const stophyTools = (cite: Cite) => ({
       });
       const body = reply.parse(await response.json());
       if (!body.success) throw new Error(body.error.message);
+      found(body.data);
       const marked = withCitations(cite, body.data, endpoint.title);
       return {
         ...marked,

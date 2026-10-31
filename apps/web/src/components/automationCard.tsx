@@ -7,6 +7,7 @@ import { type Translate, useLocale, useT } from "@/components/i18n";
 import { PluginCard } from "@/components/pluginCard";
 import { useProjects } from "@/components/projects";
 import { schedule } from "@sirathic/server/automations";
+import { ANSWER_CARDS } from "@sirathic/server/cards";
 import { currentToolName } from "@sirathic/server/messages";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon, TimeScheduleIcon, UserEdit01Icon } from "@hugeicons/core-free-icons";
@@ -24,6 +25,7 @@ const CARD_TOOLS = new Set([
   "request_user_form",
   "request_browser_help",
   ...FILE_TOOLS,
+  ...ANSWER_CARDS,
 ]);
 
 export const isCardTool = (name: string) => CARD_TOOLS.has(currentToolName(name));

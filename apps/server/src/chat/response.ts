@@ -7,31 +7,23 @@ import {
   createUIMessageStreamResponse,
   type FinishReason,
   getToolName,
-  hasToolCall,
   type InferUIMessageChunk,
-  isStepCount,
   isToolUIPart,
   type LanguageModel,
   type LanguageModelUsage,
   smoothStream,
-  ToolLoopAgent,
-  type ToolSet,
   type UIMessageStreamOutcome,
 } from "ai";
-import { OpenTelemetry } from "@ai-sdk/otel";
-import { z } from "zod";
-import { limitRepeats } from "./repeatGuard";
 import { memoryTools, rememberAfterAnswer } from "../account/memory";
 import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
 import { countedTokens } from "../models/usage";
 import type { RulesProject } from "../projects/rules";
-import { answerOptions } from "../models/subscription";
 import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
 import { type AutomationScope, routineTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
-import { BROWSER_HELP, browserTools, USER_FORM } from "../bots/browser";
+import { browserTools } from "../bots/browser";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
@@ -55,21 +47,19 @@ import { skillTools } from "../skills/tools";
 import type { ChatMessage, Mode } from "../shared/messages";
 import type { Settings } from "../shared/settings";
 import { shortenEarlierResults, withReactionNotes } from "./history";
-import { instructions } from "./prompts/build";
+import { instructions, userFacts } from "./prompts/build";
 import {
-  closedTools,
   loadedNames,
-  loadedText,
   loadSkill,
   LOAD_SKILL,
   openedBy,
-  type Skill,
-  skillIndex,
   type UserSkill,
   skillsFor,
 } from "./skills/builtIn";
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
-import { relatedQuestions } from "./related";
+import { answerAgent, type Turn } from "./answerAgent";
+import { answerCards, placeBook } from "./cards";
+import { afterAnswer } from "./afterAnswer";
 import type { SourceKind } from "../shared/sources";
 import { xSearchTools } from "./xSearch";
 import { hasGrok } from "../models/plans";
@@ -81,112 +71,9 @@ import {
   sirathicTools,
 } from "./tools";
 
-const shownForm = z.object({ shown: z.literal(true) });
-
-const tracing = new OpenTelemetry({ agentSpanName: "functionId" });
-
 export const KEEPALIVE_MS = 15_000;
-const STEP_CAP = 20;
-const LAST_STEP =
-  "You have no research steps left. Answer now from what you found, and say what you could not check.";
-const STALLED_MS = 120_000;
 const RESEARCH_OPENS = ["research", "calculate", "files"];
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
-
-type Turn = Parameters<typeof answerOptions>[0];
-
-const RULES_HEADER =
-  "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
-
-const FIRST_STEP = {
-  fetch: { type: "tool", toolName: "fetch_url" },
-  anyTool: "required",
-} as const;
-
-function answerAgent({
-  model,
-  tools,
-  short,
-  instructions: system,
-  mentioned,
-  firstStep,
-  skills,
-  loaded,
-  confirm,
-  refine,
-  shorten,
-  turn,
-}: {
-  model: LanguageModel;
-  tools: ToolSet;
-  short: boolean;
-  instructions: ReturnType<typeof instructions>;
-  mentioned: string;
-  firstStep: keyof typeof FIRST_STEP | undefined;
-  skills: readonly Skill[];
-  loaded: readonly string[];
-  confirm: (call: { toolName: string; input: unknown }) => Promise<boolean>;
-  refine: Awaited<ReturnType<typeof connectedTools>>["refine"];
-  shorten: ReturnType<typeof shortenEarlierResults>;
-  turn: Turn;
-}) {
-  const options = answerOptions(turn);
-  return new ToolLoopAgent({
-    model,
-    experimental_telemetry: {
-      functionId: "answer",
-      recordInputs: false,
-      recordOutputs: false,
-      integrations: tracing,
-    },
-    instructions: system,
-    tools: limitRepeats(tools),
-    stopWhen: [
-      hasToolCall(CLARIFYING),
-      ({ steps }) =>
-        steps
-          .at(-1)
-          ?.toolResults.some(
-            (part) => part.toolName === USER_FORM && shownForm.safeParse(part.output).success,
-          ) ?? false,
-      hasToolCall(BROWSER_HELP),
-      isStepCount(STEP_CAP),
-    ],
-    timeout: { chunkMs: STALLED_MS },
-    experimental_refineToolInput: refine,
-    toolApproval: async ({ toolCall }) => ((await confirm(toolCall)) ? "user-approval" : undefined),
-    allowSystemInMessages: true,
-    prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
-      const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
-      const closed = closedTools(skills, open);
-      const forcing = stepNumber === 0 ? firstStep : undefined;
-      const loadable = skills.filter(({ name }) => !open.has(name));
-      const index =
-        loadable.length > 0 ? `Skills you can load with load_skill:\n${skillIndex(loadable)}` : "";
-      const skillText = (index + loadedText(skills, open) + mentioned).trim();
-      const earlier = initialMessages.map(shorten);
-      const asked = earlier.findLastIndex((message) => message.role === "user") + 1;
-      const last = stepNumber === STEP_CAP - 1;
-      return {
-        messages: [
-          ...earlier.slice(0, asked),
-          ...(skillText ? [{ role: "system" as const, content: RULES_HEADER + skillText }] : []),
-          ...earlier.slice(asked),
-          ...responseMessages,
-          ...(last ? [{ role: "system" as const, content: LAST_STEP }] : []),
-        ],
-        activeTools: last ? [] : Object.keys(tools).filter((name) => !closed.has(name)),
-        ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
-      };
-    },
-    providerOptions: short
-      ? options
-      : {
-          ...options,
-          openai: { ...options.openai, textVerbosity: "medium" },
-        },
-  });
-}
 
 export function chatResponse({
   models,
@@ -250,6 +137,7 @@ export function chatResponse({
   const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages);
   const tools = sirathicTools(sources.add, sourceKinds);
+  const places = placeBook(messages);
   const asked = messages.findLast((message) => message.role === "user");
   const askedText =
     asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "";
@@ -320,7 +208,7 @@ export function chatResponse({
       const available = {
         ...tools,
         ...((!sourceKinds || sourceKinds.includes("web")) && {
-          ...stophyTools(sources.add),
+          ...stophyTools(sources.add, places.add),
           ...imageTools(sources.addImage),
         }),
         ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
@@ -344,6 +232,7 @@ export function chatResponse({
             inBot !== undefined || preferred.saveMemory,
           )),
         ...(!unattended && (mode === "research" || inBot) && { [CLARIFYING]: clarifyingQuestions }),
+        ...(!unattended && answerCards(places)),
         ...(searchable && chatSearchTools(searchable)),
         ...(owner !== undefined &&
           !unattended &&
@@ -502,11 +391,17 @@ export function chatResponse({
           console.error(`memory not saved: ${reasonOf(err)}`);
         });
       }
-      if (!inBot && !unattended && ended?.finishReason === "stop" && text.trim() && sourcesNeeded) {
-        const questions = await relatedQuestions(models.small, askedText, text, abortSignal).catch(
-          () => [],
-        );
-        if (questions.length > 0) writer.write({ type: "data-related", data: { questions } });
+      if (!unattended && ended?.finishReason === "stop" && text.trim()) {
+        await afterAnswer({
+          writer,
+          model: models.small,
+          asked: askedText,
+          answer: text,
+          related: !inBot && sourcesNeeded,
+          research: !inBot && mode === "quick",
+          facts: userFacts(preferred),
+          abortSignal,
+        });
       }
       streaming = false;
       if (finish) writer.write(finish);

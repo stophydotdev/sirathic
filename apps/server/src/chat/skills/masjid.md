@@ -20,7 +20,7 @@ Find masjids near the user and read their prayer and Jumu'ah times from the masj
 1. Find candidates with stophy_call, id google.maps.search, with query "mosque" and then "masjid" and the place as location. Keep the name, the address, the distance and the website.
 2. For each finalist, find its timetable page with stophy_call, id web.map, url the masjid's site and search "prayer timetable", which lists the matching pages best first. Read that page with fetch_url, which also reads a timetable PDF from its address. Use your browser only when the timetable is an image or a widget. A masjid timetable gives two times for each prayer: the start time and the jama'ah (iqamah) time. Report the jama'ah time for praying with the congregation. Jumu'ah often has more than one khutbah; list each one. A page that shows a timetable's headings but no times fills them in with a script: open the timetable PDF or calendar it links to instead.
 3. When you cannot read the masjid's own time, say so, give the start times from prayer_times, and suggest calling them. Never invent a jama'ah time.
-4. Present each masjid with its distance, the times the user asked for and the dates they apply to, each constraint as met or unknown, and the link to the timetable.
+4. Show the masjids with show_places: put the times the user asked for and the dates they apply to in each description, and each constraint as met or unknown in its tips. In your prose, link each masjid's timetable for its times.
 5. Offer once to add Jumu'ah to their calendar as a weekly event at the time you read; load the scheduling skill for it. Say that the masjid can change the time, often when the clocks change.
 
 ## Keep a masjid's times in their calendar

@@ -50,6 +50,7 @@ export const messageMetadata = z.object({
   report: report.optional(),
   routine: z.string().optional(),
   formReply: z.enum(["filled", "missed", "dismissed"]).optional(),
+  memory: z.boolean().optional(),
 });
 
 type MessageMetadata = z.infer<typeof messageMetadata>;
@@ -66,6 +67,7 @@ export const questionAnswer = z.enum(["option", "own", "dismissed"]);
 
 export const chatData = {
   related: z.object({ questions: z.array(z.string()) }),
+  research: z.object({ rationale: z.string() }),
   title: z.object({ title: z.string() }),
 };
 
@@ -144,6 +146,7 @@ export type ChatMessage = UIMessage<
   MessageMetadata,
   {
     related: z.output<typeof chatData.related>;
+    research: z.output<typeof chatData.research>;
     title: z.output<typeof chatData.title>;
   },
   ChatTools

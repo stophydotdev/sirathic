@@ -248,6 +248,14 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
                   feedback={message.metadata?.feedback ?? null}
                   onRate={(next) => rate(message.id, next)}
                   onRetry={() => void regenerate({ messageId: message.id })}
+                  onResearch={
+                    index === messages.length - 1
+                      ? () => {
+                          useChatState.getState().setMode("research");
+                          void regenerate({ messageId: message.id });
+                        }
+                      : undefined
+                  }
                   onAsk={ask}
                 />
               ),
