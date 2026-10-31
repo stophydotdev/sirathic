@@ -24,7 +24,7 @@ export const muslimSkills: Skill[] = [
   },
   {
     name: "masjid",
-    when: "Load when the user wants a masjid nearby, a masjid's prayer or Jumu'ah times, or Jumu'ah in their calendar",
+    when: "Load when the user wants a masjid nearby, a masjid's prayer or Jumu'ah times, Jumu'ah in their calendar, or their masjid's times kept in their calendar. To keep them there, load scheduling and routines with it",
     text: masjid,
     tools: [...STOPHY_TOOLS, ...BROWSER_TOOLS],
   },
