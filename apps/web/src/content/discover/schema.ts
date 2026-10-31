@@ -50,3 +50,5 @@ export const article = z
   });
 
 export type Article = z.infer<typeof article>;
+
+export type ArticleInput = z.input<typeof article>;
