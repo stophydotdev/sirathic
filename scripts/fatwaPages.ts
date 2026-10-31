@@ -1,4 +1,4 @@
-import { stophy } from "@sirathic/core/stophy";
+import { scrapedPage, stophy } from "@sirathic/core/stophy";
 import { fatwas, sources } from "@sirathic/db/schema";
 import { z } from "zod";
 import { DATA_DIR } from "./catalog";
@@ -29,12 +29,13 @@ const get = async (url: string, attempt = 1): Promise<string> => {
   const result = await stophy.web
     .scrape({ url, formats: ["rawHtml"] }, { signal: AbortSignal.timeout(60_000) })
     .catch((error: Error) => error);
+  const page = result instanceof Error ? undefined : scrapedPage.parse(result.data);
   if (!(result instanceof Error)) {
     const host = new URL(url).hostname;
     spent.set(host, creditsSpent(host) + result.creditsUsed);
-    if (result.data.rawHtml && result.data.metadata.statusCode < 400) return result.data.rawHtml;
+    if (page?.rawHtml && page.metadata.statusCode < 400) return page.rawHtml;
   }
-  const why = result instanceof Error ? result.message : `HTTP ${result.data.metadata.statusCode}`;
+  const why = result instanceof Error ? result.message : `HTTP ${page?.metadata.statusCode}`;
   if (attempt === ATTEMPTS) throw new Error(`${url}: ${why}`);
   await Bun.sleep(2_000 * attempt);
   return get(url, attempt + 1);

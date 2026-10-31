@@ -96,7 +96,7 @@ export const skillsFor = ({
       ? [
           {
             name: "stophy",
-            when: "Load when the user links a YouTube, TikTok, Instagram, X, Reddit, Amazon, Airbnb, Booking or Google Maps page, or wants live flights, hotels, products and prices, places, reviews, jobs, homes or apps",
+            when: "Load when the user links a YouTube, TikTok, Instagram, X, Reddit, Amazon, Airbnb, Booking, Expedia, Luma, Realtor.com, Craigslist or Google Maps page, or wants live flights, hotels, products and prices, places, reviews, jobs, homes, events or apps",
             text: stophy,
             tools: ["stophy_search_endpoints", "stophy_call"],
           },

@@ -217,7 +217,7 @@
         "@sirathic/env": "workspace:*",
         "drizzle-orm": "^0.45.4",
         "linkedom": "^0.18.14",
-        "stophy": "3.0.0",
+        "stophy": "1.2.0",
         "turndown": "^7.2.4",
         "zod": "^4.4.3",
       },
@@ -3074,7 +3074,7 @@
 
     "stdin-discarder": ["stdin-discarder@0.2.2", "", {}, "sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ=="],
 
-    "stophy": ["stophy@3.0.0", "", {}, "sha512-S0NW9kfNjidHRlukntzc5q8kRCQ6Vg6PlvRoAYAhoIrAU40H8j+V1Afr9p52ISvIpZgFAc1b48TmFiMyA6MPZg=="],
+    "stophy": ["stophy@1.2.0", "", {}, "sha512-837/fSBAkJRuNhAHIoRY2N0Xe6WKF1MVqtyABPm7kY4Rk9SrJ/tx876GK1IUZw0dZhA3j0pk7Gf4PRjG/9ln2Q=="],
 
     "stream-buffers": ["stream-buffers@2.2.0", "", {}, "sha512-uyQK/mx5QjHun80FLJTfaWE7JtwfRMKBLkMne6udYOmvH0CawotVa7TfgYHzAnpphn4+TweIx1QKMnRIbipmUg=="],
 
