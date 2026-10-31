@@ -1,0 +1,493 @@
+{
+  "title": "Is shrimp halal?",
+  "headline": "Shrimp is lawful in three schools, while the Hanafi school is split over it",
+  "cover": "أكل الروبيان",
+  "slug": "is-shrimp-halal",
+  "topic": "Food",
+  "tint": "indigo",
+  "summary": {
+    "text": "The Maliki, Shafi'i and Hanbali schools hold shrimp lawful to eat, and the Hanafi school is split over it because its rule admits only fish from the sea. The question turns on how wide \"game of the sea\" in Quran 5:96 is and whether a shrimp counts as samak (fish) in the Arabic of the revelation.",
+    "citations": [
+      "https://fiqh.islamonline.net/en/crab-the-jurisprudence-of-seafood/",
+      "https://shamela.ws/book/11355#0:80",
+      "https://shamela.ws/book/11444#6:146",
+      "https://shamela.ws/book/6910#13:345",
+      "https://islamqa.org/hanafi/daruliftaamw/134432/sea-foods-prawns-calamari/",
+      "https://islamqa.org/hanafi/qibla-hanafi/36667/ruling-on-shrimp/",
+      "https://islamqa.org/hanafi/darululoomtt/149237/the-ruling-of-prawns-shrimps/"
+    ]
+  },
+  "updated": "2026-10-31",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://fiqh.islamonline.net/en/crab-the-jurisprudence-of-seafood/",
+      "title": "Crab: The Jurisprudence of Seafood"
+    },
+    {
+      "url": "https://shamela.ws/book/11355#0:80",
+      "title": "مختصر خليل، خليل بن إسحاق الجندي، ج0 ص80"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#6:146",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج6 ص146"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#13:345",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج13 ص345"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/daruliftaamw/134432/sea-foods-prawns-calamari/",
+      "title": "Sea Foods; Prawns, Calamari"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/qibla-hanafi/36667/ruling-on-shrimp/",
+      "title": "Ruling on Shrimp"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darululoomtt/149237/the-ruling-of-prawns-shrimps/",
+      "title": "THE RULING OF PRAWNS/SHRIMPS"
+    },
+    {
+      "url": "https://quran.com/5/96",
+      "title": "Quran 5:96, Al-Maaida"
+    },
+    {
+      "url": "https://quran.com/16/14",
+      "title": "Quran 16:14, An-Nahl"
+    },
+    {
+      "url": "https://quran.com/35/12",
+      "title": "Quran 35:12, Faatir"
+    },
+    {
+      "url": "https://quran.com/5/3",
+      "title": "Quran 5:3, Al-Maaida"
+    },
+    {
+      "url": "https://quran.com/7/157",
+      "title": "Quran 7:157, Al-A'raaf"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#6:307",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص307"
+    },
+    {
+      "url": "https://daruliftaa.us/fatwa/361/",
+      "title": "Eating Lobster"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#13:298",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج13 ص298"
+    },
+    {
+      "url": "https://sunnah.com/urn/510640",
+      "title": "Muwatta Malik 1061: Game"
+    },
+    {
+      "url": "https://sunnah.com/urn/510630",
+      "title": "Muwatta Malik 1060: Game"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:4362",
+      "title": "Sahih al-Bukhari 4362: Military Expeditions led by the Prophet (pbuh) (Al-Maghaazi)"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%AC%D8%A7%D8%A8%D8%B1_%D8%A8%D9%86_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87/3#13817",
+      "title": "Musnad Ahmad 14336"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/2#6935",
+      "title": "Musnad Ahmad 7233"
+    },
+    {
+      "url": "https://sunnah.com/nasai:4350",
+      "title": "Sunan an-Nasa'i 4350: The Book of Hunting and Slaughtering"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:388",
+      "title": "Sunan Ibn Majah 388: The Book of Purification and its Sunnah"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%AC%D8%A7%D8%A8%D8%B1_%D8%A8%D9%86_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87/11#14481",
+      "title": "Musnad Ahmad 15012"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:3314",
+      "title": "Sunan Ibn Majah 3314: Chapters on Food"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/15#5465",
+      "title": "Musnad Ahmad 5723"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:3218",
+      "title": "Sunan Ibn Majah 3218: Chapters on Hunting"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/1908/as-per-hanafi-school-of-thought-it-is-not-permissible-to-eat-any-kind-of-sea-food-but-which-fall-under-the-categoriy-of-pisces-fishes-please-provide-the-hadith-evidence-of-above-fact/",
+      "title": "As per Hanafi School of Thought, it is not permissible to eat any kind of sea food but which fall under the categoriy of pisces (fishes). Please provide the hadith evidence of above fact."
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darululoomtt/147571/shrimp-and-sea-food/",
+      "title": "Shrimp and Sea food"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:3840",
+      "title": "Sunan Abi Dawud 3840: Foods (Kitab Al-At'imah)"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:3815",
+      "title": "Sunan Abi Dawud 3815: Foods (Kitab Al-At'imah)"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:3247",
+      "title": "Sunan Ibn Majah 3247: Chapters on Hunting"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:850",
+      "title": "Jami' at-Tirmidhi 850: The Book on Hajj"
+    },
+    {
+      "url": "https://sunnah.com/nasai:4342",
+      "title": "Sunan an-Nasa'i 4342: The Book of Hunting and Slaughtering"
+    },
+    {
+      "url": "https://daruliftaa.us/fatwa/400/",
+      "title": "Shrimp"
+    },
+    {
+      "url": "https://daruliftaa.us/fatwa/322/",
+      "title": "Non-Fish Seafood"
+    },
+    {
+      "url": "https://mathabah.org/are-sea-animals-permissible/",
+      "title": "Are Sea Animals Permissible Ḥalāl?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/fatwa-tt/134353/is-it-permissible-to-consume-shrimp-according-to-the-hanafi-madhab/",
+      "title": "Is it permissible to consume Shrimp according to the Hanafi Madhab?"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:536",
+      "title": "المدونة، مالك بن أنس، ج1 ص536"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:439",
+      "title": "المدونة، مالك بن أنس، ج1 ص439"
+    },
+    {
+      "url": "https://shamela.ws/book/499#3:274",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج3 ص274"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#5:395",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج5 ص395"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#13:344",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج13 ص344"
+    },
+    {
+      "url": "https://shamela.ws/book/622#14:315",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج14 ص315"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/daruliftaa-birmingham/170678/is-shrimp-halal/",
+      "title": "Is Shrimp Halal?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/tafseer-raheemi/51968/are-prawns-halal/",
+      "title": "Are prawns halal?"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/14033/حكم-أكل-الجمبري-عند-السادة-الحنفية",
+      "title": "أكل الجمبري عند السادة الحنفية"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#1:83",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص83"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:17",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص17"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/how-does-the-hanafi-school-classify-shrimp-and-other-seafood/",
+      "title": "How Does the Hanafi School Classify Shrimp and Other Seafood?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/18789/is-shrimp-haalal/",
+      "title": "Is shrimp Haalal?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/12138/please-advise-whether-oysters-fall-under-the-same-category-as-prawns-and-crabs-or-are-they-permissible-being-fish-please-clarify-whether-prawns-are-halal-or-makrooh/",
+      "title": "Please advise whether Oysters fall under the same category as prawns and crabs, or are they permissible being fish. Please clarify whether prawns are halal or makrooh."
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/22785/طهي-الجمبري-حيا",
+      "title": "طهي الجمبري حيا"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/19764/حكم-أكل-ما-يخرج-من-البحر-من-غير-الأسماك",
+      "title": "حكم أكل ما يخرج من البحر من غير الأسماك"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/106703/sea-animals",
+      "title": "Sea Animals"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/74771/all-sea-creatures-absolutely-lawful",
+      "title": "Are all sea creatures absolutely lawful?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/10815/what-ruling-eating-sea-game-any-marine-animals-not-permissible-eat",
+      "title": "What is the ruling on eating sea game, and are there any marine animals that are not permissible to eat?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband/110185/is-all-ocean-life-halal-for-muslims/",
+      "title": "Is all ocean life halal for Muslims?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband-waqf/151624/there-is-a-difference-of-opinion-amongst-the-senior-ulama-with-regards-to-the-permissibility-of-that-they-are-haraam-pls-clear-the-affairs/",
+      "title": "There is a difference of opinion amongst the senior Ulama with regards to the permissibility of … that they are Haraam. Pls clear the affairs."
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/14716/are-the-foll-halal-to-eat-clams-crab-tuna-dolphins-lobsters-oysters-octopus-shellfish-shrimp-snails-snakes/",
+      "title": "Are the foll. Halal to eat? Clams, Crab, Tuna, Dolphins, Lobsters, Oysters, Octopus, Shellfish, Shrimp, Snails, Snakes"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/18693/is-crab-and-prawn-shrimp-a-haram-food/",
+      "title": "Is crab and prawn (shrimp) a haram food?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/128989/the-halal-status-of-prawns-a-debate/",
+      "title": "The Halal Status of Prawns: A Debate"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/98296/dealing-with-differences-in-opinion-the-prawn-curry-dilemma/",
+      "title": "Dealing with Differences in Opinion: The Prawn Curry Dilemma"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/fatwa-org-au/21518/crabs-lobsters-and-prawns/",
+      "title": "Crabs, lobsters and prawns"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/daruliftaazambia/134677/are-prawns-halaal/",
+      "title": "Are Prawns Halaal"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%aa%d9%86%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%85%d8%a3%d9%83%d9%88%d9%84%d8%a7%d8%aa-%d8%a7%d9%84%d8%a8%d8%ad%d8%b1%d9%8a%d8%a9/",
+      "title": "تناول المأكولات البحرية"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/seafood/",
+      "title": "Seafood"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The foundational text is the sea verse of al-Ma'idah: \"Lawful to you is game from the sea and its food as provision for you and the travelers, but forbidden to you is game from the land as long as you are in the state of iḥrām. And fear Allāh to whom you will be gathered.\" Two other verses supply the same broad grant: in Surah al-Nahl, \"And it is He who subjected the sea for you to eat from it tender meat and to extract from it ornaments which you wear,\" and in Fatir, \"And from each you eat tender meat and extract ornaments which you wear.\"",
+          "citations": [
+            "https://quran.com/5/96",
+            "https://quran.com/16/14",
+            "https://quran.com/35/12"
+          ]
+        },
+        {
+          "text": "Set against them is the prohibition of carrion in 5:3, \"Prohibited to you are dead animals, blood, the flesh of swine,\" and the principle in 7:157 that the Prophet ﷺ \"makes lawful for them what is good and forbids them from what is evil.\" The Hanafis lean on that last principle, arguing that what is not fish is khabith and so stays under the ban on carrion.",
+          "citations": [
+            "https://quran.com/5/3",
+            "https://quran.com/7/157",
+            "https://shamela.ws/book/21613#6:307",
+            "https://daruliftaa.us/fatwa/361/"
+          ]
+        },
+        {
+          "text": "The Companions read the sea verse expansively. Ibn Abbas explained \"its food\" as \"what dies in it,\" and Abu Bakr said the floating fish is lawful. Zayd ibn Thabit and Abu Hurayrah were asked about what the sea casts up and both said there is no harm in it, a report graded mauquf sahih.",
+          "citations": [
+            "https://shamela.ws/book/6910#13:298",
+            "https://sunnah.com/urn/510640",
+            "https://sunnah.com/urn/510630"
+          ]
+        },
+        {
+          "text": "The practical case is Jabir's: on the expedition to the coast the sea threw up a huge dead whale, the men ate from it for half a month, and the Prophet ﷺ was told and let them.",
+          "citations": [
+            "https://sunnah.com/bukhari:4362",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%AC%D8%A7%D8%A8%D8%B1_%D8%A8%D9%86_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87/3#13817"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "\"Its water is purifying, and its dead animals are lawful to eat,\" from Abu Hurayrah, is recorded in Musnad Ahmad 7233, Sunan al-Nasa'i 4350 and Sunan Ibn Majah 388. It is graded sahih on the condition of the two shaykhs by al-Arna'ut, sahih by Abu Ghuddah and al-Albani, and hasan sahih by al-Albani and Abd al-Baqi. It is the broadest text: the sea's dead are lawful without exception. The same report from Jabir, in Musnad Ahmad 15012 and Ibn Majah 388, confirms it through a second companion, graded sahih on Muslim's condition by al-Arna'ut and hasan by al-Arna'ut.",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%A8%D9%8A_%D9%87%D8%B1%D9%8A%D8%B1%D8%A9/2#6935",
+            "https://sunnah.com/nasai:4350",
+            "https://sunnah.com/ibnmajah:388",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%AC%D8%A7%D8%A8%D8%B1_%D8%A8%D9%86_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87/11#14481"
+          ]
+        },
+        {
+          "text": "\"Two kinds of dead meat and two kinds of blood have been made lawful for you: fish and locusts, liver and spleen,\" from Ibn Umar, is in Ibn Majah 3314, Musnad Ahmad 5723 and Ibn Majah 3218. It is graded sahih by al-Albani and Abd al-Baqi and da'if by al-Arna'ut and Zubair Ali Zai, and al-Arna'ut calls the Ahmad chain weak because of Abd al-Rahman ibn Zayd. The Hanafi restriction rests on it: only fish is excepted from carrion. The Ahmad route names Abd al-Rahman ibn Zayd ibn Aslam, the narrator al-Arna'ut identifies as its weakness, and the same chain underlies the Ibn Majah versions, which is why they carry both a sahih and a da'if grading.",
+          "citations": [
+            "https://sunnah.com/ibnmajah:3314",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%B9%D9%85%D8%B1_%D8%A8%D9%86_%D8%A7%D9%84%D8%AE%D8%B7%D8%A7%D8%A8/15#5465",
+            "https://sunnah.com/ibnmajah:3218",
+            "https://islamqa.org/hanafi/askimam/1908/as-per-hanafi-school-of-thought-it-is-not-permissible-to-eat-any-kind-of-sea-food-but-which-fall-under-the-categoriy-of-pisces-fishes-please-provide-the-hadith-evidence-of-above-fact/",
+            "https://islamqa.org/hanafi/darululoomtt/147571/shrimp-and-sea-food/"
+          ]
+        },
+        {
+          "text": "The whale (anbar) the army ate is in Sahih al-Bukhari 4362, Musnad Ahmad 14336 and Sunan Abi Dawud 3840, graded sahih, sahih on the two shaykhs' condition, and sahih by al-Albani, al-Arna'ut and Abd al-Hamid. It is a large sea animal, not a fish in the ordinary sense, eaten by the Companions with prophetic approval. \"Eat what the sea casts up... but do not eat what dies in it and floats,\" in Sunan Abi Dawud 3815 and Ibn Majah 3247, is graded da'if by al-Albani, Abd al-Hamid and Zubair Ali Zai, and Abu Dawud notes the trustworthy narrators stopped it at Jabir; it is treated as weak or as Jabir's own word.",
+          "citations": [
+            "https://sunnah.com/bukhari:4362",
+            "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%AC%D8%A7%D8%A8%D8%B1_%D8%A8%D9%86_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87/3#13817",
+            "https://sunnah.com/abudawud:3840",
+            "https://sunnah.com/abudawud:3815",
+            "https://sunnah.com/ibnmajah:3247"
+          ]
+        },
+        {
+          "text": "Locusts being \"from the game of the sea,\" in Jami' at-Tirmidhi 850, is graded da'if by Shakir, al-Albani and Zubair Ali Zai, and Tirmidhi calls it gharib through Abu al-Muhazzim, whom Shu'bah criticised; it shows the sea category was applied loosely. The ban on \"any predatory animal that has a fang,\" in Sunan al-Nasa'i 4342, is graded sahih and is a land prohibition, cited when discussing whether sea animals resembling land beasts are excluded.",
+          "citations": ["https://sunnah.com/tirmidhi:850", "https://sunnah.com/nasai:4342"]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "In the Hanafi books, al-Durr al-Mukhtar with Radd al-Muhtar, al-Fatawa al-Hindiyya, Mukhtasar al-Quduri, al-Hidaya and al-Mabsut, only fish is lawful from the sea and everything else is not, and the school divides over whether shrimp is fish. Their reasoning is that the two-dead-things hadith is mashhur and supported by ijma, so it may specify the general verse; fish is established separately by \"tender meat\" in 16:14, and what is not fish is khabith and remains under the ban on carrion.",
+          "citations": [
+            "https://islamqa.org/hanafi/daruliftaamw/134432/sea-foods-prawns-calamari/",
+            "https://shamela.ws/book/21613#6:307",
+            "https://daruliftaa.us/fatwa/400/",
+            "https://daruliftaa.us/fatwa/322/",
+            "https://mathabah.org/are-sea-animals-permissible/",
+            "https://islamqa.org/hanafi/fatwa-tt/134353/is-it-permissible-to-consume-shrimp-according-to-the-hanafi-madhab/"
+          ]
+        },
+        {
+          "text": "The Maliki books, Mukhtasar Khalil and al-Mudawwana, hold sea creatures lawful \"even if dead,\" and Malik disliked none of the sea's animals and did not object to the floating. Sea game is all mudhakka by nature and needs no tasmiyah, so even a Magian's catch is lawful.",
+          "citations": [
+            "https://shamela.ws/book/11355#0:80",
+            "https://shamela.ws/book/587#1:536",
+            "https://shamela.ws/book/587#1:439"
+          ]
+        },
+        {
+          "text": "In the Shafi'i books, Rawdat al-Talibin and Mughni al-Muhtaj, fish is lawful without slaughter, and the reliable position is that all that is in the sea is lawful when dead except the frog. The reasoning is the absolute wording of 5:96 and the hadith on the sea's water and dead; the Mawaridi exception for sea snakes and poisonous creatures is reported but not the relied-upon view.",
+          "citations": ["https://shamela.ws/book/499#3:274", "https://shamela.ws/book/11444#6:146"]
+        },
+        {
+          "text": "The Hanbali sources state that whatever lives only in water is lawful without slaughter, with no known disagreement, and that salt sea and rivers are alike. They state that what lives on land too, such as the turtle, needs slaughter, but the bloodless crab does not; the reasoning given is the verse and the reports of the two dead things and the anbar. They also report that Ahmad said of the crab, \"there is no harm in it,\" and that it is not slaughtered.",
+          "citations": [
+            "https://shamela.ws/book/6910#5:395",
+            "https://shamela.ws/book/6910#13:345",
+            "https://shamela.ws/book/6910#13:344",
+            "https://shamela.ws/book/622#14:315"
+          ]
+        },
+        {
+          "text": "Within the Hanafi school the shrimp question is genuinely contested, and both sides argue from the same rule. Those who permit it hold that the criterion is what the Arabs called samak at the time of revelation, not modern biology, and cite al-Qamus and Taj al-Aroos (\"the irbiyan is a fish,\" \"a fish like a worm\") and al-Damiri's \"shrimp is a very small red fish\"; Mufti Taqi Usmani is reported as saying the more correct Hanafi view is that it falls in the fish category, and Shaykh Faraz Rabbani answers that it is permitted \"according to the soundest position in the Hanafi school.\"",
+          "citations": [
+            "https://islamqa.org/hanafi/qibla-hanafi/36667/ruling-on-shrimp/",
+            "https://islamqa.org/hanafi/daruliftaa-birmingham/170678/is-shrimp-halal/",
+            "https://islamqa.org/hanafi/fatwa-tt/134353/is-it-permissible-to-consume-shrimp-according-to-the-hanafi-madhab/",
+            "https://islamqa.org/hanafi/tafseer-raheemi/51968/are-prawns-halal/"
+          ]
+        },
+        {
+          "text": "Those who refuse it answer that marine biologists do not classify shrimp as a fish, and that the school's texts say plainly, \"It is not permitted to eat the creatures of the water other than fish.\" Dar al-Ifta al-Misriyyah goes further and says shrimp is lawful according to all the jurists including the Hanafis, with no real difference among them, since the linguists agreed it is a kind of fish.",
+          "citations": [
+            "https://islamqa.org/hanafi/darululoomtt/149237/the-ruling-of-prawns-shrimps/",
+            "https://islamqa.org/hanafi/fatwa-tt/134353/is-it-permissible-to-consume-shrimp-according-to-the-hanafi-madhab/",
+            "https://islamqa.org/hanafi/daruliftaamw/134432/sea-foods-prawns-calamari/",
+            "https://daruliftaa.us/fatwa/322/",
+            "https://mathabah.org/are-sea-animals-permissible/",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14033/حكم-أكل-الجمبري-عند-السادة-الحنفية"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "Ibn Rushd states the crux most clearly: Abu Hanifa preferred the generality of the verse over the report, either because the verse is definitive while the report is probable, or because he read the hadith as a concession to those particular people, or because he judged the whale may have died from a cause, the sea casting it ashore, and carrion is only what dies of itself with no cause. He also notes that Jabir's report agrees with the verse only partially.",
+          "citations": ["https://shamela.ws/book/21739#1:83", "https://shamela.ws/book/21739#3:17"]
+        },
+        {
+          "text": "Ibn Qudama answers from the other side: the prohibition of the floating fish is not established, since Abu Dawud said the trustworthy narrators stopped it at Jabir and it was only raised to the Prophet ﷺ through a weak chain, and Abu Bakr had said the floating is lawful; if it were authentic it would be carried to a meaning other than a blanket ban, and his analogy is that what would be lawful dying on land is lawful dying in the sea, like the locust.",
+          "citations": ["https://shamela.ws/book/6910#13:298"]
+        },
+        {
+          "text": "The last layer is the shrimp question itself, which is not a dispute over texts but over language. Shaykh Faraz Rabbani's summary is that both readings are honest, principled and grounded in the Quran read in its own tongue, and that whichever school one follows, one is on solid ground. The Hanafi criterion is what the Arabs counted as fish at the time of revelation; the opposing criterion is the zoologist's classification. That is why the same school can produce a fatwa of permissibility and a fatwa of prohibition without either side abandoning the school's principle.",
+          "citations": [
+            "https://seekersguidance.org/answers/hanafi-fiqh/how-does-the-hanafi-school-classify-shrimp-and-other-seafood/",
+            "https://islamqa.org/hanafi/qibla-hanafi/36667/ruling-on-shrimp/",
+            "https://islamqa.org/hanafi/daruliftaa-birmingham/170678/is-shrimp-halal/",
+            "https://islamqa.org/hanafi/darululoomtt/149237/the-ruling-of-prawns-shrimps/",
+            "https://islamqa.org/hanafi/fatwa-tt/134353/is-it-permissible-to-consume-shrimp-according-to-the-hanafi-madhab/",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14033/حكم-أكل-الجمبري-عند-السادة-الحنفية",
+            "https://islamqa.org/hanafi/askimam/18789/is-shrimp-haalal/",
+            "https://islamqa.org/hanafi/askimam/12138/please-advise-whether-oysters-fall-under-the-same-category-as-prawns-and-crabs-or-are-they-permissible-being-fish-please-clarify-whether-prawns-are-halal-or-makrooh/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "The Assembly of Muslim Jurists of America ruled that shrimp is among the sea's fish and lawful by its death, but that cooking it alive is torture and forbidden, and that Ahmad disliked it for that reason. Dar al-Ifta al-Misriyyah holds shrimp lawful for all schools including the Hanafis, and sets out the three positions on sea creatures that also live outside water.",
+          "citations": [
+            "https://www.amjaonline.org/fatwa/ar/22785/طهي-الجمبري-حيا",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14033/حكم-أكل-الجمبري-عند-السادة-الحنفية",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/19764/حكم-أكل-ما-يخرج-من-البحر-من-غير-الأسماك"
+          ]
+        },
+        {
+          "text": "The Permanent Committee in Saudi Arabia and Shaykh Ibn Baz both take the apparent sense of 5:96 with the hadith on the sea's dead as making all sea creatures lawful, and Shaykh Ibn Uthaymeen says the same, adding that a singular noun in construct form gives generality.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/106703/sea-animals",
+            "https://al-fatawa.com/en/fatwa/74771/all-sea-creatures-absolutely-lawful",
+            "https://al-fatawa.com/en/fatwa/10815/what-ruling-eating-sea-game-any-marine-animals-not-permissible-eat"
+          ]
+        },
+        {
+          "text": "Darul Uloom Deoband holds that only fish is lawful in Hanafi fiqh while the other imams allow almost all sea animals, and that where proofs appear to conflict, taqlid is needed because not everyone can weigh them. Darul Uloom Waqf Deoband adds that \"prawn being a fish is preferable,\" citing Imdad al-Fatawa and Fiqhi Maqalat.",
+          "citations": [
+            "https://islamqa.org/hanafi/darulifta-deoband/110185/is-all-ocean-life-halal-for-muslims/",
+            "https://islamqa.org/hanafi/darulifta-deoband-waqf/151624/there-is-a-difference-of-opinion-amongst-the-senior-ulama-with-regards-to-the-permissibility-of-that-they-are-haraam-pls-clear-the-affairs/"
+          ]
+        },
+        {
+          "text": "Askimam (Mufti Ebrahim Desai) rules shrimp and lobster impermissible for Hanafis as non-fish, while noting the other three schools permit them, and elsewhere advises abstaining out of taqwa without equating it to pork. Muftionline and Fatwa.org.au record two Hanafi views, some permitting prawns and others calling them makruh tahrimi, and Darul Iftaa Zambia says both positions are strong and reliable, with taqwa in refraining. IslamOnline presents the majority position that seafood is lawful as a whole, including crustaceans.",
+          "citations": [
+            "https://islamqa.org/hanafi/askimam/18789/is-shrimp-haalal/",
+            "https://islamqa.org/hanafi/askimam/14716/are-the-foll-halal-to-eat-clams-crab-tuna-dolphins-lobsters-oysters-octopus-shellfish-shrimp-snails-snakes/",
+            "https://islamqa.org/hanafi/askimam/18693/is-crab-and-prawn-shrimp-a-haram-food/",
+            "https://islamqa.org/hanafi/askimam/12138/please-advise-whether-oysters-fall-under-the-same-category-as-prawns-and-crabs-or-are-they-permissible-being-fish-please-clarify-whether-prawns-are-halal-or-makrooh/",
+            "https://islamqa.org/hanafi/muftionline/128989/the-halal-status-of-prawns-a-debate/",
+            "https://islamqa.org/hanafi/muftionline/98296/dealing-with-differences-in-opinion-the-prawn-curry-dilemma/",
+            "https://islamqa.org/hanafi/fatwa-org-au/21518/crabs-lobsters-and-prawns/",
+            "https://islamqa.org/hanafi/daruliftaazambia/134677/are-prawns-halaal/",
+            "https://fiqh.islamonline.net/en/crab-the-jurisprudence-of-seafood/",
+            "https://fiqh.islamonline.net/%d8%aa%d9%86%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%85%d8%a3%d9%83%d9%88%d9%84%d8%a7%d8%aa-%d8%a7%d9%84%d8%a8%d8%ad%d8%b1%d9%8a%d8%a9/",
+            "https://fiqh.islamonline.net/en/seafood/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
