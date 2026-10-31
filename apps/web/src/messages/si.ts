@@ -846,6 +846,7 @@ export default {
   "Allow automatically": "ස්වයංක්‍රීයව ඉඩ දෙන්න",
   "Ask first": "මුලින් අසන්න",
   "Add rule": "රීතියක් එක් කරන්න",
+  "{done} of {count} done": "{done}/{count} නිමයි",
   "{count} steps": "පියවර {count}",
   "Step {at} of {count}": "පියවර {at}/{count}",
   "One at a time": "එකින් එක",

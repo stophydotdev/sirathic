@@ -847,6 +847,7 @@ export default {
   "Allow automatically": "السماح تلقائيًا",
   "Ask first": "اسأل أولاً",
   "Add rule": "إضافة قاعدة",
+  "{done} of {count} done": "تم {done} من {count}",
   "{count} steps": "{count} خطوات",
   "Step {at} of {count}": "الخطوة {at} من {count}",
   "One at a time": "خطوة بخطوة",

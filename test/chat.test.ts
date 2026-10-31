@@ -2,6 +2,7 @@ import { expect, test } from "bun:test";
 import { validateUIMessages } from "ai";
 import { rehypeBareCitations } from "../apps/web/src/components/citations";
 import { citationRuns, groupedCitations, withoutCitations } from "../apps/mobile/src/lib/sources";
+import { todoBook } from "../apps/server/src/chat/cards";
 import { citations, withBareCitations } from "../apps/server/src/chat/citations";
 import { withoutPageText, withStoredPageText } from "../apps/server/src/chat/pageText";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
@@ -319,4 +320,44 @@ test("a video transcript comes in 30-second lines that start with their time", (
   expect(timedLines(segments)).toBe(
     "[0:02] Bismillah. Patience is light.\n[1:35] Trust His timing.",
   );
+});
+
+type Todo = ReturnType<ReturnType<typeof todoBook>["write"]>["todos"][number];
+
+test("a to-do write merges by id into the latest list in the chat, or replaces it", async () => {
+  const found: Todo = { id: "hadith", content: "Find the hadith", status: "completed" };
+  const check: Todo = { id: "ruling", content: "Check the ruling", status: "in_progress" };
+  const checked: Todo = { ...check, status: "completed" };
+  const write: Todo = { id: "write", content: "Write the answer", status: "pending" };
+  const history = await validateUIMessages<ChatMessage>({
+    messages: [
+      {
+        id: "answer",
+        role: "assistant",
+        metadata: {},
+        parts: [
+          {
+            type: "tool-todo_write",
+            toolCallId: "call",
+            state: "output-available",
+            input: { todos: [found, check], merge: false },
+            output: { todos: [found, check] },
+          },
+        ],
+      },
+    ],
+    dataSchemas: chatData,
+    metadataSchema: messageMetadata,
+  });
+  const book = todoBook(history);
+  expect(book.write({ todos: [checked, write], merge: true })).toEqual({
+    todos: [found, checked, write],
+  });
+  expect(
+    book.write({ todos: [{ ...write, status: "in_progress" }, checked], merge: true }),
+  ).toEqual({ todos: [found, checked, { ...write, status: "in_progress" }] });
+  expect(book.write({ todos: [check, write], merge: false })).toEqual({ todos: [check, write] });
+  expect(todoBook([]).write({ todos: [check, write], merge: true })).toEqual({
+    todos: [check, write],
+  });
 });

@@ -8,6 +8,7 @@ import { MADHAB_NAMES } from "@/components/settingsCustomize";
 import { QuizCard } from "@/components/quizCard";
 import { useSettings } from "@/components/settings";
 import { StepsCard } from "@/components/stepsCard";
+import { TodoCard } from "@/components/todoCard";
 import { TranslationCard } from "@/components/translationCard";
 import { settingChange } from "@sirathic/server/cards";
 import { messageMetadata } from "@sirathic/server/messages";
@@ -16,8 +17,9 @@ import { BrainIcon, UserEdit01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { FC } from "react";
 
-export const AnswerCard: FC<{ name: string; args: unknown; result: unknown }> = ({
+export const AnswerCard: FC<{ name: string; callId: string; args: unknown; result: unknown }> = ({
   name,
+  callId,
   args,
   result,
 }) => {
@@ -36,6 +38,8 @@ export const AnswerCard: FC<{ name: string; args: unknown; result: unknown }> = 
       return <IslamicDatesCard result={result} />;
     case "change_setting":
       return <SettingChanged result={result} />;
+    case "todo_write":
+      return <TodoCard callId={callId} result={result} />;
     default:
       return null;
   }

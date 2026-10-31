@@ -858,6 +858,7 @@ export default {
   "Allow automatically": "Ruhusu kiotomatiki",
   "Ask first": "Uliza kwanza",
   "Add rule": "Ongeza kanuni",
+  "{done} of {count} done": "{done} kati ya {count} imekamilika",
   "{count} steps": "Hatua {count}",
   "Step {at} of {count}": "Hatua {at} kati ya {count}",
   "One at a time": "Moja moja",

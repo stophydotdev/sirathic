@@ -843,6 +843,7 @@ export default {
   "Allow automatically": "ఆటోమేటిక్‌గా అనుమతించు",
   "Ask first": "ముందు అడుగు",
   "Add rule": "నియమాన్ని జోడించు",
+  "{done} of {count} done": "{done}/{count} పూర్తయ్యాయి",
   "{count} steps": "{count} దశలు",
   "Step {at} of {count}": "దశ {at}/{count}",
   "One at a time": "ఒక్కొక్కటిగా",

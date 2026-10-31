@@ -861,6 +861,7 @@ export default {
   "Allow automatically": "Avtomatik icazə ver",
   "Ask first": "Əvvəl soruş",
   "Add rule": "Qayda əlavə et",
+  "{done} of {count} done": "{done}/{count} hazırdır",
   "{count} steps": "{count} addım",
   "Step {at} of {count}": "Addım {at} / {count}",
   "One at a time": "Bir-bir",

@@ -845,6 +845,7 @@ export default {
   "Allow automatically": "নিজে নিজে অনুমতি দিয়ক",
   "Ask first": "আগতে সোধক",
   "Add rule": "নিয়ম যোগ কৰক",
+  "{done} of {count} done": "{count}ৰ ভিতৰত {done}টা হ'ল",
   "{count} steps": "{count}টা পদক্ষেপ",
   "Step {at} of {count}": "{count}ৰ ভিতৰত পদক্ষেপ {at}",
   "One at a time": "এটা এটাকৈ",

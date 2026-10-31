@@ -865,6 +865,7 @@ export default {
   "Allow automatically": "Автоматик рухсат бер",
   "Ask first": "Аввал сўра",
   "Add rule": "Қоида қўшиш",
+  "{done} of {count} done": "{done}/{count} тайёр",
   "{count} steps": "{count} қадам",
   "Step {at} of {count}": "{count} қадамдан {at}-қадам",
   "One at a time": "Биттадан",

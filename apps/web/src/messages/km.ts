@@ -843,6 +843,7 @@ export default {
   "Allow automatically": "អនុញ្ញាតដោយស្វ័យប្រវត្តិ",
   "Ask first": "សួរមុន",
   "Add rule": "បន្ថែមវិធាន",
+  "{done} of {count} done": "{done} នៃ {count} រួចរាល់",
   "{count} steps": "{count} ជំហាន",
   "Step {at} of {count}": "ជំហាន {at} នៃ {count}",
   "One at a time": "ម្តងមួយៗ",

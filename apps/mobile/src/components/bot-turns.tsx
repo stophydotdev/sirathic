@@ -256,7 +256,12 @@ export const BotSays: FC<{
           ) : (
             <>
               <AutomationCard tool={item.tool.name} output={item.tool.output} />
-              <AnswerCard name={item.tool.name} input={item.tool.input} output={item.tool.output} />
+              <AnswerCard
+                name={item.tool.name}
+                callId={item.tool.id}
+                input={item.tool.input}
+                output={item.tool.output}
+              />
               <BotEvent tool={item.tool.name} output={item.tool.output} />
             </>
           )}

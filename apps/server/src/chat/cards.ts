@@ -1,6 +1,15 @@
 import { getToolName, isToolUIPart, tool } from "ai";
 import { z } from "zod";
-import { place, places, quiz, steps, translation } from "../shared/cards";
+import {
+  mergeTodos,
+  place,
+  places,
+  quiz,
+  steps,
+  todoList,
+  todoWrite,
+  translation,
+} from "../shared/cards";
 import type { ChatMessage } from "../shared/messages";
 
 const shown = async () => ({ shown: true });
@@ -30,7 +39,27 @@ export const placeBook = (history: readonly ChatMessage[]) => {
   return { add, known };
 };
 
-export const answerCards = (book: ReturnType<typeof placeBook>) => ({
+export const todoBook = (history: readonly ChatMessage[]) => {
+  const lists = history
+    .flatMap((message) => message.parts)
+    .flatMap((part) =>
+      isToolUIPart(part) && getToolName(part) === "todo_write" && part.state === "output-available"
+        ? [todoList.safeParse(part.output).data?.todos ?? []]
+        : [],
+    );
+  let current = lists.at(-1) ?? [];
+  return {
+    write: (input: z.infer<typeof todoWrite>) => {
+      current = mergeTodos(current, input);
+      return { todos: current };
+    },
+  };
+};
+
+export const answerCards = (
+  book: ReturnType<typeof placeBook>,
+  todos: ReturnType<typeof todoBook>,
+) => ({
   show_steps: tool({
     description: `Show a numbered, step-by-step walkthrough of a procedure. Use this for how-to questions where the answer is 3 to 8 ordered steps, each with a short title and a one- or two-sentence description, like 'how do I perform wudu', 'how is the janazah prayer done' or 'how do I pay zakat al-fitr'.
 
@@ -55,6 +84,23 @@ Fetch the verses, hadith and rulings you ask about before you write the card, an
       "Show a translation card when the user asks how to say, write or translate a specific short passage (a message, sentence, phrase, dua or a few lines) into another language. The card shows the original and the translation side by side with a copy button, so do NOT repeat the translation in your reply: after the card, add one or two sentences of nuance only (register or politeness choice, a regional note, or what to change for a different tone). Do not use it for single-word dictionary lookups, for translating long documents or files, for the meaning of a verse or hadith, which you quote with its source, or when the user wants an explanation of grammar rather than a rendering.",
     inputSchema: translation,
     execute: shown,
+  }),
+  todo_write: tool({
+    description: `Your task list: the durable list of everything the user has asked for in this chat. The user sees it as a checklist, and the full merged list comes back as the result.
+
+When to use:
+- The moment a request with two or more parts arrives, record it as todos before you start it.
+- Update statuses in real time: in_progress when its work starts, completed the moment its result is delivered to the user, cancelled when the user drops it or changes their mind.
+- On every user message, reconcile the list first: what's running, what landed, what's next.
+
+States and parallelism:
+- pending: not yet started. in_progress: actively being worked. completed: result delivered to the user. cancelled: no longer needed.
+- SEVERAL todos are normally in_progress at once, one per independent stream running in parallel, plus at most one thing you are doing inline. Never serialize independent streams just to keep a single one in_progress.
+- Keep the list current rather than perfect: cancel stale items instead of leaving them pending, and prune long-finished ones when the list gets noisy.
+
+Skip it for purely conversational replies and trivial one-step lookups you answer inline immediately.`,
+    inputSchema: todoWrite,
+    execute: async (input) => todos.write(input),
   }),
   show_places: tool({
     description: `Show a stacked list of places, each with its photo, rating, open status and a Google Maps link. Whenever your answer recommends 2 to 8 specific places you found with google.maps.search, like masjids near the user, halal restaurants or hotels near the Haram, call this before you write your answer, then write your picks after the card.

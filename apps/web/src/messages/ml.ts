@@ -853,6 +853,7 @@ export default {
   "Allow automatically": "സ്വയം അനുവദിക്കുക",
   "Ask first": "ആദ്യം ചോദിക്കുക",
   "Add rule": "നിയമം ചേർക്കുക",
+  "{done} of {count} done": "{done}/{count} കഴിഞ്ഞു",
   "{count} steps": "{count} ഘട്ടങ്ങൾ",
   "Step {at} of {count}": "ഘട്ടം {at}/{count}",
   "One at a time": "ഓരോന്നായി",

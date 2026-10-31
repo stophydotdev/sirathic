@@ -62,7 +62,7 @@ import { STOPHY_LINK, stophyTools } from "./stophyTools";
 import { answerAgent, type Turn } from "./answerAgent";
 import { answerFromResults } from "./answerFromResults";
 import { answerOptions } from "../models/subscription";
-import { answerCards, placeBook } from "./cards";
+import { answerCards, placeBook, todoBook } from "./cards";
 import { afterAnswer } from "./afterAnswer";
 import type { SourceKind } from "../shared/sources";
 import { xSearchTools } from "./xSearch";
@@ -146,6 +146,7 @@ export function chatResponse({
   const shorten = shortenEarlierResults(messages);
   const tools = sirathicTools(sources.add, sourceKinds);
   const places = placeBook(messages);
+  const todos = todoBook(messages);
   const asked = messages.findLast((message) => message.role === "user");
   const askedText =
     asked?.parts.map((part) => (part.type === "text" ? part.text : "")).join(" ") ?? "";
@@ -250,7 +251,7 @@ export function chatResponse({
           (mode === "research" || inBot) && {
             [CLARIFYING]: inBot ? botQuestions : clarifyingQuestions,
           }),
-        ...(!unattended && answerCards(places)),
+        ...(!unattended && answerCards(places, todos)),
         ...(searchable && chatSearchTools(searchable)),
         ...(owner !== undefined &&
           !unattended &&

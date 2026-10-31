@@ -787,6 +787,7 @@ export const MESSAGES = [
   "Allow automatically",
   "Ask first",
   "Add rule",
+  "{done} of {count} done",
   "{count} steps",
   "Step {at} of {count}",
   "One at a time",
