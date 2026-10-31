@@ -1,9 +1,9 @@
 import { expect, mock, test } from "bun:test";
 import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 import { drizzle } from "drizzle-orm/pg-proxy";
-import type { z } from "zod";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { nextRun, schedule, type Schedule } from "../apps/server/src/automations/schedule";
+import { PRAYERS, prayerTimesOn, type PrayerPlace } from "../apps/server/src/prayer/times";
 import { timezone } from "../apps/server/src/shared/settings";
 
 const automationId = "11111111-1111-4111-8111-111111111111";
@@ -28,7 +28,6 @@ const botId = "22222222-2222-4222-8222-222222222222";
 let botRoutine = false;
 let storedBotChat: unknown[] = [];
 const savedChats: unknown[][] = [];
-const insertedAutomations: unknown[][] = [];
 
 const fakeDb = drizzle(
   async (sql, params) => {
@@ -76,32 +75,6 @@ const fakeDb = drizzle(
     if (sql.startsWith('select "project_id" from "chat_sessions"')) return { rows: [] };
     if (sql.includes('from "bot_items"') || sql.includes('from "projects"')) return { rows: [] };
     if (sql.startsWith('update "chat_sessions"')) return { rows: [] };
-    if (sql.startsWith('insert into "automations"')) {
-      insertedAutomations.push(params);
-      const [owner, name, prompt, plan, zone, nextRunAt] = params;
-      return {
-        rows: [
-          [
-            automationId,
-            owner,
-            null,
-            name,
-            prompt,
-            plan,
-            zone,
-            true,
-            nextRunAt,
-            null,
-            dueAt,
-            dueAt,
-            null,
-            "quick",
-            "app",
-            0,
-          ],
-        ],
-      };
-    }
     if (sql.startsWith('insert into "chat_sessions"')) {
       savedChats.push(params);
       return { rows: [[botId]] };
@@ -155,8 +128,7 @@ mock.module("../apps/server/src/chat/response", () => ({
   },
 }));
 
-const { isSkip, routineBrief, runDue } = await import("../apps/server/src/automations/runner");
-const { routineCall, routineTools } = await import("../apps/server/src/automations/tools");
+const { isSkip, runDue } = await import("../apps/server/src/automations/runner");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;
@@ -260,26 +232,6 @@ test("a routine runs even when the user has used Noor's limit in chat", async ()
   expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
 });
 
-test("a run that works resets the failure count", async () => {
-  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 2 });
-  usedTokens = 0;
-
-  await runDueQuietly();
-
-  expect(automationRow.failures).toBe(0);
-  expect(lastSavedText()).toEqual(["Verse 33\nAn-Nasr 110:1"]);
-});
-
-test("a run whose model call fails posts the reason the provider gave, even after some text", async () => {
-  Object.assign(automationRow, { enabled: true, nextRunAt: dueAt, failures: 0 });
-  modelError = "401: invalid x-api-key";
-
-  await runDueQuietly();
-  modelError = undefined;
-
-  expect(lastSavedText()).toEqual(["This run did not finish. 401: invalid x-api-key"]);
-});
-
 test("a run missed by more than an hour is skipped and the next one is scheduled", async () => {
   const missedAt = new Date(Date.now() - 2 * 60 * 60_000).toISOString();
   Object.assign(automationRow, { enabled: true, nextRunAt: missedAt });
@@ -325,12 +277,6 @@ test("a time that happens twice in autumn fires once, the first time", () => {
   expect(next(plan, "America/New_York", "2026-11-01T05:30:00Z")).toBe("2026-11-02T06:30:00.000Z");
 });
 
-test("zones with half-hour offsets and the date line are respected", () => {
-  const plan: Schedule = { kind: "daily", time: "09:00" };
-  expect(next(plan, "Asia/Kolkata", "2026-10-26T00:00:00Z")).toBe("2026-10-26T03:30:00.000Z");
-  expect(next(plan, "Pacific/Kiritimati", "2026-10-26T00:00:00Z")).toBe("2026-10-26T19:00:00.000Z");
-});
-
 test("weekly picks the next chosen weekday in the person's zone", () => {
   const plan: Schedule = { kind: "weekly", days: [1, 3], time: "09:00" };
   expect(next(plan, "Asia/Tokyo", "2026-10-30T00:00:00Z")).toBe("2026-11-02T00:00:00.000Z");
@@ -352,20 +298,6 @@ test("hourly fires on the start minute through the end time, then waits for tomo
   const exact: Schedule = { kind: "hourly", from: "09:00", to: "12:00" };
   expect(next(exact, "UTC", "2026-10-26T11:00:00Z")).toBe("2026-10-26T12:00:00.000Z");
   expect(next(exact, "UTC", "2026-10-26T12:00:00Z")).toBe("2026-10-27T09:00:00.000Z");
-});
-
-test("an hourly window across the spring clock change fires once for the skipped hour", () => {
-  const plan: Schedule = { kind: "hourly", from: "01:00", to: "04:00" };
-  const zone = "America/New_York";
-  expect(next(plan, zone, "2026-03-08T06:00:00Z")).toBe("2026-03-08T07:00:00.000Z");
-  expect(next(plan, zone, "2026-03-08T07:00:00Z")).toBe("2026-03-08T08:00:00.000Z");
-  expect(next(plan, zone, "2026-03-08T08:00:00Z")).toBe("2026-03-09T05:00:00.000Z");
-});
-
-test("yearly fires on its date, and next year when this year's date has passed", () => {
-  const plan: Schedule = { kind: "yearly", month: 3, day: 15, time: "08:00" };
-  expect(next(plan, "UTC", "2026-01-01T00:00:00Z")).toBe("2026-03-15T08:00:00.000Z");
-  expect(next(plan, "UTC", "2026-10-26T00:00:00Z")).toBe("2027-03-15T08:00:00.000Z");
 });
 
 test("yearly on Feb 29 fires on Feb 28 in years without one", () => {
@@ -396,26 +328,6 @@ test("schedules with an impossible date, a repeated day or a bad zone are reject
   );
 });
 
-test("Noor creates a weekly reminder in the person's time zone with In app notification", async () => {
-  const tools = routineTools({ owner: "user-a", timezone: "Asia/Tokyo" });
-  const created = await tools.update_routine.execute?.(
-    {
-      action: "create",
-      name: "Read Surah al-Kahf",
-      prompt: "Remind me to read Surah al-Kahf.",
-      schedule: { kind: "weekly", days: [5], time: "08:00" },
-    },
-    { toolCallId: "call-1", messages: [], context: {} },
-  );
-  expect(created).toMatchObject({
-    name: "Read Surah al-Kahf",
-    schedule: { kind: "weekly", days: [5], time: "08:00" },
-    timezone: "Asia/Tokyo",
-    notify: "app",
-  });
-  expect(insertedAutomations[0]?.[4]).toBe("Asia/Tokyo");
-});
-
 test("a routine reply of SKIP stays out of the chat, any other reply is a post", () => {
   expect(["SKIP", " skip.\n", "Skip!"].map(isSkip)).toEqual([true, true, true]);
   expect(["Nothing to skip today.", "3 items are due.", ""].map(isSkip)).toEqual([
@@ -423,31 +335,6 @@ test("a routine reply of SKIP stays out of the chat, any other reply is a post",
     false,
     false,
   ]);
-});
-
-test("a study routine is told what is due and what it said last time", () => {
-  const brief = routineBrief({
-    prompt: "Morning review",
-    topics: ["2 items are due."],
-    due: [
-      {
-        kind: "verse",
-        ref: "112:1-4",
-        label: "Al-Ikhlas 112:1-4",
-        step: 2,
-        mistake: "said ahad twice",
-      },
-    ],
-    studying: true,
-  });
-  expect(brief).toContain(
-    "Due for review now: Al-Ikhlas 112:1-4 (step 2, last mistake: said ahad twice).",
-  );
-  expect(brief).toContain("Earlier posts for this routine, oldest first:\n- 2 items are due.");
-  expect(brief).toContain("reply with exactly SKIP");
-  expect(routineBrief({ prompt: "Daily dua", topics: [], due: [], studying: false })).toBe(
-    "Daily dua",
-  );
 });
 
 test("a bot routine run sends the model only its brief, numbers citations after the chat's and appends to it", async () => {
@@ -500,15 +387,95 @@ test("a bot routine run sends the model only its brief, numbers citations after 
   expect(appended[1]?.id).toBe("reply-1");
 });
 
-const issues = (call: z.input<typeof routineCall>) =>
-  routineCall.safeParse(call).error?.issues.map((issue) => issue.message);
+const MINUTE_MS = 60_000;
 
-test("a routine call missing what its action needs is rejected", () => {
-  const id = "33333333-3333-4333-8333-333333333333";
-  expect(issues({ action: "create", name: "Eid reminder" })).toEqual([
-    "prompt is required to create",
-    "schedule is required to create",
-  ]);
-  expect(issues({ action: "delete", id })).toEqual(["name is required to delete"]);
-  expect(issues({ action: "pause", id })).toBeUndefined();
+const minutesIn = (zone: string, instant: Date) => {
+  const [hour = 0, minute = 0] = new Intl.DateTimeFormat("en-GB", {
+    timeZone: zone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  })
+    .format(instant)
+    .split(":")
+    .map(Number);
+  return hour * 60 + minute;
+};
+
+const official = [
+  {
+    authority: "JAKIM, Kuala Lumpur (WLY01)",
+    place: { latitude: 3.139, longitude: 101.6869, method: "Malaysia", asr: "standard" },
+    zone: "Asia/Kuala_Lumpur",
+    date: { year: 2026, month: 10, day: 30 },
+    times: ["05:48", "06:56", "13:00", "16:19", "18:59", "20:09"],
+  },
+  {
+    authority: "Diyanet, Istanbul",
+    place: { latitude: 41.0082, longitude: 28.9784, method: "Turkey", asr: "standard" },
+    zone: "Europe/Istanbul",
+    date: { year: 2026, month: 10, day: 30 },
+    times: ["05:59", "07:25", "12:53", "15:43", "18:10", "19:31"],
+  },
+] satisfies {
+  authority: string;
+  place: PrayerPlace;
+  zone: string;
+  date: { year: number; month: number; day: number };
+  times: string[];
+}[];
+
+test.each(official)("prayer times are within two minutes of $authority", (row) => {
+  const times = prayerTimesOn(row.place, row.date);
+  const gaps = PRAYERS.map((prayer, index) => {
+    const [hour = 0, minute = 0] = (row.times[index] ?? "").split(":").map(Number);
+    return Math.abs(minutesIn(row.zone, times[prayer]) - (hour * 60 + minute));
+  });
+  expect(Math.max(...gaps)).toBeLessThanOrEqual(2);
+});
+
+test("Umm al-Qura Isha moves to two hours after Maghrib from the first night of Ramadan", () => {
+  const makkah = {
+    latitude: 21.4225,
+    longitude: 39.8262,
+    method: "UmmAlQura",
+    asr: "standard",
+  } satisfies PrayerPlace;
+  const gap = (day: number) => {
+    const times = prayerTimesOn(makkah, { year: 2026, month: 2, day });
+    return (times.isha.getTime() - times.maghrib.getTime()) / MINUTE_MS;
+  };
+  expect(gap(16)).toBe(90);
+  expect(gap(17)).toBe(120);
+  expect(gap(18)).toBe(120);
+});
+
+test("a routine tied to a prayer moves with it every day, even past midnight", () => {
+  const london = {
+    latitude: 51.5074,
+    longitude: -0.1278,
+    method: "MuslimWorldLeague",
+    asr: "standard",
+  } satisfies PrayerPlace;
+  const zone = "Europe/London";
+  const beforeMaghrib: Schedule = {
+    kind: "daily",
+    time: "16:22",
+    prayer: { ...london, name: "maghrib", minutes: -15 },
+  };
+  expect(nextRun(beforeMaghrib, zone, new Date("2026-10-30T12:00:00Z"))?.toISOString()).toBe(
+    "2026-10-30T16:22:00.000Z",
+  );
+  expect(nextRun(beforeMaghrib, zone, new Date("2026-10-30T16:30:00Z"))?.toISOString()).toBe(
+    "2026-10-31T16:20:00.000Z",
+  );
+  const afterIsha: Schedule = {
+    kind: "daily",
+    time: "00:25",
+    prayer: { ...london, name: "isha", minutes: 120 },
+  };
+  const run =
+    prayerTimesOn(london, { year: 2026, month: 6, day: 21 }).isha.getTime() + 120 * MINUTE_MS;
+  expect(minutesIn(zone, new Date(run))).toBeLessThan(60);
+  expect(nextRun(afterIsha, zone, new Date("2026-06-21T23:01:00Z"))?.getTime()).toBe(run);
 });

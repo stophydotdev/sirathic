@@ -20,7 +20,7 @@ const wordsOf = (text: string) =>
     .split(/[^\p{L}\p{N}]+/u)
     .filter((word) => word.length >= MIN_WORD);
 
-export function findInChat(messages: ChatMessage[], query: string) {
+function findInChat(messages: ChatMessage[], query: string) {
   const wanted = [...new Set(wordsOf(query))].toSorted((a, b) => b.length - a.length);
   const earlier = messages.slice(
     0,

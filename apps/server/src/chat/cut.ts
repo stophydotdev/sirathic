@@ -2,7 +2,7 @@ import { fuse } from "./fuse";
 
 const RATIO = 1.15;
 
-export const nearBest = <Item extends { distance: number }>(
+const nearBest = <Item extends { distance: number }>(
   items: Item[],
   alwaysKept: (item: Item) => boolean = () => false,
 ) => {

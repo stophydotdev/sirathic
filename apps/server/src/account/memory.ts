@@ -51,7 +51,7 @@ export const changedFacts = (
 
 const MIN_WORD = 2;
 
-export const matchingFacts = (facts: readonly string[], query: string) => {
+const matchingFacts = (facts: readonly string[], query: string) => {
   const words = query
     .toLowerCase()
     .split(/[^\p{L}\p{N}]+/u)

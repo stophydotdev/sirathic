@@ -28,7 +28,7 @@ Rules:
 
 const verdict = z.object({ change: z.boolean(), note: z.string(), reason: z.string() });
 
-export const reviewed = (decided: z.output<typeof verdict>, current: string) => {
+const reviewed = (decided: z.output<typeof verdict>, current: string) => {
   if (!decided.change) return undefined;
   const taught = taughtNote.safeParse(decided);
   return taught.success && taught.data.note !== current ? taught.data : undefined;

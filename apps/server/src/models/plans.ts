@@ -170,7 +170,7 @@ const onlyOptions = (providerOptions: ProviderOptions): LanguageModelMiddleware 
   transformParams: async ({ params }) => ({ ...params, providerOptions }),
 });
 
-export const withoutHiddenReasoning: LanguageModelMiddleware = {
+const withoutHiddenReasoning: LanguageModelMiddleware = {
   transformParams: async ({ params }) => ({
     ...params,
     prompt: params.prompt.map((message) =>

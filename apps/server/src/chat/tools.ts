@@ -63,7 +63,7 @@ const fetchUrlInput = z.object({
 
 const STOPHY_ROUTE = /Call ([\w.]+) \(\w+ in MCP\) with (\w+) set to this address/u;
 
-export const routedToStophy = (message: string) =>
+const routedToStophy = (message: string) =>
   message.replace(
     STOPHY_ROUTE,
     "Load the stophy skill, then call stophy_call with id $1 and $2 set to this address",

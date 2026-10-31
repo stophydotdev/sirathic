@@ -103,7 +103,7 @@ const FIRST_STEP = {
   anyTool: "required",
 } as const;
 
-export function answerAgent({
+function answerAgent({
   model,
   tools,
   short,

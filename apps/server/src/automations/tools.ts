@@ -24,7 +24,7 @@ const REQUIRED = {
   readonly (keyof z.input<typeof fields> | "id")[]
 >;
 
-export const routineCall = fields
+const routineCall = fields
   .partial()
   .extend({
     action: z.enum(ACTIONS),

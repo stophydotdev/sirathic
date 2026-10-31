@@ -3,7 +3,7 @@ import type { duaSearch } from "@sirathic/core/tools/duaSearch";
 
 const VOWEL_MARKS = /[ؐ-ًؚ-ٰٟۖ-ۭـ]/gu;
 
-export const unvowel = (text: string) => text.replaceAll(VOWEL_MARKS, "");
+const unvowel = (text: string) => text.replaceAll(VOWEL_MARKS, "");
 
 const LINE_START_DASH = /(?<=\n)[ \t]*\u2014[ \t]*/gu;
 const EM_DASH = /\s*\u2014\s*/gu;
