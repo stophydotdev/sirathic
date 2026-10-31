@@ -20,7 +20,8 @@ import {
 } from "ai";
 import { OpenTelemetry } from "@ai-sdk/otel";
 import { z } from "zod";
-import { memoryTools } from "../account/memory";
+import { limitRepeats } from "./repeatGuard";
+import { memoryTools, rememberAfterAnswer } from "../account/memory";
 import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
 import { countedTokens } from "../models/usage";
@@ -88,7 +89,6 @@ export const KEEPALIVE_MS = 15_000;
 const STEP_CAP = 20;
 const LAST_STEP =
   "You have no research steps left. Answer now from what you found, and say what you could not check.";
-const SAME_CALLS = 2;
 const STALLED_MS = 120_000;
 const RESEARCH_OPENS = ["research", "calculate", "files"];
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
@@ -129,31 +129,6 @@ function answerAgent({
   turn: Turn;
 }) {
   const options = answerOptions(turn);
-  const repeats = new Map<string, number>();
-  const gated = Object.fromEntries(
-    Object.entries(tools).map(([name, entry]) => {
-      const { execute } = entry;
-      return [
-        name,
-        execute === undefined
-          ? entry
-          : {
-              ...entry,
-              execute: (...call: Parameters<typeof execute>) => {
-                const key = `${name} ${JSON.stringify(call[0])}`;
-                const times = (repeats.get(key) ?? 0) + 1;
-                repeats.set(key, times);
-                if (times > SAME_CALLS) {
-                  throw new Error(
-                    `You already called ${name} with this input ${SAME_CALLS} times in this reply. Use those results or change the input.`,
-                  );
-                }
-                return execute(...call);
-              },
-            },
-      ];
-    }),
-  );
   return new ToolLoopAgent({
     model,
     experimental_telemetry: {
@@ -163,7 +138,7 @@ function answerAgent({
       integrations: tracing,
     },
     instructions: system,
-    tools: gated,
+    tools: limitRepeats(tools),
     stopWhen: [
       hasToolCall(CLARIFYING),
       ({ steps }) =>
@@ -500,6 +475,24 @@ export function chatResponse({
             });
           }
         }
+      }
+      const calledMemory = [...calls.values()].some(({ tool }) => tool === "update_memory");
+      if (
+        owner !== undefined &&
+        !inBot &&
+        !unattended &&
+        preferred.saveMemory &&
+        !calledMemory &&
+        ended?.finishReason === "stop"
+      ) {
+        void rememberAfterAnswer({
+          scope: { kind: "account", owner },
+          messages,
+          model: models.small,
+          abortSignal,
+        }).catch((err: Error) => {
+          console.error(`memory not saved: ${reasonOf(err)}`);
+        });
       }
       if (!inBot && !unattended && ended?.finishReason === "stop" && text.trim()) {
         const questions = await relatedQuestions(models.small, askedText, text, abortSignal).catch(
