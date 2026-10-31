@@ -5,7 +5,7 @@ import { z } from "zod";
 import { hadithKey } from "./hadithKey";
 
 const MOSTLY_UNCHECKED = 0.9;
-const TEXT_MATCH_BOOKS = new Set(["muslim", "malik"]);
+const TEXT_MATCH_BOOKS = new Set(["muslim", "malik", "darimi"]);
 const ATTRIBUTION_CHARS = 60;
 
 const pagesDir = z.string().parse(Bun.env.SUNNAH_PAGES);
