@@ -8,6 +8,8 @@ const verse = { arabic: "ٱلنِّسَآءَ", translation: "women", reference:
 
 const draft = {
   title: "Does touching a woman break wudu?",
+  headline: "The schools give three answers",
+  cover: "اللمس",
   slug: "touching-a-woman-and-wudu",
   topic: "Purification",
   tint: "teal",

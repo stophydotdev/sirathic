@@ -12,6 +12,8 @@ import { alternatesOf, SITE } from "@/lib/seo";
 import { translator } from "../../dictionaries";
 
 const DESCRIPTION_CHARS = 160;
+const TITLE_CHARS = 60;
+const SEARCH_SUFFIX = " What scholars say";
 
 export function generateStaticParams() {
   return articles.map(({ slug }) => ({ slug }));
@@ -26,18 +28,19 @@ export async function generateMetadata({
     article.summary.text.length <= DESCRIPTION_CHARS
       ? article.summary.text
       : `${article.summary.text.slice(0, DESCRIPTION_CHARS).replace(/\s+\S*$/u, "")}…`;
+  const searched = `${article.title}${SEARCH_SUFFIX}`;
   return {
-    title: article.title,
+    title: searched.length <= TITLE_CHARS ? searched : article.title,
     description,
     alternates: alternatesOf(`/discover/${article.slug}`),
     openGraph: {
-      title: article.title,
+      title: article.headline,
       description,
       type: "article",
       modifiedTime: article.updated,
       images: [{ url: `${SITE}/discover/${article.slug}/image`, width: 1200, height: 630 }],
     },
-    twitter: { card: "summary_large_image", title: article.title, description },
+    twitter: { card: "summary_large_image", title: article.headline, description },
   };
 }
 
@@ -53,7 +56,8 @@ export default async function DiscoverArticlePage({
   const structured = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: article.title,
+    headline: article.headline,
+    alternativeHeadline: article.title,
     description: article.summary.text,
     datePublished: article.updated,
     dateModified: article.updated,

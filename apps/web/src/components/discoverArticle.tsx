@@ -157,7 +157,7 @@ export const ArticleBody: FC<{ article: Article }> = ({ article }) => {
   return (
     <article data-ask-ref={article.title} className="flex flex-col gap-5">
       <h1 className="font-serif text-3xl leading-tight text-balance sm:text-4xl">
-        {article.title}
+        {article.headline}
       </h1>
       <div className="font-serif text-lg leading-7 sm:text-xl sm:leading-8">
         <Claim paragraph={article.summary} />

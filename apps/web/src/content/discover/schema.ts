@@ -22,6 +22,8 @@ const section = z.object({
 export const article = z
   .object({
     title: z.string().min(1),
+    headline: z.string().min(1).max(120),
+    cover: z.string().regex(/\p{scx=Arabic}/u),
     slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u),
     topic: z.string().min(1),
     tint: z.enum(["teal", "rose", "amber", "indigo"]),

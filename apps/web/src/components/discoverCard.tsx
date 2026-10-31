@@ -29,17 +29,13 @@ const Cover: FC<{ article: Article; big: boolean; className: string }> = ({
       className,
     )}
   >
-    {article.verse ? (
-      <span
-        dir="rtl"
-        lang="ar"
-        className={cn("font-quran text-2xl leading-loose", big && "sm:text-3xl")}
-      >
-        {article.verse.arabic}
-      </span>
-    ) : (
-      <span className="font-serif text-2xl text-white/80">{article.topic}</span>
-    )}
+    <span
+      dir="rtl"
+      lang="ar"
+      className={cn("font-quran text-3xl leading-loose", big && "sm:text-4xl")}
+    >
+      {article.cover}
+    </span>
   </div>
 );
 
@@ -90,7 +86,7 @@ export const DiscoverCard: FC<{ article: Article; kind?: Kind }> = ({ article, k
           <Cover article={article} big={false} className="h-36" />
           <div className="flex flex-col gap-1.5 px-4 pt-4">
             <Topic article={article} />
-            <h2 className="font-serif text-xl leading-snug text-balance">{article.title}</h2>
+            <h2 className="font-serif text-xl leading-snug text-balance">{article.headline}</h2>
           </div>
         </Link>
         <div className="px-4 pt-2 pb-3">
@@ -123,7 +119,7 @@ export const DiscoverCard: FC<{ article: Article; kind?: Kind }> = ({ article, k
               lead ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl",
             )}
           >
-            {article.title}
+            {article.headline}
           </h2>
         </Link>
         <Published updated={article.updated} />

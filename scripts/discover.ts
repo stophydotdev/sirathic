@@ -20,13 +20,17 @@ const RESULTS_CHARS = 120_000;
 const MARKER = /\s*\[(\d+)\]/gu;
 const RESEARCH_MS = 15 * 60_000;
 const PASS = 0.5;
+const HEADLINE_CHARS = 120;
 
 const ARTICLE_RULES = `You turn a cited answer into a Discover article. Use only the answer's own statements and keep their meaning. Never add a fact, a source, a grade or a name the answer does not have.
 
 Return:
+- headline: one plain sentence under 90 characters that states what the sources show on the question, such as how the schools split, without picking a side. Not a question.
+- cover: two to four Arabic words naming the subject of the question the way the fiqh books name it, like النوم or نكاح الكتابية.
 - summary: two or three sentences that give each school's answer, with the citation numbers the answer uses for them.
 - sections: use these headings in this order, and leave out any the answer has nothing for: What the Quran says; What the hadith show; How the four schools rule; How scholars reconciled the evidence; What recent fatwas say.
 - Each paragraph is two to four plain sentences. Its citations are the numbers in square brackets that the answer uses for those statements. Remove the brackets from the text.
+- Leave out any section or paragraph that would only describe what the sources do or do not contain, as when the classical books have no chapter on a modern question. Never write about "the sources" or number them in the text.
 - Never say or suggest that one school is right or wrong, or that one side wins.`;
 
 const FIX = `Rewrite the paragraph using only what the sources say. Drop every statement the sources do not support. Never state a hadith grade or a grader the sources do not show. Keep it plain, two to four sentences. Return an empty text if nothing in the paragraph is supported.`;
@@ -42,6 +46,8 @@ const BATTLE = {
 
 const paragraph = z.object({ text: z.string(), citations: z.array(z.number().int()) });
 const drafted = z.object({
+  headline: z.string(),
+  cover: z.string(),
   summary: paragraph,
   sections: z.array(z.object({ heading: z.string(), paragraphs: z.array(paragraph) })),
 });
@@ -59,7 +65,7 @@ const shownResults = z.union([
 type Paragraph = ArticleInput["summary"];
 
 const brief = (title: string) =>
-  `${title} Give: the Quran verses involved and how the Companions and scholars read them; the hadith with their grades; the position of each of the four madhabs from their own fiqh books, searching each school's books separately in Arabic; recent fatwas; and where the evidence seems to conflict, how the scholars reconciled it. Do not say which school is right. Cite every point.`;
+  `${title} Give: the Quran verses involved and how the Companions and scholars read them; the hadith with their grades; the position of each of the four madhabs from their own fiqh books where they address it, searching each school's books separately in Arabic; recent fatwas; and where the evidence seems to conflict, how the scholars reconciled it. Do not say which school is right. Cite every point.`;
 
 const inOrder = <Item, Done>(
   items: readonly Item[],
@@ -144,6 +150,20 @@ async function research(title: string) {
     steps: result.steps.length,
     inputTokens: result.totalUsage.inputTokens ?? 0,
   };
+}
+
+const cleanHeadline = (text: string) => withoutEmDashes(text).trim();
+
+async function headlineOf(written: string, title: string) {
+  if (cleanHeadline(written).length <= HEADLINE_CHARS) return cleanHeadline(written);
+  const { headline } = await streamText({
+    model: NOOR_SIDE_MODEL,
+    instructions:
+      "Shorten this headline to under 90 characters. Keep its meaning and do not pick a side.",
+    prompt: written,
+    output: Output.object({ schema: z.object({ headline: z.string() }) }),
+  }).output;
+  return cleanHeadline(headline).length <= HEADLINE_CHARS ? cleanHeadline(headline) : title;
 }
 
 async function review(
@@ -231,9 +251,10 @@ async function write(entry: (typeof queue)[number], tint: (typeof TINTS)[number]
   });
   const sections = checked.filter((section) => section.paragraphs.length > 0);
   if (sections.length === 0) return log("FAILED: no section passed review");
-  const whole = [summary, ...sections.flatMap((section) => section.paragraphs)]
-    .map((part) => part.text)
-    .join("\n\n");
+  const whole = [
+    draft.headline,
+    ...[summary, ...sections.flatMap((section) => section.paragraphs)].map((part) => part.text),
+  ].join("\n\n");
   const battle = (await yesChances(whole, BATTLE, "clef"))("battle") ?? 1;
   if (battle >= PASS) return log(`FAILED: reads as one side winning (${battle.toFixed(2)})`);
   const cited = new Set(
@@ -243,6 +264,8 @@ async function write(entry: (typeof queue)[number], tint: (typeof TINTS)[number]
   );
   const input = {
     title: entry.title,
+    headline: await headlineOf(draft.headline, entry.title),
+    cover: draft.cover.trim(),
     slug: entry.slug,
     topic: entry.topic,
     tint,
@@ -277,9 +300,10 @@ await inOrder(waiting, (entry) =>
   ),
 );
 const done = new Set(await readdir(FOLDER));
-const written = queue
-  .map((entry) => camelOf(entry.slug))
-  .filter((name) => done.has(`${name}.json`));
+const written = [...done]
+  .filter((name) => name.endsWith(".json"))
+  .map((name) => name.slice(0, -".json".length))
+  .toSorted();
 await Bun.write(
   join(FOLDER, "written.ts"),
   `${written.map((name) => `import ${name} from "./${name}.json";`).join("\n")}\n\nexport const written = [${written.join(", ")}];\n`,
