@@ -6,9 +6,7 @@ import {
   createUIMessageStream,
   createUIMessageStreamResponse,
   type FinishReason,
-  getToolName,
   type InferUIMessageChunk,
-  isToolUIPart,
   type LanguageModel,
   type LanguageModelUsage,
   smoothStream,
@@ -54,7 +52,7 @@ import type { Settings } from "../shared/settings";
 import { shortenEarlierResults, withReactionNotes, withSenderNote } from "./history";
 import { instructions, userFacts } from "./prompts/build";
 import {
-  loadedNames,
+  loadedEarlier,
   loadSkill,
   LOAD_SKILL,
   openedBy,
@@ -321,13 +319,7 @@ export function chatResponse({
         ...(builtIn.length > 0 && { [LOAD_SKILL]: loadSkill(builtIn) }),
       };
       const loaded = [
-        ...loadedNames(
-          messages.flatMap((message) =>
-            message.parts
-              .filter(isToolUIPart)
-              .map((part) => ({ toolName: getToolName(part), input: part.input })),
-          ),
-        ),
+        ...loadedEarlier(messages),
         ...(mode === "research" ? RESEARCH_OPENS : []),
         ...openedBy(askedText, plugins),
       ];
@@ -368,6 +360,7 @@ export function chatResponse({
         shorten,
         turn,
         steer,
+        quickly: mode === "quick" && !inBot && !unattended ? { asked: askedText } : undefined,
       });
       const answer = await createAgentUIStream({
         agent,

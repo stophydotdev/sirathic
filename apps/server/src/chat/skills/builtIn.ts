@@ -1,6 +1,6 @@
-import { tool, type ToolSet } from "ai";
+import { getToolName, isToolUIPart, tool, type ToolSet } from "ai";
 import { z } from "zod";
-import type { Mode } from "../../shared/messages";
+import type { ChatMessage, Mode } from "../../shared/messages";
 import { BROWSER_TOOLS } from "../../bots/browser";
 import { BULK } from "../../plugins/bulkInput";
 import { CODE_RULES } from "../codeTools";
@@ -356,6 +356,15 @@ export const loadSkill = (skills: readonly Skill[]) =>
 export const loadedNames = (calls: readonly { toolName: string; input: unknown }[]) =>
   calls.flatMap(({ toolName, input }) =>
     toolName === LOAD_SKILL ? (loadInput.safeParse(input).data?.names ?? []) : [],
+  );
+
+export const loadedEarlier = (messages: readonly ChatMessage[]) =>
+  loadedNames(
+    messages.flatMap((message) =>
+      message.parts
+        .filter(isToolUIPart)
+        .map((part) => ({ toolName: getToolName(part), input: part.input })),
+    ),
   );
 
 export const loadedText = (skills: readonly Skill[], loaded: ReadonlySet<string>) =>

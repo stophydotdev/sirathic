@@ -938,4 +938,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'Futa kikundi "{name}"? Mazungumzo yake pia yatafutwa.',
   "Pick at least two bots": "Chagua bot angalau mbili",
+  "Checking your memory": "Inakagua kumbukumbu yako",
+  "Checked your memory": "Imekagua kumbukumbu yako",
 } satisfies Messages;

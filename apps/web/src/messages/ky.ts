@@ -943,4 +943,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" тобун өчүрөсүзбү? Анын маеги да өчүрүлөт.',
   "Pick at least two bots": "Эң аз дегенде эки бот тандаңыз",
+  "Checking your memory": "Эс тутумуңуз текшерилүүдө",
+  "Checked your memory": "Эс тутумуңуз текшерилди",
 } satisfies Messages;

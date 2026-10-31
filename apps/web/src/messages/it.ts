@@ -943,4 +943,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'Eliminare il gruppo "{name}"? Anche la sua conversazione viene eliminata.',
   "Pick at least two bots": "Scegli almeno due bot",
+  "Checking your memory": "Controllo la tua memoria",
+  "Checked your memory": "Ho controllato la tua memoria",
 } satisfies Messages;

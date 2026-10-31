@@ -22,6 +22,7 @@ const TOOL_NAMES = new Map(
     load_skill: { now: "Loading a skill", done: "Skills" },
     update_memory: { now: "Saving to your preferences", done: "Saved to your preferences" },
     search_past_chats: { now: "Searching your past chats", done: "Searched your past chats" },
+    search_user_memories: { now: "Checking your memory", done: "Checked your memory" },
     stophy_search_endpoints: { now: "Checking Stophy", done: "Read from Stophy" },
     stophy_call: { now: "Reading from Stophy", done: "Read from Stophy" },
     code_execution: { now: "Running code", done: "Ran code" },
@@ -45,16 +46,9 @@ export const toolOf = (part: Part) => {
 
 export type Now = { kind: "think" | "search" | "read" | "tool"; text: string; url?: string };
 
-export function nowOf(message: ChatMessage): Now {
-  const last = message.parts.findLast((part) => {
-    const tool = toolOf(part);
-    return (
-      part.type === "reasoning" ||
-      (tool !== undefined && !ANSWER_CARDS.some((card) => card === tool.name))
-    );
-  });
-  if (!last || last.type === "reasoning") return { kind: "think", text: "Thinking" };
-  const tool = toolOf(last);
+const stepOf = (part: Part | undefined): Now => {
+  if (!part || part.type === "reasoning") return { kind: "think", text: "Thinking" };
+  const tool = toolOf(part);
   if (!tool) return { kind: "think", text: "Working" };
   if (tool.name === "search_web") {
     const { queries = [], arabic = [] } = searchInput.parse(tool.input);
@@ -68,7 +62,20 @@ export function nowOf(message: ChatMessage): Now {
       : { kind: "read", text: "Reading" };
   }
   return { kind: "tool", text: TOOL_NAMES.get(tool.name)?.now ?? tool.name.replaceAll("_", " ") };
-}
+};
+
+export const stepsOf = (message: ChatMessage): Now[] => {
+  const steps = message.parts.filter(
+    (part) => part.type === "reasoning" || toolOf(part) !== undefined,
+  );
+  const tools = steps.filter((part) => {
+    const tool = toolOf(part);
+    return tool !== undefined && !ANSWER_CARDS.some((card) => card === tool.name);
+  });
+  const current = steps.at(-1);
+  const thinking = current === undefined || current.type === "reasoning" || tools.length === 0;
+  return [...tools.map(stepOf), ...(thinking ? [stepOf(undefined)] : [])];
+};
 
 export function summaryOf(message: ChatMessage) {
   const tools = message.parts.flatMap((part) => toolOf(part) ?? []);

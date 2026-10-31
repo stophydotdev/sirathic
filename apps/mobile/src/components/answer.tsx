@@ -23,7 +23,7 @@ import {
 import { useResolveClassNames, useUniwind } from "uniwind";
 import { Renderer, useMarkdown } from "react-native-marked";
 import { z } from "zod";
-import { type Now, nowOf, summaryOf, toolOf } from "@/lib/research";
+import { type Now, stepsOf, summaryOf, toolOf } from "@/lib/research";
 import { citationRuns, faviconUrl, groupedCitations, relatedOf, sourcesOf } from "@/lib/sources";
 import { usePreferences } from "@/lib/preferences";
 import {
@@ -192,14 +192,20 @@ const StatusLine: FC<{ message: ChatMessage; working: boolean }> = ({ message, w
   const steps = summaryOf(message);
 
   if (working) {
-    const now = nowOf(message);
+    const rows = stepsOf(message);
     return (
-      <View className="mb-4 h-6 flex-row items-center gap-2">
-        <NowIcon now={now} />
-        <Text numberOfLines={1} className="text-muted-foreground font-sans shrink text-sm">
-          {now.text}
-        </Text>
-        <Text className="text-muted-foreground/70 font-sans text-sm">{`${seconds}s`}</Text>
+      <View className="mb-4 gap-1.5">
+        {rows.map((now, index) => (
+          <View key={index} className="h-6 flex-row items-center gap-2">
+            <NowIcon now={now} />
+            <Text numberOfLines={1} className="text-muted-foreground font-sans shrink text-sm">
+              {now.text}
+            </Text>
+            {index === rows.length - 1 && (
+              <Text className="text-muted-foreground/70 font-sans text-sm">{`${seconds}s`}</Text>
+            )}
+          </View>
+        ))}
       </View>
     );
   }
@@ -252,7 +258,13 @@ export const Answer: FC<{
   const [cited, setCited] = useState<string[]>();
   const runs = useMemo(() => ({ runs: citationRuns(text), show: setCited }), [text]);
   const [copied, setCopied] = useState(false);
-  const working = streaming && text === "";
+  const latest = message.parts.findLast((part) => part.type !== "step-start");
+  const latestTool = latest === undefined ? undefined : toolOf(latest);
+  const working =
+    streaming &&
+    (text.trim() === "" ||
+      latest?.type === "reasoning" ||
+      (latestTool !== undefined && !isAnswerCard(latestTool.name)));
   const cards = message.parts.flatMap((part, index) => {
     const tool = toolOf(part);
     if (!tool) return [];

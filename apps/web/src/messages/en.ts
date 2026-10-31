@@ -861,6 +861,8 @@ export const MESSAGES = [
   "Delete group",
   'Delete the group "{name}"? Its conversation is deleted too.',
   "Pick at least two bots",
+  "Checking your memory",
+  "Checked your memory",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

@@ -936,4 +936,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" குழுவை நீக்கவா? அதன் உரையாடலும் நீக்கப்படும்.',
   "Pick at least two bots": "குறைந்தது இரண்டு பாட்களைத் தேர்ந்தெடுக்கவும்",
+  "Checking your memory": "உங்கள் நினைவகத்தைப் பார்க்கிறேன்",
+  "Checked your memory": "உங்கள் நினைவகத்தைப் பார்த்தேன்",
 } satisfies Messages;

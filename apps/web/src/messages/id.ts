@@ -941,4 +941,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'Hapus grup "{name}"? Percakapannya juga dihapus.',
   "Pick at least two bots": "Pilih setidaknya dua bot",
+  "Checking your memory": "Memeriksa memori Anda",
+  "Checked your memory": "Memori Anda diperiksa",
 } satisfies Messages;

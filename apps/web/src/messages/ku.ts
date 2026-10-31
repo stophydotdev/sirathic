@@ -939,4 +939,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'گروپی "{name}" بسڕدرێتەوە؟ گفتوگۆکەشی دەسڕدرێتەوە.',
   "Pick at least two bots": "لانیکەم دوو بۆت هەڵبژێرە",
+  "Checking your memory": "بیرەوەرییەکەت دەپشکنم",
+  "Checked your memory": "بیرەوەرییەکەتم پشکنی",
 } satisfies Messages;

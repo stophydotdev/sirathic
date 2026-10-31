@@ -935,4 +935,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     'د "{name}" ډله ړنګه شي؟ خبرې اترې یې هم ړنګېږي.',
   "Pick at least two bots": "لږ تر لږه دوه بوټونه وټاکئ",
+  "Checking your memory": "ستاسو حافظه ګورم",
+  "Checked your memory": "ستاسو حافظه مې وکتله",
 } satisfies Messages;

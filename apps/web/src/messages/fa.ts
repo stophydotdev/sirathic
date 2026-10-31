@@ -934,4 +934,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     "گروه «{name}» حذف شود؟ گفتگوی آن هم حذف می‌شود.",
   "Pick at least two bots": "دست‌کم دو بات انتخاب کنید",
+  "Checking your memory": "در حال بررسی حافظهٔ شما",
+  "Checked your memory": "حافظهٔ شما بررسی شد",
 } satisfies Messages;

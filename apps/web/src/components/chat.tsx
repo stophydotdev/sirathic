@@ -392,6 +392,7 @@ export const Chat: FC<{
     .find((message) => message.role === "user")
     ?.parts.find((part) => part.type === "text")?.text;
   const title = incognito ? undefined : (savedTitle ?? question);
+  const botName = useProjects((s) => s.bots?.find((bot) => bot.id === projectId)?.name);
 
   useEffect(() => {
     usePreferences.getState().load();
@@ -434,13 +435,14 @@ export const Chat: FC<{
   }, [started, address, incognito]);
 
   useEffect(() => {
-    if (!title) return;
+    const tab = botName === undefined ? title && `${title} - Sirathic` : `${botName} · Sirathic`;
+    if (!tab) return;
     const previous = document.title;
-    document.title = `${title} - Sirathic`;
+    document.title = tab;
     return () => {
       document.title = previous;
     };
-  }, [title]);
+  }, [botName, title]);
 
   return (
     <ChatContext value={{ id: chatId, projectId, saved: !incognito, chat }}>

@@ -7,6 +7,7 @@ import type { connectedTools } from "../plugins/connections";
 import type { shortenEarlierResults } from "./history";
 import { noSilentStop } from "./noSilentStop";
 import type { instructions } from "./prompts/build";
+import { ENOUGH_STEP, researchedEnough } from "./enoughGate";
 import { limitRepeats } from "./repeatGuard";
 import { closedTools, loadedNames, loadedText, type Skill, skillIndex } from "./skills/builtIn";
 import { CLARIFYING } from "./tools";
@@ -41,6 +42,7 @@ export function answerAgent({
   shorten,
   turn,
   steer,
+  quickly,
 }: {
   model: Parameters<typeof wrapLanguageModel>[0]["model"];
   tools: ToolSet;
@@ -55,9 +57,11 @@ export function answerAgent({
   shorten: ReturnType<typeof shortenEarlierResults>;
   turn: Turn;
   steer: (() => string[]) | undefined;
+  quickly: { asked: string } | undefined;
 }) {
   const options = answerOptions(turn);
   const noted: string[] = [];
+  let answeringFrom: number | undefined;
   return new ToolLoopAgent({
     model: wrapLanguageModel({ model, middleware: noSilentStop }),
     experimental_telemetry: {
@@ -82,7 +86,7 @@ export function answerAgent({
     experimental_refineToolInput: refine,
     toolApproval: async ({ toolCall }) => ((await confirm(toolCall)) ? "user-approval" : undefined),
     allowSystemInMessages: true,
-    prepareStep: ({ stepNumber, steps, initialMessages, responseMessages }) => {
+    prepareStep: async ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);
       const closed = closedTools(skills, open);
       const forcing = stepNumber === 0 ? firstStep : undefined;
@@ -93,6 +97,19 @@ export function answerAgent({
       const earlier = initialMessages.map(shorten);
       const asked = earlier.findLastIndex((message) => message.role === "user") + 1;
       noted.push(...(steer?.() ?? []));
+      if (
+        answeringFrom === undefined &&
+        quickly !== undefined &&
+        stepNumber > 0 &&
+        (await researchedEnough(quickly.asked, steps))
+      ) {
+        answeringFrom = stepNumber;
+      }
+      const answering = answeringFrom !== undefined;
+      const strayed =
+        answeringFrom !== undefined &&
+        stepNumber > answeringFrom &&
+        (steps.at(-1)?.toolCalls ?? []).some(({ toolName }) => !toolName.startsWith("show_"));
       return {
         messages: [
           ...earlier.slice(0, asked),
@@ -103,8 +120,13 @@ export function answerAgent({
             role: "user" as const,
             content: `A note from the bot that gave you this task: ${note}`,
           })),
+          ...(answering ? [{ role: "system" as const, content: ENOUGH_STEP }] : []),
         ],
-        activeTools: Object.keys(tools).filter((name) => !closed.has(name)),
+        activeTools: strayed
+          ? []
+          : Object.keys(tools).filter(
+              (name) => !closed.has(name) && (!answering || name.startsWith("show_")),
+            ),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
       };
     },

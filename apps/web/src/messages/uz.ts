@@ -946,4 +946,6 @@ export default {
   'Delete the group "{name}"? Its conversation is deleted too.':
     '"{name}" гуруҳи ўчирилсинми? Унинг суҳбати ҳам ўчирилади.',
   "Pick at least two bots": "Камида иккита бот танланг",
+  "Checking your memory": "Хотирангиз текширилмоқда",
+  "Checked your memory": "Хотирангиз текширилди",
 } satisfies Messages;
