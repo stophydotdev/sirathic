@@ -11,11 +11,13 @@ test("hadith links follow each collection's own page numbering", () => {
     hadithLink("muslim:1907a", null),
     hadithLink("bukhari:402.2", null),
     hadithLink("ahmad:781", "https://ar.wikisource.org/wiki/chapter"),
+    hadithLink("dehlawi:33", null),
   ]).toEqual([
     "https://sunnah.com/urn/510770",
     "https://sunnah.com/muslim:1907a",
     "https://sunnah.com/bukhari:402",
     "https://ar.wikisource.org/wiki/chapter#781",
+    "https://sunnah.com/shahwaliullah40:33",
   ]);
 });
 

@@ -11,6 +11,7 @@ const SUNNAH_COM_BOOKS = new Map([
   ["ibnmajah", "ibnmajah"],
   ["nawawi", "nawawi40"],
   ["qudsi", "qudsi40"],
+  ["dehlawi", "shahwaliullah40"],
   ["riyadussalihin", "riyadussalihin"],
 ]);
 
@@ -29,11 +30,6 @@ export const hadithIdOfSunnahUrl = (url: string) => {
   return book === undefined || found?.[2] === undefined ? null : `${book}:${found[2]}`;
 };
 
-const HADITH_API =
-  "https://github.com/fawazahmed0/hadith-api/blob/df57907be35291c91ad6a6691180e22ca9920784/editions";
-
-const HADITH_API_EDITIONS = new Map([["dehlawi", "ara-dehlawi"]]);
-
 const SHARED_PAGE_BOOKS = new Set(["ahmad", "adab"]);
 
 export const hadithLink = (id: string, stored: string | null) => {
@@ -43,8 +39,5 @@ export const hadithLink = (id: string, stored: string | null) => {
   }
   const urn = book === "malik" ? MALIK_URNS.get(number) : undefined;
   if (urn !== undefined) return `https://sunnah.com/urn/${urn}`;
-  const edition = HADITH_API_EDITIONS.get(book);
-  return edition !== undefined && /^\d+$/u.test(number)
-    ? `${HADITH_API}/${edition}/${number}.json`
-    : sunnahComLink(id);
+  return sunnahComLink(id);
 };
