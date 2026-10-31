@@ -40,13 +40,20 @@ export const elementsOf = (snapshot: string): PageElement[] => {
     const flags = [...row.attributes.matchAll(FLAGS)].map((flag) => flag[0].slice(1, -1));
     const below = rows.slice(at + 1);
     const inside = below.findIndex((next) => next.depth <= row.depth);
-    const options = (inside < 0 ? below : below.slice(0, inside))
+    const nested = inside < 0 ? below : below.slice(0, inside);
+    const named =
+      row.name ||
+      (row.role === "button"
+        ? nested.map((next) => unquoted(next.value) || next.name).find(Boolean)
+        : undefined) ||
+      "";
+    const options = nested
       .filter((next) => next.role === "option" && !REF.test(next.attributes))
       .map((option) => ({ label: option.name, chosen: option.attributes.includes("[selected]") }));
     const base = {
       ref,
       role: row.role,
-      label: row.name.slice(0, LABEL_CHARS),
+      label: named.slice(0, LABEL_CHARS),
       value: unquoted(row.value).slice(0, VALUE_CHARS),
       flags,
     };

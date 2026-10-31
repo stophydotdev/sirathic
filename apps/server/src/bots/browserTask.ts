@@ -11,6 +11,10 @@ const MIN_PROBABILITY = 0.15;
 const MAX_STEPS = 20;
 const MAX_MS = 50_000;
 const STUCK_AFTER = 3;
+const MAX_SKIPPED = 3;
+const MAX_DISMISSED = 2;
+const COVERED = /covers it/u;
+const DISMISSAL = /\b(?:accept|agree|allow all|consent|reject|decline|got it)\b/iu;
 const TEXT_WAIT_MS = 15_000;
 const PAGE_TEXT_CHARS = 1_500;
 const MAX_OPTIONS = 255;
@@ -51,7 +55,15 @@ BLOCKED means nothing here can make progress.`;
 const TARGET_RULES =
   "This question only picks the target of that operation. Choose an offered index. Do not pick a field that already holds the requested value.";
 
-const write = z.object({ fieldAsksFor: z.string(), text: z.string().nullable() });
+const write = z.object({
+  fieldAsksFor: z.string(),
+  text: z
+    .string()
+    .nullable()
+    .transform((text) =>
+      text === null || /^(?:null|none|n\/a)$/iu.test(text.trim()) ? null : text,
+    ),
+});
 
 const textFor = async (task: Task, field: PageElement, page: Result, steps: readonly string[]) =>
   (
@@ -240,6 +252,8 @@ type Progress<Shown extends Result> = {
   clefCalls: number;
   clefTokens: number;
   stuck: number;
+  skipped: string[];
+  dismissed: number;
 };
 
 const holdBack = (decision: Decision) => {
@@ -309,16 +323,44 @@ export const driveTask = async <Shown extends Result>(
   act: (action: Action, full?: boolean) => Promise<Shown>,
 ) => {
   const startedAt = Date.now();
+  const attempt = (action: Action) => act(action, true).catch((error: Error) => error);
+  const settle = async (progress: Progress<Shown>) => {
+    const check = await finished(task, progress.page, progress.steps).catch(() => ({
+      tokens: 0,
+      met: false,
+    }));
+    const checked = {
+      ...progress,
+      clefCalls: progress.clefCalls + 1,
+      clefTokens: progress.clefTokens + check.tokens,
+    };
+    return check.met
+      ? { ...checked, ending: { kind: "done" } as const }
+      : {
+          ...checked,
+          ending: {
+            kind: "handback",
+            why: "The browser agent thought the goal was met, but a second check found a part still to do.",
+          } as const,
+        };
+  };
   const advance = async (
     progress: Progress<Shown>,
   ): Promise<Progress<Shown> & { ending: Ending }> => {
-    const { page, steps } = progress;
+    const { page, steps, skipped } = progress;
     if (steps.length >= MAX_STEPS || Date.now() - startedAt > MAX_MS) {
       return { ...progress, ending: { kind: "budget" } };
     }
-    if (progress.stuck >= STUCK_AFTER) return { ...progress, ending: { kind: "blocked" } };
-    const { decision, tokens } = await decide(task, page, elementsOf(page.page), steps).catch(
-      (error: Error) => ({ tokens: 0, decision: { kind: "unsure", why: error.message } as const }),
+    if (progress.stuck >= STUCK_AFTER) {
+      const checked = await settle(progress);
+      return checked.ending.kind === "done" ? checked : { ...checked, ending: { kind: "blocked" } };
+    }
+    const elements = elementsOf(page.page).filter((element) => !skipped.includes(element.ref));
+    const { decision, tokens } = await decide(task, page, elements, steps).catch(
+      (error: Error) => ({
+        tokens: 0,
+        decision: { kind: "unsure", why: error.message } as const,
+      }),
     );
     const counted = {
       ...progress,
@@ -328,47 +370,88 @@ export const driveTask = async <Shown extends Result>(
     const handBack = (why: string) => ({ ...counted, ending: { kind: "handback", why } as const });
     if (decision.kind === "unsure") return handBack(decision.why);
     if (decision.kind === "blocked") return { ...counted, ending: { kind: "blocked" } };
-    if (decision.kind === "done") {
-      const check = await finished(task, page, steps).catch(() => ({ tokens: 0, met: false }));
-      const checked = {
-        ...counted,
-        clefCalls: counted.clefCalls + 1,
-        clefTokens: counted.clefTokens + check.tokens,
-      };
-      return check.met
-        ? { ...checked, ending: { kind: "done" } }
-        : {
-            ...checked,
-            ending: {
-              kind: "handback",
-              why: "The browser agent thought the goal was met, but a second check found a part still to do.",
-            },
-          };
-    }
+    if (decision.kind === "done") return settle(counted);
     const held = holdBack(decision);
     if (held) return handBack(held);
     const typed =
-      decision.kind === "type" ? await textFor(task, decision.element, page, steps) : "";
-    if (decision.kind === "type" && typed === null) {
-      return handBack(
-        `No text for ${describe(decision.element)} could be worked out from the goal and values, so ask the user.`,
-      );
+      decision.kind === "type"
+        ? ((await textFor(task, decision.element, page, steps)) ??
+          (await textFor(task, decision.element, page, steps)))
+        : "";
+    if (typed === null && decision.kind === "type") {
+      return skipped.length < MAX_SKIPPED
+        ? advance({ ...counted, skipped: [...skipped, decision.element.ref] })
+        : handBack(
+            `No text for ${describe(decision.element)} could be worked out from the goal and values, so ask the user.`,
+          );
     }
     const { action, said } = planned(decision, typed ?? "");
-    const next = await act(action, true).catch((error: Error) => error);
-    if (next instanceof Error) return handBack(`Tried to ${said} and it failed: ${next.message}`);
-    return advance({
-      ...counted,
-      page: next,
-      steps: [...steps, said],
-      stuck: next.page === page.page ? progress.stuck + 1 : 0,
-    });
+    const next = await attempt(action);
+    if (!(next instanceof Error)) {
+      return advance({
+        ...counted,
+        page: next,
+        steps: [...steps, said],
+        stuck: next.page === page.page ? progress.stuck + 1 : 0,
+        skipped: [],
+      });
+    }
+    if (COVERED.test(next.message) && progress.dismissed < MAX_DISMISSED) {
+      const fresh = await attempt({ kind: "snapshot" });
+      const banner =
+        fresh instanceof Error
+          ? undefined
+          : elementsOf(fresh.page).find(
+              (element) =>
+                (element.role === "button" || element.role === "link") &&
+                DISMISSAL.test(element.label),
+            );
+      const cleared = banner ? await attempt({ kind: "click", target: banner.ref }) : undefined;
+      if (banner && cleared && !(cleared instanceof Error)) {
+        return advance({
+          ...counted,
+          page: cleared,
+          steps: [...steps, `clicked ${describe(banner)} to clear what covered the page`],
+          stuck: 0,
+          skipped: [],
+          dismissed: progress.dismissed + 1,
+        });
+      }
+    }
+    if (decision.kind === "select") {
+      const opened = await attempt({ kind: "click", target: decision.element.ref });
+      const option =
+        opened instanceof Error
+          ? undefined
+          : elementsOf(opened.page).find(
+              (element) => element.role === "option" && element.label === decision.option,
+            );
+      const picked = option ? await attempt({ kind: "click", target: option.ref }) : undefined;
+      if (picked && !(picked instanceof Error)) {
+        return advance({
+          ...counted,
+          page: picked,
+          steps: [...steps, said],
+          stuck: 0,
+          skipped: [],
+        });
+      }
+    }
+    return handBack(`Tried to ${said} and it failed: ${next.message}`);
   };
   const start = await act(
     task.url ? { kind: "navigate", url: task.url } : { kind: "snapshot" },
     true,
   );
-  const ended = await advance({ page: start, steps: [], clefCalls: 0, clefTokens: 0, stuck: 0 });
+  const ended = await advance({
+    page: start,
+    steps: [],
+    clefCalls: 0,
+    clefTokens: 0,
+    stuck: 0,
+    skipped: [],
+    dismissed: 0,
+  });
   return {
     page: { ...ended.page, page: clipped(ended.page.page) },
     report: reportOf(ended.ending, ended.steps),
