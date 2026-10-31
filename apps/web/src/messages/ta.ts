@@ -913,4 +913,14 @@ export default {
   "Check its verses and hadith": "இதன் வசனங்களையும் ஹதீஸ்களையும் சரிபார்",
   "Summarize it": "சுருக்கமாகச் சொல்",
   "Translate it": "மொழிபெயர்",
+  Tasks: "பணிகள்",
+  "1 task": "1 பணி",
+  "{count} tasks": "{count} பணிகள்",
+  Bot: "பாட்",
+  "Needs attention": "கவனம் தேவை",
+  "In progress": "நடந்துகொண்டிருக்கிறது",
+  "Didn't finish": "முடியவில்லை",
+  Stopped: "நிறுத்தப்பட்டது",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "ஒரு பாட்டிடம் ஒரே நேரத்தில் பல விஷயங்களைக் கேளுங்கள், ஒவ்வொன்றும் இங்கே தெரியும்.",
 } satisfies Messages;

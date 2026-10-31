@@ -899,4 +899,14 @@ export default {
   "Check its verses and hadith": "దీని ఆయతులు మరియు హదీసులు తనిఖీ చేయి",
   "Summarize it": "సంక్షిప్తం చేయి",
   "Translate it": "అనువదించు",
+  Tasks: "పనులు",
+  "1 task": "1 పని",
+  "{count} tasks": "{count} పనులు",
+  Bot: "బాట్",
+  "Needs attention": "శ్రద్ధ కావాలి",
+  "In progress": "జరుగుతున్నాయి",
+  "Didn't finish": "పూర్తి కాలేదు",
+  Stopped: "ఆపివేయబడింది",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "బాట్‌ను ఒకేసారి కొన్ని పనులు అడగండి, ప్రతిదీ ఇక్కడ కనిపిస్తుంది.",
 } satisfies Messages;

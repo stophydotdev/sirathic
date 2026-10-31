@@ -840,6 +840,15 @@ export const MESSAGES = [
   "Check its verses and hadith",
   "Summarize it",
   "Translate it",
+  "Tasks",
+  "1 task",
+  "{count} tasks",
+  "Bot",
+  "Needs attention",
+  "In progress",
+  "Didn't finish",
+  "Stopped",
+  "Ask a bot for a few things at once and each one shows up here.",
 ] as const;
 
 export type MessageKey = (typeof MESSAGES)[number];

@@ -922,4 +922,14 @@ export default {
   "Check its verses and hadith": "Suriin ang mga ayah at hadith nito",
   "Summarize it": "Ibuod ito",
   "Translate it": "Isalin ito",
+  Tasks: "Mga gawain",
+  "1 task": "1 gawain",
+  "{count} tasks": "{count} gawain",
+  Bot: "Bot",
+  "Needs attention": "Kailangang tingnan",
+  "In progress": "Isinasagawa",
+  "Didn't finish": "Hindi natapos",
+  Stopped: "Itinigil",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Humingi sa bot ng ilang bagay nang sabay-sabay at lalabas dito ang bawat isa.",
 } satisfies Messages;

@@ -1,5 +1,6 @@
-import { expect, test } from "bun:test";
-import { validateUIMessages } from "ai";
+import { expect, mock, test } from "bun:test";
+import { createUIMessageStream, createUIMessageStreamResponse, validateUIMessages } from "ai";
+import { drizzle } from "drizzle-orm/pg-proxy";
 import { rehypeBareCitations } from "../apps/web/src/components/citations";
 import { citationRuns, groupedCitations, withoutCitations } from "../apps/mobile/src/lib/sources";
 import { todoBook } from "../apps/server/src/chat/cards";
@@ -10,6 +11,7 @@ import {
   type ChatMessage,
   chatData,
   messageMetadata,
+  messageText,
   sentMessage,
 } from "../apps/server/src/shared/messages";
 import { unwrappedCitations } from "../packages/app/src/citations";
@@ -360,4 +362,91 @@ test("a to-do write merges by id into the latest list in the chat, or replaces i
   expect(todoBook([]).write({ todos: [check, write], merge: true })).toEqual({
     todos: [check, write],
   });
+});
+
+const botId = "22222222-2222-4222-8222-222222222222";
+const earlier: ChatMessage[] = [
+  { id: "u1", role: "user", metadata: {}, parts: [{ type: "text", text: "Research hajj" }] },
+  { id: "a1", role: "assistant", metadata: {}, parts: [{ type: "text", text: "Starting." }] },
+];
+const botRow = [botId, "Noor Bot", null, "Help me study", false, [], "bot", null, null, null, ""];
+const botRowEnd = [false, null, false, null, null, null, [], null, 0, 0];
+const savedChats: unknown[][] = [];
+const modelInputs: ChatMessage[][] = [];
+
+mock.module("@sirathic/db", () => ({
+  db: drizzle(
+    async (sql, params) => {
+      if (sql.startsWith('select "id", "email"')) {
+        return { rows: [["user-a", "a@example.com", null, null, null]] };
+      }
+      if (sql.startsWith('select "messages"')) return { rows: [[earlier, false, botId]] };
+      if (sql.startsWith('select "id", "name"')) return { rows: [[...botRow, ...botRowEnd]] };
+      if (sql.startsWith('select "project_id"')) return { rows: [] };
+      if (sql.startsWith('update "chat_sessions"')) return { rows: [[botId, "Bot", false, true]] };
+      if (sql.startsWith('insert into "chat_sessions"')) {
+        savedChats.push(params);
+        return { rows: [[botId]] };
+      }
+      throw new Error(`unexpected query: ${sql}`);
+    },
+    { casing: "snake_case" },
+  ),
+}));
+mock.module("../apps/server/src/chat/response", () => ({
+  chatResponse: ({
+    messages,
+    save,
+    task,
+    consumeSseStream,
+  }: {
+    messages: ChatMessage[];
+    save: (saved: ChatMessage[]) => Promise<void>;
+    task?: true;
+    consumeSseStream?: Parameters<typeof createUIMessageStreamResponse>[0]["consumeSseStream"];
+  }) => {
+    modelInputs.push(messages);
+    const text = task ? `Done: ${messageText(messages.at(-1))}` : "Here is what I found.";
+    const reply: ChatMessage = {
+      id: "r",
+      role: "assistant",
+      metadata: {},
+      parts: [{ type: "text", text }],
+    };
+    const stream = createUIMessageStream({ execute: async () => save([...messages, reply]) });
+    return createUIMessageStreamResponse({ stream, consumeSseStream });
+  },
+}));
+const { startAnswer } = await import("../apps/server/src/chat/answers");
+const { deliveryOf, hasTasks } = await import("../apps/server/src/bots/taskBook");
+const { launchTask } = await import("../apps/server/src/bots/taskRun");
+
+test("two background tasks finish while the bot is answering, and one wake delivers both after", async () => {
+  const bot = { id: botId, owner: "user-a" };
+  const style = { modelName: "sirathic-noor-1-flash", effort: "high", timezone: "UTC" } as const;
+  const chatting = startAnswer(bot.owner, bot.id);
+
+  const tasks = ["Find hajj visa rules", "Find umrah costs"].map((brief) =>
+    launchTask({ bot, title: brief, brief, resume: undefined, style }),
+  );
+  await Promise.all(tasks.map((task) => task.finished));
+
+  expect(tasks.map((task) => task.end?.kind)).toEqual(["done", "done"]);
+  expect([hasTasks(bot.owner, bot.id), savedChats.length]).toEqual([true, 0]);
+
+  await chatting.consumeSseStream({ stream: new ReadableStream({ start: (c) => c.close() }) });
+  await deliveryOf(bot);
+
+  const wakes = modelInputs.filter((input) => input.at(-1)?.metadata?.wake);
+  expect(wakes).toHaveLength(1);
+  expect(messageText(wakes[0]?.at(-1))).toContain("Done: Find hajj visa rules");
+  expect(messageText(wakes[0]?.at(-1))).toContain("Done: Find umrah costs");
+  const saved: ChatMessage[] = JSON.parse(String(savedChats.at(-1)?.[3]));
+  expect(saved.map((message) => [message.role, messageText(message).slice(0, 12)])).toEqual([
+    ["user", "Research haj"],
+    ["assistant", "Starting."],
+    ["user", "These are up"],
+    ["assistant", "Here is what"],
+  ]);
+  expect(hasTasks(bot.owner, bot.id)).toBe(false);
 });

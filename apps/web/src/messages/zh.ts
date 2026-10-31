@@ -894,4 +894,14 @@ export default {
   "Check its verses and hadith": "核查其中的经文和圣训",
   "Summarize it": "总结一下",
   "Translate it": "翻译一下",
+  Tasks: "任务",
+  "1 task": "1 个任务",
+  "{count} tasks": "{count} 个任务",
+  Bot: "机器人",
+  "Needs attention": "需要关注",
+  "In progress": "进行中",
+  "Didn't finish": "未完成",
+  Stopped: "已停止",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "一次让机器人做几件事，每件事都会显示在这里。",
 } satisfies Messages;

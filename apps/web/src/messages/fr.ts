@@ -925,4 +925,14 @@ export default {
   "Check its verses and hadith": "Vérifier ses versets et hadiths",
   "Summarize it": "Le résumer",
   "Translate it": "Le traduire",
+  Tasks: "Tâches",
+  "1 task": "1 tâche",
+  "{count} tasks": "{count} tâches",
+  Bot: "Bot",
+  "Needs attention": "À surveiller",
+  "In progress": "En cours",
+  "Didn't finish": "Non terminée",
+  Stopped: "Arrêtée",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Demandez plusieurs choses à la fois à un bot et chacune apparaît ici.",
 } satisfies Messages;

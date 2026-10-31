@@ -24,7 +24,8 @@ import type { connectedTools } from "../plugins/connections";
 import { type Event, toolFailure } from "./events";
 import { type AutomationScope, routineTools } from "../automations/tools";
 import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
-import { browserTools, NEEDS_SOMEONE_THERE } from "../bots/browser";
+import { browserFor } from "../bots/browser";
+import { readingOnly, taskTools } from "../bots/taskTools";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
@@ -103,6 +104,9 @@ export function chatResponse({
   consumeSseStream = consumeStream,
   spend,
   unattended,
+  task,
+  wake,
+  steer,
   bot,
   historyLimit,
   citedEarlier,
@@ -127,6 +131,9 @@ export function chatResponse({
   consumeSseStream?: Parameters<typeof createUIMessageStreamResponse>[0]["consumeSseStream"];
   spend?: (counted: number) => void;
   unattended?: true;
+  task?: true;
+  wake?: true;
+  steer?: () => string[];
   bot?: Promise<BotScope | undefined>;
   historyLimit?: number;
   citedEarlier?: ChatMessage[];
@@ -142,6 +149,8 @@ export function chatResponse({
   let usage: LanguageModelUsage | undefined;
   let counted = 0;
   let text = "";
+  let browser: ReturnType<typeof browserFor> | undefined;
+  const handsOn = !unattended && !wake;
   const sources = citations([...(citedEarlier ?? []), ...messages]);
   const shorten = shortenEarlierResults(messages);
   const tools = sirathicTools(sources.add, sourceKinds);
@@ -203,6 +212,7 @@ export function chatResponse({
         messages,
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
+      browser = inBot && browserFor(inBot, unattended === true);
       const searchable =
         inBot && (unattended || visible.length < messages.length) ? inBot : undefined;
       const disk = inBot && botDisk(inBot.id);
@@ -221,31 +231,29 @@ export function chatResponse({
           ...stophyTools(sources.add, places.add),
           ...imageTools(sources.addImage),
         }),
-        ...(routines && routineTools({ ...routines, projectId: inBot?.id })),
-        ...(inBot && !unattended && botTools(inBot)),
+        ...(routines && !wake && routineTools({ ...routines, projectId: inBot?.id })),
+        ...(inBot && handsOn && botTools(inBot)),
         ...(inBot &&
-          Object.fromEntries(
-            Object.entries(browserTools(inBot)).filter(
-              ([name]) => !unattended || !NEEDS_SOMEONE_THERE.includes(name),
-            ),
-          )),
+          handsOn &&
+          taskTools(inBot, { modelName, effort: turn.effort, timezone: routines?.timezone })),
+        ...browser?.tools,
         islamic_dates: islamicDates,
         prayer_times: prayerTimes,
-        ...(owner !== undefined && !unattended && settingTools(owner)),
-        ...(owner !== undefined && !unattended && skillTools(owner)),
+        ...(owner !== undefined && handsOn && settingTools(owner)),
+        ...(owner !== undefined && handsOn && skillTools(owner)),
         ...(owner !== undefined && grok && xSearchTools(owner, sources.add)),
         ...(owner !== undefined && !unattended && { [SEND_FEEDBACK]: sendFeedback }),
         ...(owner !== undefined &&
           !unattended &&
           pluginTools(owner, inBot ? `/bot/${inBot.id}` : `/c/${turn.sessionId}`)),
-        ...(!unattended &&
+        ...((!unattended || task) &&
           memoryTools(
             owner === undefined
               ? undefined
               : inBot
                 ? { kind: "bot", ...inBot, saveShared: preferred.saveMemory }
                 : { kind: "account", owner },
-            inBot !== undefined || preferred.saveMemory,
+            handsOn && (inBot !== undefined || preferred.saveMemory),
           )),
         ...(!unattended &&
           (mode === "research" || inBot) && {
@@ -268,14 +276,14 @@ export function chatResponse({
             disk,
             link: sources.link,
           })),
-        ...connectors.tools,
+        ...(task ? readingOnly(connectors.tools) : connectors.tools),
       };
       const builtIn = skillsFor({
         mode,
         texting: texts,
         inBot: inBot !== undefined,
         timezone: routines?.timezone,
-        canWriteSkills: owner !== undefined && !unattended,
+        canWriteSkills: owner !== undefined && handsOn,
         userSkills: ownSkills,
         offered: available,
         plugins: connectors.tools,
@@ -304,6 +312,7 @@ export function chatResponse({
         short: texts,
         project: inProject,
         unattended: unattended === true,
+        task: task === true,
         offered,
         skills: builtIn,
         remembers:
@@ -329,6 +338,7 @@ export function chatResponse({
         refine: connectors.refine,
         shorten,
         turn,
+        steer,
       });
       const answer = await createAgentUIStream({
         agent,
@@ -410,7 +420,7 @@ export function chatResponse({
         !text.trim() &&
         ended?.finishReason !== "tool-calls" &&
         !connecting &&
-        (!abortSignal.aborted || unattended === true) &&
+        (!abortSignal.aborted || (unattended === true && !task)) &&
         results.length > 0;
       if (unanswered) {
         const fallback = await answerFromResults({
@@ -469,6 +479,7 @@ export function chatResponse({
     },
     onError: (error) => (error instanceof Error ? error.message : String(error)),
     onEnd: ({ messages: answered, outcome }) => {
+      browser?.release();
       void connected.then(({ close }) => close());
       const status = ended?.outcome.status ?? outcome.status;
       spend?.(counted);
@@ -493,7 +504,7 @@ export function chatResponse({
             cacheWriteTokens: usage?.inputTokenDetails.cacheWriteTokens,
             outputTokens: usage?.outputTokens,
             reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
-            from: unattended ? "routine" : inBot ? "bot" : "chat",
+            from: task ? "task" : unattended ? "routine" : inBot ? "bot" : "chat",
           },
         }),
       );

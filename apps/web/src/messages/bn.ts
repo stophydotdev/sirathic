@@ -903,4 +903,14 @@ export default {
   "Check its verses and hadith": "এর আয়াত ও হাদিস যাচাই করুন",
   "Summarize it": "সংক্ষেপ করুন",
   "Translate it": "অনুবাদ করুন",
+  Tasks: "টাস্ক",
+  "1 task": "১টি টাস্ক",
+  "{count} tasks": "{count}টি টাস্ক",
+  Bot: "বট",
+  "Needs attention": "মনোযোগ দরকার",
+  "In progress": "চলছে",
+  "Didn't finish": "শেষ হয়নি",
+  Stopped: "থামানো হয়েছে",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "একটি বটকে একসঙ্গে কয়েকটি কাজ দিন, প্রতিটি এখানে দেখা যাবে।",
 } satisfies Messages;

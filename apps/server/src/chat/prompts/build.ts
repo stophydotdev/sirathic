@@ -7,10 +7,12 @@ import type { Skill } from "../skills/builtIn";
 import answer from "./answer.md" with { type: "text" };
 import bot from "./bot.md" with { type: "text" };
 import core from "./core.md" with { type: "text" };
+import delegation from "./delegation.md" with { type: "text" };
 import newBot from "./newBot.md" with { type: "text" };
 import quick from "./quick.md" with { type: "text" };
 import research from "./research.md" with { type: "text" };
 import routine from "./routine.md" with { type: "text" };
+import taskRules from "./task.md" with { type: "text" };
 
 const MODES = { quick, research } as const satisfies Record<Mode, string>;
 
@@ -121,8 +123,9 @@ const abilitiesOf = ({
     "update_skill" in offered && "Save their own skills, ways of working you reuse.",
   ].flatMap((line) => (line ? [`- ${line}`] : []));
 
-const botPrompt = (project: RulesProject, live: boolean) =>
+const botPrompt = (project: RulesProject, live: boolean, delegates: boolean) =>
   fill(bot, {
+    delegation: delegates ? `${delegation}\n\n` : "",
     identity: botIdentity(project),
     job: project.instructions ? `Your job:\n${project.instructions}` : live ? newBot : "",
     opened: live ? openedWith(project) : "",
@@ -138,6 +141,7 @@ export const instructions = ({
   short,
   project,
   unattended,
+  task,
   offered,
   skills,
   remembers,
@@ -151,6 +155,7 @@ export const instructions = ({
   short: boolean;
   project: RulesProject | undefined;
   unattended: boolean;
+  task?: boolean;
   offered: ToolSet;
   skills: readonly Skill[];
   remembers: boolean;
@@ -174,7 +179,10 @@ export const instructions = ({
     quote: QUOTE,
     length: short ? SHORT : DEFAULT_LENGTH,
     format: project ? "" : answer,
-    surface: [project ? botPrompt(project, !unattended) : MODES[mode], unattended && routine]
+    surface: [
+      project ? botPrompt(project, !unattended, "start_task" in offered) : MODES[mode],
+      unattended && (task ? taskRules : routine),
+    ]
       .flatMap((part) => (part ? [part] : []))
       .join("\n\n"),
     date: dateLine(now, timezone ?? "UTC"),

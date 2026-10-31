@@ -76,7 +76,7 @@ export type Event =
     }
   | {
       name: "answer.completed";
-      props: AnswerStats & { mode: Mode; model: string; from: "chat" | "bot" | "routine" };
+      props: AnswerStats & { mode: Mode; model: string; from: "chat" | "bot" | "routine" | "task" };
     }
   | {
       name: "tool.completed";

@@ -50,6 +50,7 @@ export const messageMetadata = z.object({
   report: report.optional(),
   routine: z.string().optional(),
   formReply: z.enum(["filled", "missed", "dismissed"]).optional(),
+  wake: z.literal(true).optional(),
   memory: z.boolean().optional(),
 });
 

@@ -40,6 +40,7 @@ export function answerAgent({
   refine,
   shorten,
   turn,
+  steer,
 }: {
   model: Parameters<typeof wrapLanguageModel>[0]["model"];
   tools: ToolSet;
@@ -53,8 +54,10 @@ export function answerAgent({
   refine: Awaited<ReturnType<typeof connectedTools>>["refine"];
   shorten: ReturnType<typeof shortenEarlierResults>;
   turn: Turn;
+  steer: (() => string[]) | undefined;
 }) {
   const options = answerOptions(turn);
+  const noted: string[] = [];
   return new ToolLoopAgent({
     model: wrapLanguageModel({ model, middleware: noSilentStop }),
     experimental_telemetry: {
@@ -89,12 +92,17 @@ export function answerAgent({
       const skillText = (index + loadedText(skills, open) + mentioned).trim();
       const earlier = initialMessages.map(shorten);
       const asked = earlier.findLastIndex((message) => message.role === "user") + 1;
+      noted.push(...(steer?.() ?? []));
       return {
         messages: [
           ...earlier.slice(0, asked),
           ...(skillText ? [{ role: "system" as const, content: RULES_HEADER + skillText }] : []),
           ...earlier.slice(asked),
           ...responseMessages,
+          ...noted.map((note) => ({
+            role: "user" as const,
+            content: `A note from the bot that gave you this task: ${note}`,
+          })),
         ],
         activeTools: Object.keys(tools).filter((name) => !closed.has(name)),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),

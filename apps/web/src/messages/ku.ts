@@ -916,4 +916,14 @@ export default {
   "Check its verses and hadith": "ئایەت و فەرموودەکانی بپشکنە",
   "Summarize it": "کورتی بکەرەوە",
   "Translate it": "وەریبگێڕە",
+  Tasks: "Kar",
+  "1 task": "1 kar",
+  "{count} tasks": "{count} kar",
+  Bot: "Bot",
+  "Needs attention": "Pêdivî bi baldariyê heye",
+  "In progress": "Berdewam e",
+  "Didn't finish": "Neqediya",
+  Stopped: "Hat rawestandin",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Ji botekê çend tiştan di heman demê de bixwaze û her yek li vir xuya dibe.",
 } satisfies Messages;

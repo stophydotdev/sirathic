@@ -322,6 +322,7 @@ export const BotYou: FC<{
       : [];
   })[0];
   const routine = message.metadata?.routine;
+  if (message.metadata?.wake) return null;
   return (
     <>
       {stamp !== undefined && (

@@ -902,4 +902,14 @@ export default {
   "Check its verses and hadith": "ইয়াৰ আয়াত আৰু হাদীছ পৰীক্ষা কৰক",
   "Summarize it": "চমুকৈ কওক",
   "Translate it": "অনুবাদ কৰক",
+  Tasks: "কাৰ্য",
+  "1 task": "১টা কাৰ্য",
+  "{count} tasks": "{count}টা কাৰ্য",
+  Bot: "বট",
+  "Needs attention": "মনোযোগৰ প্ৰয়োজন",
+  "In progress": "চলি আছে",
+  "Didn't finish": "সম্পূৰ্ণ নহ’ল",
+  Stopped: "বন্ধ কৰা হ’ল",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "এটা বটক একেলগে কেইটামান কাম কওক, আৰু প্ৰতিটো ইয়াত দেখা যাব।",
 } satisfies Messages;

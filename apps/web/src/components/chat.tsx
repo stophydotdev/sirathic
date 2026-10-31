@@ -211,6 +211,18 @@ const waitForSaved = async (chat: LiveChat<ChatMessage>, waitsLeft = SAVED_WAITS
   }
 };
 
+const BACKGROUND_POLL_MS = 4000;
+
+const syncBackground = async (chat: LiveChat<ChatMessage>) => {
+  void useSessions.getState().refresh();
+  const saved = await savedChat(chat.id, true).catch(() => undefined);
+  if (!saved || saved.unfinished || answering(chat)) return;
+  if (saved.messages.length > chat.messages.length) {
+    chat.messages = saved.messages;
+    markAnswered(chat.id);
+  }
+};
+
 const RESUME_GRACE_MS = 5000;
 
 const useLimitResume = create<Record<string, number>>(() => ({}));
@@ -351,6 +363,9 @@ export const Chat: FC<{
   );
   const started = chat.messages.length > 0;
   const streaming = chat.status === "streaming";
+  const busyInBackground = useSessions(
+    (s) => s.sessions?.find((found) => found.id === chatId)?.working === true,
+  );
   const question = chat.messages
     .find((message) => message.role === "user")
     ?.parts.find((part) => part.type === "text")?.text;
@@ -364,6 +379,15 @@ export const Chat: FC<{
   useEffect(() => {
     if (streaming) refreshSaved();
   }, [streaming]);
+
+  useEffect(() => {
+    if (!busyInBackground || projectId !== chatId) return;
+    const timer = setInterval(() => void syncBackground(session), BACKGROUND_POLL_MS);
+    return () => {
+      clearInterval(timer);
+      setTimeout(() => void syncBackground(session), BACKGROUND_POLL_MS / 2);
+    };
+  }, [busyInBackground, projectId, chatId, session]);
 
   useEffect(() => {
     const { sessions, change } = useSessions.getState();

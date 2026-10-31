@@ -5,6 +5,7 @@ import { type AnyColumn, and, desc, eq, gt, ilike, lt, ne, or, sql } from "drizz
 import { z } from "zod";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "../shared/messages";
 import { StatusError } from "../http";
+import { hasTasks } from "../bots/taskBook";
 import { isAnswering } from "./answers";
 
 const TITLE_CHARS = 80;
@@ -104,7 +105,9 @@ export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT)
     )
     .orderBy(desc(chatSessions.pinned), desc(chatSessions.updatedAt))
     .limit(limit);
-  return rows.map((row) => Object.assign(row, { working: isAnswering(by, row.id) }));
+  return rows.map((row) =>
+    Object.assign(row, { working: isAnswering(by, row.id) || hasTasks(by, row.id) }),
+  );
 };
 
 async function storedMessages(id: string, by: string) {

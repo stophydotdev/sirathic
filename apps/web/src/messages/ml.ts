@@ -910,4 +910,14 @@ export default {
   "Check its verses and hadith": "ഇതിലെ ആയത്തുകളും ഹദീസുകളും പരിശോധിക്കുക",
   "Summarize it": "ചുരുക്കുക",
   "Translate it": "വിവർത്തനം ചെയ്യുക",
+  Tasks: "ടാസ്‌കുകൾ",
+  "1 task": "1 ടാസ്‌ക്",
+  "{count} tasks": "{count} ടാസ്‌കുകൾ",
+  Bot: "ബോട്ട്",
+  "Needs attention": "ശ്രദ്ധ വേണം",
+  "In progress": "പുരോഗമിക്കുന്നു",
+  "Didn't finish": "പൂർത്തിയായില്ല",
+  Stopped: "നിർത്തി",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "ഒരു ബോട്ടിനോട് ഒരേസമയം പല കാര്യങ്ങൾ ആവശ്യപ്പെടൂ, ഓരോന്നും ഇവിടെ കാണാം.",
 } satisfies Messages;

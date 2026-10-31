@@ -903,4 +903,14 @@ export default {
   "Check its verses and hadith": "تحقق من آياته وأحاديثه",
   "Summarize it": "لخّصه",
   "Translate it": "ترجمه",
+  Tasks: "المهام",
+  "1 task": "مهمة واحدة",
+  "{count} tasks": "{count} مهام",
+  Bot: "البوت",
+  "Needs attention": "تحتاج إلى انتباهك",
+  "In progress": "قيد التنفيذ",
+  "Didn't finish": "لم تكتمل",
+  Stopped: "متوقفة",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "اطلب من بوت عدة أشياء دفعة واحدة وستظهر كل واحدة هنا.",
 } satisfies Messages;

@@ -905,4 +905,14 @@ export default {
   "Check its verses and hadith": "इसकी आयतें और हदीसें जाँचें",
   "Summarize it": "इसका सार बताएँ",
   "Translate it": "इसका अनुवाद करें",
+  Tasks: "कार्य",
+  "1 task": "1 कार्य",
+  "{count} tasks": "{count} कार्य",
+  Bot: "बॉट",
+  "Needs attention": "ध्यान देना है",
+  "In progress": "जारी है",
+  "Didn't finish": "पूरा नहीं हुआ",
+  Stopped: "रोका गया",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "बॉट से एक साथ कई काम कहें, और हर काम यहाँ दिखेगा।",
 } satisfies Messages;

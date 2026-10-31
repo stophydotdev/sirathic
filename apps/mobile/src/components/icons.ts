@@ -1,4 +1,5 @@
 import {
+  IconListCheck,
   IconPhoto,
   IconCamera,
   IconPlug,
@@ -63,6 +64,7 @@ import {
 } from "@tabler/icons-react-native";
 import { withUniwind } from "uniwind";
 
+export const ListCheck = withUniwind(IconListCheck);
 export const Adjustments = withUniwind(IconAdjustmentsHorizontal);
 export const ArrowUp = withUniwind(IconArrowUp);
 export const ArrowUpRight = withUniwind(IconArrowUpRight);

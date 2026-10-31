@@ -922,4 +922,14 @@ export default {
   "Check its verses and hadith": "Оят ва ҳадисларини текшир",
   "Summarize it": "Қисқача айт",
   "Translate it": "Таржима қил",
+  Tasks: "Vazifalar",
+  "1 task": "1 ta vazifa",
+  "{count} tasks": "{count} ta vazifa",
+  Bot: "Bot",
+  "Needs attention": "E’tibor talab qiladi",
+  "In progress": "Bajarilmoqda",
+  "Didn't finish": "Tugallanmadi",
+  Stopped: "To‘xtatildi",
+  "Ask a bot for a few things at once and each one shows up here.":
+    "Botdan bir vaqtning o‘zida bir nechta ishni so‘rang, har biri shu yerda ko‘rinadi.",
 } satisfies Messages;
