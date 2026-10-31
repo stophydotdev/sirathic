@@ -24,7 +24,8 @@ const CONFIRMED_DELETES = new Map<string, readonly string[]>([["update_skill", [
 const ACTIONS = [
   {
     kind: "delete",
-    words: /(?:^|[^a-z])(?:destroy|drop|truncate|purge|delete\s+from)(?=$|[^a-z])/iu,
+    words:
+      /(?:^|[^a-z])(?:destroy|drop|truncate|purge|delete\s+from|delete[^a-z]+event)(?=$|[^a-z])/iu,
   },
   { kind: "refund", words: /(?:^|[^a-z])refund(?=$|[^a-z])/iu },
   { kind: "pay", words: /(?:^|[^a-z])(?:pay|charge|payout|transfer)(?=$|[^a-z])/iu },
@@ -34,6 +35,9 @@ const ACTIONS = [
 ] as const;
 
 export type ActionKind = (typeof ACTIONS)[number]["kind"];
+
+const CHANGES =
+  /(?:^|[^a-z])(?:(?:create|update)[^a-z]+event|trash|archive|labels?|unlabel)(?=$|[^a-z])/iu;
 
 const WIPE_OUT =
   /(?:^|[^a-z])(?:drop\s+(?:table|database|schema|view|index|column)|truncate|delete\s+from)(?=$|[^a-z])/iu;
@@ -76,6 +80,9 @@ export const needsApproval = (call: Call, writes: ReadonlySet<string>) =>
     (actionOf(call) !== undefined || (bulkCall(call)?.matches?.length ?? 0) > 0)) ||
   confirmedDelete(call);
 
+export const changesWhatIsTheirs = (call: Call, writes: ReadonlySet<string>) =>
+  writes.has(call.toolName) && !bulkCall(call) && CHANGES.test(spell(call));
+
 export const cardDecisions = (messages: readonly ChatMessage[]): Event[] => {
   const last = messages.at(-1);
   const card = last?.role === "assistant" ? last : messages.at(-2);
@@ -110,6 +117,16 @@ export const cardDecisions = (messages: readonly ChatMessage[]): Event[] => {
 export const withoutOriginalInputs = (messages: ChatMessage[]) => {
   for (const part of messages.flatMap(({ parts }) => parts)) {
     if (isToolUIPart(part) && part.approval) delete part.approval.inputSchemaInput;
+  }
+  return messages;
+};
+
+const DECLINED =
+  "The user declined this action on its card, so it was not done. Do not try it again, reword it, or reach the same goal another way. The service did not refuse and nothing is wrong with it. Tell the user plainly that they declined it and that nothing was changed.";
+
+export const withDeclineReasons = (messages: ChatMessage[]) => {
+  for (const part of messages.flatMap(({ parts }) => parts)) {
+    if (isToolUIPart(part) && part.approval?.approved === false) part.approval.reason ??= DECLINED;
   }
   return messages;
 };

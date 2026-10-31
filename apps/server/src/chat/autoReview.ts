@@ -1,12 +1,40 @@
 import { bulkCall } from "../plugins/bulkInput";
+import { z } from "zod";
 import type { Settings } from "../shared/settings";
 import { yesChances } from "./clef";
-import { type Call, spell } from "./confirm";
+import { type Call, changesWhatIsTheirs, needsApproval, spell } from "./confirm";
 
 const ASK_AT = 0.3;
 const ALLOW_AT = 0.6;
 const MONEY =
   /pay|refund|charge|transfer|purchase|checkout|invoice|donat|buy|money|wire|withdraw|deposit/iu;
+
+const inboxIds = z.array(z.string()).refine((ids) => ids.includes("INBOX"));
+
+const leavesInbox = z.union([
+  z.object({ labelIds: inboxIds }),
+  z.object({ removeLabelIds: inboxIds }),
+]);
+
+const described = (call: Call) =>
+  /unlabel|update[^a-z]+message[^a-z]+labels/iu.test(call.toolName) &&
+  leavesInbox.safeParse(call.input).success
+    ? `${spell(call)} (this archives it: it takes it out of the inbox)`
+    : spell(call);
+
+const chancesFor = async (action: string, rules: Settings["rules"]) => {
+  const chance = await yesChances(
+    `The assistant is about to run the tool ${action.replaceAll("_", " ")}.`,
+    Object.fromEntries(
+      rules.map(({ text }, index) => [
+        `rule${index}`,
+        `The user's rule: "${text}". Is the tool call something this rule is about?`,
+      ]),
+    ),
+    "clef",
+  );
+  return (index: number) => chance(`rule${index}`);
+};
 
 export const asksFirst = async (call: Call, rules: Settings["rules"]) => {
   const action = spell(call);
@@ -14,16 +42,7 @@ export const asksFirst = async (call: Call, rules: Settings["rules"]) => {
     return true;
   }
   try {
-    const chance = await yesChances(
-      `Tool call: ${action.replaceAll("_", " ")}`,
-      Object.fromEntries(
-        rules.map(({ text }, index) => [
-          `rule${index}`,
-          `Rule: "${text}". Is this tool call an example of what the rule describes?`,
-        ]),
-      ),
-    );
-    const score = (index: number) => chance(`rule${index}`);
+    const score = await chancesFor(described(call), rules);
     const asks = rules.some(
       ({ effect }, index) => effect === "ask" && (score(index) ?? 1) >= ASK_AT,
     );
@@ -36,3 +55,24 @@ export const asksFirst = async (call: Call, rules: Settings["rules"]) => {
     return true;
   }
 };
+
+const askedByRule = async (call: Call, rules: Settings["rules"]) => {
+  const asking = rules.filter(({ effect }) => effect === "ask");
+  if (asking.length === 0) return false;
+  try {
+    const score = await chancesFor(described(call), asking);
+    return asking.some((_, index) => (score(index) ?? 1) >= ASK_AT);
+  } catch (err) {
+    console.warn(`auto-review failed: ${err instanceof Error ? err.message : String(err)}`);
+    return true;
+  }
+};
+
+export const needsCard = async (
+  call: Call,
+  writes: ReadonlySet<string>,
+  rules: Settings["rules"],
+) =>
+  needsApproval(call, writes)
+    ? asksFirst(call, rules)
+    : changesWhatIsTheirs(call, writes) && (await askedByRule(call, rules));

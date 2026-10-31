@@ -39,8 +39,8 @@ import { islamicDates } from "../bots/islamicDates";
 import { prayerTimes } from "../prayer/tool";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
-import { asksFirst } from "./autoReview";
-import { needsApproval, withoutOriginalInputs, writingTools } from "./confirm";
+import { needsCard } from "./autoReview";
+import { withDeclineReasons, withoutOriginalInputs, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
 import { fileTools } from "./fileTools";
@@ -416,8 +416,7 @@ export function chatResponse({
             : undefined,
         skills: builtIn,
         loaded,
-        confirm: async (call) =>
-          needsApproval(call, new Set(writes)) && (await asksFirst(call, preferred.rules)),
+        confirm: (call) => needsCard(call, new Set(writes), preferred.rules),
         refine: connectors.refine,
         shorten,
         turn,
@@ -426,8 +425,10 @@ export function chatResponse({
         agent,
         uiMessages: [
           ...(inBot ? await summaryNote(inBot) : []),
-          ...withoutOriginalInputs(
-            await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner),
+          ...withDeclineReasons(
+            withoutOriginalInputs(
+              await readFiles(withReactionNotes(visible).map(withBareCitations), fileOwner),
+            ),
           ),
         ],
         originalMessages: messages,
