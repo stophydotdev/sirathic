@@ -24,7 +24,10 @@ export const withoutPageText = (messages: ChatMessage[]) =>
     }),
   }));
 
-export const withStoredPageText = (messages: ChatMessage[], stored: ChatMessage[]) => {
+export const withSavedResults = (messages: ChatMessage[], stored: ChatMessage[]) => {
+  const cited = new Map(
+    stored.flatMap(({ id, metadata }) => (metadata?.cited ? [[id, metadata.cited] as const] : [])),
+  );
   const outputs = new Map(
     stored.flatMap((message) =>
       message.parts.flatMap((part) =>
@@ -36,6 +39,9 @@ export const withStoredPageText = (messages: ChatMessage[], stored: ChatMessage[
   );
   return messages.map((message) => ({
     ...message,
+    ...(cited.has(message.id) && {
+      metadata: { ...message.metadata, cited: cited.get(message.id) },
+    }),
     parts: message.parts.map((part) => {
       if (part.type !== "tool-search_web" || part.state !== "output-available") return part;
       return { ...part, output: outputs.get(part.toolCallId) ?? part.output };

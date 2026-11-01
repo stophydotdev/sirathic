@@ -50,7 +50,7 @@ import { appRouter } from "./router";
 import { createContext } from "./trpc";
 import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
-import { withStoredPageText } from "./chat/pageText";
+import { withSavedResults } from "./chat/pageText";
 import {
   messageSchemas,
   openSession,
@@ -117,7 +117,7 @@ app.post("/api/chat", (c) =>
     if (!user) throw new StatusError(401, "not signed in");
     const by = user.id;
     const stored = (input.incognito ? undefined : await openSession(input.id, by, false)) ?? [];
-    const validated = withStoredPageText(
+    const validated = withSavedResults(
       await validateUIMessages<ChatMessage>({
         messages: input.messages,
         ...messageSchemas,
