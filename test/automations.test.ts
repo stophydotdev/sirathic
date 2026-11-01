@@ -129,7 +129,7 @@ mock.module("../apps/server/src/chat/response", () => ({
   },
 }));
 
-const { isSkip, runDue } = await import("../apps/server/src/automations/runner");
+const { isSkip, lastWords, runDue } = await import("../apps/server/src/automations/runner");
 
 test("a run that fails still saves an unread chat with the reason and ends the one-time automation", async () => {
   const logged = console.error;
@@ -336,6 +336,15 @@ test("a routine reply of SKIP stays out of the chat, any other reply is a post",
     false,
     false,
   ]);
+  const progressThenSkip = {
+    id: "a",
+    role: "assistant" as const,
+    parts: [
+      { type: "text" as const, text: "I'm checking earlier reports." },
+      { type: "text" as const, text: "SKIP" },
+    ],
+  };
+  expect(isSkip(lastWords(progressThenSkip))).toBe(true);
 });
 
 test("a bot routine run sends the model only its brief, numbers citations after the chat's and appends to it", async () => {

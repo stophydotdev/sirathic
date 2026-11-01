@@ -1,6 +1,6 @@
 import { parseJsonEventStream, type UIMessageChunk, uiMessageChunkSchema } from "ai";
 import { z } from "zod";
-import { isSkip, ownerOf } from "../automations/runner";
+import { isSkip, lastWords, ownerOf } from "../automations/runner";
 import { getSettings } from "../account/settings";
 import { listSkills } from "../skills/skills";
 import { connectedTools } from "../plugins/connections";
@@ -221,7 +221,7 @@ async function wake(bot: BotScope, finished: Task[]) {
   const last = answered.at(-1);
   if (last?.role !== "assistant" || !last.parts.some((part) => part.type !== "step-start"))
     return "dropped";
-  if (isSkip(messageText(last))) return "silent";
+  if (isSkip(lastWords(last))) return "silent";
   await saveSession(bot.id, bot.owner, answered, bot.id);
   await updateSession(bot.id, bot.owner, { unread: true });
   void refreshSummary({
