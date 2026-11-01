@@ -166,7 +166,7 @@ export const userForm = z.object({
   fields: z
     .array(
       z.object({
-        label: z.string().min(1).max(60).describe("The field's label as the page shows it."),
+        label: z.string().min(1).max(1_000).describe("The field's label as the page shows it."),
         target,
         secret: z
           .boolean()
