@@ -411,6 +411,7 @@ export default {
     "وړیا اسلامي ځوابونو انجن. ځوابونه له قرآن، د درجې سره حدیثونو او د علماوو له فتواوو راځي او خپلې سرچينې ښيي.",
   Privacy: "محرمیت",
   Terms: "شرایط",
+  "Open data": "پرانیستي معلومات",
   "Build and manage Wix sites": "د Wix سایټونه جوړ او اداره کړئ",
   "Build and run automations": "اتومات کارونه جوړ او پرمخ بوځئ",
   "Build campaigns and read reports": "کمپاینونه جوړ کړئ او راپورونه ولولئ",

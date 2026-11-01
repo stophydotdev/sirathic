@@ -400,6 +400,7 @@ export const MESSAGES = [
   "About",
   "Privacy",
   "Terms",
+  "Open data",
   "Build and manage Wix sites",
   "Build and run automations",
   "Build campaigns and read reports",

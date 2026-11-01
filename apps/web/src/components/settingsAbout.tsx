@@ -26,6 +26,11 @@ export const AboutSection: FC = () => {
           {t("Open")}
         </Link>
       </Row>
+      <Row label={t("Open data")}>
+        <Link href="/data" onClick={() => setOpen(false)} className={control}>
+          {t("Open")}
+        </Link>
+      </Row>
       <Row label={t("Contact")} hint={t("Report a wrong answer or a bug")}>
         <a href={`mailto:${CONTACT}`} className={control}>
           {t("Email us")}

@@ -419,6 +419,7 @@ export default {
     "Moteur de réponses islamique gratuit. Les réponses viennent du Coran, des hadiths avec leur degré d'authenticité et des avis des savants, et citent leurs sources.",
   Privacy: "Confidentialité",
   Terms: "Conditions",
+  "Open data": "Données ouvertes",
   "Build and manage Wix sites": "Créez et gérez des sites Wix",
   "Build and run automations": "Créez et lancez des automatisations",
   "Build campaigns and read reports": "Créez des campagnes et consultez les rapports",

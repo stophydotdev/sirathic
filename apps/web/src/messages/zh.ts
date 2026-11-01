@@ -402,6 +402,7 @@ export default {
     "免费的伊斯兰问答引擎。回答依据《古兰经》、标明真实等级的圣训和学者的教法意见，并注明出处。",
   Privacy: "隐私",
   Terms: "条款",
+  "Open data": "开放数据",
   "Build and manage Wix sites": "创建并管理 Wix 网站",
   "Build and run automations": "创建并运行自动化",
   "Build campaigns and read reports": "创建营销活动并阅读报告",

@@ -415,6 +415,7 @@ export default {
     "Mesin penjawab Islami gratis. Jawaban bersumber dari Al-Qur'an, hadis beserta derajatnya, dan pendapat ulama, serta menyebutkan sumbernya.",
   Privacy: "Privasi",
   Terms: "Ketentuan",
+  "Open data": "Data terbuka",
   "Build and manage Wix sites": "Buat dan kelola situs Wix",
   "Build and run automations": "Buat dan jalankan otomatisasi",
   "Build campaigns and read reports": "Buat kampanye dan baca laporan",
