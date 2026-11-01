@@ -216,7 +216,7 @@ const followUps = z
   .min(2)
   .max(3)
   .describe(
-    "Two or three short next asks the user can tap under the card, like 'More gadgets', 'Under $50' or 'Ships to Slovenia'.",
+    "Two or three short next asks the user can tap at the end of your answer, like 'More gadgets', 'Under $50' or 'Ships to Slovenia'.",
   );
 
 export const products = z.object({

@@ -1,6 +1,7 @@
 "use client";
 
 import { AnswerCard, MemoryUsed } from "@/components/answerCard";
+import { ProductFollowUps } from "@/components/productsCard";
 import { BotMessageActions, BotReactions, sentAt } from "@/components/botMessageActions";
 import { splitQuote } from "@sirathic/app/botQuote";
 import { ReplyError } from "@/components/answer";
@@ -251,6 +252,7 @@ const BotSays: FC = () => {
             {!working && index === lastText && <MemoryUsed />}
           </Fragment>
         ))}
+        {!working && <ProductFollowUps />}
         {working && <Working step={step && stepLineOf(step)} />}
         <ReplyError />
       </div>
