@@ -77,6 +77,11 @@ const NUDGE_ONLY =
 const textOf = (message: ChatMessage | undefined) =>
   message?.role === "assistant" ? messageText(message) : "";
 
+export const lastWords = (message: ChatMessage | undefined) =>
+  message?.role === "assistant"
+    ? (message.parts.flatMap((part) => (part.type === "text" ? [part.text] : [])).at(-1) ?? "")
+    : "";
+
 export const isSkip = (text: string) =>
   text
     .trim()
@@ -266,7 +271,7 @@ async function runAutomation({
     ...(failedInARow >= PAUSE_AFTER && { enabled: false, nextRunAt: null }),
   };
   const added = (answered ?? []).map((message) => (message.id === asked.id ? asked : message));
-  const skipped = !answered || isSkip(textOf(added.at(-1)));
+  const skipped = !answered || isSkip(lastWords(added.at(-1)));
   track(
     {
       name: "routine.ran",
