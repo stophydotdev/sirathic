@@ -207,7 +207,9 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
         ref={scroll}
         contentContainerClassName="px-4 pb-6"
         keyboardShouldPersistTaps="handled"
-        onContentSizeChange={() => scroll.current?.scrollToEnd({ animated: busy })}
+        onContentSizeChange={() =>
+          requestAnimationFrame(() => scroll.current?.scrollToEnd({ animated: busy }))
+        }
       >
         <View className="items-start pt-8">
           <Text className="bg-foreground/7 text-foreground font-sans overflow-hidden rounded-3xl px-4 py-2 text-base">
