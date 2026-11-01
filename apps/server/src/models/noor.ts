@@ -33,7 +33,7 @@ const NOOR = "sirathic-noor-1-flash";
 
 const deepseek = workersAi.chat("@cf/deepseek-ai/deepseek-v4.1-flash-1017");
 
-const answering = wrapLanguageModel({ model: deepseek, middleware: [leanTools] });
+export const NOOR_MODEL = wrapLanguageModel({ model: deepseek, middleware: [leanTools] });
 
 export const NOOR_MODELS: Model[] = [{ slug: NOOR, name: "Noor 1 Flash", maker: "sirathic" }];
 
@@ -44,4 +44,4 @@ export const NOOR_SIDE_MODEL = wrapLanguageModel({
   middleware: [leanTools, thinkingOff],
 });
 
-export const noorModel = (slug: string) => (slug === NOOR ? answering : undefined);
+export const noorModel = (slug: string) => (slug === NOOR ? NOOR_MODEL : undefined);

@@ -230,3 +230,21 @@ test("a bulk action lets Clef pick the matches, asks once, and runs the write on
   });
   expect(trashed.toSorted()).toEqual(["a", "d"]);
 });
+
+test("a browser task on a page with its own tools hands back before Clef or a model picks a step", async () => {
+  const { WEBMCP_LISTING } = await import("../apps/browser/src/protocol");
+  const { driveTask } = await import("../apps/server/src/bots/browserTask");
+  const page = {
+    url: "https://shop.example/",
+    title: "Shop",
+    page: `${WEBMCP_LISTING}\n  - add_to_cart: Adds an item to the cart\n\n- button "Add to cart" [ref=e2]`,
+  };
+  const acts: string[] = [];
+  const result = await driveTask({ goal: "Add the blue shirt to my cart" }, async (action) => {
+    acts.push(action.kind);
+    return page;
+  });
+  expect(acts).toEqual(["snapshot"]);
+  expect(result.report).toStartWith("Stopped for you: This page offers its own tools");
+  expect(result.page.page).toContain("add_to_cart");
+});

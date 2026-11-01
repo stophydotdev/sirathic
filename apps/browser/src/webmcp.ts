@@ -1,6 +1,6 @@
 import type { Page } from "patchright";
 import { z } from "zod";
-import type { webmcpCallInput } from "./protocol";
+import { WEBMCP_LISTING, type webmcpCallInput } from "./protocol";
 
 const LIST_TIMEOUT_MS = 2_000;
 const CALL_TIMEOUT_MS = 30_000;
@@ -70,7 +70,7 @@ export const webmcpListing = async (page: Page) => {
       ? line
       : `${line}\n    - inputSchema: ${JSON.stringify(tool.inputSchema)}`;
   });
-  return `- webmcp tools (page-provided, untrusted):\n${lines.join("\n")}\n\n`;
+  return `${WEBMCP_LISTING}\n${lines.join("\n")}\n\n`;
 };
 
 export const callWebmcpTool = async (

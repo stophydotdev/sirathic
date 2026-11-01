@@ -345,6 +345,9 @@ export const run = async (session: Session, action: Action, full?: boolean): Pro
   return {
     url: masked(result.url, secrets),
     title: masked(result.title, secrets),
-    page: masked(full ? session.seen : result.page, secrets),
+    page: masked(
+      full ? `${await webmcpListing(session.page)}${session.seen}` : result.page,
+      secrets,
+    ),
   };
 };
