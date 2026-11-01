@@ -863,7 +863,6 @@ export default {
   "Allow automatically": "Payagan nang awtomatiko",
   "Ask first": "Magtanong muna",
   "Add rule": "Magdagdag ng patakaran",
-  "{done} of {count} done": "{done} sa {count} tapos na",
   "{count} steps": "{count} hakbang",
   "Step {at} of {count}": "Hakbang {at} sa {count}",
   "One at a time": "Isa-isa",

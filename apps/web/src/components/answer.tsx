@@ -161,7 +161,6 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
                     <AutomationCard tool={part.toolName} result={part.result} />
                     <AnswerCard
                       name={currentToolName(part.toolName)}
-                      callId={part.toolCallId}
                       args={part.args}
                       result={part.result}
                     />
@@ -243,7 +242,9 @@ const wroteNothing = (message: ThreadMessage) =>
   !message.content.some(
     (part) =>
       (part.type === "text" && part.text.trim() !== "") ||
-      (part.type === "tool-call" && isCardTool(part.toolName)),
+      (part.type === "tool-call" &&
+        isCardTool(part.toolName) &&
+        currentToolName(part.toolName) !== "todo_write"),
   );
 
 const EmptyAnswer: FC = () => {

@@ -96,7 +96,7 @@ Fetch the verses, hadith and rulings you ask about before you write the card, an
     execute: shown,
   }),
   todo_write: tool({
-    description: `Your task list: the durable list of everything the user has asked for in this chat. The user sees it as a checklist, and the full merged list comes back as the result.
+    description: `Your task list: the durable list of everything the user has asked for in this chat. The full merged list comes back as the result.
 
 When to use:
 - The moment a request with two or more parts arrives, record it as todos before you start it.

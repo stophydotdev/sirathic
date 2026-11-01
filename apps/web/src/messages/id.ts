@@ -860,7 +860,6 @@ export default {
   "Allow automatically": "Izinkan otomatis",
   "Ask first": "Tanya dulu",
   "Add rule": "Tambah aturan",
-  "{done} of {count} done": "{done} dari {count} selesai",
   "{count} steps": "{count} langkah",
   "Step {at} of {count}": "Langkah {at} dari {count}",
   "One at a time": "Satu per satu",

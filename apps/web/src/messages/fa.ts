@@ -852,7 +852,6 @@ export default {
   "Allow automatically": "خودکار اجازه بده",
   "Ask first": "اول بپرس",
   "Add rule": "افزودن قانون",
-  "{done} of {count} done": "{done} از {count} انجام شد",
   "{count} steps": "{count} مرحله",
   "Step {at} of {count}": "مرحله {at} از {count}",
   "One at a time": "یکی‌یکی",

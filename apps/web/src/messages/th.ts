@@ -838,7 +838,6 @@ export default {
   "Allow automatically": "อนุญาตอัตโนมัติ",
   "Ask first": "ถามก่อน",
   "Add rule": "เพิ่มกฎ",
-  "{done} of {count} done": "เสร็จแล้ว {done} จาก {count}",
   "{count} steps": "{count} ขั้นตอน",
   "Step {at} of {count}": "ขั้นตอนที่ {at} จาก {count}",
   "One at a time": "ทีละขั้น",

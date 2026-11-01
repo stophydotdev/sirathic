@@ -20,7 +20,6 @@ import { z } from "zod";
 import { api } from "@/lib/api";
 import { API_URL, sessionHeaders } from "@/lib/auth";
 import { useChatState } from "@/lib/chat-state";
-import { latestTodoId } from "@/lib/research";
 import { Answer, type Feedback, PendingReply } from "./answer";
 import { SentFiles } from "./attachment-chip";
 import { Composer } from "./composer";
@@ -28,7 +27,6 @@ import { ComposerDock } from "./composer-dock";
 import { GLASS, GlassFill } from "./glass";
 import { Plus, Share, Spy } from "./icons";
 import { Mark } from "./mark";
-import { LatestTodo } from "./todo-card";
 
 const transportIn = (projectId: string | undefined) =>
   new DefaultChatTransport<ChatMessage>({
@@ -236,37 +234,35 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
               if (busy) scroll.current?.scrollToEnd({ animated: true });
             }}
           >
-            <LatestTodo value={latestTodoId(messages)}>
-              {messages.map((message, index) =>
-                message.role === "user" ? (
-                  <View key={message.id} className="items-end pt-8 pb-6">
-                    <SentFiles message={message} />
-                    <Text className="bg-bubble text-foreground font-sans max-w-[90%] overflow-hidden rounded-3xl px-4 py-2.5 text-base">
-                      {messageText(message)}
-                    </Text>
-                  </View>
-                ) : (
-                  <Answer
-                    key={message.id}
-                    chatId={id}
-                    message={message}
-                    streaming={busy && index === messages.length - 1}
-                    feedback={message.metadata?.feedback ?? null}
-                    onRate={(next) => rate(message.id, next)}
-                    onRetry={() => void regenerate({ messageId: message.id })}
-                    onResearch={
-                      index === messages.length - 1
-                        ? () => {
-                            useChatState.getState().setMode("research");
-                            void regenerate({ messageId: message.id });
-                          }
-                        : undefined
-                    }
-                    onAsk={ask}
-                  />
-                ),
-              )}
-            </LatestTodo>
+            {messages.map((message, index) =>
+              message.role === "user" ? (
+                <View key={message.id} className="items-end pt-8 pb-6">
+                  <SentFiles message={message} />
+                  <Text className="bg-bubble text-foreground font-sans max-w-[90%] overflow-hidden rounded-3xl px-4 py-2.5 text-base">
+                    {messageText(message)}
+                  </Text>
+                </View>
+              ) : (
+                <Answer
+                  key={message.id}
+                  chatId={id}
+                  message={message}
+                  streaming={busy && index === messages.length - 1}
+                  feedback={message.metadata?.feedback ?? null}
+                  onRate={(next) => rate(message.id, next)}
+                  onRetry={() => void regenerate({ messageId: message.id })}
+                  onResearch={
+                    index === messages.length - 1
+                      ? () => {
+                          useChatState.getState().setMode("research");
+                          void regenerate({ messageId: message.id });
+                        }
+                      : undefined
+                  }
+                  onAsk={ask}
+                />
+              ),
+            )}
             {busy && messages.at(-1)?.role === "user" && <PendingReply />}
             {error && (
               <Text className="text-destructive font-sans text-sm">{messageOf(error)}</Text>

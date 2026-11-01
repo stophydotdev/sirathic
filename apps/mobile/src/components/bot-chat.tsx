@@ -9,12 +9,11 @@ import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { api } from "@/lib/api";
 import { useChatState } from "@/lib/chat-state";
 import { type Bot, useBots } from "@/lib/bots";
-import { latestTodoId, toolOf } from "@/lib/research";
+import { toolOf } from "@/lib/research";
 import { ChatLink, type Feedback } from "./answer";
 import { BotAvatar } from "./bot-avatar";
 import { BotMenu, useBotPanel } from "./bot-menu";
 import { BotSays, BotYou, stampOf } from "./bot-turns";
-import { LatestTodo } from "./todo-card";
 import { liveChat, messageOf, savedChat } from "./chat";
 import { Composer } from "./composer";
 import { ComposerDock } from "./composer-dock";
@@ -237,29 +236,27 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
               )
             )}
           </View>
-          <LatestTodo value={latestTodoId(messages)}>
-            {messages.map((message, index) =>
-              message.role === "user" ? (
-                <BotYou
-                  key={message.id}
-                  message={message}
-                  reply={messages[index + 1]}
-                  stamp={stampOf(messages, index)}
-                  color={bot.color}
-                />
-              ) : (
-                <BotSays
-                  key={message.id}
-                  message={message}
-                  running={busy && index === messages.length - 1}
-                  reply={answerAfter(messages, index)}
-                  feedback={message.metadata?.feedback ?? null}
-                  onRate={(next) => rate(message.id, next)}
-                  onAsk={ask}
-                />
-              ),
-            )}
-          </LatestTodo>
+          {messages.map((message, index) =>
+            message.role === "user" ? (
+              <BotYou
+                key={message.id}
+                message={message}
+                reply={messages[index + 1]}
+                stamp={stampOf(messages, index)}
+                color={bot.color}
+              />
+            ) : (
+              <BotSays
+                key={message.id}
+                message={message}
+                running={busy && index === messages.length - 1}
+                reply={answerAfter(messages, index)}
+                feedback={message.metadata?.feedback ?? null}
+                onRate={(next) => rate(message.id, next)}
+                onAsk={ask}
+              />
+            ),
+          )}
           {error && <Text className="text-destructive font-sans text-sm">{messageOf(error)}</Text>}
           <Learned bot={bot} messages={messages} ready={status === "ready"} />
         </ScrollView>

@@ -861,7 +861,6 @@ export default {
   "Allow automatically": "Consenti automaticamente",
   "Ask first": "Chiedi prima",
   "Add rule": "Aggiungi regola",
-  "{done} of {count} done": "{done} di {count} fatte",
   "{count} steps": "{count} passaggi",
   "Step {at} of {count}": "Passaggio {at} di {count}",
   "One at a time": "Uno alla volta",

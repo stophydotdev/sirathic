@@ -860,7 +860,6 @@ export default {
   "Allow automatically": "Автоматтык түрдө уруксат бер",
   "Ask first": "Адегенде сура",
   "Add rule": "Эреже кошуу",
-  "{done} of {count} done": "{count} ичинен {done} даяр",
   "{count} steps": "{count} кадам",
   "Step {at} of {count}": "{count} кадамдын {at}-кадамы",
   "One at a time": "Бирден",

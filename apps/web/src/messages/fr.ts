@@ -866,7 +866,6 @@ export default {
   "Allow automatically": "Autoriser automatiquement",
   "Ask first": "Demander d'abord",
   "Add rule": "Ajouter une règle",
-  "{done} of {count} done": "{done} sur {count} terminées",
   "{count} steps": "{count} étapes",
   "Step {at} of {count}": "Étape {at} sur {count}",
   "One at a time": "Une à la fois",
