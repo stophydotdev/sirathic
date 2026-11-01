@@ -27,7 +27,7 @@ import type { Room } from "../bots/room";
 import { readingOnly, taskTools } from "../bots/taskTools";
 import { type Summon, teamTools, teammatesOf } from "../bots/team";
 import { summaryNote } from "../bots/summary";
-import { chatSearchTools, SEARCH_OUR_CHAT } from "../bots/chatSearch";
+import { chatSearchTools, ourChatNote } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
 import { islamicDates } from "../bots/islamicDates";
 import { prayerTimes } from "../prayer/tool";
@@ -337,7 +337,7 @@ export function chatResponse({
         skills: builtIn,
         remembers: owner !== undefined && handsOn && (inBot !== undefined || preferred.saveMemory),
         connectedApps: plugins.flatMap((plugin) => (plugin.connected ? [plugin.name] : [])),
-        toolNotes: [searchable ? SEARCH_OUR_CHAT : ""],
+        toolNotes: [searchable ? await ourChatNote(disk) : ""],
         teammates,
         room,
       });
