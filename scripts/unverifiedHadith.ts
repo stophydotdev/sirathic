@@ -69,8 +69,10 @@ for (const { book, text } of pages) {
     if (!paragraph.startsWith("|")) {
       const plain = paragraph.replace(/\[((?:\\.|[^\]\\])*)\]\([^)]*\)/gu, "$1").trim();
       const arabic = plain.match(ARABIC_LETTERS)?.length ?? 0;
+      const short = arabic <= SHORT_LETTERS;
+      if (short && plain.startsWith("باب")) continue;
       if (arabic > (plain.match(LATIN_LETTERS)?.length ?? 0)) {
-        pending.push({ text: plain, short: arabic <= SHORT_LETTERS });
+        pending.push({ text: plain, short });
       } else if (/[A-Za-z]/u.test(plain)) {
         pending = [];
       }
