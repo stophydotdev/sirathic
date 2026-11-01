@@ -83,6 +83,8 @@ export default {
   Discarded: "পৰিত্যাগ কৰা হ'ল",
   "Not sent": "পঠোৱা নহ'ল",
   "Could not save your changes. Try again.": "আপোনাৰ সলনিবোৰ সংৰক্ষণ কৰিব পৰা নগ'ল। আকৌ চেষ্টা কৰক।",
+  "You already saved a login for this site. Open it to change it.":
+    "আপুনি এই ছাইটৰ বাবে ইতিমধ্যে এটা লগইন সাঁচি থৈছে। সলনি কৰিবলৈ সেইটো খোলক।",
   Confirm: "নিশ্চিত কৰক",
   Confirmed: "নিশ্চিত কৰা হ'ল",
   Cancelled: "বাতিল কৰা হ'ল",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "ৰুটিন হৈছে এই বটে এটা সময়সূচী অনুসৰি চলোৱা পুনৰাবৃত্ত কাম।",
   "Delete “{name}”?": "“{name}” মচিবনে?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "এইটোৱে বটটো আৰু ইয়াৰ চেট ইতিহাস স্থায়ীভাৱে মচি পেলাব। এইটো আৰু ঘূৰাই আনিব নোৱাৰি।",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "এইটোৱে বটটো, ইয়াৰ চেট ইতিহাস আৰু ৰুটিনসমূহ স্থায়ীভাৱে মচি পেলাব। এইটো আৰু ঘূৰাই আনিব নোৱাৰি।",
   "Upload files or images": "ফাইল বা ছবি আপল'ড কৰক",
   Attachment: "সংলগ্নক",
   Chat: "চেট",

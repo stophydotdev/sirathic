@@ -83,6 +83,8 @@ export default {
   Discarded: "Scartata",
   "Not sent": "Non inviata",
   "Could not save your changes. Try again.": "Impossibile salvare le modifiche. Riprova.",
+  "You already saved a login for this site. Open it to change it.":
+    "Hai già salvato un accesso per questo sito. Aprilo per modificarlo.",
   Confirm: "Conferma",
   Confirmed: "Confermato",
   Cancelled: "Annullato",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Le routine sono attività ricorrenti che questo bot esegue secondo una pianificazione.",
   "Delete “{name}”?": "Eliminare “{name}”?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Questo elimina definitivamente il bot e la sua cronologia chat. L'azione non può essere annullata.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Questo elimina definitivamente il bot, la sua cronologia chat e le sue routine. L'azione non può essere annullata.",
   "Upload files or images": "Carica file o immagini",
   Attachment: "Allegato",
   Chat: "Chat",

@@ -83,6 +83,8 @@ export default {
   Discarded: "تم التجاهل",
   "Not sent": "لم يُرسل",
   "Could not save your changes. Try again.": "تعذّر حفظ تعديلاتك. حاول مرة أخرى.",
+  "You already saved a login for this site. Open it to change it.":
+    "لقد حفظت تسجيل دخول لهذا الموقع بالفعل. افتحه لتغييره.",
   Confirm: "تأكيد",
   Confirmed: "تم التأكيد",
   Cancelled: "تم الإلغاء",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "الروتينات مهام متكررة ينفذها هذا البوت وفق جدول زمني.",
   "Delete “{name}”?": "حذف “{name}”؟",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "سيؤدي هذا إلى حذف البوت وسجل محادثاته نهائيًا. لا يمكن التراجع عن ذلك.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "سيؤدي هذا إلى حذف البوت وسجل محادثاته وروتيناته نهائيًا. لا يمكن التراجع عن ذلك.",
   "Upload files or images": "رفع ملفات أو صور",
   Attachment: "مرفق",
   Chat: "محادثة",

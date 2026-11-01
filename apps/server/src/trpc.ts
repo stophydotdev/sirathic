@@ -8,6 +8,7 @@ const TRPC_CODES = {
   401: "UNAUTHORIZED",
   403: "FORBIDDEN",
   404: "NOT_FOUND",
+  409: "CONFLICT",
   429: "TOO_MANY_REQUESTS",
   502: "BAD_GATEWAY",
 } as const satisfies Record<StatusError["status"], TRPCError["code"]>;

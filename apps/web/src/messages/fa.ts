@@ -83,6 +83,8 @@ export default {
   Discarded: "کنار گذاشته شد",
   "Not sent": "ارسال نشد",
   "Could not save your changes. Try again.": "تغییرات ذخیره نشد. دوباره تلاش کنید.",
+  "You already saved a login for this site. Open it to change it.":
+    "قبلاً یک ورود برای این سایت ذخیره کرده‌اید. برای تغییرش آن را باز کنید.",
   Confirm: "تأیید",
   Confirmed: "تأیید شد",
   Cancelled: "لغو شد",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "روتین‌ها کارهای تکرارشونده‌ای هستند که این بات طبق زمان‌بندی انجام می‌دهد.",
   "Delete “{name}”?": "“{name}” حذف شود؟",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "این کار بات و تاریخچهٔ گفتگوی آن را برای همیشه حذف می‌کند. قابل بازگشت نیست.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "این کار بات، تاریخچهٔ گفتگو و روتین‌های آن را برای همیشه حذف می‌کند. قابل بازگشت نیست.",
   "Upload files or images": "بارگذاری فایل یا تصویر",
   Attachment: "پیوست",
   Chat: "گفتگو",

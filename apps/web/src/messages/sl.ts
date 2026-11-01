@@ -98,6 +98,8 @@ export default {
   Discarded: "Zavrženo",
   "Not sent": "Ni poslano",
   "Could not save your changes. Try again.": "Sprememb ni bilo mogoče shraniti. Poskusite znova.",
+  "You already saved a login for this site. Open it to change it.":
+    "Za to stran ste prijavo že shranili. Odprite jo, da jo spremenite.",
   Confirm: "Potrdi",
   Confirmed: "Potrjeno",
   Cancelled: "Preklicano",
@@ -130,8 +132,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Rutine so ponavljajoče se naloge, ki jih ta bot izvaja po urniku.",
   "Delete “{name}”?": "Izbrisati „{name}“?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "To trajno izbriše bota in zgodovino njegovih pogovorov. Tega ni mogoče razveljaviti.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "To trajno izbriše bota, zgodovino njegovih pogovorov in njegove rutine. Tega ni mogoče razveljaviti.",
   "Add files or tools": "Dodaj datoteke ali orodja",
   "Upload files or images": "Naloži datoteke ali slike",
   Attachment: "Priponka",

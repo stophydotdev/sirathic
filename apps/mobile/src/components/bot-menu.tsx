@@ -166,7 +166,7 @@ export const BotMenu: FC<{
               onPress={then(() =>
                 useConfirm.getState().ask({
                   title: `Delete “${bot.name}”?`,
-                  body: "This permanently deletes the bot and its chat history. This can't be undone.",
+                  body: "This permanently deletes the bot, its chat history and its routines. This can't be undone.",
                   action: "Delete",
                   danger: true,
                   onConfirm: () => void useBots.getState().remove(bot.id),

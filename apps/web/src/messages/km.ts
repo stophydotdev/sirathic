@@ -82,6 +82,8 @@ export default {
   Discarded: "បានបោះបង់",
   "Not sent": "មិនបានផ្ញើ",
   "Could not save your changes. Try again.": "មិនអាចរក្សាទុកការកែប្រែរបស់អ្នកបានទេ។ សូមព្យាយាមម្ដងទៀត។",
+  "You already saved a login for this site. Open it to change it.":
+    "អ្នកបានរក្សាទុកការចូលសម្រាប់គេហទំព័រនេះរួចហើយ។ បើកវាដើម្បីកែប្រែ។",
   Confirm: "បញ្ជាក់",
   Confirmed: "បានបញ្ជាក់",
   Cancelled: "បានបោះបង់",
@@ -114,8 +116,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "ទម្លាប់គឺជាកិច្ចការដដែលៗ ដែលបូតនេះដំណើរការតាមកាលវិភាគ។",
   "Delete “{name}”?": "លុប “{name}” ឬ?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "សកម្មភាពនេះលុបបូត និងប្រវត្តិជជែករបស់វាជាអចិន្ត្រៃយ៍។ មិនអាចត្រឡប់វិញបានទេ។",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "សកម្មភាពនេះលុបបូត ប្រវត្តិជជែក និងទម្លាប់របស់វាជាអចិន្ត្រៃយ៍។ មិនអាចត្រឡប់វិញបានទេ។",
   "Upload files or images": "ផ្ទុកឯកសារ ឬរូបភាពឡើង",
   Attachment: "ឯកសារភ្ជាប់",
   Chat: "ការជជែក",

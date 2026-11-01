@@ -83,6 +83,8 @@ export default {
   Discarded: "破棄しました",
   "Not sent": "送信されませんでした",
   "Could not save your changes. Try again.": "変更を保存できませんでした。もう一度お試しください。",
+  "You already saved a login for this site. Open it to change it.":
+    "このサイトのログインはすでに保存されています。変更するには、それを開いてください。",
   Confirm: "確認",
   Confirmed: "確認済み",
   Cancelled: "キャンセル済み",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "ルーティンは、このボットがスケジュールに沿って実行する定期的なタスクです。",
   "Delete “{name}”?": "“{name}”を削除しますか？",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "ボットとそのチャット履歴が完全に削除されます。この操作は元に戻せません。",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "ボットとそのチャット履歴、ルーティンが完全に削除されます。この操作は元に戻せません。",
   "Upload files or images": "ファイルや画像をアップロード",
   Attachment: "添付ファイル",
   Chat: "チャット",

@@ -84,6 +84,8 @@ export default {
   Discarded: "تاشلىۋېتىلدى",
   "Not sent": "ئەۋەتىلمىدى",
   "Could not save your changes. Try again.": "ئۆزگەرتىشلىرىڭىز ساقلانمىدى. قايتا سىناڭ.",
+  "You already saved a login for this site. Open it to change it.":
+    "بۇ تور بېكەت ئۈچۈن ئاللىبۇرۇن كىرىش ساقلىغانسىز. ئۆزگەرتىش ئۈچۈن ئۇنى ئېچىڭ.",
   Confirm: "جەزملەش",
   Confirmed: "جەزملەندى",
   Cancelled: "بىكار قىلىندى",
@@ -116,8 +118,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "ئادەتلەر بۇ بوت جەدۋەل بويىچە قايتا-قايتا ئىجرا قىلىدىغان ۋەزىپىلەردۇر.",
   "Delete “{name}”?": "“{name}” ئۆچۈرۈلسۇنمۇ؟",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "بۇ بوتنى ۋە ئۇنىڭ سۆھبەت تارىخىنى مەڭگۈلۈك ئۆچۈرىدۇ. بۇنى ئەسلىگە كەلتۈرگىلى بولمايدۇ.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "بۇ بوتنى، ئۇنىڭ سۆھبەت تارىخىنى ۋە ئادەتلىرىنى مەڭگۈلۈك ئۆچۈرىدۇ. بۇنى ئەسلىگە كەلتۈرگىلى بولمايدۇ.",
   "Upload files or images": "ھۆججەت ياكى رەسىم يۈكلەش",
   Attachment: "قوشۇمچە",
   Chat: "سۆھبەت",

@@ -82,6 +82,8 @@ export default {
   Discarded: "ละทิ้งแล้ว",
   "Not sent": "ไม่ได้ส่ง",
   "Could not save your changes. Try again.": "บันทึกการแก้ไขไม่ได้ ลองอีกครั้ง",
+  "You already saved a login for this site. Open it to change it.":
+    "คุณบันทึกข้อมูลเข้าสู่ระบบของเว็บไซต์นี้ไว้แล้ว เปิดรายการนั้นเพื่อแก้ไข",
   Confirm: "ยืนยัน",
   Confirmed: "ยืนยันแล้ว",
   Cancelled: "ยกเลิกแล้ว",
@@ -114,8 +116,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "กิจวัตรคืองานที่ทำซ้ำตามกำหนดเวลาซึ่งบอตนี้ทำให้",
   "Delete “{name}”?": "ลบ “{name}” ไหม",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "การดำเนินการนี้จะลบบอตและประวัติแชทของบอตอย่างถาวร และย้อนกลับไม่ได้",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "การดำเนินการนี้จะลบบอต ประวัติแชท และกิจวัตรของบอตอย่างถาวร และย้อนกลับไม่ได้",
   "Upload files or images": "อัปโหลดไฟล์หรือรูปภาพ",
   Attachment: "ไฟล์แนบ",
   Chat: "แชท",

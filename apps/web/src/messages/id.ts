@@ -83,6 +83,8 @@ export default {
   Discarded: "Dibuang",
   "Not sent": "Tidak terkirim",
   "Could not save your changes. Try again.": "Perubahan tidak dapat disimpan. Coba lagi.",
+  "You already saved a login for this site. Open it to change it.":
+    "Anda sudah menyimpan login untuk situs ini. Buka login itu untuk mengubahnya.",
   Confirm: "Konfirmasi",
   Confirmed: "Dikonfirmasi",
   Cancelled: "Dibatalkan",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Rutinitas adalah tugas berulang yang dijalankan bot ini sesuai jadwal.",
   "Delete “{name}”?": "Hapus “{name}”?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Ini menghapus bot dan riwayat obrolannya secara permanen. Tindakan ini tidak dapat dibatalkan.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Ini menghapus bot, riwayat obrolannya, dan rutinitasnya secara permanen. Tindakan ini tidak dapat dibatalkan.",
   "Upload files or images": "Unggah berkas atau gambar",
   Attachment: "Lampiran",
   Chat: "Obrolan",
