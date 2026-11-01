@@ -26,10 +26,18 @@ const idsCache = cacheFor({
 
 export type Filter = { where: SQL; key: string };
 
+const UNMARK = new Map([...MARKED].map((mark, at) => [mark, UNMARKED[at] ?? ""]));
+
+const unmarked = (text: string) => [...text].map((letter) => UNMARK.get(letter) ?? letter).join("");
+
 const wordQuery = (word: string) =>
   ARABIC.test(word)
-    ? sql`to_tsquery('simple', ${arabicForms(word).join(" | ")})`
-    : sql`plainto_tsquery('english', translate(${word}, ${MARKED}, ${UNMARKED}))`;
+    ? sql`to_tsquery('simple', ${[
+        ...new Set(arabicForms(word).flatMap((form) => [form, unmarked(form)])),
+      ]
+        .filter((form) => form.length > 1)
+        .join(" | ")})`
+    : sql`(plainto_tsquery('english', ${word}) || plainto_tsquery('english', ${unmarked(word)}))`;
 
 const rareWordScore = async (table: Searchable["table"], query: string) => {
   const words = [
@@ -124,7 +132,7 @@ const searchIds = async (
     if (indexOnly) await tx.execute(sql`set local enable_seqscan = off`);
     return tx.execute(sql`
     with words as (
-      select plainto_tsquery('english', translate(${plain}, ${MARKED}, ${UNMARKED})) as every_word
+      select plainto_tsquery('english', ${plain}) || plainto_tsquery('english', ${unmarked(plain)}) as every_word
     ),
     keyword as (${keyword}),
     meaning as (
