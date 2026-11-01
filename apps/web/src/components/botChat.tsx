@@ -382,7 +382,7 @@ const BotYou: FC = () => {
         <BotMessageActions text={splitQuote(text).text} />
         <div
           className={cn(
-            "relative min-w-0 max-w-4/5 text-base text-white",
+            "relative min-w-0 max-w-4/5 text-sm text-white",
             (reaction || ownReaction) && "mb-3",
           )}
         >

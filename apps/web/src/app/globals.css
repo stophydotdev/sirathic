@@ -137,6 +137,11 @@
 }
 
 [data-palette="grove"] {
+  --foreground: oklch(0.24 0.03 160);
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 62%, var(--background));
   --background: oklch(0.972 0.005 157.15);
   --card: var(--background);
   --popover: var(--background);
@@ -149,6 +154,7 @@
 
 .dark[data-palette="grove"],
 [data-mode="dark"][data-palette="grove"] {
+  --foreground: oklch(0.92 0.02 160);
   --background: oklch(0.261 0.022 162.75);
   --card: color-mix(in oklab, var(--background) 94%, white);
   --popover: color-mix(in oklab, var(--background) 94%, white);
@@ -160,6 +166,11 @@
 }
 
 [data-palette="ocean"] {
+  --foreground: oklch(0.24 0.03 245);
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 62%, var(--background));
   --background: oklch(0.974 0.003 241.6);
   --card: var(--background);
   --popover: var(--background);
@@ -172,6 +183,7 @@
 
 .dark[data-palette="ocean"],
 [data-mode="dark"][data-palette="ocean"] {
+  --foreground: oklch(0.92 0.02 245);
   --background: oklch(0.243 0.024 250.57);
   --card: color-mix(in oklab, var(--background) 94%, white);
   --popover: color-mix(in oklab, var(--background) 94%, white);
@@ -183,6 +195,11 @@
 }
 
 [data-palette="ember"] {
+  --foreground: oklch(0.24 0.025 50);
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 62%, var(--background));
   --background: oklch(0.977 0.003 60.73);
   --card: var(--background);
   --popover: var(--background);
@@ -195,6 +212,7 @@
 
 .dark[data-palette="ember"],
 [data-mode="dark"][data-palette="ember"] {
+  --foreground: oklch(0.92 0.02 50);
   --background: oklch(0.246 0.019 42.04);
   --card: color-mix(in oklab, var(--background) 94%, white);
   --popover: color-mix(in oklab, var(--background) 94%, white);
@@ -206,6 +224,11 @@
 }
 
 [data-palette="iris"] {
+  --foreground: oklch(0.24 0.04 295);
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 62%, var(--background));
   --background: oklch(0.977 0.004 303.23);
   --card: var(--background);
   --popover: var(--background);
@@ -218,6 +241,7 @@
 
 .dark[data-palette="iris"],
 [data-mode="dark"][data-palette="iris"] {
+  --foreground: oklch(0.92 0.025 295);
   --background: oklch(0.226 0.031 293.74);
   --card: color-mix(in oklab, var(--background) 94%, white);
   --popover: color-mix(in oklab, var(--background) 94%, white);
@@ -229,6 +253,11 @@
 }
 
 [data-palette="rose"] {
+  --foreground: oklch(0.24 0.035 330);
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --muted-foreground: color-mix(in oklab, var(--foreground) 62%, var(--background));
   --background: oklch(0.982 0.01 325.65);
   --card: var(--background);
   --popover: var(--background);
@@ -241,6 +270,7 @@
 
 .dark[data-palette="rose"],
 [data-mode="dark"][data-palette="rose"] {
+  --foreground: oklch(0.92 0.025 330);
   --background: oklch(0.228 0.02 307.47);
   --card: color-mix(in oklab, var(--background) 94%, white);
   --popover: color-mix(in oklab, var(--background) 94%, white);
@@ -338,7 +368,8 @@
 }
 
 @media print {
-  .dark {
+  .dark,
+  .dark[data-palette] {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -497,7 +528,7 @@
 }
 
 .bot-bubble {
-  @apply bg-foreground/7 w-fit min-w-0 rounded-3xl px-4 py-2 text-base;
+  @apply bg-foreground/7 w-fit min-w-0 rounded-3xl px-4 py-2 text-sm;
 }
 
 .typing-dot {
