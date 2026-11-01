@@ -6,6 +6,7 @@ import {
   OUR_LETTERED,
 } from "../packages/core/src/tools/hadithLinks";
 import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
+import { verseSource } from "../apps/server/src/chat/cite";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
 
@@ -88,4 +89,18 @@ test("a verse in French comes from its published translation, without footnote m
   } finally {
     openData.mockRestore();
   }
+});
+
+test("a verse's source preview leaves out the translation's footnote marks", () => {
+  const verse = {
+    id: "quran:13:1",
+    surah: 13,
+    surahName: "Ar-Ra'd",
+    ayah: 1,
+    textAr: "المر",
+    textEn: "Alif, Lām, Meem, Rā.[622] These are the verses of the Book[623]",
+    footnotesEn: null,
+    tafsirAr: null,
+  };
+  expect(verseSource(verse).snippet).toBe("Alif, Lām, Meem, Rā. These are the verses of the Book");
 });

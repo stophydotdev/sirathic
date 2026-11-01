@@ -6,6 +6,7 @@ import type { quranSearch } from "@sirathic/core/tools/quranSearch";
 import type { Source } from "../shared/sources";
 
 const SNIPPET_CHARS = 300;
+const FOOTNOTE_MARK = /\[\d+\]/gu;
 
 export type Cite = (url: string) => number;
 export type Verse = Awaited<ReturnType<typeof quranSearch>>["verses"][number];
@@ -17,7 +18,7 @@ export type Hit = { url: string; title: string; description: string };
 export const verseSource = (verse: Verse): Source => ({
   url: `https://quran.com/${verse.surah}/${verse.ayah}`,
   title: `Quran ${verse.surah}:${verse.ayah}, ${verse.surahName}`,
-  snippet: verse.textEn.slice(0, SNIPPET_CHARS),
+  snippet: verse.textEn.replaceAll(FOOTNOTE_MARK, "").slice(0, SNIPPET_CHARS),
 });
 
 const COLLECTIONS = new Map([
