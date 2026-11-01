@@ -5,6 +5,7 @@ import { useLocale, useT } from "@/components/i18n";
 import { ProductDialog } from "@/components/productDialog";
 import { faviconUrl } from "@/components/sources";
 import { shownProducts } from "@sirathic/server/cards";
+import { currentToolName } from "@sirathic/server/messages";
 import { useAuiState } from "@assistant-ui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowLeft01Icon, ArrowRight01Icon, StarIcon } from "@hugeicons/core-free-icons";
@@ -20,10 +21,6 @@ export const ProductsCard: FC<{ result: unknown }> = ({ result }) => {
   const row = useRef<HTMLDivElement>(null);
   const [ends, setEnds] = useState({ back: false, next: false });
   const [opened, setOpened] = useState<string>();
-  const chat = useChatState()?.chat;
-  const offered = useAuiState(
-    (s) => !s.thread.isRunning && s.thread.messages.at(-1)?.id === s.message.id,
-  );
 
   const measure = () => {
     const element = row.current;
@@ -139,22 +136,36 @@ export const ProductsCard: FC<{ result: unknown }> = ({ result }) => {
           onOpenChange={(open) => setOpened(open ? item.id : undefined)}
         />
       ))}
-      {offered && shown.followUps && shown.followUps.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-2">
-          {shown.followUps.map((ask) => (
-            <button
-              key={ask}
-              type="button"
-              onClick={() =>
-                void chat?.sendMessage({ text: ask, metadata: { createdAt: Date.now() } })
-              }
-              className="bg-foreground/7 hover:bg-foreground/12 h-9 rounded-full px-3.5 text-sm"
-            >
-              {ask}
-            </button>
-          ))}
-        </div>
-      )}
+    </div>
+  );
+};
+
+export const ProductFollowUps: FC = () => {
+  const chat = useChatState()?.chat;
+  const offered = useAuiState(
+    (s) => !s.thread.isRunning && s.thread.messages.at(-1)?.id === s.message.id,
+  );
+  const content = useAuiState((s) => s.message.content);
+  const asks = content
+    .flatMap((part) =>
+      part.type === "tool-call" && currentToolName(part.toolName) === "show_products"
+        ? (shownProducts.safeParse(part.result).data?.followUps ?? [])
+        : [],
+    )
+    .slice(-3);
+  if (!offered || asks.length === 0) return null;
+  return (
+    <div className="mt-3 flex flex-wrap gap-2 print:hidden">
+      {asks.map((ask) => (
+        <button
+          key={ask}
+          type="button"
+          onClick={() => void chat?.sendMessage({ text: ask, metadata: { createdAt: Date.now() } })}
+          className="bg-foreground/7 hover:bg-foreground/12 h-9 rounded-full px-3.5 text-sm"
+        >
+          {ask}
+        </button>
+      ))}
     </div>
   );
 };

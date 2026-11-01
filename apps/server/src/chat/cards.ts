@@ -138,7 +138,7 @@ DON'T use this card when you only have one place: write prose. Don't re-list the
     }),
   }),
   show_products: tool({
-    description: `Show a row of product cards, each with its photo, price, rating, store and a link to the product's own page. When your answer recommends products you found with shop_search, show them in this card instead of a text list: every shortlist, and a single product the user asked about or picked. Write your text first, without listing them: your pick and the main tradeoff, and anything to know before ordering. Then call this last, so the card and its follow-ups end your answer.
+    description: `Show a row of product cards, each with its photo, price, rating, store and a link to the product's own page. When your answer recommends products you found with shop_search, show them in this card instead of a text list: every shortlist, and a single product the user asked about or picked. Call this before you write your answer, after at most a one-sentence lead-in, then give your pick, the main tradeoff and anything to know before ordering. The follow-ups show at the end of your answer.
 
 Pass each product's id and a short note: the card fills in the name, photo, price, rating and store from the search result, so don't include them. Don't re-list the products in your prose.`,
     inputSchema: products,

@@ -5,6 +5,7 @@ import { StreamingResponse } from "@/components/agents/streamingResponse";
 import { actionButton, AnswerExtras, MoreMenu, useAnswer } from "@/components/answerActions";
 import { ShareMenu } from "@/components/shareMenu";
 import { AnswerCard, MemoryUsed } from "@/components/answerCard";
+import { ProductFollowUps } from "@/components/productsCard";
 import { ResearchCard } from "@/components/researchCard";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { ConfirmCard } from "@/components/confirmCard";
@@ -177,6 +178,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
         <ReplyError />
         {empty && <EmptyAnswer />}
       </StreamingResponse>
+      {state === "complete" && !empty && <ProductFollowUps />}
       {state === "complete" && !empty && <Related />}
 
       <ReportMistake
