@@ -1,0 +1,462 @@
+{
+  "title": "Can Muslims have dogs?",
+  "headline": "The four schools tie keeping a dog to a need; they differ on guarding, pets, and purity",
+  "cover": "اقتناء الكلاب",
+  "slug": "can-muslims-have-dogs",
+  "topic": "Daily life",
+  "tint": "teal",
+  "summary": {
+    "text": "The four schools agree that keeping a dog is tied to a real need, such as hunting, guarding livestock or crops, and they differ on how far that need extends and on whether the dog is ritually impure. The Hanafis permit hunting, livestock and crops by consensus and treat guarding as a need, though Ibn Abidin says one should not keep it inside the home, while the Shafi'i view counted more correct permits guarding houses and roads and the Hanbali Kashshaf al-Qina' forbids keeping a dog even to guard houses except for livestock, hunting or crops. On purity, the Hanafis hold the dog not impure in itself and the Malikis hold it pure, while the Shafi'is and Hanbalis hold it impure yet permit keeping it out of need.",
+    "citations": [
+      "https://shamela.ws/book/21613#5:226",
+      "https://shamela.ws/book/6910#6:356",
+      "https://shamela.ws/book/499#3:346",
+      "https://shamela.ws/book/21604#3:447",
+      "https://shamela.ws/book/622#7:307",
+      "https://shamela.ws/book/21613#1:207",
+      "https://islamqa.info/ar/answers/69777",
+      "https://shamela.ws/book/11444#2:339",
+      "https://shamela.ws/book/587#1:115",
+      "https://www.dar-alifta.org/ar/Fatwa/Details/13427/حكم-تربية-الكلاب-بغرض-الحراسة",
+      "https://shamela.ws/book/6910#1:73"
+    ]
+  },
+  "updated": "2026-11-01",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://shamela.ws/book/21613#5:226",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج5 ص226"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#6:356",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج6 ص356"
+    },
+    {
+      "url": "https://shamela.ws/book/499#3:346",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج3 ص346"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#3:447",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج3 ص447"
+    },
+    {
+      "url": "https://shamela.ws/book/622#7:307",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج7 ص307"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#1:207",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص207"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/69777",
+      "title": "حكم اقتناء الكلاب"
+    },
+    {
+      "url": "https://shamela.ws/book/11444#2:339",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج2 ص339"
+    },
+    {
+      "url": "https://shamela.ws/book/587#1:115",
+      "title": "المدونة، مالك بن أنس، ج1 ص115"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/13427/حكم-تربية-الكلاب-بغرض-الحراسة",
+      "title": "تربية الكلاب بغرض الحراسة"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#1:73",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص73"
+    },
+    {
+      "url": "https://quran.com/5/4",
+      "title": "Quran 5:4, Al-Maaida"
+    },
+    {
+      "url": "https://shamela.ws/book/11820#4:401",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج4 ص401"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%aa%d8%b1%d8%a8%d9%8a%d8%a9-%d8%a7%d9%84%d9%83%d9%84%d8%a7%d8%a8-%d9%84%d9%84%d9%87%d9%88%d8%a7%d9%8a%d8%a9/",
+      "title": "حكم تربية الكلاب للهواية"
+    },
+    {
+      "url": "https://quran.com/7/176",
+      "title": "Quran 7:176, Al-A'raaf"
+    },
+    {
+      "url": "https://quran.com/18/18",
+      "title": "Quran 18:18, Al-Kahf"
+    },
+    {
+      "url": "https://quran.com/18/22",
+      "title": "Quran 18:22, Al-Kahf"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/13686",
+      "title": "What is the point of mentioning the dog in the story of the people of the Cave?"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1571",
+      "title": "Sahih Muslim 1571: The Book of Musaqah"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1574d",
+      "title": "Sahih Muslim 1574d: The Book of Musaqah"
+    },
+    {
+      "url": "https://sunnah.com/nasai:4284",
+      "title": "Sunan an-Nasa'i 4284: The Book of Hunting and Slaughtering"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1575b",
+      "title": "Sahih Muslim 1575b: The Book of Musaqah"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1573a",
+      "title": "Sahih Muslim 1573a: The Book of Musaqah"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:91",
+      "title": "Jami' at-Tirmidhi 91: The Book on Purification"
+    },
+    {
+      "url": "https://sunnah.com/nasai:5347",
+      "title": "Sunan an-Nasa'i 5347: The Book of Adornment"
+    },
+    {
+      "url": "https://sunnah.com/nasai:63",
+      "title": "Sunan an-Nasa'i 63: The Book of Purification"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:1686",
+      "title": "Riyad as-Salihin 1686"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:3651",
+      "title": "Sunan Ibn Majah 3651: Chapters on Dress"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/82401/how-reconcile-narrations-hadith-regarding-dog-drinking-vessel",
+      "title": "How to reconcile the narrations of the hadith regarding a dog drinking from a vessel"
+    },
+    {
+      "url": "https://sunnah.com/muslim:2245b",
+      "title": "Sahih Muslim 2245b: The Book of Greetings"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:3210",
+      "title": "Sunan Ibn Majah 3210: Chapters on Hunting"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1572",
+      "title": "Sahih Muslim 1572: The Book of Musaqah"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2845",
+      "title": "Sunan Abi Dawud 2845: Game (Kitab Al-Said)"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1486",
+      "title": "Jami' at-Tirmidhi 1486: The Book on Hunting"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:126",
+      "title": "Riyad as-Salihin 126"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:6009",
+      "title": "Sahih al-Bukhari 6009: Good Manners and Form (Al-Adab)"
+    },
+    {
+      "url": "https://shamela.ws/book/11820#1:25",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص25"
+    },
+    {
+      "url": "https://shamela.ws/book/21613#1:209",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص209"
+    },
+    {
+      "url": "https://shamela.ws/book/499#3:241",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج3 ص241"
+    },
+    {
+      "url": "https://shamela.ws/book/21604#3:11",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج3 ص11"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#6:357",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج6 ص357"
+    },
+    {
+      "url": "https://shamela.ws/book/6910#6:352",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج6 ص352"
+    },
+    {
+      "url": "https://shamela.ws/book/11820#3:77",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج3 ص77"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%a7%d8%aa%d8%ac%d8%a7%d8%b1-%d9%81%d9%8a-%d8%a7%d9%84%d9%83%d9%84%d8%a7%d8%a8-%d8%a8%d9%8a%d9%86-%d8%a7%d8%ae%d8%aa%d9%84%d8%a7%d9%81-%d8%a7%d9%84%d9%81%d9%82%d9%87%d8%a7%d8%a1-%d9%88/",
+      "title": "الاتجار في الكلاب بين اختلاف الفقهاء ومقاصد الشرع"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/153894",
+      "title": "Ruling on keeping a dog outside the house as a pet"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/hadithanswers/120456/the-meaning-of-one-qirat-reward/",
+      "title": "The meaning of ‘one qirat reward’"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/82884/ruling-keeping-dog-guarding-home-detecting-criminals",
+      "title": "The ruling on keeping a dog for guarding the home and detecting criminals"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/316965",
+      "title": "حكم اقتناء الكلب لتنبيه المريض إلى وقت حدوث نوبة الصرع"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/en/22910/pets",
+      "title": "Pets"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/606306",
+      "title": "ما حكم اقتناء الكلب للحراسة الشخصية؟"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hadith/what-is-intended-by-the-angels-refusal-to-enter-homes/",
+      "title": "What Is Intended by “The Angels’ Refusal to Enter Homes”?"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/556658",
+      "title": "ما المقصود بالملائكة في حديث «لا تدخل الملائكة بيتًا فيه كلب ولا صورة»؟"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/129554",
+      "title": "تريد الاحتفاظ بالكلب في بيتها كي لا يقتله القائمون على حقوق الحيوان"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/266369",
+      "title": "He follows the Maliki madhhab in the view that a dog’s saliva is not impure (najis). Is it permissible for him to pray wearing clothes that a dog’s saliva got on to?"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/en/79329/pet-dogs",
+      "title": "Pet Dogs"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/123854/is-it-permissible-to-keep-a-dog-for-security-purposes-2/",
+      "title": "Is it permissible to keep a dog for security purposes?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband/26198/is-it-allowed-to-keep-a-dog-as-a-pet-in-islam/",
+      "title": "Is it allowed to keep a dog as a pet in Islam?"
+    },
+    {
+      "url": "https://islamqa.org/shafii/darul-iftaa-jordan/226456/what-is-the-ruling-on-raising-dogs-inside-houses-by-some-people/",
+      "title": "What is the ruling on raising dogs inside houses by some people?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/94859/haram-dogs-vs-permissible-guard-dogs-in-islam/",
+      "title": "Haram Dogs vs. Permissible Guard Dogs in Islam"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/fatwa-org-au/21624/keeping-dog-for-security-purpose/",
+      "title": "Keeping dog for security purpose"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The verse most used in this discussion is the one on hunting: \"Lawful for you are [all] good foods and [game caught by] what you have trained of hunting animals which you train as Allah has taught you. So eat of what they catch for you, and mention the name of Allah upon it, and fear Allah.\" Al-Marghinani in al-Hidaya takes the phrase \"mukallibin\" (those who train dogs) as the textual basis for hunting with trained dogs and beasts of prey, and al-Qurtubi, as quoted by IslamOnline, read the same verse as showing that keeping and training dogs is lawful, from which he derived that buying, selling and otherwise benefiting from them is permitted.",
+          "citations": [
+            "https://quran.com/5/4",
+            "https://shamela.ws/book/11820#4:401",
+            "https://fiqh.islamonline.net/%d8%aa%d8%b1%d8%a8%d9%8a%d8%a9-%d8%a7%d9%84%d9%83%d9%84%d8%a7%d8%a8-%d9%84%d9%84%d9%87%d9%88%d8%a7%d9%8a%d8%a9/"
+          ]
+        },
+        {
+          "text": "The other Quranic mentions are narrative, not legislative. In the story of the cave, the dog is described stretching its forelegs at the entrance, and the disputed number of the sleepers is given with the dog as the last of them; Ibn Kathir, as quoted by IslamQA, said the dog was included in their blessing because it kept company with righteous people, and al-Shanqiti drew from it a lesson about the benefit of accompanying the righteous. The dog in Surah al-A'raf is a parable of the one who follows his desires, panting whether chased or left alone.",
+          "citations": [
+            "https://quran.com/7/176",
+            "https://quran.com/18/18",
+            "https://quran.com/18/22",
+            "https://islamqa.info/en/answers/13686"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The Prophet ﷺ ordered dogs killed except a hunting dog, a sheep dog or a livestock dog (Sahih Muslim 1571, sahih), and Ibn al-Mughaffal's narration adds that he then granted permission for hunting and sheep dogs (Sahih Muslim 1573a, sahih). \"Whoever keeps a dog, except a dog for herding livestock or a hunting dog, a qirat is deducted from his deeds every day,\" with Abu Hurayra adding \"or a dog for farming\" (Sahih Muslim 1574d, sahih); another route has two qirats (Sunan an-Nasa'i 4284, graded sahih), and Muslim's version through al-Zuhri includes farming in the Prophet's own words (Sahih Muslim 1575b, sahih).",
+          "citations": [
+            "https://sunnah.com/muslim:1571",
+            "https://sunnah.com/muslim:1574d",
+            "https://sunnah.com/nasai:4284",
+            "https://sunnah.com/muslim:1575b",
+            "https://sunnah.com/muslim:1573a"
+          ]
+        },
+        {
+          "text": "On the vessel: \"If a dog drinks from the vessel of one of you, let him wash it seven times\" (Sunan an-Nasa'i 63, sahih); at-Tirmidhi's version adds that the first or last washing is with soil and was graded hasan sahih by him, and a Muslim narration has \"and rub it with dust the eighth time\". On angels: \"The angels do not enter a house in which there is a dog or a picture\" (Sunan an-Nasa'i 5347, sahih); Aisha's report that a puppy under the bed kept Jibril from coming is in Bukhari and Muslim, and Ibn Majah's version is graded hasan sahih.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:91",
+            "https://sunnah.com/nasai:5347",
+            "https://sunnah.com/nasai:63",
+            "https://sunnah.com/riyadussalihin:1686",
+            "https://sunnah.com/ibnmajah:3651",
+            "https://al-fatawa.com/en/fatwa/82401/how-reconcile-narrations-hadith-regarding-dog-drinking-vessel"
+          ]
+        },
+        {
+          "text": "On black dogs, Jabir's report says the Prophet first ordered killing dogs, then forbade it and restricted it to the pure black dog (Sahih Muslim 1572, sahih), and \"were it not that dogs are a community among the communities, I would have ordered them killed\" (Jami' at-Tirmidhi 1486, hasan sahih); the same hadith in Abu Dawud 2845 is graded daif by Zubair Ali Zai but sahih by al-Albani and Shu'ayb al-Arna'ut, and Abu Dharr's question about the pure black dog was answered, \"It is a devil\" (Sunan Ibn Majah 3210, sahih). On mercy to dogs, there is the man who gave a thirsty dog water and was forgiven (Sahih al-Bukhari 6009, sahih), the prostitute of the Children of Israel forgiven for the same (Sahih Muslim 2245b, sahih), and the Prophet's answer, \"In every moist liver there is a reward\".",
+          "citations": [
+            "https://sunnah.com/muslim:2245b",
+            "https://sunnah.com/ibnmajah:3210",
+            "https://sunnah.com/muslim:1572",
+            "https://sunnah.com/abudawud:2845",
+            "https://sunnah.com/tirmidhi:1486",
+            "https://sunnah.com/riyadussalihin:126",
+            "https://sunnah.com/bukhari:6009"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafis permit keeping a dog for hunting, livestock and crops \"by consensus,\" and permit it when one fears a thief, though Ibn Abidin says one \"should not\" keep it in one's house; guarding is treated as a need, but keeping it inside the home is discouraged. The Imam's view, and the fatwa, is that the dog is not impure in itself and its hair is pure, though its leftover water is impure and the vessel is washed three times.",
+          "citations": [
+            "https://shamela.ws/book/21613#5:226",
+            "https://shamela.ws/book/11820#1:25",
+            "https://shamela.ws/book/21613#1:207",
+            "https://shamela.ws/book/21613#1:209"
+          ]
+        },
+        {
+          "text": "The Malikis permit keeping a dog for hunting, livestock and guarding, with guarding included among the permitted reasons. Malik held living creatures pure and read the seven washings as an act of worship without a rationale of impurity, and he was reluctant even to wash fat or milk a dog had touched; Dar al-Ifta al-Misriyya summarises this as Imam Malik holding the dog pure.",
+          "citations": [
+            "https://shamela.ws/book/21604#3:447",
+            "https://shamela.ws/book/587#1:115",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/13427/حكم-تربية-الكلاب-بغرض-الحراسة"
+          ]
+        },
+        {
+          "text": "The Shafi'is permit the three by consensus, and \"the more correct view\" is that guarding houses and roads is permitted, including buying a puppy for that purpose, while it is disliked to keep a hunting dog for one who does not hunt. The dog is impure in itself, and game its mouth has touched must be washed seven times with earth.",
+          "citations": [
+            "https://shamela.ws/book/499#3:346",
+            "https://shamela.ws/book/499#3:241",
+            "https://shamela.ws/book/11444#2:339"
+          ]
+        },
+        {
+          "text": "The Hanbalis permit keeping a dog only for hunting, livestock or farming, and Kashshaf al-Qina' states it is forbidden to keep a dog, \"even to guard houses,\" except for livestock, hunting or crops. The dog is impure, and the vessel is washed seven times, one with earth.",
+          "citations": [
+            "https://shamela.ws/book/6910#6:356",
+            "https://shamela.ws/book/622#7:307",
+            "https://shamela.ws/book/6910#1:73"
+          ]
+        },
+        {
+          "text": "On selling dogs, the Hanafis validate the sale of dogs, while the Hanbali al-Mughni reports the sale as invalid and lists al-Shafi'i among those who held that, and the Maliki al-Dusuqi reports that a dog may not be sold, unlike a hunting dog according to some. Within the Hanbali school, Ibn Qudama himself set out two possibilities for someone who keeps a dog to guard property he does not yet own.",
+          "citations": [
+            "https://shamela.ws/book/21604#3:11",
+            "https://shamela.ws/book/6910#6:357",
+            "https://shamela.ws/book/6910#6:352",
+            "https://shamela.ws/book/11820#3:77"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The command to kill dogs is read as abrogated or as a temporary measure: Jabir's narration itself says the Prophet later forbade killing them, and the \"community among the communities\" hadith shows the command was withheld. Al-Marghinani explains the prohibition on selling them at the beginning of Islam as a way of breaking people's attachment to keeping dogs, and IslamOnline reports the same reading.",
+          "citations": [
+            "https://shamela.ws/book/11820#3:77",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%a7%d8%aa%d8%ac%d8%a7%d8%b1-%d9%81%d9%8a-%d8%a7%d9%84%d9%83%d9%84%d8%a7%d8%a8-%d8%a8%d9%8a%d9%86-%d8%a7%d8%ae%d8%aa%d9%84%d8%a7%d9%81-%d8%a7%d9%84%d9%81%d9%82%d9%87%d8%a7%d8%a1-%d9%88/",
+            "https://sunnah.com/muslim:1572",
+            "https://sunnah.com/tirmidhi:1486"
+          ]
+        },
+        {
+          "text": "The qirat deduction is read two ways: Ibn Abd al-Barr and the Malikis took it to show dislike rather than prohibition, since a forbidden thing would not merely reduce reward, while the majority took it as evidence of prohibition, and Ibn Hajar in Fath al-Bari allowed that the deduction equals the sin incurred. The qirat itself is explained as a known portion of reward whose extent is known to Allah, compared in another hadith to Mount Uhud.",
+          "citations": [
+            "https://islamqa.info/en/answers/153894",
+            "https://islamqa.org/hanafi/hadithanswers/120456/the-meaning-of-one-qirat-reward/"
+          ]
+        },
+        {
+          "text": "The three named exceptions are extended by some and restricted by others: al-Nawawi, Ibn Abd al-Barr and Ibn Uthaymeen extended them by the reasoning of need, so that guarding a house or a person is a fortiori permitted, while Ibn Baz restricted the permission to crops, livestock and hunting and did not allow a guard dog for a palace. This is a difference over the ratio of the ruling, not over the hadith's authenticity.",
+          "citations": [
+            "https://shamela.ws/book/499#3:346",
+            "https://islamqa.info/ar/answers/69777",
+            "https://al-fatawa.com/en/fatwa/82884/ruling-keeping-dog-guarding-home-detecting-criminals",
+            "https://islamqa.info/ar/answers/316965"
+          ]
+        },
+        {
+          "text": "Impurity and permission are held together differently: the Hanafis say the dog is not impure in itself but its saliva is, which is why it can be kept and even sold while its bowl must be washed, the Malikis call the washing devotional and the dog pure, and the Shafi'is and Hanbalis hold the dog impure yet permit keeping it out of need. AMJA notes that a dog kept for a valid reason does not make one's clothes problematic by mere contact, but its dishes must be washed seven times with soil or soap.",
+          "citations": [
+            "https://shamela.ws/book/11820#1:25",
+            "https://shamela.ws/book/21613#1:207",
+            "https://www.amjaonline.org/fatwa/en/22910/pets",
+            "https://shamela.ws/book/11444#2:339",
+            "https://shamela.ws/book/587#1:115",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/13427/حكم-تربية-الكلاب-بغرض-الحراسة",
+            "https://shamela.ws/book/6910#1:73"
+          ]
+        },
+        {
+          "text": "The angels' hadith is narrowed to the angels of mercy: al-Nawawi said the angels meant are those who bring mercy, blessings and forgiveness, while the recording angels never leave a person, and IslamQA notes that this specification is the commentators' inference from the full body of texts, not the Prophet's own wording. The practical reconciliation with permission is that the dog kept for a need is housed outside the living space, which is what the recent fatwas advise.",
+          "citations": [
+            "https://islamqa.info/ar/answers/606306",
+            "https://seekersguidance.org/answers/hadith/what-is-intended-by-the-angels-refusal-to-enter-homes/",
+            "https://islamqa.info/ar/answers/556658"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "IslamQA's 2005 answer permits keeping a dog only for hunting, livestock or crops and adds that guarding a house is permitted by analogy, and its 2025 answer on personal protection allows a dog for a woman facing harassment while requiring it to be housed in an outdoor shelter, since the need is outside the house. Its 2020 answer allows a seizure-alert dog for an epileptic woman, with care to avoid its saliva on body and clothes, and a 2009 answer discusses a convert's elderly dog that might be killed if released; a 2025 answer affirms that one following the Maliki view on saliva may pray in clothes it touched.",
+          "citations": [
+            "https://islamqa.info/ar/answers/69777",
+            "https://islamqa.info/ar/answers/606306",
+            "https://islamqa.info/ar/answers/129554",
+            "https://islamqa.info/ar/answers/316965",
+            "https://islamqa.info/en/answers/266369"
+          ]
+        },
+        {
+          "text": "Dar al-Ifta al-Misriyya, in fatwa 3093 of 2016, permits keeping dogs inside the home for guarding, notes the majority view of impurity against Imam Malik's view of purity, and treats the place where the dog is as pure on the Maliki position. The Assembly of Muslim Jurists of America states that dogs cannot be taken as pets but may be kept for farm, sheep, guard, hunt or guide purposes.",
+          "citations": [
+            "https://www.amjaonline.org/fatwa/en/22910/pets",
+            "https://www.amjaonline.org/fatwa/en/79329/pet-dogs",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/13427/حكم-تربية-الكلاب-بغرض-الحراسة"
+          ]
+        },
+        {
+          "text": "The Hanafi-oriented Darul Iftaa Deoband and Muftionline permit a dog for hunting, farm and house guarding but not as a pet, and Askimam permits a dog for security while saying a pet dog is not allowed. The Jordanian Ifta permits dogs only for a legal purpose such as guarding or hunting, while Ibn Baz's answer restricts permission to the three cases and questions police dogs.",
+          "citations": [
+            "https://islamqa.org/hanafi/askimam/123854/is-it-permissible-to-keep-a-dog-for-security-purposes-2/",
+            "https://islamqa.org/hanafi/darulifta-deoband/26198/is-it-allowed-to-keep-a-dog-as-a-pet-in-islam/",
+            "https://al-fatawa.com/en/fatwa/82884/ruling-keeping-dog-guarding-home-detecting-criminals",
+            "https://islamqa.org/shafii/darul-iftaa-jordan/226456/what-is-the-ruling-on-raising-dogs-inside-houses-by-some-people/",
+            "https://islamqa.org/hanafi/muftionline/94859/haram-dogs-vs-permissible-guard-dogs-in-islam/",
+            "https://islamqa.org/hanafi/fatwa-org-au/21624/keeping-dog-for-security-purpose/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
