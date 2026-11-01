@@ -250,20 +250,10 @@ const ThreadBody: FC = () => {
               bot={!!bot || !!group}
               compact
             />
-            <Caution />
           </div>
         </TurnRow>
       </ThreadPrimitive.ViewportFooter>
     </>
-  );
-};
-
-const Caution: FC = () => {
-  const t = useT();
-  return (
-    <p className="text-muted-foreground mt-2 text-center text-xs">
-      {t("Sirathic can make mistakes. Check the sources.")}
-    </p>
   );
 };
 
@@ -286,7 +276,6 @@ const EmptyState: FC = () => {
           </h1>
         </div>
         <Composer placeholder={t("Ask anything…")} menuSide="bottom" rotate />
-        <Caution />
       </div>
     </div>
   );

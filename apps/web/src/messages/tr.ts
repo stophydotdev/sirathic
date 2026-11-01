@@ -326,8 +326,6 @@ export default {
   "Saved to your preferences": "Tercihlerinize kaydedildi",
   "Finding duas for {detail}": "Dualar aranıyor: {detail}",
   "The answer failed.": "Yanıt alınamadı.",
-  "Sirathic can make mistakes. Check the sources.":
-    "Sirathic yanılabilir. Kaynakları kontrol edin.",
   "What's wrong with this answer?": "Bu cevapta yanlış olan ne?",
   "A verse or hadith is wrong": "Bir ayet veya hadis yanlış",
   "A school's view is wrong": "Bir mezhebin görüşü yanlış",
@@ -804,7 +802,6 @@ export default {
   "Save login": "Girişi kaydet",
   Browser: "Tarayıcı",
   Continue: "Devam",
-  Dismiss: "Kapat",
   Done: "Bitti",
   Filled: "Dolduruldu",
   "Filled into the page. Your bot never saw it.": "Sayfaya dolduruldu. Botunuz bunu hiç görmedi.",

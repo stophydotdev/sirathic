@@ -324,7 +324,6 @@ export default {
   "Saved to your preferences": "உங்கள் விருப்பங்களில் சேமிக்கப்பட்டது",
   "Finding duas for {detail}": "{detail}-க்கான துஆக்களைத் தேடுகிறது",
   "The answer failed.": "பதில் கிடைக்கவில்லை.",
-  "Sirathic can make mistakes. Check the sources.": "Sirathic தவறாக இருக்கலாம். ஆதாரங்களைச் சரிபாருங்கள்.",
   "What's wrong with this answer?": "இந்தப் பதிலில் என்ன தவறு?",
   "A verse or hadith is wrong": "ஒரு வசனம் அல்லது ஹதீஸ் தவறு",
   "A school's view is wrong": "ஒரு மத்ஹபின் கருத்து தவறு",
@@ -800,7 +799,6 @@ export default {
   "Save login": "உள்நுழைவைச் சேமி",
   Browser: "உலாவி",
   Continue: "தொடர்",
-  Dismiss: "நிராகரி",
   Done: "முடிந்தது",
   Filled: "நிரப்பப்பட்டது",
   "Filled into the page. Your bot never saw it.":

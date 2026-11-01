@@ -171,9 +171,6 @@ export const BotHome: FC<{ bot: Project }> = ({ bot }) => {
             bot
             compact
           />
-          <p className="text-muted-foreground mt-2 text-center text-xs">
-            {t("Sirathic can make mistakes. Check the sources.")}
-          </p>
         </div>
       </div>
     </div>

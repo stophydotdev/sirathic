@@ -52,6 +52,7 @@ export const messageMetadata = z.object({
   routine: z.string().optional(),
   formReply: z.enum(["filled", "missed", "dismissed"]).optional(),
   wake: z.literal(true).optional(),
+  picked: z.literal(true).optional(),
   memory: z.boolean().optional(),
   from: z.object({ id: z.uuid(), name: z.string() }).optional(),
   cited: z.record(z.string(), z.string()).optional(),

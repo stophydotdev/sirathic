@@ -327,8 +327,6 @@ export default {
   "Saved to your preferences": "Жөндөөлөрүңүзгө сакталды",
   "Finding duas for {detail}": "Дубалар изделүүдө: {detail}",
   "The answer failed.": "Жооп алынган жок.",
-  "Sirathic can make mistakes. Check the sources.":
-    "Sirathic жаңылышы мүмкүн. Булактарды текшериңиз.",
   "What's wrong with this answer?": "Бул жоопто эмне туура эмес?",
   "A verse or hadith is wrong": "Аят же хадис туура эмес",
   "A school's view is wrong": "Мазхабдын көз карашы туура эмес",
@@ -806,7 +804,6 @@ export default {
   "Save login": "Логинди сактоо",
   Browser: "Браузер",
   Continue: "Улантуу",
-  Dismiss: "Жабуу",
   Done: "Даяр",
   Filled: "Толтурулду",
   "Filled into the page. Your bot never saw it.":

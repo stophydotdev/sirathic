@@ -327,7 +327,6 @@ export default {
   "Saved to your preferences": "Đã lưu vào tùy chọn của bạn",
   "Finding duas for {detail}": "Đang tìm lời cầu nguyện cho {detail}",
   "The answer failed.": "Không trả lời được.",
-  "Sirathic can make mistakes. Check the sources.": "Sirathic có thể sai. Hãy kiểm tra nguồn.",
   "What's wrong with this answer?": "Câu trả lời này sai ở đâu?",
   "A verse or hadith is wrong": "Một câu kinh hoặc hadith bị sai",
   "A school's view is wrong": "Quan điểm của một trường phái bị sai",
@@ -799,7 +798,6 @@ export default {
   "Save login": "Lưu đăng nhập",
   Browser: "Trình duyệt",
   Continue: "Tiếp tục",
-  Dismiss: "Bỏ qua",
   Done: "Xong",
   Filled: "Đã điền",
   "Filled into the page. Your bot never saw it.":

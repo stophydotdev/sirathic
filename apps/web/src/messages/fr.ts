@@ -332,8 +332,6 @@ export default {
   "Saved to your preferences": "Enregistré dans vos préférences",
   "Finding duas for {detail}": "Recherche de douas : {detail}",
   "The answer failed.": "La réponse a échoué.",
-  "Sirathic can make mistakes. Check the sources.":
-    "Sirathic peut se tromper. Vérifiez les sources.",
   "What's wrong with this answer?": "Qu'est-ce qui ne va pas dans cette réponse ?",
   "A verse or hadith is wrong": "Un verset ou un hadith est faux",
   "A school's view is wrong": "L'avis d'une école est faux",
@@ -811,7 +809,6 @@ export default {
   "Save login": "Enregistrer l'identifiant",
   Browser: "Navigateur",
   Continue: "Continuer",
-  Dismiss: "Ignorer",
   Done: "Terminé",
   Filled: "Rempli",
   "Filled into the page. Your bot never saw it.":

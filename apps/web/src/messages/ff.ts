@@ -326,7 +326,6 @@ export default {
   "Saved to your preferences": "Danndaama e cuɓe maa",
   "Finding duas for {detail}": "Ena yiyloo du'aaji ngam {detail}",
   "The answer failed.": "Jaabawol ngol ronkii.",
-  "Sirathic can make mistakes. Check the sources.": "Sirathic ina waawi juumde. Ƴeewto ɗaɗɗe ɗe.",
   "What's wrong with this answer?": "Ko woni juumre e ndee jaabawol?",
   "A verse or hadith is wrong": "Aaya walla hadiis ina juumi",
   "A school's view is wrong": "Miijo mazhab ina juumi",
@@ -800,7 +799,6 @@ export default {
   "Save login": "Mooftu naatirgal",
   Browser: "Wanngorde",
   Continue: "Jokku",
-  Dismiss: "Uddu",
   Done: "Gasii",
   Filled: "Hebbinaama",
   "Filled into the page. Your bot never saw it.":

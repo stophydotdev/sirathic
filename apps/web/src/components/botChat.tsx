@@ -300,7 +300,7 @@ const stampOf = (messages: readonly ThreadMessage[], id: string) => {
   const message = messages.find((item) => item.id === id);
   if (message?.role !== "user") return undefined;
   const hidden = messageMetadata.safeParse(message.metadata.custom).data;
-  if (hidden?.formReply || hidden?.wake) return undefined;
+  if (hidden?.formReply || hidden?.wake || hidden?.picked) return undefined;
   const at = sentAt(messages, message);
   const before = messages.slice(0, messages.indexOf(message)).findLast((m) => m.role === "user");
   return before === undefined || at - sentAt(messages, before) > STAMP_GAP ? at : undefined;
@@ -346,7 +346,7 @@ const BotYou: FC = () => {
   );
   const hidden = useAuiState((s) => {
     const sent = messageMetadata.safeParse(s.message.metadata.custom).data;
-    return sent?.formReply !== undefined || sent?.wake === true;
+    return sent?.formReply !== undefined || sent?.wake === true || sent?.picked === true;
   });
   const fromId = useAuiState(
     (s) => messageMetadata.safeParse(s.message.metadata.custom).data?.from?.id,
