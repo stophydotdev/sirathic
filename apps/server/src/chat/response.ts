@@ -75,6 +75,7 @@ import {
   clarifyingQuestions,
   SEND_FEEDBACK,
   sendFeedback,
+  forBots,
   sirathicTools,
 } from "./tools";
 
@@ -250,7 +251,7 @@ export function chatResponse({
         timezone: preferred.timezone || automate.timezone,
       };
       const available = {
-        ...tools,
+        ...(inBot ? forBots(tools) : tools),
         ...((!sourceKinds || sourceKinds.includes("web")) && {
           ...stophyTools(sources.add, book),
           ...imageTools(sources.addImage),

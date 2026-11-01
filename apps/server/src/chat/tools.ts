@@ -192,3 +192,32 @@ If results are incomplete, conflicting, snippet-level, single-sided, or do not c
     }),
   };
 }
+
+const BOT_SEARCH = `Search the web, news, the Quran, hadith, fatwas and fiqh books for real-time information about any topic. Returns summarized information from search results and relevant URLs.
+
+Use this tool when you need up-to-date information that might not be available or correct in your training data, or when you need to verify current facts.
+This includes queries about:
+- Places, prices, schedules and services whose details change often. ("Which halal restaurants are open near me?")
+- Current events or news. ("What changed in this year's Hajj rules?")
+- Informational queries similar to what you might Google ("zakat on gold jewelry")
+
+IMPORTANT - Use the correct year in search queries: use the year from today's date when searching for recent information or current events. Do not add hadith numbers, a school of fiqh, scholar names, titles or editions that the user, the conversation or a tool result did not give.
+
+Results come from an external search index that some sites block, so a missing or stale result is not evidence a page or fact does not exist. When search comes up empty for something that should exist, try fetch_url on a likely URL, then fall back to your browser when you have one.`;
+
+const BOT_FETCH = `Fetch content from the URLs you give and return their contents in a readable format. Use this tool when you need to retrieve and analyze webpage content.
+
+- Each URL must be a fully-formed, valid URL.
+- This tool is read-only and will not work for requests intended to have side effects.
+- This fetch tries to return live results but may return previously cached content.
+- Authentication is not supported, and an error will be returned if the URL requires authentication.
+- If the URL is returning a non-200 status code, e.g. 404, the tool will not return the content and will instead return an error message.
+- A YouTube video comes with its transcript in timed lines like [12:04]; to point to a moment in it, link the time to the video at that second, like [12:04](https://www.youtube.com/watch?v=VIDEO_ID&t=724s).
+
+Some sites' firewalls block this tool's fetch provider with a 403 or a block page (e.g. "Request Rejected"). That is not evidence the page does not exist: fall back to your browser when you have one.`;
+
+export const forBots = (tools: ReturnType<typeof sirathicTools>) => ({
+  ...tools,
+  search_web: { ...tools.search_web, description: BOT_SEARCH },
+  fetch_url: { ...tools.fetch_url, description: BOT_FETCH },
+});
