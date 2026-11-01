@@ -54,6 +54,7 @@ export const messageMetadata = z.object({
   wake: z.literal(true).optional(),
   memory: z.boolean().optional(),
   from: z.object({ id: z.uuid(), name: z.string() }).optional(),
+  cited: z.record(z.string(), z.string()).optional(),
 });
 
 type MessageMetadata = z.infer<typeof messageMetadata>;

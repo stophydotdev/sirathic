@@ -1,4 +1,5 @@
 import type { StreamTextTransform, TextStreamPart, ToolSet, UIMessage } from "ai";
+import { z } from "zod";
 import type { ChatMessage } from "../shared/messages";
 import { withoutEmDashes } from "./compact";
 
@@ -54,15 +55,20 @@ function holdFrom(text: string) {
   return Math.min(nativeOpen, bracketOpen, TRAILING.exec(text)?.index ?? text.length);
 }
 
+const citedBefore = z.object({ cited: z.record(z.string(), z.string()) });
+
 export function citations(history: UIMessage[]) {
   const byUrl = new Map<string, number>();
   const byNumber = new Map<number, string>();
+  const fresh = new Map<string, string>();
   const remember = (number: number, url: string) => {
     if (byUrl.has(url) || byNumber.has(number)) return;
     byUrl.set(url, number);
     byNumber.set(number, url);
   };
   for (const message of history.filter((entry) => entry.role === "assistant")) {
+    const cited = citedBefore.safeParse(message.metadata).data?.cited ?? {};
+    for (const [number, url] of Object.entries(cited)) remember(Number(number), url);
     for (const part of message.parts) {
       if (part.type === "text")
         for (const [, number, url] of part.text.matchAll(LINKED))
@@ -75,6 +81,7 @@ export function citations(history: UIMessage[]) {
     if (known !== undefined) return known;
     const number = Math.max(0, ...byNumber.keys()) + 1;
     remember(number, url);
+    fresh.set(String(number), url);
     return number;
   };
 
@@ -165,5 +172,12 @@ export function citations(history: UIMessage[]) {
     };
   }
 
-  return { add, addImage, link, numberOf: (url: string) => byUrl.get(url), transform };
+  return {
+    add,
+    addImage,
+    link,
+    numberOf: (url: string) => byUrl.get(url),
+    cited: () => (fresh.size > 0 ? Object.fromEntries(fresh) : undefined),
+    transform,
+  };
 }
