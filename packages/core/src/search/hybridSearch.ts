@@ -1,4 +1,5 @@
 import { db } from "@sirathic/db";
+import { MARKED, UNMARKED } from "@sirathic/db/schema";
 import { getTableName, type SQL, sql } from "drizzle-orm";
 import { z } from "zod";
 import { cacheFor, dataVersion } from "../cache";
@@ -28,7 +29,7 @@ export type Filter = { where: SQL; key: string };
 const wordQuery = (word: string) =>
   ARABIC.test(word)
     ? sql`to_tsquery('simple', ${arabicForms(word).join(" | ")})`
-    : sql`plainto_tsquery('english', ${word})`;
+    : sql`plainto_tsquery('english', translate(${word}, ${MARKED}, ${UNMARKED}))`;
 
 const rareWordScore = async (table: Searchable["table"], query: string) => {
   const words = [
@@ -123,7 +124,7 @@ const searchIds = async (
     if (indexOnly) await tx.execute(sql`set local enable_seqscan = off`);
     return tx.execute(sql`
     with words as (
-      select plainto_tsquery('english', ${plain}) as every_word
+      select plainto_tsquery('english', translate(${plain}, ${MARKED}, ${UNMARKED})) as every_word
     ),
     keyword as (${keyword}),
     meaning as (
