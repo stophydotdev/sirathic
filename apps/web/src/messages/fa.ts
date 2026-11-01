@@ -324,8 +324,6 @@ export default {
   "Saved to your preferences": "در تنظیمات شما ذخیره شد",
   "Finding duas for {detail}": "یافتن دعا برای {detail}",
   "The answer failed.": "پاسخ ناموفق بود.",
-  "Sirathic can make mistakes. Check the sources.":
-    "Sirathic ممکن است اشتباه کند. منابع را بررسی کنید.",
   "What's wrong with this answer?": "این پاسخ چه اشکالی دارد؟",
   "A verse or hadith is wrong": "یک آیه یا حدیث اشتباه است",
   "A school's view is wrong": "نظر یک مذهب اشتباه است",
@@ -799,7 +797,6 @@ export default {
   "Save login": "ذخیره ورود",
   Browser: "مرورگر",
   Continue: "ادامه",
-  Dismiss: "رد کردن",
   Done: "انجام شد",
   Filled: "پر شد",
   "Filled into the page. Your bot never saw it.": "در صفحه پر شد. رباتتان هرگز آن را ندید.",

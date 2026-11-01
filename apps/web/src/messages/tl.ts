@@ -331,8 +331,6 @@ export default {
   "Saved to your preferences": "Na-save sa iyong mga kagustuhan",
   "Finding duas for {detail}": "Naghahanap ng dua para sa {detail}",
   "The answer failed.": "Pumalya ang sagot.",
-  "Sirathic can make mistakes. Check the sources.":
-    "Maaaring magkamali ang Sirathic. Suriin ang mga sanggunian.",
   "What's wrong with this answer?": "Ano ang mali sa sagot na ito?",
   "A verse or hadith is wrong": "Mali ang isang talata o hadith",
   "A school's view is wrong": "Mali ang pananaw ng isang paaralan",
@@ -809,7 +807,6 @@ export default {
   "Save login": "I-save ang login",
   Browser: "Browser",
   Continue: "Magpatuloy",
-  Dismiss: "Isara",
   Done: "Tapos na",
   Filled: "Napunan",
   "Filled into the page. Your bot never saw it.":

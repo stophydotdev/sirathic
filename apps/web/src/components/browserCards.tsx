@@ -3,13 +3,18 @@
 import { useBot } from "@/components/botHome";
 import { useBrowser } from "@/components/browserView";
 import { useChatState } from "@/components/chat";
-import { primaryPill, quietPill } from "@/components/confirmShell";
 import { useT } from "@/components/i18n";
 import { browserHelp, filled, userForm } from "@sirathic/browser/protocol";
 import { messageMetadata } from "@sirathic/server/messages";
 import { useAuiState } from "@assistant-ui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ComputerIcon, Shield01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
+import {
+  Cancel01Icon,
+  ComputerIcon,
+  Tick02Icon,
+  ViewIcon,
+  ViewOffSlashIcon,
+} from "@hugeicons/core-free-icons";
 import { type FC, type ReactNode, useState } from "react";
 import { z } from "zod";
 
@@ -47,14 +52,14 @@ const Receipt: FC<{ title: string; reply: FormReply | "answered" }> = ({ title, 
   return (
     <div className="bot-card flex items-center gap-3 py-3.5">
       <div className="min-w-0 flex-1">
-        <p className="text-base font-medium">{title}</p>
+        <p className="text-sm font-medium">{title}</p>
         {reply === "filled" && (
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-xs">
             {t("Filled into the page. Your bot never saw it.")}
           </p>
         )}
         {reply === "missed" && (
-          <p className="text-muted-foreground text-sm">{t("Some fields didn't fill.")}</p>
+          <p className="text-muted-foreground text-xs">{t("Some fields didn't fill.")}</p>
         )}
       </div>
       {reply === "filled" && (
@@ -74,11 +79,11 @@ export const FormCard: FC<{ args: unknown; result: unknown }> = ({ args, result 
   const chat = useChatState()?.chat;
   const reply = useReply();
   const running = useAuiState((s) => s.thread.isRunning);
-  const show = useBrowser((s) => s.show);
   const [values, setValues] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const [keep, setKeep] = useState(false);
+  const [visible, setVisible] = useState<string[]>([]);
   const t = useT();
   if (!form || !bot || notShown.safeParse(result).success) return null;
   if (reply) return <Receipt title={form.title} reply={reply} />;
@@ -131,24 +136,56 @@ export const FormCard: FC<{ args: unknown; result: unknown }> = ({ args, result 
 
   return (
     <form
-      className="bot-card flex flex-col gap-3"
+      className="border-foreground/10 my-2 flex w-full max-w-lg flex-col gap-3 rounded-3xl border p-4 print:hidden"
       onSubmit={(event) => {
         event.preventDefault();
         if (!busy && !running && complete) void fillIn();
       }}
     >
-      <p className="text-base font-medium">{form.title}</p>
+      <div className="flex items-start justify-between gap-2">
+        <p className="min-w-0 flex-1 py-0.5 text-sm font-semibold">{form.title}</p>
+        <button
+          type="button"
+          aria-label={t("Close")}
+          disabled={running}
+          onClick={() => send(t("I dismissed the form."), "dismissed")}
+          className="text-muted-foreground hover:bg-foreground/8 hover:text-foreground -me-1 rounded-full p-1 disabled:opacity-50"
+        >
+          <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+        </button>
+      </div>
       {form.fields.map(({ label, target, secret }) => (
         <label key={target} className="flex flex-col gap-1.5 text-sm">
-          <span className="text-muted-foreground ps-1">{label} *</span>
-          <input
-            type={secret ? "password" : "text"}
-            required
-            autoComplete="off"
-            value={values[target] ?? ""}
-            onChange={(event) => setValues({ ...values, [target]: event.target.value })}
-            className="bg-background h-11 rounded-xl px-3 text-base outline-none"
-          />
+          <span className="text-muted-foreground">{label}</span>
+          <span className="relative flex">
+            <input
+              type={secret && !visible.includes(target) ? "password" : "text"}
+              required
+              autoComplete="off"
+              value={values[target] ?? ""}
+              onChange={(event) => setValues({ ...values, [target]: event.target.value })}
+              className={`bg-foreground/4 border-foreground/10 focus-visible:border-foreground/30 h-10 w-full rounded-xl border px-3 outline-none ${secret ? "pe-10" : ""}`}
+            />
+            {secret && (
+              <button
+                type="button"
+                aria-label={visible.includes(target) ? t("Hide password") : t("Show password")}
+                onClick={() =>
+                  setVisible(
+                    visible.includes(target)
+                      ? visible.filter((shown) => shown !== target)
+                      : [...visible, target],
+                  )
+                }
+                className="text-muted-foreground hover:text-foreground absolute inset-y-0 end-0 flex w-10 items-center justify-center"
+              >
+                <HugeiconsIcon
+                  icon={visible.includes(target) ? ViewOffSlashIcon : ViewIcon}
+                  className="size-4"
+                />
+              </button>
+            )}
+          </span>
         </label>
       ))}
       {login && (
@@ -163,26 +200,18 @@ export const FormCard: FC<{ args: unknown; result: unknown }> = ({ args, result 
         </label>
       )}
       {failed && <p className="text-destructive text-sm">{t("Couldn't fill the page.")}</p>}
-      <div className="flex flex-wrap items-center gap-2">
-        <button type="submit" disabled={busy || running || !complete} className={primaryPill}>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-muted-foreground min-w-0 text-xs">
+          {t("Never shown to your bot. Filled directly to {site}.", { site: form.domain })}
+        </p>
+        <button
+          type="submit"
+          disabled={busy || running || !complete}
+          className="bg-foreground text-background h-9 shrink-0 rounded-full px-4 text-sm font-medium disabled:opacity-40"
+        >
           {t("Continue")}
         </button>
-        <button type="button" onClick={show} className={quietPill}>
-          {t("Open the browser")}
-        </button>
-        <button
-          type="button"
-          disabled={running}
-          onClick={() => send(t("I dismissed the form."), "dismissed")}
-          className="text-muted-foreground hover:text-foreground h-11 px-3 text-sm font-medium disabled:opacity-50"
-        >
-          {t("Dismiss")}
-        </button>
       </div>
-      <p className="text-muted-foreground flex gap-2 text-xs">
-        <HugeiconsIcon icon={Shield01Icon} className="size-4 shrink-0" />
-        {t("Never shown to your bot. Filled directly to {site}.", { site: form.domain })}
-      </p>
     </form>
   );
 };

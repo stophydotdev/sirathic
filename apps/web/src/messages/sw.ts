@@ -343,7 +343,6 @@ export default {
   "Saved to your preferences": "Imehifadhiwa kwenye mapendeleo yako",
   "Finding duas for {detail}": "Inatafuta dua za {detail}",
   "The answer failed.": "Jibu limeshindwa.",
-  "Sirathic can make mistakes. Check the sources.": "Sirathic inaweza kukosea. Angalia vyanzo.",
   "What's wrong with this answer?": "Kuna tatizo gani katika jibu hili?",
   "A verse or hadith is wrong": "Aya au hadithi si sahihi",
   "A school's view is wrong": "Msimamo wa madhehebu si sahihi",
@@ -802,7 +801,6 @@ export default {
   "Save login": "Hifadhi kuingia",
   Browser: "Kivinjari",
   Continue: "Endelea",
-  Dismiss: "Puuza",
   Done: "Imekamilika",
   Filled: "Imejazwa",
   "Filled into the page. Your bot never saw it.":

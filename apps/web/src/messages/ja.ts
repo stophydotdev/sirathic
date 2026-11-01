@@ -326,8 +326,6 @@ export default {
   "Saved to your preferences": "設定に保存しました",
   "Finding duas for {detail}": "ドゥアーを探しています：{detail}",
   "The answer failed.": "回答できませんでした。",
-  "Sirathic can make mistakes. Check the sources.":
-    "Sirathic は間違えることがあります。出典を確認してください。",
   "What's wrong with this answer?": "この回答のどこが間違っていますか？",
   "A verse or hadith is wrong": "クルアーンの節やハディースが間違っている",
   "A school's view is wrong": "学派の見解が間違っている",
@@ -800,7 +798,6 @@ export default {
   "Save login": "ログインを保存",
   Browser: "ブラウザ",
   Continue: "続ける",
-  Dismiss: "閉じる",
   Done: "完了",
   Filled: "入力済み",
   "Filled into the page. Your bot never saw it.":

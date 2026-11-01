@@ -328,7 +328,6 @@ export default {
   "Saved to your preferences": "Disimpan ke preferensi Anda",
   "Finding duas for {detail}": "Mencari doa untuk {detail}",
   "The answer failed.": "Jawaban gagal.",
-  "Sirathic can make mistakes. Check the sources.": "Sirathic bisa salah. Periksa sumbernya.",
   "What's wrong with this answer?": "Apa yang salah dengan jawaban ini?",
   "A verse or hadith is wrong": "Ayat atau hadis salah",
   "A school's view is wrong": "Pendapat sebuah mazhab salah",
@@ -805,7 +804,6 @@ export default {
   "Save login": "Simpan login",
   Browser: "Browser",
   Continue: "Lanjutkan",
-  Dismiss: "Abaikan",
   Done: "Selesai",
   Filled: "Terisi",
   "Filled into the page. Your bot never saw it.":

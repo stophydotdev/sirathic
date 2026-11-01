@@ -327,8 +327,6 @@ export default {
   "Saved to your preferences": "مايىللىقلىرىڭىزغا ساقلاندى",
   "Finding duas for {detail}": "دۇئا ئىزدەۋاتىدۇ: {detail}",
   "The answer failed.": "جاۋاب بەرگىلى بولمىدى.",
-  "Sirathic can make mistakes. Check the sources.":
-    "Sirathic خاتالىشىشى مۇمكىن. مەنبەلەرنى تەكشۈرۈڭ.",
   "What's wrong with this answer?": "بۇ جاۋابتا نېمە خاتا؟",
   "A verse or hadith is wrong": "بىر ئايەت ياكى ھەدىس خاتا",
   "A school's view is wrong": "بىر مەزھەبنىڭ قارىشى خاتا",
@@ -806,7 +804,6 @@ export default {
   "Save login": "كىرىشنى ساقلاش",
   Browser: "توركۆرگۈ",
   Continue: "داۋاملاشتۇرۇش",
-  Dismiss: "تاقاش",
   Done: "تامام",
   Filled: "تولدۇرۇلدى",
   "Filled into the page. Your bot never saw it.": "بەتكە تولدۇرۇلدى. بوتىڭىز ئۇنى ھەرگىز كۆرمىدى.",

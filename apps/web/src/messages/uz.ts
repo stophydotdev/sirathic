@@ -328,8 +328,6 @@ export default {
   "Saved to your preferences": "Созламаларингизга сақланди",
   "Finding duas for {detail}": "Дуолар қидирилмоқда: {detail}",
   "The answer failed.": "Жавоб олиб бўлмади.",
-  "Sirathic can make mistakes. Check the sources.":
-    "Sirathic хато қилиши мумкин. Манбаларни текширинг.",
   "What's wrong with this answer?": "Бу жавобда нима хато?",
   "A verse or hadith is wrong": "Оят ёки ҳадис хато",
   "A school's view is wrong": "Мазҳаб фикри хато",
@@ -809,7 +807,6 @@ export default {
   "Save login": "Логинни сақлаш",
   Browser: "Браузер",
   Continue: "Давом этиш",
-  Dismiss: "Ёпиш",
   Done: "Тайёр",
   Filled: "Тўлдирилди",
   "Filled into the page. Your bot never saw it.":

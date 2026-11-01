@@ -326,7 +326,6 @@ export default {
   "Saved to your preferences": "Сачувано у вашим подешавањима",
   "Finding duas for {detail}": "Тражење дова: {detail}",
   "The answer failed.": "Одговор није успео.",
-  "Sirathic can make mistakes. Check the sources.": "Sirathic може погрешити. Проверите изворе.",
   "What's wrong with this answer?": "Шта није у реду са овим одговором?",
   "A verse or hadith is wrong": "Ајет или хадис је погрешан",
   "A school's view is wrong": "Став мезхеба је погрешан",
@@ -801,7 +800,6 @@ export default {
   "Save login": "Сачувај пријаву",
   Browser: "Прегледач",
   Continue: "Настави",
-  Dismiss: "Одбаци",
   Done: "Готово",
   Filled: "Попуњено",
   "Filled into the page. Your bot never saw it.":
