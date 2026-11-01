@@ -18,8 +18,8 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
-export const MARKED = "āīūḥḍṣṭẓĀĪŪḤḌṢṬẒʿʾʼʻ";
-export const UNMARKED = "aiuhdstzAIUHDSTZ";
+export const MARKED = "āīūḥḍṣṭẓĀĪŪḤḌṢṬẒأإآʿʾʼʻ";
+export const UNMARKED = "aiuhdstzAIUHDSTZااا";
 
 const unmarked = (english: string) => sql.raw(`translate(${english}, '${MARKED}', '${UNMARKED}')`);
 
@@ -65,7 +65,7 @@ export const verses = pgTable(
     textEn: text().notNull(),
     footnotesEn: text(),
     search: tsvector().generatedAlwaysAs(
-      sql`to_tsvector('english', ${unmarked("text_en")}) || to_tsvector('simple', text_ar_clean)`,
+      sql`to_tsvector('english', ${unmarked("text_en")}) || to_tsvector('simple', ${unmarked("text_ar_clean")})`,
     ),
     embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
   },
@@ -92,7 +92,7 @@ export const hadiths = pgTable(
       .references(() => sources.name),
     url: text(),
     search: tsvector().generatedAlwaysAs(
-      sql`to_tsvector('english', ${unmarked("coalesce(text_en, '')")}) || to_tsvector('simple', coalesce(text_ar_clean, ''))`,
+      sql`to_tsvector('english', ${unmarked("coalesce(text_en, '')")}) || to_tsvector('simple', ${unmarked("coalesce(text_ar_clean, '')")})`,
     ),
     embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
   },
@@ -166,7 +166,7 @@ export const duas = pgTable(
     grade: text().notNull(),
     hadithId: text().references(() => hadiths.id),
     search: tsvector().generatedAlwaysAs(
-      sql`to_tsvector('english', ${unmarked("title || ' ' || text_en")}) || to_tsvector('simple', text_ar_clean)`,
+      sql`to_tsvector('english', ${unmarked("title || ' ' || text_en")}) || to_tsvector('simple', ${unmarked("text_ar_clean")})`,
     ),
     embedding: halfvec({ dimensions: EMBEDDING.dimensions }),
   },
