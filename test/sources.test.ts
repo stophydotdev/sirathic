@@ -32,6 +32,7 @@ test("hadith links follow each collection's own page numbering", () => {
   ]);
   expect(hadithIdOfSunnahUrl("https://sunnah.com/tirmidhi:3604j")).toBe("tirmidhi:3604.1");
   expect(hadithIdOfSunnahUrl("https://sunnah.com/urn/1101260")).toBe("nasai:125b");
+  expect(hadithIdOfSunnahUrl("https://sunnah.com/urn/510770")).toBe("malik:1074");
   expect(OUR_LETTERED.get("bukhari:1132b")).toBe("bukhari:1132.2");
 });
 

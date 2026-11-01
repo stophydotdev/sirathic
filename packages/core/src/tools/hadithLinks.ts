@@ -6,7 +6,10 @@ const MALIK_URNS = new Map(Object.entries(malikUrns));
 
 const SUNNAH_URNS = new Map(Object.entries(sunnahUrns));
 
-const URN_IDS = new Map([...SUNNAH_URNS].map(([id, urn]) => [urn, id]));
+const URN_IDS = new Map([
+  ...[...SUNNAH_URNS].map(([id, urn]) => [urn, id] as const),
+  ...[...MALIK_URNS].map(([number, urn]) => [String(urn), `malik:${number}`] as const),
+]);
 
 export const SUNNAH_LETTERED = new Map(Object.entries(sunnahLettered));
 
