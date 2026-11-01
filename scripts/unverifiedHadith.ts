@@ -54,15 +54,9 @@ const copiesOf = (lines: readonly { text: string; short: boolean }[]) => {
   const lastLong = lines.findLastIndex((line) => !line.short);
   return [
     ...long.map((_, from) => long.slice(from).join(" ")),
-    ...lines.map((_, from) =>
+    ...lines.slice(0, Math.max(lastLong, 0) + 1).map((_, from) =>
       lines
         .slice(from)
-        .map((line) => line.text)
-        .join(" "),
-    ),
-    ...lines.slice(0, lastLong + 1).map((_, from) =>
-      lines
-        .slice(from, lastLong + 1)
         .map((line) => line.text)
         .join(" "),
     ),
@@ -77,6 +71,8 @@ for (const { book, text } of pages) {
       const arabic = plain.match(ARABIC_LETTERS)?.length ?? 0;
       if (arabic > (plain.match(LATIN_LETTERS)?.length ?? 0)) {
         pending.push({ text: plain, short: arabic <= SHORT_LETTERS });
+      } else if (/[A-Za-z]/u.test(plain)) {
+        pending = [];
       }
       continue;
     }
