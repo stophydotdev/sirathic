@@ -16,6 +16,7 @@ import {
 import { afterAnswer } from "../apps/server/src/chat/afterAnswer";
 import { researchedEnough } from "../apps/server/src/chat/enoughGate";
 import { chatResponse } from "../apps/server/src/chat/response";
+import { productsIn } from "../apps/server/src/chat/shopTools";
 import { keepFitting } from "../apps/server/src/chat/stophyTools";
 import server from "../apps/server/src/index";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
@@ -401,3 +402,30 @@ test.each([
     }
   },
 );
+
+const variant = (amount: number, currency: string) => ({
+  url: "https://brand.example/products/kettle?variant=1",
+  price: { amount, currency },
+  seller: { name: "Brand", url: "https://brand.example" },
+});
+
+test("shop search keeps prices in whole units and skips broken products", () => {
+  const rows = productsIn({
+    products: [
+      {
+        id: "gid://shopify/p/1",
+        title: "Kettle",
+        rating: { value: 4.6, count: 2253 },
+        variants: [variant(17_995, "USD")],
+      },
+      { id: "gid://shopify/p/2", title: "Teapot", variants: [variant(4800, "JPY")] },
+      { id: "gid://shopify/p/3", title: "No variants", variants: [] },
+    ],
+  });
+  expect(
+    rows.map(({ title, price, currency, reviews }) => [title, price, currency, reviews]),
+  ).toEqual([
+    ["Kettle", 179.95, "USD", 2253],
+    ["Teapot", 4800, "JPY", undefined],
+  ]);
+});

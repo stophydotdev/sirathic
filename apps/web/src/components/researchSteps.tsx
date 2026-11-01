@@ -96,6 +96,14 @@ const TOOLS = new Map<
     },
   ],
   [
+    "shop_search",
+    {
+      Icon: Search01Icon,
+      label: (t, d) => t("Searching “{query}”", { query: d }),
+      done: (t) => t("Searched stores"),
+    },
+  ],
+  [
     "stophy_call",
     { Icon: Globe02Icon, label: (t) => t("Read from Stophy"), done: (t) => t("Read from Stophy") },
   ],

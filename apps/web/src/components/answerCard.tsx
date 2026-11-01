@@ -4,6 +4,7 @@ import { useT } from "@/components/i18n";
 import { IslamicDatesCard } from "@/components/islamicDatesCard";
 import { PlacesCard } from "@/components/placesCard";
 import { PrayerTimesCard } from "@/components/prayerTimesCard";
+import { ProductsCard } from "@/components/productsCard";
 import { MADHAB_NAMES } from "@/components/settingsCustomize";
 import { QuizCard } from "@/components/quizCard";
 import { useSettings } from "@/components/settings";
@@ -32,6 +33,8 @@ export const AnswerCard: FC<{ name: string; callId: string; args: unknown; resul
       return <TranslationCard args={args} />;
     case "show_places":
       return <PlacesCard result={result} />;
+    case "show_products":
+      return <ProductsCard result={result} />;
     case "prayer_times":
       return <PrayerTimesCard result={result} />;
     case "islamic_dates":

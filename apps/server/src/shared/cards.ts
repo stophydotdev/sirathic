@@ -6,6 +6,7 @@ export const ANSWER_CARDS = [
   "show_quiz",
   "show_translation",
   "show_places",
+  "show_products",
   "prayer_times",
   "islamic_dates",
   "change_setting",
@@ -178,6 +179,55 @@ export const place = z.object({
 
 export const shownPlaces = z.object({
   places: z.array(place.and(placeChoice)),
+});
+
+export const httpsUrl = z.url({ protocol: /^https$/u, normalize: true });
+
+export const product = z.object({
+  id: z.string(),
+  url: httpsUrl,
+  title: z.string(),
+  price: z.number(),
+  currency: z.string(),
+  listPrice: z.number().optional(),
+  rating: z.number().optional(),
+  reviews: z.number().optional(),
+  imageUrl: httpsUrl.optional(),
+  store: z.string(),
+  storeUrl: httpsUrl.optional(),
+  country: z.string().optional(),
+});
+
+const productChoice = z.object({
+  id: z
+    .string()
+    .max(200)
+    .describe("The id of a shop_search result from this chat. Copy it exactly."),
+  note: z
+    .string()
+    .max(120)
+    .describe(
+      "A few words on what sets it apart, like 'Gooseneck pour-over kettle with a hold mode'. The card already shows the price, rating and store.",
+    ),
+});
+
+const followUps = z
+  .array(z.string().max(40))
+  .min(2)
+  .max(3)
+  .describe(
+    "Two or three short next asks the user can tap under the card, like 'More gadgets', 'Under $50' or 'Ships to Slovenia'.",
+  );
+
+export const products = z.object({
+  products: z.array(productChoice).min(1).max(8),
+  followUps,
+  summary,
+});
+
+export const shownProducts = z.object({
+  products: z.array(product.and(productChoice)),
+  followUps: followUps.optional(),
 });
 
 type Question = z.infer<typeof quiz>["questions"][number];
