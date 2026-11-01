@@ -1,15 +1,24 @@
 import { tool } from "ai";
 import { z } from "zod";
 import { unlinked } from "../chat/citations";
+import { fencedText } from "../chat/fence";
 import { messagesOf } from "../chat/sessions";
 import { type ChatMessage, messageText } from "../shared/messages";
+import type { BotDisk } from "./disk";
 import type { BotScope } from "./tools";
 
 const MAX_MATCHES = 4;
 const SNIPPET_CHARS = 240;
 
-export const SEARCH_OUR_CHAT =
+const SEARCH_OUR_CHAT =
   " Older turns of this chat drop out of your view, and short notes on them come first. When they ask about something said earlier that you can no longer see, use searchOurChat to find it.";
+
+export const ourChatNote = async (disk: BotDisk | false | undefined) => {
+  const names = disk ? (await disk.list().catch(() => [])).map(({ name }) => name) : [];
+  return names.length > 0
+    ? `${SEARCH_OUR_CHAT} Your files, like ones the user sent you and your downloads, stay after the message that brought them drops out of view. Their names: ${fencedText(names.join(", "))}`
+    : SEARCH_OUR_CHAT;
+};
 const MIN_WORD = 3;
 
 export const textOf = (message: ChatMessage) => unlinked(messageText(message).trim());
