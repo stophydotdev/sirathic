@@ -3,10 +3,11 @@ import { PgDialect } from "drizzle-orm/pg-core";
 import {
   hadithIdOfSunnahUrl,
   hadithLink,
+  MALIK_BY_TITLE,
   OUR_LETTERED,
 } from "../packages/core/src/tools/hadithLinks";
 import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
-import { verseSource } from "../apps/server/src/chat/cite";
+import { hadithTitle, verseSource } from "../apps/server/src/chat/cite";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
 
@@ -32,6 +33,8 @@ test("hadith links follow each collection's own page numbering", () => {
   ]);
   expect(hadithIdOfSunnahUrl("https://sunnah.com/tirmidhi:3604j")).toBe("tirmidhi:3604.1");
   expect(hadithIdOfSunnahUrl("https://sunnah.com/urn/1101260")).toBe("nasai:125b");
+  expect(hadithIdOfSunnahUrl("https://sunnah.com/urn/510770")).toBe("malik:1074");
+  expect(MALIK_BY_TITLE.get("malik:1077")).toBe("malik:1074");
   expect(OUR_LETTERED.get("bukhari:1132b")).toBe("bukhari:1132.2");
 });
 
@@ -106,4 +109,21 @@ test("a verse's source preview leaves out the translation's footnote marks", () 
     tafsirAr: null,
   };
   expect(verseSource(verse).snippet).toBe("Alif, Lām, Meem, Rā. These are the verses of the Book");
+});
+
+test("a Malik hadith's title gives the number on the sunnah.com page it links to", () => {
+  const hadith = {
+    id: "malik:1074",
+    book: "malik",
+    chapter: null,
+    arabicNumber: null,
+    textAr: null,
+    credit: null,
+    english: null,
+    licensedEnglish: null,
+    explanation: null,
+    grades: [],
+    link: "https://sunnah.com/urn/510770",
+  };
+  expect(hadithTitle(hadith)).toBe("Muwatta Malik 1077");
 });

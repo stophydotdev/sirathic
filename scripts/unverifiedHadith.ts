@@ -12,10 +12,12 @@ const pagesDir = z.string().parse(Bun.env.SUNNAH_PAGES);
 const summaryFile = z.string().parse(Bun.argv[2]);
 const outFile = new URL("../packages/core/src/tools/unverifiedHadith.json", import.meta.url);
 const letteredFile = new URL("../packages/core/src/tools/sunnahLettered.json", import.meta.url);
+const malikFile = new URL("../packages/core/src/tools/malikNumbers.json", import.meta.url);
 
 const copies = new Map<string, Set<string>>();
 const bookTexts = new Map<string, Set<string>>();
 const letteredAs = new Map<string, string>();
+const numbersOfText = new Map<string, Set<string>>();
 
 const dottedForms = (base: string, letter: string) => {
   const place = letter.charCodeAt(0) - 96;
@@ -33,6 +35,10 @@ const addCopy = (book: string, number: string | null, text: string) => {
   const ids = [...(number === null ? [] : [number]), ...dotted].map((id) => `${book}:${id}`);
   for (const id of ids) copies.set(id, (copies.get(id) ?? new Set<string>()).add(key));
   bookTexts.set(book, (bookTexts.get(book) ?? new Set<string>()).add(key));
+  if (number !== null) {
+    const at = `${book}:${key}`;
+    numbersOfText.set(at, (numbersOfText.get(at) ?? new Set<string>()).add(number));
+  }
 };
 
 const ARABIC_LETTERS = /[ء-ي]/gu;
@@ -180,6 +186,20 @@ const lettered = Object.fromEntries(
   }),
 );
 await Bun.write(letteredFile, `${JSON.stringify(lettered)}\n`);
+const nearest = (own: number, numbers: Iterable<string>) =>
+  [...numbers].toSorted((a, b) => Math.abs(Number(a) - own) - Math.abs(Number(b) - own))[0];
+const malikNumbers = Object.fromEntries(
+  rows.flatMap((row, at) => {
+    if (row.book !== "malik" || verdicts[at] !== "textOnly") return [];
+    const own = row.id.slice(row.id.indexOf(":") + 1);
+    const sunnah = nearest(
+      Number(own),
+      numbersOfText.get(`malik:${hadithKey(row.textAr ?? "")}`) ?? [],
+    );
+    return sunnah === undefined || sunnah === own ? [] : [[row.id, sunnah]];
+  }),
+);
+await Bun.write(malikFile, `${JSON.stringify(malikNumbers)}\n`);
 await Bun.write(summaryFile, JSON.stringify(summary, null, 2));
 console.log(
   `books excluded whole: ${books.join(", ")}; ids listed: ${Object.values(ids).join(" ").split(" ").length}`,
