@@ -33,14 +33,16 @@ const TOOL_NAMES = new Map(
 
 export const toolOf = (part: Part) => {
   const output = "output" in part ? part.output : undefined;
+  const failed = "state" in part && part.state === "output-error";
   return part.type === "dynamic-tool"
-    ? { id: part.toolCallId, name: part.toolName, input: part.input, output }
+    ? { id: part.toolCallId, name: part.toolName, input: part.input, output, failed }
     : part.type.startsWith("tool-") && "input" in part
       ? {
           id: part.toolCallId,
           name: currentToolName(part.type.slice(5)),
           input: part.input,
           output,
+          failed,
         }
       : undefined;
 };

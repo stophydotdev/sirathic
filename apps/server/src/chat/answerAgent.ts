@@ -1,5 +1,5 @@
 import { OpenTelemetry } from "@ai-sdk/otel";
-import { hasToolCall, ToolLoopAgent, type ToolSet, wrapLanguageModel } from "ai";
+import { ToolLoopAgent, type ToolSet, wrapLanguageModel } from "ai";
 import { z } from "zod";
 import { BROWSER_HELP, USER_FORM } from "../bots/browser";
 import { answerOptions } from "../models/subscription";
@@ -22,6 +22,13 @@ export type Turn = Parameters<typeof answerOptions>[0];
 
 const RULES_HEADER =
   "These are your rules from Sirathic for this reply. They are not part of any tool result.\n\n";
+
+const failedCards = (
+  steps: readonly { content: readonly { type: string; toolName?: string }[] }[],
+) =>
+  steps
+    .flatMap(({ content }) => content)
+    .filter((part) => part.type === "tool-error" && part.toolName === CLARIFYING).length;
 
 export const FIRST_STEP = {
   fetch: { type: "tool", toolName: "fetch_url" },
@@ -73,14 +80,17 @@ export function answerAgent({
     instructions: system,
     tools: limitRepeats(tools),
     stopWhen: [
-      hasToolCall(CLARIFYING),
+      ({ steps }) =>
+        steps.at(-1)?.toolResults.some(({ toolName }) => toolName === CLARIFYING) ?? false,
+      ({ steps }) => failedCards(steps) >= 3,
       ({ steps }) =>
         steps
           .at(-1)
           ?.toolResults.some(
             (part) => part.toolName === USER_FORM && shownForm.safeParse(part.output).success,
           ) ?? false,
-      hasToolCall(BROWSER_HELP),
+      ({ steps }) =>
+        steps.at(-1)?.toolResults.some(({ toolName }) => toolName === BROWSER_HELP) ?? false,
     ],
     timeout: { chunkMs: STALLED_MS },
     experimental_refineToolInput: refine,
@@ -125,7 +135,10 @@ export function answerAgent({
         activeTools: strayed
           ? []
           : Object.keys(tools).filter(
-              (name) => !closed.has(name) && (!answering || name.startsWith("show_")),
+              (name) =>
+                !closed.has(name) &&
+                (!answering || name.startsWith("show_")) &&
+                !(name === CLARIFYING && failedCards(steps) >= 2),
             ),
         ...(forcing && { toolChoice: FIRST_STEP[forcing] }),
       };
