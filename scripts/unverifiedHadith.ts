@@ -36,6 +36,8 @@ const addCopy = (book: string, number: string | null, text: string) => {
 };
 
 const ARABIC_LETTERS = /[ء-ي]/gu;
+const LATIN_LETTERS = /[A-Za-z]/gu;
+const SHORT_LETTERS = 20;
 const referenceLink = /\*\*Reference\*\*\s*\|\s*:\s*\[([^\]]*)\]\(([^)]*)\)/u;
 const arabicReference = /Arabic reference\s*\|\s*:\s*Book \d+, Hadith (\d+)/u;
 
@@ -47,12 +49,33 @@ const pages = await Promise.all(
   })),
 );
 
+const copiesOf = (lines: readonly { text: string; short: boolean }[]) => {
+  const long = lines.filter((line) => !line.short).map((line) => line.text);
+  const lastLong = lines.findLastIndex((line) => !line.short);
+  return [
+    ...long.map((_, from) => long.slice(from).join(" ")),
+    ...lines.slice(0, Math.max(lastLong, 0) + 1).map((_, from) =>
+      lines
+        .slice(from)
+        .map((line) => line.text)
+        .join(" "),
+    ),
+  ];
+};
+
 for (const { book, text } of pages) {
-  let pending: string[] = [];
+  let pending: { text: string; short: boolean }[] = [];
   for (const paragraph of text.split(/\n\s*\n/u)) {
     if (!paragraph.startsWith("|")) {
-      const plain = paragraph.replace(/\[([^\]]*)\]\([^)]*\)/gu, "$1").trim();
-      if ((plain.match(ARABIC_LETTERS)?.length ?? 0) > 20) pending.push(plain);
+      const plain = paragraph.replace(/\[((?:\\.|[^\]\\])*)\]\([^)]*\)/gu, "$1").trim();
+      const arabic = plain.match(ARABIC_LETTERS)?.length ?? 0;
+      const short = arabic <= SHORT_LETTERS;
+      if (short && plain.startsWith("باب")) continue;
+      if (arabic > (plain.match(LATIN_LETTERS)?.length ?? 0)) {
+        pending.push({ text: plain, short });
+      } else if (/[A-Za-z]/u.test(plain)) {
+        pending = [];
+      }
       continue;
     }
     const link = referenceLink.exec(paragraph);
@@ -63,9 +86,7 @@ for (const { book, text } of pages) {
       : (arabicReference.exec(paragraph)?.[1] ?? null);
     const isReference = link !== null || /Sunnah\.com reference|Arabic reference/u.test(paragraph);
     if (!isReference || pending.length === 0) continue;
-    for (let from = 0; from < pending.length; from++) {
-      addCopy(book, number, pending.slice(from).join(" "));
-    }
+    for (const copy of new Set(copiesOf(pending))) addCopy(book, number, copy);
     pending = [];
   }
 }
