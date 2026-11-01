@@ -236,6 +236,15 @@ const StatusLine: FC<{ message: ChatMessage; working: boolean }> = ({ message, w
   );
 };
 
+export const PendingReply: FC = () => {
+  const [id] = useState(() => `pending:${Date.now()}`);
+  return (
+    <View className="pb-4">
+      <StatusLine message={{ id, role: "assistant", parts: [] }} working />
+    </View>
+  );
+};
+
 const actionButton = "size-9 items-center justify-center rounded-full active:bg-muted";
 
 export type Feedback = "up" | "down" | null;
