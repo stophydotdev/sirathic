@@ -55,7 +55,7 @@ class AnswerRenderer extends Renderer {
     const open = () => void WebBrowser.openBrowserAsync(href);
     if (!CITATION.test(label)) {
       return (
-        <Text key={this.getKey()} onPress={open} className="text-super">
+        <Text key={this.getKey()} accessibilityRole="link" onPress={open} className="text-super">
           {children}
         </Text>
       );
@@ -72,7 +72,7 @@ class AnswerRenderer extends Renderer {
   }
 }
 
-const ChatLink = createContext("https://sirathic.com");
+export const ChatLink = createContext("https://sirathic.com");
 
 const ChartCard: FC = () => {
   const href = useContext(ChatLink);
@@ -90,7 +90,7 @@ const ChartCard: FC = () => {
   );
 };
 
-const renderer = new AnswerRenderer();
+export const renderer = new AnswerRenderer();
 
 const SERIF = Platform.select({ ios: "Georgia", default: "serif" });
 const SANS = Platform.select({ ios: "System", default: "sans-serif" });

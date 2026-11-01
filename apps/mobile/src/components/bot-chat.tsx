@@ -10,7 +10,7 @@ import { api } from "@/lib/api";
 import { useChatState } from "@/lib/chat-state";
 import { type Bot, useBots } from "@/lib/bots";
 import { latestTodoId, toolOf } from "@/lib/research";
-import type { Feedback } from "./answer";
+import { ChatLink, type Feedback } from "./answer";
 import { BotAvatar } from "./bot-avatar";
 import { BotMenu, useBotPanel } from "./bot-menu";
 import { BotSays, BotYou, stampOf } from "./bot-turns";
@@ -176,101 +176,103 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding" className="flex-1">
-      <View className="h-14 flex-row items-center justify-between gap-2 px-2">
-        <View className="flex-1 flex-row items-center gap-2">
-          <MenuButton />
-          <Pressable
-            accessibilityLabel="Settings"
-            onPress={() => setPanel(true)}
-            className="bg-muted active:bg-foreground/10 h-11 flex-row items-center gap-2 rounded-full px-3"
-          >
-            <BotAvatar
-              color={bot.color}
-              body={bot.symbol}
-              seed={bot.id}
-              state={stateOf(messages, status)}
-              size={26}
-            />
-            <Text numberOfLines={1} className="text-foreground font-medium max-w-48 text-base">
-              {bot.name}
-            </Text>
-          </Pressable>
+    <ChatLink value={`https://sirathic.com/bot/${bot.id}`}>
+      <KeyboardAvoidingView behavior="padding" className="flex-1">
+        <View className="h-14 flex-row items-center justify-between gap-2 px-2">
+          <View className="flex-1 flex-row items-center gap-2">
+            <MenuButton />
+            <Pressable
+              accessibilityLabel="Settings"
+              onPress={() => setPanel(true)}
+              className="bg-muted active:bg-foreground/10 h-11 flex-row items-center gap-2 rounded-full px-3"
+            >
+              <BotAvatar
+                color={bot.color}
+                body={bot.symbol}
+                seed={bot.id}
+                state={stateOf(messages, status)}
+                size={26}
+              />
+              <Text numberOfLines={1} className="text-foreground font-medium max-w-48 text-base">
+                {bot.name}
+              </Text>
+            </Pressable>
+          </View>
+          <BotMenu
+            bot={bot}
+            triggerClassName="active:bg-muted size-11 items-center justify-center rounded-full"
+            iconSize={24}
+          />
         </View>
-        <BotMenu
-          bot={bot}
-          triggerClassName="active:bg-muted size-11 items-center justify-center rounded-full"
-          iconSize={24}
-        />
-      </View>
-      <ScrollView
-        ref={scroll}
-        contentContainerClassName="px-4 pb-6"
-        keyboardShouldPersistTaps="handled"
-        onContentSizeChange={() =>
-          requestAnimationFrame(() => scroll.current?.scrollToEnd({ animated: busy }))
-        }
-      >
-        <View className="items-start pt-8">
-          <Text className="bg-foreground/7 text-foreground font-sans overflow-hidden rounded-3xl px-4 py-2 text-base">
-            {bot.greeting ??
-              "Assalamu alaikum. What do you want me around for? Anything concrete, or more of a study companion?"}
-          </Text>
-          {bot.options ? (
-            <QuestionCard
-              question={bot.question ?? "What should I focus on?"}
-              options={bot.options}
-              reply={reply}
-              busy={busy}
-              onAnswer={ask}
-            />
-          ) : (
-            (!bot.instructions || reply !== undefined) && (
+        <ScrollView
+          ref={scroll}
+          contentContainerClassName="px-4 pb-6"
+          keyboardShouldPersistTaps="handled"
+          onContentSizeChange={() =>
+            requestAnimationFrame(() => scroll.current?.scrollToEnd({ animated: busy }))
+          }
+        >
+          <View className="items-start pt-8">
+            <Text className="bg-foreground/7 text-foreground font-sans overflow-hidden rounded-3xl px-4 py-2 text-base">
+              {bot.greeting ??
+                "Assalamu alaikum. What do you want me around for? Anything concrete, or more of a study companion?"}
+            </Text>
+            {bot.options ? (
               <QuestionCard
-                question="What should I focus on?"
-                options={[...STARTER_REPLIES]}
+                question={bot.question ?? "What should I focus on?"}
+                options={bot.options}
                 reply={reply}
                 busy={busy}
                 onAnswer={ask}
               />
-            )
-          )}
-        </View>
-        <LatestTodo value={latestTodoId(messages)}>
-          {messages.map((message, index) =>
-            message.role === "user" ? (
-              <BotYou
-                key={message.id}
-                message={message}
-                reply={messages[index + 1]}
-                stamp={stampOf(messages, index)}
-                color={bot.color}
-              />
             ) : (
-              <BotSays
-                key={message.id}
-                message={message}
-                running={busy && index === messages.length - 1}
-                reply={answerAfter(messages, index)}
-                feedback={message.metadata?.feedback ?? null}
-                onRate={(next) => rate(message.id, next)}
-                onAsk={ask}
-              />
-            ),
-          )}
-        </LatestTodo>
-        {error && <Text className="text-destructive font-sans text-sm">{messageOf(error)}</Text>}
-        <Learned bot={bot} messages={messages} ready={status === "ready"} />
-      </ScrollView>
-      <ComposerDock>
-        <Composer
-          placeholder={`Message ${bot.name}`}
-          busy={busy}
-          onSend={ask}
-          onStop={() => void stop()}
-          bot
-        />
-      </ComposerDock>
-    </KeyboardAvoidingView>
+              (!bot.instructions || reply !== undefined) && (
+                <QuestionCard
+                  question="What should I focus on?"
+                  options={[...STARTER_REPLIES]}
+                  reply={reply}
+                  busy={busy}
+                  onAnswer={ask}
+                />
+              )
+            )}
+          </View>
+          <LatestTodo value={latestTodoId(messages)}>
+            {messages.map((message, index) =>
+              message.role === "user" ? (
+                <BotYou
+                  key={message.id}
+                  message={message}
+                  reply={messages[index + 1]}
+                  stamp={stampOf(messages, index)}
+                  color={bot.color}
+                />
+              ) : (
+                <BotSays
+                  key={message.id}
+                  message={message}
+                  running={busy && index === messages.length - 1}
+                  reply={answerAfter(messages, index)}
+                  feedback={message.metadata?.feedback ?? null}
+                  onRate={(next) => rate(message.id, next)}
+                  onAsk={ask}
+                />
+              ),
+            )}
+          </LatestTodo>
+          {error && <Text className="text-destructive font-sans text-sm">{messageOf(error)}</Text>}
+          <Learned bot={bot} messages={messages} ready={status === "ready"} />
+        </ScrollView>
+        <ComposerDock>
+          <Composer
+            placeholder={`Message ${bot.name}`}
+            busy={busy}
+            onSend={ask}
+            onStop={() => void stop()}
+            bot
+          />
+        </ComposerDock>
+      </KeyboardAvoidingView>
+    </ChatLink>
   );
 };

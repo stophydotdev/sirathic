@@ -7,7 +7,7 @@ import { useMarkdown } from "react-native-marked";
 import { z } from "zod";
 import { toolOf } from "@/lib/research";
 import { withoutCitations } from "@/lib/sources";
-import { type Feedback, useMarkdownLook } from "./answer";
+import { type Feedback, renderer, useMarkdownLook } from "./answer";
 import { SentFiles } from "./attachment-chip";
 import { useBots } from "@/lib/bots";
 import { BotAvatar, tintOf } from "./bot-avatar";
@@ -141,6 +141,7 @@ export const Working: FC<{ step: string | undefined }> = ({ step }) => (
 const BotText: FC<{ text: string }> = ({ text }) => {
   const look = useMarkdownLook();
   const elements = useMarkdown(text, {
+    renderer,
     ...look,
     styles: { ...look.styles, paragraph: { marginBottom: 0, paddingVertical: 0 } },
   });
