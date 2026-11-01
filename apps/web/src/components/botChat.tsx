@@ -23,7 +23,7 @@ import { MarkdownText } from "@/components/markdownText";
 import { UserText } from "@/components/mentions";
 import { ConfirmCard } from "@/components/confirmCard";
 import { AskCard } from "@/components/questionCard";
-import { SourcesContext, siteName, sourcesOf } from "@/components/sources";
+import { SourcesContext, sourcesOf } from "@/components/sources";
 import { cn } from "@/lib/utils";
 import { currentToolName, messageMetadata } from "@sirathic/server/messages";
 import {
@@ -34,7 +34,6 @@ import {
   type ThreadMessage,
   useAuiState,
 } from "@assistant-ui/react";
-import type { Source } from "@sirathic/server/sources";
 import { type FC, Fragment, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
@@ -209,33 +208,6 @@ const Working: FC<{ step: StepLine | undefined }> = ({ step }) => {
   );
 };
 
-const SourceLine: FC<{ sources: readonly Source[] }> = ({ sources }) => {
-  const t = useT();
-  const sites = [...new Map(sources.map((source) => [siteName(source.url), source.url]))].slice(
-    0,
-    4,
-  );
-  if (sites.length === 0) return null;
-  return (
-    <p className="text-muted-foreground mb-2 ms-4 max-w-9/10 text-xs">
-      {t("Sources")}:{" "}
-      {sites.map(([name, url], index) => (
-        <Fragment key={url}>
-          {index > 0 && ", "}
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-super hover:underline"
-          >
-            {name}
-          </a>
-        </Fragment>
-      ))}
-    </p>
-  );
-};
-
 const BotSays: FC = () => {
   const content = useAuiState((s) => s.message.content);
   const running = useAuiState((s) => s.message.status?.type === "running");
@@ -275,7 +247,6 @@ const BotSays: FC = () => {
         {said.slice(0, shown).map((item, index) => (
           <Fragment key={index}>
             <Bubble said={item} last={index === lastText} />
-            {!working && index === lastText && <SourceLine sources={sources} />}
             {!working && index === lastText && <MemoryUsed />}
           </Fragment>
         ))}

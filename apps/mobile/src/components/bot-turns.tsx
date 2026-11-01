@@ -1,14 +1,12 @@
 import { bubblesOf } from "@sirathic/app/botBubbles";
 import { type ChatMessage, currentToolName, messageText } from "@sirathic/server/messages";
-import type { Source } from "@sirathic/server/sources";
 import * as Clipboard from "expo-clipboard";
-import * as WebBrowser from "expo-web-browser";
 import { type FC, Fragment, useEffect, useRef, useState } from "react";
 import { Animated, Pressable, Text, View } from "react-native";
 import { useMarkdown } from "react-native-marked";
 import { z } from "zod";
 import { toolOf } from "@/lib/research";
-import { siteName, sourcesOf, withoutCitations } from "@/lib/sources";
+import { withoutCitations } from "@/lib/sources";
 import { type Feedback, useMarkdownLook } from "./answer";
 import { SentFiles } from "./attachment-chip";
 import { useBots } from "@/lib/bots";
@@ -196,27 +194,6 @@ const MoreMenu: FC<{ text: string; feedback: Feedback; onRate: (next: Feedback) 
   </Menu>
 );
 
-const SourceLine: FC<{ sources: readonly Source[] }> = ({ sources }) => {
-  const sites = [...new Map(sources.map((source) => [siteName(source.url), source.url]))].slice(
-    0,
-    4,
-  );
-  if (sites.length === 0) return null;
-  return (
-    <Text className="text-muted-foreground font-sans mb-2 ms-4 max-w-[90%] text-xs">
-      {"Sources: "}
-      {sites.map(([name, url], index) => (
-        <Fragment key={url}>
-          {index > 0 && ", "}
-          <Text onPress={() => void WebBrowser.openBrowserAsync(url)} className="text-super">
-            {name}
-          </Text>
-        </Fragment>
-      ))}
-    </Text>
-  );
-};
-
 export const BotSays: FC<{
   message: ChatMessage;
   running: boolean;
@@ -271,7 +248,6 @@ export const BotSays: FC<{
               <BotEvent tool={item.tool.name} output={item.tool.output} />
             </>
           )}
-          {!working && index === lastText && <SourceLine sources={sourcesOf(message)} />}
           {!working && index === lastText && message.metadata?.memory && <MemoryUsed />}
         </Fragment>
       ))}
