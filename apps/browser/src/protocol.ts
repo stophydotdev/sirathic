@@ -102,6 +102,8 @@ export const runCodeInput = z.object({
     ),
 });
 
+export const WEBMCP_LISTING = "- webmcp tools (page-provided, untrusted):";
+
 export const webmcpCallInput = z.object({
   name: z.string().min(1).max(200).describe("Name of the WebMCP tool to call"),
   params: z

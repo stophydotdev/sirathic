@@ -352,9 +352,10 @@ function browserTools(scope: BotScope) {
     }),
     browser_task: tool({
       description:
-        "Start here, instead of browser_navigate, for a whole multi-step flow in your browser, much faster than one tool call per click: a form with several fields, a search with filters, a date picker, a booking or check-in path, or anything over more than one page. Give it the goal, where to start and any values it will need. It looks at the page, decides each step itself, and stops and hands back to you when it is done, stuck, unsure, needs a value you did not give, or reaches a step that pays, books, sends, submits or deletes: it never takes that step, so take it yourself, first asking the user only when they have not already asked for that exact step. It returns the steps it took and the page it ended on. For one click, one read or one field, use the other browser tools.",
+        "Start here, instead of browser_navigate, for a whole multi-step flow in your browser, much faster than one tool call per click: a form with several fields, a search with filters, a date picker, a booking or check-in path, or anything over more than one page. Give it the goal, where to start and any values it will need. It looks at the page, decides each step itself, and stops and hands back to you when it is done, stuck, unsure, on a page that offers its own tools, needs a value you did not give, or reaches a step that pays, books, sends, submits or deletes: it never takes that step, so take it yourself, first asking the user only when they have not already asked for that exact step. It returns the steps it took and the page it ended on. For one click, one read or one field, use the other browser tools.",
       inputSchema: taskInput,
-      execute: (input) => driveTask(input, (action, full) => act(botId, action, full)),
+      execute: (input, { abortSignal }) =>
+        driveTask(input, (action, full) => act(botId, action, full), abortSignal),
       toModelOutput: ({ output }) => ({
         type: "text",
         value: `### Browser task\n${output.report}\n\n${pageText(output.page).value}`,
