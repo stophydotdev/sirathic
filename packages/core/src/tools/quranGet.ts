@@ -1,6 +1,6 @@
 import { db } from "@sirathic/db";
 import { surahs, tafsirPassages, texts, verses } from "@sirathic/db/schema";
-import { and, asc, between, eq, inArray } from "drizzle-orm";
+import { and, asc, between, eq, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { quranTranslation } from "./quranTranslation";
 
@@ -31,7 +31,7 @@ const verseColumns = {
   surahName: surahs.nameTranslit,
   ayah: verses.ayah,
   textAr: verses.textAr,
-  textEn: verses.textEn,
+  textEn: sql<string>`regexp_replace(${verses.textEn}, '\\[[0-9]+\\]', '', 'g')`,
   footnotesEn: verses.footnotesEn,
   tafsirAr: texts.body,
 };
