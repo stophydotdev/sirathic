@@ -367,10 +367,7 @@ export const searchPastChats = (by: string, except: string, query: string) => {
       and(
         eq(chatSessions.owner, by),
         ne(chatSessions.id, except),
-        or(
-          ilike(chatSessions.title, pattern),
-          sql`${chatSessions.messages}::text ilike ${pattern}`,
-        ),
+        or(ilike(chatSessions.title, pattern), sql`${hitIn(query, pattern)} is not null`),
       ),
     )
     .orderBy(desc(chatSessions.updatedAt))
