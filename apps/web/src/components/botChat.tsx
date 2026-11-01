@@ -178,6 +178,7 @@ const TOOL_LINES = new Map<string, StepLine>([
   ["install_plugin", "Setting it up…"],
   ["stophy_search_endpoints", "Checking Stophy…"],
   ["stophy_call", "Checking Stophy…"],
+  ["shop_search", "Searching the web…"],
 ]);
 
 const searched = z.object({ sources: z.array(z.string()) });

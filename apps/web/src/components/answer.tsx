@@ -66,6 +66,7 @@ const researchByType = groupPartByType({
   "tool-call:show_quiz": [],
   "tool-call:show_translation": [],
   "tool-call:show_places": [],
+  "tool-call:show_products": [],
   "tool-call:prayer_times": [],
   "tool-call:islamic_dates": [],
   "tool-call:change_setting": [],
@@ -199,7 +200,10 @@ const Related: FC = () => {
   const last = useAuiState((s) => s.message.isLast);
   const content = useAuiState((s) => s.message.content);
   const questions = relatedOf(content);
-  if (!last || questions.length === 0) return null;
+  const products = content.some(
+    (part) => part.type === "tool-call" && currentToolName(part.toolName) === "show_products",
+  );
+  if (!last || questions.length === 0 || products) return null;
 
   return (
     <div className="border-border/60 mt-4 flex flex-col border-t pt-2 print:hidden">

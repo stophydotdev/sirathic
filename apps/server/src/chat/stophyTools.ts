@@ -4,9 +4,11 @@ import { tool } from "ai";
 import { z } from "zod";
 import { wordsOf } from "../plugins/tools";
 import type { Source } from "../shared/sources";
+import type { cardBook } from "./cards";
 import type { Cite } from "./cite";
 import { yesChances } from "./clef";
 import { fenced } from "./fence";
+import { shopTools } from "./shopTools";
 import { videoOfRow, withVideos } from "./youtube";
 
 const API = "https://api.stophy.dev";
@@ -211,7 +213,8 @@ const matchingEndpoints = (
   return matches.length > 0 ? { endpoints: matches } : { endpoints: [], sources };
 };
 
-export const stophyTools = (cite: Cite, found: (data: z.infer<typeof json>) => void) => ({
+export const stophyTools = (cite: Cite, book: ReturnType<typeof cardBook>) => ({
+  ...shopTools(book.addProducts),
   stophy_search_endpoints: tool({
     description:
       "Use this first when the user wants live data from the web: search, video, social, places, jobs, shopping, homes, events, apps, travel or ads. Returns matches with inputs, filters and cost, ready for stophy_call.",
@@ -238,7 +241,7 @@ export const stophyTools = (cite: Cite, found: (data: z.infer<typeof json>) => v
       const body = reply.parse(await response.json());
       if (!body.success) throw new Error(body.error.message);
       const data = keepIf ? await keepFitting(body.data, keepIf) : body.data;
-      found(data);
+      book.add(data);
       const marked = withCitations(cite, data, endpoint.title);
       return {
         ...marked,

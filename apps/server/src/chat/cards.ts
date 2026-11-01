@@ -4,6 +4,8 @@ import {
   mergeTodos,
   place,
   places,
+  product,
+  products,
   quiz,
   steps,
   todoList,
@@ -17,26 +19,34 @@ const shown = async () => ({ shown: true });
 const json = z.json();
 const searched = z.object({ results: z.array(json) });
 const stophyOutput = z.object({ data: json });
+const shopOutput = z.object({ products: z.array(json) });
 
-export const placeBook = (history: readonly ChatMessage[]) => {
+export const cardBook = (history: readonly ChatMessage[]) => {
   const known = new Map<string, z.infer<typeof place>>();
+  const goods = new Map<string, z.infer<typeof product>>();
   const add = (data: z.infer<typeof json>) => {
     for (const row of searched.safeParse(data).data?.results ?? []) {
       const found = place.safeParse(row).data;
       if (found) known.set(found.placeId, found);
     }
   };
+  const addProducts = (rows: readonly z.infer<typeof json>[]) => {
+    for (const row of rows) {
+      const found = product.safeParse(row).data;
+      if (found) goods.set(found.id, found);
+    }
+  };
   for (const part of history.flatMap((message) => message.parts)) {
-    if (
-      isToolUIPart(part) &&
-      getToolName(part) === "stophy_call" &&
-      part.state === "output-available"
-    ) {
+    if (!isToolUIPart(part) || part.state !== "output-available") continue;
+    if (getToolName(part) === "stophy_call") {
       const output = stophyOutput.safeParse(part.output).data;
       if (output) add(output.data);
     }
+    if (getToolName(part) === "shop_search") {
+      addProducts(shopOutput.safeParse(part.output).data?.products ?? []);
+    }
   }
-  return { add, known };
+  return { add, known, addProducts, goods };
 };
 
 export const todoBook = (history: readonly ChatMessage[]) => {
@@ -57,7 +67,7 @@ export const todoBook = (history: readonly ChatMessage[]) => {
 };
 
 export const answerCards = (
-  book: ReturnType<typeof placeBook>,
+  book: ReturnType<typeof cardBook>,
   todos: ReturnType<typeof todoBook>,
 ) => ({
   show_steps: tool({
@@ -125,6 +135,29 @@ DON'T use this card when you only have one place: write prose. Don't re-list the
     toModelOutput: ({ output }) => ({
       type: "json",
       value: { shown: output.places.length, missing: output.missing },
+    }),
+  }),
+  show_products: tool({
+    description: `Show a row of product cards, each with its photo, price, rating, store and a link to the product's own page. When your answer recommends products you found with shop_search, show them in this card instead of a text list: every shortlist, and a single product the user asked about or picked. Write your text first, without listing them: your pick and the main tradeoff, and anything to know before ordering. Then call this last, so the card and its follow-ups end your answer.
+
+Pass each product's id and a short note: the card fills in the name, photo, price, rating and store from the search result, so don't include them. Don't re-list the products in your prose.`,
+    inputSchema: products,
+    execute: async ({ products: chosen, followUps }) => {
+      const missing = chosen.filter(({ id }) => !book.goods.has(id));
+      const found = chosen.flatMap(({ id, note }) => {
+        const known = book.goods.get(id);
+        return known ? [{ ...known, note }] : [];
+      });
+      if (found.length === 0) {
+        throw new Error(
+          "No shop_search result in this chat has these ids. Search with shop_search first and copy each id exactly.",
+        );
+      }
+      return { products: found, followUps, missing: missing.map(({ id }) => id) };
+    },
+    toModelOutput: ({ output }) => ({
+      type: "json",
+      value: { shown: output.products.length, missing: output.missing },
     }),
   }),
 });

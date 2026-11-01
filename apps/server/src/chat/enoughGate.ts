@@ -9,6 +9,7 @@ const RESEARCH_TOOLS = new Set([
   "search_x",
   "stophy_search_endpoints",
   "stophy_call",
+  "shop_search",
   "prayer_times",
   "islamic_dates",
 ]);

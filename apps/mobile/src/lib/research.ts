@@ -25,6 +25,7 @@ const TOOL_NAMES = new Map(
     search_user_memories: { now: "Checking your memory", done: "Checked your memory" },
     stophy_search_endpoints: { now: "Checking Stophy", done: "Read from Stophy" },
     stophy_call: { now: "Reading from Stophy", done: "Read from Stophy" },
+    shop_search: { now: "Searching stores", done: "Searched stores" },
     code_execution: { now: "Running code", done: "Ran code" },
     search_duas: { now: "Finding duas", done: "Found duas" },
   }),

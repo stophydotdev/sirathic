@@ -6,6 +6,7 @@ import { type FC, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { Brain, Check, Copy, Pin, Search } from "./icons";
 import { IslamicDatesCard, PrayerTimesCard, SettingChanged } from "./day-cards";
+import { ProductsCard } from "./products-card";
 import { QuizCard } from "./quiz-card";
 import { Swap } from "./motion";
 import { TodoCard } from "./todo-card";
@@ -216,6 +217,8 @@ export const AnswerCard: FC<{ name: string; callId: string; input: unknown; outp
       return <TranslationCard input={input} />;
     case "show_places":
       return <PlacesCard output={output} />;
+    case "show_products":
+      return <ProductsCard output={output} />;
     case "prayer_times":
       return <PrayerTimesCard output={output} />;
     case "islamic_dates":
