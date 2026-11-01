@@ -16,6 +16,7 @@ export const yesChances = async (
   state: State,
   questions: Readonly<Record<string, string>>,
   model: ClefModel = CLEF,
+  images: readonly string[] = [],
 ) => {
   const res = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/cloudflare/${model}`,
@@ -28,6 +29,7 @@ export const yesChances = async (
       body: JSON.stringify({
         model,
         state,
+        ...(images.length > 0 && { images }),
         questions: Object.fromEntries(
           Object.entries(questions).map(([name, instructions]) => [
             name,
