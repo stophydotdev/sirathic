@@ -63,6 +63,10 @@ mock.module("@sirathic/db", () => ({
         delivered.push({ chat: String(params[0]), message: sent[0][0] });
         return { rows: [[params[0]]] };
       }
+      if (sql.startsWith('delete from "automations"')) {
+        deleted.push("routines");
+        return { rows: [] };
+      }
       if (sql.startsWith('delete from "chat_sessions"')) {
         deleted.push("chat history");
         return { rows: [] };
@@ -193,9 +197,9 @@ test("islamic_dates converts both ways with the Umm al-Qura calendar and marks u
   });
 });
 
-test("deleting a bot deletes its chat history first", async () => {
+test("deleting a bot deletes its routines and chat history first", async () => {
   expect(await removeProject(botId, "user-a")).toEqual({ deleted: true });
-  expect(deleted).toEqual(["chat history", "bot"]);
+  expect(deleted).toEqual(["routines", "chat history", "bot"]);
 });
 
 const fromScout = (id: string): ChatMessage => ({
