@@ -93,12 +93,18 @@ export const quranGet = async (input: z.input<typeof quranGetInput>) => {
     .where(and(eq(verses.surah, surah), window))
     .orderBy(asc(verses.ayah))
     .limit(MAX_VERSES + 1);
+  if (from !== undefined && !rows.some(({ ayah }) => ayah >= from && ayah <= (to ?? from))) {
+    const [found] = await db
+      .select({ verseCount: surahs.verseCount })
+      .from(surahs)
+      .where(eq(surahs.number, surah));
+    throw new Error(`Surah ${surah} has ${found?.verseCount ?? "no"} verses.`);
+  }
   const shown = rows.slice(0, MAX_VERSES);
   const translated = await translating;
   return {
     truncated: rows.length > MAX_VERSES,
     translatedBy: translated?.by,
-    tafsirEn: await tafsirEnFor(shown.map((row) => row.id)),
     verses: shown.map((row) =>
       Object.assign(row, {
         isContext: from !== undefined && to !== undefined && (row.ayah < from || row.ayah > to),
