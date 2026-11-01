@@ -137,18 +137,34 @@ export async function openSession(id: string, by: string, markRead = true) {
   });
 }
 
-const withArrived = (stored: readonly ChatMessage[], sent: ChatMessage[]) =>
-  stored.reduce(
+const postedIn = (stored: readonly ChatMessage[]) => {
+  const posted = new Set<string>();
+  let inRoutine = false;
+  for (const message of stored) {
+    if (message.role === "user") inRoutine = message.metadata?.routine !== undefined;
+    if (inRoutine || message.metadata?.from) posted.add(message.id);
+  }
+  return posted;
+};
+
+const withArrived = (stored: readonly ChatMessage[], sent: ChatMessage[]) => {
+  const posted = postedIn(stored);
+  return stored.reduce(
     (merged, message, index) => {
-      if (!message.metadata?.from || merged.some((kept) => kept.id === message.id)) return merged;
+      if (!posted.has(message.id) || merged.some((kept) => kept.id === message.id)) return merged;
       const after = stored
         .slice(0, index)
         .findLast((earlier) => merged.some((kept) => kept.id === earlier.id));
-      const at = after ? merged.findIndex((kept) => kept.id === after.id) + 1 : merged.length;
+      const next = after ? merged.findIndex((kept) => kept.id === after.id) + 1 : merged.length;
+      const reply = merged[next];
+      const answersAsked =
+        merged[next - 1]?.role === "user" && reply?.role === "assistant" && !posted.has(reply.id);
+      const at = answersAsked ? next + 1 : next;
       return [...merged.slice(0, at), message, ...merged.slice(at)];
     },
     [...sent],
   );
+};
 
 const withStoredMarks = (stored: readonly ChatMessage[], messages: ChatMessage[]) => {
   const saved = new Map(stored.map((message) => [message.id, message.metadata]));

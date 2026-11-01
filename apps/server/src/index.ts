@@ -116,6 +116,7 @@ app.post("/api/chat", (c) =>
     const user = await userFor(c.req.raw.headers);
     if (!user) throw new StatusError(401, "not signed in");
     const by = user.id;
+    const stored = (input.incognito ? undefined : await openSession(input.id, by, false)) ?? [];
     const validated = withStoredPageText(
       await validateUIMessages<ChatMessage>({
         messages: input.messages,
@@ -123,7 +124,7 @@ app.post("/api/chat", (c) =>
       }).catch((err: Error) => {
         throw new StatusError(400, err.message);
       }),
-      (input.incognito ? undefined : await openSession(input.id, by, false)) ?? [],
+      stored,
     );
     const owner = input.incognito ? undefined : by;
     const { modelName, models } = pickModels(user, input.model);
@@ -230,6 +231,7 @@ app.post("/api/chat", (c) =>
       models,
       modelName,
       messages: validated,
+      citedEarlier: stored,
       mode: input.mode,
       abortSignal: answer.signal,
       consumeSseStream: answer.consumeSseStream,
