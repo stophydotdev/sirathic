@@ -2,8 +2,9 @@ import type { StreamTextTransform, TextStreamPart, ToolSet, UIMessage } from "ai
 import type { ChatMessage } from "../shared/messages";
 import { withoutEmDashes } from "./compact";
 
-const LINKED = /\[(\d+)\]\(([^)\s]+)\)/g;
-const CITATION = /( ?)\[(\d+)\](?:\(([^)\s]+)\))?/g;
+const URL_PART = String.raw`(?:[^()\s]|\([^()\s]*\))+`;
+const LINKED = new RegExp(String.raw`\[(\d+)\]\((${URL_PART})\)`, "g");
+const CITATION = new RegExp(String.raw`( ?)\[(\d+)\](?:\((${URL_PART})\))?`, "g");
 
 export const unlinked = (text: string) => text.replace(LINKED, "[$1]");
 
@@ -23,7 +24,10 @@ const IMAGE = /\[image:(\d+)\]/g;
 const QURAN_URL = /^https:\/\/quran\.com\/(\d+)\/(\d+)$/;
 const VERSE_KEY = /\b(\d{1,3}):(\d{1,3})(?:\s*[-–]\s*(\d{1,3}))?/g;
 const PARAGRAPH = "\n\n";
-const CITED = /\[\d+\](?:\([^)\s]+\))?|\ue200cite\ue202[^\ue201]*\ue201/g;
+const CITED = new RegExp(
+  String.raw`\[\d+\](?:\(${URL_PART}\))?|\ue200cite\ue202[^\ue201]*\ue201`,
+  "g",
+);
 const TRAILING = /[\s\u2014]+$/u;
 const FENCE = /^ {0,3}```/gmu;
 

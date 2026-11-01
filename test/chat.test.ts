@@ -49,11 +49,16 @@ test("an earlier answer reaches the model with bare citation numbers", () => {
   const answer: ChatMessage = {
     id: "a",
     role: "assistant",
-    parts: [{ type: "text", text: "Intentions matter.[1](https://sunnah.com/bukhari:1)" }],
+    parts: [
+      {
+        type: "text",
+        text: "Intentions matter.[1](https://sunnah.com/bukhari:1) Badr was in 624.[2](https://en.wikipedia.org/wiki/Battle_of_Badr_(624))",
+      },
+    ],
   };
   const asked: ChatMessage = { id: "u", role: "user", parts: [{ type: "text", text: "[1](x)" }] };
   expect([answer, asked].map(withBareCitations).map((message) => message.parts)).toEqual([
-    [{ type: "text", text: "Intentions matter.[1]" }],
+    [{ type: "text", text: "Intentions matter.[1] Badr was in 624.[2]" }],
     [{ type: "text", text: "[1](x)" }],
   ]);
 });
