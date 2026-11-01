@@ -15,7 +15,7 @@ export function shortenEarlierResults(history: ChatMessage[]) {
   );
   const notes = new Map(
     answered.flatMap((message) => {
-      const { numberOf } = citations([message]);
+      const { numberOf } = citations([{ ...message, metadata: undefined }]);
       return message.parts.flatMap((part) => {
         if (!isToolUIPart(part) || part.state !== "output-available") {
           return [];

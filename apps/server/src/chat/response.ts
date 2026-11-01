@@ -382,9 +382,11 @@ export function chatResponse({
           ended = { outcome, finishReason };
         },
         messageMetadata: ({ part }) => {
-          if (part.type === "finish") usage = part.totalUsage;
           if (part.type === "finish-step") counted += countedTokens(part.usage);
-          return undefined;
+          if (part.type !== "finish") return undefined;
+          usage = part.totalUsage;
+          const cited = sources.cited();
+          return cited && { cited };
         },
         onError: (error) => {
           if (APICallError.isInstance(error)) {

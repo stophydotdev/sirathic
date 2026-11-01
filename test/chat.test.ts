@@ -45,6 +45,23 @@ test("a citation whose link the model guessed keeps its number's real source", a
   );
 });
 
+test("an answer continued after a card keeps the numbers its sources already had", async () => {
+  const nisab = "https://islamqa.info/en/answers/2795";
+  const first = citations([]);
+  const before = first.add(nisab);
+  const paused: ChatMessage = {
+    id: "a",
+    role: "assistant",
+    metadata: { cited: first.cited() },
+    parts: [{ type: "text", text: "Let me email it." }],
+  };
+  const { add, transform } = citations([paused]);
+  expect(add("https://sunnah.com/bukhari:1")).toBe(before + 1);
+  expect(await streamed(transform, ["Nisab is 85 grams of gold.", `[${before}]`])).toBe(
+    `Nisab is 85 grams of gold.[${before}](${nisab})`,
+  );
+});
+
 test("an earlier answer reaches the model with bare citation numbers", () => {
   const answer: ChatMessage = {
     id: "a",
