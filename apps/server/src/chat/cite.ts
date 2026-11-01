@@ -1,7 +1,7 @@
 import type { fatwaSearch } from "@sirathic/core/tools/fatwaSearch";
 import type { fiqhSearch } from "@sirathic/core/tools/fiqhSearch";
 import type { hadithsByIds } from "@sirathic/core/tools/hadithGet";
-import { SUNNAH_LETTERED } from "@sirathic/core/tools/hadithLinks";
+import { MALIK_NUMBERS, SUNNAH_LETTERED } from "@sirathic/core/tools/hadithLinks";
 import type { quranSearch } from "@sirathic/core/tools/quranSearch";
 import type { Source } from "../shared/sources";
 
@@ -42,7 +42,9 @@ export const hadithTitle = (hadith: Hadith) => {
   const number =
     hadith.book === "ahmad" && hadith.arabicNumber
       ? hadith.arabicNumber
-      : (SUNNAH_LETTERED.get(hadith.id) ?? hadith.id.slice(hadith.id.indexOf(":") + 1));
+      : (SUNNAH_LETTERED.get(hadith.id) ??
+        MALIK_NUMBERS.get(hadith.id) ??
+        hadith.id.slice(hadith.id.indexOf(":") + 1));
   const name = `${COLLECTIONS.get(hadith.book) ?? hadith.book} ${number}`;
   return hadith.chapter ? `${name}: ${hadith.chapter}` : name;
 };

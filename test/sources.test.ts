@@ -6,7 +6,7 @@ import {
   OUR_LETTERED,
 } from "../packages/core/src/tools/hadithLinks";
 import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
-import { verseSource } from "../apps/server/src/chat/cite";
+import { hadithTitle, verseSource } from "../apps/server/src/chat/cite";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
 
@@ -107,4 +107,21 @@ test("a verse's source preview leaves out the translation's footnote marks", () 
     tafsirAr: null,
   };
   expect(verseSource(verse).snippet).toBe("Alif, Lām, Meem, Rā. These are the verses of the Book");
+});
+
+test("a Malik hadith's title gives the number on the sunnah.com page it links to", () => {
+  const hadith = {
+    id: "malik:1074",
+    book: "malik",
+    chapter: null,
+    arabicNumber: null,
+    textAr: null,
+    credit: null,
+    english: null,
+    licensedEnglish: null,
+    explanation: null,
+    grades: [],
+    link: "https://sunnah.com/urn/510770",
+  };
+  expect(hadithTitle(hadith)).toBe("Muwatta Malik 1077");
 });

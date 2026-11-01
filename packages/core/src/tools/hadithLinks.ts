@@ -1,3 +1,4 @@
+import malikNumbers from "./malikNumbers.json";
 import malikUrns from "./malikUrns.json";
 import sunnahLettered from "./sunnahLettered.json";
 import sunnahUrns from "./sunnahUrns.json";
@@ -12,6 +13,8 @@ const URN_IDS = new Map([
 ]);
 
 export const SUNNAH_LETTERED = new Map(Object.entries(sunnahLettered));
+
+export const MALIK_NUMBERS = new Map(Object.entries(malikNumbers));
 
 export const OUR_LETTERED = new Map(
   [...SUNNAH_LETTERED].map(([id, number]) => [`${id.slice(0, id.indexOf(":"))}:${number}`, id]),
