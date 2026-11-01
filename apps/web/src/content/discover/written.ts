@@ -1,4 +1,5 @@
 import canMuslimsCelebrateChristmas from "./canMuslimsCelebrateChristmas.json";
+import canMuslimsHaveDogs from "./canMuslimsHaveDogs.json";
 import canMuslimsMarryChristians from "./canMuslimsMarryChristians.json";
 import isMusicHaram from "./isMusicHaram.json";
 import isShrimpHalal from "./isShrimpHalal.json";
@@ -8,6 +9,7 @@ import wipingOverSocks from "./wipingOverSocks.json";
 
 export const written = [
   canMuslimsCelebrateChristmas,
+  canMuslimsHaveDogs,
   canMuslimsMarryChristians,
   isMusicHaram,
   isShrimpHalal,
