@@ -382,11 +382,9 @@ export function chatResponse({
           ended = { outcome, finishReason };
         },
         messageMetadata: ({ part }) => {
+          if (part.type === "finish") usage = part.totalUsage;
           if (part.type === "finish-step") counted += countedTokens(part.usage);
-          if (part.type !== "finish") return undefined;
-          usage = part.totalUsage;
-          const cited = sources.cited();
-          return cited && { cited };
+          return undefined;
         },
         onError: (error) => {
           if (APICallError.isInstance(error)) {
@@ -470,6 +468,8 @@ export function chatResponse({
         text = fallback?.text ?? "";
         if (fallback) counted += countedTokens(fallback.usage);
       }
+      const cited = sources.cited();
+      if (cited) writer.write({ type: "message-metadata", messageMetadata: { cited } });
       if (failure && !(unanswered && text.trim())) writer.write(failure);
       const calledMemory = [...calls.values()].some(({ tool }) => tool === "update_memory");
       if (

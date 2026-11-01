@@ -5,7 +5,7 @@ import { rehypeBareCitations } from "../apps/web/src/components/citations";
 import { citationRuns, groupedCitations, withoutCitations } from "../apps/mobile/src/lib/sources";
 import { todoBook } from "../apps/server/src/chat/cards";
 import { citations, withBareCitations } from "../apps/server/src/chat/citations";
-import { withoutPageText, withStoredPageText } from "../apps/server/src/chat/pageText";
+import { withoutPageText, withSavedResults } from "../apps/server/src/chat/pageText";
 import { sharedReports } from "../apps/server/src/chat/reviews";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import {
@@ -258,7 +258,7 @@ test("a loaded chat drops search page text, and the next question gets it back",
     dataSchemas: chatData,
     metadataSchema: messageMetadata,
   });
-  expect(withStoredPageText(sentBack, stored)).toEqual(stored);
+  expect(withSavedResults(sentBack, stored)).toEqual(stored);
 });
 
 test("a saved chat sent back with the old tool names reaches the agent under the new ones", () => {
