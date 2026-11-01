@@ -19,6 +19,7 @@ test("hadith links follow each collection's own page numbering", () => {
     hadithLink("dehlawi:33", null),
     hadithLink("bukhari:1132.2", null),
     hadithLink("tirmidhi:3604.1", null),
+    hadithLink("nasai:125b", "https://sunnah.com/nasai:125b"),
   ]).toEqual([
     "https://sunnah.com/urn/510770",
     "https://sunnah.com/muslim:1907a",
@@ -27,8 +28,10 @@ test("hadith links follow each collection's own page numbering", () => {
     "https://sunnah.com/shahwaliullah40:33",
     "https://sunnah.com/bukhari:1132b",
     "https://sunnah.com/tirmidhi:3604j",
+    "https://sunnah.com/urn/1101260",
   ]);
   expect(hadithIdOfSunnahUrl("https://sunnah.com/tirmidhi:3604j")).toBe("tirmidhi:3604.1");
+  expect(hadithIdOfSunnahUrl("https://sunnah.com/urn/1101260")).toBe("nasai:125b");
   expect(OUR_LETTERED.get("bukhari:1132b")).toBe("bukhari:1132.2");
 });
 
