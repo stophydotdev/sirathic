@@ -84,6 +84,8 @@ export default {
   Discarded: "நிராகரிக்கப்பட்டது",
   "Not sent": "அனுப்பப்படவில்லை",
   "Could not save your changes. Try again.": "உங்கள் மாற்றங்களைச் சேமிக்க முடியவில்லை. மீண்டும் முயலவும்.",
+  "You already saved a login for this site. Open it to change it.":
+    "இந்தத் தளத்திற்கு ஏற்கனவே ஒரு உள்நுழைவைச் சேமித்துள்ளீர்கள். மாற்ற அதைத் திறக்கவும்.",
   Confirm: "உறுதிப்படுத்து",
   Confirmed: "உறுதிப்படுத்தப்பட்டது",
   Cancelled: "ரத்து செய்யப்பட்டது",
@@ -116,8 +118,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "வழக்கங்கள் என்பவை இந்த பாட் அட்டவணைப்படி திரும்பத் திரும்ப செய்யும் பணிகள்.",
   "Delete “{name}”?": "“{name}” ஐ நீக்கவா?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "இது பாட்டையும் அதன் உரையாடல் வரலாற்றையும் நிரந்தரமாக நீக்கும். இதைத் திரும்பப் பெற முடியாது.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "இது பாட்டையும் அதன் உரையாடல் வரலாற்றையும் வழக்கங்களையும் நிரந்தரமாக நீக்கும். இதைத் திரும்பப் பெற முடியாது.",
   "Upload files or images": "கோப்புகள் அல்லது படங்களைப் பதிவேற்று",
   Attachment: "இணைப்புக் கோப்பு",
   Chat: "உரையாடல்",

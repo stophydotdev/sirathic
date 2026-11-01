@@ -84,6 +84,8 @@ export default {
   "Not sent": "نەنێردرا",
   "Could not save your changes. Try again.":
     "نەتوانرا گۆڕانکارییەکانت پاشەکەوت بکرێن. دووبارە هەوڵ بدەرەوە.",
+  "You already saved a login for this site. Open it to change it.":
+    "پێشتر چوونەژوورەوەیەکت بۆ ئەم ماڵپەڕە پاشەکەوت کردووە. بیکەرەوە بۆ گۆڕینی.",
   Confirm: "پشتڕاستکردنەوە",
   Confirmed: "پشتڕاستکرایەوە",
   Cancelled: "هەڵوەشێنرایەوە",
@@ -116,8 +118,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "ڕۆتینەکان ئەرکی دووبارەبوونەوەن کە ئەم بۆتە بەپێی خشتە جێبەجێیان دەکات.",
   "Delete “{name}”?": "“{name}” بسڕدرێتەوە؟",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "ئەمە بۆتەکە و مێژووی گفتوگۆکانی بۆ هەمیشە دەسڕێتەوە. ناتوانرێت پاشگەز بکرێتەوە.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "ئەمە بۆتەکە و مێژووی گفتوگۆکانی و ڕۆتینەکانی بۆ هەمیشە دەسڕێتەوە. ناتوانرێت پاشگەز بکرێتەوە.",
   "Upload files or images": "بارکردنی فایل یان وێنە",
   Attachment: "هاوپێچ",
   Chat: "گفتوگۆ",

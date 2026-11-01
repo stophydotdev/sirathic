@@ -83,6 +83,8 @@ export default {
   Discarded: "ඉවත දැමීය",
   "Not sent": "යැව්වේ නැත",
   "Could not save your changes. Try again.": "ඔබේ වෙනස්කම් සුරැකිය නොහැකි විය. නැවත උත්සාහ කරන්න.",
+  "You already saved a login for this site. Open it to change it.":
+    "ඔබ දැනටමත් මෙම අඩවිය සඳහා පිවිසුමක් සුරැකුවා. එය වෙනස් කිරීමට එය විවෘත කරන්න.",
   Confirm: "තහවුරු කරන්න",
   Confirmed: "තහවුරු කළා",
   Cancelled: "අවලංගු කළා",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "චර්යා යනු මෙම බොට් කාලසටහනකට අනුව ක්‍රියාත්මක කරන පුනරාවර්තන කාර්යයන් ය.",
   "Delete “{name}”?": "“{name}” මකන්නද?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "මෙය බොට් සහ එහි කතාබස් ඉතිහාසය ස්ථිරවම මකයි. මෙය ආපසු හැරවිය නොහැක.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "මෙය බොට්, එහි කතාබස් ඉතිහාසය සහ එහි චර්යා ස්ථිරවම මකයි. මෙය ආපසු හැරවිය නොහැක.",
   "Upload files or images": "ගොනු හෝ රූප උඩුගත කරන්න",
   Attachment: "ඇමුණුම",
   Chat: "කතාබස",

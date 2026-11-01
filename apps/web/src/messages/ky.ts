@@ -84,6 +84,8 @@ export default {
   Discarded: "Четке кагылды",
   "Not sent": "Жөнөтүлгөн жок",
   "Could not save your changes. Try again.": "Өзгөртүүлөр сакталган жок. Кайра аракет кылыңыз.",
+  "You already saved a login for this site. Open it to change it.":
+    "Бул сайт үчүн логинди мурунтан эле сактагансыз. Аны өзгөртүү үчүн ачыңыз.",
   Confirm: "Ырастоо",
   Confirmed: "Ырасталды",
   Cancelled: "Жокко чыгарылды",
@@ -116,8 +118,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Күнүмдүк иштер: бул бот график боюнча аткарган кайталануучу тапшырмалар.",
   "Delete “{name}”?": "“{name}” өчүрүлсүнбү?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Бул ботту жана анын чат тарыхын биротоло өчүрөт. Муну кайтарууга болбойт.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Бул ботту, анын чат тарыхын жана күнүмдүк иштерин биротоло өчүрөт. Муну кайтарууга болбойт.",
   "Upload files or images": "Файл же сүрөт жүктөө",
   Attachment: "Тиркеме",
   Chat: "Маек",

@@ -84,6 +84,8 @@ export default {
   Discarded: "Vazgeçildi",
   "Not sent": "Gönderilmedi",
   "Could not save your changes. Try again.": "Değişiklikleriniz kaydedilemedi. Tekrar deneyin.",
+  "You already saved a login for this site. Open it to change it.":
+    "Bu site için zaten bir giriş kaydettiniz. Değiştirmek için onu açın.",
   Confirm: "Onayla",
   Confirmed: "Onaylandı",
   Cancelled: "İptal edildi",
@@ -116,8 +118,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Rutinler, bu botun bir programa göre çalıştırdığı yinelenen görevlerdir.",
   "Delete “{name}”?": "“{name}” silinsin mi?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Bu işlem botu ve sohbet geçmişini kalıcı olarak siler. Geri alınamaz.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Bu işlem botu, sohbet geçmişini ve rutinlerini kalıcı olarak siler. Geri alınamaz.",
   "Upload files or images": "Dosya veya görsel yükle",
   Attachment: "Ek",
   Chat: "Sohbet",

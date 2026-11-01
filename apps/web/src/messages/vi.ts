@@ -83,6 +83,8 @@ export default {
   Discarded: "Đã bỏ",
   "Not sent": "Chưa gửi được",
   "Could not save your changes. Try again.": "Không lưu được thay đổi của bạn. Hãy thử lại.",
+  "You already saved a login for this site. Open it to change it.":
+    "Bạn đã lưu thông tin đăng nhập cho trang này rồi. Hãy mở nó để thay đổi.",
   Confirm: "Xác nhận",
   Confirmed: "Đã xác nhận",
   Cancelled: "Đã hủy",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Thói quen là các tác vụ lặp lại mà bot này chạy theo lịch.",
   "Delete “{name}”?": "Xóa “{name}”?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Thao tác này xóa vĩnh viễn bot và lịch sử trò chuyện của bot. Không thể hoàn tác.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Thao tác này xóa vĩnh viễn bot, lịch sử trò chuyện và các thói quen của bot. Không thể hoàn tác.",
   "Upload files or images": "Tải lên tệp hoặc hình ảnh",
   Attachment: "Tệp đính kèm",
   Chat: "Cuộc trò chuyện",

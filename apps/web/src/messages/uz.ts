@@ -84,6 +84,8 @@ export default {
   Discarded: "Бекор қилинди",
   "Not sent": "Юборилмади",
   "Could not save your changes. Try again.": "Ўзгаришлар сақланмади. Қайта уриниб кўринг.",
+  "You already saved a login for this site. Open it to change it.":
+    "Бу сайт учун логинни аллақачон сақлагансиз. Ўзгартириш учун уни очинг.",
   Confirm: "Тасдиқлаш",
   Confirmed: "Тасдиқланди",
   Cancelled: "Бекор қилинди",
@@ -116,8 +118,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Одатлар: бу бот жадвал бўйича бажарадиган такрорланувчи вазифалардир.",
   "Delete “{name}”?": "“{name}” ўчирилсинми?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Бу бот ва унинг суҳбат тарихини бутунлай ўчиради. Буни қайтариб бўлмайди.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Бу бот, унинг суҳбат тарихи ва одатларини бутунлай ўчиради. Буни қайтариб бўлмайди.",
   "Upload files or images": "Файл ёки расм юклаш",
   Attachment: "Илова",
   Chat: "Суҳбат",

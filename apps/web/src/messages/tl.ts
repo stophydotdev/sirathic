@@ -84,6 +84,8 @@ export default {
   Discarded: "Itinapon",
   "Not sent": "Hindi naipadala",
   "Could not save your changes. Try again.": "Hindi nai-save ang mga pagbabago mo. Subukan muli.",
+  "You already saved a login for this site. Open it to change it.":
+    "Nakapag-save ka na ng login para sa site na ito. Buksan ito para baguhin.",
   Confirm: "Kumpirmahin",
   Confirmed: "Nakumpirma",
   Cancelled: "Kinansela",
@@ -116,8 +118,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Ang mga routine ay paulit-ulit na gawain na pinatatakbo ng bot na ito ayon sa iskedyul.",
   "Delete “{name}”?": "Burahin ang “{name}”?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Permanenteng buburahin nito ang bot at ang kasaysayan ng chat nito. Hindi na ito maibabalik.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Permanenteng buburahin nito ang bot, ang kasaysayan ng chat nito, at ang mga routine nito. Hindi na ito maibabalik.",
   "Upload files or images": "Mag-upload ng file o larawan",
   Attachment: "Kalakip",
   Chat: "Chat",

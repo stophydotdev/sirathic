@@ -82,6 +82,8 @@ export default {
   Discarded: "已放弃",
   "Not sent": "未发送",
   "Could not save your changes. Try again.": "无法保存你的修改。请重试。",
+  "You already saved a login for this site. Open it to change it.":
+    "你已为此网站保存过登录信息。打开它即可修改。",
   Confirm: "确认",
   Confirmed: "已确认",
   Cancelled: "已取消",
@@ -114,8 +116,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "例行任务是这个机器人按计划重复执行的任务。",
   "Delete “{name}”?": "删除“{name}”？",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "这将永久删除该机器人及其聊天记录，且无法撤销。",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "这将永久删除该机器人及其聊天记录和例行任务，且无法撤销。",
   "Upload files or images": "上传文件或图片",
   Attachment: "附件",
   Chat: "对话",

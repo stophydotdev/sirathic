@@ -83,6 +83,8 @@ export default {
   Discarded: "छोड़ दिया गया",
   "Not sent": "नहीं भेजा गया",
   "Could not save your changes. Try again.": "आपके बदलाव सहेजे नहीं जा सके। फिर कोशिश करें।",
+  "You already saved a login for this site. Open it to change it.":
+    "आप इस साइट के लिए पहले ही एक लॉगिन सेव कर चुके हैं। इसे बदलने के लिए उसे खोलें।",
   Confirm: "पुष्टि करें",
   Confirmed: "पुष्टि हो गई",
   Cancelled: "रद्द किया गया",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "रूटीन दोहराए जाने वाले कार्य हैं, जिन्हें यह बॉट तय समय-सारणी पर चलाता है।",
   "Delete “{name}”?": "“{name}” हटाएँ?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "इससे बॉट और उसका चैट इतिहास हमेशा के लिए हट जाएगा। इसे वापस नहीं किया जा सकता।",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "इससे बॉट, उसका चैट इतिहास और उसके रूटीन हमेशा के लिए हट जाएंगे। इसे वापस नहीं किया जा सकता।",
   "Upload files or images": "फ़ाइलें या तस्वीरें अपलोड करें",
   Attachment: "अटैचमेंट",
   Chat: "चैट",

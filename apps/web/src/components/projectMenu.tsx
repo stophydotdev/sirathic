@@ -114,7 +114,9 @@ export const DeleteProjectDialog: FC<{
   return (
     <Modal open onOpenChange={onClose} title={t("Delete “{name}”?", { name })}>
       <p className="text-muted-foreground -mt-2 text-sm">
-        {t("This permanently deletes the bot and its chat history. This can't be undone.")}
+        {t(
+          "This permanently deletes the bot, its chat history and its routines. This can't be undone.",
+        )}
       </p>
       <div className="grid grid-cols-2 gap-2">
         <Dialog.Close type="button" className={cn(modalButton, "h-10 rounded-xl")}>

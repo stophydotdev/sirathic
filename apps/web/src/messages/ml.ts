@@ -83,6 +83,8 @@ export default {
   Discarded: "ഉപേക്ഷിച്ചു",
   "Not sent": "അയച്ചില്ല",
   "Could not save your changes. Try again.": "മാറ്റങ്ങൾ സംരക്ഷിക്കാൻ കഴിഞ്ഞില്ല. വീണ്ടും ശ്രമിക്കുക.",
+  "You already saved a login for this site. Open it to change it.":
+    "ഈ സൈറ്റിനായി നിങ്ങൾ ഇതിനകം ഒരു ലോഗിൻ സേവ് ചെയ്തിട്ടുണ്ട്. മാറ്റാൻ അത് തുറക്കുക.",
   Confirm: "സ്ഥിരീകരിക്കുക",
   Confirmed: "സ്ഥിരീകരിച്ചു",
   Cancelled: "റദ്ദാക്കി",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "ഈ ബോട്ട് ഒരു ഷെഡ്യൂൾ അനുസരിച്ച് ആവർത്തിച്ച് ചെയ്യുന്ന ജോലികളാണ് ദിനചര്യകൾ.",
   "Delete “{name}”?": "“{name}” ഇല്ലാതാക്കണോ?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "ഇത് ബോട്ടിനെയും അതിന്റെ ചാറ്റ് ചരിത്രത്തെയും എന്നെന്നേക്കുമായി ഇല്ലാതാക്കും. ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "ഇത് ബോട്ടിനെയും അതിന്റെ ചാറ്റ് ചരിത്രത്തെയും ദിനചര്യകളെയും എന്നെന്നേക്കുമായി ഇല്ലാതാക്കും. ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.",
   "Upload files or images": "ഫയലുകളോ ചിത്രങ്ങളോ അപ്‌ലോഡ് ചെയ്യുക",
   Attachment: "അറ്റാച്ച്‌മെന്റ്",
   Chat: "ചാറ്റ്",

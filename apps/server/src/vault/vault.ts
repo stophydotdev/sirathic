@@ -37,6 +37,17 @@ export const saveLogin = async (owner: string, { site, ...login }: z.infer<typeo
     .returning({ id: vaultLogins.id, site: vaultLogins.site });
 };
 
+export const addLogin = async (owner: string, { site, ...login }: z.infer<typeof vaultLogin>) => {
+  const sealed = await seal(JSON.stringify(login), owner, site);
+  const [added] = await db
+    .insert(vaultLogins)
+    .values({ owner, kind: "login", site, sealed })
+    .onConflictDoNothing({ target: [vaultLogins.owner, vaultLogins.site] })
+    .returning({ id: vaultLogins.id, site: vaultLogins.site });
+  if (!added) throw new StatusError(409, "a login for this site is already saved");
+  return added;
+};
+
 const rowsOf = (owner: string) =>
   db
     .select({ id: vaultLogins.id, site: vaultLogins.site, sealed: vaultLogins.sealed })

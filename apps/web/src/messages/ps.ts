@@ -83,6 +83,8 @@ export default {
   Discarded: "رد شو",
   "Not sent": "ونه لېږل شو",
   "Could not save your changes. Try again.": "ستاسو بدلونونه خوندي نه شول. بیا هڅه وکړئ.",
+  "You already saved a login for this site. Open it to change it.":
+    "تاسو دمخه د دې سایټ لپاره ننوتنه خوندي کړې ده. د بدلولو لپاره یې پرانیزئ.",
   Confirm: "تایید",
   Confirmed: "تایید شو",
   Cancelled: "لغوه شو",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "ورځني کارونه تکراري کارونه دي چې دا بوټ يې د مهال ویش له مخې ترسره کوي.",
   "Delete “{name}”?": "“{name}” ړنګ کړم؟",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "دا بوټ او د هغه د خبرو اترو تاریخ د تل لپاره ړنګوي. دا بیرته نشي کېدای.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "دا بوټ، د هغه د خبرو اترو تاریخ او ورځنۍ کارونه د تل لپاره ړنګوي. دا بیرته نشي کېدای.",
   "Upload files or images": "فایل یا انځور پورته کړئ",
   Attachment: "ضمیمه",
   Chat: "خبرې اترې",

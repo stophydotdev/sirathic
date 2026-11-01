@@ -83,6 +83,8 @@ export default {
   Discarded: "Wurtinaama",
   "Not sent": "Neldaaka",
   "Could not save your changes. Try again.": "Waylooji maa mooftaaka. Haɓtu fahin.",
+  "You already saved a login for this site. Open it to change it.":
+    "A danndii naatirgal ngam ndee lowre. Uddit ɗum ngam waylude ɗum.",
   Confirm: "Tabbitin",
   Confirmed: "Tabbitinaama",
   Cancelled: "Haaytaama",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Golle ñalnde kala ko golle ndeenataa bot ɗo ɗum waɗata dow waajtaare.",
   "Delete “{name}”?": "Momtu “{name}”?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Ɗum momtan bot ɗon e taariha ndaarooji maako haa abada. Ɗum waawataa foti.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Ɗum momtan bot ɗon, taariha ndaarooji maako e golle maako ñalnde kala haa abada. Ɗum waawataa foti.",
   "Upload files or images": "Yollu fiilaaji walla nate",
   Attachment: "Ko sakkitii",
   Chat: "Yeewtere",

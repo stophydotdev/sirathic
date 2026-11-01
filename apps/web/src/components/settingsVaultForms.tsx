@@ -5,6 +5,7 @@ import { Modal } from "@/components/sessionMenu";
 import { api } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { TRPCClientError } from "@trpc/client";
 import { Key01Icon, UserIcon, ViewIcon, ViewOffSlashIcon } from "@hugeicons/core-free-icons";
 import { COUNTRY_CODES } from "@sirathic/server/countries";
 import { Dialog } from "radix-ui";
@@ -78,18 +79,19 @@ const Footer: FC<{ hint?: string; busy: boolean; ready: boolean; save: string }>
 
 const useSave = (onClose: () => void, onSaved: () => Promise<void>) => {
   const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState<"taken" | "error">();
   const save = async (event: FormEvent, request: () => Promise<void>) => {
     event.preventDefault();
     setBusy(true);
-    setFailed(false);
-    const saved = await request().then(
-      () => true,
-      () => false,
+    setFailed(undefined);
+    const problem = await request().then(
+      () => undefined,
+      (error: Error) =>
+        error instanceof TRPCClientError && error.data?.code === "CONFLICT" ? "taken" : "error",
     );
     setBusy(false);
-    if (!saved) {
-      setFailed(true);
+    if (problem) {
+      setFailed(problem);
       return;
     }
     onClose();
@@ -188,7 +190,11 @@ export const LoginForm: FC<{
           />
         </Field>
         {failed && (
-          <p className="text-destructive text-sm">{t("Could not save your changes. Try again.")}</p>
+          <p className="text-destructive text-sm">
+            {failed === "taken"
+              ? t("You already saved a login for this site. Open it to change it.")
+              : t("Could not save your changes. Try again.")}
+          </p>
         )}
         <Footer
           hint={t("Your bots can use this login to sign in for you")}

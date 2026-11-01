@@ -26,6 +26,13 @@ mock.module("@sirathic/db", () => ({
         vaultUpdates.push(params);
         return { rows: [] };
       }
+      if (sql.startsWith('insert into "vault_logins"')) {
+        const [owner, kind, site, sealed] = z.array(z.string()).parse(params);
+        const saved = vaultRows.get(owner) ?? [];
+        if (saved.some((row) => row[2] === site)) return { rows: [] };
+        vaultRows.set(owner, [...saved, ["new-id", kind, site, sealed]]);
+        return { rows: [["new-id", site]] };
+      }
       const rows = vaultRows.get(z.string().parse(params[0])) ?? [];
       if (sql.startsWith('select "sealed"')) {
         return { rows: rows.filter((row) => row[2] === params[2]).map((row) => [row[3]]) };
@@ -46,7 +53,8 @@ mock.module("@sirathic/db", () => ({
 const { emailToSend, FORGET, withUpdate } = await import("../apps/server/src/plugins/connections");
 const { keepFor } = await import("@sirathic/core/cache");
 const { notConnected } = await import("../apps/server/src/plugins/tools");
-const { loginFor, listVault, updateLogin } = await import("../apps/server/src/vault/vault");
+const { addLogin, loginFor, listVault, updateLogin } =
+  await import("../apps/server/src/vault/vault");
 const { contactTools } = await import("../apps/server/src/bots/contactFill");
 
 test("private, loopback, link-local and mapped addresses are private, public ones are not", () => {
@@ -143,6 +151,18 @@ test("editing a login keeps the two-step key the form never shows", async () => 
   await updateLogin("edit", "login-id", { site: "example.com", password: "new" });
   expect(vaultUpdates.at(-1)).toContain("example.com");
   expect(vaultUpdates.at(-1)).toContain(JSON.stringify({ password: "new", code: saved.code }));
+});
+
+test("a second login for a saved site is refused and the first one stays", async () => {
+  await addLogin("twice", { site: "example.com", password: "personal" });
+  const second = await addLogin("twice", { site: "example.com", password: "work" }).then(
+    () => undefined,
+    (error: Error) => error,
+  );
+  expect(second).toMatchObject({ status: 409 });
+  expect(vaultRows.get("twice")?.map((row) => row[3])).toEqual([
+    JSON.stringify({ password: "personal" }),
+  ]);
 });
 
 test("a bot fills a saved contact without seeing it, and gets only labels to choose from", async () => {

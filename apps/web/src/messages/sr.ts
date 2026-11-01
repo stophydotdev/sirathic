@@ -83,6 +83,8 @@ export default {
   Discarded: "Одбачено",
   "Not sent": "Није послато",
   "Could not save your changes. Try again.": "Измене нису сачуване. Покушајте поново.",
+  "You already saved a login for this site. Open it to change it.":
+    "Већ сте сачували пријаву за овај сајт. Отворите је да бисте је променили.",
   Confirm: "Потврди",
   Confirmed: "Потврђено",
   Cancelled: "Отказано",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Рутине су задаци који се понављају и које овај бот извршава по распореду.",
   "Delete “{name}”?": "Обрисати „{name}”?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Ово трајно брише бота и историју његових разговора. Ово се не може опозвати.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Ово трајно брише бота, историју његових разговора и његове рутине. Ово се не може опозвати.",
   "Upload files or images": "Отпреми датотеке или слике",
   Attachment: "Прилог",
   Chat: "Разговор",

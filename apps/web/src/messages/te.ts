@@ -82,6 +82,8 @@ export default {
   Discarded: "వదిలేశారు",
   "Not sent": "పంపబడలేదు",
   "Could not save your changes. Try again.": "మీ మార్పులను సేవ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నించండి.",
+  "You already saved a login for this site. Open it to change it.":
+    "ఈ సైట్ కోసం మీరు ఇప్పటికే ఒక లాగిన్ సేవ్ చేశారు. మార్చడానికి దాన్ని తెరవండి.",
   Confirm: "నిర్ధారించు",
   Confirmed: "నిర్ధారించబడింది",
   Cancelled: "రద్దు చేయబడింది",
@@ -114,8 +116,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "రొటీన్లు అంటే ఈ బాట్ షెడ్యూల్ ప్రకారం పునరావృతంగా చేసే పనులు.",
   "Delete “{name}”?": "“{name}”ను తొలగించాలా?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "ఇది బాట్‌ను, దాని చాట్ చరిత్రను శాశ్వతంగా తొలగిస్తుంది. దీన్ని వెనక్కి తీసుకోలేరు.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "ఇది బాట్‌ను, దాని చాట్ చరిత్రను, దాని రొటీన్లను శాశ్వతంగా తొలగిస్తుంది. దీన్ని వెనక్కి తీసుకోలేరు.",
   "Upload files or images": "ఫైళ్ళు లేదా చిత్రాలు అప్‌లోడ్ చేయండి",
   Attachment: "జోడింపు",
   Chat: "చాట్",

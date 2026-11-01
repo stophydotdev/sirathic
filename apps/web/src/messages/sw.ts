@@ -98,6 +98,8 @@ export default {
   Discarded: "Imetupwa",
   "Not sent": "Haijatumwa",
   "Could not save your changes. Try again.": "Mabadiliko yako hayakuhifadhiwa. Jaribu tena.",
+  "You already saved a login for this site. Open it to change it.":
+    "Tayari umehifadhi kuingia kwa tovuti hii. Kifungue ili ukibadilishe.",
   Confirm: "Thibitisha",
   Confirmed: "Imethibitishwa",
   Cancelled: "Imeghairiwa",
@@ -130,8 +132,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Kazi za kujirudia ni kazi ambazo bot hii hufanya mara kwa mara kwa ratiba.",
   "Delete “{name}”?": "Futa “{name}”?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Hii hufuta bot na historia yake ya gumzo moja kwa moja. Hatua hii haiwezi kutenduliwa.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Hii hufuta bot, historia yake ya gumzo na kazi zake za kujirudia moja kwa moja. Hatua hii haiwezi kutenduliwa.",
   "Add files or tools": "Ongeza faili au zana",
   "Upload files or images": "Pakia faili au picha",
   Attachment: "Kiambatisho",

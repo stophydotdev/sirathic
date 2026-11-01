@@ -83,6 +83,8 @@ export default {
   Discarded: "Отменено",
   "Not sent": "Не отправлено",
   "Could not save your changes. Try again.": "Не удалось сохранить изменения. Попробуйте ещё раз.",
+  "You already saved a login for this site. Open it to change it.":
+    "Вы уже сохранили логин для этого сайта. Откройте его, чтобы изменить.",
   Confirm: "Подтвердить",
   Confirmed: "Подтверждено",
   Cancelled: "Отменено",
@@ -115,8 +117,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Рутины - это повторяющиеся задачи, которые бот выполняет по расписанию.",
   "Delete “{name}”?": "Удалить «{name}»?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Бот и история его чата будут удалены навсегда. Это нельзя отменить.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Бот, история его чата и его рутины будут удалены навсегда. Это нельзя отменить.",
   "Upload files or images": "Загрузить файлы или изображения",
   Attachment: "Вложение",
   Chat: "Чат",

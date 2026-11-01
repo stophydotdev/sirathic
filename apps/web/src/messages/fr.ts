@@ -85,6 +85,8 @@ export default {
   "Not sent": "Non envoyé",
   "Could not save your changes. Try again.":
     "Impossible d'enregistrer vos modifications. Réessayez.",
+  "You already saved a login for this site. Open it to change it.":
+    "Vous avez déjà enregistré un identifiant pour ce site. Ouvrez-le pour le modifier.",
   Confirm: "Confirmer",
   Confirmed: "Confirmé",
   Cancelled: "Annulé",
@@ -117,8 +119,8 @@ export default {
   "Routines are recurring tasks this bot runs on a schedule.":
     "Les routines sont des tâches récurrentes que ce bot exécute selon un calendrier.",
   "Delete “{name}”?": "Supprimer « {name} » ?",
-  "This permanently deletes the bot and its chat history. This can't be undone.":
-    "Cela supprime définitivement le bot et son historique de discussion. Cette action est irréversible.",
+  "This permanently deletes the bot, its chat history and its routines. This can't be undone.":
+    "Cela supprime définitivement le bot, son historique de discussion et ses routines. Cette action est irréversible.",
   "Upload files or images": "Importer des fichiers ou des images",
   Attachment: "Pièce jointe",
   Chat: "Discussion",
