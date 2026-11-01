@@ -209,7 +209,7 @@ export const DrawerPanel: FC<DrawerContentComponentProps> = ({ navigation }) => 
       <View className="h-14 flex-row items-center px-4">
         <Mark size={24} />
       </View>
-      <ScrollView contentContainerClassName="gap-0.5 px-2">
+      <ScrollView contentContainerClassName="gap-0.5 px-2" keyboardShouldPersistTaps="handled">
         <Pressable
           onPress={() => {
             newChat();
