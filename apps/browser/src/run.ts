@@ -262,14 +262,19 @@ const unmasked = async (session: Session, action: Action): Promise<Result> => {
         buffer: Buffer.from(data, "base64"),
       }));
       const field = page.locator(`aria-ref=${action.target}`);
+      const nearest = field
+        .locator('xpath=ancestor-or-self::*[.//input[@type="file"]][1]')
+        .locator('input[type="file"]');
       const fileFields = page.locator('input[type="file"]');
       const shown = fileFields.filter({ visible: true });
       const input =
         (await field.getAttribute("type", { timeout: ACTION_TIMEOUT_MS })) === "file"
           ? field
-          : (await shown.count()) === 1
-            ? shown
-            : fileFields;
+          : (await nearest.count()) === 1
+            ? nearest
+            : (await shown.count()) === 1
+              ? shown
+              : fileFields;
       if ((await input.count()) !== 1) {
         throw new Error(
           "That isn't a file field, and the page has no single file field to use instead. Point to the upload field itself.",
