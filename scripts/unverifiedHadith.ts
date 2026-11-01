@@ -11,17 +11,27 @@ const ATTRIBUTION_CHARS = 60;
 const pagesDir = z.string().parse(Bun.env.SUNNAH_PAGES);
 const summaryFile = z.string().parse(Bun.argv[2]);
 const outFile = new URL("../packages/core/src/tools/unverifiedHadith.json", import.meta.url);
+const letteredFile = new URL("../packages/core/src/tools/sunnahLettered.json", import.meta.url);
 
 const copies = new Map<string, Set<string>>();
 const bookTexts = new Map<string, Set<string>>();
+const letteredAs = new Map<string, string>();
+
+const dottedForms = (base: string, letter: string) => {
+  const place = letter.charCodeAt(0) - 96;
+  if (place < 2) return [];
+  const twoDigit = place === 10 ? "1" : String(place).padStart(2, "0");
+  return [...new Set([`${base}.${place}`, `${base}.${twoDigit}`])];
+};
 
 const addCopy = (book: string, number: string | null, text: string) => {
   const key = hadithKey(text);
   if (key === "") return;
-  if (number !== null) {
-    const same = copies.get(`${book}:${number}`) ?? new Set<string>();
-    copies.set(`${book}:${number}`, same.add(key));
-  }
+  const lettered = /^(\d+)([a-z])$/u.exec(number ?? "");
+  const dotted = lettered ? dottedForms(lettered[1] ?? "", lettered[2] ?? "") : [];
+  for (const form of dotted) letteredAs.set(`${book}:${form}`, number ?? "");
+  const ids = [...(number === null ? [] : [number]), ...dotted].map((id) => `${book}:${id}`);
+  for (const id of ids) copies.set(id, (copies.get(id) ?? new Set<string>()).add(key));
   bookTexts.set(book, (bookTexts.get(book) ?? new Set<string>()).add(key));
 };
 
@@ -47,7 +57,7 @@ for (const { book, text } of pages) {
     }
     const link = referenceLink.exec(paragraph);
     const number = link
-      ? (/\/[a-z0-9]+:(\d+[a-z]?)$/u.exec(link[2] ?? "")?.[1] ??
+      ? (/\/[a-z0-9]+:(\d+[a-z]?)(?:-\d+[a-z]?)?$/u.exec(link[2] ?? "")?.[1] ??
         /(\d+[a-z]?)$/u.exec(link[1] ?? "")?.[1] ??
         null)
       : (arabicReference.exec(paragraph)?.[1] ?? null);
@@ -142,6 +152,13 @@ for (const [at, row] of rows.entries()) {
 }
 
 await Bun.write(outFile, `${JSON.stringify({ books, ids })}\n`);
+const lettered = Object.fromEntries(
+  rows.flatMap((row, at) => {
+    const sunnah = letteredAs.get(row.id);
+    return sunnah !== undefined && isChecked(verdicts[at] ?? "noCopy") ? [[row.id, sunnah]] : [];
+  }),
+);
+await Bun.write(letteredFile, `${JSON.stringify(lettered)}\n`);
 await Bun.write(summaryFile, JSON.stringify(summary, null, 2));
 console.log(
   `books excluded whole: ${books.join(", ")}; ids listed: ${Object.values(ids).join(" ").split(" ").length}`,

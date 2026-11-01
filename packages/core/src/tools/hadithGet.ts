@@ -1,7 +1,7 @@
 import { db } from "@sirathic/db";
 import { hadithGrades, hadiths, sources, texts } from "@sirathic/db/schema";
 import { and, eq, inArray } from "drizzle-orm";
-import { hadithLink } from "./hadithLinks";
+import { hadithLink, OUR_LETTERED } from "./hadithLinks";
 import { trustedHadith } from "./trustedHadith";
 
 const LICENSED = "hadeethenc-en";
@@ -10,8 +10,9 @@ const MACHINE_TRANSLATED = "sirathic-en";
 export const citableId = (hadith: { id: string; book: string; arabicNumber: string | null }) =>
   hadith.book === "ahmad" && hadith.arabicNumber ? `ahmad:${hadith.arabicNumber}` : hadith.id;
 
-export const hadithsByIds = async (ids: string[]) => {
-  if (ids.length === 0) return [];
+export const hadithsByIds = async (asked: string[]) => {
+  if (asked.length === 0) return [];
+  const ids = asked.map((id) => OUR_LETTERED.get(id) ?? id);
   const [rows, grades, english] = await Promise.all([
     db
       .select({

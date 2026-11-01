@@ -1,6 +1,10 @@
 import { expect, spyOn, test } from "bun:test";
 import { PgDialect } from "drizzle-orm/pg-core";
-import { hadithLink } from "../packages/core/src/tools/hadithLinks";
+import {
+  hadithIdOfSunnahUrl,
+  hadithLink,
+  OUR_LETTERED,
+} from "../packages/core/src/tools/hadithLinks";
 import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
@@ -12,13 +16,19 @@ test("hadith links follow each collection's own page numbering", () => {
     hadithLink("bukhari:402.2", null),
     hadithLink("ahmad:781", "https://ar.wikisource.org/wiki/chapter"),
     hadithLink("dehlawi:33", null),
+    hadithLink("bukhari:1132.2", null),
+    hadithLink("tirmidhi:3604.1", null),
   ]).toEqual([
     "https://sunnah.com/urn/510770",
     "https://sunnah.com/muslim:1907a",
-    "https://sunnah.com/bukhari:402",
+    "https://sunnah.com/bukhari:402b",
     "https://ar.wikisource.org/wiki/chapter#781",
     "https://sunnah.com/shahwaliullah40:33",
+    "https://sunnah.com/bukhari:1132b",
+    "https://sunnah.com/tirmidhi:3604j",
   ]);
+  expect(hadithIdOfSunnahUrl("https://sunnah.com/tirmidhi:3604j")).toBe("tirmidhi:3604.1");
+  expect(OUR_LETTERED.get("bukhari:1132b")).toBe("bukhari:1132.2");
 });
 
 test("a hadith keeps its place only when its words match sunnah.com, spelling aside", () => {

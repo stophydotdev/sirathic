@@ -1,6 +1,13 @@
 import malikUrns from "./malikUrns.json";
+import sunnahLettered from "./sunnahLettered.json";
 
 const MALIK_URNS = new Map(Object.entries(malikUrns));
+
+export const SUNNAH_LETTERED = new Map(Object.entries(sunnahLettered));
+
+export const OUR_LETTERED = new Map(
+  [...SUNNAH_LETTERED].map(([id, number]) => [`${id.slice(0, id.indexOf(":"))}:${number}`, id]),
+);
 
 const SUNNAH_COM_BOOKS = new Map([
   ["bukhari", "bukhari"],
@@ -17,8 +24,9 @@ const SUNNAH_COM_BOOKS = new Map([
 
 const sunnahComLink = (id: string) => {
   const [book = "", citation = ""] = id.split(":");
+  const lettered = SUNNAH_LETTERED.get(id);
   const collection = SUNNAH_COM_BOOKS.get(book);
-  const page = /^(\d+[a-z]?)(?:\.\d+)?$/u.exec(citation)?.[1];
+  const page = /^(\d+[a-z]?)(?:\.\d+)?$/u.exec(lettered ?? citation)?.[1];
   return collection === undefined || page === undefined
     ? null
     : `https://sunnah.com/${collection}:${page}`;
@@ -27,7 +35,8 @@ const sunnahComLink = (id: string) => {
 export const hadithIdOfSunnahUrl = (url: string) => {
   const found = /^\/([a-z0-9]+):(\d+[a-z]?)$/u.exec(URL.parse(url)?.pathname ?? "");
   const book = [...SUNNAH_COM_BOOKS].find(([, collection]) => collection === found?.[1])?.[0];
-  return book === undefined || found?.[2] === undefined ? null : `${book}:${found[2]}`;
+  if (book === undefined || found?.[2] === undefined) return null;
+  return OUR_LETTERED.get(`${book}:${found[2]}`) ?? `${book}:${found[2]}`;
 };
 
 const SHARED_PAGE_BOOKS = new Set(["ahmad", "adab"]);
