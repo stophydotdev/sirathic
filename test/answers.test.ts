@@ -460,3 +460,38 @@ test("bots don't get the answer engine's search-everything rules, normal chats k
   expect(bot).toContain("For Islamic questions");
   expect(bot).toContain("untrusted_data");
 });
+
+const askWith = (option: string) =>
+  [
+    { type: "stream-start", warnings: [] },
+    {
+      type: "tool-call",
+      toolCallId: option.slice(0, 4),
+      toolName: "clarifying_questions",
+      input: JSON.stringify({
+        question: "Which mail should I keep?",
+        options: [option, "Keep all"],
+      }),
+    },
+    { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
+  ] satisfies MockChunks;
+
+test("a question card the model gets wrong lets it try again instead of ending the turn", async () => {
+  const seen = await chatTurn({ mode: "research" }, [
+    askWith("x".repeat(120)),
+    askWith("Keep invoices"),
+  ]);
+  expect(seen).toHaveLength(2);
+  expect(seen.body).toContain("Keep invoices");
+});
+
+test("after two failed question cards the bot asks in text instead", async () => {
+  const seen = await chatTurn({ mode: "research" }, [
+    askWith("x".repeat(120)),
+    askWith("y".repeat(120)),
+    answered,
+  ]);
+  expect(toolNames(seen[1])).toContain("clarifying_questions");
+  expect(toolNames(seen[2])).not.toContain("clarifying_questions");
+  expect(seen.body).toContain("Done.");
+});

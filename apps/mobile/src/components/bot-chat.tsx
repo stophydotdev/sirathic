@@ -49,7 +49,7 @@ const stateOf = (messages: ChatMessage[], status: string): BlobState => {
   if (last?.role !== "assistant") return running ? "thinking" : "ready";
   const open = last.parts.flatMap((part) => {
     const tool = toolOf(part);
-    return tool && tool.output === undefined ? [tool] : [];
+    return tool && tool.output === undefined && !tool.failed ? [tool] : [];
   });
   if (open.some((tool) => currentToolName(tool.name) === "clarifying_questions")) return "asking";
   if (!running) return "ready";

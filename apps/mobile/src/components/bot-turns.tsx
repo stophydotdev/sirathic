@@ -35,7 +35,7 @@ const saidOf = (message: ChatMessage) =>
         (isCardTool(tool.name) ||
           isAnswerCard(tool.name) ||
           isBotEvent(tool.name) ||
-          currentToolName(tool.name) === "clarifying_questions")
+          (currentToolName(tool.name) === "clarifying_questions" && !tool.failed))
         ? [{ kind: "tool", tool }]
         : [];
     })
