@@ -150,6 +150,23 @@ const withArrived = (stored: readonly ChatMessage[], sent: ChatMessage[]) =>
     [...sent],
   );
 
+const withStoredMarks = (stored: readonly ChatMessage[], messages: ChatMessage[]) => {
+  const saved = new Map(stored.map((message) => [message.id, message.metadata]));
+  return messages.map((message) => {
+    if (!saved.has(message.id)) return message;
+    const marks = saved.get(message.id);
+    return {
+      ...message,
+      metadata: {
+        ...message.metadata,
+        feedback: marks?.feedback,
+        report: marks?.report,
+        reaction: marks?.reaction,
+      },
+    };
+  });
+};
+
 const SAVE_TRIES = 5;
 
 export async function saveSession(
@@ -159,19 +176,6 @@ export async function saveSession(
   project?: string,
 ) {
   const title = titleOf(messages);
-  if (!project) {
-    const [saved] = await db
-      .insert(chatSessions)
-      .values({ id, owner: by, title, messages })
-      .onConflictDoUpdate({
-        target: chatSessions.id,
-        set: { messages, updatedAt: new Date() },
-        setWhere: eq(chatSessions.owner, by),
-      })
-      .returning({ id: chatSessions.id });
-    if (!saved) throw new StatusError(404, "no such session");
-    return;
-  }
   const attempt = async (left: number): Promise<boolean> => {
     if (left === 0) return false;
     const [row] = await db
@@ -195,7 +199,10 @@ export async function saveSession(
     }).catch(() => []);
     const [updated] = await db
       .update(chatSessions)
-      .set({ messages: withArrived(stored, messages), updatedAt: new Date() })
+      .set({
+        messages: withStoredMarks(stored, withArrived(stored, messages)),
+        updatedAt: new Date(),
+      })
       .where(and(owned(id, by), sql`md5(${chatSessions.messages}::text) = ${row.version}`))
       .returning({ id: chatSessions.id });
     return updated !== undefined || attempt(left - 1);
