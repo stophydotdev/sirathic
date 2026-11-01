@@ -408,6 +408,7 @@ export default {
     "محرك إجابات إسلامي مجاني. تأتي الإجابات من القرآن والأحاديث مع درجاتها وأحكام العلماء، وتذكر مصادرها.",
   Privacy: "الخصوصية",
   Terms: "الشروط",
+  "Open data": "البيانات المفتوحة",
   "Build and manage Wix sites": "أنشئ مواقع Wix وأدرها",
   "Build and run automations": "أنشئ الأتمتة وشغّلها",
   "Build campaigns and read reports": "أنشئ الحملات واقرأ التقارير",

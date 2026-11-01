@@ -404,6 +404,7 @@ export default {
     "বিনামূলীয়া ইছলামীয় উত্তৰ ইঞ্জিন। উত্তৰসমূহ কোৰআন, মানসহ হাদীছ আৰু আলিমসকলৰ ফতোৱাৰ পৰা আহে, আৰু উৎস উল্লেখ কৰে।",
   Privacy: "গোপনীয়তা",
   Terms: "চৰ্তাৱলী",
+  "Open data": "মুকলি ডেটা",
   "Build and manage Wix sites": "Wix ছাইট বনাওক আৰু পৰিচালনা কৰক",
   "Build and run automations": "অটোমেচন বনাওক আৰু চলাওক",
   "Build campaigns and read reports": "কেম্পেইন বনাওক আৰু ৰিপৰ্ট পঢ়ক",

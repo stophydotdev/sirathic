@@ -417,6 +417,7 @@ export default {
     "Motor de respuestas islámico gratuito. Las respuestas vienen del Corán, de hadices con su grado de autenticidad y de dictámenes de los sabios, y citan sus fuentes.",
   Privacy: "Privacidad",
   Terms: "Términos",
+  "Open data": "Datos abiertos",
   "Build and manage Wix sites": "Crea y gestiona sitios de Wix",
   "Build and run automations": "Crea y ejecuta automatizaciones",
   "Build campaigns and read reports": "Crea campañas y consulta informes",

@@ -412,6 +412,7 @@ export default {
     "Ücretsiz İslami cevap motoru. Cevaplar Kur'an'a, sıhhat derecesiyle hadislere ve âlimlerin hükümlerine dayanır ve kaynaklarını gösterir.",
   Privacy: "Gizlilik",
   Terms: "Koşullar",
+  "Open data": "Açık veri",
   "Build and manage Wix sites": "Wix sitelerini oluşturun ve yönetin",
   "Build and run automations": "Otomasyonlar oluşturun ve çalıştırın",
   "Build campaigns and read reports": "Kampanyalar oluşturun ve raporları okuyun",

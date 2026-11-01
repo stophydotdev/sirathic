@@ -412,6 +412,7 @@ export default {
   About: "Kuhusu",
   Privacy: "Faragha",
   Terms: "Masharti",
+  "Open data": "Data huria",
   "Build and manage Wix sites": "Jenga na usimamie tovuti za Wix",
   "Build and run automations": "Jenga na uendeshe kazi otomatiki",
   "Build campaigns and read reports": "Tengeneza kampeni na usome ripoti",

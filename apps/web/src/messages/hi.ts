@@ -407,6 +407,7 @@ export default {
     "मुफ़्त इस्लामी उत्तर इंजन। जवाब क़ुरआन, दर्जे के साथ हदीसों और विद्वानों के फ़तवों पर आधारित होते हैं, और अपने स्रोत बताते हैं।",
   Privacy: "गोपनीयता",
   Terms: "शर्तें",
+  "Open data": "ओपन डेटा",
   "Build and manage Wix sites": "Wix साइट बनाएँ और संभालें",
   "Build and run automations": "ऑटोमेशन बनाएँ और चलाएँ",
   "Build campaigns and read reports": "कैंपेन बनाएँ और रिपोर्ट पढ़ें",

@@ -412,6 +412,7 @@ export default {
     "Pulsuz İslami cavab sistemi. Cavablar Qurana, səhihlik dərəcəsi göstərilmiş hədislərə və alimlərin hökmlərinə əsaslanır və mənbələrini göstərir.",
   Privacy: "Məxfilik",
   Terms: "Şərtlər",
+  "Open data": "Açıq məlumatlar",
   "Build and manage Wix sites": "Wix saytlarını yaradın və idarə edin",
   "Build and run automations": "Avtomatlaşdırmalar yaradın və işə salın",
   "Build campaigns and read reports": "Kampaniyalar yaradın və hesabatları oxuyun",

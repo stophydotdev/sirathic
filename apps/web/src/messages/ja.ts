@@ -413,6 +413,7 @@ export default {
     "無料のイスラームの回答エンジン。回答はクルアーン、真正性の等級つきのハディース、学者の見解にもとづき、出典を示します。",
   Privacy: "プライバシー",
   Terms: "利用規約",
+  "Open data": "オープンデータ",
   "Build and manage Wix sites": "Wix サイトを作成・管理",
   "Build and run automations": "自動化を作成して実行",
   "Build campaigns and read reports": "キャンペーンを作成してレポートを読む",

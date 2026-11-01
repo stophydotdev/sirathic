@@ -413,6 +413,7 @@ export default {
   About: "O aplikaciji",
   Privacy: "Zasebnost",
   Terms: "Pogoji",
+  "Open data": "Odprti podatki",
   "Build and manage Wix sites": "Gradite spletna mesta Wix in upravljajte z njimi",
   "Build and run automations": "Gradite in zaganjajte avtomatizacije",
   "Build campaigns and read reports": "Gradite kampanje in berite poročila",

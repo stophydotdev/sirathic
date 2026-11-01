@@ -412,6 +412,7 @@ export default {
     "Công cụ giải đáp về Hồi giáo miễn phí. Câu trả lời dựa trên Qur'an, hadith kèm mức độ xác thực và ý kiến của các học giả, và có dẫn nguồn.",
   Privacy: "Quyền riêng tư",
   Terms: "Điều khoản",
+  "Open data": "Dữ liệu mở",
   "Build and manage Wix sites": "Tạo và quản lý trang Wix",
   "Build and run automations": "Tạo và chạy tự động hóa",
   "Build campaigns and read reports": "Tạo chiến dịch và đọc báo cáo",
