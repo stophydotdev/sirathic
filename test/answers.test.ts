@@ -16,6 +16,7 @@ import {
 import { afterAnswer } from "../apps/server/src/chat/afterAnswer";
 import { researchedEnough } from "../apps/server/src/chat/enoughGate";
 import { chatResponse } from "../apps/server/src/chat/response";
+import { instructions } from "../apps/server/src/chat/prompts/build";
 import { productsIn } from "../apps/server/src/chat/shopTools";
 import { keepFitting } from "../apps/server/src/chat/stophyTools";
 import server from "../apps/server/src/index";
@@ -428,4 +429,34 @@ test("shop search keeps prices in whole units and skips broken products", () => 
     ["Kettle", 179.95, "USD", 2253],
     ["Teapot", 4800, "JPY", undefined],
   ]);
+});
+
+const promptFor = (project: Parameters<typeof instructions>[0]["project"]) =>
+  instructions({
+    now: new Date("2026-11-01T12:00:00Z"),
+    timezone: "UTC",
+    mode: "quick",
+    settings: DEFAULT_SETTINGS,
+    short: false,
+    project,
+    unattended: false,
+    offered: {},
+    skills: [],
+    remembers: false,
+    connectedApps: [],
+    toolNotes: [],
+    teammates: undefined,
+    room: undefined,
+  })
+    .map(({ content }) => content)
+    .join("\n");
+
+test("bots don't get the answer engine's search-everything rules, normal chats keep them", () => {
+  const answers = promptFor(undefined);
+  const bot = promptFor({ id: "b", name: "Noor", title: "", instructions: "Help with jobs." });
+  expect(answers).toContain("Use search_web for definitions");
+  expect(bot).not.toContain("Use search_web for definitions");
+  expect(bot).not.toContain("call search_web again");
+  expect(bot).toContain("For Islamic questions");
+  expect(bot).toContain("untrusted_data");
 });

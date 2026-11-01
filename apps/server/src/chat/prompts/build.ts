@@ -13,6 +13,7 @@ import type { Mode } from "../../shared/messages";
 import type { Settings } from "../../shared/settings";
 import type { Skill } from "../skills/builtIn";
 import answer from "./answer.md" with { type: "text" };
+import answerSearch from "./answerSearch.md" with { type: "text" };
 import bot from "./bot.md" with { type: "text" };
 import core from "./core.md" with { type: "text" };
 import delegation from "./delegation.md" with { type: "text" };
@@ -27,6 +28,11 @@ import team from "./team.md" with { type: "text" };
 const MODES = { quick, research } as const satisfies Record<Mode, string>;
 
 const PROMPT_PARTS = core.split(/(?=## Ad-hoc Instructions)/u);
+
+const [SEARCH_GUIDE = "", SEARCH_CHECKS = "", FETCH_GUIDE = ""] = answerSearch
+  .trim()
+  .split(/\n+---\n+/u)
+  .map((part) => `${part}\n\n`);
 
 const SCHOOLS = {
   hanafi: "Hanafi",
@@ -214,6 +220,9 @@ export const instructions = ({
     quote: QUOTE,
     length: short ? SHORT : DEFAULT_LENGTH,
     format: project ? "" : answer,
+    search_guide: project ? "" : SEARCH_GUIDE,
+    search_checks: project ? "" : SEARCH_CHECKS,
+    fetch_guide: project ? "" : FETCH_GUIDE,
     surface: [
       project
         ? botPrompt(project, !unattended, "start_task" in offered, teammates, inRoom)
