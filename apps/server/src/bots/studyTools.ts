@@ -8,7 +8,7 @@ const DUE_PER_SESSION = 5;
 export const studyTools = (scope: BotScope) => ({
   addStudyItem: tool({
     description:
-      "Puts something the user is learning on their review schedule, after you taught it with its source. kind is verse (ref like 112:1-4 or 2:255), hadith (ref is the hadith id from its link, like bukhari:1), word (ref is the Arabic word, label gives its meaning) or other (ref and label). Verses and hadith are checked against our texts and named for you. Never add a hadith a source grades weak or fabricated; for a collection without grades, like Nawawi's Forty, use the grade of the collection its text names. Add what they ask for; on your own, add at most one new item per session.",
+      "Puts something the user is learning on their review schedule, after you taught it with its source. kind is verse (ref like 112:1-4 or 2:255), hadith (ref is the collection and number its title shows, like bukhari:1 for Sahih al-Bukhari 1), word (ref is the Arabic word, label gives its meaning) or other (ref and label). Verses and hadith are checked against our texts and named for you. Never add a hadith a source grades weak or fabricated; for a collection without grades, like Nawawi's Forty, use the grade of the collection its text names. Add what they ask for; on your own, add at most one new item per session.",
     inputSchema: addInput,
     execute: (input) => addItem(scope, input),
   }),

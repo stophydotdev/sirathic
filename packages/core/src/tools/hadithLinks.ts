@@ -16,6 +16,10 @@ export const SUNNAH_LETTERED = new Map(Object.entries(sunnahLettered));
 
 export const MALIK_NUMBERS = new Map(Object.entries(malikNumbers));
 
+export const MALIK_BY_TITLE = new Map(
+  [...MALIK_NUMBERS].map(([id, number]) => [`malik:${number}`, id]),
+);
+
 export const OUR_LETTERED = new Map(
   [...SUNNAH_LETTERED].map(([id, number]) => [`${id.slice(0, id.indexOf(":"))}:${number}`, id]),
 );

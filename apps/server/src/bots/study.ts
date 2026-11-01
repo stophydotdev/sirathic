@@ -1,4 +1,5 @@
 import { hadithsByIds } from "@sirathic/core/tools/hadithGet";
+import { hadithIdOfSunnahUrl, MALIK_BY_TITLE } from "@sirathic/core/tools/hadithLinks";
 import { quranGet } from "@sirathic/core/tools/quranGet";
 import { db } from "@sirathic/db";
 import { botItems } from "@sirathic/db/schema";
@@ -66,7 +67,9 @@ async function sourceOf({ kind, ref, label }: z.output<typeof addInput>) {
       };
     }
     case "hadith": {
-      const [hadith] = await hadithsByIds([ref]);
+      const [hadith] = await hadithsByIds([
+        hadithIdOfSunnahUrl(ref) ?? MALIK_BY_TITLE.get(ref) ?? ref,
+      ]);
       if (!hadith) throw new Error(`Hadith ${ref} was not found. Find it with search first.`);
       return { ref: hadith.id, label: hadithTitle(hadith) };
     }
