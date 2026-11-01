@@ -21,7 +21,7 @@ import { api } from "@/lib/api";
 import { API_URL, sessionHeaders } from "@/lib/auth";
 import { useChatState } from "@/lib/chat-state";
 import { latestTodoId } from "@/lib/research";
-import { Answer, type Feedback } from "./answer";
+import { Answer, type Feedback, PendingReply } from "./answer";
 import { SentFiles } from "./attachment-chip";
 import { Composer } from "./composer";
 import { ComposerDock } from "./composer-dock";
@@ -267,6 +267,7 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
                 ),
               )}
             </LatestTodo>
+            {busy && messages.at(-1)?.role === "user" && <PendingReply />}
             {error && (
               <Text className="text-destructive font-sans text-sm">{messageOf(error)}</Text>
             )}
