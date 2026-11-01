@@ -854,7 +854,6 @@ export default {
   "Allow automatically": "自動で許可",
   "Ask first": "先に確認",
   "Add rule": "ルールを追加",
-  "{done} of {count} done": "{count} 件中 {done} 件完了",
   "{count} steps": "{count} ステップ",
   "Step {at} of {count}": "ステップ {at}/{count}",
   "One at a time": "1つずつ",

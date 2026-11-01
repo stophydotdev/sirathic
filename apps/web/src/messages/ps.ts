@@ -854,7 +854,6 @@ export default {
   "Allow automatically": "په اتومات ډول اجازه ورکړه",
   "Ask first": "لومړی وپوښته",
   "Add rule": "قاعده زیاتول",
-  "{done} of {count} done": "{done} له {count} بشپړ شو",
   "{count} steps": "{count} ګامونه",
   "Step {at} of {count}": "ګام {at} له {count}",
   "One at a time": "یو په یو",

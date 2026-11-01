@@ -55,6 +55,7 @@ const saidOf = (content: ThreadMessage["content"]) =>
       if (part.type === "text") return bubblesOf(part.text).map((text) => ({ kind: "text", text }));
       if (
         part.type === "tool-call" &&
+        currentToolName(part.toolName) !== "todo_write" &&
         (isCardTool(part.toolName) || isBotEvent(part.toolName) || part.approval || shows(part))
       ) {
         return [{ kind: "tool", part }];
@@ -115,7 +116,7 @@ const BotText: FC<{ text: string; last: boolean }> = ({ text, last }) => {
 
 const Bubble: FC<{ said: Said; last: boolean }> = ({ said, last }) => {
   if (said.kind === "text") return <BotText text={said.text} last={last} />;
-  const { toolName, toolCallId, args, result } = said.part;
+  const { toolName, args, result } = said.part;
   const shot = shownScreenshot.safeParse(result).data;
   if (shot) return <ScreenshotCard shot={shot} />;
   if (currentToolName(toolName) === "clarifying_questions") return <AskCard args={args} />;
@@ -127,12 +128,7 @@ const Bubble: FC<{ said: Said; last: boolean }> = ({ said, last }) => {
     <>
       {said.part.approval && <ConfirmCard call={said.part} />}
       <AutomationCard tool={toolName} result={result} />
-      <AnswerCard
-        name={currentToolName(toolName)}
-        callId={toolCallId}
-        args={args}
-        result={result}
-      />
+      <AnswerCard name={currentToolName(toolName)} args={args} result={result} />
       <BotEvent tool={toolName} result={result} />
       {(FILE_TOOLS.includes(toolName) || toolName === "code_execution") && (
         <FileResult part={said.part} />

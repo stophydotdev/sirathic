@@ -846,7 +846,6 @@ export default {
   "Allow automatically": "নিজে থেকে অনুমতি দিন",
   "Ask first": "আগে জিজ্ঞাসা করুন",
   "Add rule": "নিয়ম যোগ করুন",
-  "{done} of {count} done": "{done}/{count} সম্পন্ন",
   "{count} steps": "{count}টি ধাপ",
   "Step {at} of {count}": "ধাপ {at}/{count}",
   "One at a time": "একটি করে",

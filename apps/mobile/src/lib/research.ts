@@ -1,4 +1,4 @@
-import { ANSWER_CARDS, todoList } from "@sirathic/server/cards";
+import { ANSWER_CARDS } from "@sirathic/server/cards";
 import { type ChatMessage, currentToolName } from "@sirathic/server/messages";
 import { z } from "zod";
 import { siteName } from "./sources";
@@ -107,8 +107,3 @@ export function summaryOf(message: ChatMessage) {
     ...used,
   ];
 }
-
-export const latestTodoId = (messages: readonly ChatMessage[]) =>
-  messages
-    .flatMap((message) => message.parts.flatMap((part) => toolOf(part) ?? []))
-    .findLast((tool) => tool.name === "todo_write" && todoList.safeParse(tool.output).success)?.id;

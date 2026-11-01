@@ -854,7 +854,6 @@ export default {
   "Allow automatically": "Tự động cho phép",
   "Ask first": "Hỏi trước",
   "Add rule": "Thêm quy tắc",
-  "{done} of {count} done": "Xong {done}/{count}",
   "{count} steps": "{count} bước",
   "Step {at} of {count}": "Bước {at}/{count}",
   "One at a time": "Từng bước một",

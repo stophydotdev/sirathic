@@ -855,7 +855,6 @@ export default {
   "Allow automatically": "Accu hoolaare",
   "Ask first": "Naamno adii",
   "Add rule": "Ɓesdu laawol",
-  "{done} of {count} done": "{done} e {count} gasii",
   "{count} steps": "Daawe {count}",
   "Step {at} of {count}": "Daawal {at} e {count}",
   "One at a time": "Gooto gooto",
