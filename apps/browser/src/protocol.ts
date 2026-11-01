@@ -102,6 +102,14 @@ export const runCodeInput = z.object({
     ),
 });
 
+export const webmcpCallInput = z.object({
+  name: z.string().min(1).max(200).describe("Name of the WebMCP tool to call"),
+  params: z
+    .record(z.string(), z.json())
+    .optional()
+    .describe("Input parameters for the tool, matching its inputSchema"),
+});
+
 export const action = z.discriminatedUnion("kind", [
   navigateInput.extend({ kind: z.literal("navigate") }),
   snapshotInput.extend({ kind: z.literal("snapshot") }),
@@ -114,6 +122,7 @@ export const action = z.discriminatedUnion("kind", [
   runCodeInput.extend({ kind: z.literal("run_code") }),
   batchInput.extend({ kind: z.literal("batch") }),
   tabsInput.extend({ kind: z.literal("tabs") }),
+  webmcpCallInput.extend({ kind: z.literal("webmcp_call") }),
   z.object({ kind: z.literal("upload"), target, files: z.array(sentFile).min(1).max(5) }),
 ]);
 

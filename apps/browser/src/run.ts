@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { Action, Result } from "./protocol";
 import { masked } from "./mask";
 import { quietFor, type Session } from "./sessions";
+import { callWebmcpTool, webmcpListing } from "./webmcp";
 
 const PAGE_CHARS = 15_000;
 const SETTLE_MS = 3_000;
@@ -121,7 +122,11 @@ const pageAfter = async (session: Session, startUrl?: string): Promise<Result> =
   return {
     url: page.url(),
     title: await titleOf(page),
-    page: whole ? clipped(snapshot) : changes ? `Changed:\n${clipped(changes)}` : "unchanged",
+    page: whole
+      ? clipped(`${await webmcpListing(page)}${snapshot}`)
+      : changes
+        ? `Changed:\n${clipped(changes)}`
+        : "unchanged",
   };
 };
 
@@ -183,7 +188,7 @@ const unmasked = async (session: Session, action: Action): Promise<Result> => {
       const after = await pageAfter(session);
       if (!action.interactive) return after;
       const controls = session.seen.split("\n").filter((line) => INTERACTIVE.test(line));
-      return { ...after, page: clipped(controls.join("\n")) };
+      return { ...after, page: clipped(`${await webmcpListing(page)}${controls.join("\n")}`) };
     }
     case "find": {
       const snapshot = await snapshotOf(page);
@@ -282,6 +287,11 @@ const unmasked = async (session: Session, action: Action): Promise<Result> => {
       }
       await input.setInputFiles(files, { timeout: ACTION_TIMEOUT_MS });
       return pageAfter(session, startUrl);
+    }
+    case "webmcp_call": {
+      const called = await callWebmcpTool(page, action);
+      const after = await pageAfter(session, startUrl);
+      return { ...after, page: `${clipped(called)}\n\n${after.page}` };
     }
     case "run_code": {
       if (await secretInField(session)) {
