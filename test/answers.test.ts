@@ -53,6 +53,17 @@ const feedbackCall = [
   { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
 ] satisfies MockChunks;
 
+const openBrowser = [
+  { type: "stream-start", warnings: [] },
+  {
+    type: "tool-call",
+    toolCallId: "b1",
+    toolName: "load_skill",
+    input: JSON.stringify({ names: ["browser"] }),
+  },
+  { type: "finish", finishReason: { unified: "tool-calls", raw: undefined }, usage },
+] satisfies MockChunks;
+
 const chatTurn = async (
   overrides: Partial<Parameters<typeof chatResponse>[0]>,
   steps: MockChunks[] = [answered],
@@ -212,6 +223,36 @@ test("a scheduled bot run cannot save memory or rename the bot, and still reads 
     [true, true, true, true],
     [false, false, false, true],
   ]);
+});
+
+const browserOffered = async (unattended: true | undefined) => {
+  const [, call] = await chatTurn(
+    { owner: "user-a", project: Promise.resolve(COACH), bot: Promise.resolve(BOT), unattended },
+    [openBrowser, answered],
+  );
+  return toolNames(call)
+    ?.filter((name) => name.startsWith("browser_") || name === "vault_sign_in")
+    .toSorted();
+};
+
+test("a routine run's browser only reads: no click, type, code, WebMCP or sign-in", async () => {
+  expect(await browserOffered(true)).toEqual([
+    "browser_find",
+    "browser_navigate",
+    "browser_screenshot",
+    "browser_snapshot",
+    "browser_tabs",
+    "browser_wait_for",
+  ]);
+  expect(await browserOffered(undefined)).toEqual(
+    expect.arrayContaining([
+      "browser_click",
+      "browser_type",
+      "browser_run_code",
+      "browser_webmcp_call",
+      "vault_sign_in",
+    ]),
+  );
 });
 
 test.each<[string, Partial<Parameters<typeof chatTurn>[0]>, boolean]>([

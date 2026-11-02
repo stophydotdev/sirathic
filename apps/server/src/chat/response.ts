@@ -202,7 +202,7 @@ export function chatResponse({
         messages,
         historyLimit ?? (inBot ? BOT_HISTORY : messages.length),
       );
-      browser = inBot && browserFor(inBot, unattended === true, byBot === true);
+      browser = inBot && browserFor(inBot, unattended === true || byBot === true);
       const searchable =
         inBot && (unattended || visible.length < messages.length) ? inBot : undefined;
       const disk = inBot && botDisk(inBot.id);
