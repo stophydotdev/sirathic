@@ -45,7 +45,9 @@ const Details: FC<{ call: ToolCall }> = ({ call }) => {
         <span className="text-muted-foreground text-xs">
           {describeSchedule(t, locale, created.schedule)}
         </span>
-        <span className="text-muted-foreground line-clamp-3 text-xs">{created.prompt}</span>
+        <span className="text-muted-foreground text-xs wrap-break-word whitespace-pre-line">
+          {created.prompt}
+        </span>
       </div>
     );
   }
@@ -64,7 +66,7 @@ const Details: FC<{ call: ToolCall }> = ({ call }) => {
     return (
       <Row key={key} label={nameOf(key)}>
         <span
-          className={`${call.toolName === "send_feedback" || labels ? "" : "line-clamp-6"} ${labels ? "max-h-64 overflow-y-auto" : ""} min-w-0 flex-1 py-1.5 wrap-break-word whitespace-pre-line`}
+          className={`${call.toolName === "send_feedback" || key === "prompt" || labels ? "" : "line-clamp-6"} ${labels ? "max-h-64 overflow-y-auto" : ""} min-w-0 flex-1 py-1.5 wrap-break-word whitespace-pre-line`}
         >
           {labels
             ? labels.map(({ label }) => label).join("\n")
