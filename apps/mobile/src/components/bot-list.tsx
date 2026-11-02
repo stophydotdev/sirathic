@@ -34,6 +34,8 @@ const BotRow: FC<{ bot: Bot; onOpen: () => void }> = ({ bot, onOpen }) => {
   const current = useGlobalSearchParams<{ id?: string }>().id === bot.id;
   const unread = session?.unread;
   const approving = !session?.working && session?.approving === true;
+  const waiting = session?.working ? null : session?.waiting;
+  const asking = approving || Boolean(waiting);
 
   return (
     <View className={`rounded-xl ${current ? "bg-muted" : ""}`}>
@@ -68,11 +70,17 @@ const BotRow: FC<{ bot: Bot; onOpen: () => void }> = ({ bot, onOpen }) => {
           <View className="flex-row items-center gap-2 pe-6">
             <Text
               numberOfLines={1}
-              className={`font-sans flex-1 text-xs ${approving ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground"}`}
+              className={`font-sans flex-1 text-xs ${asking ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground"}`}
             >
-              {approving ? "Waiting for your OK" : session ? session.preview : bot.greeting}
+              {approving
+                ? "Waiting for your OK"
+                : waiting
+                  ? `Waiting for you: ${waiting}`
+                  : session
+                    ? session.preview
+                    : bot.greeting}
             </Text>
-            {approving ? (
+            {asking ? (
               <View className="size-1.5 rounded-full bg-amber-500" />
             ) : (
               unread && <View className="bg-super size-1.5 rounded-full" />
