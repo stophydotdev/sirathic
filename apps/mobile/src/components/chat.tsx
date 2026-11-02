@@ -22,6 +22,7 @@ import { api } from "@/lib/api";
 import { API_URL, sessionHeaders } from "@/lib/auth";
 import { useChatState } from "@/lib/chat-state";
 import { Answer, type Feedback, PendingReply } from "./answer";
+import { ApprovalDock } from "./approval-prompt";
 import { SentFiles } from "./attachment-chip";
 import { Composer } from "./composer";
 import { ComposerDock } from "./composer-dock";
@@ -309,6 +310,13 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
             </Pressable>
           </View>
           <ComposerDock onLayout={(event) => setDock(event.nativeEvent.layout.height)}>
+            <ApprovalDock
+              message={messages.at(-1)}
+              name="Sirathic"
+              onDecide={(approvalId, approved) =>
+                void addToolApprovalResponse({ id: approvalId, approved })
+              }
+            />
             <Composer
               placeholder="Ask a follow-up"
               busy={busy}
