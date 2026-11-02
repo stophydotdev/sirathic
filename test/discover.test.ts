@@ -1,7 +1,8 @@
+import { PGlite } from "@electric-sql/pglite";
 import { expect, test } from "bun:test";
 import { parseHadithRef, type HadithRef } from "../apps/data/src/resolve";
 import { article } from "../apps/web/src/content/discover/schema";
-import { slugOf } from "../scripts/discoverTopics";
+import { ASKED_ENOUGH, ENOUGH_PEOPLE, fromUsers, slugOf } from "../scripts/discoverTopics";
 import { checkCopies, type Check, type Copy } from "../scripts/openData/verify";
 
 const cited = "https://sunnah.com/bukhari:513";
@@ -99,4 +100,44 @@ test("an asked question becomes a short slug that keeps every whole word", () =>
   expect(slugOf("Could a woman pray at home instead of the mosque on Eid days?")).toBe(
     "could-a-woman-pray-at-home-instead-of-the-mosque-on-eid-days",
   );
+});
+
+const names = (count: number, prefix: string) =>
+  Array.from({ length: count }, (_, index) => `${prefix}${index}`);
+
+test("a topic needs five people who still exist, whatever its stored counter says", async () => {
+  const pg = new PGlite();
+  await pg.exec(`
+    create table users (id text primary key);
+    create table asked_topics (id uuid primary key default gen_random_uuid(), question text not null, people integer not null default 0);
+    create table asked_by (
+      topic_id uuid not null references asked_topics(id) on delete cascade,
+      asker text not null references users(id) on delete cascade,
+      primary key (topic_id, asker)
+    );
+  `);
+  const ask = async (question: string, askers: string[]) => {
+    const { rows } = await pg.query<{ id: string }>(
+      "insert into asked_topics (question, people) values ($1, $2) returning id",
+      [question, ENOUGH_PEOPLE],
+    );
+    await pg.query("insert into users select unnest($1::text[]) on conflict do nothing", [askers]);
+    await pg.query("insert into asked_by select $1, unnest($2::text[])", [rows[0]?.id, askers]);
+  };
+  await ask("Is it allowed to pray behind an imam of another school?", names(5, "a"));
+  await ask("Is a slanted question allowed?", names(5, "b"));
+  await pg.query("delete from users where id in ('b1', 'b2', 'b3', 'b4')");
+  const { rows } = await pg.query(ASKED_ENOUGH, [ENOUGH_PEOPLE]);
+  expect(rows).toEqual([
+    { question: "Is it allowed to pray behind an imam of another school?", people: 5 },
+  ]);
+});
+
+test("an article waits for review when its topic came from users' questions", () => {
+  const topic = { title: "Is X allowed?", slug: "is-x-allowed", topic: "Prayer" };
+  expect([
+    fromUsers([{ ...topic, from: "asked by 5 people, 120 search impressions" }]),
+    fromUsers([{ ...topic, from: "asked on 6 fatwa sites" }]),
+    fromUsers([{ ...topic, from: "queue" }]),
+  ]).toEqual([true, false, false]);
 });

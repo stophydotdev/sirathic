@@ -28,6 +28,10 @@ const SECTIONS = {
   Hajj: "Hajj and Umrah",
 };
 
+export const ASKED_ENOUGH = `select t.question, count(*)::int as people
+  from asked_topics t join asked_by b on b.topic_id = t.id
+  group by t.id having count(*) >= $1`;
+
 export type DiscoverTopic = { title: string; slug: string; topic: string; from: string };
 
 type Candidate = {
@@ -108,8 +112,7 @@ const fatwaQuestions = async (): Promise<Candidate[]> => {
 const askedQuestions = async (): Promise<Candidate[]> => {
   if (!settings.DISCOVER_ASKED_DATABASE_URL) return [];
   const asked = new SQL(settings.DISCOVER_ASKED_DATABASE_URL);
-  const rows =
-    await asked`select question, people from asked_topics where people >= ${ENOUGH_PEOPLE}`;
+  const rows = await asked.unsafe(ASKED_ENOUGH, [ENOUGH_PEOPLE]);
   await asked.close();
   return z
     .array(askedRow)
@@ -179,6 +182,9 @@ const sectionOf = async (title: string) =>
       },
     )
   ).answers.section?.choice;
+
+export const fromUsers = (topics: readonly DiscoverTopic[]) =>
+  topics.some(({ from }) => from.startsWith("asked by"));
 
 export async function nextTopics(
   count: number,
