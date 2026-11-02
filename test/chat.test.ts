@@ -5,7 +5,8 @@ import { rehypeBareCitations } from "../apps/web/src/components/citations";
 import { citationRuns, groupedCitations, withoutCitations } from "../apps/mobile/src/lib/sources";
 import { todoBook } from "../apps/server/src/chat/cards";
 import { citations, withBareCitations } from "../apps/server/src/chat/citations";
-import { withoutPageText, withSavedResults } from "../apps/server/src/chat/pageText";
+import { ownHistory } from "../apps/server/src/chat/ownHistory";
+import { withoutPageText } from "../apps/server/src/chat/pageText";
 import { sharedReports } from "../apps/server/src/chat/reviews";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import {
@@ -253,16 +254,18 @@ test("a loaded chat drops search page text, and the next question gets it back",
   const sent = withoutPageText(stored);
   expect(JSON.stringify(sent)).not.toContain("three rak'ahs");
   expect(sent[0]?.parts[0]).toMatchObject({ output: { sources: output.sources } });
-  const sentBack = await validateUIMessages<ChatMessage>({
-    messages: JSON.parse(JSON.stringify(sent)),
-    dataSchemas: chatData,
-    metadataSchema: messageMetadata,
-  });
-  expect(withSavedResults(sentBack, stored)).toEqual(stored);
+  const sentBack = sentMessage
+    .array()
+    .parse([
+      ...JSON.parse(JSON.stringify(sent)),
+      { id: "next", role: "user", metadata: {}, parts: [{ type: "text", text: "Next" }] },
+    ]);
+  expect((await ownHistory(sentBack, stored)).messages.slice(0, -1)).toEqual(stored);
 });
 
 test("a saved chat sent back with the old tool names reaches the agent under the new ones", () => {
   const sent = sentMessage.parse({
+    id: "a",
     role: "assistant",
     parts: [
       { type: "tool-search", toolCallId: "c1", state: "input-available", input: {} },

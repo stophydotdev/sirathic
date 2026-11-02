@@ -141,6 +141,7 @@ const sentPart = z.union([
 ]);
 
 export const sentMessage = z.looseObject({
+  id: z.string(),
   role: z.enum(["user", "assistant"]),
   parts: z.array(sentPart),
 });
