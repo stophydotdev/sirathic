@@ -293,7 +293,7 @@ type ArticleSite = {
   parallel?: number;
   delayMs?: number;
   school?: Fatwa["school"];
-  answeredBy?: (markdown: string) => string | undefined;
+  answeredBy?: (markdown: string, html: string) => string | undefined;
 };
 
 export const articleSite = ({
@@ -335,7 +335,7 @@ export const articleSite = ({
       found && {
         ...found,
         school: school ?? found.school,
-        answeredBy: answeredBy?.(markdown) ?? found.answeredBy,
+        answeredBy: answeredBy?.(markdown, html) ?? found.answeredBy,
       }
     );
   },
