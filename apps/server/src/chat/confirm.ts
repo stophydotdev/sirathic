@@ -25,6 +25,8 @@ export const isReadOnly = (entry: ToolSet[string]) =>
 export const writingTools = (tools: ToolSet) =>
   Object.entries(tools).flatMap(([name, entry]) => (isReadOnly(entry) ? [] : [name]));
 
+export const VAULT_FILL_CONTACT = "vault_fill_contact";
+
 const CONFIRMED_ACTIONS = new Map<string, readonly string[]>([
   ["update_skill", ["delete"]],
   ["update_routine", ["create", "edit", "delete"]],
@@ -83,8 +85,11 @@ export const actionOf = (call: Call) => {
   return named ?? (WIPE_OUT.test([sql, ...sql_statements].join(" ")) ? "delete" : undefined);
 };
 
+const labelled = z.object({ label: z.string() });
+
 const confirmedAction = ({ toolName, input }: Call) =>
-  CONFIRMED_ACTIONS.get(toolName)?.includes(spelledOut.parse(input).action) ?? false;
+  (toolName === VAULT_FILL_CONTACT && labelled.safeParse(input).success) ||
+  (CONFIRMED_ACTIONS.get(toolName)?.includes(spelledOut.parse(input).action) ?? false);
 
 export const needsApproval = (call: Call, writes: ReadonlySet<string>) =>
   (writes.has(call.toolName) &&

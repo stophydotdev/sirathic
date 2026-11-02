@@ -36,7 +36,8 @@ import { StatusError } from "../http";
 import { loginFor } from "../vault/vault";
 import { mediaTypeOf } from "../files/sniff";
 import { driveTask, taskInput } from "./browserTask";
-import { contactTools, VAULT_FILL_CONTACT } from "./contactFill";
+import { VAULT_FILL_CONTACT } from "../chat/confirm";
+import { contactTools } from "./contactFill";
 import { botDisk } from "./disk";
 import type { BotScope } from "./tools";
 
@@ -45,7 +46,7 @@ const TIMEOUT_MS = 90_000;
 export const USER_FORM = "request_user_form";
 export const BROWSER_HELP = "request_browser_help";
 const REFILL = "refill_form_fields";
-const NEEDS_SOMEONE_THERE = new Set([USER_FORM, BROWSER_HELP, REFILL]);
+const NEEDS_SOMEONE_THERE = new Set([USER_FORM, BROWSER_HELP, REFILL, VAULT_FILL_CONTACT]);
 const READING = new Set([
   "browser_navigate",
   "browser_snapshot",

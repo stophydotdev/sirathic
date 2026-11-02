@@ -240,7 +240,7 @@ test("renaming a login or a contact onto a saved name is refused and both stay",
   ]);
 });
 
-test("a bot fills a saved contact without seeing it, and gets only labels to choose from", async () => {
+test("a bot gets only the saved labels first, then fills the chosen contact without seeing it", async () => {
   const sent: string[] = [];
   const fill: Parameters<typeof contactTools>[1] = async (_bot, form) => {
     sent.push(...form.fields.map(({ value }) => value));
@@ -249,15 +249,22 @@ test("a bot fills a saved contact without seeing it, and gets only labels to cho
       submitted: false,
     };
   };
-  const run = (owner: string, fields: { part: "email" | "city"; target: string }[]) =>
+  const run = (
+    owner: string,
+    fields: { part: "email" | "city"; target: string }[],
+    label?: string,
+  ) =>
     contactTools({ id: "bot", owner }, fill).vault_fill_contact.execute?.(
-      { domain: "example.com", fields },
+      { domain: "example.com", fields, label },
       { toolCallId: "contact", messages: [], context: {} },
     );
-  const receipt = await run("contacts", [
+  const fields = [
     { part: "email", target: "e1" },
     { part: "city", target: "e2" },
-  ]);
+  ] as const;
+  expect(await run("contacts", [...fields])).toEqual({ kind: "choose", labels: ["Home"] });
+  expect(sent).toEqual([]);
+  const receipt = await run("contacts", [...fields], "Home");
   expect(sent).toEqual(["private@example.com"]);
   expect(receipt).toEqual({ kind: "filled", filled: ["email"], empty: ["city"], failed: [] });
   expect(JSON.stringify(receipt)).not.toContain("private@example.com");
