@@ -6,7 +6,6 @@ import { newsSearch } from "@sirathic/core/tools/newsSearch";
 import { quranSearch } from "@sirathic/core/tools/quranSearch";
 import { webFetch } from "@sirathic/core/tools/webFetch";
 import { webSearch } from "@sirathic/core/tools/webSearch";
-import { hostOf, isOnSite } from "@sirathic/core/web/url";
 import { z } from "zod";
 import { reasonOf } from "../http";
 import type { Source } from "../shared/sources";
@@ -32,6 +31,7 @@ import {
   fiqhBlock,
   hadithBlock,
   pagesBlock,
+  PIECE_CHARS,
   pageText,
   quranBlock,
 } from "./compact";
@@ -237,7 +237,7 @@ const onePerPage = (passages: readonly FiqhHit[]) => {
   );
 };
 
-const searchFiqh = async (cite: Cite, queries: string[], sites: string[], chars: number) => {
+const searchFiqh = async (cite: Cite, queries: string[], chars: number) => {
   const bySchool = await Promise.all(
     queries.map((query) =>
       Promise.all(
@@ -260,15 +260,9 @@ const searchFiqh = async (cite: Cite, queries: string[], sites: string[], chars:
       index < POOL_PER_SOURCE ||
       !near.slice(0, index).some(({ school }) => school === passage.school),
   );
-  const onSites = onePerPage(
-    pool.filter(
-      ({ url }) =>
-        sites.length === 0 || (url !== null && sites.some((site) => isOnSite(hostOf(url), site))),
-    ),
-  );
   const { kept, dropped } = await relevant(
     queries.join("; "),
-    onSites,
+    onePerPage(pool),
     (passage) =>
       `${passage.work} (${passage.school})${passage.heading ? `: ${passage.heading}` : ""}\n${clip(passage.textAr, HEAD_CHARS)}`,
   );
@@ -355,7 +349,11 @@ const searchFatwa = async (cite: Cite, queries: string[], sites: string[], chars
   const { kept, dropped } = await relevant(
     queries.join("; "),
     near.slice(0, POOL_PER_SOURCE),
-    (fatwa) => `${fatwa.title}\n${clip(fatwa.question ?? fatwa.summary, HEAD_CHARS)}`,
+    (fatwa) =>
+      `${fatwa.title}\n${
+        clip(fatwa.question ?? fatwa.summary, HEAD_CHARS) ??
+        bestPieces(pageText(fatwa.answer, Number.POSITIVE_INFINITY), queries, PIECE_CHARS + 1)
+      }`,
   );
   const { fits, over } = withinChars(
     kept,
@@ -533,7 +531,7 @@ export const searchAll = async (
     quran: () => searchQuran(cite, queries),
     hadith: () => searchHadith(cite, both, share),
     fatwa: () => searchFatwa(cite, both, sites, share),
-    fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, sites, share),
+    fiqh: () => searchFiqh(cite, arabic.length > 0 ? arabic : queries, share),
     web: () => searchWeb(cite, queries, sites, time),
     news: () => searchNews(cite, queries, time),
     duas: () => searchDuas(both),

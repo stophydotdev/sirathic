@@ -90,7 +90,7 @@ export const documentLinks = (markdown: string) => {
     : ["Linked documents:", ...[...links].map(([url, text]) => `- ${text}: ${url}`)].join("\n");
 };
 
-const PIECE_CHARS = 400;
+export const PIECE_CHARS = 400;
 const SENTENCE_END = /(?<=[.!?؟؛])\s+/u;
 const ARABIC_PREFIX = /^(?:[وفبكل]?ال|[وف])(?=\p{L}{3})/u;
 const LATIN_PLURAL = /(?<=\p{Script=Latin}{3})s$/u;
