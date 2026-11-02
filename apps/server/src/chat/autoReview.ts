@@ -85,24 +85,74 @@ const ADDRESS = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+/gu;
 
 const DRAFT = /(?:^|[^a-z])(?:create|update)[^a-z]+draft(?=$|[^a-z])/iu;
 
+const DESTROYS = /(?:^|[^a-z])(?:delete|remove|destroy|erase|empty|purge|wipe)(?=$|[^a-z])/iu;
+
+const NOTIFIES = /send.?(?:updates|notifications)|notif/iu;
+
+const NO_GUESTS = new Set([
+  "calendarid",
+  "summary",
+  "description",
+  "location",
+  "title",
+  "icaluid",
+  "organizer",
+  "creator",
+]);
+
+const ADDRESS_BREAK = /[\s"'<>,;:()[\]{}\\]+/u;
+
+const verbs = z
+  .object({
+    action: z.string().catch(""),
+    command: z.string().catch(""),
+    method: z.string().catch(""),
+  })
+  .catch({ action: "", command: "", method: "" });
+
 export const addressesIn = (text: string) =>
   (text.match(ADDRESS) ?? []).map((address) => address.toLowerCase());
 
 const UNATTENDED_REFUSAL =
-  "Refused: this run happens while the user is away, so besides reading it can only label, archive, add calendar events and write drafts. The only email it can send goes to an address written in the routine itself or to the user. Don't try another way. Say in your result what you would have done, so the user can ask you to do it.";
+  "Refused: this run happens while the user is away, so besides reading it can only label, archive, write drafts and add calendar events that invite or notify no one outside the routine. The only email it can send goes to an address written in the routine itself or to the user. Don't try another way. Say in your result what you would have done, so the user can ask you to do it.";
 
-const runsAlone = (call: Call, writes: ReadonlySet<string>) =>
-  !needsApproval(call, writes) &&
-  (!writes.has(call.toolName) || CHANGES.test(call.toolName) || DRAFT.test(call.toolName));
+const destroys = (call: Call) => {
+  const { action, command, method } = verbs.parse(call.input);
+  return DESTROYS.test(
+    [call.toolName, action, command, method].join(" ").replaceAll(/(\p{Ll})(\p{Lu})/gu, "$1 $2"),
+  );
+};
+
+const invitesOnly = (call: Call, allowed: ReadonlySet<string>) => {
+  let notifies = false;
+  const reaches = JSON.stringify(call.input ?? null, (key, value) => {
+    if (NOTIFIES.test(key) && value !== "none" && value !== false) notifies = true;
+    return NO_GUESTS.has(key.toLowerCase().replaceAll(/[^a-z]/gu, "")) ? undefined : value;
+  });
+  return (
+    !notifies &&
+    reaches
+      .split(ADDRESS_BREAK)
+      .filter((piece) => piece.includes("@"))
+      .every((piece) => allowed.has(piece.toLowerCase()))
+  );
+};
+
+const safeChange = (call: Call, allowed: ReadonlySet<string>) =>
+  !destroys(call) &&
+  (DRAFT.test(call.toolName) || (CHANGES.test(call.toolName) && invitesOnly(call, allowed)));
+
+const runsAlone = (call: Call, writes: ReadonlySet<string>, allowed: ReadonlySet<string>) =>
+  !needsApproval(call, writes) && (!writes.has(call.toolName) || safeChange(call, allowed));
 
 const unattendedApproval = (
   call: Call,
   writes: ReadonlySet<string>,
   sendsOnlyTo: readonly string[],
 ) => {
-  if (runsAlone(call, writes)) return undefined;
-  const email = call.toolName === GMAIL_SEND ? outgoingEmail.safeParse(call.input).data : undefined;
   const allowed = new Set(sendsOnlyTo.map((address) => address.toLowerCase()));
+  if (runsAlone(call, writes, allowed)) return undefined;
+  const email = call.toolName === GMAIL_SEND ? outgoingEmail.safeParse(call.input).data : undefined;
   const named =
     email !== undefined &&
     [...email.to, ...(email.cc ?? []), ...(email.bcc ?? [])].every((address) =>
