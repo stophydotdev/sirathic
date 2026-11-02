@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "আপোনাৰ সলনিবোৰ সংৰক্ষণ কৰিব পৰা নগ'ল। আকৌ চেষ্টা কৰক।",
   "You already saved a login for this site. Open it to change it.":
     "আপুনি এই ছাইটৰ বাবে ইতিমধ্যে এটা লগইন সাঁচি থৈছে। সলনি কৰিবলৈ সেইটো খোলক।",
+  "You already saved a contact with this label. Open it to change it.":
+    "আপুনি এই লেবেলৰ সৈতে ইতিমধ্যে এটা যোগাযোগ সাঁচি থৈছে। সলনি কৰিবলৈ সেইটো খোলক।",
   Confirm: "নিশ্চিত কৰক",
   Confirmed: "নিশ্চিত কৰা হ'ল",
   Cancelled: "বাতিল কৰা হ'ল",

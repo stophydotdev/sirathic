@@ -100,6 +100,8 @@ export default {
   "Could not save your changes. Try again.": "Mabadiliko yako hayakuhifadhiwa. Jaribu tena.",
   "You already saved a login for this site. Open it to change it.":
     "Tayari umehifadhi kuingia kwa tovuti hii. Kifungue ili ukibadilishe.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Tayari umehifadhi mawasiliano yenye lebo hii. Yafungue ili uyabadilishe.",
   Confirm: "Thibitisha",
   Confirmed: "Imethibitishwa",
   Cancelled: "Imeghairiwa",

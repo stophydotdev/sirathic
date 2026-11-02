@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "ඔබේ වෙනස්කම් සුරැකිය නොහැකි විය. නැවත උත්සාහ කරන්න.",
   "You already saved a login for this site. Open it to change it.":
     "ඔබ දැනටමත් මෙම අඩවිය සඳහා පිවිසුමක් සුරැකුවා. එය වෙනස් කිරීමට එය විවෘත කරන්න.",
+  "You already saved a contact with this label. Open it to change it.":
+    "ඔබ දැනටමත් මෙම ලේබලය සහිත සම්බන්ධතාවක් සුරැකුවා. එය වෙනස් කිරීමට එය විවෘත කරන්න.",
   Confirm: "තහවුරු කරන්න",
   Confirmed: "තහවුරු කළා",
   Cancelled: "අවලංගු කළා",

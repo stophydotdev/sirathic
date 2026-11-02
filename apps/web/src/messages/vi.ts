@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "Không lưu được thay đổi của bạn. Hãy thử lại.",
   "You already saved a login for this site. Open it to change it.":
     "Bạn đã lưu thông tin đăng nhập cho trang này rồi. Hãy mở nó để thay đổi.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Bạn đã lưu một liên hệ với nhãn này rồi. Hãy mở nó để thay đổi.",
   Confirm: "Xác nhận",
   Confirmed: "Đã xác nhận",
   Cancelled: "Đã hủy",

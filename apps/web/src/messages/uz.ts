@@ -86,6 +86,8 @@ export default {
   "Could not save your changes. Try again.": "Ўзгаришлар сақланмади. Қайта уриниб кўринг.",
   "You already saved a login for this site. Open it to change it.":
     "Бу сайт учун логинни аллақачон сақлагансиз. Ўзгартириш учун уни очинг.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Бу ёрлиқ билан алоқани аллақачон сақлагансиз. Ўзгартириш учун уни очинг.",
   Confirm: "Тасдиқлаш",
   Confirmed: "Тасдиқланди",
   Cancelled: "Бекор қилинди",

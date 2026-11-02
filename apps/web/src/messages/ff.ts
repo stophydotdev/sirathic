@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "Waylooji maa mooftaaka. Haɓtu fahin.",
   "You already saved a login for this site. Open it to change it.":
     "A danndii naatirgal ngam ndee lowre. Uddit ɗum ngam waylude ɗum.",
+  "You already saved a contact with this label. Open it to change it.":
+    "A danndii jokkondiral gonnga innde ndee. Uddit ɗum ngam waylude ɗum.",
   Confirm: "Tabbitin",
   Confirmed: "Tabbitinaama",
   Cancelled: "Haaytaama",

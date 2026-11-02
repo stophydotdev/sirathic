@@ -86,6 +86,8 @@ export default {
   "Could not save your changes. Try again.": "Өзгөртүүлөр сакталган жок. Кайра аракет кылыңыз.",
   "You already saved a login for this site. Open it to change it.":
     "Бул сайт үчүн логинди мурунтан эле сактагансыз. Аны өзгөртүү үчүн ачыңыз.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Бул белги менен байланышты мурунтан эле сактагансыз. Аны өзгөртүү үчүн ачыңыз.",
   Confirm: "Ырастоо",
   Confirmed: "Ырасталды",
   Cancelled: "Жокко чыгарылды",

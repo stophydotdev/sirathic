@@ -86,6 +86,8 @@ export default {
   "Could not save your changes. Try again.": "ئۆزگەرتىشلىرىڭىز ساقلانمىدى. قايتا سىناڭ.",
   "You already saved a login for this site. Open it to change it.":
     "بۇ تور بېكەت ئۈچۈن ئاللىبۇرۇن كىرىش ساقلىغانسىز. ئۆزگەرتىش ئۈچۈن ئۇنى ئېچىڭ.",
+  "You already saved a contact with this label. Open it to change it.":
+    "بۇ بەلگە بىلەن ئاللىبۇرۇن ئالاقىداش ساقلىغانسىز. ئۆزگەرتىش ئۈچۈن ئۇنى ئېچىڭ.",
   Confirm: "جەزملەش",
   Confirmed: "جەزملەندى",
   Cancelled: "بىكار قىلىندى",

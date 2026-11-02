@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "Izmjene nisu sačuvane. Pokušajte ponovo.",
   "You already saved a login for this site. Open it to change it.":
     "Već ste sačuvali prijavu za ovu stranicu. Otvorite je da je promijenite.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Već ste sačuvali kontakt s ovom oznakom. Otvorite ga da ga promijenite.",
   Confirm: "Potvrdi",
   Confirmed: "Potvrđeno",
   Cancelled: "Otkazano",

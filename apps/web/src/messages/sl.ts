@@ -100,6 +100,8 @@ export default {
   "Could not save your changes. Try again.": "Sprememb ni bilo mogoče shraniti. Poskusite znova.",
   "You already saved a login for this site. Open it to change it.":
     "Za to stran ste prijavo že shranili. Odprite jo, da jo spremenite.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Stik s to oznako ste že shranili. Odprite ga, da ga spremenite.",
   Confirm: "Potrdi",
   Confirmed: "Potrjeno",
   Cancelled: "Preklicano",

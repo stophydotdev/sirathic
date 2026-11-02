@@ -87,6 +87,8 @@ export default {
     "Impossible d'enregistrer vos modifications. Réessayez.",
   "You already saved a login for this site. Open it to change it.":
     "Vous avez déjà enregistré un identifiant pour ce site. Ouvrez-le pour le modifier.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Vous avez déjà enregistré un contact avec ce libellé. Ouvrez-le pour le modifier.",
   Confirm: "Confirmer",
   Confirmed: "Confirmé",
   Cancelled: "Annulé",

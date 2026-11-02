@@ -86,6 +86,8 @@ export default {
   "Could not save your changes. Try again.": "உங்கள் மாற்றங்களைச் சேமிக்க முடியவில்லை. மீண்டும் முயலவும்.",
   "You already saved a login for this site. Open it to change it.":
     "இந்தத் தளத்திற்கு ஏற்கனவே ஒரு உள்நுழைவைச் சேமித்துள்ளீர்கள். மாற்ற அதைத் திறக்கவும்.",
+  "You already saved a contact with this label. Open it to change it.":
+    "இந்த அடையாளப் பெயருடன் ஏற்கனவே ஒரு தொடர்பைச் சேமித்துள்ளீர்கள். மாற்ற அதைத் திறக்கவும்.",
   Confirm: "உறுதிப்படுத்து",
   Confirmed: "உறுதிப்படுத்தப்பட்டது",
   Cancelled: "ரத்து செய்யப்பட்டது",

@@ -24,7 +24,16 @@ mock.module("@sirathic/db", () => ({
     async (sql, params) => {
       if (sql.startsWith('update "vault_logins"')) {
         vaultUpdates.push(params);
-        return { rows: [] };
+        const [site, sealed, , owner, id] = z.array(z.string()).parse(params);
+        const saved = vaultRows.get(owner ?? "") ?? [];
+        const row = saved.find((item) => item[0] === id);
+        if (!row) return { rows: [] };
+        if (saved.some((item) => item[0] !== id && item[2] === site)) {
+          throw Object.assign(new Error("duplicate key value"), { code: "23505" });
+        }
+        row[2] = site ?? "";
+        row[3] = sealed ?? "";
+        return { rows: [[id]] };
       }
       if (sql.startsWith('insert into "vault_logins"')) {
         const [owner, kind, site, sealed] = z.array(z.string()).parse(params);
@@ -55,6 +64,7 @@ const { keepFor } = await import("@sirathic/core/cache");
 const { notConnected } = await import("../apps/server/src/plugins/tools");
 const { addLogin, loginFor, listVault, updateLogin } =
   await import("../apps/server/src/vault/vault");
+const { saveContact, updateContact } = await import("../apps/server/src/vault/contacts");
 const { contactTools } = await import("../apps/server/src/bots/contactFill");
 
 test("private, loopback, link-local and mapped addresses are private, public ones are not", () => {
@@ -162,6 +172,43 @@ test("a second login for a saved site is refused and the first one stays", async
   expect(second).toMatchObject({ status: 409 });
   expect(vaultRows.get("twice")?.map((row) => row[3])).toEqual([
     JSON.stringify({ password: "personal" }),
+  ]);
+});
+
+const refused = (request: Promise<unknown>) =>
+  request.then(
+    () => undefined,
+    (error: Error) => error,
+  );
+
+test("a second contact with a saved label is refused and the first one stays", async () => {
+  const home = { label: "Home", address: "1 Old Road" };
+  await saveContact("labels", home);
+  const second = await refused(saveContact("labels", { label: "home", address: "2 New Road" }));
+  expect(second).toMatchObject({ status: 409 });
+  expect(vaultRows.get("labels")?.map((row) => row[3])).toEqual([JSON.stringify(home)]);
+});
+
+test("renaming a login or a contact onto a saved name is refused and both stay", async () => {
+  vaultRows.set("rename", [
+    ["a-id", "login", "a.example.com", '{"password":"a"}'],
+    ["b-id", "login", "b.example.com", '{"password":"b"}'],
+    ["home-id", "contact", "contact:home", "home"],
+    ["work-id", "contact", "contact:work", "work"],
+  ]);
+  const login = await refused(
+    updateLogin("rename", "b-id", { site: "a.example.com", password: "x" }),
+  );
+  const contact = await refused(
+    updateContact("rename", "work-id", { label: "Home", city: "Elsewhere" }),
+  );
+  expect(login).toMatchObject({ status: 409 });
+  expect(contact).toMatchObject({ status: 409 });
+  expect(vaultRows.get("rename")?.map((row) => row[2])).toEqual([
+    "a.example.com",
+    "b.example.com",
+    "contact:home",
+    "contact:work",
   ]);
 });
 

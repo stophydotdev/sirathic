@@ -5,6 +5,7 @@ import { z } from "zod";
 import { StatusError } from "../http";
 import { COUNTRY_CODES } from "../shared/countries";
 import { seal, unseal } from "./seal";
+import { refuseTaken } from "./taken";
 
 export const contactLabel = z.string().trim().min(1).max(40);
 
@@ -39,11 +40,13 @@ export const saveContact = async (owner: string, contact: z.infer<typeof vaultCo
   const parsed = vaultContact.parse(contact);
   const site = siteOf(parsed.label);
   const sealed = await seal(JSON.stringify(parsed), owner, site);
-  return db
+  const [added] = await db
     .insert(vaultLogins)
     .values({ owner, kind: "contact", site, sealed })
-    .onConflictDoUpdate({ target: [vaultLogins.owner, vaultLogins.site], set: { sealed } })
+    .onConflictDoNothing({ target: [vaultLogins.owner, vaultLogins.site] })
     .returning({ id: vaultLogins.id });
+  if (!added) throw new StatusError(409, "a contact with this label is already saved");
+  return added;
 };
 
 export const updateContact = async (
@@ -59,7 +62,8 @@ export const updateContact = async (
     .where(
       and(eq(vaultLogins.owner, owner), eq(vaultLogins.id, id), eq(vaultLogins.kind, "contact")),
     )
-    .returning({ id: vaultLogins.id });
+    .returning({ id: vaultLogins.id })
+    .catch(refuseTaken("a contact with this label is already saved"));
   if (updated.length === 0) throw new StatusError(404, "no such vault item");
 };
 

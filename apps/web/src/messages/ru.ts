@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "Не удалось сохранить изменения. Попробуйте ещё раз.",
   "You already saved a login for this site. Open it to change it.":
     "Вы уже сохранили логин для этого сайта. Откройте его, чтобы изменить.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Вы уже сохранили контакт с этой меткой. Откройте его, чтобы изменить.",
   Confirm: "Подтвердить",
   Confirmed: "Подтверждено",
   Cancelled: "Отменено",

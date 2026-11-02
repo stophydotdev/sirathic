@@ -84,6 +84,8 @@ export default {
   "Could not save your changes. Try again.": "บันทึกการแก้ไขไม่ได้ ลองอีกครั้ง",
   "You already saved a login for this site. Open it to change it.":
     "คุณบันทึกข้อมูลเข้าสู่ระบบของเว็บไซต์นี้ไว้แล้ว เปิดรายการนั้นเพื่อแก้ไข",
+  "You already saved a contact with this label. Open it to change it.":
+    "คุณบันทึกผู้ติดต่อที่ใช้ป้ายกำกับนี้ไว้แล้ว เปิดรายการนั้นเพื่อแก้ไข",
   Confirm: "ยืนยัน",
   Confirmed: "ยืนยันแล้ว",
   Cancelled: "ยกเลิกแล้ว",
