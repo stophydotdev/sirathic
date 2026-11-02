@@ -875,6 +875,9 @@ export default {
   "View at {store}": "عرض في {store}",
   "Buy this for {price}": "اشترِ هذا مقابل {price}",
   "Research this": "ابحث في هذا بعمق",
+  "Check these quotes": "تحقق من هذه الاقتباسات",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "هذه الاقتباسات لا تطابق المصادر حرفيًا. تحقق منها قبل أن تعتمد عليها.",
   "Used your memory": "استُخدمت ذاكرتك",
   Discover: "اكتشف",
   "Back to Discover": "العودة إلى اكتشف",

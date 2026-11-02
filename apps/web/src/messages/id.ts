@@ -889,6 +889,9 @@ export default {
   "View at {store}": "Lihat di {store}",
   "Buy this for {price}": "Beli ini seharga {price}",
   "Research this": "Teliti lebih dalam",
+  "Check these quotes": "Periksa kutipan ini",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Kutipan ini tidak sama kata demi kata dengan sumbernya. Periksa dulu sebelum Anda mengandalkannya.",
   "Used your memory": "Memori Anda digunakan",
   Discover: "Jelajahi",
   "Back to Discover": "Kembali ke Jelajahi",

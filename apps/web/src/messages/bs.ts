@@ -886,6 +886,9 @@ export default {
   "View at {store}": "Pogledaj na {store}",
   "Buy this for {price}": "Kupi ovo za {price}",
   "Research this": "Istraži ovo",
+  "Check these quotes": "Provjerite ove citate",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Ovi citati se ne poklapaju s izvorima od riječi do riječi. Provjerite ih prije nego što se oslonite na njih.",
   "Used your memory": "Korištena je tvoja memorija",
   Discover: "Otkrij",
   "Back to Discover": "Nazad na Otkrij",

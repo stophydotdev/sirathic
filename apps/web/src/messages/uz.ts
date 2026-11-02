@@ -892,6 +892,9 @@ export default {
   "View at {store}": "{store}да кўриш",
   "Buy this for {price}": "Буни {price}га сотиб ол",
   "Research this": "Буни тадқиқ қилиш",
+  "Check these quotes": "Бу иқтибосларни текширинг",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Бу иқтибослар манбалар билан сўзма-сўз мос келмайди. Уларга таянишдан олдин текширинг.",
   "Used your memory": "Хотирангиздан фойдаланилди",
   Discover: "Кашф этиш",
   "Back to Discover": "Кашф этишга қайтиш",

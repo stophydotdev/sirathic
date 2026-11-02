@@ -875,6 +875,9 @@ export default {
   "View at {store}": "{store}-এ দেখুন",
   "Buy this for {price}": "এটি {price}-এ কিনুন",
   "Research this": "এটি নিয়ে গবেষণা করুন",
+  "Check these quotes": "এই উদ্ধৃতিগুলো যাচাই করুন",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "এই উদ্ধৃতিগুলো উৎসের সঙ্গে হুবহু মেলে না। এগুলোর ওপর ভরসা করার আগে যাচাই করুন।",
   "Used your memory": "আপনার মেমরি ব্যবহার করা হয়েছে",
   Discover: "আবিষ্কার",
   "Back to Discover": "আবিষ্কারে ফিরে যান",

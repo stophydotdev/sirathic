@@ -61,6 +61,7 @@ import { answerFromResults } from "./answerFromResults";
 import { answerOptions } from "../models/subscription";
 import { answerCards, cardBook, todoBook } from "./cards";
 import { afterAnswer } from "./afterAnswer";
+import { earlierToolTexts, unmatchedQuotes, withText } from "./quotes";
 import { xSearchTools } from "./xSearch";
 import { hasGrok } from "../models/plans";
 import {
@@ -74,8 +75,6 @@ import {
 } from "./tools";
 
 export const KEEPALIVE_MS = 15_000;
-const FALLBACK_MS = 120_000;
-const withText = z.object({ text: z.string() });
 const connectCard = z.object({ status: z.literal("redirect") });
 const URL_IN_TEXT = /https?:\/\/\S+/iu;
 
@@ -419,18 +418,12 @@ export function chatResponse({
           model: models.model,
           system,
           asked: askedText,
-          earlier: visible.slice(
-            0,
-            visible.findLastIndex((message) => message.role === "user"),
-          ),
+          visible,
           results,
           writer,
           transform: sources.transform(),
-          abortSignal: abortSignal.aborted ? AbortSignal.timeout(FALLBACK_MS) : abortSignal,
+          abortSignal,
           providerOptions: answerOptions(turn),
-        }).catch((err: Error) => {
-          console.error(`answer from results failed: ${reasonOf(err)}`);
-          return undefined;
         });
         text = fallback?.text ?? "";
         if (fallback) counted += countedTokens(fallback.usage);
@@ -438,6 +431,11 @@ export function chatResponse({
       const cited = sources.cited();
       if (cited) writer.write({ type: "message-metadata", messageMetadata: { cited } });
       if (failure && !(unanswered && text.trim())) writer.write(failure);
+      const unmatched =
+        ended?.finishReason === "stop"
+          ? unmatchedQuotes(text, [askedText, ...earlierToolTexts(messages), ...results])
+          : [];
+      if (unmatched.length > 0) writer.write({ type: "data-quotes", data: { unmatched } });
       const calledMemory = [...calls.values()].some(({ tool }) => tool === "update_memory");
       if (
         owner !== undefined &&

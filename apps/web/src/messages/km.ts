@@ -871,6 +871,9 @@ export default {
   "View at {store}": "មើលនៅ {store}",
   "Buy this for {price}": "ទិញរបស់នេះតម្លៃ {price}",
   "Research this": "ស្រាវជ្រាវរឿងនេះ",
+  "Check these quotes": "ពិនិត្យសម្រង់ទាំងនេះ",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "សម្រង់ទាំងនេះមិនត្រូវគ្នានឹងប្រភពពាក្យមួយៗទេ។ សូមពិនិត្យមុនពេលពឹងផ្អែកលើវា។",
   "Used your memory": "បានប្រើការចងចាំរបស់អ្នក",
   Discover: "ស្វែងយល់",
   "Back to Discover": "ត្រឡប់ទៅស្វែងយល់",

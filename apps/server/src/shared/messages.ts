@@ -74,6 +74,7 @@ export const chatData = {
   related: z.object({ questions: z.array(z.string()) }),
   research: z.object({ rationale: z.string() }),
   title: z.object({ title: z.string() }),
+  quotes: z.object({ unmatched: z.array(z.string()) }),
 };
 
 const RENAMED_TOOLS = new Map([
@@ -154,6 +155,7 @@ export type ChatMessage = UIMessage<
     related: z.output<typeof chatData.related>;
     research: z.output<typeof chatData.research>;
     title: z.output<typeof chatData.title>;
+    quotes: z.output<typeof chatData.quotes>;
   },
   ChatTools
 >;

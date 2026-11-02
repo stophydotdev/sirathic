@@ -874,6 +874,9 @@ export default {
   "View at {store}": "{store} හි බලන්න",
   "Buy this for {price}": "මෙය {price}ට මිලදී ගන්න",
   "Research this": "මෙය පර්යේෂණය කරන්න",
+  "Check these quotes": "මෙම උපුටා දැක්වීම් පරීක්ෂා කරන්න",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "මෙම උපුටා දැක්වීම් මූලාශ්‍ර සමඟ වචනයෙන් වචනය නොගැළපේ. ඒවා මත විශ්වාසය තැබීමට පෙර පරීක්ෂා කරන්න.",
   "Used your memory": "ඔබේ මතකය භාවිත කළා",
   Discover: "සොයාගන්න",
   "Back to Discover": "සොයාගන්න වෙත ආපසු",

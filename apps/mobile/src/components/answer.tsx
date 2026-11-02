@@ -287,6 +287,7 @@ export const Answer: FC<{
         : [];
   });
   const research = message.parts.find((part) => part.type === "data-research");
+  const quotes = message.parts.find((part) => part.type === "data-quotes");
 
   const copy = () => {
     void Clipboard.setStringAsync(text).then(() => {
@@ -326,6 +327,18 @@ export const Answer: FC<{
             <Text className="text-foreground font-sans text-sm">Try again</Text>
           </Pressable>
         </View>
+      )}
+      {!streaming && quotes && (
+        <AnswerNote kind="warning">
+          <Text className="text-foreground font-sans text-sm">
+            These quotes don't match the sources word for word. Check them before you rely on them.
+          </Text>
+          {quotes.data.unmatched.map((quote) => (
+            <Text key={quote} className="text-muted-foreground font-sans text-sm">
+              “{quote}”
+            </Text>
+          ))}
+        </AnswerNote>
       )}
       {!streaming && research && onResearch && (
         <ResearchCard rationale={research.data.rationale} onResearch={onResearch} />

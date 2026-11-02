@@ -867,6 +867,9 @@ export default {
   "View at {store}": "在 {store} 查看",
   "Buy this for {price}": "以 {price} 购买这个",
   "Research this": "深入研究",
+  "Check these quotes": "核对这些引文",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "这些引文与来源并非逐字一致。请先核对，再作依据。",
   "Used your memory": "已使用你的记忆",
   Discover: "发现",
   "Back to Discover": "返回发现",

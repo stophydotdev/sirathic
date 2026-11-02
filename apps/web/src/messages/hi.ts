@@ -876,6 +876,9 @@ export default {
   "View at {store}": "{store} पर देखें",
   "Buy this for {price}": "इसे {price} में खरीदें",
   "Research this": "इस पर रिसर्च करें",
+  "Check these quotes": "इन उद्धरणों को जाँचें",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "ये उद्धरण स्रोतों से शब्दशः मेल नहीं खाते। इन पर भरोसा करने से पहले इन्हें जाँच लें।",
   "Used your memory": "आपकी मेमोरी का उपयोग हुआ",
   Discover: "खोजें",
   "Back to Discover": "खोजें पर वापस जाएँ",

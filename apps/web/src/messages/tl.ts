@@ -892,6 +892,9 @@ export default {
   "View at {store}": "Tingnan sa {store}",
   "Buy this for {price}": "Bilhin ito sa halagang {price}",
   "Research this": "Saliksikin ito",
+  "Check these quotes": "Suriin ang mga siping ito",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Hindi tugma nang salita-sa-salita ang mga siping ito sa mga pinagmulan. Suriin muna bago ka umasa sa mga ito.",
   "Used your memory": "Ginamit ang iyong memorya",
   Discover: "Tuklasin",
   "Back to Discover": "Bumalik sa Tuklasin",

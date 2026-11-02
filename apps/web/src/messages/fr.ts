@@ -895,6 +895,9 @@ export default {
   "View at {store}": "Voir sur {store}",
   "Buy this for {price}": "Achète ceci pour {price}",
   "Research this": "Rechercher en profondeur",
+  "Check these quotes": "Vérifier ces citations",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Ces citations ne correspondent pas mot pour mot aux sources. Vérifiez-les avant de vous y fier.",
   "Used your memory": "Votre mémoire a été utilisée",
   Discover: "Découvrir",
   "Back to Discover": "Retour à Découvrir",
