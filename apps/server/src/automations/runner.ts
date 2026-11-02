@@ -7,6 +7,7 @@ import { checkNoorUsage } from "../models/usage";
 import { BOT_HISTORY } from "../bots/tools";
 import { holdShutdown } from "../chat/answers";
 import { streamFailure } from "../chat/drain";
+import { addressesIn } from "../chat/autoReview";
 import { chatResponse } from "../chat/response";
 import { connectedTools } from "../plugins/connections";
 import { track } from "../chat/events";
@@ -139,6 +140,7 @@ const routineBrief = ({
 
 async function answerPrompt(
   by: string,
+  prompt: string,
   conversation: ChatMessage[],
   earlier: ChatMessage[],
   sessionId: string,
@@ -156,6 +158,7 @@ async function answerPrompt(
     mode: runMode,
     abortSignal: AbortSignal.timeout(RUN_TIMEOUT_MS),
     unattended: true,
+    sendsOnlyTo: [...addressesIn(prompt), ...(user.email ? [user.email] : [])],
     preferences: getSettings(by).catch((err: Error) => {
       console.error(`settings not read: ${reasonOf(err)}`);
       return DEFAULT_SETTINGS;
@@ -238,6 +241,7 @@ async function runAutomation({
     : asked;
   const outcome = await answerPrompt(
     owner,
+    prompt,
     [briefed],
     earlier,
     sessionId,

@@ -1,5 +1,5 @@
 import { OpenTelemetry } from "@ai-sdk/otel";
-import { ToolLoopAgent, type ToolSet, wrapLanguageModel } from "ai";
+import { ToolLoopAgent, type ToolApprovalStatus, type ToolSet, wrapLanguageModel } from "ai";
 import { z } from "zod";
 import { BROWSER_HELP, USER_FORM } from "../bots/browser";
 import { answerOptions } from "../models/subscription";
@@ -59,7 +59,7 @@ export function answerAgent({
   firstStep: keyof typeof FIRST_STEP | undefined;
   skills: readonly Skill[];
   loaded: readonly string[];
-  confirm: (call: { toolName: string; input: unknown }) => Promise<boolean>;
+  confirm: (call: { toolName: string; input: unknown }) => Promise<ToolApprovalStatus>;
   refine: Awaited<ReturnType<typeof connectedTools>>["refine"];
   shorten: ReturnType<typeof shortenEarlierResults>;
   turn: Turn;
@@ -94,7 +94,7 @@ export function answerAgent({
     ],
     timeout: { chunkMs: STALLED_MS },
     experimental_refineToolInput: refine,
-    toolApproval: async ({ toolCall }) => ((await confirm(toolCall)) ? "user-approval" : undefined),
+    toolApproval: ({ toolCall }) => confirm(toolCall),
     allowSystemInMessages: true,
     prepareStep: async ({ stepNumber, steps, initialMessages, responseMessages }) => {
       const open = new Set([...loaded, ...loadedNames(steps.flatMap((step) => step.toolCalls))]);

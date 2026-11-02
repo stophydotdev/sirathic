@@ -32,6 +32,7 @@ export type ResponseInput = {
   consumeSseStream?: Parameters<typeof createUIMessageStreamResponse>[0]["consumeSseStream"];
   spend?: (counted: number) => void;
   unattended?: true;
+  sendsOnlyTo?: readonly string[];
   task?: true;
   wake?: true;
   steer?: () => string[];

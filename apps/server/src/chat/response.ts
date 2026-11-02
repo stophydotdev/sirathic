@@ -30,7 +30,7 @@ import { prayerTimes } from "../prayer/tool";
 import { settingTools } from "../account/settingTools";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
-import { needsCard } from "./autoReview";
+import { approvalFor } from "./autoReview";
 import type { ResponseInput } from "./responseInput";
 import { withDeclineReasons, withoutOriginalInputs, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
@@ -99,6 +99,7 @@ export function chatResponse({
   consumeSseStream = consumeStream,
   spend,
   unattended,
+  sendsOnlyTo,
   task,
   wake,
   steer,
@@ -288,7 +289,7 @@ export function chatResponse({
         ...(mode === "research" ? RESEARCH_OPENS : []),
         ...openedBy(askedText, plugins),
       ];
-      const writes = unattended ? [] : [...writingTools(connectors.tools), SEND_FEEDBACK];
+      const writes = new Set([...writingTools(connectors.tools), SEND_FEEDBACK]);
       const system = instructions({
         now: new Date(),
         timezone: routines?.timezone,
@@ -320,7 +321,8 @@ export function chatResponse({
             : undefined,
         skills: builtIn,
         loaded,
-        confirm: (call) => needsCard(call, new Set(writes), preferred.rules),
+        confirm: (call) =>
+          approvalFor(call, writes, preferred.rules, unattended && (sendsOnlyTo ?? [])),
         refine: connectors.refine,
         shorten,
         turn,
