@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "تغییرات ذخیره نشد. دوباره تلاش کنید.",
   "You already saved a login for this site. Open it to change it.":
     "قبلاً یک ورود برای این سایت ذخیره کرده‌اید. برای تغییرش آن را باز کنید.",
+  "You already saved a contact with this label. Open it to change it.":
+    "قبلاً مخاطبی با این برچسب ذخیره کرده‌اید. برای تغییرش آن را باز کنید.",
   Confirm: "تأیید",
   Confirmed: "تأیید شد",
   Cancelled: "لغو شد",

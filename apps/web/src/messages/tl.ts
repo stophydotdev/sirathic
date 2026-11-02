@@ -86,6 +86,8 @@ export default {
   "Could not save your changes. Try again.": "Hindi nai-save ang mga pagbabago mo. Subukan muli.",
   "You already saved a login for this site. Open it to change it.":
     "Nakapag-save ka na ng login para sa site na ito. Buksan ito para baguhin.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Nakapag-save ka na ng contact na may ganitong label. Buksan ito para baguhin.",
   Confirm: "Kumpirmahin",
   Confirmed: "Nakumpirma",
   Cancelled: "Kinansela",

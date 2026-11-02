@@ -86,6 +86,8 @@ export default {
   "Could not save your changes. Try again.": "Dəyişikliklər saxlanmadı. Yenidən cəhd edin.",
   "You already saved a login for this site. Open it to change it.":
     "Bu sayt üçün artıq giriş saxlamısınız. Dəyişmək üçün onu açın.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Bu etiketlə artıq əlaqəni yadda saxlamısınız. Dəyişmək üçün onu açın.",
   Confirm: "Təsdiq et",
   Confirmed: "Təsdiqləndi",
   Cancelled: "Ləğv edildi",

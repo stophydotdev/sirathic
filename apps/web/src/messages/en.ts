@@ -109,6 +109,7 @@ export const MESSAGES = [
   "Not sent",
   "Could not save your changes. Try again.",
   "You already saved a login for this site. Open it to change it.",
+  "You already saved a contact with this label. Open it to change it.",
   "Confirm",
   "Confirmed",
   "Cancelled",

@@ -84,6 +84,8 @@ export default {
   "Could not save your changes. Try again.": "មិនអាចរក្សាទុកការកែប្រែរបស់អ្នកបានទេ។ សូមព្យាយាមម្ដងទៀត។",
   "You already saved a login for this site. Open it to change it.":
     "អ្នកបានរក្សាទុកការចូលសម្រាប់គេហទំព័រនេះរួចហើយ។ បើកវាដើម្បីកែប្រែ។",
+  "You already saved a contact with this label. Open it to change it.":
+    "អ្នកបានរក្សាទុកទំនាក់ទំនងដែលមានស្លាកនេះរួចហើយ។ បើកវាដើម្បីកែប្រែ។",
   Confirm: "បញ្ជាក់",
   Confirmed: "បានបញ្ជាក់",
   Cancelled: "បានបោះបង់",

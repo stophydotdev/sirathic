@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "आपके बदलाव सहेजे नहीं जा सके। फिर कोशिश करें।",
   "You already saved a login for this site. Open it to change it.":
     "आप इस साइट के लिए पहले ही एक लॉगिन सेव कर चुके हैं। इसे बदलने के लिए उसे खोलें।",
+  "You already saved a contact with this label. Open it to change it.":
+    "आप इस लेबल वाला संपर्क पहले ही सहेज चुके हैं। इसे बदलने के लिए उसे खोलें।",
   Confirm: "पुष्टि करें",
   Confirmed: "पुष्टि हो गई",
   Cancelled: "रद्द किया गया",

@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "Perubahan tidak dapat disimpan. Coba lagi.",
   "You already saved a login for this site. Open it to change it.":
     "Anda sudah menyimpan login untuk situs ini. Buka login itu untuk mengubahnya.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Anda sudah menyimpan kontak dengan label ini. Buka kontak itu untuk mengubahnya.",
   Confirm: "Konfirmasi",
   Confirmed: "Dikonfirmasi",
   Cancelled: "Dibatalkan",

@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "Impossibile salvare le modifiche. Riprova.",
   "You already saved a login for this site. Open it to change it.":
     "Hai già salvato un accesso per questo sito. Aprilo per modificarlo.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Hai già salvato un contatto con questa etichetta. Aprilo per modificarlo.",
   Confirm: "Conferma",
   Confirmed: "Confermato",
   Cancelled: "Annullato",

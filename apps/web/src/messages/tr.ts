@@ -86,6 +86,8 @@ export default {
   "Could not save your changes. Try again.": "Değişiklikleriniz kaydedilemedi. Tekrar deneyin.",
   "You already saved a login for this site. Open it to change it.":
     "Bu site için zaten bir giriş kaydettiniz. Değiştirmek için onu açın.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Bu etiketle zaten bir kişi kaydettiniz. Değiştirmek için onu açın.",
   Confirm: "Onayla",
   Confirmed: "Onaylandı",
   Cancelled: "İptal edildi",

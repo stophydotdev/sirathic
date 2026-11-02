@@ -6,6 +6,7 @@ import { z } from "zod";
 import { StatusError } from "../http";
 import { listContacts, vaultContact } from "./contacts";
 import { seal, unseal } from "./seal";
+import { refuseTaken } from "./taken";
 import { setupKey, totp } from "./totp";
 
 export const vaultLogin = z.object({
@@ -100,7 +101,8 @@ export const updateLogin = async (
   await db
     .update(vaultLogins)
     .set({ site, sealed })
-    .where(and(eq(vaultLogins.owner, owner), eq(vaultLogins.id, id)));
+    .where(and(eq(vaultLogins.owner, owner), eq(vaultLogins.id, id)))
+    .catch(refuseTaken("a login for this site is already saved"));
 };
 
 export const removeFromVault = async (owner: string, id: string) => {

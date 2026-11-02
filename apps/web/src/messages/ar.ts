@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "تعذّر حفظ تعديلاتك. حاول مرة أخرى.",
   "You already saved a login for this site. Open it to change it.":
     "لقد حفظت تسجيل دخول لهذا الموقع بالفعل. افتحه لتغييره.",
+  "You already saved a contact with this label. Open it to change it.":
+    "لقد حفظت جهة اتصال بهذه التسمية بالفعل. افتحها لتغييرها.",
   Confirm: "تأكيد",
   Confirmed: "تم التأكيد",
   Cancelled: "تم الإلغاء",

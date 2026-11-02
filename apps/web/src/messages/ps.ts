@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "ستاسو بدلونونه خوندي نه شول. بیا هڅه وکړئ.",
   "You already saved a login for this site. Open it to change it.":
     "تاسو دمخه د دې سایټ لپاره ننوتنه خوندي کړې ده. د بدلولو لپاره یې پرانیزئ.",
+  "You already saved a contact with this label. Open it to change it.":
+    "تاسو دمخه د دې نوم سره اړیکه خوندي کړې ده. د بدلولو لپاره یې پرانیزئ.",
   Confirm: "تایید",
   Confirmed: "تایید شو",
   Cancelled: "لغوه شو",

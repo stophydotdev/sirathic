@@ -84,6 +84,8 @@ export default {
   "Could not save your changes. Try again.": "无法保存你的修改。请重试。",
   "You already saved a login for this site. Open it to change it.":
     "你已为此网站保存过登录信息。打开它即可修改。",
+  "You already saved a contact with this label. Open it to change it.":
+    "你已保存过使用此标签的联系人。打开它即可修改。",
   Confirm: "确认",
   Confirmed: "已确认",
   Cancelled: "已取消",

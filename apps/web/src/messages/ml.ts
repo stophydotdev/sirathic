@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "മാറ്റങ്ങൾ സംരക്ഷിക്കാൻ കഴിഞ്ഞില്ല. വീണ്ടും ശ്രമിക്കുക.",
   "You already saved a login for this site. Open it to change it.":
     "ഈ സൈറ്റിനായി നിങ്ങൾ ഇതിനകം ഒരു ലോഗിൻ സേവ് ചെയ്തിട്ടുണ്ട്. മാറ്റാൻ അത് തുറക്കുക.",
+  "You already saved a contact with this label. Open it to change it.":
+    "ഈ ലേബലുള്ള ഒരു കോൺടാക്റ്റ് നിങ്ങൾ ഇതിനകം സേവ് ചെയ്തിട്ടുണ്ട്. മാറ്റാൻ അത് തുറക്കുക.",
   Confirm: "സ്ഥിരീകരിക്കുക",
   Confirmed: "സ്ഥിരീകരിച്ചു",
   Cancelled: "റദ്ദാക്കി",

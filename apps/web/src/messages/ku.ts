@@ -86,6 +86,8 @@ export default {
     "نەتوانرا گۆڕانکارییەکانت پاشەکەوت بکرێن. دووبارە هەوڵ بدەرەوە.",
   "You already saved a login for this site. Open it to change it.":
     "پێشتر چوونەژوورەوەیەکت بۆ ئەم ماڵپەڕە پاشەکەوت کردووە. بیکەرەوە بۆ گۆڕینی.",
+  "You already saved a contact with this label. Open it to change it.":
+    "پێشتر پەیوەندییەکت بەم ناونیشانە پاشەکەوت کردووە. بیکەرەوە بۆ گۆڕینی.",
   Confirm: "پشتڕاستکردنەوە",
   Confirmed: "پشتڕاستکرایەوە",
   Cancelled: "هەڵوەشێنرایەوە",

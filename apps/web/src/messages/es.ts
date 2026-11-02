@@ -86,6 +86,8 @@ export default {
     "No se pudieron guardar los cambios. Inténtalo de nuevo.",
   "You already saved a login for this site. Open it to change it.":
     "Ya guardaste un inicio de sesión para este sitio. Ábrelo para cambiarlo.",
+  "You already saved a contact with this label. Open it to change it.":
+    "Ya guardaste un contacto con esta etiqueta. Ábrelo para cambiarlo.",
   Confirm: "Confirmar",
   Confirmed: "Confirmado",
   Cancelled: "Cancelado",

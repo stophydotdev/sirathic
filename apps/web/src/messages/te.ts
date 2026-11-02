@@ -84,6 +84,8 @@ export default {
   "Could not save your changes. Try again.": "మీ మార్పులను సేవ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నించండి.",
   "You already saved a login for this site. Open it to change it.":
     "ఈ సైట్ కోసం మీరు ఇప్పటికే ఒక లాగిన్ సేవ్ చేశారు. మార్చడానికి దాన్ని తెరవండి.",
+  "You already saved a contact with this label. Open it to change it.":
+    "ఈ లేబుల్‌తో మీరు ఇప్పటికే ఒక పరిచయాన్ని సేవ్ చేశారు. మార్చడానికి దాన్ని తెరవండి.",
   Confirm: "నిర్ధారించు",
   Confirmed: "నిర్ధారించబడింది",
   Cancelled: "రద్దు చేయబడింది",

@@ -85,6 +85,8 @@ export default {
   "Could not save your changes. Try again.": "変更を保存できませんでした。もう一度お試しください。",
   "You already saved a login for this site. Open it to change it.":
     "このサイトのログインはすでに保存されています。変更するには、それを開いてください。",
+  "You already saved a contact with this label. Open it to change it.":
+    "このラベルの連絡先はすでに保存されています。変更するには、それを開いてください。",
   Confirm: "確認",
   Confirmed: "確認済み",
   Cancelled: "キャンセル済み",

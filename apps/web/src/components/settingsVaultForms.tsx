@@ -296,7 +296,9 @@ export const ContactForm: FC<{
         <Field label={t("Email address")}>{field("email", "email")}</Field>
         {failed && (
           <p className="text-destructive col-span-2 text-sm">
-            {t("Could not save your changes. Try again.")}
+            {failed === "taken"
+              ? t("You already saved a contact with this label. Open it to change it.")
+              : t("Could not save your changes. Try again.")}
           </p>
         )}
         <div className="col-span-2">
