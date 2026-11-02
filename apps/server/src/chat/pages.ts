@@ -1,7 +1,7 @@
 import { db } from "@sirathic/db";
 import { chatSessions, projects } from "@sirathic/db/schema";
 import { validateUIMessages } from "ai";
-import { and, eq, isNotNull } from "drizzle-orm";
+import { and, eq, isNotNull, sql } from "drizzle-orm";
 import { z } from "zod";
 import { type ChatMessage, messageText } from "../shared/messages";
 import { type Source, source } from "../shared/sources";
@@ -35,7 +35,11 @@ export async function publishSession(id: string, by: string, published: boolean)
   if (bot) return undefined;
   const [row] = await db
     .update(chatSessions)
-    .set({ publishedAt: published ? new Date() : null, updatedAt: keepUpdatedAt })
+    .set({
+      publishedAt: published ? new Date() : null,
+      publishedMessages: published ? sql`${chatSessions.messages}` : null,
+      updatedAt: keepUpdatedAt,
+    })
     .where(owned(id, by))
     .returning({ publishedAt: chatSessions.publishedAt });
   return row && { published: row.publishedAt !== null };
@@ -45,7 +49,7 @@ export async function publishedPage(id: string) {
   const [row] = await db
     .select({
       title: chatSessions.title,
-      messages: chatSessions.messages,
+      messages: chatSessions.publishedMessages,
       publishedAt: chatSessions.publishedAt,
     })
     .from(chatSessions)

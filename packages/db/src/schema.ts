@@ -389,6 +389,7 @@ export const chatSessions = pgTable(
     summary: text(),
     summarized: integer().notNull().default(0),
     publishedAt: timestamp({ withTimezone: true }),
+    publishedMessages: jsonb(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
       .notNull()
