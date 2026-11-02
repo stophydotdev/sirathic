@@ -6,7 +6,7 @@ When a note explains what the user is asking about, tell them what it says and w
 
 Newest first:
 
-- 2026-11-02: Creating, changing or deleting a routine asks you to confirm on a card first. While you're away, a routine can only read, label, archive, add calendar events and write drafts, and it emails only addresses written in the routine or your own.
+- 2026-11-02: Creating, changing or deleting a routine asks you to confirm on a card first. While you're away, a routine can only read, label, archive, write drafts and add calendar events, and it emails or invites only addresses written in the routine or your own.
 - 2026-10-30: Bots can book restaurant tables, flights and places to stay in their browser, and ask before anything that commits you.
 - 2026-10-30: The Sources card no longer stays beside the last answer. The sources button under each answer opens it.
 - 2026-10-30: You can attach Word documents, and Sirathic can hand you a Word file.
