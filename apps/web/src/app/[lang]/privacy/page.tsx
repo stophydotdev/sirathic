@@ -59,9 +59,10 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
 
       <h2>Who else sees your questions</h2>
       <p>
-        To answer you, we send your question and the passages we found to the model you picked:
-        Anthropic for Noor, or OpenAI for GPT models under your own ChatGPT plan. We also send
-        search text to OpenAI to search our library, and to Stophy to search the web.
+        To answer you, we send your question and the passages we found to the model you picked. Noor
+        runs on Cloudflare. GPT, Grok and MiniMax models run under your own plan with OpenAI, xAI or
+        MiniMax. Small checks, such as whether a question needs sources, also run on Cloudflare. We
+        send search text to OpenAI to search our library, and to Stophy to search the web.
       </p>
       <p>
         Our database runs on Neon, our servers on Railway, and the website on Cloudflare. They store
