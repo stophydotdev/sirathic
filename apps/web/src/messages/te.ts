@@ -940,7 +940,6 @@ export default {
   "Show details": "వివరాలను చూపు",
   "Allow once": "ఒకసారి అనుమతించు",
   "Don't allow": "అనుమతించవద్దు",
-  "Always allow": "ఎల్లప్పుడూ అనుమతించు",
   "Always allow on this site": "ఈ సైట్‌లో ఎల్లప్పుడూ అనుమతించు",
   Allowed: "అనుమతించబడింది",
   "Not allowed": "అనుమతించబడలేదు",
@@ -955,7 +954,6 @@ export default {
   "Allow {name} to post this?": "దీన్ని పోస్ట్ చేయడానికి {name}ని అనుమతించాలా?",
   "Allow {name} to cancel this?": "దీన్ని రద్దు చేయడానికి {name}ని అనుమతించాలా?",
   "Fill my saved contact on {site} without asking": "అడగకుండా {site}లో నేను సేవ్ చేసిన కాంటాక్ట్‌ను నింపు",
-  "{action} without asking": "అడగకుండా {action}",
   "It types these values into the page and doesn't submit it.":
     "ఇది ఈ విలువలను పేజీలో టైప్ చేస్తుంది, సమర్పించదు.",
 } satisfies Messages;

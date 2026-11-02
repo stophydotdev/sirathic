@@ -946,7 +946,6 @@ export default {
   "Show details": "विवरण दिखाएँ",
   "Allow once": "एक बार अनुमति दें",
   "Don't allow": "अनुमति न दें",
-  "Always allow": "हमेशा अनुमति दें",
   "Always allow on this site": "इस साइट पर हमेशा अनुमति दें",
   Allowed: "अनुमति दी गई",
   "Not allowed": "अनुमति नहीं दी गई",
@@ -961,7 +960,6 @@ export default {
   "Allow {name} to post this?": "क्या {name} को इसे पोस्ट करने दें?",
   "Allow {name} to cancel this?": "क्या {name} को इसे रद्द करने दें?",
   "Fill my saved contact on {site} without asking": "बिना पूछे {site} पर मेरा सहेजा गया संपर्क भरें",
-  "{action} without asking": "बिना पूछे {action}",
   "It types these values into the page and doesn't submit it.":
     "यह इन मानों को पेज में टाइप करता है और उसे सबमिट नहीं करता।",
 } satisfies Messages;

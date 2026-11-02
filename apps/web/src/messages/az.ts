@@ -960,7 +960,6 @@ export default {
   "Show details": "Təfərrüatları göstər",
   "Allow once": "Bir dəfə icazə ver",
   "Don't allow": "İcazə vermə",
-  "Always allow": "Həmişə icazə ver",
   "Always allow on this site": "Bu saytda həmişə icazə ver",
   Allowed: "İcazə verildi",
   "Not allowed": "İcazə verilmədi",
@@ -976,7 +975,6 @@ export default {
   "Allow {name} to cancel this?": "{name} bunu ləğv etsin?",
   "Fill my saved contact on {site} without asking":
     "{site} saytında saxlanmış əlaqəmi soruşmadan doldur",
-  "{action} without asking": "Soruşmadan: {action}",
   "It types these values into the page and doesn't submit it.":
     "Bu dəyərləri səhifəyə yazır və göndərmir.",
 } satisfies Messages;

@@ -940,7 +940,6 @@ export default {
   "Show details": "បង្ហាញព័ត៌មានលម្អិត",
   "Allow once": "អនុញ្ញាតម្តង",
   "Don't allow": "កុំអនុញ្ញាត",
-  "Always allow": "អនុញ្ញាតជានិច្ច",
   "Always allow on this site": "អនុញ្ញាតជានិច្ចលើគេហទំព័រនេះ",
   Allowed: "បានអនុញ្ញាត",
   "Not allowed": "មិនបានអនុញ្ញាត",
@@ -956,6 +955,5 @@ export default {
   "Allow {name} to cancel this?": "អនុញ្ញាតឱ្យ {name} បោះបង់រឿងនេះឬ?",
   "Fill my saved contact on {site} without asking":
     "បំពេញទំនាក់ទំនងដែលបានរក្សាទុករបស់ខ្ញុំនៅលើ {site} ដោយមិនសួរ",
-  "{action} without asking": "{action} ដោយមិនសួរ",
   "It types these values into the page and doesn't submit it.": "វាវាយតម្លៃទាំងនេះចូលទំព័រ ហើយមិនដាក់ស្នើទេ។",
 } satisfies Messages;

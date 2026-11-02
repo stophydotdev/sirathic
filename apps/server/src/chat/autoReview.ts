@@ -47,15 +47,17 @@ const chancesFor = async (action: string, rules: Settings["rules"]) => {
 
 const filledSite = z.object({ domain: z.string().min(1) });
 
+const HOST = /[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+/gu;
+
 const rulesFor = (call: Call, rules: Settings["rules"]) => {
   const site = call.toolName === VAULT_FILL_CONTACT ? filledSite.safeParse(call.input).data : null;
-  return site === null
-    ? rules
-    : rules.filter(
-        ({ effect, text }) =>
-          effect === "ask" ||
-          (site !== undefined && text.toLowerCase().includes(site.domain.toLowerCase())),
-      );
+  if (site === null) return rules;
+  const domain = site?.domain.toLowerCase();
+  return rules.filter(
+    ({ effect, text }) =>
+      effect === "ask" ||
+      (domain !== undefined && text.toLowerCase().match(HOST)?.includes(domain)),
+  );
 };
 
 export const asksFirst = async (call: Call, everyRule: Settings["rules"]) => {

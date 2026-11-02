@@ -959,7 +959,6 @@ export default {
   "Show details": "Tampilkan detail",
   "Allow once": "Izinkan sekali",
   "Don't allow": "Jangan izinkan",
-  "Always allow": "Selalu izinkan",
   "Always allow on this site": "Selalu izinkan di situs ini",
   Allowed: "Diizinkan",
   "Not allowed": "Tidak diizinkan",
@@ -975,7 +974,6 @@ export default {
   "Allow {name} to cancel this?": "Izinkan {name} membatalkan ini?",
   "Fill my saved contact on {site} without asking":
     "Isi kontak tersimpan saya di {site} tanpa bertanya",
-  "{action} without asking": "{action} tanpa bertanya",
   "It types these values into the page and doesn't submit it.":
     "Ini mengetikkan nilai-nilai ini ke halaman dan tidak mengirimkannya.",
 } satisfies Messages;

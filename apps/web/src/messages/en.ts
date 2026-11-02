@@ -876,7 +876,6 @@ export const MESSAGES = [
   "Show details",
   "Allow once",
   "Don't allow",
-  "Always allow",
   "Always allow on this site",
   "Allowed",
   "Not allowed",
@@ -890,7 +889,6 @@ export const MESSAGES = [
   "Allow {name} to post this?",
   "Allow {name} to cancel this?",
   "Fill my saved contact on {site} without asking",
-  "{action} without asking",
   "It types these values into the page and doesn't submit it.",
 ] as const;
 

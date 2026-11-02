@@ -953,7 +953,6 @@ export default {
   "Show details": "詳細を表示",
   "Allow once": "今回だけ許可",
   "Don't allow": "許可しない",
-  "Always allow": "常に許可",
   "Always allow on this site": "このサイトでは常に許可",
   Allowed: "許可済み",
   "Not allowed": "許可されませんでした",
@@ -968,7 +967,6 @@ export default {
   "Allow {name} to post this?": "{name} にこれを投稿させますか？",
   "Allow {name} to cancel this?": "{name} にこれをキャンセルさせますか？",
   "Fill my saved contact on {site} without asking": "{site} で保存済みの連絡先を確認なしで入力する",
-  "{action} without asking": "確認なしで{action}",
   "It types these values into the page and doesn't submit it.":
     "これらの値をページに入力しますが、送信はしません。",
 } satisfies Messages;

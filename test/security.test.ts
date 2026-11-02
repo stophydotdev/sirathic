@@ -100,7 +100,9 @@ test("always allowing a contact fill covers only the site it names", async () =>
   } as const;
   const sameSite = await scoredBy([0.9], () => asksFirst(fillOn("shop.example"), [shop]));
   const otherSite = await scoredBy([0.9], () => asksFirst(fillOn("other.example"), [shop]));
-  expect([sameSite, otherSite]).toEqual([false, true]);
+  const shorter = await scoredBy([0.9], () => asksFirst(fillOn("example"), [shop]));
+  const inside = await scoredBy([0.9], () => asksFirst(fillOn("hop.example"), [shop]));
+  expect([sameSite, otherSite, shorter, inside]).toEqual([false, true, true, true]);
 });
 
 const calendar = { text: "ask me before changing my calendar", effect: "ask" } as const;

@@ -936,7 +936,6 @@ export default {
   "Show details": "แสดงรายละเอียด",
   "Allow once": "อนุญาตครั้งเดียว",
   "Don't allow": "ไม่อนุญาต",
-  "Always allow": "อนุญาตเสมอ",
   "Always allow on this site": "อนุญาตเสมอบนเว็บไซต์นี้",
   Allowed: "อนุญาตแล้ว",
   "Not allowed": "ไม่ได้อนุญาต",
@@ -951,6 +950,5 @@ export default {
   "Allow {name} to post this?": "อนุญาตให้ {name} โพสต์สิ่งนี้ไหม",
   "Allow {name} to cancel this?": "อนุญาตให้ {name} ยกเลิกสิ่งนี้ไหม",
   "Fill my saved contact on {site} without asking": "กรอกข้อมูลติดต่อที่บันทึกไว้ของฉันบน {site} โดยไม่ต้องถาม",
-  "{action} without asking": "{action} โดยไม่ต้องถาม",
   "It types these values into the page and doesn't submit it.": "จะพิมพ์ค่าเหล่านี้ลงในหน้าและไม่กดส่ง",
 } satisfies Messages;

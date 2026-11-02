@@ -963,7 +963,6 @@ export default {
   "Show details": "Tafsilotlarni ko‘rsatish",
   "Allow once": "Bir marta ruxsat berish",
   "Don't allow": "Ruxsat bermaslik",
-  "Always allow": "Doim ruxsat berish",
   "Always allow on this site": "Bu saytda doim ruxsat berish",
   Allowed: "Ruxsat berildi",
   "Not allowed": "Ruxsat berilmadi",
@@ -979,7 +978,6 @@ export default {
   "Allow {name} to cancel this?": "{name} buni bekor qilsinmi?",
   "Fill my saved contact on {site} without asking":
     "{site} saytida saqlangan kontaktimni so‘ramasdan to‘ldirish",
-  "{action} without asking": "So‘ramasdan: {action}",
   "It types these values into the page and doesn't submit it.":
     "Bu qiymatlarni sahifaga yozadi va uni yubormaydi.",
 } satisfies Messages;

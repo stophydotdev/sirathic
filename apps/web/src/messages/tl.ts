@@ -963,7 +963,6 @@ export default {
   "Show details": "Ipakita ang detalye",
   "Allow once": "Payagan nang isang beses",
   "Don't allow": "Huwag payagan",
-  "Always allow": "Laging payagan",
   "Always allow on this site": "Laging payagan sa site na ito",
   Allowed: "Pinayagan",
   "Not allowed": "Hindi pinayagan",
@@ -979,7 +978,6 @@ export default {
   "Allow {name} to cancel this?": "Payagan si {name} na kanselahin ito?",
   "Fill my saved contact on {site} without asking":
     "Punan ang naka-save kong contact sa {site} nang hindi nagtatanong",
-  "{action} without asking": "{action} nang hindi nagtatanong",
   "It types these values into the page and doesn't submit it.":
     "Itina-type nito ang mga value na ito sa page at hindi ito isinusumite.",
 } satisfies Messages;

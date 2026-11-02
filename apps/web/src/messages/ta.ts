@@ -954,7 +954,6 @@ export default {
   "Show details": "விவரங்களைக் காட்டு",
   "Allow once": "ஒருமுறை அனுமதி",
   "Don't allow": "அனுமதிக்காதே",
-  "Always allow": "எப்போதும் அனுமதி",
   "Always allow on this site": "இந்தத் தளத்தில் எப்போதும் அனுமதி",
   Allowed: "அனுமதிக்கப்பட்டது",
   "Not allowed": "அனுமதிக்கப்படவில்லை",
@@ -969,7 +968,6 @@ export default {
   "Allow {name} to post this?": "இதை வெளியிட {name}-ஐ அனுமதிக்கவா?",
   "Allow {name} to cancel this?": "இதை ரத்துசெய்ய {name}-ஐ அனுமதிக்கவா?",
   "Fill my saved contact on {site} without asking": "கேட்காமல் {site} இல் நான் சேமித்த தொடர்பை நிரப்பு",
-  "{action} without asking": "கேட்காமல் {action}",
   "It types these values into the page and doesn't submit it.":
     "இது இந்த மதிப்புகளைப் பக்கத்தில் தட்டச்சு செய்கிறது, சமர்ப்பிக்காது.",
 } satisfies Messages;

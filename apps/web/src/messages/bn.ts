@@ -944,7 +944,6 @@ export default {
   "Show details": "বিস্তারিত দেখান",
   "Allow once": "একবার অনুমতি দিন",
   "Don't allow": "অনুমতি দেবেন না",
-  "Always allow": "সবসময় অনুমতি দিন",
   "Always allow on this site": "এই সাইটে সবসময় অনুমতি দিন",
   Allowed: "অনুমতি দেওয়া হয়েছে",
   "Not allowed": "অনুমতি দেওয়া হয়নি",
@@ -960,7 +959,6 @@ export default {
   "Allow {name} to cancel this?": "{name}-কে এটি বাতিল করতে দেবেন?",
   "Fill my saved contact on {site} without asking":
     "জিজ্ঞেস না করে {site}-এ আমার সংরক্ষিত যোগাযোগ পূরণ করুন",
-  "{action} without asking": "জিজ্ঞেস না করে {action}",
   "It types these values into the page and doesn't submit it.":
     "এটি এই মানগুলো পৃষ্ঠায় টাইপ করে, জমা দেয় না।",
 } satisfies Messages;

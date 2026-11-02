@@ -944,7 +944,6 @@ export default {
   "Show details": "විස්තර පෙන්වන්න",
   "Allow once": "එක් වරක් ඉඩ දෙන්න",
   "Don't allow": "ඉඩ නොදෙන්න",
-  "Always allow": "සැමවිට ඉඩ දෙන්න",
   "Always allow on this site": "මෙම අඩවියේ සැමවිට ඉඩ දෙන්න",
   Allowed: "ඉඩ දුන්නා",
   "Not allowed": "ඉඩ නොදුන්නා",
@@ -959,7 +958,6 @@ export default {
   "Allow {name} to post this?": "මෙය පළ කිරීමට {name}ට ඉඩ දෙනවාද?",
   "Allow {name} to cancel this?": "මෙය අවලංගු කිරීමට {name}ට ඉඩ දෙනවාද?",
   "Fill my saved contact on {site} without asking": "නොඅසා {site} හි මගේ සුරැකි සම්බන්ධතාව පුරවන්න",
-  "{action} without asking": "නොඅසා {action}",
   "It types these values into the page and doesn't submit it.":
     "එය මෙම අගයන් පිටුවට ටයිප් කරයි, එය ඉදිරිපත් නොකරයි.",
 } satisfies Messages;

@@ -32,8 +32,6 @@ const sentEmail = z.object({ to: z.array(z.string()) });
 
 const GMAIL_SEND = toolName("gmail", "send_email");
 
-const NEVER_ALWAYS = new Set(["update_routine", "update_skill", "install_plugin"]);
-
 const QUESTIONS = {
   delete: "Allow {name} to delete this?",
   refund: "Allow {name} to issue this refund?",
@@ -42,8 +40,6 @@ const QUESTIONS = {
   post: "Allow {name} to post this?",
   cancel: "Allow {name} to cancel this?",
 } as const satisfies Record<ActionKind, MessageKey>;
-
-const RISKY = new Set<ActionKind>(["delete", "refund", "pay"]);
 
 const titleOf = (text: string) => {
   const spaced = nameOf(text.replaceAll(/(\p{Ll})(\p{Lu})/gu, "$1 $2")).toLowerCase();
@@ -156,16 +152,12 @@ export const ConfirmCard: FC<{ call: ToolCall }> = ({ call }) => {
   const question = fill
     ? t("Allow {name} to fill your saved contact on {site}?", { name: botName, site: fill.domain })
     : t(kind ? QUESTIONS[kind] : "Allow {name} to do this?", { name: botName });
-  const always = fill
-    ? t("Always allow on this site")
-    : (kind && RISKY.has(kind)) || NEVER_ALWAYS.has(call.toolName) || "matches" in call.args
-      ? undefined
-      : t("Always allow");
+  const always = fill ? t("Always allow on this site") : undefined;
   const rule = fill
     ? t("Fill my saved contact on {site} without asking", { site: fill.domain })
-    : t("{action} without asking", { action: subject });
+    : "";
   const answer = (choice: ApprovalAnswer) => {
-    if (choice === "always") void allowAlways(rule).catch(() => undefined);
+    if (choice === "always" && rule) void allowAlways(rule).catch(() => undefined);
     decide(choice !== "never");
   };
   return (

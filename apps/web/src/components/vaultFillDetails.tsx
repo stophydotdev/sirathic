@@ -40,7 +40,9 @@ export const vaultFill = z.object({
 
 const loadContact = async (label: string) => {
   const { contacts } = await api.vault.list.query();
-  const found = contacts.find((contact) => contact.label === label);
+  const found = contacts.find(
+    (contact) => contact.label.trim().toLowerCase() === label.trim().toLowerCase(),
+  );
   const item = found ? await api.vault.open.query({ id: found.id }) : undefined;
   return item?.kind === "contact" ? item : null;
 };

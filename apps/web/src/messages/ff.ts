@@ -954,7 +954,6 @@ export default {
   "Show details": "Hollu cikkuuji",
   "Allow once": "Yamir laabi gooto",
   "Don't allow": "Wota yamir",
-  "Always allow": "Yamir sahaa kala",
   "Always allow on this site": "Yamir sahaa kala e ndee lowre",
   Allowed: "Yamiraama",
   "Not allowed": "Yamiraaka",
@@ -970,7 +969,6 @@ export default {
   "Allow {name} to cancel this?": "Yamir {name} haaytina ɗum?",
   "Fill my saved contact on {site} without asking":
     "Hebbin jokkondiral am danndaaɗo e {site} tawa a naamnaaki",
-  "{action} without asking": "{action} tawa a naamnaaki",
   "It types these values into the page and doesn't submit it.":
     "Ɗum winndat ɗeen keeweeli e hello ngoo, nde neldataa ngoo.",
 } satisfies Messages;

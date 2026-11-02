@@ -944,7 +944,6 @@ export default {
   "Show details": "عرض التفاصيل",
   "Allow once": "السماح مرة واحدة",
   "Don't allow": "عدم السماح",
-  "Always allow": "السماح دائمًا",
   "Always allow on this site": "السماح دائمًا على هذا الموقع",
   Allowed: "تم السماح",
   "Not allowed": "لم يُسمح",
@@ -960,7 +959,6 @@ export default {
   "Allow {name} to cancel this?": "هل تسمح لـ {name} بإلغاء هذا؟",
   "Fill my saved contact on {site} without asking":
     "املأ جهة الاتصال المحفوظة على {site} دون أن تسأل",
-  "{action} without asking": "{action} دون أن تسأل",
   "It types these values into the page and doesn't submit it.":
     "يكتب هذه القيم في الصفحة ولا يرسلها.",
 } satisfies Messages;

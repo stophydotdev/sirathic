@@ -935,7 +935,6 @@ export default {
   "Show details": "显示详情",
   "Allow once": "允许一次",
   "Don't allow": "不允许",
-  "Always allow": "始终允许",
   "Always allow on this site": "在此网站始终允许",
   Allowed: "已允许",
   "Not allowed": "未允许",
@@ -950,7 +949,6 @@ export default {
   "Allow {name} to post this?": "允许 {name} 发布这项内容吗？",
   "Allow {name} to cancel this?": "允许 {name} 取消这项内容吗？",
   "Fill my saved contact on {site} without asking": "无需询问，在 {site} 上填写我保存的联系信息",
-  "{action} without asking": "无需询问：{action}",
   "It types these values into the page and doesn't submit it.":
     "它会把这些值填入页面，但不会提交。",
 } satisfies Messages;

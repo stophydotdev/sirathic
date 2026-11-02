@@ -955,7 +955,6 @@ export default {
   "Show details": "Показать подробности",
   "Allow once": "Разрешить один раз",
   "Don't allow": "Не разрешать",
-  "Always allow": "Всегда разрешать",
   "Always allow on this site": "Всегда разрешать на этом сайте",
   Allowed: "Разрешено",
   "Not allowed": "Не разрешено",
@@ -971,7 +970,6 @@ export default {
   "Allow {name} to cancel this?": "Разрешить {name} отменить это?",
   "Fill my saved contact on {site} without asking":
     "Заполнять мой сохранённый контакт на {site} без вопросов",
-  "{action} without asking": "{action} без вопросов",
   "It types these values into the page and doesn't submit it.":
     "Вводит эти значения на странице и не отправляет её.",
 } satisfies Messages;

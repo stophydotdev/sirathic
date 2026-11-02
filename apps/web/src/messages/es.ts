@@ -960,7 +960,6 @@ export default {
   "Show details": "Mostrar detalles",
   "Allow once": "Permitir una vez",
   "Don't allow": "No permitir",
-  "Always allow": "Permitir siempre",
   "Always allow on this site": "Permitir siempre en este sitio",
   Allowed: "Permitido",
   "Not allowed": "No permitido",
@@ -976,7 +975,6 @@ export default {
   "Allow {name} to cancel this?": "¿Permitir que {name} cancele esto?",
   "Fill my saved contact on {site} without asking":
     "Rellenar mi contacto guardado en {site} sin preguntar",
-  "{action} without asking": "{action} sin preguntar",
   "It types these values into the page and doesn't submit it.":
     "Escribe estos valores en la página y no la envía.",
 } satisfies Messages;

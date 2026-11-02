@@ -957,7 +957,6 @@ export default {
   "Show details": "Hûrguliyan nîşan bide",
   "Allow once": "Carekê destûr bide",
   "Don't allow": "Destûr nede",
-  "Always allow": "Her tim destûr bide",
   "Always allow on this site": "Li vê malperê her tim destûr bide",
   Allowed: "Destûr hate dayîn",
   "Not allowed": "Destûr nehate dayîn",
@@ -973,7 +972,6 @@ export default {
   "Allow {name} to cancel this?": "Destûr didî {name} ku vê betal bike?",
   "Fill my saved contact on {site} without asking":
     "Têkiliya min a tomarkirî li {site} bêyî pirsîn dagire",
-  "{action} without asking": "{action} bêyî pirsîn",
   "It types these values into the page and doesn't submit it.":
     "Ev nirxan dinivîse nav rûpelê û wê naşîne.",
 } satisfies Messages;

@@ -953,7 +953,6 @@ export default {
   "Show details": "جزئیات وښایاست",
   "Allow once": "یو ځل اجازه ورکړئ",
   "Don't allow": "اجازه مه ورکوئ",
-  "Always allow": "تل اجازه ورکړئ",
   "Always allow on this site": "پدې سایټ کې تل اجازه ورکړئ",
   Allowed: "اجازه ورکړل شوه",
   "Not allowed": "اجازه ورنه کړل شوه",
@@ -969,7 +968,6 @@ export default {
   "Allow {name} to cancel this?": "{name} ته اجازه ورکوئ چې دا لغوه کړي؟",
   "Fill my saved contact on {site} without asking":
     "په {site} کې زما خوندي شوې اړیکه پرته له پوښتنې ډکه کړه",
-  "{action} without asking": "{action} پرته له پوښتنې",
   "It types these values into the page and doesn't submit it.":
     "دا ارزښتونه په پاڼه کې لیکي او نه یې لېږي.",
 } satisfies Messages;

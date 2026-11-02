@@ -954,7 +954,6 @@ export default {
   "Show details": "Hiện chi tiết",
   "Allow once": "Cho phép một lần",
   "Don't allow": "Không cho phép",
-  "Always allow": "Luôn cho phép",
   "Always allow on this site": "Luôn cho phép trên trang này",
   Allowed: "Đã cho phép",
   "Not allowed": "Không được phép",
@@ -970,7 +969,6 @@ export default {
   "Allow {name} to cancel this?": "Cho phép {name} hủy mục này?",
   "Fill my saved contact on {site} without asking":
     "Điền liên hệ đã lưu của tôi trên {site} mà không hỏi",
-  "{action} without asking": "{action} mà không hỏi",
   "It types these values into the page and doesn't submit it.":
     "Nó nhập các giá trị này vào trang và không gửi đi.",
 } satisfies Messages;

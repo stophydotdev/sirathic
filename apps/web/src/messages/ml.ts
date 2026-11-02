@@ -951,7 +951,6 @@ export default {
   "Show details": "വിശദാംശങ്ങൾ കാണിക്കുക",
   "Allow once": "ഒരിക്കൽ അനുവദിക്കുക",
   "Don't allow": "അനുവദിക്കരുത്",
-  "Always allow": "എപ്പോഴും അനുവദിക്കുക",
   "Always allow on this site": "ഈ സൈറ്റിൽ എപ്പോഴും അനുവദിക്കുക",
   Allowed: "അനുവദിച്ചു",
   "Not allowed": "അനുവദിച്ചില്ല",
@@ -967,7 +966,6 @@ export default {
   "Allow {name} to cancel this?": "ഇത് റദ്ദാക്കാൻ {name}-നെ അനുവദിക്കണോ?",
   "Fill my saved contact on {site} without asking":
     "ചോദിക്കാതെ {site}-ൽ എന്റെ സേവ് ചെയ്ത കോൺടാക്റ്റ് പൂരിപ്പിക്കുക",
-  "{action} without asking": "ചോദിക്കാതെ {action}",
   "It types these values into the page and doesn't submit it.":
     "ഇത് ഈ മൂല്യങ്ങൾ പേജിൽ ടൈപ്പ് ചെയ്യുന്നു, സമർപ്പിക്കുന്നില്ല.",
 } satisfies Messages;

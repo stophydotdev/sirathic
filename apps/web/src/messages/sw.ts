@@ -956,7 +956,6 @@ export default {
   "Show details": "Onyesha maelezo",
   "Allow once": "Ruhusu mara moja",
   "Don't allow": "Usiruhusu",
-  "Always allow": "Ruhusu kila wakati",
   "Always allow on this site": "Ruhusu kila wakati kwenye tovuti hii",
   Allowed: "Imeruhusiwa",
   "Not allowed": "Haikuruhusiwa",
@@ -972,7 +971,6 @@ export default {
   "Allow {name} to cancel this?": "Ruhusu {name} aghairi hiki?",
   "Fill my saved contact on {site} without asking":
     "Jaza anwani yangu iliyohifadhiwa kwenye {site} bila kuuliza",
-  "{action} without asking": "{action} bila kuuliza",
   "It types these values into the page and doesn't submit it.":
     "Huandika thamani hizi kwenye ukurasa na haiutumi.",
 } satisfies Messages;

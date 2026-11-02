@@ -956,7 +956,6 @@ export default {
   "Show details": "Прикажи детаље",
   "Allow once": "Дозволи једном",
   "Don't allow": "Не дозволи",
-  "Always allow": "Увек дозволи",
   "Always allow on this site": "Увек дозволи на овом сајту",
   Allowed: "Дозвољено",
   "Not allowed": "Није дозвољено",
@@ -972,7 +971,6 @@ export default {
   "Allow {name} to cancel this?": "Дозволити да {name} откаже ово?",
   "Fill my saved contact on {site} without asking":
     "Попуни мој сачувани контакт на {site} без питања",
-  "{action} without asking": "{action} без питања",
   "It types these values into the page and doesn't submit it.":
     "Уписује ове вредности на страницу и не шаље је.",
 } satisfies Messages;

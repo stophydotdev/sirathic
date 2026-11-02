@@ -943,7 +943,6 @@ export default {
   "Show details": "বিৱৰণ দেখুৱাওক",
   "Allow once": "এবাৰ অনুমতি দিয়ক",
   "Don't allow": "অনুমতি নিদিব",
-  "Always allow": "সদায় অনুমতি দিয়ক",
   "Always allow on this site": "এই চাইটত সদায় অনুমতি দিয়ক",
   Allowed: "অনুমতি দিয়া হ'ল",
   "Not allowed": "অনুমতি দিয়া নহ'ল",
@@ -958,7 +957,6 @@ export default {
   "Allow {name} to post this?": "{name}-ক এইটো প্ৰকাশ কৰিবলৈ অনুমতি দিবনে?",
   "Allow {name} to cancel this?": "{name}-ক এইটো বাতিল কৰিবলৈ অনুমতি দিবনে?",
   "Fill my saved contact on {site} without asking": "নুসোধাকৈ {site}-ত মোৰ সংৰক্ষিত যোগাযোগ পূৰণ কৰক",
-  "{action} without asking": "নুসোধাকৈ {action}",
   "It types these values into the page and doesn't submit it.":
     "ই এই মানবোৰ পৃষ্ঠাত টাইপ কৰে আৰু দাখিল নকৰে।",
 } satisfies Messages;

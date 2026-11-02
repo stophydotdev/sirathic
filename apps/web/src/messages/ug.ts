@@ -959,7 +959,6 @@ export default {
   "Show details": "تەپسىلاتنى كۆرسىتىش",
   "Allow once": "بىر قېتىم رۇخسەت قىلىش",
   "Don't allow": "رۇخسەت قىلماسلىق",
-  "Always allow": "ھەمىشە رۇخسەت قىلىش",
   "Always allow on this site": "بۇ تور بېكەتتە ھەمىشە رۇخسەت قىلىش",
   Allowed: "رۇخسەت قىلىندى",
   "Not allowed": "رۇخسەت قىلىنمىدى",
@@ -975,7 +974,6 @@ export default {
   "Allow {name} to cancel this?": "{name} نىڭ بۇنى بىكار قىلىشىغا رۇخسەت قىلامسىز؟",
   "Fill my saved contact on {site} without asking":
     "{site} دا ساقلانغان ئالاقە ئۇچۇرۇمنى سورىماي تولدۇرۇش",
-  "{action} without asking": "سورىماي {action}",
   "It types these values into the page and doesn't submit it.":
     "بۇ قىممەتلەرنى بەتكە يازىدۇ، يوللىمايدۇ.",
 } satisfies Messages;
