@@ -881,6 +881,9 @@ export default {
   "View at {store}": "{store}-ൽ കാണുക",
   "Buy this for {price}": "ഇത് {price}-ന് വാങ്ങുക",
   "Research this": "ഇത് ഗവേഷണം ചെയ്യുക",
+  "Check these quotes": "ഈ ഉദ്ധരണികൾ പരിശോധിക്കുക",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "ഈ ഉദ്ധരണികൾ ഉറവിടങ്ങളുമായി വാക്കിനു വാക്ക് യോജിക്കുന്നില്ല. ആശ്രയിക്കുന്നതിനു മുമ്പ് അവ പരിശോധിക്കുക.",
   "Used your memory": "നിങ്ങളുടെ മെമ്മറി ഉപയോഗിച്ചു",
   Discover: "കണ്ടെത്തുക",
   "Back to Discover": "കണ്ടെത്തുകയിലേക്ക് മടങ്ങുക",

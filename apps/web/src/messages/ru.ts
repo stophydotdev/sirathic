@@ -885,6 +885,9 @@ export default {
   "View at {store}": "Смотреть на {store}",
   "Buy this for {price}": "Купи это за {price}",
   "Research this": "Исследовать подробнее",
+  "Check these quotes": "Проверьте эти цитаты",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Эти цитаты не совпадают с источниками слово в слово. Проверьте их, прежде чем на них полагаться.",
   "Used your memory": "Использована ваша память",
   Discover: "Интересное",
   "Back to Discover": "Назад к разделу «Интересное»",

@@ -889,6 +889,9 @@ export default {
   "View at {store}": "{store} сайтынан көрүү",
   "Buy this for {price}": "Муну {price} баада сатып ал",
   "Research this": "Муну изилдөө",
+  "Check these quotes": "Бул цитаталарды текшериңиз",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Бул цитаталар булактарга сөзмө-сөз дал келбейт. Аларга таянуудан мурун текшериңиз.",
   "Used your memory": "Эс тутумуңуз колдонулду",
   Discover: "Изилдөө",
   "Back to Discover": "Изилдөөгө кайтуу",

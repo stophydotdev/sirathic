@@ -888,6 +888,9 @@ export default {
   "View at {store}": "{store} دا كۆرۈش",
   "Buy this for {price}": "بۇنى {price} گە سېتىۋال",
   "Research this": "بۇنى تەتقىق قىل",
+  "Check these quotes": "بۇ نەقىللەرنى تەكشۈرۈڭ",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "بۇ نەقىللەر مەنبەلەر بىلەن سۆزمۇسۆز ماس كەلمەيدۇ. ئۇلارغا تايىنىشتىن بۇرۇن تەكشۈرۈڭ.",
   "Used your memory": "ئەستە ساقلىغانلىرىڭىز ئىشلىتىلدى",
   Discover: "بايقاش",
   "Back to Discover": "بايقاشقا قايتىش",

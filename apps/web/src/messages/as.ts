@@ -873,6 +873,9 @@ export default {
   "View at {store}": "{store}ত চাওক",
   "Buy this for {price}": "{price}ত এইটো কিনক",
   "Research this": "এইটো গৱেষণা কৰক",
+  "Check these quotes": "এই উদ্ধৃতিবোৰ পৰীক্ষা কৰক",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "এই উদ্ধৃতিবোৰ উৎসসমূহৰ সৈতে হুবহু নিমিলে। ইয়াৰ ওপৰত ভৰসা কৰাৰ আগতে পৰীক্ষা কৰক।",
   "Used your memory": "আপোনাৰ মেমৰি ব্যৱহাৰ কৰা হৈছে",
   Discover: "আৱিষ্কাৰ",
   "Back to Discover": "আৱিষ্কাৰলৈ উভতি যাওক",

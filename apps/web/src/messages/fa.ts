@@ -881,6 +881,9 @@ export default {
   "View at {store}": "مشاهده در {store}",
   "Buy this for {price}": "این را به قیمت {price} بخر",
   "Research this": "این را پژوهش کن",
+  "Check these quotes": "این نقل‌قول‌ها را بررسی کن",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "این نقل‌قول‌ها کلمه‌به‌کلمه با منابع مطابقت ندارند. پیش از اینکه به آن‌ها تکیه کنی، بررسی‌شان کن.",
   "Used your memory": "از حافظهٔ شما استفاده شد",
   Discover: "کشف",
   "Back to Discover": "بازگشت به کشف",

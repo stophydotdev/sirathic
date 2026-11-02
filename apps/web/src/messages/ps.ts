@@ -883,6 +883,9 @@ export default {
   "View at {store}": "په {store} کې یې وګورئ",
   "Buy this for {price}": "دا په {price} واخله",
   "Research this": "په دې اړه څیړنه وکړه",
+  "Check these quotes": "دا اقتباسونه وګورئ",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "دا اقتباسونه له سرچينو سره ټکي په ټکي سمون نه خوري. مخکې له دې چې پرې باور وکړئ، وې ګورئ.",
   "Used your memory": "ستاسو حافظه وکارول شوه",
   Discover: "کشف",
   "Back to Discover": "کشف ته بېرته تګ",

@@ -883,6 +883,9 @@ export default {
   "View at {store}": "{store}で見る",
   "Buy this for {price}": "これを{price}で購入して",
   "Research this": "詳しく調べる",
+  "Check these quotes": "これらの引用を確認",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "これらの引用は出典と一字一句一致していません。頼る前に確認してください。",
   "Used your memory": "メモリーを使用しました",
   Discover: "発見",
   "Back to Discover": "発見に戻る",

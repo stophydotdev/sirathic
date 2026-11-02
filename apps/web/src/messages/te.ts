@@ -871,6 +871,9 @@ export default {
   "View at {store}": "{store}లో చూడండి",
   "Buy this for {price}": "దీన్ని {price}కి కొను",
   "Research this": "దీనిపై పరిశోధన చేయండి",
+  "Check these quotes": "ఈ ఉల్లేఖనలను తనిఖీ చేయండి",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "ఈ ఉల్లేఖనలు ఆధారాలతో పదం పదంగా సరిపోలడం లేదు. వాటిపై ఆధారపడే ముందు తనిఖీ చేయండి.",
   "Used your memory": "మీ మెమరీ ఉపయోగించబడింది",
   Discover: "అన్వేషించండి",
   "Back to Discover": "అన్వేషణకు తిరిగి వెళ్ళండి",

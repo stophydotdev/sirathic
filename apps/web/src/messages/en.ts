@@ -813,6 +813,8 @@ export const MESSAGES = [
   "View at {store}",
   "Buy this for {price}",
   "Research this",
+  "Check these quotes",
+  "These quotes don't match the sources word for word. Check them before you rely on them.",
   "Used your memory",
   "Discover",
   "Back to Discover",

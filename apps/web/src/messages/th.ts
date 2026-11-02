@@ -867,6 +867,9 @@ export default {
   "View at {store}": "ดูที่ {store}",
   "Buy this for {price}": "ซื้ออันนี้ในราคา {price}",
   "Research this": "ค้นคว้าเรื่องนี้",
+  "Check these quotes": "ตรวจสอบข้อความที่ยกมานี้",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "ข้อความที่ยกมานี้ไม่ตรงกับแหล่งที่มาคำต่อคำ โปรดตรวจสอบก่อนนำไปอ้างอิง",
   "Used your memory": "ใช้ความจำของคุณแล้ว",
   Discover: "ค้นพบ",
   "Back to Discover": "กลับไปที่ค้นพบ",

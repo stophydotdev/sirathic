@@ -887,6 +887,9 @@ export default {
   "View at {store}": "لە {store} ببینە",
   "Buy this for {price}": "ئەمە بە {price} بکڕە",
   "Research this": "لێکۆڵینەوە لەمە بکە",
+  "Check these quotes": "ئەم وەرگیراوانە بپشکنە",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "ئەم وەرگیراوانە وشە بە وشە لەگەڵ سەرچاوەکان ناگونجێن. پێش ئەوەی پشتیان پێ ببەستیت بیانپشکنە.",
   "Used your memory": "بیرەوەرییەکەت بەکارهات",
   Discover: "دۆزینەوە",
   "Back to Discover": "گەڕانەوە بۆ دۆزینەوە",

@@ -884,6 +884,9 @@ export default {
   "View at {store}": "Yiy e {store}",
   "Buy this for {price}": "Soodu ɗum e {price}",
   "Research this": "Ɗaɓɓit ɗum",
+  "Check these quotes": "Ƴeewto ɗee konngi",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Ɗee konngi nanndaa e ɗaɗɗe ɗe konngol e konngol. Ƴeewto ɗe hade maa hoolaade ɗe.",
   "Used your memory": "Teskaaɗe maa kuutoraama",
   Discover: "Tawtu",
   "Back to Discover": "Rutto e Tawtu",

@@ -884,6 +884,9 @@ export default {
   "View at {store}": "{store} இல் பார்",
   "Buy this for {price}": "இதை {price}க்கு வாங்கு",
   "Research this": "இதை ஆராய்",
+  "Check these quotes": "இந்த மேற்கோள்களைச் சரிபாருங்கள்",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "இந்த மேற்கோள்கள் ஆதாரங்களுடன் சொல்லுக்குச் சொல் பொருந்தவில்லை. அவற்றை நம்புவதற்கு முன் சரிபாருங்கள்.",
   "Used your memory": "உங்கள் நினைவகம் பயன்படுத்தப்பட்டது",
   Discover: "கண்டறி",
   "Back to Discover": "கண்டறிவுக்குத் திரும்பு",

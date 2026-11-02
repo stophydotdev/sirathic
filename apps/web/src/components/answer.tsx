@@ -6,6 +6,7 @@ import { actionButton, AnswerExtras, MoreMenu, useAnswer } from "@/components/an
 import { ShareMenu } from "@/components/shareMenu";
 import { AnswerCard, MemoryUsed } from "@/components/answerCard";
 import { ProductFollowUps } from "@/components/productsCard";
+import { QuoteCheck } from "@/components/quoteCheck";
 import { ResearchCard } from "@/components/researchCard";
 import { AutomationCard, isCardTool } from "@/components/automationCard";
 import { ConfirmCard } from "@/components/confirmCard";
@@ -172,6 +173,7 @@ const Answer: FC<{ sources: Source[] }> = ({ sources }) => {
           }}
         </MessagePrimitive.GroupedParts>
         <FileCards />
+        <QuoteCheck />
         <MemoryUsed />
         <ResearchCard />
         <ReplyError />

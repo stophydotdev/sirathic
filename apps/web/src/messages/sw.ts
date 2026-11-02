@@ -886,6 +886,9 @@ export default {
   "View at {store}": "Tazama kwenye {store}",
   "Buy this for {price}": "Nunua hii kwa {price}",
   "Research this": "Chunguza hili",
+  "Check these quotes": "Kagua nukuu hizi",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Nukuu hizi hazilingani neno kwa neno na vyanzo. Zikague kabla ya kuzitegemea.",
   "Used your memory": "Kumbukumbu yako imetumika",
   Discover: "Gundua",
   "Back to Discover": "Rudi kwa Gundua",

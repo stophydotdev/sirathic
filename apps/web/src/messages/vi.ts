@@ -883,6 +883,9 @@ export default {
   "View at {store}": "Xem tại {store}",
   "Buy this for {price}": "Mua cái này với giá {price}",
   "Research this": "Nghiên cứu sâu",
+  "Check these quotes": "Kiểm tra các trích dẫn này",
+  "These quotes don't match the sources word for word. Check them before you rely on them.":
+    "Các trích dẫn này không khớp từng chữ với nguồn. Hãy kiểm tra trước khi dựa vào chúng.",
   "Used your memory": "Đã dùng bộ nhớ của bạn",
   Discover: "Khám phá",
   "Back to Discover": "Quay lại Khám phá",
