@@ -4,7 +4,14 @@ import { outgoingEmail } from "../plugins/outgoingEmail";
 import { z } from "zod";
 import type { Settings } from "../shared/settings";
 import { yesChances } from "./clef";
-import { type Call, CHANGES, changesWhatIsTheirs, needsApproval, spell } from "./confirm";
+import {
+  type Call,
+  CHANGES,
+  changesWhatIsTheirs,
+  needsApproval,
+  spell,
+  VAULT_FILL_CONTACT,
+} from "./confirm";
 
 const ASK_AT = 0.3;
 const ALLOW_AT = 0.6;
@@ -38,7 +45,21 @@ const chancesFor = async (action: string, rules: Settings["rules"]) => {
   return (index: number) => chance(`rule${index}`);
 };
 
-export const asksFirst = async (call: Call, rules: Settings["rules"]) => {
+const filledSite = z.object({ domain: z.string().min(1) });
+
+const rulesFor = (call: Call, rules: Settings["rules"]) => {
+  const site = call.toolName === VAULT_FILL_CONTACT ? filledSite.safeParse(call.input).data : null;
+  return site === null
+    ? rules
+    : rules.filter(
+        ({ effect, text }) =>
+          effect === "ask" ||
+          (site !== undefined && text.toLowerCase().includes(site.domain.toLowerCase())),
+      );
+};
+
+export const asksFirst = async (call: Call, everyRule: Settings["rules"]) => {
+  const rules = rulesFor(call, everyRule);
   const action = spell(call);
   if (bulkCall(call) || !rules.some(({ effect }) => effect === "allow") || MONEY.test(action)) {
     return true;

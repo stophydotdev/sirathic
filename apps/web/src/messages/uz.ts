@@ -959,4 +959,27 @@ export default {
   "Pick at least two bots": "Камида иккита бот танланг",
   "Checking your memory": "Хотирангиз текширилмоқда",
   "Checked your memory": "Хотирангиз текширилди",
+  "Hide details": "Tafsilotlarni yashirish",
+  "Show details": "Tafsilotlarni ko‘rsatish",
+  "Allow once": "Bir marta ruxsat berish",
+  "Don't allow": "Ruxsat bermaslik",
+  "Always allow": "Doim ruxsat berish",
+  "Always allow on this site": "Bu saytda doim ruxsat berish",
+  Allowed: "Ruxsat berildi",
+  "Not allowed": "Ruxsat berilmadi",
+  "Waiting for your OK": "Roziligingiz kutilmoqda",
+  "Allow {name} to fill your saved contact on {site}?":
+    "{name} {site} saytida saqlangan kontaktingizni to‘ldirsinmi?",
+  "Allow {name} to do this?": "{name} buni qilsinmi?",
+  "Allow {name} to delete this?": "{name} buni o‘chirsinmi?",
+  "Allow {name} to issue this refund?": "{name} bu pulni qaytarsinmi?",
+  "Allow {name} to make this payment?": "{name} bu to‘lovni amalga oshirsinmi?",
+  "Allow {name} to send this?": "{name} buni yuborsinmi?",
+  "Allow {name} to post this?": "{name} buni joylasinmi?",
+  "Allow {name} to cancel this?": "{name} buni bekor qilsinmi?",
+  "Fill my saved contact on {site} without asking":
+    "{site} saytida saqlangan kontaktimni so‘ramasdan to‘ldirish",
+  "{action} without asking": "So‘ramasdan: {action}",
+  "It types these values into the page and doesn't submit it.":
+    "Bu qiymatlarni sahifaga yozadi va uni yubormaydi.",
 } satisfies Messages;

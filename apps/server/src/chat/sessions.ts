@@ -92,6 +92,7 @@ export const listSessions = async (by: string, query = "", limit = RECENT_LIMIT)
       updatedAt: isoTime(chatSessions.updatedAt),
       snippet: hit,
       preview: sql<string>`left(regexp_replace(coalesce((select string_agg(part->>'text', ' ') from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where part->>'type' = 'text'), ''), '^> [^\n]*\n\n', ''), ${PREVIEW_CHARS})`,
+      approving: sql<boolean>`exists (select 1 from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where ${chatSessions.messages} -> -1 ->> 'role' = 'assistant' and part->>'state' = 'approval-requested')`,
       waiting: sql<
         string | null
       >`(select left(coalesce(part->'input'->>'title', part->'input'->>'instruction'), ${PREVIEW_CHARS}) from jsonb_array_elements(${chatSessions.messages} -> -1 -> 'parts') as part where ${chatSessions.messages} -> -1 ->> 'role' = 'assistant' and part->>'type' in ('tool-request_user_form', 'tool-request_browser_help') limit 1)`,

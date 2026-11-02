@@ -953,4 +953,27 @@ export default {
   "Pick at least two bots": "Odaberi najmanje dva bota",
   "Checking your memory": "Provjeravam tvoju memoriju",
   "Checked your memory": "Provjerio tvoju memoriju",
+  "Hide details": "Sakrij detalje",
+  "Show details": "Prikaži detalje",
+  "Allow once": "Dozvoli jednom",
+  "Don't allow": "Ne dozvoli",
+  "Always allow": "Uvijek dozvoli",
+  "Always allow on this site": "Uvijek dozvoli na ovoj stranici",
+  Allowed: "Dozvoljeno",
+  "Not allowed": "Nije dozvoljeno",
+  "Waiting for your OK": "Čeka vašu potvrdu",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Dozvoliti da {name} popuni vaš sačuvani kontakt na {site}?",
+  "Allow {name} to do this?": "Dozvoliti da {name} uradi ovo?",
+  "Allow {name} to delete this?": "Dozvoliti da {name} izbriše ovo?",
+  "Allow {name} to issue this refund?": "Dozvoliti da {name} izvrši ovaj povrat novca?",
+  "Allow {name} to make this payment?": "Dozvoliti da {name} izvrši ovo plaćanje?",
+  "Allow {name} to send this?": "Dozvoliti da {name} pošalje ovo?",
+  "Allow {name} to post this?": "Dozvoliti da {name} objavi ovo?",
+  "Allow {name} to cancel this?": "Dozvoliti da {name} otkaže ovo?",
+  "Fill my saved contact on {site} without asking":
+    "Popuni moj sačuvani kontakt na {site} bez pitanja",
+  "{action} without asking": "{action} bez pitanja",
+  "It types these values into the page and doesn't submit it.":
+    "Upisuje ove vrijednosti u stranicu i ne šalje je.",
 } satisfies Messages;

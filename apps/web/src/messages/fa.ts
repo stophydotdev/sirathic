@@ -947,4 +947,27 @@ export default {
   "Pick at least two bots": "دست‌کم دو بات انتخاب کنید",
   "Checking your memory": "در حال بررسی حافظهٔ شما",
   "Checked your memory": "حافظهٔ شما بررسی شد",
+  "Hide details": "پنهان کردن جزئیات",
+  "Show details": "نمایش جزئیات",
+  "Allow once": "یک بار اجازه بده",
+  "Don't allow": "اجازه نده",
+  "Always allow": "همیشه اجازه بده",
+  "Always allow on this site": "همیشه در این سایت اجازه بده",
+  Allowed: "اجازه داده شد",
+  "Not allowed": "اجازه داده نشد",
+  "Waiting for your OK": "در انتظار تأیید شما",
+  "Allow {name} to fill your saved contact on {site}?":
+    "به {name} اجازه می‌دهید مخاطب ذخیره‌شده‌تان را در {site} پر کند؟",
+  "Allow {name} to do this?": "به {name} اجازه می‌دهید این کار را انجام دهد؟",
+  "Allow {name} to delete this?": "به {name} اجازه می‌دهید این را حذف کند؟",
+  "Allow {name} to issue this refund?": "به {name} اجازه می‌دهید این بازپرداخت را انجام دهد؟",
+  "Allow {name} to make this payment?": "به {name} اجازه می‌دهید این پرداخت را انجام دهد؟",
+  "Allow {name} to send this?": "به {name} اجازه می‌دهید این را بفرستد؟",
+  "Allow {name} to post this?": "به {name} اجازه می‌دهید این را منتشر کند؟",
+  "Allow {name} to cancel this?": "به {name} اجازه می‌دهید این را لغو کند؟",
+  "Fill my saved contact on {site} without asking":
+    "مخاطب ذخیره‌شده‌ام را در {site} بدون پرسیدن پر کن",
+  "{action} without asking": "{action} بدون پرسیدن",
+  "It types these values into the page and doesn't submit it.":
+    "این مقادیر را در صفحه تایپ می‌کند و آن را ارسال نمی‌کند.",
 } satisfies Messages;

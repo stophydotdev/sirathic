@@ -949,4 +949,27 @@ export default {
   "Pick at least two bots": "لږ تر لږه دوه بوټونه وټاکئ",
   "Checking your memory": "ستاسو حافظه ګورم",
   "Checked your memory": "ستاسو حافظه مې وکتله",
+  "Hide details": "جزئیات پټ کړئ",
+  "Show details": "جزئیات وښایاست",
+  "Allow once": "یو ځل اجازه ورکړئ",
+  "Don't allow": "اجازه مه ورکوئ",
+  "Always allow": "تل اجازه ورکړئ",
+  "Always allow on this site": "پدې سایټ کې تل اجازه ورکړئ",
+  Allowed: "اجازه ورکړل شوه",
+  "Not allowed": "اجازه ورنه کړل شوه",
+  "Waiting for your OK": "ستاسو د تایید په تمه",
+  "Allow {name} to fill your saved contact on {site}?":
+    "{name} ته اجازه ورکوئ چې په {site} کې ستاسو خوندي شوې اړیکه ډکه کړي؟",
+  "Allow {name} to do this?": "{name} ته اجازه ورکوئ چې دا وکړي؟",
+  "Allow {name} to delete this?": "{name} ته اجازه ورکوئ چې دا ړنګ کړي؟",
+  "Allow {name} to issue this refund?": "{name} ته اجازه ورکوئ چې دا بیرته ورکړه وکړي؟",
+  "Allow {name} to make this payment?": "{name} ته اجازه ورکوئ چې دا تادیه وکړي؟",
+  "Allow {name} to send this?": "{name} ته اجازه ورکوئ چې دا ولېږي؟",
+  "Allow {name} to post this?": "{name} ته اجازه ورکوئ چې دا خپور کړي؟",
+  "Allow {name} to cancel this?": "{name} ته اجازه ورکوئ چې دا لغوه کړي؟",
+  "Fill my saved contact on {site} without asking":
+    "په {site} کې زما خوندي شوې اړیکه پرته له پوښتنې ډکه کړه",
+  "{action} without asking": "{action} پرته له پوښتنې",
+  "It types these values into the page and doesn't submit it.":
+    "دا ارزښتونه په پاڼه کې لیکي او نه یې لېږي.",
 } satisfies Messages;

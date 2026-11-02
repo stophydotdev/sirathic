@@ -953,4 +953,27 @@ export default {
   "Pick at least two bots": "En az iki bot seçin",
   "Checking your memory": "Hafızanız kontrol ediliyor",
   "Checked your memory": "Hafızanız kontrol edildi",
+  "Hide details": "Ayrıntıları gizle",
+  "Show details": "Ayrıntıları göster",
+  "Allow once": "Bir kez izin ver",
+  "Don't allow": "İzin verme",
+  "Always allow": "Her zaman izin ver",
+  "Always allow on this site": "Bu sitede her zaman izin ver",
+  Allowed: "İzin verildi",
+  "Not allowed": "İzin verilmedi",
+  "Waiting for your OK": "Onayınız bekleniyor",
+  "Allow {name} to fill your saved contact on {site}?":
+    "{name}, {site} sitesinde kayıtlı kişi bilgilerinizi doldursun mu?",
+  "Allow {name} to do this?": "{name} bunu yapsın mı?",
+  "Allow {name} to delete this?": "{name} bunu silsin mi?",
+  "Allow {name} to issue this refund?": "{name} bu iadeyi yapsın mı?",
+  "Allow {name} to make this payment?": "{name} bu ödemeyi yapsın mı?",
+  "Allow {name} to send this?": "{name} bunu göndersin mi?",
+  "Allow {name} to post this?": "{name} bunu paylaşsın mı?",
+  "Allow {name} to cancel this?": "{name} bunu iptal etsin mi?",
+  "Fill my saved contact on {site} without asking":
+    "{site} sitesinde kayıtlı kişi bilgilerimi sormadan doldur",
+  "{action} without asking": "Sormadan: {action}",
+  "It types these values into the page and doesn't submit it.":
+    "Bu değerleri sayfaya yazar ve göndermez.",
 } satisfies Messages;

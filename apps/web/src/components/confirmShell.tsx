@@ -9,8 +9,6 @@ const pill = "h-11 rounded-full px-5 text-sm font-medium disabled:opacity-50";
 
 export const primaryPill = `${pill} bg-foreground text-background`;
 
-export const dangerPill = `${pill} bg-destructive text-background`;
-
 export const quietPill = `${pill} bg-foreground/8 hover:bg-foreground/12`;
 
 export const fieldClass =

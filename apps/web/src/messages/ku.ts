@@ -953,4 +953,27 @@ export default {
   "Pick at least two bots": "لانیکەم دوو بۆت هەڵبژێرە",
   "Checking your memory": "بیرەوەرییەکەت دەپشکنم",
   "Checked your memory": "بیرەوەرییەکەتم پشکنی",
+  "Hide details": "Hûrguliyan veşêre",
+  "Show details": "Hûrguliyan nîşan bide",
+  "Allow once": "Carekê destûr bide",
+  "Don't allow": "Destûr nede",
+  "Always allow": "Her tim destûr bide",
+  "Always allow on this site": "Li vê malperê her tim destûr bide",
+  Allowed: "Destûr hate dayîn",
+  "Not allowed": "Destûr nehate dayîn",
+  "Waiting for your OK": "Li benda erêya te",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Destûr didî {name} ku têkiliya te ya tomarkirî li {site} dagire?",
+  "Allow {name} to do this?": "Destûr didî {name} ku vê bike?",
+  "Allow {name} to delete this?": "Destûr didî {name} ku vê jê bibe?",
+  "Allow {name} to issue this refund?": "Destûr didî {name} ku vê vegerandina pere bike?",
+  "Allow {name} to make this payment?": "Destûr didî {name} ku vê dayînê bike?",
+  "Allow {name} to send this?": "Destûr didî {name} ku vê bişîne?",
+  "Allow {name} to post this?": "Destûr didî {name} ku vê biweşîne?",
+  "Allow {name} to cancel this?": "Destûr didî {name} ku vê betal bike?",
+  "Fill my saved contact on {site} without asking":
+    "Têkiliya min a tomarkirî li {site} bêyî pirsîn dagire",
+  "{action} without asking": "{action} bêyî pirsîn",
+  "It types these values into the page and doesn't submit it.":
+    "Ev nirxan dinivîse nav rûpelê û wê naşîne.",
 } satisfies Messages;

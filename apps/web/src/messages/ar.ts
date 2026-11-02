@@ -940,4 +940,27 @@ export default {
   "Pick at least two bots": "اختر بوتين على الأقل",
   "Checking your memory": "أراجع ذاكرتك",
   "Checked your memory": "راجعت ذاكرتك",
+  "Hide details": "إخفاء التفاصيل",
+  "Show details": "عرض التفاصيل",
+  "Allow once": "السماح مرة واحدة",
+  "Don't allow": "عدم السماح",
+  "Always allow": "السماح دائمًا",
+  "Always allow on this site": "السماح دائمًا على هذا الموقع",
+  Allowed: "تم السماح",
+  "Not allowed": "لم يُسمح",
+  "Waiting for your OK": "بانتظار موافقتك",
+  "Allow {name} to fill your saved contact on {site}?":
+    "هل تسمح لـ {name} بملء جهة الاتصال المحفوظة على {site}؟",
+  "Allow {name} to do this?": "هل تسمح لـ {name} بفعل هذا؟",
+  "Allow {name} to delete this?": "هل تسمح لـ {name} بحذف هذا؟",
+  "Allow {name} to issue this refund?": "هل تسمح لـ {name} بإصدار هذا الاسترداد؟",
+  "Allow {name} to make this payment?": "هل تسمح لـ {name} بإجراء هذه الدفعة؟",
+  "Allow {name} to send this?": "هل تسمح لـ {name} بإرسال هذا؟",
+  "Allow {name} to post this?": "هل تسمح لـ {name} بنشر هذا؟",
+  "Allow {name} to cancel this?": "هل تسمح لـ {name} بإلغاء هذا؟",
+  "Fill my saved contact on {site} without asking":
+    "املأ جهة الاتصال المحفوظة على {site} دون أن تسأل",
+  "{action} without asking": "{action} دون أن تسأل",
+  "It types these values into the page and doesn't submit it.":
+    "يكتب هذه القيم في الصفحة ولا يرسلها.",
 } satisfies Messages;

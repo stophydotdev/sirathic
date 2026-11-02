@@ -959,4 +959,27 @@ export default {
   "Pick at least two bots": "Pumili ng hindi bababa sa dalawang bot",
   "Checking your memory": "Sinusuri ang iyong memorya",
   "Checked your memory": "Nasuri ang iyong memorya",
+  "Hide details": "Itago ang detalye",
+  "Show details": "Ipakita ang detalye",
+  "Allow once": "Payagan nang isang beses",
+  "Don't allow": "Huwag payagan",
+  "Always allow": "Laging payagan",
+  "Always allow on this site": "Laging payagan sa site na ito",
+  Allowed: "Pinayagan",
+  "Not allowed": "Hindi pinayagan",
+  "Waiting for your OK": "Hinihintay ang iyong OK",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Payagan si {name} na punan ang naka-save mong contact sa {site}?",
+  "Allow {name} to do this?": "Payagan si {name} na gawin ito?",
+  "Allow {name} to delete this?": "Payagan si {name} na burahin ito?",
+  "Allow {name} to issue this refund?": "Payagan si {name} na ibalik ang bayad na ito?",
+  "Allow {name} to make this payment?": "Payagan si {name} na gawin ang bayad na ito?",
+  "Allow {name} to send this?": "Payagan si {name} na ipadala ito?",
+  "Allow {name} to post this?": "Payagan si {name} na i-post ito?",
+  "Allow {name} to cancel this?": "Payagan si {name} na kanselahin ito?",
+  "Fill my saved contact on {site} without asking":
+    "Punan ang naka-save kong contact sa {site} nang hindi nagtatanong",
+  "{action} without asking": "{action} nang hindi nagtatanong",
+  "It types these values into the page and doesn't submit it.":
+    "Itina-type nito ang mga value na ito sa page at hindi ito isinusumite.",
 } satisfies Messages;

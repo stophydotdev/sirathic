@@ -940,4 +940,27 @@ export default {
   "Pick at least two bots": "কমপক্ষে দুটি বট বেছে নিন",
   "Checking your memory": "আপনার মেমরি দেখছি",
   "Checked your memory": "আপনার মেমরি দেখেছি",
+  "Hide details": "বিস্তারিত লুকান",
+  "Show details": "বিস্তারিত দেখান",
+  "Allow once": "একবার অনুমতি দিন",
+  "Don't allow": "অনুমতি দেবেন না",
+  "Always allow": "সবসময় অনুমতি দিন",
+  "Always allow on this site": "এই সাইটে সবসময় অনুমতি দিন",
+  Allowed: "অনুমতি দেওয়া হয়েছে",
+  "Not allowed": "অনুমতি দেওয়া হয়নি",
+  "Waiting for your OK": "আপনার সম্মতির অপেক্ষায়",
+  "Allow {name} to fill your saved contact on {site}?":
+    "{name}-কে {site}-এ আপনার সংরক্ষিত যোগাযোগ পূরণ করতে দেবেন?",
+  "Allow {name} to do this?": "{name}-কে এটি করতে দেবেন?",
+  "Allow {name} to delete this?": "{name}-কে এটি মুছতে দেবেন?",
+  "Allow {name} to issue this refund?": "{name}-কে এই টাকা ফেরত দিতে দেবেন?",
+  "Allow {name} to make this payment?": "{name}-কে এই পেমেন্ট করতে দেবেন?",
+  "Allow {name} to send this?": "{name}-কে এটি পাঠাতে দেবেন?",
+  "Allow {name} to post this?": "{name}-কে এটি পোস্ট করতে দেবেন?",
+  "Allow {name} to cancel this?": "{name}-কে এটি বাতিল করতে দেবেন?",
+  "Fill my saved contact on {site} without asking":
+    "জিজ্ঞেস না করে {site}-এ আমার সংরক্ষিত যোগাযোগ পূরণ করুন",
+  "{action} without asking": "জিজ্ঞেস না করে {action}",
+  "It types these values into the page and doesn't submit it.":
+    "এটি এই মানগুলো পৃষ্ঠায় টাইপ করে, জমা দেয় না।",
 } satisfies Messages;

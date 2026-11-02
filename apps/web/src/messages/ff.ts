@@ -950,4 +950,27 @@ export default {
   "Pick at least two bots": "Suɓtu bot-ji ɗiɗi ɗum fuu",
   "Checking your memory": "Ina ƴeewa teskaaɗe maa",
   "Checked your memory": "Ƴeewii teskaaɗe maa",
+  "Hide details": "Suuɗ cikkuuji",
+  "Show details": "Hollu cikkuuji",
+  "Allow once": "Yamir laabi gooto",
+  "Don't allow": "Wota yamir",
+  "Always allow": "Yamir sahaa kala",
+  "Always allow on this site": "Yamir sahaa kala e ndee lowre",
+  Allowed: "Yamiraama",
+  "Not allowed": "Yamiraaka",
+  "Waiting for your OK": "Ina sabbi jaɓɓol maa",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Yamir {name} hebbina jokkondiral maa danndaaɗo e {site}?",
+  "Allow {name} to do this?": "Yamir {name} waɗa ɗum?",
+  "Allow {name} to delete this?": "Yamir {name} momta ɗum?",
+  "Allow {name} to issue this refund?": "Yamir {name} artira ngal kaalis?",
+  "Allow {name} to make this payment?": "Yamir {name} yoba ngal njoɓdi?",
+  "Allow {name} to send this?": "Yamir {name} neldu ɗum?",
+  "Allow {name} to post this?": "Yamir {name} yaltin ɗum?",
+  "Allow {name} to cancel this?": "Yamir {name} haaytina ɗum?",
+  "Fill my saved contact on {site} without asking":
+    "Hebbin jokkondiral am danndaaɗo e {site} tawa a naamnaaki",
+  "{action} without asking": "{action} tawa a naamnaaki",
+  "It types these values into the page and doesn't submit it.":
+    "Ɗum winndat ɗeen keeweeli e hello ngoo, nde neldataa ngoo.",
 } satisfies Messages;

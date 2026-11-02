@@ -955,4 +955,27 @@ export default {
   "Pick at least two bots": "Pilih setidaknya dua bot",
   "Checking your memory": "Memeriksa memori Anda",
   "Checked your memory": "Memori Anda diperiksa",
+  "Hide details": "Sembunyikan detail",
+  "Show details": "Tampilkan detail",
+  "Allow once": "Izinkan sekali",
+  "Don't allow": "Jangan izinkan",
+  "Always allow": "Selalu izinkan",
+  "Always allow on this site": "Selalu izinkan di situs ini",
+  Allowed: "Diizinkan",
+  "Not allowed": "Tidak diizinkan",
+  "Waiting for your OK": "Menunggu persetujuan Anda",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Izinkan {name} mengisi kontak tersimpan Anda di {site}?",
+  "Allow {name} to do this?": "Izinkan {name} melakukan ini?",
+  "Allow {name} to delete this?": "Izinkan {name} menghapus ini?",
+  "Allow {name} to issue this refund?": "Izinkan {name} mengembalikan dana ini?",
+  "Allow {name} to make this payment?": "Izinkan {name} melakukan pembayaran ini?",
+  "Allow {name} to send this?": "Izinkan {name} mengirim ini?",
+  "Allow {name} to post this?": "Izinkan {name} memposting ini?",
+  "Allow {name} to cancel this?": "Izinkan {name} membatalkan ini?",
+  "Fill my saved contact on {site} without asking":
+    "Isi kontak tersimpan saya di {site} tanpa bertanya",
+  "{action} without asking": "{action} tanpa bertanya",
+  "It types these values into the page and doesn't submit it.":
+    "Ini mengetikkan nilai-nilai ini ke halaman dan tidak mengirimkannya.",
 } satisfies Messages;
