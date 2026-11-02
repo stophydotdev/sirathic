@@ -690,7 +690,9 @@ export const askedBy = pgTable(
     topicId: uuid()
       .notNull()
       .references(() => askedTopics.id, { onDelete: "cascade" }),
-    asker: text().notNull(),
+    asker: text()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
   },
   (table) => [primaryKey({ columns: [table.topicId, table.asker] })],
 );

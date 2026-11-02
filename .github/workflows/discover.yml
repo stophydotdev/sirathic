@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  id-token: write
 
 concurrency: discover
 
@@ -23,7 +24,6 @@ jobs:
       NEXT_PUBLIC_SERVER: http://localhost:3000
       DATABASE_URL: ${{ secrets.DISCOVER_DATABASE_URL }}
       DISCOVER_ASKED_DATABASE_URL: ${{ secrets.DISCOVER_ASKED_DATABASE_URL }}
-      GSC_SERVICE_ACCOUNT: ${{ secrets.GSC_SERVICE_ACCOUNT }}
       REDIS_URL: redis://127.0.0.1:6379
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -52,7 +52,17 @@ jobs:
         with:
           bun-version: 1.4.4
       - run: bun install --frozen-lockfile
+      - id: google
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/977489795408/locations/global/workloadIdentityPools/github/providers/sirathic
+          service_account: sirathic-discover-gsc@sirathic-512115.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/webmasters.readonly
+          create_credentials_file: false
       - run: bun scripts/discover.ts 1
+        env:
+          GSC_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
       - id: written
         run: echo "file=$(git ls-files --others --exclude-standard apps/web/src/content/discover | head -1)" >> "$GITHUB_OUTPUT"
       - if: steps.written.outputs.file != ''

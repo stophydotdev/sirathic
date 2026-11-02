@@ -96,4 +96,7 @@ test("an asked question becomes a short slug that keeps every whole word", () =>
   expect(
     slugOf("Can a wife ask for khula if her husband refuses to pay the maintenance he owes her?"),
   ).toBe("can-a-wife-ask-for-khula-if-her-husband-refuses-to-pay-the");
+  expect(slugOf("Could a woman pray at home instead of the mosque on Eid days?")).toBe(
+    "could-a-woman-pray-at-home-instead-of-the-mosque-on-eid-days",
+  );
 });

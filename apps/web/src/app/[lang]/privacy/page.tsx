@@ -15,7 +15,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
       home="/"
       back={t("Back to Sirathic")}
       title="Privacy policy"
-      updated="October 25, 2026"
+      updated="November 2, 2026"
     >
       <p>
         Sirathic is a free Islamic answering engine at sirathic.com and in the Sirathic apps. It has
@@ -47,6 +47,12 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           Usage records. These list the mode and model you used, how long the answer took, how many
           sources it cited, and your device type, operating system, browser and country. They never
           include the text of a question or an answer.
+        </li>
+        <li>
+          Common questions. When you ask a general question about Islam, we also save it reworded,
+          with no names or details, and note that your account asked it. This counts how many
+          different people ask each question, so Discover can write about the ones many people ask.
+          Deleting your account removes that note.
         </li>
       </ul>
       <p>We don't train AI models on your chats.</p>

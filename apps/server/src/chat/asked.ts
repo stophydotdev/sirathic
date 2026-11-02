@@ -1,11 +1,10 @@
 import { embedQuery } from "@sirathic/core/search/embedding";
 import { db } from "@sirathic/db";
 import { askedBy, askedTopics, EMBEDDING } from "@sirathic/db/schema";
-import { env } from "@sirathic/env/server";
-import { generateText, type LanguageModel, Output } from "ai";
+import { generateText, Output } from "ai";
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
-import type { ProviderOptions } from "../models/subscription";
+import { NOOR_SIDE_MODEL } from "../models/noor";
 import { yesChances } from "./clef";
 
 const ASKED_CHARS = 1_500;
@@ -14,7 +13,7 @@ const NEAR_DISTANCE = 0.45;
 const SAME_CHANCE = 0.7;
 const CANDIDATES = 5;
 const SPECIFIC_CHANCE = 0.5;
-const SPECIFIC_TEXT = /[0-9@]|https?:|www\./u;
+const SPECIFIC_TEXT = /[\p{Nd}@]|https?:|www\./u;
 
 const PROMPT = `You turn a message someone sent to an Islamic answering engine into the general question an article could answer, or SKIP.
 
@@ -35,9 +34,6 @@ const general = z.object({
     .nullable()
     .describe("The general question when kind is general ruling, else null"),
 });
-
-const askerOf = (owner: string) =>
-  new Bun.CryptoHasher("sha256", env.BETTER_AUTH_SECRET).update(owner).digest("hex");
 
 export const sameQuestion = async (
   question: string,
@@ -60,17 +56,12 @@ export const sameQuestion = async (
     ?.id;
 };
 
-export const generalQuestion = async (
-  asked: string,
-  model: LanguageModel,
-  providerOptions?: ProviderOptions,
-) => {
+export const generalQuestion = async (asked: string) => {
   const { output } = await generateText({
-    model,
+    model: NOOR_SIDE_MODEL,
     system: PROMPT,
     prompt: asked.slice(0, ASKED_CHARS),
     output: Output.object({ schema: general }),
-    providerOptions,
   });
   const question = output.question?.trim().slice(0, QUESTION_CHARS);
   if (output.kind !== "general ruling" || !question || SPECIFIC_TEXT.test(question))
@@ -84,13 +75,8 @@ export const generalQuestion = async (
   return chance("p1") < SPECIFIC_CHANCE ? question : undefined;
 };
 
-export async function noteAsked(
-  owner: string,
-  asked: string,
-  model: LanguageModel,
-  providerOptions: ProviderOptions,
-) {
-  const question = await generalQuestion(asked, model, providerOptions);
+export async function noteAsked(owner: string, asked: string) {
+  const question = await generalQuestion(asked);
   if (!question) return;
   const embedding = await embedQuery(EMBEDDING, question);
   const distance = sql`${askedTopics.embedding} <=> ${JSON.stringify(embedding)}::halfvec`;
@@ -110,7 +96,7 @@ export async function noteAsked(
   if (topicId === undefined) return;
   const added = await db
     .insert(askedBy)
-    .values({ topicId, asker: askerOf(owner) })
+    .values({ topicId, asker: owner })
     .onConflictDoNothing()
     .returning({ topicId: askedBy.topicId });
   if (added.length === 0) return;

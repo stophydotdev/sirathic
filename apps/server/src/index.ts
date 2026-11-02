@@ -216,9 +216,7 @@ app.post("/api/chat", (c) =>
     const countAsked = () =>
       void project
         .then((inProject) =>
-          inProject?.kind === "bot" || !asked
-            ? undefined
-            : noteAsked(by, messageText(asked), models.small, sideOptions),
+          inProject?.kind === "bot" || !asked ? undefined : noteAsked(by, messageText(asked)),
         )
         .catch((err: Error) => {
           console.error(`asked not counted: ${reasonOf(err)}`);
