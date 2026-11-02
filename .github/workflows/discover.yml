@@ -61,7 +61,8 @@ jobs:
           token_format: access_token
           access_token_scopes: https://www.googleapis.com/auth/webmasters.readonly
           create_credentials_file: false
-      - run: bun scripts/discover.ts 1
+      - id: discover
+        run: bun scripts/discover.ts 1
         env:
           GSC_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
       - id: written
@@ -77,6 +78,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           FILE: ${{ steps.written.outputs.file }}
+          REVIEW: ${{ steps.discover.outputs.review }}
         run: |
           title=$(bun -e 'console.log((await import(`./${process.env.FILE}`)).default.title)')
           branch="discover-$(basename "$FILE" .json)"
@@ -87,4 +89,8 @@ jobs:
           git commit -m "feat(web): Discover answers \"$title\"" -m "Written by Noor from our Quran, hadith, fiqh and fatwa search. Clef checked every paragraph against the sources it cites before it was kept." -m "Built by Noor 1 Flash in the Discover job"
           git push origin "$branch"
           gh pr create --base main --head "$branch" --title "feat(web): Discover answers \"$title\"" --body "Written by the daily Discover job. Clef checked every paragraph against the sources it cites, and the repo checks passed in the job. Built by Noor 1 Flash in the Discover job"
-          gh pr merge "$branch" --squash
+          if [ "$REVIEW" = true ]; then
+            echo "Left open for review: the topic came from users' questions."
+          else
+            gh pr merge "$branch" --squash
+          fi

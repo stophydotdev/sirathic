@@ -1,4 +1,4 @@
-import { readdir } from "node:fs/promises";
+import { appendFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { Output, streamText, ToolLoopAgent } from "ai";
 import { z } from "zod";
@@ -11,7 +11,7 @@ import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { type Source, source } from "../apps/server/src/shared/sources";
 import { articles } from "../apps/web/src/content/discover/articles";
 import { article, type ArticleInput } from "../apps/web/src/content/discover/schema";
-import { type DiscoverTopic, nextTopics } from "./discoverTopics";
+import { type DiscoverTopic, fromUsers, nextTopics } from "./discoverTopics";
 
 const FOLDER = join(import.meta.dir, "../apps/web/src/content/discover");
 const TINTS = ["teal", "rose", "amber", "indigo"] as const;
@@ -309,6 +309,8 @@ await inOrder(waiting, (entry, index) => {
     (err: Error) => console.log(`[${entry.slug}] FAILED: ${err.message}`),
   );
 });
+if (process.env.GITHUB_OUTPUT && fromUsers(waiting))
+  await appendFile(process.env.GITHUB_OUTPUT, "review=true\n");
 const done = new Set(await readdir(FOLDER));
 const written = [...done]
   .filter((name) => name.endsWith(".json"))
