@@ -10,6 +10,7 @@ import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
 import { hadithTitle, verseSource } from "../apps/server/src/chat/cite";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
+import { SITES } from "../scripts/fatwaSites";
 
 test("hadith links follow each collection's own page numbering", () => {
   expect([
@@ -126,4 +127,17 @@ test("a Malik hadith's title gives the number on the sunnah.com page it links to
     link: "https://sunnah.com/urn/510770",
   };
   expect(hadithTitle(hadith)).toBe("Muwatta Malik 1077");
+});
+
+test("a SeekersGuidance answer credits the scholar it names, not the staff member who posted it", () => {
+  const url = "https://seekersguidance.org/answers/hanafi-fiqh/is-my-wudu-valid/";
+  const markdown = [
+    "# Is My Wudu Valid?",
+    "[January 24, 2023] [Basit Manzoor](https://seekersguidance.org/author/basit/)/in Hanafi Fiqh",
+    "**Answered By\u00a0**Mawlana Ilyas Patel****",
+    "### Question",
+    "When doubting passing gas, I cannot tell where the smell comes from. ".repeat(8),
+  ].join("\n\n");
+  const site = SITES.find(({ source }) => source.name === "seekersguidance.org");
+  expect(site?.parse(markdown, "", url)?.answeredBy).toBe("Mawlana Ilyas Patel");
 });
