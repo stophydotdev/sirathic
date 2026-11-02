@@ -25,7 +25,10 @@ export const isReadOnly = (entry: ToolSet[string]) =>
 export const writingTools = (tools: ToolSet) =>
   Object.entries(tools).flatMap(([name, entry]) => (isReadOnly(entry) ? [] : [name]));
 
-const CONFIRMED_DELETES = new Map<string, readonly string[]>([["update_skill", ["delete"]]]);
+const CONFIRMED_ACTIONS = new Map<string, readonly string[]>([
+  ["update_skill", ["delete"]],
+  ["update_routine", ["create", "edit", "delete"]],
+]);
 
 const ACTIONS = [
   {
@@ -72,19 +75,21 @@ export const spell = (call: Call) => {
 
 export const actionOf = (call: Call) => {
   const { action, sql, sql_statements } = spelledOut.parse(call.input);
-  if (CONFIRMED_DELETES.get(call.toolName)?.includes(action)) return "delete";
+  if (action === "delete" && CONFIRMED_ACTIONS.get(call.toolName)?.includes(action)) {
+    return "delete";
+  }
   const spelled = spell(call);
   const named = ACTIONS.find(({ words }) => words.test(spelled))?.kind;
   return named ?? (WIPE_OUT.test([sql, ...sql_statements].join(" ")) ? "delete" : undefined);
 };
 
-const confirmedDelete = ({ toolName, input }: Call) =>
-  CONFIRMED_DELETES.get(toolName)?.includes(spelledOut.parse(input).action) ?? false;
+const confirmedAction = ({ toolName, input }: Call) =>
+  CONFIRMED_ACTIONS.get(toolName)?.includes(spelledOut.parse(input).action) ?? false;
 
 export const needsApproval = (call: Call, writes: ReadonlySet<string>) =>
   (writes.has(call.toolName) &&
     (actionOf(call) !== undefined || (bulkCall(call)?.matches?.length ?? 0) > 0)) ||
-  confirmedDelete(call);
+  confirmedAction(call);
 
 export const changesWhatIsTheirs = (call: Call, writes: ReadonlySet<string>) =>
   writes.has(call.toolName) && !bulkCall(call) && CHANGES.test(spell(call));

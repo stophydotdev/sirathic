@@ -26,7 +26,9 @@ test.each([
   ["posthog_exec", { command: `${" ".repeat(90)}call project-destroy {"id":7}` }, true],
   ["cal_delete_event", { eventId: "ev1" }, true],
   ["update_skill", { action: "delete" }, true],
-  ["update_routine", { action: "delete" }, false],
+  ["update_routine", { action: "delete" }, true],
+  ["update_routine", { action: "create" }, true],
+  ["update_routine", { action: "pause" }, false],
 ])("the %s call %p needs the user's confirmation: %p", (toolName, input, expected) => {
   const writes = new Set([
     "slack_send",

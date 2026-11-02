@@ -94,9 +94,7 @@ const Details: FC<{ tool: Tool }> = ({ tool }) => {
         <Text className="text-muted-foreground font-sans text-xs">
           {describeSchedule(created.schedule)}
         </Text>
-        <Text numberOfLines={3} className="text-muted-foreground font-sans text-xs">
-          {created.prompt}
-        </Text>
+        <Text className="text-muted-foreground font-sans text-xs">{created.prompt}</Text>
       </View>
     );
   }

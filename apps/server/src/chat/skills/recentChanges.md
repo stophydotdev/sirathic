@@ -6,6 +6,7 @@ When a note explains what the user is asking about, tell them what it says and w
 
 Newest first:
 
+- 2026-11-02: Creating, changing or deleting a routine asks you to confirm on a card first. While you're away, a routine can only read, label, archive, add calendar events and write drafts, and it emails only addresses written in the routine or your own.
 - 2026-10-30: Bots can book restaurant tables, flights and places to stay in their browser, and ask before anything that commits you.
 - 2026-10-30: The Sources card no longer stays beside the last answer. The sources button under each answer opens it.
 - 2026-10-30: You can attach Word documents, and Sirathic can hand you a Word file.
@@ -24,7 +25,6 @@ Newest first:
 - 2026-10-28: Answers no longer narrate their own steps.
 - 2026-10-28: A confirmed or cancelled action says so under its card.
 - 2026-10-28: Chats no longer show a card listing your routines.
-- 2026-10-28: A routine you ask for is set up at once, with no confirm card.
 - 2026-10-27: The ask box no longer suggests questions while you type.
 - 2026-10-27: The sources pill and panel list every source found, cited ones first.
 - 2026-10-26: Bots have their own chat, memory and routines.
