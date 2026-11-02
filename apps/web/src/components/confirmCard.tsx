@@ -30,6 +30,8 @@ const shown = z.union([z.string(), z.number(), z.boolean()]);
 
 const matched = z.array(z.object({ label: z.string() }));
 
+const filledParts = z.array(z.object({ part: z.string() }));
+
 const sentEmail = z.object({ to: z.array(z.string()) });
 
 const GMAIL_SEND = toolName("gmail", "send_email");
@@ -62,7 +64,12 @@ const Details: FC<{ call: ToolCall }> = ({ call }) => {
     );
   }
   return Object.entries(call.args).map(([key, value]) => {
-    const labels = key === "matches" ? matched.safeParse(value).data : undefined;
+    const labels =
+      key === "matches"
+        ? matched.safeParse(value).data
+        : key === "fields"
+          ? filledParts.safeParse(value).data?.map(({ part }) => ({ label: part }))
+          : undefined;
     return (
       <Row key={key} label={nameOf(key)}>
         <span

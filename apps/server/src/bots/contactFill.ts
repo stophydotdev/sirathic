@@ -3,10 +3,9 @@ import { siteHost } from "@sirathic/core/web/url";
 import { tool } from "ai";
 import { z } from "zod";
 import { contactFor, contactLabel, listContacts, vaultContact } from "../vault/contacts";
+import { VAULT_FILL_CONTACT } from "../chat/confirm";
 import type { fillBrowser } from "./browser";
 import type { BotScope } from "./tools";
-
-export const VAULT_FILL_CONTACT = "vault_fill_contact";
 
 const FIELDS_PER_FILL = 8;
 
@@ -32,11 +31,10 @@ const fillContact = async (
       note: "No contact info is saved in the vault. Send request_user_form instead.",
     };
   }
-  if (label === undefined && contacts.length > 1) {
+  if (label === undefined) {
     return { kind: "choose" as const, labels: contacts.map((contact) => contact.label) };
   }
-  const chosen = label ?? contacts[0]?.label;
-  const contact = chosen === undefined ? undefined : await contactFor(owner, chosen);
+  const contact = await contactFor(owner, label);
   if (!contact) {
     return {
       kind: "missing" as const,
@@ -79,7 +77,7 @@ export function contactTools(scope: BotScope, fill: typeof fillBrowser) {
   return {
     [VAULT_FILL_CONTACT]: tool({
       description:
-        "Fills contact info the user saved in their vault straight into the page your browser has open. Use it first when a page asks for a name, address, phone or email. Take a fresh snapshot first, give its site's domain and give each field its target ref, including embedded fields. Omit label to use the only saved contact, or get just the labels when there is a choice and ask the user which to use. Ask in chat or send request_user_form only for what the contact lacks. Values never reach you: you receive only which parts were filled, which were empty and which targets failed. This only fills, without submitting. Take a fresh snapshot afterward, then use the site's own continue button.",
+        "Fills contact info the user saved in their vault straight into the page your browser has open. Use it first when a page asks for a name, address, phone or email. Take a fresh snapshot first, give its site's domain and give each field its target ref, including embedded fields. First call it without label: that fills nothing and returns the saved contacts' labels. When there are several, ask the user which to use, then call it again with that label to fill. Ask in chat or send request_user_form only for what the contact lacks. Values never reach you: you receive only which parts were filled, which were empty and which targets failed. This only fills, without submitting. The user confirms each fill on a card showing the site, the contact and the parts that go in, so don't also ask in chat. Take a fresh snapshot afterward, then use the site's own continue button.",
       inputSchema: contactInput,
       execute: (input) => fillContact(scope, fill, input),
     }),

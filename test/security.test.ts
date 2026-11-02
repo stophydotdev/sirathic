@@ -29,6 +29,8 @@ test.each([
   ["update_routine", { action: "delete" }, true],
   ["update_routine", { action: "create" }, true],
   ["update_routine", { action: "pause" }, false],
+  ["vault_fill_contact", { domain: "shop.example", label: "Home", fields: [] }, true],
+  ["vault_fill_contact", { domain: "shop.example", fields: [] }, false],
 ])("the %s call %p needs the user's confirmation: %p", (toolName, input, expected) => {
   const writes = new Set([
     "slack_send",
