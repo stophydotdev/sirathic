@@ -2,6 +2,7 @@ import { duaSearch } from "@sirathic/core/tools/duaSearch";
 import { fatwaSearch } from "@sirathic/core/tools/fatwaSearch";
 import { fiqhSearch } from "@sirathic/core/tools/fiqhSearch";
 import { hadithSearch } from "@sirathic/core/tools/hadithSearch";
+import { answerKey } from "@sirathic/core/search/onePerAnswer";
 import { newsSearch } from "@sirathic/core/tools/newsSearch";
 import { quranSearch } from "@sirathic/core/tools/quranSearch";
 import { webFetch } from "@sirathic/core/tools/webFetch";
@@ -344,7 +345,7 @@ const searchFatwa = async (cite: Cite, queries: string[], sites: string[], chars
   );
   const { near, far } = nearFused(
     found.map((result) => result.fatwas),
-    (fatwa) => fatwa.url,
+    answerKey,
   );
   const { kept, dropped } = await relevant(
     queries.join("; "),
