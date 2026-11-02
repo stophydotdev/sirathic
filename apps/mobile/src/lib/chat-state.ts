@@ -28,6 +28,7 @@ export const useChatState = create<{
   sessions: Session[] | undefined;
   newChat: () => void;
   open: (id: string) => void;
+  answered: (id: string) => void;
   setMode: (mode: Mode) => void;
   setEffort: (effort: Effort) => void;
   setIncognito: (on: boolean) => void;
@@ -56,6 +57,12 @@ export const useChatState = create<{
       saved: true,
       sessions: state.sessions?.map((session) =>
         session.id === chatId ? { ...session, unread: false } : session,
+      ),
+    })),
+  answered: (id) =>
+    set((state) => ({
+      sessions: state.sessions?.map((session) =>
+        session.id === id ? { ...session, approving: false, working: true } : session,
       ),
     })),
   setMode: (mode) => set({ mode }),

@@ -273,8 +273,10 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
                   onAsk={ask}
                   onDecide={
                     index === messages.length - 1
-                      ? (approvalId, approved) =>
-                          void addToolApprovalResponse({ id: approvalId, approved })
+                      ? (approvalId, approved) => {
+                          useChatState.getState().answered(id);
+                          void addToolApprovalResponse({ id: approvalId, approved });
+                        }
                       : undefined
                   }
                 />
@@ -313,9 +315,10 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
             <ApprovalDock
               message={messages.at(-1)}
               name="Sirathic"
-              onDecide={(approvalId, approved) =>
-                void addToolApprovalResponse({ id: approvalId, approved })
-              }
+              onDecide={(approvalId, approved) => {
+                useChatState.getState().answered(id);
+                void addToolApprovalResponse({ id: approvalId, approved });
+              }}
             />
             <Composer
               placeholder="Ask a follow-up"

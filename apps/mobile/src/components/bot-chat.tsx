@@ -256,8 +256,10 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
                 onAsk={ask}
                 onDecide={
                   index === messages.length - 1
-                    ? (approvalId, approved) =>
-                        void addToolApprovalResponse({ id: approvalId, approved })
+                    ? (approvalId, approved) => {
+                        useChatState.getState().answered(bot.id);
+                        void addToolApprovalResponse({ id: approvalId, approved });
+                      }
                     : undefined
                 }
               />
@@ -270,9 +272,10 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
           <ApprovalDock
             message={messages.at(-1)}
             name={bot.name}
-            onDecide={(approvalId, approved) =>
-              void addToolApprovalResponse({ id: approvalId, approved })
-            }
+            onDecide={(approvalId, approved) => {
+              useChatState.getState().answered(bot.id);
+              void addToolApprovalResponse({ id: approvalId, approved });
+            }}
           />
           <Composer
             placeholder={`Message ${bot.name}`}
