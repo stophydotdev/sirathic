@@ -1,6 +1,7 @@
 import { db } from "@sirathic/db";
 import { fiqhPassages, fiqhWorks } from "@sirathic/db/schema";
 import { eq, inArray } from "drizzle-orm";
+import { SHAMELA_PAGES } from "./shamelaPages";
 
 const SHAMELA_BOOKS = new Map([
   ["shamela.5841", 21739],
@@ -18,7 +19,13 @@ const SHAMELA_BOOKS = new Map([
 
 const pageUrl = (workId: string, volume: number, page: number) => {
   const book = SHAMELA_BOOKS.get(workId);
-  return book === undefined ? null : `https://shamela.ws/book/${book}#${volume}:${page}`;
+  if (book === undefined) return null;
+  const shift = SHAMELA_PAGES.get(workId)?.find(
+    ([onVolume, from, to]) => onVolume === volume && page >= from && page <= to,
+  )?.[3];
+  return shift === undefined
+    ? `https://shamela.ws/book/${book}#${volume}:${page}`
+    : `https://shamela.ws/book/${book}/${page + shift}`;
 };
 
 export const passagesByIds = async (ids: string[]) => {
