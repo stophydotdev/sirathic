@@ -141,3 +141,16 @@ test("a SeekersGuidance answer credits the scholar it names, not the staff membe
   const site = SITES.find(({ source }) => source.name === "seekersguidance.org");
   expect(site?.parse(markdown, "", url)?.answeredBy).toBe("Mawlana Ilyas Patel");
 });
+
+test("an Albalagh page credits its byline, not the site login", () => {
+  const html = [
+    '<script type="application/ld+json">{"author":{"name":"albalagh_anas"}}</script>',
+    '<svg class="e-font-icon-svg e-far-user-circle"></svg></span>',
+    '<span class="elementor-icon-list-text">By Mufti Ebrahim Desai</span>',
+  ].join("");
+  const markdown = `# Achieving Taqwa\n\n${"One should always meditate on the attributes of Allah. ".repeat(10)}`;
+  const site = SITES.find(({ source }) => source.name === "albalagh.net");
+  expect(site?.parse(markdown, html, "https://albalagh.net/qa/achieving-taqwa")?.answeredBy).toBe(
+    "Mufti Ebrahim Desai",
+  );
+});

@@ -171,6 +171,10 @@ export const SITES: Site[] = [
     sitemaps: ["https://albalagh.net/sitemap_index.xml"],
     page: /^https:\/\/(www\.)?albalagh\.net\/[a-z_-]+\/[^/]+/u,
     school: "hanafi",
+    answeredBy: (_markdown, html) =>
+      plainText(
+        /e-far-user-circle[\s\S]*?elementor-icon-list-text">([^<]*)</u.exec(html)?.[1] ?? "",
+      ).replace(/^By /u, "") || undefined,
   }),
   articleSite({
     name: "mathabah.org",
