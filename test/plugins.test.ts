@@ -15,6 +15,7 @@ mock.module("@sirathic/core/cache", () => ({
 }));
 const vaultRows = new Map<string, string[][]>();
 const vaultUpdates: unknown[][] = [];
+const connectionRows = new Map<string, { secrets: string; connected: boolean }>();
 mock.module("../apps/server/src/vault/seal", () => ({
   seal: async (plain: string) => plain,
   unseal: async (sealed: string) => sealed,
@@ -22,6 +23,31 @@ mock.module("../apps/server/src/vault/seal", () => ({
 mock.module("@sirathic/db", () => ({
   db: drizzle(
     async (sql, params) => {
+      if (sql.startsWith('insert into "connections"')) {
+        const [owner, connector, secrets, connected] = z
+          .tuple([z.string(), z.string(), z.string(), z.boolean()])
+          .rest(z.unknown())
+          .parse(params);
+        if (sql.includes("do nothing") && connectionRows.has(`${owner}/${connector}`)) {
+          return { rows: [] };
+        }
+        connectionRows.set(`${owner}/${connector}`, { secrets, connected });
+        return { rows: [[owner]] };
+      }
+      if (sql.startsWith('select "secrets" from "connections"')) {
+        const [owner, connector] = z.tuple([z.string(), z.string()]).parse(params);
+        const row = connectionRows.get(`${owner}/${connector}`);
+        return { rows: row ? [[row.secrets]] : [] };
+      }
+      if (sql.startsWith('update "connections"')) {
+        const [secrets, connected, , owner, connector, was] = z
+          .tuple([z.string(), z.boolean(), z.unknown(), z.string(), z.string(), z.string()])
+          .parse(params);
+        const row = connectionRows.get(`${owner}/${connector}`);
+        if (row?.secrets !== was) return { rows: [] };
+        connectionRows.set(`${owner}/${connector}`, { secrets, connected });
+        return { rows: [[owner]] };
+      }
       if (sql.startsWith('update "vault_logins"')) {
         vaultUpdates.push(params);
         const [site, sealed, , owner, id] = z.array(z.string()).parse(params);
@@ -59,7 +85,9 @@ mock.module("@sirathic/db", () => ({
     { casing: "snake_case" },
   ),
 }));
-const { emailToSend, FORGET, withUpdate } = await import("../apps/server/src/plugins/connections");
+const { emailToSend, providerFor } = await import("../apps/server/src/plugins/connections");
+const { FORGET, withUpdate } = await import("../apps/server/src/plugins/secrets");
+const { seal, unseal } = await import("../apps/server/src/account/vault");
 const { keepFor } = await import("@sirathic/core/cache");
 const { notConnected } = await import("../apps/server/src/plugins/tools");
 const { addLogin, loginFor, listVault, updateLogin } =
@@ -314,4 +342,47 @@ test("a browser task on a page with its own tools hands back before Clef or a mo
   expect(acts).toEqual(["snapshot"]);
   expect(result.report).toStartWith("Stopped for you: This page offers its own tools");
   expect(result.page.page).toContain("add_to_cart");
+});
+
+const tokensFor = (refresh_token: string) => ({
+  access_token: `access-${refresh_token}`,
+  token_type: "Bearer",
+  refresh_token,
+});
+
+const saved = async () => {
+  const row = connectionRows.get("ali/custom-1");
+  if (!row) throw new Error("row missing");
+  const { tokens } = z
+    .object({ tokens: z.object({ refresh_token: z.string() }).optional() })
+    .parse(JSON.parse(await unseal(row.secrets)));
+  return { refreshToken: tokens?.refresh_token, connected: row.connected };
+};
+
+test("a refresh that lost keeps the newer tokens and never overwrites them later, a revoked token is still forgotten", async () => {
+  const server = { name: "Local", url: "https://mcp.example.com/mcp" };
+  const stored = { client: { client_id: "registered" }, tokens: tokensFor("rt-1") };
+  const seed = async () =>
+    connectionRows.set("ali/custom-1", {
+      secrets: await seal(JSON.stringify(stored)),
+      connected: true,
+    });
+  const providers = () => ({
+    winner: providerFor("ali", "custom-1", server, stored).provider,
+    loser: providerFor("ali", "custom-1", server, stored).provider,
+  });
+  await seed();
+  const first = providers();
+  await first.winner.saveTokens(tokensFor("rt-2"));
+  await first.loser.invalidateCredentials?.("tokens", { tokens: tokensFor("rt-1") });
+  expect(await saved()).toEqual({ refreshToken: "rt-2", connected: true });
+  expect((await first.loser.tokens())?.refresh_token).toBe("rt-2");
+  await first.loser.invalidateCredentials?.("tokens", { tokens: tokensFor("rt-2") });
+  expect(await saved()).toEqual({ refreshToken: undefined, connected: false });
+  await seed();
+  const second = providers();
+  await second.loser.invalidateCredentials?.("tokens", { tokens: tokensFor("rt-1") });
+  await second.winner.saveTokens(tokensFor("rt-2"));
+  await second.loser.saveState?.("pending");
+  expect(await saved()).toEqual({ refreshToken: "rt-2", connected: true });
 });

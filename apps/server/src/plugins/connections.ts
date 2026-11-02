@@ -32,6 +32,7 @@ import {
   popularOf,
   toolName,
 } from "./catalog";
+import { FORGET, type Secrets, storedSecrets, withUpdate } from "./secrets";
 
 const REDIRECT_URL = new URL("/api/connectors/callback", env.SITE_URL).href;
 const CONNECT_TIMEOUT_MS = 10_000;
@@ -102,52 +103,6 @@ const CLIENT_METADATA = {
   grant_types: ["authorization_code", "refresh_token"],
   response_types: ["code"],
 } satisfies OAuthClientMetadata;
-
-const issuedBy = {
-  issuer: z.string().optional(),
-  authorization_server: z.string().optional(),
-  token_endpoint: z.string().optional(),
-};
-
-const storedSecrets = z.object({
-  client: z
-    .object({
-      client_id: z.string(),
-      client_secret: z.string().optional(),
-      client_id_issued_at: z.number().optional(),
-      client_secret_expires_at: z.number().optional(),
-      ...issuedBy,
-    })
-    .optional(),
-  tokens: z
-    .object({
-      access_token: z.string(),
-      id_token: z.string().optional(),
-      token_type: z.string(),
-      expires_in: z.number().optional(),
-      scope: z.string().optional(),
-      refresh_token: z.string().optional(),
-      ...issuedBy,
-    })
-    .optional(),
-  verifier: z.string().optional(),
-  state: z.string().optional(),
-  returnTo: z.string().optional(),
-});
-
-type Secrets = z.infer<typeof storedSecrets>;
-
-export const FORGET = {
-  all: { client: undefined, tokens: undefined, verifier: undefined, state: undefined },
-  client: { client: undefined },
-  tokens: { tokens: undefined },
-  verifier: { verifier: undefined },
-} satisfies Record<string, Partial<Secrets>>;
-
-export const withUpdate = (secrets: Secrets, update: Partial<Secrets>) => {
-  const merged = { ...secrets, ...update };
-  return { secrets: merged, connected: merged.tokens !== undefined };
-};
 
 const callbackQuery = z.object({
   state: z.string(),
@@ -222,13 +177,42 @@ async function store(owner: string, connector: string, secrets: Secrets, connect
   forgetOwner(owner);
 }
 
-function providerFor(owner: string, connector: string, server: Server, stored: Secrets) {
+async function merge(
+  owner: string,
+  connector: string,
+  held: Secrets,
+  update: Partial<Secrets>,
+  failed?: string,
+): Promise<Secrets> {
+  const [row] = await db
+    .select({ secrets: connections.secrets })
+    .from(connections)
+    .where(owned(owner, connector));
+  const current = row ? await unsealed(row.secrets) : held;
+  if (failed !== undefined && current.tokens?.refresh_token !== failed) return current;
+  const next = withUpdate({ ...current, returnTo: held.returnTo ?? current.returnTo }, update);
+  const values = { secrets: await seal(JSON.stringify(next.secrets)), connected: next.connected };
+  const written = row
+    ? await db
+        .update(connections)
+        .set(values)
+        .where(and(owned(owner, connector), eq(connections.secrets, row.secrets)))
+        .returning({ owner: connections.owner })
+    : await db
+        .insert(connections)
+        .values({ owner, connector, ...values })
+        .onConflictDoNothing()
+        .returning({ owner: connections.owner });
+  if (written.length === 0) return merge(owner, connector, held, update, failed);
+  forgetOwner(owner);
+  return next.secrets;
+}
+
+export function providerFor(owner: string, connector: string, server: Server, stored: Secrets) {
   let secrets = stored;
   let authorizationUrl: URL | undefined;
-  const save = async (update: Partial<Secrets>) => {
-    const next = withUpdate(secrets, update);
-    secrets = next.secrets;
-    await store(owner, connector, secrets, next.connected);
+  const save = async (update: Partial<Secrets>, failed?: string) => {
+    secrets = await merge(owner, connector, secrets, update, failed);
   };
   const provider: OAuthClientProvider = {
     redirectUrl: REDIRECT_URL,
@@ -256,7 +240,7 @@ function providerFor(owner: string, connector: string, server: Server, stored: S
       }
       authorizationUrl = url;
     },
-    invalidateCredentials: (scope) => save(FORGET[scope]),
+    invalidateCredentials: (scope, context) => save(FORGET[scope], context?.tokens.refresh_token),
   };
   return { provider, authorizationUrl: () => authorizationUrl };
 }
