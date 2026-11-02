@@ -200,6 +200,7 @@ export const SITES: Site[] = [
     sitemaps: ["https://www.drhatemalhaj.com/wp-sitemap.xml"],
     follow: /posts-post/u,
     page: /^https:\/\/www\.drhatemalhaj\.com\/.+/u,
+    headline: /<title[^>]*>[^<]*::\s*([^<]+?)\s*<\/title>/u,
     school: "hanbali",
     answeredBy: by("Dr. Hatem al-Haj"),
   }),

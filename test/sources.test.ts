@@ -173,3 +173,13 @@ test("a search names at most five sites and says which ones it left out", () => 
     "Only 5 sites fit in one search, so these were left out: dar-alifta.org.",
   ]);
 });
+
+test("a Dr. Hatem al-Haj fatwa takes its title from the page, not the site name", () => {
+  const html =
+    "<title>  Sheikh Hatem Al Haj  :: Salat Women ::  The Women's Imamate of Mahram Men in Prayer </title>";
+  const markdown = `## The Women's Imamate of Mahram Men in Prayer\n\n${"A woman may lead her mahram men. ".repeat(15)}`;
+  const site = SITES.find(({ source }) => source.name === "drhatemalhaj.com");
+  expect(site?.parse(markdown, html, "https://www.drhatemalhaj.com/fiqh/imamate/")?.title).toBe(
+    "The Women's Imamate of Mahram Men in Prayer",
+  );
+});
