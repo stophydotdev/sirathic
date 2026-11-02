@@ -67,6 +67,11 @@ jobs:
       - id: written
         run: echo "file=$(git ls-files --others --exclude-standard apps/web/src/content/discover | head -1)" >> "$GITHUB_OUTPUT"
       - if: steps.written.outputs.file != ''
+        env:
+          DATABASE_URL: postgres://ci@127.0.0.1/ci
+          OPENAI_API_KEY: ci
+          CLOUDFLARE_ACCOUNT_ID: ci
+          CLOUDFLARE_AI_TOKEN: ci
         run: bun run check && bun run check-slop && bun run check-types && bun run test
       - if: steps.written.outputs.file != ''
         env:
