@@ -6,6 +6,7 @@ import isMusicHaram from "./isMusicHaram.json";
 import isShrimpHalal from "./isShrimpHalal.json";
 import sleepAndWudu from "./sleepAndWudu.json";
 import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
+import whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives from "./whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives.json";
 import wipingOverSocks from "./wipingOverSocks.json";
 
 export const written = [
@@ -17,5 +18,6 @@ export const written = [
   isShrimpHalal,
   sleepAndWudu,
   touchingPrivatePartsAndWudu,
+  whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives,
   wipingOverSocks,
 ];
