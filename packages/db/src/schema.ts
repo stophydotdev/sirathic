@@ -371,7 +371,7 @@ export const automations = pgTable(
       name: "automations_project_id_fkey",
       columns: [table.projectId],
       foreignColumns: [projects.id],
-    }).onDelete("set null"),
+    }).onDelete("cascade"),
   ],
 );
 

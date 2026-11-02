@@ -1,5 +1,5 @@
 import { db } from "@sirathic/db";
-import { automations, chatSessions, projects } from "@sirathic/db/schema";
+import { chatSessions, projects } from "@sirathic/db/schema";
 import { type AnyColumn, and, count, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { forgetBrowser } from "../bots/browser";
@@ -169,7 +169,6 @@ export async function updateProject(
 
 export async function removeProject(id: string, by: string) {
   await requireProject(id, by);
-  await db.delete(automations).where(and(eq(automations.projectId, id), eq(automations.owner, by)));
   await db
     .delete(chatSessions)
     .where(and(eq(chatSessions.projectId, id), eq(chatSessions.owner, by)));
