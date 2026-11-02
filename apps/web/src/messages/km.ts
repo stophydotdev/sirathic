@@ -875,7 +875,6 @@ export default {
   Discover: "ស្វែងយល់",
   "Back to Discover": "ត្រឡប់ទៅស្វែងយល់",
   "Updated {date}": "ធ្វើបច្ចុប្បន្នភាព {date}",
-  "Draft, not reviewed": "សេចក្តីព្រាង មិនទាន់ត្រួតពិនិត្យ",
   "Discover more": "ស្វែងយល់បន្ថែម",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "សំណួរដែលមានការជជែកដេញដោល ឆ្លើយពីគម្ពីរគួរអាន ហាទីស និងសៀវភៅហ្វិក្ហ៍ ដោយមានដកស្រង់គ្រប់ប្រភព។",

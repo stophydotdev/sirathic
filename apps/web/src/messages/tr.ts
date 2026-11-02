@@ -890,7 +890,6 @@ export default {
   Discover: "Keşfet",
   "Back to Discover": "Keşfet'e dön",
   "Updated {date}": "Güncellendi: {date}",
-  "Draft, not reviewed": "Taslak, incelenmedi",
   "Discover more": "Daha fazla keşfet",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "İhtilaflı sorular; Kur'an, hadis ve fıkıh kitaplarından, her kaynak belirtilerek yanıtlanır.",

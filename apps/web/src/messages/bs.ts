@@ -890,7 +890,6 @@ export default {
   Discover: "Otkrij",
   "Back to Discover": "Nazad na Otkrij",
   "Updated {date}": "Ažurirano {date}",
-  "Draft, not reviewed": "Nacrt, nije pregledano",
   "Discover more": "Otkrij još",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Sporna pitanja, odgovorena iz Kur'ana, hadisa i fikhskih knjiga, uz navedene sve izvore.",

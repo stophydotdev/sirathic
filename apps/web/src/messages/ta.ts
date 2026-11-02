@@ -888,7 +888,6 @@ export default {
   Discover: "கண்டறி",
   "Back to Discover": "கண்டறிவுக்குத் திரும்பு",
   "Updated {date}": "புதுப்பிக்கப்பட்டது: {date}",
-  "Draft, not reviewed": "வரைவு, மதிப்பாய்வு செய்யப்படவில்லை",
   "Discover more": "மேலும் கண்டறி",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "கருத்து வேறுபாடுள்ள கேள்விகளுக்கு குர்ஆன், ஹதீஸ், ஃபிக்ஹ் நூல்களிலிருந்து, ஒவ்வொரு ஆதாரத்தையும் குறிப்பிட்டு பதில்.",

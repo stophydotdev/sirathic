@@ -893,7 +893,6 @@ export default {
   Discover: "Изилдөө",
   "Back to Discover": "Изилдөөгө кайтуу",
   "Updated {date}": "Жаңыртылды: {date}",
-  "Draft, not reviewed": "Долбоор, текшерилген эмес",
   "Discover more": "Дагы изилдөө",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Талаштуу суроолорго Куран, хадис жана фикх китептеринен, ар бир булак көрсөтүлүп жооп берилет.",

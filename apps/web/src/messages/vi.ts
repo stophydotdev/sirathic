@@ -887,7 +887,6 @@ export default {
   Discover: "Khám phá",
   "Back to Discover": "Quay lại Khám phá",
   "Updated {date}": "Cập nhật {date}",
-  "Draft, not reviewed": "Bản nháp, chưa được duyệt",
   "Discover more": "Khám phá thêm",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Những câu hỏi còn tranh luận, được trả lời từ Qur'an, hadith và sách fiqh, với mọi nguồn đều được dẫn.",

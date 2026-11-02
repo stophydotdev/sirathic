@@ -167,10 +167,7 @@ export const ArticleBody: FC<{ article: Article }> = ({ article }) => {
           <Mark size={18} color="currentColor" />
           Sirathic
         </span>
-        <span>
-          {t("Updated {date}", { date: dateOf(article.updated) })}
-          {!article.reviewed && ` · ${t("Draft, not reviewed")}`}
-        </span>
+        <span>{t("Updated {date}", { date: dateOf(article.updated) })}</span>
       </div>
       <SourceCards sources={article.sources} />
       {article.verse && <VerseBlock verse={article.verse} tint={article.tint} />}
