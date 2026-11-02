@@ -150,7 +150,7 @@ export const SITES: Site[] = [
     parallel: 1,
     delayMs: 10_000,
     answeredBy: (markdown) =>
-      (/^Answered by (.+)$/mu.exec(markdown) ??
+      (/^[#\s*]*Answered by[\p{Zs}*]*(\p{L}[^*\n]*)/imu.exec(markdown) ??
         /^## (.+?) (?:is asked|addresses|answers|explains|discusses|clarifies|advises|responds)\b/mu.exec(
           markdown,
         ) ??
