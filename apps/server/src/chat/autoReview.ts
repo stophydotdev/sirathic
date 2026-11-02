@@ -25,11 +25,16 @@ const leavesInbox = z.union([
   z.object({ removeLabelIds: inboxIds }),
 ]);
 
-const described = (call: Call) =>
-  /unlabel|update[^a-z]+message[^a-z]+labels/iu.test(call.toolName) &&
-  leavesInbox.safeParse(call.input).success
+const filledSite = z.object({ domain: z.string().min(1) });
+
+const described = (call: Call) => {
+  const site = call.toolName === VAULT_FILL_CONTACT ? filledSite.safeParse(call.input).data : null;
+  if (site) return `${spell(call)} (this fills the user's saved contact on ${site.domain})`;
+  return /unlabel|update[^a-z]+message[^a-z]+labels/iu.test(call.toolName) &&
+    leavesInbox.safeParse(call.input).success
     ? `${spell(call)} (this archives it: it takes it out of the inbox)`
     : spell(call);
+};
 
 const chancesFor = async (action: string, rules: Settings["rules"]) => {
   const chance = await yesChances(
@@ -44,8 +49,6 @@ const chancesFor = async (action: string, rules: Settings["rules"]) => {
   );
   return (index: number) => chance(`rule${index}`);
 };
-
-const filledSite = z.object({ domain: z.string().min(1) });
 
 const HOST = /[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+/gu;
 
