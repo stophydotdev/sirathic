@@ -33,6 +33,7 @@ export type DiscoverTopic = { title: string; slug: string; topic: string; from: 
 type Candidate = {
   title: string;
   votes: number;
+  impressions: number;
   from: string;
   reword: boolean;
   slug?: string;
@@ -52,7 +53,14 @@ const searchReport = z.object({
   rows: z.array(z.object({ keys: z.array(z.string()), impressions: z.number() })).default([]),
 });
 
-const byVotes = (a: Candidate, b: Candidate) => b.votes - a.votes;
+const strongestFirst = (a: Candidate, b: Candidate) =>
+  b.votes - a.votes || b.impressions - a.impressions;
+
+const wordsOf = (text: string) =>
+  text
+    .toLowerCase()
+    .match(/\p{L}+/gu)
+    ?.join(" ");
 
 const skipped = (source: string) => (err: Error) => {
   console.log(`${source} skipped: ${err.message}`);
@@ -91,6 +99,7 @@ const fatwaQuestions = async (): Promise<Candidate[]> => {
     .map((row) => ({
       title: row.title,
       votes: row.sites,
+      impressions: 0,
       from: `asked on ${row.sites} fatwa sites`,
       reword: true,
     }));
@@ -108,6 +117,7 @@ const askedQuestions = async (): Promise<Candidate[]> => {
     .map((row) => ({
       title: row.question,
       votes: row.people,
+      impressions: 0,
       from: `asked by ${row.people} people`,
       reword: false,
     }));
@@ -151,7 +161,7 @@ const addSearchVotes = async (ranked: readonly Candidate[]) => {
     const match = await sameQuestion(query, near).catch(() => undefined);
     const candidate = top.find((_, index) => String(index) === match);
     if (!candidate) return;
-    candidate.votes += impressions;
+    candidate.impressions += impressions;
     candidate.from += `, ${impressions} search impressions`;
   }, Promise.resolve());
 };
@@ -178,15 +188,16 @@ export async function nextTopics(
   const found = [
     ...(await askedQuestions().catch(skipped("Asked questions"))),
     ...(await fatwaQuestions().catch(skipped("Fatwa questions"))),
-  ].toSorted(byVotes);
+  ].toSorted(strongestFirst);
   await addSearchVotes(found);
   const candidates: Candidate[] = [
-    ...found.toSorted(byVotes),
+    ...found.toSorted(strongestFirst),
     ...queue.map(({ title, slug, topic }) => ({
       title,
       slug,
       topic,
       votes: 0,
+      impressions: 0,
       from: "queue",
       reword: false,
     })),
@@ -198,7 +209,7 @@ export async function nextTopics(
     const title = candidate.reword
       ? await generalQuestion(candidate.title).catch(() => undefined)
       : candidate.title;
-    if (!title) return chosen;
+    if (!title || (candidate.reword && wordsOf(title) === wordsOf(candidate.title))) return chosen;
     const slug = candidate.slug ?? slugOf(title);
     if (!slug || isWritten(slug) || chosen.some((entry) => entry.slug === slug)) return chosen;
     const others = [

@@ -14,10 +14,17 @@ const SAME_CHANCE = 0.7;
 const CANDIDATES = 5;
 const SPECIFIC_CHANCE = 0.5;
 const SPECIFIC_TEXT = /[\p{Nd}@]|https?:|www\./u;
+const SPECIFICS = {
+  person:
+    "Does passage p1 name a private person, such as Ahmed or Fatima? Prophets, the Prophet's family, Companions and scholars of the past do not count.",
+  place: "Does passage p1 name a town, city or country? Makkah and Madinah do not count.",
+  company: "Does passage p1 name a company or an organisation?",
+  date: "Does passage p1 name a calendar date or a clock time, such as 5 March or 3 pm?",
+};
 
 const PROMPT = `You turn a message someone sent to an Islamic answering engine into the general question an article could answer, or SKIP.
 
-Write the question the way people search for it, as short as it can be while keeping its meaning, in English: "Is music haram?", "Does bleeding break wudu?", "Can a traveller combine Dhuhr and Asr?".
+Write the question the way people search for it, as short as it can be while keeping its meaning, in English and in your own words, never copying the message's wording: "Is music haram?", "Does bleeding break wudu?", "Can a traveller combine Dhuhr and Asr?".
 
 Keep only the ruling or topic. Drop every detail about the person and everyone they mention: names, places, ages, dates, amounts, jobs, family members, health, events and quotes. If those details change the ruling, keep only the general case ("Can a wife ask for khula if her husband harms her?").
 
@@ -66,13 +73,10 @@ export const generalQuestion = async (asked: string) => {
   const question = output.question?.trim().slice(0, QUESTION_CHARS);
   if (output.kind !== "general ruling" || !question || SPECIFIC_TEXT.test(question))
     return undefined;
-  const chance = await yesChances(
-    { search: question, passages: { p1: question } },
-    {
-      p1: "Does passage p1 name a specific person, family member, place, city, country, organisation, amount, date or time of day?",
-    },
-  );
-  return chance("p1") < SPECIFIC_CHANCE ? question : undefined;
+  const chance = await yesChances({ search: question, passages: { p1: question } }, SPECIFICS);
+  return Object.keys(SPECIFICS).every((name) => (chance(name) ?? 1) < SPECIFIC_CHANCE)
+    ? question
+    : undefined;
 };
 
 export async function noteAsked(owner: string, asked: string) {

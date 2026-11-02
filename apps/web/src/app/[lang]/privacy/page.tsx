@@ -49,10 +49,10 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
           include the text of a question or an answer.
         </li>
         <li>
-          Common questions. When you ask a general question about Islam, we also save it reworded,
-          with no names or details, and note that your account asked it. This counts how many
-          different people ask each question, so Discover can write about the ones many people ask.
-          Deleting your account removes that note.
+          Common questions. When you ask a general question about Islam, a model on Cloudflare
+          rewords it with no names or details, and we save that with a note that your account asked
+          it. This counts how many different people ask each question, so Discover can write about
+          the ones many people ask. Deleting your account removes that note.
         </li>
       </ul>
       <p>We don't train AI models on your chats.</p>
