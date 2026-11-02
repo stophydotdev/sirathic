@@ -46,7 +46,6 @@ const TIMEOUT_MS = 90_000;
 export const USER_FORM = "request_user_form";
 export const BROWSER_HELP = "request_browser_help";
 const REFILL = "refill_form_fields";
-const NEEDS_SOMEONE_THERE = new Set([USER_FORM, BROWSER_HELP, REFILL, VAULT_FILL_CONTACT]);
 const READING = new Set([
   "browser_navigate",
   "browser_snapshot",
@@ -379,7 +378,7 @@ const holders = new Map<string, symbol>();
 const BUSY =
   "Your browser is busy with another job. Do this without it, or after that job finishes.";
 
-export function browserFor(scope: BotScope, unattended: boolean, readingOnly: boolean) {
+export function browserFor(scope: BotScope, readingOnly: boolean) {
   const me = Symbol(scope.id);
   const take = () => {
     const holder = holders.get(scope.id);
@@ -389,7 +388,6 @@ export function browserFor(scope: BotScope, unattended: boolean, readingOnly: bo
   const own: ToolSet = browserTools(scope);
   const tools: ToolSet = Object.fromEntries(
     Object.entries(own)
-      .filter(([name]) => !unattended || !NEEDS_SOMEONE_THERE.has(name))
       .filter(([name]) => !readingOnly || READING.has(name))
       .map(([name, entry]) => {
         const { execute } = entry;

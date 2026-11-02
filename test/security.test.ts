@@ -188,10 +188,17 @@ test.each([
   ["gmail_delete_draft", { id: "d1" }, false],
   ["github_merge_pull_request", { pull_number: 7, action: "label" }, false],
   ["stripe_create_payment_link", { command: "create draft" }, false],
+  ["blog_create_draft", { title: "Ramadan hours", body: "Open late" }, true],
+  ["blog_create_draft", { title: "Ramadan hours", publish_at: "2026-11-03T09:00:00Z" }, false],
+  ["blog_update_draft", { id: 4, publish: true }, false],
+  ["gmail_create_draft", { body: "hi", options: { schedule: { sendAt: "9am" } } }, false],
+  ["blog_update_draft", { id: 4, publish: false, body: "typo" }, true],
 ])("a routine run's %s call %p goes ahead: %p", async (toolName, input, allowed) => {
   const writes = new Set([
     "gmail_send_email",
     "gmail_create_draft",
+    "blog_create_draft",
+    "blog_update_draft",
     "gmail_delete_draft",
     "gmail_update_message_labels",
     "slack_send",

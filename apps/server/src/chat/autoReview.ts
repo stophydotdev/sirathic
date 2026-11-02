@@ -87,6 +87,8 @@ const DRAFT = /(?:^|[^a-z])(?:create|update)[^a-z]+draft(?=$|[^a-z])/iu;
 
 const DESTROYS = /(?:^|[^a-z])(?:delete|remove|destroy|erase|empty|purge|wipe)(?=$|[^a-z])/iu;
 
+const PUBLISHES = /publish|schedul|send.?at|send.?time/iu;
+
 const NOTIFIES = /send.?(?:updates|notifications)|notif/iu;
 
 const NO_GUESTS = new Set([
@@ -138,9 +140,19 @@ const invitesOnly = (call: Call, allowed: ReadonlySet<string>) => {
   );
 };
 
+const publishes = (call: Call) => {
+  let found = false;
+  JSON.stringify(call.input ?? null, (key, value) => {
+    if (PUBLISHES.test(key) && value !== false && value !== null) found = true;
+    return value;
+  });
+  return found;
+};
+
 const safeChange = (call: Call, allowed: ReadonlySet<string>) =>
   !destroys(call) &&
-  (DRAFT.test(call.toolName) || (CHANGES.test(call.toolName) && invitesOnly(call, allowed)));
+  ((DRAFT.test(call.toolName) && !publishes(call)) ||
+    (CHANGES.test(call.toolName) && invitesOnly(call, allowed)));
 
 const runsAlone = (call: Call, writes: ReadonlySet<string>, allowed: ReadonlySet<string>) =>
   !needsApproval(call, writes) && (!writes.has(call.toolName) || safeChange(call, allowed));
