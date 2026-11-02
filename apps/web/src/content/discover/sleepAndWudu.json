@@ -10,13 +10,13 @@
     "citations": [
       "https://quran.com/5/6",
       "https://quran.com/4/43",
-      "https://shamela.ws/book/6910#1:235",
-      "https://shamela.ws/book/21604#1:118",
+      "https://shamela.ws/book/6910/291",
+      "https://shamela.ws/book/21604/117",
       "https://shamela.ws/book/499#1:72",
-      "https://shamela.ws/book/21613#1:142",
+      "https://shamela.ws/book/21613/137",
       "https://islamqa.info/ar/answers/36889",
-      "https://shamela.ws/book/21604#1:119",
-      "https://shamela.ws/book/6910#1:237",
+      "https://shamela.ws/book/21604/118",
+      "https://shamela.ws/book/6910/293",
       "https://daruliftaa.us/fatwa/1520/",
       "https://www.dar-alifta.org/ar/Fatwa/Details/17475/تأثير-النعاس-على-الوضوء-والصلاة"
     ]
@@ -33,11 +33,11 @@
       "title": "Quran 4:43, An-Nisaa"
     },
     {
-      "url": "https://shamela.ws/book/6910#1:235",
+      "url": "https://shamela.ws/book/6910/291",
       "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص235"
     },
     {
-      "url": "https://shamela.ws/book/21604#1:118",
+      "url": "https://shamela.ws/book/21604/117",
       "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص118"
     },
     {
@@ -45,7 +45,7 @@
       "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص72"
     },
     {
-      "url": "https://shamela.ws/book/21613#1:142",
+      "url": "https://shamela.ws/book/21613/137",
       "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص142"
     },
     {
@@ -53,11 +53,11 @@
       "title": "هل النوم ينقض الوضوء؟"
     },
     {
-      "url": "https://shamela.ws/book/21604#1:119",
+      "url": "https://shamela.ws/book/21604/118",
       "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص119"
     },
     {
-      "url": "https://shamela.ws/book/6910#1:237",
+      "url": "https://shamela.ws/book/6910/293",
       "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج1 ص237"
     },
     {
@@ -69,7 +69,7 @@
       "title": "تأثير النعاس على الوضوء والصلاة"
     },
     {
-      "url": "https://shamela.ws/book/587#1:119",
+      "url": "https://shamela.ws/book/587/7",
       "title": "المدونة، مالك بن أنس، ج1 ص119"
     },
     {
@@ -77,7 +77,7 @@
       "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج1 ص40"
     },
     {
-      "url": "https://shamela.ws/book/11444#1:141",
+      "url": "https://shamela.ws/book/11444/57",
       "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص141"
     },
     {
@@ -173,15 +173,15 @@
       "title": "Sahih Muslim 278a: The Book of Purification"
     },
     {
-      "url": "https://shamela.ws/book/21613#1:603",
+      "url": "https://shamela.ws/book/21613/598",
       "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص603"
     },
     {
-      "url": "https://shamela.ws/book/11444#1:144",
+      "url": "https://shamela.ws/book/11444/60",
       "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص144"
     },
     {
-      "url": "https://shamela.ws/book/11444#1:143",
+      "url": "https://shamela.ws/book/11444/59",
       "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص143"
     },
     {
@@ -222,19 +222,19 @@
           "citations": [
             "https://quran.com/5/6",
             "https://quran.com/4/43",
-            "https://shamela.ws/book/587#1:119"
+            "https://shamela.ws/book/587/7"
           ]
         },
         {
           "text": "Ibn Rushd notes that the verse's outward sense supports that reading for whoever accepts it. Al-Shafi'i's commentators in Mughni al-Muhtaj work through the same implied wording, noting that the verse's structure requires an omitted phrase such as from sleep. Ibn Rushd gives the opposite starting point: the chapter on nullifiers is built on the two verses' mention of the toilet and of touching women, together with the hadith that Allah does not accept the prayer of one who has broken wind until he performs wudu.",
-          "citations": ["https://shamela.ws/book/21739#1:40", "https://shamela.ws/book/11444#1:141"]
+          "citations": ["https://shamela.ws/book/21739#1:40", "https://shamela.ws/book/11444/57"]
         },
         {
           "text": "Ibn Rushd adds that Abu Hurayra's report about washing the hand on waking appears, on its face, to make sleep obligate wudu whether little or much. On the Companions' practice, Anas reports that they dozed while waiting for 'Isha and then prayed without renewing wudu, while Abu Hurayra is reported in the Mudawwana as saying that whoever is overcome by sleep must perform wudu.",
           "citations": [
             "https://sunnah.com/abudawud:200",
             "https://shamela.ws/book/21739#1:40",
-            "https://shamela.ws/book/587#1:119"
+            "https://shamela.ws/book/587/7"
           ]
         }
       ]
@@ -296,33 +296,33 @@
         {
           "text": "The Hanafi school holds that sleep breaks wudu when one is lying down, leaning back, or resting on something that would fall if removed, but not when sleeping standing, sitting, bowing or prostrating. Ibn Abidin reports the mu'tamad that sleeping in sujud, even inside the prayer, does not break wudu, though the Zahir al-Riwaya says it does, and that the sahih ruling for a sick man praying lying down who falls asleep is that his wudu breaks. Darul Iftaa Chicago quotes Multaqa al-Abhur and Sharh al-Wiqaya for the same limit, resting it on the lying down report.",
           "citations": [
-            "https://shamela.ws/book/21613#1:142",
+            "https://shamela.ws/book/21613/137",
             "https://daruliftaa.us/fatwa/1520/",
-            "https://shamela.ws/book/21613#1:603"
+            "https://shamela.ws/book/21613/598"
           ]
         },
         {
           "text": "The Maliki school holds that the criterion is the weight of the sleep, not the posture: heavy sleep breaks in any position, even briefly, while light sleep breaks when lying or prostrating but not when standing or sitting. Malik in the Mudawwana says that whoever sleeps in his prostration and the sleep becomes heavy and long, his wudu is broken; light sleep like a passing thought does not break it, and the same distinction applies to sleeping on a mount. Al-Dasuqi reports the mashhur as weighing the attribute of the sleep, while the Talkhis weighs both the sleep and the posture.",
           "citations": [
-            "https://shamela.ws/book/21604#1:118",
-            "https://shamela.ws/book/587#1:119",
-            "https://shamela.ws/book/21604#1:119"
+            "https://shamela.ws/book/21604/117",
+            "https://shamela.ws/book/587/7",
+            "https://shamela.ws/book/21604/118"
           ]
         },
         {
           "text": "The Shafi'i school holds that sleep breaks wudu whenever the sleeper's buttocks are not firmly settled on the ground, however short the sleep; a firmly seated sleeper does not break wudu even if the sleep is long, and dozing never breaks it. Al-Nawawi defines sleep as relaxation of the body and loss of awareness, saying dozing and passing thoughts do not break wudu at all; if one buttock lifts before waking it breaks, if after or with the waking or in doubt it does not, and sleeping on the back with the buttocks on the ground does break. Mughni al-Muhtaj states that sleep is not a hadath in itself but a sign of passing wind, that the Prophet's sleep is one of his special traits, and that renewing wudu after sleep while firmly seated is recommended to leave the disagreement.",
           "citations": [
-            "https://shamela.ws/book/11444#1:144",
+            "https://shamela.ws/book/11444/60",
             "https://shamela.ws/book/499#1:72",
-            "https://shamela.ws/book/11444#1:143"
+            "https://shamela.ws/book/11444/59"
           ]
         },
         {
           "text": "The Hanbali school holds that lying down breaks wudu little or much, while sitting breaks only if much, in one report; the apparent position from Ahmad is that standing and sitting are equal, with another narration that it breaks in every case. Ibn Qudama sets out the three categories and the reports from Ahmad, adding that if one doubts whether the sleep was long, wudu stands because purity is certain. Al-Buhuti exempts the Prophet and slight sleep by one sitting or standing.",
           "citations": [
-            "https://shamela.ws/book/6910#1:235",
+            "https://shamela.ws/book/6910/291",
             "https://shamela.ws/book/622#1:283",
-            "https://shamela.ws/book/6910#1:237"
+            "https://shamela.ws/book/6910/293"
           ]
         }
       ]
@@ -342,10 +342,10 @@
         {
           "text": "The second reconciliation is causal. Al-Shafi'i's school and Ibn Qudama both treat sleep not as a hadath in itself but as a presumed cause of one, so the ruling follows the likelihood that wind passed. That is the reasoning Ibn Uthaymeen and the contemporary fatwas adopt, which is why doubt resolves in favour of the existing wudu.",
           "citations": [
-            "https://shamela.ws/book/11444#1:144",
+            "https://shamela.ws/book/11444/60",
             "https://shamela.ws/book/499#1:72",
             "https://islamqa.info/ar/answers/36889",
-            "https://shamela.ws/book/6910#1:237",
+            "https://shamela.ws/book/6910/293",
             "https://islamqa.info/ar/answers/111837",
             "https://fiqh.islamonline.net/%d9%87%d9%84-%d9%8a%d9%86%d8%aa%d9%82%d8%b6-%d9%88%d8%b6%d9%88%d8%a1%d9%87-%d9%85%d9%86-%d9%86%d8%a7%d9%85-%d9%81%d9%8a-%d8%a7%d9%84%d9%85%d9%88%d8%a7%d8%b5%d9%84%d8%a7%d8%aa/"
           ]
@@ -353,8 +353,8 @@
         {
           "text": "The third is the Prophet's exemption. His sleep did not break his wudu because his heart stayed awake, and both the Shafi'i and Hanbali books list this among his special traits, which removes his reported prayer after sleeping from the general rule. The fourth is the grading dispute: the Hanafis rest their position on the lying down report, while Abu Dawud himself calls its key phrase munkar and four later graders call the hadith da'if.",
           "citations": [
-            "https://shamela.ws/book/6910#1:235",
-            "https://shamela.ws/book/11444#1:144",
+            "https://shamela.ws/book/6910/291",
+            "https://shamela.ws/book/11444/60",
             "https://shamela.ws/book/622#1:283",
             "https://ar.wikisource.org/wiki/%D9%85%D8%B3%D9%86%D8%AF_%D8%A3%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%AD%D9%86%D8%A8%D9%84/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%AF_%D8%A7%D9%84%D8%A3%D9%88%D9%84/%D9%85%D8%B3%D9%86%D8%AF_%D8%B9%D8%A8%D8%AF_%D8%A7%D9%84%D9%84%D9%87_%D8%A8%D9%86_%D8%A7%D9%84%D8%B9%D8%A8%D8%A7%D8%B3_%286%29#2085",
             "https://sunnah.com/abudawud:202",
