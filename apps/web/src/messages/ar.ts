@@ -879,6 +879,7 @@ export default {
   Discover: "اكتشف",
   "Back to Discover": "العودة إلى اكتشف",
   "Updated {date}": "آخر تحديث {date}",
+  "Draft, not reviewed": "مسودة، لم تُراجع بعد",
   "Discover more": "المزيد للاكتشاف",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "مسائل الخلاف، يُجاب عنها من القرآن وكتب الحديث والفقه مع ذكر كل مصدر.",

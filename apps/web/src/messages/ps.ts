@@ -887,6 +887,7 @@ export default {
   Discover: "کشف",
   "Back to Discover": "کشف ته بېرته تګ",
   "Updated {date}": "تازه شوی: {date}",
+  "Draft, not reviewed": "مسوده، نه ده کتل شوې",
   "Discover more": "نور کشف",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "اختلافي پوښتنې، د قرآن، حدیث او فقهې کتابونو څخه ځواب شوې، د هرې سرچینې په یادولو سره.",

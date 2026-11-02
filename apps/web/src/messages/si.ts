@@ -878,6 +878,7 @@ export default {
   Discover: "සොයාගන්න",
   "Back to Discover": "සොයාගන්න වෙත ආපසු",
   "Updated {date}": "යාවත්කාලීන කළේ {date}",
+  "Draft, not reviewed": "කෙටුම්පත, සමාලෝචනය කර නැත",
   "Discover more": "තවත් සොයාගන්න",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "මතභේද ඇති ප්‍රශ්නවලට කුර්ආනය, හදීස් සහ ෆික්හ් ග්‍රන්ථවලින්, සෑම මූලාශ්‍රයක්ම සඳහන් කර පිළිතුරු.",

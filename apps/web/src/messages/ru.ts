@@ -889,6 +889,7 @@ export default {
   Discover: "Интересное",
   "Back to Discover": "Назад к разделу «Интересное»",
   "Updated {date}": "Обновлено {date}",
+  "Draft, not reviewed": "Черновик, не проверено",
   "Discover more": "Ещё в разделе",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Спорные вопросы с ответами из Корана, хадисов и книг по фикху, с указанием каждого источника.",

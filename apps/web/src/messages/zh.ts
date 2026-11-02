@@ -871,6 +871,7 @@ export default {
   Discover: "发现",
   "Back to Discover": "返回发现",
   "Updated {date}": "更新于 {date}",
+  "Draft, not reviewed": "草稿，未经审核",
   "Discover more": "更多发现",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "有争议的问题，依据《古兰经》、圣训和教法书籍作答，并注明每一个来源。",

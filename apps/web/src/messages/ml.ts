@@ -885,6 +885,7 @@ export default {
   Discover: "കണ്ടെത്തുക",
   "Back to Discover": "കണ്ടെത്തുകയിലേക്ക് മടങ്ങുക",
   "Updated {date}": "പുതുക്കിയത്: {date}",
+  "Draft, not reviewed": "കരട്, പരിശോധിച്ചിട്ടില്ല",
   "Discover more": "കൂടുതൽ കണ്ടെത്തുക",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "അഭിപ്രായഭിന്നതയുള്ള ചോദ്യങ്ങൾക്ക് ഖുർആൻ, ഹദീസ്, ഫിഖ്ഹ് ഗ്രന്ഥങ്ങൾ എന്നിവയിൽ നിന്ന് ഓരോ ഉറവിടവും ഉദ്ധരിച്ച് ഉത്തരം.",

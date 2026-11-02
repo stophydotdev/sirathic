@@ -891,6 +891,7 @@ export default {
   Discover: "دۆزینەوە",
   "Back to Discover": "گەڕانەوە بۆ دۆزینەوە",
   "Updated {date}": "نوێکراوەتەوە {date}",
+  "Draft, not reviewed": "ڕەشنووس، پێداچوونەوەی بۆ نەکراوە",
   "Discover more": "دۆزینەوەی زیاتر",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "پرسە جیاوازەکان، لە قورئان و فەرموودە و کتێبەکانی فیقهەوە وەڵام دراونەتەوە، لەگەڵ ناوهێنانی هەموو سەرچاوەیەک.",

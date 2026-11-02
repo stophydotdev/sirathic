@@ -892,6 +892,7 @@ export default {
   Discover: "بايقاش",
   "Back to Discover": "بايقاشقا قايتىش",
   "Updated {date}": "يېڭىلانغان: {date}",
+  "Draft, not reviewed": "لايىھە، تەكشۈرۈلمىگەن",
   "Discover more": "تېخىمۇ كۆپ بايقاش",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "ئىختىلاپلىق مەسىلىلەرگە قۇرئان، ھەدىس ۋە پىقھى كىتابلىرىدىن، ھەر بىر مەنبە كۆرسىتىلگەن ھالدا جاۋاب بېرىلىدۇ.",

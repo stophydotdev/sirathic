@@ -880,6 +880,7 @@ export default {
   Discover: "खोजें",
   "Back to Discover": "खोजें पर वापस जाएँ",
   "Updated {date}": "अपडेट किया गया: {date}",
+  "Draft, not reviewed": "मसौदा, समीक्षा नहीं हुई",
   "Discover more": "और खोजें",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "विवादित सवालों के जवाब कुरआन, हदीस और फ़िक़्ह की किताबों से, हर स्रोत के हवाले के साथ।",
