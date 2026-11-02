@@ -890,6 +890,7 @@ export default {
   Discover: "Gundua",
   "Back to Discover": "Rudi kwa Gundua",
   "Updated {date}": "Imesasishwa {date}",
+  "Draft, not reviewed": "Rasimu, haijakaguliwa",
   "Discover more": "Gundua zaidi",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Maswali yenye mjadala, yanajibiwa kutoka Qur'ani, hadithi na vitabu vya fiqh, huku kila chanzo kikitajwa.",

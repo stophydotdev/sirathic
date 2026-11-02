@@ -871,6 +871,7 @@ export default {
   Discover: "ค้นพบ",
   "Back to Discover": "กลับไปที่ค้นพบ",
   "Updated {date}": "อัปเดต {date}",
+  "Draft, not reviewed": "ฉบับร่าง ยังไม่ได้ตรวจทาน",
   "Discover more": "ค้นพบเพิ่มเติม",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "คำถามที่มีข้อถกเถียง ตอบจากอัลกุรอาน หะดีษ และตำราฟิกฮ์ พร้อมอ้างอิงทุกแหล่งที่มา",

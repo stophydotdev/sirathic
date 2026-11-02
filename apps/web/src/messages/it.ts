@@ -894,6 +894,7 @@ export default {
   Discover: "Scopri",
   "Back to Discover": "Torna a Scopri",
   "Updated {date}": "Aggiornato il {date}",
+  "Draft, not reviewed": "Bozza, non revisionata",
   "Discover more": "Scopri di più",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Questioni controverse, risposte con il Corano, gli hadith e i libri di fiqh, con ogni fonte citata.",

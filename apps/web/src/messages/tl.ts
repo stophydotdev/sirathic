@@ -896,6 +896,7 @@ export default {
   Discover: "Tuklasin",
   "Back to Discover": "Bumalik sa Tuklasin",
   "Updated {date}": "Na-update noong {date}",
+  "Draft, not reviewed": "Draft, hindi pa nasusuri",
   "Discover more": "Tuklasin pa",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Mga pinagtatalunang tanong, sinasagot mula sa Quran, hadith at mga aklat ng fiqh, na may sanggunian sa bawat sagot.",

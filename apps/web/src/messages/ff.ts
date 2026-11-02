@@ -888,6 +888,7 @@ export default {
   Discover: "Tawtu",
   "Back to Discover": "Rutto e Tawtu",
   "Updated {date}": "Hesɗitinaama: {date}",
+  "Draft, not reviewed": "Daftaru, ndaaraaka",
   "Discover more": "Tawtu ɓuri",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Naamnal sentinooɗum, jaabaaɗum ndeen Alqur'aana, hadiisaaji e defte fiqh, e iwdi kala wiyaaɗi.",

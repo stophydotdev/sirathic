@@ -893,6 +893,7 @@ export default {
   Discover: "Kəşf et",
   "Back to Discover": "Kəşf et bölməsinə qayıt",
   "Updated {date}": "Yenilənib: {date}",
+  "Draft, not reviewed": "Qaralama, yoxlanılmayıb",
   "Discover more": "Daha çox kəşf et",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Mübahisəli suallar Quran, hədis və fiqh kitablarından, hər mənbə göstərilməklə cavablandırılır.",
