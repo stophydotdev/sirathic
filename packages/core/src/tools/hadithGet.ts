@@ -63,7 +63,7 @@ export const hadithsByIds = async (asked: string[]) => {
         grades: grades
           .filter((grade) => grade.hadithId === id)
           .map(({ grader, grade }) => ({ grader, grade })),
-        link: hadithLink(id, url),
+        link: hadithLink(id, url, citableId(row)),
       },
     ];
   });

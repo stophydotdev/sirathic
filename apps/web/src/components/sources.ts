@@ -36,6 +36,7 @@ const SITES = new Map(
     "quran.com": { name: "Quran.com", kind: "quran" },
     "sunnah.com": { name: "Sunnah.com", kind: "hadith" },
     "ar.wikisource.org": { name: "Wikisource", kind: "hadith" },
+    "hadithunlocked.com": { name: "Hadith Unlocked", kind: "hadith" },
     "shamela.ws": { name: "Shamela", kind: "book" },
     "youtube.com": { name: "YouTube", kind: "web" },
     "youtu.be": { name: "YouTube", kind: "web" },

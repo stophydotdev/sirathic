@@ -57,15 +57,12 @@ export const hadithIdOfSunnahUrl = (url: string) => {
   return OUR_LETTERED.get(`${book}:${found[2]}`) ?? `${book}:${found[2]}`;
 };
 
-const SHARED_PAGE_BOOKS = new Set(["ahmad", "adab"]);
-
-export const hadithLink = (id: string, stored: string | null) => {
+export const hadithLink = (id: string, stored: string | null, citable = id) => {
   const [book = "", number = ""] = id.split(":");
+  if (book === "adab" || citable !== id) return `https://hadithunlocked.com/${citable}`;
   const moved = SUNNAH_URNS.get(id);
   if (moved !== undefined) return `https://sunnah.com/urn/${moved}`;
-  if (stored !== null) {
-    return SHARED_PAGE_BOOKS.has(book) ? `${stored}#${number}` : stored;
-  }
+  if (stored !== null) return book === "ahmad" ? `${stored}#:~:text=${number}` : stored;
   const urn = book === "malik" ? MALIK_URNS.get(number) : undefined;
   if (urn !== undefined) return `https://sunnah.com/urn/${urn}`;
   return sunnahComLink(id);
