@@ -1,6 +1,8 @@
 import { expect, mock, test } from "bun:test";
 import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
+import { getTableConfig } from "drizzle-orm/pg-core";
 import { drizzle } from "drizzle-orm/pg-proxy";
+import { automations } from "@sirathic/db/schema";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { nextRun, schedule, type Schedule } from "../apps/server/src/automations/schedule";
 import { prayerTimesOn, type PrayerPlace } from "../apps/server/src/prayer/times";
@@ -510,4 +512,12 @@ test("a routine tied to a prayer moves with it every day, even past midnight", (
     prayerTimesOn(london, { year: 2026, month: 6, day: 21 }).isha.getTime() + 120 * MINUTE_MS;
   expect(minutesIn(zone, new Date(run))).toBeLessThan(60);
   expect(nextRun(afterIsha, zone, new Date("2026-06-21T23:01:00Z"))?.getTime()).toBe(run);
+});
+
+test("deleting a bot deletes its routines, because the foreign key cascades", () => {
+  const { foreignKeys } = getTableConfig(automations);
+  const onBot = foreignKeys.find(
+    (key) => key.reference().columns[0]?.name === automations.projectId.name,
+  );
+  expect(onBot?.onDelete).toBe("cascade");
 });
