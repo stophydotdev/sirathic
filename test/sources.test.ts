@@ -10,6 +10,7 @@ import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
 import { hadithTitle, verseSource } from "../apps/server/src/chat/cite";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
+import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { SITES } from "../scripts/fatwaSites";
 
 test("hadith links follow each collection's own page numbering", () => {
@@ -153,4 +154,22 @@ test("an Albalagh page credits its byline, not the site login", () => {
   expect(site?.parse(markdown, html, "https://albalagh.net/qa/achieving-taqwa")?.answeredBy).toBe(
     "Mufti Ebrahim Desai",
   );
+});
+
+test("a search names at most five sites and says which ones it left out", () => {
+  const { sites, notes } = cleanSearch({
+    queries: ["zakat on gold site:dar-alifta.org"],
+    arabic: [],
+    sites: ["islamqa.info", "islamweb.net", "seekersguidance.org", "islamqa.org", "amjaonline.org"],
+  });
+  expect(sites).toEqual([
+    "islamqa.info",
+    "islamweb.net",
+    "seekersguidance.org",
+    "islamqa.org",
+    "amjaonline.org",
+  ]);
+  expect(notes).toEqual([
+    "Only 5 sites fit in one search, so these were left out: dar-alifta.org.",
+  ]);
 });

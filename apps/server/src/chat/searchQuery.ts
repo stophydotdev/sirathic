@@ -5,6 +5,7 @@ const QUOTES = /["“”„‟«»]/gu;
 const BOOLEAN_OPERATOR = /(?<=^|\s)(?:AND|OR|NOT)(?=\s|$)/gu;
 
 const MIN_QUERY_CHARS = 2;
+const MAX_SITES = 5;
 
 const cleanQuery = (raw: string) => {
   const bare = raw.replaceAll(QUOTES, " ");
@@ -35,11 +36,16 @@ export const cleanSearch = ({
   ];
   const named = [...sites, ...all.flatMap((cleaned) => cleaned.sites)];
   const parsed = named.map((site) => ({ site, host: siteHost.safeParse(site) }));
+  const hosts = [...new Set(parsed.flatMap(({ host }) => (host.success ? [host.data] : [])))];
+  const left = hosts.slice(MAX_SITES);
   return {
     queries: keep(cleanedQueries),
     arabic: keep(cleanedArabic),
-    sites: [...new Set(parsed.flatMap(({ host }) => (host.success ? [host.data] : [])))],
+    sites: hosts.slice(0, MAX_SITES),
     notes: [
+      ...(left.length > 0
+        ? [`Only ${MAX_SITES} sites fit in one search, so these were left out: ${left.join(", ")}.`]
+        : []),
       ...(all.some(({ query }) => query.length < MIN_QUERY_CHARS)
         ? ["A query was empty after removing quotes and operators, so it was skipped."]
         : []),
