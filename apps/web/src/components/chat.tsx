@@ -289,11 +289,15 @@ const liveChat = (
     onData: (part) => {
       if (part.type === "data-title") void useSessions.getState().refresh();
     },
-    onFinish: ({ message, isAbort, isError }) => {
+    onFinish: ({ message, isAbort, isError, finishReason }) => {
       markAnswered(id);
       if (isAbort || isError) return;
       if (useGroups.getState().groups?.some((group) => group.id === id)) {
         adoptTeammateMessages(created);
+        return;
+      }
+      if (finishReason === undefined) {
+        void waitForSaved(created);
         return;
       }
       announceAnswer(id, projectId === id ? `/bot/${id}` : `/c/${id}`, message);
