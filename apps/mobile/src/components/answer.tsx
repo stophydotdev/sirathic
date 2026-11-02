@@ -43,6 +43,7 @@ import { Fold, Swap, Turn } from "./motion";
 import { Cited, CitationPill, CitationSheet } from "./citation";
 import { SourcesSheet } from "./sources-sheet";
 import { AnswerCard, isAnswerCard, MemoryUsed, ResearchCard } from "./answer-cards";
+import { ApprovalCard } from "./approval-card";
 import { AutomationCard, isCardTool } from "./chat-cards";
 import { notesOf } from "@/lib/notes";
 import { AnswerNote } from "./answer-note";
@@ -258,7 +259,8 @@ export const Answer: FC<{
   onRetry: () => void;
   onResearch?: () => void;
   onAsk: (question: string) => void;
-}> = ({ chatId, message, streaming, feedback, onRate, onRetry, onResearch, onAsk }) => {
+  onDecide?: (approvalId: string, approved: boolean) => void;
+}> = ({ chatId, message, streaming, feedback, onRate, onRetry, onResearch, onAsk, onDecide }) => {
   const text = messageText(message);
   const parts = useMemo(() => notesOf(groupedCitations(text)), [text]);
   const sources = useMemo(() => sourcesOf(message), [message]);
@@ -277,6 +279,7 @@ export const Answer: FC<{
   const cards = message.parts.flatMap((part, index) => {
     const tool = toolOf(part);
     if (!tool) return [];
+    if (tool.approval) return [<ApprovalCard key={index} tool={tool} onDecide={onDecide} />];
     return isCardTool(tool.name)
       ? [<AutomationCard key={index} tool={tool.name} output={tool.output} />]
       : isAnswerCard(tool.name) && tool.name !== "todo_write"
