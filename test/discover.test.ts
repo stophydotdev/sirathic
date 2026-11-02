@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { parseHadithRef, type HadithRef } from "../apps/data/src/resolve";
 import { article } from "../apps/web/src/content/discover/schema";
+import { slugOf } from "../scripts/discoverTopics";
 import { checkCopies, type Check, type Copy } from "../scripts/openData/verify";
 
 const cited = "https://sunnah.com/bukhari:513";
@@ -87,4 +88,12 @@ test("a hadith with no Arabic is never verified, even with a second copy", () =>
     reason: "empty_arabic",
     similarity: null,
   });
+});
+
+test("an asked question becomes a short slug that keeps every whole word", () => {
+  expect(slugOf("Does vomiting break the fast?")).toBe("does-vomiting-break-the-fast");
+  expect(slugOf("Is ṣalāh valid in a moving car?")).toBe("is-salah-valid-in-a-moving-car");
+  expect(
+    slugOf("Can a wife ask for khula if her husband refuses to pay the maintenance he owes her?"),
+  ).toBe("can-a-wife-ask-for-khula-if-her-husband-refuses-to-pay-the");
 });

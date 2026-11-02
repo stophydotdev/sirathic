@@ -22,6 +22,8 @@ jobs:
     env:
       NEXT_PUBLIC_SERVER: http://localhost:3000
       DATABASE_URL: ${{ secrets.DISCOVER_DATABASE_URL }}
+      DISCOVER_ASKED_DATABASE_URL: ${{ secrets.DISCOVER_ASKED_DATABASE_URL }}
+      GSC_SERVICE_ACCOUNT: ${{ secrets.GSC_SERVICE_ACCOUNT }}
       REDIS_URL: redis://127.0.0.1:6379
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

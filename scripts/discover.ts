@@ -9,8 +9,9 @@ import { sirathicTools } from "../apps/server/src/chat/tools";
 import { DEFAULT_NOOR, NOOR_SIDE_MODEL, noorModel } from "../apps/server/src/models/noor";
 import { DEFAULT_SETTINGS } from "../apps/server/src/shared/settings";
 import { type Source, source } from "../apps/server/src/shared/sources";
-import { queue } from "../apps/web/src/content/discover/queue";
+import { articles } from "../apps/web/src/content/discover/articles";
 import { article, type ArticleInput } from "../apps/web/src/content/discover/schema";
+import { type DiscoverTopic, nextTopics } from "./discoverTopics";
 
 const FOLDER = join(import.meta.dir, "../apps/web/src/content/discover");
 const TINTS = ["teal", "rose", "amber", "indigo"] as const;
@@ -212,7 +213,7 @@ async function review(
   return second.passed ? { ...draft, text: rewritten } : undefined;
 }
 
-async function write(entry: (typeof queue)[number], tint: (typeof TINTS)[number]) {
+async function write(entry: DiscoverTopic, tint: (typeof TINTS)[number]) {
   const startedAt = performance.now();
   const log = (line: string) => console.log(`[${entry.slug}] ${line}`);
   const found = await research(entry.title);
@@ -296,14 +297,18 @@ async function write(entry: (typeof queue)[number], tint: (typeof TINTS)[number]
 }
 
 const present = new Set(await readdir(FOLDER));
-const waiting = queue
-  .filter((entry) => !present.has(`${camelOf(entry.slug)}.json`))
-  .slice(0, Number(Bun.argv[2] ?? queue.length));
-await inOrder(waiting, (entry) =>
-  write(entry, TINTS[queue.indexOf(entry) % TINTS.length] ?? "teal").catch((err: Error) =>
-    console.log(`[${entry.slug}] FAILED: ${err.message}`),
-  ),
+const waiting = await nextTopics(
+  Number(Bun.argv[2] ?? 1),
+  articles.map((written) => written.title),
+  (slug) =>
+    present.has(`${camelOf(slug)}.json`) || articles.some((written) => written.slug === slug),
 );
+await inOrder(waiting, (entry, index) => {
+  console.log(`[${entry.slug}] ${entry.title} (${entry.from})`);
+  return write(entry, TINTS[(articles.length + index) % TINTS.length] ?? "teal").catch(
+    (err: Error) => console.log(`[${entry.slug}] FAILED: ${err.message}`),
+  );
+});
 const done = new Set(await readdir(FOLDER));
 const written = [...done]
   .filter((name) => name.endsWith(".json"))

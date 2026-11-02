@@ -669,3 +669,28 @@ export const vaultLogins = pgTable(
     }).onDelete("cascade"),
   ],
 );
+
+export const askedTopics = pgTable(
+  "asked_topics",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    question: text().notNull(),
+    embedding: halfvec({ dimensions: EMBEDDING.dimensions }).notNull(),
+    people: integer().notNull().default(0),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("asked_topics_embedding").using("hnsw", table.embedding.op("halfvec_cosine_ops")),
+  ],
+);
+
+export const askedBy = pgTable(
+  "asked_by",
+  {
+    topicId: uuid()
+      .notNull()
+      .references(() => askedTopics.id, { onDelete: "cascade" }),
+    asker: text().notNull(),
+  },
+  (table) => [primaryKey({ columns: [table.topicId, table.asker] })],
+);
