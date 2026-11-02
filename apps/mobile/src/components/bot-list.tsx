@@ -33,6 +33,7 @@ const BotRow: FC<{ bot: Bot; onOpen: () => void }> = ({ bot, onOpen }) => {
   const session = useChatState((s) => s.sessions?.find((found) => found.id === bot.id));
   const current = useGlobalSearchParams<{ id?: string }>().id === bot.id;
   const unread = session?.unread;
+  const approving = !session?.working && session?.approving === true;
 
   return (
     <View className={`rounded-xl ${current ? "bg-muted" : ""}`}>
@@ -65,10 +66,17 @@ const BotRow: FC<{ bot: Bot; onOpen: () => void }> = ({ bot, onOpen }) => {
             )}
           </View>
           <View className="flex-row items-center gap-2 pe-6">
-            <Text numberOfLines={1} className="text-muted-foreground font-sans flex-1 text-xs">
-              {session ? session.preview : bot.greeting}
+            <Text
+              numberOfLines={1}
+              className={`font-sans flex-1 text-xs ${approving ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground"}`}
+            >
+              {approving ? "Waiting for your OK" : session ? session.preview : bot.greeting}
             </Text>
-            {unread && <View className="bg-super size-1.5 rounded-full" />}
+            {approving ? (
+              <View className="size-1.5 rounded-full bg-amber-500" />
+            ) : (
+              unread && <View className="bg-super size-1.5 rounded-full" />
+            )}
           </View>
         </View>
       </Pressable>

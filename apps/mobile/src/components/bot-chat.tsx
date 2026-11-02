@@ -11,6 +11,7 @@ import { useChatState } from "@/lib/chat-state";
 import { type Bot, useBots } from "@/lib/bots";
 import { toolOf } from "@/lib/research";
 import { ChatLink, type Feedback } from "./answer";
+import { ApprovalDock } from "./approval-prompt";
 import { BotAvatar } from "./bot-avatar";
 import { BotMenu, useBotPanel } from "./bot-menu";
 import { BotSays, BotYou, stampOf } from "./bot-turns";
@@ -266,6 +267,13 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
           <Learned bot={bot} messages={messages} ready={status === "ready"} />
         </ScrollView>
         <ComposerDock>
+          <ApprovalDock
+            message={messages.at(-1)}
+            name={bot.name}
+            onDecide={(approvalId, approved) =>
+              void addToolApprovalResponse({ id: approvalId, approved })
+            }
+          />
           <Composer
             placeholder={`Message ${bot.name}`}
             busy={busy}
