@@ -10,6 +10,7 @@ import { quranTranslation } from "../packages/core/src/tools/quranTranslation";
 import { hadithTitle, verseSource } from "../apps/server/src/chat/cite";
 import { trustedHadith } from "../packages/core/src/tools/trustedHadith";
 import { hadithKey } from "../scripts/hadithKey";
+import { bestPieces } from "../apps/server/src/chat/compact";
 import { cleanSearch } from "../apps/server/src/chat/searchQuery";
 import { SITES } from "../scripts/fatwaSites";
 
@@ -181,5 +182,16 @@ test("a Dr. Hatem al-Haj fatwa takes its title from the page, not the site name"
   const site = SITES.find(({ source }) => source.name === "drhatemalhaj.com");
   expect(site?.parse(markdown, html, "https://www.drhatemalhaj.com/fiqh/imamate/")?.title).toBe(
     "The Women's Imamate of Mahram Men in Prayer",
+  );
+});
+
+test("the best part of an answer is found inside a long Arabic sentence with only commas", () => {
+  const filler = "قال العلماء في هذه المسألة أقوالا كثيرة، ";
+  const sentence = `${filler.repeat(9)}والتبني محرم في الإسلام كما قال تعالى ادعوهم لآبائهم، ${filler.repeat(9)}`;
+  const answer = [filler.repeat(3), sentence, filler.repeat(3)].join("\n");
+  expect(bestPieces(answer, ["التبني"], 401)).toContain("والتبني محرم");
+  const run = "斋月是伊斯兰历的第九个月穆斯林在这个月里从黎明到日落禁食".repeat(20);
+  expect(bestPieces(`${run}《布哈里圣训实录》${run}`, ["布哈里圣训实录"], 401)).toContain(
+    "布哈里圣训实录",
   );
 });

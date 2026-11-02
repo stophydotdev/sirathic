@@ -92,6 +92,10 @@ export const documentLinks = (markdown: string) => {
 
 export const PIECE_CHARS = 400;
 const SENTENCE_END = /(?<=[.!?؟؛])\s+/u;
+const UP_TO_A_PIECE = new RegExp(
+  `\\S.{0,${PIECE_CHARS - 2}}(?=\\s|$)|\\S.{0,${PIECE_CHARS - 2}}`,
+  "gu",
+);
 const ARABIC_PREFIX = /^(?:[وفبكل]?ال|[وف])(?=\p{L}{3})/u;
 const LATIN_PLURAL = /(?<=\p{Script=Latin}{3})s$/u;
 const K1 = 1.5;
@@ -106,6 +110,9 @@ const piecesOf = (text: string) =>
   text
     .split("\n")
     .flatMap((line) => (line.length <= PIECE_CHARS ? [line] : line.split(SENTENCE_END)))
+    .flatMap((part) =>
+      part.length <= PIECE_CHARS ? [part] : (part.match(UP_TO_A_PIECE) ?? [part]),
+    )
     .reduce<string[]>((pieces, part) => {
       const last = pieces.at(-1);
       if (last !== undefined && last.length + part.length < PIECE_CHARS) {
