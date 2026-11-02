@@ -1,0 +1,62 @@
+diff --git a/lib/cjs/SolarTime.js b/lib/cjs/SolarTime.js
+index 53c52f4779f44b655b5db2f68157d3984825d23a..04f07cdfce90691d8719391540829822a840f188 100644
+--- a/lib/cjs/SolarTime.js
++++ b/lib/cjs/SolarTime.js
+@@ -38,10 +38,20 @@ var SolarTime = exports["default"] = /*#__PURE__*/function () {
+     key: "afternoon",
+     value: function afternoon(shadowLength) {
+       // TODO source shadow angle calculation
+-      var tangent = Math.abs(this.observer.latitude - this.solar.declination);
++      var declination = _Astronomical["default"].interpolate(this.solar.declination, this.prevSolar.declination, this.nextSolar.declination, this.approxTransit);
++      var tangent = Math.abs(this.observer.latitude - declination);
+       var inverse = shadowLength + Math.tan((0, _MathUtils.degreesToRadians)(tangent));
+       var angle = (0, _MathUtils.radiansToDegrees)(Math.atan(1.0 / inverse));
+-      return this.hourAngle(angle, true);
++      var latitude = (0, _MathUtils.degreesToRadians)(this.observer.latitude);
++      var m = this.transit / 24;
++      for (var step = 0; step < 4; step++) {
++        var delta = (0, _MathUtils.degreesToRadians)(_Astronomical["default"].interpolate(this.solar.declination, this.prevSolar.declination, this.nextSolar.declination, m));
++        var cosH = (Math.sin((0, _MathUtils.degreesToRadians)(angle)) - Math.sin(latitude) * Math.sin(delta)) / (Math.cos(latitude) * Math.cos(delta));
++        var H = (0, _MathUtils.radiansToDegrees)(Math.acos(Math.min(1, Math.max(-1, cosH))));
++        var a = _Astronomical["default"].interpolateAngles(this.solar.rightAscension, this.prevSolar.rightAscension, this.nextSolar.rightAscension, m);
++        m += (H - (0, _MathUtils.quadrantShiftAngle)(this.solar.apparentSiderealTime + 360.985647 * m + this.observer.longitude - a)) / 360.985647;
++      }
++      return m * 24;
+     }
+   }]);
+ }();
+diff --git a/lib/esm/SolarTime.js b/lib/esm/SolarTime.js
+index 2357cab5d19dc04383f922780a5148de3c5a5043..349f4e3b3763ef4c5bb722e1d66369d64e2c6e33 100644
+--- a/lib/esm/SolarTime.js
++++ b/lib/esm/SolarTime.js
+@@ -1,5 +1,5 @@
+ import Astronomical from './Astronomical.js';
+-import { degreesToRadians, radiansToDegrees } from './MathUtils.js';
++import { degreesToRadians, quadrantShiftAngle, radiansToDegrees } from './MathUtils.js';
+ import SolarCoordinates from './SolarCoordinates.js';
+ export default class SolarTime {
+   constructor(date, coordinates) {
+@@ -20,10 +20,20 @@ export default class SolarTime {
+   }
+   afternoon(shadowLength) {
+     // TODO source shadow angle calculation
+-    const tangent = Math.abs(this.observer.latitude - this.solar.declination);
++    const declination = Astronomical.interpolate(this.solar.declination, this.prevSolar.declination, this.nextSolar.declination, this.approxTransit);
++    const tangent = Math.abs(this.observer.latitude - declination);
+     const inverse = shadowLength + Math.tan(degreesToRadians(tangent));
+     const angle = radiansToDegrees(Math.atan(1.0 / inverse));
+-    return this.hourAngle(angle, true);
++    const latitude = degreesToRadians(this.observer.latitude);
++    let m = this.transit / 24;
++    for (let step = 0; step < 4; step++) {
++      const delta = degreesToRadians(Astronomical.interpolate(this.solar.declination, this.prevSolar.declination, this.nextSolar.declination, m));
++      const cosH = (Math.sin(degreesToRadians(angle)) - Math.sin(latitude) * Math.sin(delta)) / (Math.cos(latitude) * Math.cos(delta));
++      const H = radiansToDegrees(Math.acos(Math.min(1, Math.max(-1, cosH))));
++      const a = Astronomical.interpolateAngles(this.solar.rightAscension, this.prevSolar.rightAscension, this.nextSolar.rightAscension, m);
++      m += (H - quadrantShiftAngle(this.solar.apparentSiderealTime + 360.985647 * m + this.observer.longitude - a)) / 360.985647;
++    }
++    return m * 24;
+   }
+ }
+ //# sourceMappingURL=SolarTime.js.map
+\ No newline at end of file

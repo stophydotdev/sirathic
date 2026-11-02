@@ -10,6 +10,7 @@ RUN apt-get update \
 
 WORKDIR /repo
 COPY package.json bun.lock ./
+COPY patches patches
 COPY apps/browser/package.json apps/browser/
 COPY packages/core/package.json packages/core/
 COPY packages/db/package.json packages/db/

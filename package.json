@@ -40,5 +40,8 @@
     "tsc-rs": "0.8.0",
     "typescript": "7",
     "wrangler": "4.153.0"
+  },
+  "patchedDependencies": {
+    "adhan@4.4.6": "patches/adhan@4.4.6.patch"
   }
 }

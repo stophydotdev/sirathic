@@ -444,6 +444,28 @@ test.each(official)("prayer times are within two minutes of $authority", (row) =
   expect(Math.max(...gaps)).toBeLessThanOrEqual(2);
 });
 
+const asrAt = (
+  latitude: number,
+  longitude: number,
+  zone: string,
+  date = { year: 2026, month: 11, day: 2 },
+) =>
+  minutesIn(
+    zone,
+    prayerTimesOn({ latitude, longitude, method: "MuslimWorldLeague", asr: "standard" }, date).asr,
+  );
+
+test("Asr starts when the shadow equals the noon shadow plus one length, far north too", () => {
+  expect(asrAt(51.5074, -0.1278, "Europe/London")).toBe(14 * 60 + 4);
+  expect(asrAt(59.9139, 10.7522, "Europe/Oslo")).toBe(13 * 60 + 49);
+  expect(asrAt(66.5039, 25.7294, "Europe/Helsinki", { year: 2027, month: 1, day: 5 })).toBe(
+    12 * 60 + 31,
+  );
+  expect(asrAt(69.4719, 25.5114, "Europe/Oslo", { year: 2027, month: 1, day: 18 })).toBe(
+    11 * 60 + 29,
+  );
+});
+
 test("Umm al-Qura Isha moves to two hours after Maghrib from the first night of Ramadan", () => {
   const makkah = {
     latitude: 21.4225,
