@@ -92,9 +92,9 @@ export function citations(history: UIMessage[]) {
     return image ? `![${image.title.replaceAll(/[[\]()]/gu, "")}](${image.url})` : "";
   };
 
-  const verseCited = (number: number, before: string) => {
+  const versesCited = (number: number, before: string) => {
     const cited = QURAN_URL.exec(byNumber.get(number) ?? "");
-    if (!cited) return number;
+    if (!cited) return [number];
     const [surah, ayah] = [Number(cited[1]), Number(cited[2])];
     const named = [...sinceLastCitation(paragraphOf(before)).matchAll(VERSE_KEY)].map(
       ([, namedSurah, from, to]) => ({
@@ -104,12 +104,12 @@ export function citations(history: UIMessage[]) {
       }),
     );
     const last = named.at(-1);
-    if (
+    const namedNumber =
       last === undefined ||
       named.some((verse) => verse.surah === surah && verse.from <= ayah && ayah <= verse.to)
-    )
-      return number;
-    return byUrl.get(`https://quran.com/${last.surah}/${last.from}`) ?? number;
+        ? undefined
+        : byUrl.get(`https://quran.com/${last.surah}/${last.from}`);
+    return namedNumber === undefined ? [number] : [namedNumber, number];
   };
 
   const link = (text: string, before = "") =>
@@ -132,9 +132,11 @@ export function citations(history: UIMessage[]) {
           const context = before + whole.slice(0, offset);
           if (inCode(context)) return found;
           const written = url === undefined ? Number(raw) : (byUrl.get(url) ?? Number(raw));
-          const number = written === undefined ? undefined : verseCited(written, context);
-          const target = number === undefined ? undefined : byNumber.get(number);
-          return target === undefined ? "" : `${space}[${number}](${target})`;
+          const linkedNumbers = versesCited(written, context).flatMap((number) => {
+            const target = byNumber.get(number);
+            return target === undefined ? [] : [`[${number}](${target})`];
+          });
+          return linkedNumbers.length === 0 ? "" : `${space}${linkedNumbers.join("")}`;
         },
       )
       .replace(IMAGE, (_, number: string) => imageOf(number));
