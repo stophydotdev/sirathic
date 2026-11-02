@@ -1,11 +1,16 @@
-import { dynamicTool } from "ai";
+import { dynamicTool, type UIMessage } from "ai";
 import { expect, test } from "bun:test";
 import { z } from "zod";
 import { publicUrl } from "@sirathic/core/web/url";
 import { isPrivateUrl } from "../apps/browser/src/blocked";
 import { masked } from "../apps/browser/src/mask";
 import { addressesIn, approvalFor, asksFirst, needsCard } from "../apps/server/src/chat/autoReview";
-import { needsApproval, withDeclineReasons, writingTools } from "../apps/server/src/chat/confirm";
+import {
+  needsApproval,
+  sendOnceAfterApproval,
+  withDeclineReasons,
+  writingTools,
+} from "../apps/server/src/chat/confirm";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
 import { totp } from "../apps/server/src/vault/totp";
@@ -181,6 +186,30 @@ test.each([
 
 test("an address in a routine written without spaces is found on its own", () => {
   expect(addressesIn("毎週金曜日にboss@work.exampleへ週報を送って")).toEqual(["boss@work.example"]);
+});
+
+const answered = (id: string): UIMessage[] => [
+  {
+    id: "a",
+    role: "assistant",
+    parts: [
+      {
+        type: "dynamic-tool",
+        toolName: "update_skill",
+        toolCallId: `call-${id}`,
+        state: "approval-responded",
+        input: {},
+        approval: { id, approved: true },
+      },
+    ],
+  },
+];
+
+test("an approval answer goes to the server once, even when the follow-up is cut short", () => {
+  const shouldSend = sendOnceAfterApproval();
+  expect(
+    [answered("1"), answered("1"), answered("2")].map((messages) => shouldSend({ messages })),
+  ).toEqual([true, false, true]);
 });
 
 test("a plugin tool needs confirmation unless the plugin marks it read-only", () => {
