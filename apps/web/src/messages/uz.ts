@@ -896,7 +896,6 @@ export default {
   Discover: "Кашф этиш",
   "Back to Discover": "Кашф этишга қайтиш",
   "Updated {date}": "Янгиланган: {date}",
-  "Draft, not reviewed": "Қоралама, текширилмаган",
   "Discover more": "Яна кашф этиш",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Баҳсли саволлар Қуръон, ҳадис ва фиқҳ китобларидан, ҳар бир манба кўрсатилган ҳолда жавобланади.",

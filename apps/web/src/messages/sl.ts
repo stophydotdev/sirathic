@@ -891,7 +891,6 @@ export default {
   Discover: "Odkrij",
   "Back to Discover": "Nazaj na Odkrij",
   "Updated {date}": "Posodobljeno {date}",
-  "Draft, not reviewed": "Osnutek, ni pregledano",
   "Discover more": "Odkrij več",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Sporna vprašanja z odgovori iz Korana, hadisov in fikhovskih knjig, z navedenimi vsemi viri.",

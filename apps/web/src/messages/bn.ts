@@ -879,7 +879,6 @@ export default {
   Discover: "আবিষ্কার",
   "Back to Discover": "আবিষ্কারে ফিরে যান",
   "Updated {date}": "হালনাগাদ: {date}",
-  "Draft, not reviewed": "খসড়া, পর্যালোচনা হয়নি",
   "Discover more": "আরও আবিষ্কার করুন",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "মতভেদপূর্ণ প্রশ্নের উত্তর কুরআন, হাদিস ও ফিকহের কিতাব থেকে, প্রতিটি সূত্রসহ।",

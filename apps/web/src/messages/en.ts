@@ -817,7 +817,6 @@ export const MESSAGES = [
   "Discover",
   "Back to Discover",
   "Updated {date}",
-  "Draft, not reviewed",
   "Discover more",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.",
   "How Discover works",

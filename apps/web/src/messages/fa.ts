@@ -885,7 +885,6 @@ export default {
   Discover: "کشف",
   "Back to Discover": "بازگشت به کشف",
   "Updated {date}": "به‌روزرسانی {date}",
-  "Draft, not reviewed": "پیش‌نویس، بازبینی نشده",
   "Discover more": "کشف بیشتر",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "مسائل اختلافی، پاسخ‌داده‌شده از قرآن، حدیث و کتاب‌های فقه، با ذکر هر منبع.",

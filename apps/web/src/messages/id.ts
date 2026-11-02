@@ -893,7 +893,6 @@ export default {
   Discover: "Jelajahi",
   "Back to Discover": "Kembali ke Jelajahi",
   "Updated {date}": "Diperbarui {date}",
-  "Draft, not reviewed": "Draf, belum ditinjau",
   "Discover more": "Jelajahi lainnya",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "Pertanyaan yang diperselisihkan, dijawab dari Al-Qur'an, hadis, dan kitab fikih, dengan setiap sumber dicantumkan.",

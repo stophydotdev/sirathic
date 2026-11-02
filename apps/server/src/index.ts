@@ -32,6 +32,7 @@ import { checkNoorUsage, spendNoor } from "./models/usage";
 import { chatResponse, KEEPALIVE_MS } from "./chat/response";
 import { reviewEvery } from "./bots/review";
 import { summonFor, wakeGroup } from "./bots/wake";
+import { noteAsked } from "./chat/asked";
 import { chatTitle } from "./chat/title";
 import { clientOf } from "./chat/client";
 import { connectedTools, finishConnect } from "./plugins/connections";
@@ -41,7 +42,15 @@ import { uploadRoutes } from "./files/upload";
 import { browserRoutes } from "./bots/browserRoutes";
 import { groupOf } from "./projects/groups";
 import { projectOfChat } from "./projects/projects";
-import { appLanguage, DEFAULT_EFFORT, device, effort, mode, sentMessage } from "./shared/messages";
+import {
+  appLanguage,
+  DEFAULT_EFFORT,
+  device,
+  effort,
+  messageText,
+  mode,
+  sentMessage,
+} from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./http";
 import { sideOptions } from "./models/subscription";
 import { appRouter } from "./router";
@@ -204,6 +213,14 @@ app.post("/api/chat", (c) =>
     saved.catch((err: Error) => {
       console.error(`session not saved: ${reasonOf(err)}`);
     });
+    const countAsked = () =>
+      void project
+        .then((inProject) =>
+          inProject?.kind === "bot" || !asked ? undefined : noteAsked(by, messageText(asked)),
+        )
+        .catch((err: Error) => {
+          console.error(`asked not counted: ${reasonOf(err)}`);
+        });
     const title = input.incognito
       ? undefined
       : (sourcesNeeded: Promise<boolean>) =>
@@ -212,7 +229,10 @@ app.post("/api/chat", (c) =>
               needed
                 ? titleSession(input.id, by, savable(validated), () =>
                     chatTitle(models.small, validated, sideOptions),
-                  )
+                  ).then((titled) => {
+                    if (titled !== undefined) countAsked();
+                    return titled;
+                  })
                 : undefined,
             )
             .catch((err: Error) => {

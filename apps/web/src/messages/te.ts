@@ -875,7 +875,6 @@ export default {
   Discover: "అన్వేషించండి",
   "Back to Discover": "అన్వేషణకు తిరిగి వెళ్ళండి",
   "Updated {date}": "నవీకరించినది: {date}",
-  "Draft, not reviewed": "ముసాయిదా, సమీక్షించబడలేదు",
   "Discover more": "మరిన్ని అన్వేషించండి",
   "Disputed questions, answered from the Quran, hadith and fiqh books with every source cited.":
     "భిన్నాభిప్రాయాలున్న ప్రశ్నలకు ఖురాన్, హదీసులు, ఫిఖ్ గ్రంథాల నుండి, ప్రతి మూలాన్ని ఉదహరిస్తూ సమాధానాలు.",
