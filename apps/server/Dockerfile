@@ -2,6 +2,7 @@ FROM oven/bun:1.4.4 AS build
 WORKDIR /repo
 
 COPY package.json bun.lock ./
+COPY patches patches
 COPY apps/server/package.json apps/server/
 COPY apps/browser/package.json apps/browser/
 COPY apps/web/package.json apps/web/

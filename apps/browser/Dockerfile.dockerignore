@@ -1,6 +1,7 @@
 **
 !package.json
 !bun.lock
+!patches
 !apps/browser/package.json
 !apps/browser/src
 !apps/browser/chromePolicy.json

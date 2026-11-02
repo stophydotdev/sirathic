@@ -1,6 +1,7 @@
 **
 !package.json
 !bun.lock
+!patches
 !tsconfig.json
 !apps/server/package.json
 !apps/server/src
