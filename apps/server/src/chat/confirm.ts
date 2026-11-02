@@ -36,7 +36,7 @@ const ACTIONS = [
 
 export type ActionKind = (typeof ACTIONS)[number]["kind"];
 
-const CHANGES =
+export const CHANGES =
   /(?:^|[^a-z])(?:(?:create|update)[^a-z]+event|trash|archive|labels?|unlabel)(?=$|[^a-z])/iu;
 
 const WIPE_OUT =

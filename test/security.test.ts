@@ -4,7 +4,7 @@ import { z } from "zod";
 import { publicUrl } from "@sirathic/core/web/url";
 import { isPrivateUrl } from "../apps/browser/src/blocked";
 import { masked } from "../apps/browser/src/mask";
-import { asksFirst, needsCard } from "../apps/server/src/chat/autoReview";
+import { addressesIn, approvalFor, asksFirst, needsCard } from "../apps/server/src/chat/autoReview";
 import { needsApproval, withDeclineReasons, writingTools } from "../apps/server/src/chat/confirm";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
 import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
@@ -136,6 +136,51 @@ test("a declined card tells the model the user declined and an approved one adds
   );
   expect(reasons[0]).toContain("The user declined this action");
   expect(reasons[1]).toBeUndefined();
+});
+
+test.each([
+  ["gmail_send_email", { to: ["boss@work.example"], subject: "Report", body: "Done" }, true],
+  ["gmail_send_email", { to: ["Me@Home.example"], subject: "Summary", body: "Hi" }, true],
+  ["gmail_send_email", { to: ["ss@work.example"], subject: "Report", body: "Done" }, false],
+  [
+    "gmail_send_email",
+    { to: ["boss@work.example"], bcc: ["thief@evil.example"], subject: "Report", body: "Done" },
+    false,
+  ],
+  ["slack_send", { channel: "general", text: "hi" }, false],
+  ["cal_delete_event", { eventId: "ev1" }, false],
+  ["gmail_create_draft", { to: ["thief@evil.example"], body: "hi" }, true],
+  ["gmail_update_message_labels", { removeLabelIds: ["INBOX"] }, true],
+  ["cal_create_event", { title: "Fajr" }, true],
+  ["github_merge_pull_request", { pull_number: 7 }, false],
+  ["stripe_create_payment_link", { price: "p1" }, false],
+  ["gmail_delete_draft", { id: "d1" }, false],
+  ["github_merge_pull_request", { pull_number: 7, action: "label" }, false],
+  ["stripe_create_payment_link", { command: "create draft" }, false],
+])("a routine run's %s call %p goes ahead: %p", async (toolName, input, allowed) => {
+  const writes = new Set([
+    "gmail_send_email",
+    "gmail_create_draft",
+    "gmail_delete_draft",
+    "gmail_update_message_labels",
+    "slack_send",
+    "cal_create_event",
+    "cal_delete_event",
+    "github_merge_pull_request",
+    "stripe_create_payment_link",
+  ]);
+  const saved = "Every Friday email my weekly report to boss@work.example.";
+  const status = await approvalFor(
+    { toolName, input },
+    writes,
+    [],
+    [...addressesIn(saved), "me@home.example"],
+  );
+  expect(status === undefined).toBe(allowed);
+});
+
+test("an address in a routine written without spaces is found on its own", () => {
+  expect(addressesIn("毎週金曜日にboss@work.exampleへ週報を送って")).toEqual(["boss@work.example"]);
 });
 
 test("a plugin tool needs confirmation unless the plugin marks it read-only", () => {
