@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/p/[id]">):
     title: first.question,
     description,
     openGraph: { title: first.question, description, type: "article" },
+    robots: { index: false },
   };
 }
 
