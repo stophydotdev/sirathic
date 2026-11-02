@@ -358,7 +358,7 @@ const BotYou: FC = () => {
         >
           <div
             className={cn(
-              "rounded-3xl px-4 py-2 wrap-break-word whitespace-pre-wrap",
+              "rounded-3xl px-4 py-2 wrap-break-word whitespace-pre-wrap [&_a]:text-current [&_a]:underline",
               tintOf(bot?.color ?? (inGroup ? "white" : null)).bubble,
             )}
           >
