@@ -9,19 +9,19 @@
     "text": "The Ḥanbalī al-Buhūtī states that listening to singing is disliked, and that listening to it with an instrument of amusement is forbidden, while the Ḥanbalī Ibn Qudāma reports disagreement among the school's companions on singing, with Abū Bakr al-Khallāl and Abū Bakr ʿAbd al-ʿAzīz holding it permissible. Ibn ʿĀbidīn reports that all of that is disliked according to the Ḥanafīs, and al-Nawawī states that the voice's singing is disliked and listening to it is disliked, neither being forbidden, while al-Shirbīnī says singing is disliked and that using an instrument from the drinking-party's emblem, like a ṭunbūr, is forbidden.",
     "citations": [
       "https://shamela.ws/book/622#15:272",
-      "https://shamela.ws/book/6910#14:160",
-      "https://shamela.ws/book/21613#6:349",
-      "https://shamela.ws/book/21604#4:18",
-      "https://shamela.ws/book/21613#5:481",
+      "https://shamela.ws/book/6910/7507",
+      "https://shamela.ws/book/21613/3791",
+      "https://shamela.ws/book/21604/1650",
+      "https://shamela.ws/book/21613/3214",
       "https://shamela.ws/book/622#12:64",
-      "https://shamela.ws/book/21604#4:166",
-      "https://shamela.ws/book/21613#5:482",
-      "https://shamela.ws/book/21613#6:348",
+      "https://shamela.ws/book/21604/1798",
+      "https://shamela.ws/book/21613/3215",
+      "https://shamela.ws/book/21613/3790",
       "https://www.dar-alifta.org/ar/Fatwa/Details/11981/الحكم-الشرعي-في-الموسيقى",
       "https://shamela.ws/book/499#11:222",
-      "https://shamela.ws/book/11444#6:348",
-      "https://shamela.ws/book/11444#6:347",
-      "https://shamela.ws/book/587#3:432"
+      "https://shamela.ws/book/11444/3076",
+      "https://shamela.ws/book/11444/3075",
+      "https://shamela.ws/book/587/1533"
     ]
   },
   "updated": "2026-10-31",
@@ -32,19 +32,19 @@
       "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج15 ص272"
     },
     {
-      "url": "https://shamela.ws/book/6910#14:160",
+      "url": "https://shamela.ws/book/6910/7507",
       "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج14 ص160"
     },
     {
-      "url": "https://shamela.ws/book/21613#6:349",
+      "url": "https://shamela.ws/book/21613/3791",
       "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص349"
     },
     {
-      "url": "https://shamela.ws/book/21604#4:18",
+      "url": "https://shamela.ws/book/21604/1650",
       "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج4 ص18"
     },
     {
-      "url": "https://shamela.ws/book/21613#5:481",
+      "url": "https://shamela.ws/book/21613/3214",
       "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج5 ص481"
     },
     {
@@ -52,15 +52,15 @@
       "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج12 ص64"
     },
     {
-      "url": "https://shamela.ws/book/21604#4:166",
+      "url": "https://shamela.ws/book/21604/1798",
       "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج4 ص166"
     },
     {
-      "url": "https://shamela.ws/book/21613#5:482",
+      "url": "https://shamela.ws/book/21613/3215",
       "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج5 ص482"
     },
     {
-      "url": "https://shamela.ws/book/21613#6:348",
+      "url": "https://shamela.ws/book/21613/3790",
       "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص348"
     },
     {
@@ -72,15 +72,15 @@
       "title": "روضة الطالبين وعمدة المفتين، النووي، ج11 ص222"
     },
     {
-      "url": "https://shamela.ws/book/11444#6:348",
+      "url": "https://shamela.ws/book/11444/3076",
       "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج6 ص348"
     },
     {
-      "url": "https://shamela.ws/book/11444#6:347",
+      "url": "https://shamela.ws/book/11444/3075",
       "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج6 ص347"
     },
     {
-      "url": "https://shamela.ws/book/587#3:432",
+      "url": "https://shamela.ws/book/587/1533",
       "title": "المدونة، مالك بن أنس، ج3 ص432"
     },
     {
@@ -217,7 +217,7 @@
         {
           "text": "The Hanbali al-Mughni adds a second verse to the same file: on \"avoid the word of falsehood\" (Quran 22:30), Ibn al-Ḥanafiyya said it is singing, and it cites Ibn ʿAbbās and Ibn Masʿūd on 31:6 in the same passage. Two further verses are read as allusions rather than rulings. On \"incite whoever you can among them with your voice\" (Quran 17:64), Mujāhid said the voice of Iblīs is singing and falsehood. And on \"while you are proudly sporting\" (Quran 53:61), Ibn ʿAbbās said samidūn means singing in the Himyar dialect: when the pagans heard the Quran they would sing over it.",
           "citations": [
-            "https://shamela.ws/book/6910#14:160",
+            "https://shamela.ws/book/6910/7507",
             "https://quran.com/17/64",
             "https://islamqa.info/en/answers/5000",
             "https://quran.com/53/61"
@@ -254,7 +254,7 @@
             "https://sunnah.com/tirmidhi:1089",
             "https://sunnah.com/ibnmajah:1895",
             "https://sunnah.com/ibnmajah:2613",
-            "https://shamela.ws/book/21613#6:348"
+            "https://shamela.ws/book/21613/3790"
           ]
         }
       ]
@@ -265,27 +265,27 @@
         {
           "text": "The Hanafis hold instruments haram: listening to the sound of malāhī is haram, and al-Kasānī says the ʿūd-player's integrity falls \"because it is not permissible in any way\". On the voice alone, al-Baḥr says \"the madhhab is its prohibition absolutely, so the disagreement ended,\" with al-Hidāya's apparent meaning that it is a major sin even for oneself; but what contains admonition and wisdom is permitted by consensus, and Ibn ʿĀbidīn defines the haram by its content.",
           "citations": [
-            "https://shamela.ws/book/21613#5:481",
-            "https://shamela.ws/book/21613#5:482",
-            "https://shamela.ws/book/21613#6:348",
-            "https://shamela.ws/book/21613#6:349",
+            "https://shamela.ws/book/21613/3214",
+            "https://shamela.ws/book/21613/3215",
+            "https://shamela.ws/book/21613/3790",
+            "https://shamela.ws/book/21613/3791",
             "https://www.dar-alifta.org/ar/Fatwa/Details/11981/الحكم-الشرعي-في-الموسيقى"
           ]
         },
         {
           "text": "Mālik disliked the duff and all maʿāzif at weddings; with an instrument it is haram even at a wedding on the relied-upon view; duff and maʿāzif at a wedding are makrūh, at an ʿaqīqa or circumcision haram. The voice alone is makrūh when free of obscene words, incitement and instruments; otherwise haram, in doing and in hearing.",
           "citations": [
-            "https://shamela.ws/book/587#3:432",
-            "https://shamela.ws/book/21604#4:18",
-            "https://shamela.ws/book/21604#4:166"
+            "https://shamela.ws/book/587/1533",
+            "https://shamela.ws/book/21604/1650",
+            "https://shamela.ws/book/21604/1798"
           ]
         },
         {
           "text": "The Shāfiʿīs hold it haram to use and to hear instruments of the wine-drinkers, tunbūr, ʿūd, ṣanj, Iraqi mizmār, and al-Shirbīnī says the more correct view is its prohibition. The voice alone is makrūh, and hearing it makrūh, not haram; stronger from a non-mahram woman; haram without dispute if fitna is feared.",
           "citations": [
             "https://shamela.ws/book/499#11:222",
-            "https://shamela.ws/book/11444#6:347",
-            "https://shamela.ws/book/11444#6:348"
+            "https://shamela.ws/book/11444/3075",
+            "https://shamela.ws/book/11444/3076"
           ]
         },
         {
@@ -293,7 +293,7 @@
           "citations": [
             "https://shamela.ws/book/622#15:272",
             "https://shamela.ws/book/622#12:64",
-            "https://shamela.ws/book/6910#14:160"
+            "https://shamela.ws/book/6910/7507"
           ]
         },
         {
@@ -301,7 +301,7 @@
           "citations": [
             "https://islamqa.info/ar/answers/169673",
             "https://islamqa.info/en/answers/5000",
-            "https://shamela.ws/book/6910#14:160"
+            "https://shamela.ws/book/6910/7507"
           ]
         }
       ]

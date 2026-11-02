@@ -9,9 +9,9 @@
     "text": "The Maliki, Shafi'i and Hanbali schools hold shrimp lawful to eat, and the Hanafi school is split over it because its rule admits only fish from the sea. The question turns on how wide \"game of the sea\" in Quran 5:96 is and whether a shrimp counts as samak (fish) in the Arabic of the revelation.",
     "citations": [
       "https://fiqh.islamonline.net/en/crab-the-jurisprudence-of-seafood/",
-      "https://shamela.ws/book/11355#0:80",
-      "https://shamela.ws/book/11444#6:146",
-      "https://shamela.ws/book/6910#13:345",
+      "https://shamela.ws/book/11355/110",
+      "https://shamela.ws/book/11444/2874",
+      "https://shamela.ws/book/6910/7033",
       "https://islamqa.org/hanafi/daruliftaamw/134432/sea-foods-prawns-calamari/",
       "https://islamqa.org/hanafi/qibla-hanafi/36667/ruling-on-shrimp/",
       "https://islamqa.org/hanafi/darululoomtt/149237/the-ruling-of-prawns-shrimps/"
@@ -25,15 +25,15 @@
       "title": "Crab: The Jurisprudence of Seafood"
     },
     {
-      "url": "https://shamela.ws/book/11355#0:80",
+      "url": "https://shamela.ws/book/11355/110",
       "title": "مختصر خليل، خليل بن إسحاق الجندي، ج0 ص80"
     },
     {
-      "url": "https://shamela.ws/book/11444#6:146",
+      "url": "https://shamela.ws/book/11444/2874",
       "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج6 ص146"
     },
     {
-      "url": "https://shamela.ws/book/6910#13:345",
+      "url": "https://shamela.ws/book/6910/7033",
       "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج13 ص345"
     },
     {
@@ -69,7 +69,7 @@
       "title": "Quran 7:157, Al-A'raaf"
     },
     {
-      "url": "https://shamela.ws/book/21613#6:307",
+      "url": "https://shamela.ws/book/21613/3749",
       "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص307"
     },
     {
@@ -77,7 +77,7 @@
       "title": "Eating Lobster"
     },
     {
-      "url": "https://shamela.ws/book/6910#13:298",
+      "url": "https://shamela.ws/book/6910/6986",
       "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج13 ص298"
     },
     {
@@ -169,11 +169,11 @@
       "title": "Is it permissible to consume Shrimp according to the Hanafi Madhab?"
     },
     {
-      "url": "https://shamela.ws/book/587#1:536",
+      "url": "https://shamela.ws/book/587/424",
       "title": "المدونة، مالك بن أنس، ج1 ص536"
     },
     {
-      "url": "https://shamela.ws/book/587#1:439",
+      "url": "https://shamela.ws/book/587/327",
       "title": "المدونة، مالك بن أنس، ج1 ص439"
     },
     {
@@ -181,11 +181,11 @@
       "title": "روضة الطالبين وعمدة المفتين، النووي، ج3 ص274"
     },
     {
-      "url": "https://shamela.ws/book/6910#5:395",
+      "url": "https://shamela.ws/book/6910/2537",
       "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج5 ص395"
     },
     {
-      "url": "https://shamela.ws/book/6910#13:344",
+      "url": "https://shamela.ws/book/6910/7032",
       "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج13 ص344"
     },
     {
@@ -302,14 +302,14 @@
           "citations": [
             "https://quran.com/5/3",
             "https://quran.com/7/157",
-            "https://shamela.ws/book/21613#6:307",
+            "https://shamela.ws/book/21613/3749",
             "https://daruliftaa.us/fatwa/361/"
           ]
         },
         {
           "text": "The Companions read the sea verse expansively. Ibn Abbas explained \"its food\" as \"what dies in it,\" and Abu Bakr said the floating fish is lawful. Zayd ibn Thabit and Abu Hurayrah were asked about what the sea casts up and both said there is no harm in it, a report graded mauquf sahih.",
           "citations": [
-            "https://shamela.ws/book/6910#13:298",
+            "https://shamela.ws/book/6910/6986",
             "https://sunnah.com/urn/510640",
             "https://sunnah.com/urn/510630"
           ]
@@ -368,7 +368,7 @@
           "text": "In the Hanafi books, al-Durr al-Mukhtar with Radd al-Muhtar, al-Fatawa al-Hindiyya, Mukhtasar al-Quduri, al-Hidaya and al-Mabsut, only fish is lawful from the sea and everything else is not, and the school divides over whether shrimp is fish. Their reasoning is that the two-dead-things hadith is mashhur and supported by ijma, so it may specify the general verse; fish is established separately by \"tender meat\" in 16:14, and what is not fish is khabith and remains under the ban on carrion.",
           "citations": [
             "https://islamqa.org/hanafi/daruliftaamw/134432/sea-foods-prawns-calamari/",
-            "https://shamela.ws/book/21613#6:307",
+            "https://shamela.ws/book/21613/3749",
             "https://daruliftaa.us/fatwa/400/",
             "https://daruliftaa.us/fatwa/322/",
             "https://mathabah.org/are-sea-animals-permissible/",
@@ -378,21 +378,21 @@
         {
           "text": "The Maliki books, Mukhtasar Khalil and al-Mudawwana, hold sea creatures lawful \"even if dead,\" and Malik disliked none of the sea's animals and did not object to the floating. Sea game is all mudhakka by nature and needs no tasmiyah, so even a Magian's catch is lawful.",
           "citations": [
-            "https://shamela.ws/book/11355#0:80",
-            "https://shamela.ws/book/587#1:536",
-            "https://shamela.ws/book/587#1:439"
+            "https://shamela.ws/book/11355/110",
+            "https://shamela.ws/book/587/424",
+            "https://shamela.ws/book/587/327"
           ]
         },
         {
           "text": "In the Shafi'i books, Rawdat al-Talibin and Mughni al-Muhtaj, fish is lawful without slaughter, and the reliable position is that all that is in the sea is lawful when dead except the frog. The reasoning is the absolute wording of 5:96 and the hadith on the sea's water and dead; the Mawaridi exception for sea snakes and poisonous creatures is reported but not the relied-upon view.",
-          "citations": ["https://shamela.ws/book/499#3:274", "https://shamela.ws/book/11444#6:146"]
+          "citations": ["https://shamela.ws/book/499#3:274", "https://shamela.ws/book/11444/2874"]
         },
         {
           "text": "The Hanbali sources state that whatever lives only in water is lawful without slaughter, with no known disagreement, and that salt sea and rivers are alike. They state that what lives on land too, such as the turtle, needs slaughter, but the bloodless crab does not; the reasoning given is the verse and the reports of the two dead things and the anbar. They also report that Ahmad said of the crab, \"there is no harm in it,\" and that it is not slaughtered.",
           "citations": [
-            "https://shamela.ws/book/6910#5:395",
-            "https://shamela.ws/book/6910#13:345",
-            "https://shamela.ws/book/6910#13:344",
+            "https://shamela.ws/book/6910/2537",
+            "https://shamela.ws/book/6910/7033",
+            "https://shamela.ws/book/6910/7032",
             "https://shamela.ws/book/622#14:315"
           ]
         },
@@ -427,7 +427,7 @@
         },
         {
           "text": "Ibn Qudama answers from the other side: the prohibition of the floating fish is not established, since Abu Dawud said the trustworthy narrators stopped it at Jabir and it was only raised to the Prophet ﷺ through a weak chain, and Abu Bakr had said the floating is lawful; if it were authentic it would be carried to a meaning other than a blanket ban, and his analogy is that what would be lawful dying on land is lawful dying in the sea, like the locust.",
-          "citations": ["https://shamela.ws/book/6910#13:298"]
+          "citations": ["https://shamela.ws/book/6910/6986"]
         },
         {
           "text": "The last layer is the shrimp question itself, which is not a dispute over texts but over language. Shaykh Faraz Rabbani's summary is that both readings are honest, principled and grounded in the Quran read in its own tongue, and that whichever school one follows, one is on solid ground. The Hanafi criterion is what the Arabs counted as fish at the time of revelation; the opposing criterion is the zoologist's classification. That is why the same school can produce a fatwa of permissibility and a fatwa of prohibition without either side abandoning the school's principle.",
