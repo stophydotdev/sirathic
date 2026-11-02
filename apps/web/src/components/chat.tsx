@@ -1,6 +1,7 @@
 "use client";
 
 import { chosenModel, currentModel } from "@/components/account";
+import { sendOnceAfterApproval } from "@sirathic/server/confirm";
 import { notify } from "@/components/automationAlerts";
 import { localZone } from "@/components/automationText";
 import { useChatOptions } from "@/components/chatOptions";
@@ -30,12 +31,7 @@ import {
   SimpleTextAttachmentAdapter,
 } from "@assistant-ui/react";
 import { useAISDKRuntime } from "@assistant-ui/react-ai-sdk";
-import {
-  DefaultChatTransport,
-  isToolUIPart,
-  lastAssistantMessageIsCompleteWithApprovalResponses,
-  validateUIMessages,
-} from "ai";
+import { DefaultChatTransport, isToolUIPart, validateUIMessages } from "ai";
 import { createContext, type FC, useContext, useEffect, useState } from "react";
 import { z } from "zod";
 import { create } from "zustand";
@@ -289,7 +285,7 @@ const liveChat = (
     id,
     messages,
     transport: transportIn(projectId),
-    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses,
+    sendAutomaticallyWhen: sendOnceAfterApproval(),
     onData: (part) => {
       if (part.type === "data-title") void useSessions.getState().refresh();
     },

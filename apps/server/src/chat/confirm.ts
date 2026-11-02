@@ -1,4 +1,10 @@
-import { getToolName, isToolUIPart, type ToolSet } from "ai";
+import {
+  getToolName,
+  isToolUIPart,
+  lastAssistantMessageIsCompleteWithApprovalResponses,
+  type ToolSet,
+  type UIMessage,
+} from "ai";
 import { z } from "zod";
 import type { Event } from "./events";
 import { bulkCall } from "../plugins/bulkInput";
@@ -129,4 +135,17 @@ export const withDeclineReasons = (messages: ChatMessage[]) => {
     if (isToolUIPart(part) && part.approval?.approved === false) part.approval.reason ??= DECLINED;
   }
   return messages;
+};
+
+export const sendOnceAfterApproval = () => {
+  const sent = new Set<string>();
+  return ({ messages }: { messages: UIMessage[] }) => {
+    if (!lastAssistantMessageIsCompleteWithApprovalResponses({ messages })) return false;
+    const answered = (messages.at(-1)?.parts ?? []).flatMap((part) =>
+      isToolUIPart(part) && part.state === "approval-responded" ? [part.approval.id] : [],
+    );
+    const fresh = answered.filter((id) => !sent.has(id));
+    for (const id of fresh) sent.add(id);
+    return fresh.length > 0;
+  };
 };

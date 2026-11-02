@@ -81,6 +81,11 @@ export const ConfirmCard: FC<{ call: ToolCall }> = ({ call }) => {
   const [sent, setSent] = useState(false);
   const { approval } = call;
   if (!approval) return null;
+  if (approval.isAutomatic) {
+    return (
+      <EventLine icon={CancelCircleIcon} label={t("Cancelled")} name={nameOf(call.toolName)} />
+    );
+  }
   const confirmed = approval.approved === true;
   const closed = approval.approved !== undefined || approval.resolution !== undefined;
   const decide = (approved: boolean) => {

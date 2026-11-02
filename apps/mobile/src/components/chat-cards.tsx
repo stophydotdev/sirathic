@@ -61,7 +61,7 @@ export const isCardTool = (name: string) => CARD_TOOLS.has(currentToolName(name)
 
 export const isBotEvent = (name: string) => EVENT_TOOLS.has(currentToolName(name));
 
-const EventLine: FC<{
+export const EventLine: FC<{
   Icon: typeof Brain;
   label: string;
   name?: string;

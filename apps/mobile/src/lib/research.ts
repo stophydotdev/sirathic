@@ -34,8 +34,9 @@ const TOOL_NAMES = new Map(
 export const toolOf = (part: Part) => {
   const output = "output" in part ? part.output : undefined;
   const failed = "state" in part && part.state === "output-error";
+  const approval = "approval" in part ? part.approval : undefined;
   return part.type === "dynamic-tool"
-    ? { id: part.toolCallId, name: part.toolName, input: part.input, output, failed }
+    ? { id: part.toolCallId, name: part.toolName, input: part.input, output, failed, approval }
     : part.type.startsWith("tool-") && "input" in part
       ? {
           id: part.toolCallId,
@@ -43,6 +44,7 @@ export const toolOf = (part: Part) => {
           input: part.input,
           output,
           failed,
+          approval,
         }
       : undefined;
 };

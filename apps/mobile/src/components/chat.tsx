@@ -1,4 +1,5 @@
 import { Chat as LiveChat, useChat } from "@ai-sdk/react";
+import { sendOnceAfterApproval } from "@sirathic/server/confirm";
 import {
   type ChatMessage,
   chatData,
@@ -72,6 +73,7 @@ export const liveChat = (id: string, messages: ChatMessage[] | undefined, projec
     id,
     messages,
     transport: transportIn(projectId),
+    sendAutomaticallyWhen: sendOnceAfterApproval(),
     onData: (part) => {
       if (part.type === "data-title") refreshSaved();
     },
@@ -173,8 +175,16 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
   const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
   const newChat = useChatState((s) => s.newChat);
   const [session] = useState(() => liveChat(id, initialMessages));
-  const { messages, sendMessage, regenerate, setMessages, status, stop, error } =
-    useChat<ChatMessage>({ chat: session, resume: session.messages.length > 0 });
+  const {
+    messages,
+    sendMessage,
+    regenerate,
+    setMessages,
+    addToolApprovalResponse,
+    status,
+    stop,
+    error,
+  } = useChat<ChatMessage>({ chat: session, resume: session.messages.length > 0 });
   const incognito = useChatState((s) => s.incognito);
   const [dock, setDock] = useState(0);
   const wasBusy = useRef(false);
@@ -260,6 +270,12 @@ export const Chat: FC<{ id: string; initialMessages?: ChatMessage[] }> = ({
                       : undefined
                   }
                   onAsk={ask}
+                  onDecide={
+                    index === messages.length - 1
+                      ? (approvalId, approved) =>
+                          void addToolApprovalResponse({ id: approvalId, approved })
+                      : undefined
+                  }
                 />
               ),
             )}

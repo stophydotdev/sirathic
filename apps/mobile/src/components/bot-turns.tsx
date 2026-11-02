@@ -12,6 +12,7 @@ import { SentFiles } from "./attachment-chip";
 import { useBots } from "@/lib/bots";
 import { BotAvatar, tintOf } from "./bot-avatar";
 import { AnswerCard, isAnswerCard, MemoryUsed } from "./answer-cards";
+import { ApprovalCard } from "./approval-card";
 import { AutomationCard, BotEvent, isBotEvent, isCardTool } from "./chat-cards";
 import { Copy, Dots, ThumbDown, ThumbUp } from "./icons";
 import { Menu, menuRow, menuText } from "./menu";
@@ -33,7 +34,8 @@ const saidOf = (message: ChatMessage) =>
       const tool = toolOf(part);
       return tool &&
         tool.name !== "todo_write" &&
-        (isCardTool(tool.name) ||
+        (tool.approval !== undefined ||
+          isCardTool(tool.name) ||
           isAnswerCard(tool.name) ||
           isBotEvent(tool.name) ||
           (currentToolName(tool.name) === "clarifying_questions" && !tool.failed))
@@ -204,7 +206,8 @@ export const BotSays: FC<{
   feedback: Feedback;
   onRate: (next: Feedback) => void;
   onAsk: (text: string) => void;
-}> = ({ message, running, reply, feedback, onRate, onAsk }) => {
+  onDecide?: (approvalId: string, approved: boolean) => void;
+}> = ({ message, running, reply, feedback, onRate, onAsk, onDecide }) => {
   const said = saidOf(message);
   const last = message.parts.at(-1);
   const streaming = running && last?.type === "text" && last.text.trim() !== "";
@@ -241,6 +244,7 @@ export const BotSays: FC<{
             <AskCard input={item.tool.input} reply={reply} busy={running} onAnswer={onAsk} />
           ) : (
             <>
+              <ApprovalCard tool={item.tool} onDecide={onDecide} />
               <AutomationCard tool={item.tool.name} output={item.tool.output} />
               <AnswerCard name={item.tool.name} input={item.tool.input} output={item.tool.output} />
               <BotEvent tool={item.tool.name} output={item.tool.output} />

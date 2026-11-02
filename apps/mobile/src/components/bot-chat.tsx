@@ -116,9 +116,8 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
 }) => {
   const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
   const [session] = useState(() => liveChat(bot.id, initialMessages, bot.id));
-  const { messages, sendMessage, setMessages, status, stop, error } = useChat<ChatMessage>({
-    chat: session,
-  });
+  const { messages, sendMessage, setMessages, addToolApprovalResponse, status, stop, error } =
+    useChat<ChatMessage>({ chat: session });
   const setPanel = useBotPanel((s) => s.setOpen);
   const busy = status === "submitted" || status === "streaming";
   const working = useChatState(
@@ -254,6 +253,12 @@ export const BotChat: FC<{ bot: Bot; initialMessages: ChatMessage[] }> = ({
                 feedback={message.metadata?.feedback ?? null}
                 onRate={(next) => rate(message.id, next)}
                 onAsk={ask}
+                onDecide={
+                  index === messages.length - 1
+                    ? (approvalId, approved) =>
+                        void addToolApprovalResponse({ id: approvalId, approved })
+                    : undefined
+                }
               />
             ),
           )}
