@@ -105,6 +105,31 @@ test("always allowing a contact fill covers only the site it names", async () =>
   expect([sameSite, otherSite, shorter, inside]).toEqual([false, true, true, true]);
 });
 
+test("an ask-first rule wins over always allow even when Clef scores it low beside the allow rule", async () => {
+  const always = {
+    text: "Fill my saved contact on shop.example without asking",
+    effect: "allow",
+  } as const;
+  const askFirst = { text: "ask me before filling in my address anywhere", effect: "ask" } as const;
+  const real = globalThis.fetch;
+  globalThis.fetch = Object.assign(
+    async (...[, init]: Parameters<typeof fetch>) => {
+      const body = String(init?.body);
+      const both = body.includes(always.text) && body.includes(askFirst.text);
+      const noul = body.includes(always.text) ? 0.95 : 0.5;
+      return Response.json({
+        result: { answers: { rule0: { noul: both ? 0.95 : noul }, rule1: { noul: 0.2 } } },
+      });
+    },
+    { preconnect: real.preconnect },
+  );
+  try {
+    expect(await asksFirst(fillOn("shop.example"), [always, askFirst])).toBe(true);
+  } finally {
+    globalThis.fetch = real;
+  }
+});
+
 const calendar = { text: "ask me before changing my calendar", effect: "ask" } as const;
 const changes = new Set([
   "cal_create_event",

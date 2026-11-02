@@ -29,7 +29,8 @@ const filledSite = z.object({ domain: z.string().min(1) });
 
 const described = (call: Call) => {
   const site = call.toolName === VAULT_FILL_CONTACT ? filledSite.safeParse(call.input).data : null;
-  if (site) return `${spell(call)} (this fills the user's saved contact on ${site.domain})`;
+  if (site)
+    return `${spell(call)} (this types the user's saved contact details, such as name, address, phone and email, into a page on ${site.domain})`;
   return /unlabel|update[^a-z]+message[^a-z]+labels/iu.test(call.toolName) &&
     leavesInbox.safeParse(call.input).success
     ? `${spell(call)} (this archives it: it takes it out of the inbox)`
@@ -37,6 +38,7 @@ const described = (call: Call) => {
 };
 
 const chancesFor = async (action: string, rules: Settings["rules"]) => {
+  if (rules.length === 0) return () => undefined;
   const chance = await yesChances(
     `The assistant is about to run the tool ${action.replaceAll("_", " ")}.`,
     Object.fromEntries(
@@ -70,13 +72,14 @@ export const asksFirst = async (call: Call, everyRule: Settings["rules"]) => {
     return true;
   }
   try {
-    const score = await chancesFor(described(call), rules);
-    const asks = rules.some(
-      ({ effect }, index) => effect === "ask" && (score(index) ?? 1) >= ASK_AT,
-    );
-    const allows = rules.some(
-      ({ effect }, index) => effect === "allow" && (score(index) ?? 0) >= ALLOW_AT,
-    );
+    const asking = rules.filter(({ effect }) => effect === "ask");
+    const allowing = rules.filter(({ effect }) => effect === "allow");
+    const [askScore, allowScore] = await Promise.all([
+      chancesFor(described(call), asking),
+      chancesFor(described(call), allowing),
+    ]);
+    const asks = asking.some((_, index) => (askScore(index) ?? 1) >= ASK_AT);
+    const allows = allowing.some((_, index) => (allowScore(index) ?? 0) >= ALLOW_AT);
     return asks || !allows;
   } catch (err) {
     console.warn(`auto-review failed: ${err instanceof Error ? err.message : String(err)}`);
