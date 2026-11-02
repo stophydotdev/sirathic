@@ -80,17 +80,17 @@ test("an earlier answer reaches the model with bare citation numbers", () => {
   ]);
 });
 
-test("a Quran citation moves to the retrieved verse its paragraph names", async () => {
+test("a Quran citation also links the retrieved verse its paragraph names and keeps its own", async () => {
   const cases = [
     {
       urls: [quran("2:219"), quran("5:90")],
       deltas: ["“…so avoid it that you may be successful.” (Qur’an 5:90)", "[1]"],
-      expected: `“…so avoid it that you may be successful.” (Qur’an 5:90)[2](${quran("5:90")})`,
+      expected: `“…so avoid it that you may be successful.” (Qur’an 5:90)[2](${quran("5:90")})[1](${quran("2:219")})`,
     },
     {
       urls: [quran("2:228"), quran("2:229")],
       deltas: ["“It is not lawful for you to take anything…” (Qur’an 2:229)[1]"],
-      expected: `“It is not lawful for you to take anything…” (Qur’an 2:229)[2](${quran("2:229")})`,
+      expected: `“It is not lawful for you to take anything…” (Qur’an 2:229)[2](${quran("2:229")})[1](${quran("2:228")})`,
     },
     {
       urls: [quran("24:47"), quran("3:100"), quran("34:31"), quran("49:14")],
@@ -98,7 +98,7 @@ test("a Quran citation moves to the retrieved verse its paragraph names", async 
         "Earlier point.[3]\n\nQur’an 49:14 addresses Bedouins who said, “We have believed.” ",
         "It should not be generalized.[2]",
       ],
-      expected: `Earlier point.[3](${quran("34:31")})\n\nQur’an 49:14 addresses Bedouins who said, “We have believed.” It should not be generalized.[4](${quran("49:14")})`,
+      expected: `Earlier point.[3](${quran("34:31")})\n\nQur’an 49:14 addresses Bedouins who said, “We have believed.” It should not be generalized.[4](${quran("49:14")})[2](${quran("3:100")})`,
     },
   ];
   expect(await Promise.all(cases.map(({ urls, deltas }) => linked(urls, deltas)))).toEqual(
