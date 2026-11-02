@@ -7,7 +7,6 @@ import {
   createUIMessageStreamResponse,
   type FinishReason,
   type InferUIMessageChunk,
-  type LanguageModel,
   type LanguageModelUsage,
   smoothStream,
   type UIMessageStreamOutcome,
@@ -17,15 +16,12 @@ import { memoryTools, rememberAfterAnswer } from "../account/memory";
 import { pastChatTools } from "./pastChats";
 import { noorModel } from "../models/noor";
 import { countedTokens } from "../models/usage";
-import type { RulesProject } from "../projects/rules";
-import type { connectedTools } from "../plugins/connections";
-import { type Event, toolFailure } from "./events";
-import { type AutomationScope, routineTools } from "../automations/tools";
-import { BOT_HISTORY, type BotScope, botTools, recentTurns } from "../bots/tools";
+import { toolFailure } from "./events";
+import { routineTools } from "../automations/tools";
+import { BOT_HISTORY, botTools, recentTurns } from "../bots/tools";
 import { browserFor } from "../bots/browser";
-import type { Room } from "../bots/room";
 import { readingOnly, taskTools } from "../bots/taskTools";
-import { type Summon, teamTools, teammatesOf } from "../bots/team";
+import { teamTools, teammatesOf } from "../bots/team";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, ourChatNote } from "../bots/chatSearch";
 import { studyTools } from "../bots/studyTools";
@@ -35,6 +31,7 @@ import { settingTools } from "../account/settingTools";
 import { citations, withBareCitations } from "./citations";
 import { codeSandbox } from "./codeTools";
 import { needsCard } from "./autoReview";
+import type { ResponseInput } from "./responseInput";
 import { withDeclineReasons, withoutOriginalInputs, writingTools } from "./confirm";
 import { needsSources } from "./relevance";
 import { listConnections } from "../plugins/connections";
@@ -47,8 +44,7 @@ import { reasonOf } from "../http";
 import { skillRules } from "../skills/skills";
 import { pluginTools } from "../plugins/tools";
 import { skillTools } from "../skills/tools";
-import type { ChatMessage, Mode } from "../shared/messages";
-import type { Settings } from "../shared/settings";
+import type { ChatMessage } from "../shared/messages";
 import { shortenEarlierResults, withReactionNotes, withSenderNote } from "./history";
 import { instructions, userFacts } from "./prompts/build";
 import {
@@ -57,16 +53,14 @@ import {
   LOAD_SKILL,
   openedBy,
   RESEARCH_OPENS,
-  type UserSkill,
   skillsFor,
 } from "./skills/builtIn";
 import { STOPHY_LINK, stophyTools } from "./stophyTools";
-import { answerAgent, type Turn } from "./answerAgent";
+import { answerAgent } from "./answerAgent";
 import { answerFromResults } from "./answerFromResults";
 import { answerOptions } from "../models/subscription";
 import { answerCards, cardBook, todoBook } from "./cards";
 import { afterAnswer } from "./afterAnswer";
-import type { SourceKind } from "../shared/sources";
 import { xSearchTools } from "./xSearch";
 import { hasGrok } from "../models/plans";
 import {
@@ -115,37 +109,7 @@ export function chatResponse({
   summon,
   room,
   byBot,
-}: {
-  models: { model: Parameters<typeof answerAgent>[0]["model"]; small: LanguageModel };
-  turn: Turn;
-  modelName: string;
-  messages: ChatMessage[];
-  mode: Mode;
-  abortSignal: AbortSignal;
-  preferences: Promise<Settings>;
-  connected: ReturnType<typeof connectedTools>;
-  project: Promise<RulesProject | undefined>;
-  userSkills: Promise<UserSkill[]>;
-  title: ((sourcesNeeded: Promise<boolean>) => Promise<string | undefined>) | undefined;
-  save: (messages: ChatMessage[]) => Promise<void>;
-  record: (event: Event) => void;
-  owner: string | undefined;
-  automate: AutomationScope | undefined;
-  fileOwner?: string;
-  consumeSseStream?: Parameters<typeof createUIMessageStreamResponse>[0]["consumeSseStream"];
-  spend?: (counted: number) => void;
-  unattended?: true;
-  task?: true;
-  wake?: true;
-  steer?: () => string[];
-  bot?: Promise<BotScope | undefined>;
-  historyLimit?: number;
-  citedEarlier?: ChatMessage[];
-  sourceKinds?: SourceKind[];
-  summon?: Summon;
-  room?: Room;
-  byBot?: true;
-}) {
+}: ResponseInput) {
   const startedAt = performance.now();
   const since = () => Math.round(performance.now() - startedAt);
   const calls = new Map<string, { tool: string; at: number }>();
