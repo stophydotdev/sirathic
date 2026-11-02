@@ -170,7 +170,6 @@ export const SITES: Site[] = [
     credit: "Albalagh (Mufti Taqi Usmani, Khalid Baig)",
     sitemaps: ["https://albalagh.net/sitemap_index.xml"],
     page: /^https:\/\/(www\.)?albalagh\.net\/[a-z_-]+\/[^/]+/u,
-    school: "hanafi",
     answeredBy: (_markdown, html) =>
       plainText(
         /e-far-user-circle[\s\S]*?elementor-icon-list-text">([^<]*)</u.exec(html)?.[1] ?? "",
