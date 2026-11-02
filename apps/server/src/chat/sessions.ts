@@ -137,7 +137,7 @@ export async function openSession(id: string, by: string, markRead = true) {
   });
 }
 
-const postedIn = (stored: readonly ChatMessage[]) => {
+export const postedIn = (stored: readonly ChatMessage[]) => {
   const posted = new Set<string>();
   let inRoutine = false;
   for (const message of stored) {

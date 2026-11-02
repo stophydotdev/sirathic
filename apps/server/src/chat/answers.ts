@@ -12,13 +12,18 @@ const running = new Map<string, Answer>();
 
 const keyOf = (owner: string, id: string) => `${owner}:${id}`;
 
+const supersede = (answer: Answer | undefined) => {
+  if (!answer) return;
+  answer.superseded = true;
+  answer.controller.abort();
+};
+
+export const supersedeAnswer = (owner: string, id: string) =>
+  supersede(running.get(keyOf(owner, id)));
+
 export function startAnswer(owner: string, id: string, { continuing = false } = {}) {
   const key = keyOf(owner, id);
-  const previous = running.get(key);
-  if (previous) {
-    previous.superseded = true;
-    previous.controller.abort();
-  }
+  supersede(running.get(key));
   const { promise: done, resolve: finish } = Promise.withResolvers<void>();
   const answer: Answer = {
     controller: new AbortController(),
@@ -76,11 +81,7 @@ export function startRound(
 ) {
   if (draining) return false;
   const key = keyOf(owner, id);
-  const previous = running.get(key);
-  if (previous) {
-    previous.superseded = true;
-    previous.controller.abort();
-  }
+  supersede(running.get(key));
   const { promise: done, resolve: finish } = Promise.withResolvers<void>();
   const round: Answer = {
     controller: new AbortController(),

@@ -9,7 +9,6 @@ import {
   createUIMessageStream,
   createUIMessageStreamResponse,
   UI_MESSAGE_STREAM_HEADERS,
-  validateUIMessages,
 } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -17,7 +16,14 @@ import { auth, userFor } from "./account/auth";
 import { startScheduler } from "./automations/runner";
 import { timezone } from "./shared/settings";
 import { withoutErrorText } from "./tracing";
-import { drainAnswers, followAnswer, startAnswer } from "./chat/answers";
+import {
+  drainAnswers,
+  followAnswer,
+  isAnswering,
+  startAnswer,
+  supersedeAnswer,
+  whenIdle,
+} from "./chat/answers";
 import { keepAlive } from "./chat/keepAlive";
 import { refreshSummary } from "./bots/summary";
 import { cutOffTasks } from "./bots/taskRun";
@@ -35,35 +41,21 @@ import { uploadRoutes } from "./files/upload";
 import { browserRoutes } from "./bots/browserRoutes";
 import { groupOf } from "./projects/groups";
 import { projectOfChat } from "./projects/projects";
-import {
-  appLanguage,
-  type ChatMessage,
-  DEFAULT_EFFORT,
-  device,
-  effort,
-  mode,
-  sentMessage,
-} from "./shared/messages";
+import { appLanguage, DEFAULT_EFFORT, device, effort, mode, sentMessage } from "./shared/messages";
 import { parseBody, reasonOf, respond, StatusError } from "./http";
 import { sideOptions } from "./models/subscription";
 import { appRouter } from "./router";
 import { createContext } from "./trpc";
 import { getSettings } from "./account/settings";
 import { DEFAULT_SETTINGS } from "./shared/settings";
-import { withSavedResults } from "./chat/pageText";
-import {
-  messageSchemas,
-  openSession,
-  saveSession,
-  sessionId,
-  titleSession,
-  updateSession,
-} from "./chat/sessions";
+import { ownHistory } from "./chat/ownHistory";
+import { openSession, saveSession, sessionId, titleSession, updateSession } from "./chat/sessions";
 import { listSkills } from "./skills/skills";
 import { sourceKind } from "./shared/sources";
 
 const IDLE_TIMEOUT_SECONDS = 255;
 const DRAIN_MS = 290_000;
+const STOP_WAIT_MS = 5000;
 
 const chatBody = z.object({
   id: sessionId,
@@ -116,16 +108,6 @@ app.post("/api/chat", (c) =>
     const user = await userFor(c.req.raw.headers);
     if (!user) throw new StatusError(401, "not signed in");
     const by = user.id;
-    const stored = (input.incognito ? undefined : await openSession(input.id, by, false)) ?? [];
-    const validated = withSavedResults(
-      await validateUIMessages<ChatMessage>({
-        messages: input.messages,
-        ...messageSchemas,
-      }).catch((err: Error) => {
-        throw new StatusError(400, err.message);
-      }),
-      stored,
-    );
     const owner = input.incognito ? undefined : by;
     const { modelName, models } = pickModels(user, input.model);
     await checkNoorUsage({
@@ -136,9 +118,22 @@ app.post("/api/chat", (c) =>
     });
     const group =
       input.incognito || input.projectId === undefined ? undefined : await groupOf(input.id, by);
+    if (
+      !input.incognito &&
+      !group &&
+      input.messages.at(-1)?.role === "user" &&
+      isAnswering(by, input.id)
+    ) {
+      supersedeAnswer(by, input.id);
+      await Promise.race([whenIdle(by, input.id), Bun.sleep(STOP_WAIT_MS)]);
+    }
+    const stored = input.incognito ? undefined : ((await openSession(input.id, by, false)) ?? []);
+    const { messages: validated, unverified } = await ownHistory(input.messages, stored);
+    const savable = (messages: typeof validated) =>
+      messages.filter((message) => !unverified.has(message.id));
     if (group) {
       if (validated.at(-1)?.role === "user") {
-        await saveSession(input.id, by, validated, group.id);
+        await saveSession(input.id, by, savable(validated), group.id);
         wakeGroup(user, group.id, true);
       }
       return createUIMessageStreamResponse({
@@ -179,7 +174,7 @@ app.post("/api/chat", (c) =>
         .catch(() => undefined)
         .then(async () => {
           const inProject = await project;
-          await saveSession(input.id, by, messages, inProject?.id);
+          await saveSession(input.id, by, savable(messages), inProject?.id);
           if (inProject?.kind === "bot" && messages.at(-1)?.role === "assistant") {
             void refreshSummary({
               bot: { id: inProject.id, owner: by },
@@ -215,7 +210,7 @@ app.post("/api/chat", (c) =>
           Promise.all([saved, sourcesNeeded])
             .then(([, needed]) =>
               needed
-                ? titleSession(input.id, by, validated, () =>
+                ? titleSession(input.id, by, savable(validated), () =>
                     chatTitle(models.small, validated, sideOptions),
                   )
                 : undefined,
@@ -231,7 +226,7 @@ app.post("/api/chat", (c) =>
       models,
       modelName,
       messages: validated,
-      citedEarlier: stored,
+      citedEarlier: stored ?? [],
       mode: input.mode,
       abortSignal: answer.signal,
       consumeSseStream: answer.consumeSseStream,

@@ -14,7 +14,9 @@ const textOf = (message: ChatMessage) => messageText(message).trim();
 
 export const sourcesOf = (messages: ChatMessage[], answers: string) => {
   const found = new Map<string, Source>();
-  for (const part of messages.flatMap((message) => message.parts)) {
+  for (const part of messages.flatMap((message) =>
+    message.role === "assistant" ? message.parts : [],
+  )) {
     if (!("output" in part)) continue;
     for (const entry of withSources.safeParse(part.output).data?.sources ?? []) {
       if (!found.has(entry.url)) found.set(entry.url, entry);
