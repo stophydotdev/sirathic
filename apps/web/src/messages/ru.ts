@@ -951,4 +951,25 @@ export default {
   "Pick at least two bots": "Выберите хотя бы двух ботов",
   "Checking your memory": "Проверяю вашу память",
   "Checked your memory": "Память проверена",
+  "Hide details": "Скрыть подробности",
+  "Show details": "Показать подробности",
+  "Allow once": "Разрешить один раз",
+  "Don't allow": "Не разрешать",
+  "Always allow on this site": "Всегда разрешать на этом сайте",
+  Allowed: "Разрешено",
+  "Not allowed": "Не разрешено",
+  "Waiting for your OK": "Ждёт вашего согласия",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Разрешить {name} заполнить ваш сохранённый контакт на {site}?",
+  "Allow {name} to do this?": "Разрешить {name} сделать это?",
+  "Allow {name} to delete this?": "Разрешить {name} удалить это?",
+  "Allow {name} to issue this refund?": "Разрешить {name} оформить этот возврат?",
+  "Allow {name} to make this payment?": "Разрешить {name} провести этот платёж?",
+  "Allow {name} to send this?": "Разрешить {name} отправить это?",
+  "Allow {name} to post this?": "Разрешить {name} опубликовать это?",
+  "Allow {name} to cancel this?": "Разрешить {name} отменить это?",
+  "Fill my saved contact on {site} without asking":
+    "Заполнять мой сохранённый контакт на {site} без вопросов",
+  "It types these values into the page and doesn't submit it.":
+    "Вводит эти значения на странице и не отправляет её.",
 } satisfies Messages;

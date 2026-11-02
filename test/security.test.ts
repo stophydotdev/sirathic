@@ -88,6 +88,23 @@ test("a bulk action asks even when an allow rule matches it", async () => {
   expect(asks).toBe(true);
 });
 
+const fillOn = (domain: string) => ({
+  toolName: "vault_fill_contact",
+  input: { domain, label: "Home", fields: [] },
+});
+
+test("always allowing a contact fill covers only the site it names", async () => {
+  const shop = {
+    text: "Fill my saved contact on shop.example without asking",
+    effect: "allow",
+  } as const;
+  const sameSite = await scoredBy([0.9], () => asksFirst(fillOn("shop.example"), [shop]));
+  const otherSite = await scoredBy([0.9], () => asksFirst(fillOn("other.example"), [shop]));
+  const shorter = await scoredBy([0.9], () => asksFirst(fillOn("example"), [shop]));
+  const inside = await scoredBy([0.9], () => asksFirst(fillOn("hop.example"), [shop]));
+  expect([sameSite, otherSite, shorter, inside]).toEqual([false, true, true, true]);
+});
+
 const calendar = { text: "ask me before changing my calendar", effect: "ask" } as const;
 const changes = new Set([
   "cal_create_event",

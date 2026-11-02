@@ -955,4 +955,25 @@ export default {
   "Pick at least two bots": "كەم دېگەندە ئىككى بوت تاللاڭ",
   "Checking your memory": "ئەستە ساقلىغانلىرىڭىز تەكشۈرۈلۈۋاتىدۇ",
   "Checked your memory": "ئەستە ساقلىغانلىرىڭىز تەكشۈرۈلدى",
+  "Hide details": "تەپسىلاتنى يوشۇرۇش",
+  "Show details": "تەپسىلاتنى كۆرسىتىش",
+  "Allow once": "بىر قېتىم رۇخسەت قىلىش",
+  "Don't allow": "رۇخسەت قىلماسلىق",
+  "Always allow on this site": "بۇ تور بېكەتتە ھەمىشە رۇخسەت قىلىش",
+  Allowed: "رۇخسەت قىلىندى",
+  "Not allowed": "رۇخسەت قىلىنمىدى",
+  "Waiting for your OK": "ماقۇللۇقىڭىزنى كۈتمەكتە",
+  "Allow {name} to fill your saved contact on {site}?":
+    "{name} نىڭ {site} دا ساقلانغان ئالاقە ئۇچۇرىڭىزنى تولدۇرۇشىغا رۇخسەت قىلامسىز؟",
+  "Allow {name} to do this?": "{name} نىڭ بۇنى قىلىشىغا رۇخسەت قىلامسىز؟",
+  "Allow {name} to delete this?": "{name} نىڭ بۇنى ئۆچۈرۈشىگە رۇخسەت قىلامسىز؟",
+  "Allow {name} to issue this refund?": "{name} نىڭ بۇ پۇلنى قايتۇرۇشىغا رۇخسەت قىلامسىز؟",
+  "Allow {name} to make this payment?": "{name} نىڭ بۇ پۇل تۆلىشىگە رۇخسەت قىلامسىز؟",
+  "Allow {name} to send this?": "{name} نىڭ بۇنى ئەۋەتىشىگە رۇخسەت قىلامسىز؟",
+  "Allow {name} to post this?": "{name} نىڭ بۇنى ئېلان قىلىشىغا رۇخسەت قىلامسىز؟",
+  "Allow {name} to cancel this?": "{name} نىڭ بۇنى بىكار قىلىشىغا رۇخسەت قىلامسىز؟",
+  "Fill my saved contact on {site} without asking":
+    "{site} دا ساقلانغان ئالاقە ئۇچۇرۇمنى سورىماي تولدۇرۇش",
+  "It types these values into the page and doesn't submit it.":
+    "بۇ قىممەتلەرنى بەتكە يازىدۇ، يوللىمايدۇ.",
 } satisfies Messages;

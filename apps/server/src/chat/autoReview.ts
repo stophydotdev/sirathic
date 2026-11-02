@@ -4,7 +4,14 @@ import { outgoingEmail } from "../plugins/outgoingEmail";
 import { z } from "zod";
 import type { Settings } from "../shared/settings";
 import { yesChances } from "./clef";
-import { type Call, CHANGES, changesWhatIsTheirs, needsApproval, spell } from "./confirm";
+import {
+  type Call,
+  CHANGES,
+  changesWhatIsTheirs,
+  needsApproval,
+  spell,
+  VAULT_FILL_CONTACT,
+} from "./confirm";
 
 const ASK_AT = 0.3;
 const ALLOW_AT = 0.6;
@@ -18,11 +25,16 @@ const leavesInbox = z.union([
   z.object({ removeLabelIds: inboxIds }),
 ]);
 
-const described = (call: Call) =>
-  /unlabel|update[^a-z]+message[^a-z]+labels/iu.test(call.toolName) &&
-  leavesInbox.safeParse(call.input).success
+const filledSite = z.object({ domain: z.string().min(1) });
+
+const described = (call: Call) => {
+  const site = call.toolName === VAULT_FILL_CONTACT ? filledSite.safeParse(call.input).data : null;
+  if (site) return `${spell(call)} (this fills the user's saved contact on ${site.domain})`;
+  return /unlabel|update[^a-z]+message[^a-z]+labels/iu.test(call.toolName) &&
+    leavesInbox.safeParse(call.input).success
     ? `${spell(call)} (this archives it: it takes it out of the inbox)`
     : spell(call);
+};
 
 const chancesFor = async (action: string, rules: Settings["rules"]) => {
   const chance = await yesChances(
@@ -38,7 +50,21 @@ const chancesFor = async (action: string, rules: Settings["rules"]) => {
   return (index: number) => chance(`rule${index}`);
 };
 
-export const asksFirst = async (call: Call, rules: Settings["rules"]) => {
+const HOST = /[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+/gu;
+
+const rulesFor = (call: Call, rules: Settings["rules"]) => {
+  const site = call.toolName === VAULT_FILL_CONTACT ? filledSite.safeParse(call.input).data : null;
+  if (site === null) return rules;
+  const domain = site?.domain.toLowerCase();
+  return rules.filter(
+    ({ effect, text }) =>
+      effect === "ask" ||
+      (domain !== undefined && text.toLowerCase().match(HOST)?.includes(domain)),
+  );
+};
+
+export const asksFirst = async (call: Call, everyRule: Settings["rules"]) => {
+  const rules = rulesFor(call, everyRule);
   const action = spell(call);
   if (bulkCall(call) || !rules.some(({ effect }) => effect === "allow") || MONEY.test(action)) {
     return true;

@@ -952,4 +952,25 @@ export default {
   "Pick at least two bots": "Chagua bot angalau mbili",
   "Checking your memory": "Inakagua kumbukumbu yako",
   "Checked your memory": "Imekagua kumbukumbu yako",
+  "Hide details": "Ficha maelezo",
+  "Show details": "Onyesha maelezo",
+  "Allow once": "Ruhusu mara moja",
+  "Don't allow": "Usiruhusu",
+  "Always allow on this site": "Ruhusu kila wakati kwenye tovuti hii",
+  Allowed: "Imeruhusiwa",
+  "Not allowed": "Haikuruhusiwa",
+  "Waiting for your OK": "Inasubiri idhini yako",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Ruhusu {name} ajaze anwani yako iliyohifadhiwa kwenye {site}?",
+  "Allow {name} to do this?": "Ruhusu {name} afanye hivi?",
+  "Allow {name} to delete this?": "Ruhusu {name} afute hiki?",
+  "Allow {name} to issue this refund?": "Ruhusu {name} arejeshe pesa hizi?",
+  "Allow {name} to make this payment?": "Ruhusu {name} afanye malipo haya?",
+  "Allow {name} to send this?": "Ruhusu {name} atume hiki?",
+  "Allow {name} to post this?": "Ruhusu {name} achapishe hiki?",
+  "Allow {name} to cancel this?": "Ruhusu {name} aghairi hiki?",
+  "Fill my saved contact on {site} without asking":
+    "Jaza anwani yangu iliyohifadhiwa kwenye {site} bila kuuliza",
+  "It types these values into the page and doesn't submit it.":
+    "Huandika thamani hizi kwenye ukurasa na haiutumi.",
 } satisfies Messages;

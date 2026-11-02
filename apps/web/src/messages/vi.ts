@@ -950,4 +950,25 @@ export default {
   "Pick at least two bots": "Chọn ít nhất hai bot",
   "Checking your memory": "Đang xem bộ nhớ của bạn",
   "Checked your memory": "Đã xem bộ nhớ của bạn",
+  "Hide details": "Ẩn chi tiết",
+  "Show details": "Hiện chi tiết",
+  "Allow once": "Cho phép một lần",
+  "Don't allow": "Không cho phép",
+  "Always allow on this site": "Luôn cho phép trên trang này",
+  Allowed: "Đã cho phép",
+  "Not allowed": "Không được phép",
+  "Waiting for your OK": "Đang chờ bạn đồng ý",
+  "Allow {name} to fill your saved contact on {site}?":
+    "Cho phép {name} điền liên hệ đã lưu của bạn trên {site}?",
+  "Allow {name} to do this?": "Cho phép {name} làm việc này?",
+  "Allow {name} to delete this?": "Cho phép {name} xóa mục này?",
+  "Allow {name} to issue this refund?": "Cho phép {name} hoàn tiền khoản này?",
+  "Allow {name} to make this payment?": "Cho phép {name} thực hiện khoản thanh toán này?",
+  "Allow {name} to send this?": "Cho phép {name} gửi mục này?",
+  "Allow {name} to post this?": "Cho phép {name} đăng mục này?",
+  "Allow {name} to cancel this?": "Cho phép {name} hủy mục này?",
+  "Fill my saved contact on {site} without asking":
+    "Điền liên hệ đã lưu của tôi trên {site} mà không hỏi",
+  "It types these values into the page and doesn't submit it.":
+    "Nó nhập các giá trị này vào trang và không gửi đi.",
 } satisfies Messages;

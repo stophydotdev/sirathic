@@ -956,4 +956,25 @@ export default {
   "Pick at least two bots": "Elige al menos dos bots",
   "Checking your memory": "Revisando tu memoria",
   "Checked your memory": "Revisé tu memoria",
+  "Hide details": "Ocultar detalles",
+  "Show details": "Mostrar detalles",
+  "Allow once": "Permitir una vez",
+  "Don't allow": "No permitir",
+  "Always allow on this site": "Permitir siempre en este sitio",
+  Allowed: "Permitido",
+  "Not allowed": "No permitido",
+  "Waiting for your OK": "Esperando tu OK",
+  "Allow {name} to fill your saved contact on {site}?":
+    "¿Permitir que {name} rellene tu contacto guardado en {site}?",
+  "Allow {name} to do this?": "¿Permitir que {name} haga esto?",
+  "Allow {name} to delete this?": "¿Permitir que {name} elimine esto?",
+  "Allow {name} to issue this refund?": "¿Permitir que {name} emita este reembolso?",
+  "Allow {name} to make this payment?": "¿Permitir que {name} haga este pago?",
+  "Allow {name} to send this?": "¿Permitir que {name} envíe esto?",
+  "Allow {name} to post this?": "¿Permitir que {name} publique esto?",
+  "Allow {name} to cancel this?": "¿Permitir que {name} cancele esto?",
+  "Fill my saved contact on {site} without asking":
+    "Rellenar mi contacto guardado en {site} sin preguntar",
+  "It types these values into the page and doesn't submit it.":
+    "Escribe estos valores en la página y no la envía.",
 } satisfies Messages;

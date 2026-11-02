@@ -28,12 +28,15 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
   const t = useT();
   const href = `/bot/${bot.id}`;
   const unread = session?.unread;
+  const approving = !session?.working && session?.approving === true;
   const waiting = session?.working ? null : session?.waiting;
-  const preview = waiting
-    ? t("Waiting for you: {task}", { task: waiting })
-    : session
-      ? session.preview
-      : bot.greeting;
+  const preview = approving
+    ? t("Waiting for your OK")
+    : waiting
+      ? t("Waiting for you: {task}", { task: waiting })
+      : session
+        ? session.preview
+        : bot.greeting;
 
   return (
     <div
@@ -89,12 +92,14 @@ const BotRow: FC<{ bot: Project; onDone?: () => void }> = ({ bot, onDone }) => {
             <span
               className={cn(
                 "min-w-0 flex-1 truncate text-xs",
-                waiting ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground",
+                approving || waiting
+                  ? "text-amber-600 dark:text-amber-400"
+                  : "text-muted-foreground",
               )}
             >
               {preview}
             </span>
-            {waiting ? (
+            {approving || waiting ? (
               <span className="size-1.5 shrink-0 rounded-full bg-amber-500" />
             ) : (
               unread && <span className="bg-super size-1.5 shrink-0 rounded-full" />

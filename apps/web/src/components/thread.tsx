@@ -1,5 +1,6 @@
 "use client";
 
+import { APPROVAL_DOCK } from "@/components/approvalPrompt";
 import { useChatOptions } from "@/components/chatOptions";
 import { AttachmentChip, Composer } from "@/components/composer";
 import { useT } from "@/components/i18n";
@@ -240,6 +241,7 @@ const ThreadBody: FC = () => {
                 <HugeiconsIcon icon={ArrowDown02Icon} className="size-4" />
               </ThreadPrimitive.ScrollToBottom>
             )}
+            <div id={APPROVAL_DOCK} className="mb-2 flex flex-col gap-2 empty:hidden" />
             <Composer
               placeholder={
                 bot || group
