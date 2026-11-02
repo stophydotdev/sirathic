@@ -469,7 +469,7 @@ export function chatResponse({
         });
       }
       streaming = false;
-      if (finish) writer.write(finish);
+      writer.write(finish ?? { type: "finish", finishReason: "other" });
     },
     onError: (error) => (error instanceof Error ? error.message : String(error)),
     onEnd: ({ messages: answered, outcome }) => {
