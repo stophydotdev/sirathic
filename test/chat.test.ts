@@ -438,7 +438,7 @@ test("two background tasks finish while the bot is answering, and one wake deliv
   const chatting = startAnswer(bot.owner, bot.id);
 
   const tasks = ["Find hajj visa rules", "Find umrah costs"].map((brief) =>
-    launchTask({ bot, title: brief, brief, resume: undefined, style }),
+    launchTask({ bot, runner: bot, title: brief, brief, resume: undefined, style }),
   );
   await Promise.all(tasks.map((task) => task.finished));
 

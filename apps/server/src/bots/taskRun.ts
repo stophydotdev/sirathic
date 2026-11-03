@@ -8,7 +8,7 @@ import { type Event, track } from "../chat/events";
 import { holdShutdown, isAnswering, startAnswer, whenIdle } from "../chat/answers";
 import { chatResponse } from "../chat/response";
 import { openSession, saveSession, updateSession } from "../chat/sessions";
-import { reasonOf } from "../http";
+import { reasonOf, StatusError } from "../http";
 import { pickModels } from "../models/pick";
 import { sideOptions } from "../models/subscription";
 import { spendNoor } from "../models/usage";
@@ -16,8 +16,10 @@ import { projectOfChat } from "../projects/projects";
 import { type ChatMessage, messageText } from "../shared/messages";
 import { DEFAULT_SETTINGS } from "../shared/settings";
 import { refreshSummary } from "./summary";
+import { answerIn, taskAnswer, waitingIn } from "./askUser";
 import {
   addTask,
+  changed,
   cutOffAll,
   deliveryOf,
   endTask,
@@ -37,10 +39,15 @@ const TASK_TIMEOUT_MS = 10 * 60_000;
 const RESULT_CHARS = 12_000;
 const STEP_CHARS = 100;
 const STEPS_KEPT = 20;
+const RESULT_LINE_CHARS = 120;
+const SOURCES_KEPT = 10;
 const stepInput = z.object({
   queries: z.array(z.string()).optional(),
   urls: z.array(z.string()).optional(),
+  url: z.string().optional(),
 });
+const MARKDOWN = /[#*_`>]|^\s*[-\d.]+\s+|\[([^\]]*)\]\([^)]*\)/gmu;
+const LINK = /https?:\/\/[^\s)>\]]+/gu;
 const BARE_SOURCE = / ?\[\d+\](?:\(([^)\s]+)\))?/gu;
 
 const messageOf = (
@@ -56,6 +63,16 @@ const messageOf = (
 
 const plainSources = (text: string) =>
   text.replace(BARE_SOURCE, (_found, link: string | undefined) => (link ? ` (${link})` : ""));
+
+const resultOf = (text: string) =>
+  (text.split("\n").find((line) => line.trim()) ?? "")
+    .replace(MARKDOWN, (_found, label: string | undefined) => label ?? "")
+    .replace(LINK, "")
+    .replace(/\s*\(\s*\)/gu, "")
+    .trim()
+    .slice(0, RESULT_LINE_CHARS);
+
+const sourcesOf = (text: string) => [...new Set(text.match(LINK) ?? [])].slice(0, SOURCES_KEPT);
 
 async function turnOf(bot: BotScope, style: Style) {
   const user = await ownerOf(bot.owner);
@@ -104,10 +121,10 @@ async function readStream(response: Response, onChunk: (chunk: UIMessageChunk) =
   return failure;
 }
 
-async function runTask(bot: BotScope, task: Task, style: Style, signal: AbortSignal) {
+async function runTask(parent: BotScope, task: Task, signal: AbortSignal) {
   let answered = task.messages;
   const response = chatResponse({
-    ...(await turnOf(bot, style)),
+    ...(await turnOf(task.runner, task.style)),
     messages: task.messages,
     abortSignal: signal,
     unattended: true,
@@ -121,43 +138,62 @@ async function runTask(bot: BotScope, task: Task, style: Style, signal: AbortSig
   const failure = await readStream(response, (chunk) => {
     if (chunk.type !== "tool-input-available") return;
     const asked = stepInput.safeParse(chunk.input).data;
-    task.now = { tool: chunk.toolName, detail: asked?.queries?.at(-1) ?? asked?.urls?.at(0) };
+    const site = chunk.toolName.startsWith("browser_") && task.now?.tool.startsWith("browser_");
+    task.now = {
+      tool: chunk.toolName,
+      detail:
+        asked?.queries?.at(-1) ??
+        asked?.urls?.at(0) ??
+        asked?.url ??
+        (site ? task.now?.detail : undefined),
+    };
     task.steps = [...task.steps, stepOf(chunk.toolName, JSON.stringify(chunk.input))].slice(
       -STEPS_KEPT,
     );
+    changed(parent, task);
   });
   task.messages = answered;
   if (failure !== undefined) throw new Error(failure);
   const last = answered.at(-1);
+  const waiting = last?.role === "assistant" ? waitingIn(last) : undefined;
+  if (waiting) return { kind: "waiting", waiting } as const;
   const text = last?.role === "assistant" ? plainSources(messageText(last)).trim() : "";
   if (!text) throw new Error("it gave no result");
-  return text.slice(0, RESULT_CHARS);
+  return { kind: "done", text: text.slice(0, RESULT_CHARS) } as const;
 }
 
-async function run(bot: BotScope, task: Task, style: Style) {
+async function run(bot: BotScope, task: Task) {
   const signal = AbortSignal.any([task.controller.signal, AbortSignal.timeout(TASK_TIMEOUT_MS)]);
-  const end = await runTask(bot, task, style, signal).then(
-    (text) => ({ kind: "done", text }) as const,
-    (err: Error) => {
-      console.error(`task ${task.id} did not finish: ${reasonOf(err)}`);
-      return {
-        kind: "failed",
-        reason:
-          signal.aborted && !task.controller.signal.aborted ? "it ran out of time" : reasonOf(err),
-      } as const;
-    },
-  );
+  const outcome = await runTask(bot, task, signal).catch((err: Error) => {
+    console.error(`task ${task.id} did not finish: ${reasonOf(err)}`);
+    return {
+      kind: "failed",
+      reason:
+        signal.aborted && !task.controller.signal.aborted ? "it ran out of time" : reasonOf(err),
+    } as const;
+  });
+  if (outcome.kind === "waiting") {
+    task.waiting = outcome.waiting;
+    changed(bot, task);
+    return;
+  }
+  const end =
+    outcome.kind === "done"
+      ? { ...outcome, result: resultOf(outcome.text), sources: sourcesOf(outcome.text) }
+      : outcome;
   if (endTask(bot, task, end)) deliver(bot);
 }
 
 export function launchTask({
   bot,
+  runner,
   title,
   brief,
   resume,
   style,
 }: {
   bot: BotScope;
+  runner: BotScope;
   title: string;
   brief: string;
   resume: string | undefined;
@@ -171,12 +207,28 @@ export function launchTask({
   const { promise: finished, resolve } = Promise.withResolvers<void>();
   const task = addTask(bot, {
     title,
+    brief,
+    runner: before?.runner ?? runner,
     messages: [...(before?.messages ?? []), messageOf("user", brief)],
     style,
     finished,
   });
-  void run(bot, task, style).finally(resolve);
+  void run(bot, task).finally(resolve);
   return task;
+}
+
+export function answerTask(bot: BotScope, id: string, answer: z.infer<typeof taskAnswer>) {
+  const task = taskOf(bot, id);
+  const waiting = task?.waiting;
+  const last = task?.messages.at(-1);
+  if (!task || !waiting || !last) throw new StatusError(409, "That task is not waiting for you.");
+  if ((waiting.kind === "approval") !== (answer.kind === "approval")) {
+    throw new StatusError(400, "That answer doesn't fit what the task asked.");
+  }
+  answerIn(last, waiting, answer);
+  task.waiting = undefined;
+  changed(bot, task);
+  void run(bot, task);
 }
 
 const updateOf = (task: Task) => {
