@@ -21,6 +21,7 @@ import { routineTools } from "../automations/tools";
 import { BOT_HISTORY, botTools, recentTurns } from "../bots/tools";
 import { browserFor } from "../bots/browser";
 import { readingOnly, taskTools } from "../bots/taskTools";
+import { ASK_USER, askUser } from "../bots/askUser";
 import { teamTools, teammatesOf } from "../bots/team";
 import { summaryNote } from "../bots/summary";
 import { chatSearchTools, ourChatNote } from "../bots/chatSearch";
@@ -267,7 +268,7 @@ export function chatResponse({
             disk,
             link: sources.link,
           })),
-        ...(task ? readingOnly(connectors.tools) : connectedHere),
+        ...(task ? { ...connectors.tools, [ASK_USER]: askUser } : connectedHere),
       };
       const builtIn = skillsFor({
         mode,
@@ -321,7 +322,12 @@ export function chatResponse({
         skills: builtIn,
         loaded,
         confirm: (call) =>
-          approvalFor(call, writes, preferred.rules, unattended && (sendsOnlyTo ?? [])),
+          approvalFor(
+            call,
+            writes,
+            preferred.rules,
+            unattended && !task ? (sendsOnlyTo ?? []) : undefined,
+          ),
         refine: connectors.refine,
         shorten,
         turn,

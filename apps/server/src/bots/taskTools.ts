@@ -2,6 +2,7 @@ import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import { isReadOnly } from "../chat/confirm";
 import { checkNoorUsage } from "../models/usage";
+import { listProjects } from "../projects/projects";
 import { launchTask } from "./taskRun";
 import {
   STEPS_SHOWN,
@@ -29,11 +30,22 @@ const reportOf = (task: Task) => ({
 export const readingOnly = (tools: ToolSet) =>
   Object.fromEntries(Object.entries(tools).filter(([, entry]) => isReadOnly(entry)));
 
+async function botNamed(owner: string, name: string) {
+  const bots = await listProjects(owner);
+  const found = bots.find((one) => one.name.toLowerCase() === name.toLowerCase());
+  if (!found) {
+    throw new Error(
+      `No bot is named ${name}. The user's bots: ${bots.map((one) => one.name).join(", ")}.`,
+    );
+  }
+  return { id: found.id, owner };
+}
+
 export function taskTools(bot: BotScope, style: Style) {
   return {
     start_task: tool({
       description:
-        "Starts a background task: a separate worker that does one piece of work on its own while you stay available to the user. It returns at once. It cannot see this chat or the user, so its brief must be self-contained: the goal, the context and exact values it needs, and what to report back. It works as you do, with your tools, files, browser and memory, but it cannot ask the user anything. Its connected apps only read, and it does not send messages or pay: anything consequential comes back to you in its result for you to do. Its final message comes back to you, not the user, and you are woken to deliver it. To follow up with a task that finished, pass its id as resume and it keeps its context. Without resume, each call starts fresh. Typically one or two tasks run at a time; four is the most.",
+        "Starts a background task: a separate worker that does one piece of work on its own while you stay available to the user. It returns at once. It cannot see this chat or the user, so its brief must be self-contained: the goal, the context and exact values it needs, and what to report back. It works as you do, with your tools, files, browser and memory. When it needs the user, a value only they know or their OK before it sends or pays, it waits for them on their Tasks page. Pass bot to have another of the user's bots do it, when the work fits that bot better; when one message asks for several separate things, start one task for each. Its final message comes back to you, not the user, and you are woken to deliver it. To follow up with a task that finished, pass its id as resume and it keeps its context. Without resume, each call starts fresh. Typically one or two tasks run at a time; four is the most.",
       inputSchema: z.object({
         title: z
           .string()
@@ -43,15 +55,22 @@ export function taskTools(bot: BotScope, style: Style) {
           .describe("A short name for the task, like 'Hajj visa research'"),
         brief: z.string().trim().min(1).max(8000),
         resume: taskId.optional(),
+        bot: z
+          .string()
+          .trim()
+          .min(1)
+          .optional()
+          .describe("The name of another of the user's bots to do it. Omit it to do it yourself."),
       }),
-      execute: async ({ title, brief, resume }) => {
+      execute: async ({ title, brief, resume, bot: named }) => {
+        const runner = named === undefined ? bot : await botNamed(bot.owner, named);
         await checkNoorUsage({
           by: bot.owner,
           modelName: style.modelName,
           timeZone: style.timezone,
           offerGpt: false,
         });
-        return reportOf(launchTask({ bot, title, brief, resume, style }));
+        return reportOf(launchTask({ bot, runner, title, brief, resume, style }));
       },
     }),
     check_task: tool({
