@@ -1,0 +1,436 @@
+{
+  "title": "Is there a specific age for marriage in Islam?",
+  "headline": "The texts tie marriage to puberty and readiness, and the schools differ on the details",
+  "cover": "نكاح الصغير",
+  "slug": "is-there-a-specific-age-for-marriage-in-islam",
+  "topic": "Family",
+  "tint": "indigo",
+  "summary": {
+    "text": "The Quran and Sunnah set no fixed age for the marriage contract, tying marriage instead to puberty, physical readiness and the ability to bear a household's responsibilities. The Hanafi, Maliki, Shafi'i and Hanbali schools all allow a father to contract a minor's marriage, differing over which guardians may act and whether the minor has a choice on reaching puberty. Recent fatwas hold that no age is fixed in the Sharia, that the father may contract his daughter's marriage, and that consummation waits until she can bear it.",
+    "citations": [
+      "https://islamqa.info/ar/answers/256830",
+      "https://islamqa.info/ar/answers/146882",
+      "https://iifa-aifi.org/ar/4867.html",
+      "https://shamela.ws/book/11820/261",
+      "https://shamela.ws/book/11444/1906",
+      "https://shamela.ws/book/587/603",
+      "https://shamela.ws/book/6910/4781",
+      "https://al-fatawa.com/en/fatwa/107757/satisfaction-spouses"
+    ]
+  },
+  "updated": "2026-11-03",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://islamqa.info/ar/answers/256830",
+      "title": "ليس للنكاح سن معين وبيان المراد بقوله تعالى (حتى إذا بلغوا النكاح)"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/146882",
+      "title": "هل هناك سن محددة للزواج في الإسلام ؟"
+    },
+    {
+      "url": "https://iifa-aifi.org/ar/4867.html",
+      "title": "قرار بشأن زواج الصغيرات بين حق الولي ومصلحة الفتاة ومدى سلطة ولي الأمر في منعه أو تقييده من المنظور الشرعي"
+    },
+    {
+      "url": "https://shamela.ws/book/11820/261",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص191"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1906",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص245"
+    },
+    {
+      "url": "https://shamela.ws/book/587/603",
+      "title": "المدونة، مالك بن أنس، ج2 ص100"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/4781",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج9 ص398"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/107757/satisfaction-spouses",
+      "title": "The Satisfaction of the Spouses"
+    },
+    {
+      "url": "https://quran.com/4/6",
+      "title": "Quran 4:6, An-Nisaa"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/57255/saying-allah-exalted-test-orphans-until-reach-age-marriage",
+      "title": "On the saying of Allah the Exalted: “And test the orphans until they reach the age of marriage.”"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/57250/exegesis-verse-test-orphans-until-reach-age-marriage-if-perceive-maturity",
+      "title": "Exegesis of the verse: (( And test the orphans until they reach the age of marriage. If you perceive in them maturity... ))"
+    },
+    {
+      "url": "https://quran.com/65/4",
+      "title": "Quran 65:4, At-Talaaq"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/87703/",
+      "title": "Meaning of Qur'an (65:4)"
+    },
+    {
+      "url": "https://quran.com/24/32",
+      "title": "Quran 24:32, An-Noor"
+    },
+    {
+      "url": "https://quran.com/24/33",
+      "title": "Quran 24:33, An-Noor"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5098",
+      "title": "Sahih al-Bukhari 5098: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:2494",
+      "title": "Sahih al-Bukhari 2494: Partnership"
+    },
+    {
+      "url": "https://quran.com/30/21",
+      "title": "Quran 30:21, Ar-Room"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5134",
+      "title": "Sahih al-Bukhari 5134: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1422a",
+      "title": "Sahih Muslim 1422a: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1422c",
+      "title": "Sahih Muslim 1422c: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1422d",
+      "title": "Sahih Muslim 1422d: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:6130",
+      "title": "Sahih al-Bukhari 6130: Good Manners and Form (Al-Adab)"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5066",
+      "title": "Sahih al-Bukhari 5066: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1400c",
+      "title": "Sahih Muslim 1400c: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3209",
+      "title": "Sunan an-Nasa'i 3209: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1419a",
+      "title": "Sahih Muslim 1419a: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3260",
+      "title": "Sunan an-Nasa'i 3260: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3264",
+      "title": "Sunan an-Nasa'i 3264: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1109",
+      "title": "Jami' at-Tirmidhi 1109: The Book on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2101",
+      "title": "Sunan Abi Dawud 2101: Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1873",
+      "title": "Sunan Ibn Majah 1873: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/urn/511000",
+      "title": "Muwatta Malik 1100: Marriage"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:2664",
+      "title": "Sahih al-Bukhari 2664: Witnesses"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:2543",
+      "title": "Sunan Ibn Majah 2543: The Chapters on Legal Punishments"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1868a",
+      "title": "Sahih Muslim 1868a: The Book on Government"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1855",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص573"
+    },
+    {
+      "url": "https://shamela.ws/book/587/758",
+      "title": "المدونة، مالك بن أنس، ج2 ص255"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/4785",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج9 ص402"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%aa%d8%b2%d9%88%d9%8a%d8%ac-%d8%a7%d9%84%d8%b5%d8%ba%d9%8a%d8%b1%d8%a9-%d9%85%d8%ad%d8%a7%d8%b0%d9%8a%d8%b1-%d8%b4%d8%b1%d8%b9%d9%8a%d8%a9-%d9%88%d9%86%d9%81%d8%b3%d9%8a%d8%a9/",
+      "title": "تزويج الصغيرة.. محاذير شرعية ونفسية واجتماعية"
+    },
+    {
+      "url": "https://shamela.ws/book/499#7:88",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج7 ص88"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1907",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص246"
+    },
+    {
+      "url": "https://shamela.ws/book/622#11:243",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج11 ص243"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/5130",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج10 ص169"
+    },
+    {
+      "url": "https://shamela.ws/book/11820/920",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج3 ص281"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darul-iftaa-chicago/271225/what-are-the-signs-of-puberty-for-a-girl-in-islam/",
+      "title": "What Are the Signs of Puberty for a Girl in Islam?"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/1375",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج3 ص292"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1307",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج3 ص269"
+    },
+    {
+      "url": "https://shamela.ws/book/622#8:349",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج8 ص349"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:32",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص32"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/living-religion/father-arrange-daughters-marriage-without-consent/",
+      "title": "Can Father Arrange Prepubescent Daughter’s Marriage without Consent?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/shafii-fiqh/can-a-father-compel-his-adult-virgin-daughter-to-marry/",
+      "title": "Can a Father Compel His Adult Virgin Daughter to Marry?"
+    },
+    {
+      "url": "https://en.tohed.com/scholarly-and-reasoned-response-to-objections-regarding-the-age-of-sayyida/",
+      "title": "Scholarly and Reasoned Response to Objections Regarding the Age of Sayyida Aisha (RA) at Marriage"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/tafseer-raheemi/52088/an-objection-upon-aisha-radiallahunanhas-age-at-the-time-of-marriage/",
+      "title": "An objection upon Aisha radiallahunanha’s age at the time of marriage."
+    },
+    {
+      "url": "https://yaqeeninstitute.org/read/paper/aisha-ra-the-case-for-an-older-age-in-sunni-hadith-scholarship",
+      "title": "Aisha (ra): The Case for an Older Age in Sunni Hadith Scholarship"
+    },
+    {
+      "url": "https://iifa-aifi.org/ar/4952.html",
+      "title": "برعاية خادم الحرمين الشريفين قرارات هامة لمجلس مجمع الفقه الإسلامي الدولي في دورته الثالثة والعشرين بالمدينة المنورة."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/109532/limit-orphanhood",
+      "title": "The Limit of Orphanhood"
+    },
+    {
+      "url": "https://www.dar-alifta.org/en/fatwa/details/8184/what-is-the-ruling-on-marrying-a-minor",
+      "title": "What is the ruling on marrying a minor?"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/15516/حكم-الزواج-قبل-بلوغ-السن-القانونية",
+      "title": "الزواج قبل بلوغ السن القانونية"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/42308/specific-age-marriage",
+      "title": "Is there a specific age for marriage?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b3%d9%86-%d8%a7%d9%84%d8%b2%d9%88%d8%a7%d8%ac/",
+      "title": "سن الزواج"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%b3%d9%86-%d8%a7%d9%84%d8%b4%d8%b1%d8%b9%d9%8a-%d9%84%d8%aa%d8%b2%d9%88%d9%8a%d8%ac-%d8%a7%d9%84%d8%a8%d9%86%d8%a7%d8%aa/",
+      "title": "السن الشرعي لتزويج البنات"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The command to test orphans \"until they reach marriageable age\" and then hand over their property once sound judgement is seen is glossed as fifteen by al-Jalalayn and others, and it concerns the guardians' handling of wealth rather than the validity of a marriage contract. Ibn Uthaymeen made the same point: the verse joins reaching the age with attaining rushd, and its subject is the orphan's property.",
+          "citations": [
+            "https://quran.com/4/6",
+            "https://islamqa.info/ar/answers/256830",
+            "https://al-fatawa.com/en/fatwa/57255/saying-allah-exalted-test-orphans-until-reach-age-marriage",
+            "https://al-fatawa.com/en/fatwa/57250/exegesis-verse-test-orphans-until-reach-age-marriage-if-perceive-maturity"
+          ]
+        },
+        {
+          "text": "The waiting period of \"those who have not menstruated\" is set at three months. Ibn Qudama cites it as proof that a girl who has not yet menstruated can be under a marriage contract, since a waiting period only follows a marriage and divorce, and Islamweb gives the same reasoning. The marriage verses tie the matter to means rather than number: \"marry the unmarried among you,\" and those who cannot afford it should remain chaste until Allah enriches them. Aisha explained the opening verses of al-Nisa' as being about orphan girls in a guardian's care and the justice owed them in their dowries, and the Quran sets the purpose of marriage as tranquillity, affection and mercy.",
+          "citations": [
+            "https://quran.com/65/4",
+            "https://shamela.ws/book/6910/4781",
+            "https://www.islamweb.net/en/fatwa/87703/",
+            "https://quran.com/24/32",
+            "https://quran.com/24/33",
+            "https://sunnah.com/bukhari:5098",
+            "https://sunnah.com/bukhari:2494",
+            "https://quran.com/30/21"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "Aisha said the Prophet ﷺ married her at six and consummated the marriage when she was nine, with one narration saying seven and another adding that he died when she was eighteen; all are graded sahih. Bukhari also records her playing with dolls in his presence, which some scholars read as a sign of her young age at that time.",
+          "citations": [
+            "https://sunnah.com/bukhari:5134",
+            "https://sunnah.com/muslim:1422a",
+            "https://sunnah.com/muslim:1422c",
+            "https://sunnah.com/muslim:1422d",
+            "https://sunnah.com/bukhari:6130"
+          ]
+        },
+        {
+          "text": "The Prophet's instruction to the young men ties marriage to capacity, not to a year: whoever is able to support a wife should marry, and whoever cannot should fast, sahih in Bukhari, Muslim and an-Nasa'i. On consent, Muslim records that a previously married woman is not married until her consent is sought, and a virgin until her permission is sought, her permission being her silence. An-Nasa'i has the same through Ibn Abbas, graded sahih, and a variant adding \"a virgin is consulted by her father\" is graded da'if by al-Albani while others accepted it. At-Tirmidhi reports that the orphan girl is to be consulted about herself, and if she refuses there is no way over her, graded hasan sahih.",
+          "citations": [
+            "https://sunnah.com/bukhari:5066",
+            "https://sunnah.com/muslim:1400c",
+            "https://sunnah.com/nasai:3209",
+            "https://sunnah.com/muslim:1419a",
+            "https://sunnah.com/nasai:3260",
+            "https://sunnah.com/nasai:3264",
+            "https://sunnah.com/tirmidhi:1109"
+          ]
+        },
+        {
+          "text": "Khansa bint Khidham said her father married her off when she was a previously married woman and she disliked it, so the Prophet ﷺ annulled it, and Ibn Majah carries the same report graded sahih; because she was thayyib, this concerns an adult, not a minor. The Muwatta records that al-Qasim, Salim and Sulayman ibn Yasar held a father's marriage of his virgin daughter without her permission to be binding; it is a statement of the Successors, not a hadith of the Prophet ﷺ. For the age of puberty, the jurists leaned on Ibn Umar's account that the Prophet ﷺ turned him back at Uhud at fourteen and accepted him at the Trench at fifteen, which Umar ibn Abd al-Aziz called the dividing line between youth and adulthood, sahih.",
+          "citations": [
+            "https://sunnah.com/abudawud:2101",
+            "https://sunnah.com/ibnmajah:1873",
+            "https://sunnah.com/urn/511000",
+            "https://sunnah.com/bukhari:2664",
+            "https://sunnah.com/ibnmajah:2543",
+            "https://sunnah.com/muslim:1868a"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafi school holds a minor boy's or girl's marriage valid when the guardian contracts it; the father and grandfather bind it, other guardians may contract it and the minor then has the choice, and the father may even marry her to a non-equal and below a comparable dowry, with no choice after the father or grandfather and choice after anyone else. The Maliki school holds that the father alone may compel, over his virgin daughter and his small son, and a father may marry a daughter who has not menstruated but is of an age to be consummated; non-fathers may not marry off a minor, and Ibn al-Qasim reports Malik allowing the executor to marry off his small children. The Shafi'i school holds that the father, and the grandfather in his absence, may contract the marriage of the virgin, small or adult, without her permission, though asking her is recommended; the sahih in al-Rawda covers small and adult, virgin and thayyib, while a third view excepts the minor who is thayyib, which is the wording of the Minhaj, and there is no option. The Hanbali school follows Ibn al-Mundhir's report of consensus that a father's marriage of his small virgin daughter is valid, even against her wish; the father, and per one report his executor, may act, the judge may marry off a minor who needs marriage, other guardians may not, and there is no option after the father, Ahmad's report that a girl is handed over at nine being, per the Qadi, not a fixed limit.",
+          "citations": [
+            "https://shamela.ws/book/11820/261",
+            "https://shamela.ws/book/21613/1855",
+            "https://shamela.ws/book/587/603",
+            "https://shamela.ws/book/587/758",
+            "https://shamela.ws/book/6910/4785",
+            "https://fiqh.islamonline.net/%d8%aa%d8%b2%d9%88%d9%8a%d8%ac-%d8%a7%d9%84%d8%b5%d8%ba%d9%8a%d8%b1%d8%a9-%d9%85%d8%ad%d8%a7%d8%b0%d9%8a%d8%b1-%d8%b4%d8%b1%d8%b9%d9%8a%d8%a9-%d9%88%d9%86%d9%81%d8%b3%d9%8a%d8%a9/",
+            "https://shamela.ws/book/11444/1906",
+            "https://shamela.ws/book/499#7:88",
+            "https://shamela.ws/book/11444/1907",
+            "https://shamela.ws/book/6910/4781",
+            "https://shamela.ws/book/622#11:243",
+            "https://shamela.ws/book/6910/5130"
+          ]
+        },
+        {
+          "text": "On puberty, the school books give different markers and ceilings. Al-Marghinani records Abu Hanifa's 18 for a boy and 17 for a girl, against 15 for both in the view of Abu Yusuf and Muhammad, which is also al-Shafi'i's, and Hanafi fatwa practice settled on 15. Al-Dasuqi gives 18 for the Maliki school, while the Shafi'i and Hanbali manuals take 15 as the age marker.",
+          "citations": [
+            "https://shamela.ws/book/11820/920",
+            "https://islamqa.org/hanafi/darul-iftaa-chicago/271225/what-are-the-signs-of-puberty-for-a-girl-in-islam/",
+            "https://shamela.ws/book/21604/1375",
+            "https://shamela.ws/book/11444/1307",
+            "https://shamela.ws/book/622#8:349"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The sharpest tension is between the reports of Aisha's age and the verse tying marriage to the age of marriage. Jurists resolved it by separating the contract from consummation: the contract may precede puberty, while cohabitation waits for physical fitness, and on this reading 4:6 speaks of the age at which an orphan's property is released, not the age at which a contract may be written.",
+          "citations": [
+            "https://islamqa.info/ar/answers/146882",
+            "https://www.islamweb.net/en/fatwa/87703/",
+            "https://iifa-aifi.org/ar/4867.html",
+            "https://islamqa.info/ar/answers/256830"
+          ]
+        },
+        {
+          "text": "The consent reports were reconciled in two ways. One reading restricts \"a virgin is not married until her permission is sought\" to the adult virgin and to guardians other than the father, with the father's authority over his minor daughter treated as a separate case established by the Aisha report. Another holds that the father should still ask, and that the Prophet's practice was to seek the daughter's approval, as the Shafi'i manuals recommend; the Khansa report does not enter the dispute, since she was previously married and therefore an adult.",
+          "citations": [
+            "https://shamela.ws/book/21739#3:32",
+            "https://al-fatawa.com/en/fatwa/107757/satisfaction-spouses",
+            "https://shamela.ws/book/11444/1906",
+            "https://seekersguidance.org/answers/living-religion/father-arrange-daughters-marriage-without-consent/",
+            "https://sunnah.com/abudawud:2101",
+            "https://seekersguidance.org/answers/shafii-fiqh/can-a-father-compel-his-adult-virgin-daughter-to-marry/"
+          ]
+        },
+        {
+          "text": "Ibn al-Mundhir's claim of consensus covers the father only, and Ibn Rushd notes a reported dissent from Ibn Shubruma, while the disagreement among the schools is over whether anyone besides the father, or besides the father and grandfather, may act. The fifteen of the Ibn Umar report is used as a marker of puberty, not as a marriage age. Some contemporary writers argue from Asma's recorded age that Aisha was nearer seventeen to nineteen at the marriage, while hadith scholars hold that the reports in Bukhari and Muslim stand as transmitted.",
+          "citations": [
+            "https://shamela.ws/book/6910/4781",
+            "https://shamela.ws/book/21739#3:32",
+            "https://shamela.ws/book/6910/4785",
+            "https://sunnah.com/ibnmajah:2543",
+            "https://sunnah.com/bukhari:2664",
+            "https://en.tohed.com/scholarly-and-reasoned-response-to-objections-regarding-the-age-of-sayyida/",
+            "https://islamqa.org/hanafi/tafseer-raheemi/52088/an-objection-upon-aisha-radiallahunanhas-age-at-the-time-of-marriage/",
+            "https://sunnah.com/bukhari:5134",
+            "https://sunnah.com/muslim:1422a",
+            "https://yaqeeninstitute.org/read/paper/aisha-ra-the-case-for-an-older-age-in-sunni-hadith-scholarship"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "The International Islamic Fiqh Academy, in resolution 217 (23/1) from its 23rd session in Medina (19–23 Safar 1440 / 28 October–1 November 2018), stated that the Sharia did not fix an age for concluding the contract, that consummation is governed by time, place and the couple's fitness, that a father may marry off his daughter after obtaining the judge's permission and is barred if harm is established, that no one but the father may do so, that each state may set the age and a penalty for violating it, and that health criteria set by trustworthy doctors are required.",
+          "citations": ["https://iifa-aifi.org/ar/4867.html", "https://iifa-aifi.org/ar/4952.html"]
+        },
+        {
+          "text": "The Saudi Permanent Committee, in fatwa 3833, held it permissible to contract the marriage of a young girl with her father, especially where he sees benefit, citing the Prophet's marriage to Aisha when she was under nine; in fatwa 4992 it listed the signs of puberty and took fifteen as the age of maturity. Egypt's Dar al-Ifta stated that Islam never upheld a minimum age, that it is sensible for a girl to marry at sixteen and a boy at eighteen, and that minimum ages today are set by legal systems to protect the couple; in an earlier fatwa, Ali Gomaa ruled that marrying a girl below the legal age without her parents' consent is haram. IslamQA answers that there is no fixed age, that the father may marry off his small virgin daughter, and that consummation is delayed until she can bear it, and Ibn Uthaymeen said plainly that there is no specific age. Atiyya Saqr and Abdul Halim Mahmud, both cited by IslamOnline, held that governments setting an age is good and to be obeyed, and that Islam left the matter to sound custom while forbidding harm.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/107757/satisfaction-spouses",
+            "https://al-fatawa.com/en/fatwa/109532/limit-orphanhood",
+            "https://www.dar-alifta.org/en/fatwa/details/8184/what-is-the-ruling-on-marrying-a-minor",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/15516/حكم-الزواج-قبل-بلوغ-السن-القانونية",
+            "https://islamqa.info/ar/answers/146882",
+            "https://islamqa.info/ar/answers/256830",
+            "https://al-fatawa.com/en/fatwa/42308/specific-age-marriage",
+            "https://fiqh.islamonline.net/%d8%b3%d9%86-%d8%a7%d9%84%d8%b2%d9%88%d8%a7%d8%ac/",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%b3%d9%86-%d8%a7%d9%84%d8%b4%d8%b1%d8%b9%d9%8a-%d9%84%d8%aa%d8%b2%d9%88%d9%8a%d8%ac-%d8%a7%d9%84%d8%a8%d9%86%d8%a7%d8%aa/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
