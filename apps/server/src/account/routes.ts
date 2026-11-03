@@ -14,6 +14,7 @@ import { z } from "zod";
 import { StatusError } from "../http";
 import { procedure, signedIn, t } from "../trpc";
 import { auth, signInMethod } from "./auth";
+import { isLive } from "../realtime/hub";
 import { deleteAccount, exportData } from "./data";
 import { moveRoutines } from "../automations/store";
 import { listDevices, signOutDevice, signOutOthers } from "./devices";
@@ -55,6 +56,7 @@ export const accountRoutes = {
             label: ctx.user.email,
             image: ctx.user.image,
             via: await signInMethod(ctx.user),
+            live: isLive(ctx.user.id),
           }
         : { signedIn: false as const },
     ),

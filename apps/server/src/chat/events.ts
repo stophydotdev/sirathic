@@ -114,6 +114,7 @@ export type Event =
   | { name: "bot.created"; props: Record<never, never> }
   | { name: "app.opened"; props: { app: "web" | "desktop"; device?: Device } & Client }
   | { name: "limit.hit"; props: { window: "5h" | "week" } }
+  | { name: "realtime.seen"; props: { ms: number } }
   | z.infer<typeof browserEvent>;
 
 export function track({ name, props }: Event, owner?: string) {
