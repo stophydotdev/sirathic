@@ -12,7 +12,7 @@ import {
   writingTools,
 } from "../apps/server/src/chat/confirm";
 import type { ChatMessage } from "../apps/server/src/shared/messages";
-import { screenTicket, ticketFits } from "../apps/server/src/bots/screenTicket";
+import { ticketFits, ticketFor } from "../apps/server/src/bots/ticket";
 import { totp } from "../apps/server/src/vault/totp";
 
 test.each([
@@ -346,7 +346,7 @@ test("a secret is masked in every spelling a page can show it, and nothing else 
 
 test("a screen ticket opens only its own bot's screen, and only for a minute", () => {
   const bot = "8bc4443d-047a-49e6-b335-9cf3fa71d658";
-  const ticket = screenTicket(bot, 1_000);
+  const ticket = ticketFor(bot, 1_000);
   expect(ticketFits(ticket, bot, 2_000)).toBe(true);
   expect(ticketFits(ticket, "53f15e17-feea-458d-80b0-0f767c35455b", 2_000)).toBe(false);
   expect(ticketFits(ticket, bot, 62_000)).toBe(false);

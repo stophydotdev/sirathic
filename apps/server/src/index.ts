@@ -40,6 +40,8 @@ import { track } from "./chat/events";
 import { cardDecisions } from "./chat/confirm";
 import { uploadRoutes } from "./files/upload";
 import { browserRoutes } from "./bots/browserRoutes";
+import { closeAll } from "./realtime/hub";
+import { realtimeRoutes } from "./realtime/routes";
 import { groupOf } from "./projects/groups";
 import { projectOfChat } from "./projects/projects";
 import {
@@ -89,6 +91,7 @@ const tracing = new NodeSDK({
 tracing.start();
 const stopScheduler = env.RAILWAY_ENVIRONMENT_NAME === "production" ? startScheduler() : undefined;
 process.on("SIGTERM", () => {
+  closeAll(1012, "restarting");
   void Promise.resolve(stopScheduler?.())
     .then(() => {
       cutOffTasks();
@@ -301,6 +304,7 @@ app.get("/api/chat/:id/stream", async (c) => {
 
 app.route("/api/files", uploadRoutes);
 app.route("/api/bots", browserRoutes);
+app.route("/api/realtime", realtimeRoutes);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 

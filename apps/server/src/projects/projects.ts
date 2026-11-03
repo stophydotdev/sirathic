@@ -9,6 +9,7 @@ import { pluginId } from "../plugins/catalog";
 import { ownerCache } from "../account/ownerCache";
 import { StatusError } from "../http";
 import { track } from "../chat/events";
+import { publish } from "../realtime/hub";
 import {
   BOT_COLORS,
   BOT_BODIES,
@@ -134,6 +135,7 @@ export async function createProject(by: string, input: z.output<typeof projectIn
     })
     .returning(projectColumns);
   track({ name: "bot.created", props: {} }, by);
+  publish(by, { kind: "bot", botId: created.id });
   return created;
 }
 
@@ -148,6 +150,7 @@ export async function saveOpener(
     .where(owned(id, by))
     .returning(projectColumns);
   forgetBot(id, by);
+  publish(by, { kind: "bot", botId: id });
   if (!row) throw new StatusError(404, "no such project");
   return row;
 }
@@ -163,6 +166,7 @@ export async function updateProject(
     .where(owned(id, by))
     .returning(projectColumns);
   forgetBot(id, by);
+  publish(by, { kind: "bot", botId: id });
   if (!row) throw new StatusError(404, "no such project");
   return row;
 }
@@ -174,6 +178,7 @@ export async function removeProject(id: string, by: string) {
     .where(and(eq(chatSessions.projectId, id), eq(chatSessions.owner, by)));
   await db.delete(projects).where(owned(id, by));
   forgetBot(id, by);
+  publish(by, { kind: "bot", botId: id });
   void forgetBrowser(id).catch(() => undefined);
   void botDisk(id)
     .clear()

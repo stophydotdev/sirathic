@@ -1,4 +1,5 @@
 import type { ChatMessage, Effort } from "../shared/messages";
+import { publish } from "../realtime/hub";
 import { rememberEndedTask } from "./taskHistory";
 import type { BotScope } from "./tools";
 
@@ -137,6 +138,7 @@ export function addTask(
   };
   book.tasks.set(task.id, task);
   book.style = style;
+  publish(bot.owner, { kind: "task", botId: bot.id, taskId: task.id });
   return task;
 }
 
@@ -160,6 +162,7 @@ export function endTask(bot: BotScope, task: Task, end: TaskEnd) {
   for (const old of ended.slice(0, Math.max(0, ended.length - ENDED_KEPT))) {
     book.tasks.delete(old.id);
   }
+  publish(bot.owner, { kind: "task", botId: bot.id, taskId: task.id });
   return true;
 }
 

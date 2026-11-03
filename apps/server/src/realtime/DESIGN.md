@@ -79,7 +79,7 @@ grows with changes instead of with open tabs.
 
 ### Connecting
 
-The live browser view already does this (`bots/browserRoutes.ts`, `bots/screenTicket.ts`),
+The live browser view already does this (`bots/browserRoutes.ts`, `bots/ticket.ts`),
 so we copy it.
 
 1. The client calls `POST /api/realtime/ticket` with its normal session: the cookie
@@ -109,7 +109,7 @@ stay in the tRPC routers, and an event can never leak text.
 | `{ kind: "approval", chatId, state: "needed" \| "decided" }` | `saveSession`, `appendMessages`, from a part's `approval-requested` or `approval-responded` state | `sessions.list`, the open chat                   | part of 3, 9         |
 | `{ kind: "task", taskId, state }`                            | `bots/taskBook.ts` task start and `endTask`                                                       | `tasks.list`                                     | 6, 8                 |
 | `{ kind: "bot", botId }`                                     | bot create, update and delete routes                                                              | `projects.list`                                  | none, saves a reload |
-| `{ kind: "run", automationId, chatId, notify }`              | `automations/runner.ts` when a run saves its chat                                                 | `automations.runs`, web notification             | 1, 2, 7              |
+| `{ kind: "run", automationId, chatId }`                      | `automations/runner.ts` when a run saves its chat                                                 | `automations.runs`, web notification             | 1, 2, 7              |
 | `{ kind: "reset" }`                                          | server, when it cannot replay                                                                     | everything on screen                             |                      |
 
 When another device starts an answer, `answering: true` tells this device to attach to
@@ -150,8 +150,10 @@ Why Redis:
   would stop the compute from ever suspending, which is the cost problem we fixed on
   2026-10-30. NOTIFY also has no replay, so the cursor would need a table anyway.
 
-Limit: Redis pub/sub drops messages while a subscriber is disconnected. When a process
-reconnects to Redis, it sends `reset` to all of its sockets.
+Limit: Redis pub/sub drops messages while a subscriber is disconnected, and Bun's client
+reconnects without its subscriptions. So every 5 seconds each process publishes a beat on
+`rt` and checks it heard the last one. If not, it subscribes again and sends `reset` to
+all of its sockets. If Redis is down, it closes its sockets and the clients poll.
 
 The API runs one replica today (`numReplicas: 1`). `chat/answers.ts` keeps running
 answers in a process `Map`, so it can't run two yet anyway. This design works with
@@ -190,9 +192,10 @@ devices know a stream exists and can attach to it.
 
 ### Flag
 
-`account.status` returns `live: boolean`. The server sets it from a list of user ids in
-code: Hussein first, then everyone. No new env key, since every env key is required and
-a flag doesn't need one. Changing it takes a deploy.
+`account.status` returns `live: boolean`. The server sets it from `REALTIME_USERS`, a
+comma list of user ids or `*`, empty by default like `REVIEWERS`. While a user is not in
+it, nothing for them is written to Redis and the ticket route answers 404. Changing it
+is a Railway variable change, which redeploys the API.
 
 ### Fallback
 
@@ -226,7 +229,8 @@ code 1012 at SIGTERM (`index.ts:91`), so clients move to the new process right a
 - Neon: new rows in the existing `events` table with a new `name`. No schema change.
 - Web on Cloudflare Workers and the phone app: client changes. The phone needs a new
   build.
-- No new env keys, services or dependencies.
+- One new env key with an empty default, `REALTIME_USERS`. No new services or
+  dependencies.
 
 ## Left out on purpose
 
