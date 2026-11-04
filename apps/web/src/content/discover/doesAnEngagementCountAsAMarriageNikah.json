@@ -1,0 +1,332 @@
+{
+  "title": "Does an engagement count as a marriage (nikah)?",
+  "headline": "The four schools treat engagement as a promise before the marriage contract, not as a marriage",
+  "cover": "الخطبة",
+  "slug": "does-an-engagement-count-as-a-marriage-nikah",
+  "topic": "Family",
+  "tint": "teal",
+  "summary": {
+    "text": "All four schools place the engagement before the contract and treat it as a proposal that creates no marital effects. The Quran names the proposal and the marriage contract as two separate acts in one verse, and the hadith limit the tie to the time before marriage. The four schools rule on proposing over another's proposal as a separate matter from the contract, and the recent fatwas state that a Fatiha reading, a ring and a settled mahr do not amount to a contract.",
+    "citations": [
+      "https://www.dar-alifta.org/ar/Fatwa/Details/17378/حقيقة-الخطبة-وحكم-العدول-عنها-دون-موافقة-الخاطب",
+      "https://seekersguidance.org/answers/hanafi-fiqh/can-i-end-an-engagement-because-i-am-not-attracted-to-him/",
+      "https://www.amjaonline.org/fatwa/ar/80800/الخطوبة",
+      "https://quran.com/2/235",
+      "https://sunnah.com/nasai:3241",
+      "https://shamela.ws/book/11355/129"
+    ]
+  },
+  "updated": "2026-11-04",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/17378/حقيقة-الخطبة-وحكم-العدول-عنها-دون-موافقة-الخاطب",
+      "title": "حقيقة الخطبة وحكم العدول عنها دون موافقة الخاطب"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/can-i-end-an-engagement-because-i-am-not-attracted-to-him/",
+      "title": "Can I End an Engagement Because I Am Not Attracted to Him?"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/80800/الخطوبة",
+      "title": "الخطوبة"
+    },
+    {
+      "url": "https://quran.com/2/235",
+      "title": "Quran 2:235, Al-Baqara"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3241",
+      "title": "Sunan an-Nasa'i 3241: The Book of Marriage"
+    },
+    {
+      "url": "https://shamela.ws/book/11355/129",
+      "title": "مختصر خليل، خليل بن إسحاق الجندي، ج0 ص96"
+    },
+    {
+      "url": "https://quran.com/4/21",
+      "title": "Quran 4:21, An-Nisaa"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%ae%d8%b7%d8%a8%d8%a9-%d8%a7%d9%84%d9%85%d8%b9%d8%aa%d8%af%d8%a9/",
+      "title": "خطبة المعتدة"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1414",
+      "title": "Sahih Muslim 1414: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5142",
+      "title": "Sahih al-Bukhari 5142: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1409d",
+      "title": "Sahih Muslim 1409d: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1087",
+      "title": "Jami' at-Tirmidhi 1087: The Book on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1866",
+      "title": "Sunan Ibn Majah 1866: The Chapters on Marriage"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/71766/benefits-hadith-if-one-proposes-woman-if-able-look",
+      "title": "Benefits of the Hadith: (If one of you proposes to a woman, then if he is able to look at her . . .)"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1864",
+      "title": "Sunan Ibn Majah 1864: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:4005",
+      "title": "Sahih al-Bukhari 4005: Military Expeditions led by the Prophet (pbuh) (Al-Maghaazi)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1480p",
+      "title": "Sahih Muslim 1480p: The Book of Divorce"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:1533",
+      "title": "Riyad as-Salihin 1533"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:30",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص30"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1290",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص8"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1293",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص11"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:80",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص80"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1880",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص219"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1884",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص223"
+    },
+    {
+      "url": "https://shamela.ws/book/499#7:3",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج7 ص3"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/4953",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج9 ص570"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/4849",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج9 ص466"
+    },
+    {
+      "url": "https://shamela.ws/book/1679/507",
+      "title": "الروض المربع شرح زاد المستقنع - ط المؤيد والرسالة، البهوتي، ج0 ص508"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/16697/حكم-الشبكة-والهدايا-عند-فسخ-الخطبة",
+      "title": "حكم الشبكة والهدايا عند فسخ الخطبة"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/16205/حكم-الشبكة-والهدايا-عند-فسخ-الخطبة",
+      "title": "حكم الشبكة والهدايا عند فسخ الخطبة"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/fatwacentre/270673/calling-off-engagement/",
+      "title": "Calling Off Engagement"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1869",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص208"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/looking-at-a-prospective-wife/",
+      "title": "Looking at a Prospective Wife"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b9%d9%84%d8%a7%d9%82%d8%a9-%d8%a7%d9%84%d8%ae%d8%a7%d8%b7%d8%a8-%d8%a8%d8%a7%d9%84%d9%85%d8%ae%d8%b7%d9%88%d8%a8%d8%a9/",
+      "title": "علاقة الخاطب بالمخطوبة"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/16044/الفرق-بين-الخطبة-والزواج",
+      "title": "الفرق بين الخطبة والزواج"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/15452/تفسير-آية-التعريض-بخطبة-النساء",
+      "title": "تفسير آية التعريض بخطبة النساء"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/80940/فترة-الخطوبة",
+      "title": "فترة الخطوبة"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/841/فتوى-في-الخطوبة",
+      "title": "فتوى في الخطوبة"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%87%d9%84-%d8%a7%d9%84%d8%ae%d8%b7%d8%a8%d8%a9-%d9%88%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d8%a7%d9%84%d9%81%d8%a7%d8%aa%d8%ad%d8%a9-%d8%aa%d8%b9%d8%aa%d8%a8%d8%b1-%d8%b2%d9%88%d8%a7%d8%ac%d8%a7/",
+      "title": "هل الخطبة وقراءة الفاتحة تعتبر زواجا"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d8%a7%d9%84%d9%81%d8%a7%d8%aa%d8%ad%d8%a9-%d9%87%d9%84-%d8%aa%d8%b9%d8%aa%d8%a8%d8%b1-%d8%b2%d9%88%d8%a7%d8%ac%d8%a7%d8%9f/",
+      "title": "قراءة الفاتحة هل تعتبر زواجا"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%aa%d8%ad%d8%af%d8%ab-%d9%82%d8%a8%d9%84-%d8%a7%d9%84%d8%b2%d9%88%d8%a7%d8%ac/",
+      "title": "التحدث قبل الزواج"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The verse on women in their waiting period permits an indirect proposal while forbidding the marriage contract until the waiting period ends, so the two are named as separate acts in the same sentence. The permitted speech is only what hints that such a woman is one whom men would want, while resolving on the contract is barred for the duration of the waiting period. Marriage is described elsewhere as a solemn covenant, language never applied to a proposal. Ibn Abbas explained the indirect allusion as a man saying he intends to marry and would like a righteous wife to be made easy for him, which is speech about marriage, not marriage.",
+          "citations": [
+            "https://quran.com/2/235",
+            "https://quran.com/4/21",
+            "https://fiqh.islamonline.net/%d8%ae%d8%b7%d8%a8%d8%a9-%d8%a7%d9%84%d9%85%d8%b9%d8%aa%d8%af%d8%a9/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The reports that give engagement its one legal effect also prove it is not a contract, because they describe a state that ends at marriage or at withdrawal. The wording that the exclusivity lasts until he marries her or gives her up shows that before the marriage she is not married. The ihram report lists marrying and proposing as two distinct acts.",
+          "citations": [
+            "https://sunnah.com/nasai:3241",
+            "https://sunnah.com/muslim:1414",
+            "https://sunnah.com/bukhari:5142",
+            "https://sunnah.com/muslim:1409d"
+          ]
+        },
+        {
+          "text": "Two hadiths define what engagement does permit, namely looking at the prospective spouse, and they place it before the contract. A third version, from Muhammad ibn Maslamah, is graded sahih by al-Albani, Muhammad Fu'ad Abd al-Baqi and Shu'ayb al-Arna'ut, but da'if by Zubair Ali Zai, so its authenticity is disputed.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:1087",
+            "https://sunnah.com/ibnmajah:1866",
+            "https://al-fatawa.com/en/fatwa/71766/benefits-hadith-if-one-proposes-woman-if-able-look",
+            "https://sunnah.com/ibnmajah:1864"
+          ]
+        },
+        {
+          "text": "The Companions lived this distinction in practice. Umar offered Hafsah to Uthman, who said he would think it over and then declined; he then met Abu Bakr, who stayed silent, and afterwards the Prophet married her, all of which was proposal and acceptance, not contract. Fatima bint Qais, divorced three times, was told by the Prophet to let him know when her waiting period was over, and only after it ended did Mu'awiyah, Abu Jahm and Usamah ibn Zayd propose to her. Ibn Rushd reports the early disagreement over how much weight the first proposal carries, not over whether it is a marriage.",
+          "citations": [
+            "https://sunnah.com/bukhari:4005",
+            "https://sunnah.com/muslim:1480p",
+            "https://sunnah.com/riyadussalihin:1533",
+            "https://shamela.ws/book/21739#3:30"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "Ibn Abidin distinguishes the khutbah of praise recited before a contract from the khitbah, the seeking of marriage, and notes that engagement is not tied to fixed wording. He rules that a nikah is not concluded by words of courting such as I have come to you as a suitor, since the contract needs the words of marriage itself. Asked about a proposal made before witnesses, he answered that no valid contract existed, and the same for a Fatiha reading without a contract.",
+          "citations": [
+            "https://shamela.ws/book/21613/1290",
+            "https://shamela.ws/book/21613/1293",
+            "https://seekersguidance.org/answers/hanafi-fiqh/can-i-end-an-engagement-because-i-am-not-attracted-to-him/"
+          ]
+        },
+        {
+          "text": "Khalil lists the prohibition of proposing over another's proposal among the rulings that accompany marriage, as a separate item from the contract, and makes it conditional on the woman's inclination toward a non-sinful suitor. Ibn Rushd reports Malik's distinction between a second proposal made before inclination and one made after inclination and near completion, and the resulting question of annulment. Malik held two views on annulling a marriage contracted over another's proposal, plus a third view that it is annulled before consummation but not after.",
+          "citations": [
+            "https://shamela.ws/book/11355/129",
+            "https://shamela.ws/book/21739#3:80",
+            "https://shamela.ws/book/21739#3:30"
+          ]
+        },
+        {
+          "text": "Al-Shirbini defines the khitbah as the suitor's seeking of marriage from the woman's side, permitted only for a woman free of a husband and of a waiting period. His book separates three stages in one passage: the khutbah sermon, then the khitbah proposal, then the contract. Al-Nawawi describes the suitor's words at this stage as I have come to you desiring your noble daughter and the guardian's reply you are not unwanted.",
+          "citations": [
+            "https://shamela.ws/book/11444/1880",
+            "https://shamela.ws/book/11444/1884",
+            "https://shamela.ws/book/499#7:3"
+          ]
+        },
+        {
+          "text": "Ibn Qudama states that proposing over a brother's proposal is prohibited where the prohibition applies, and that if a man does it anyway his marriage is valid, which he attributes to Ahmad's explicit text, while noting a report from Malik to the contrary. He also records that the khitbah is not obligatory according to any scholar he knows except Dawud, which shows it is a separate recommended act, not a pillar of the contract. Al-Buhuti cites the verse on the waiting period in the chapter of marriage to forbid explicit proposal to a woman in her waiting period, again as a proposal rule distinct from the contract.",
+          "citations": [
+            "https://shamela.ws/book/6910/4953",
+            "https://shamela.ws/book/6910/4849",
+            "https://shamela.ws/book/1679/507"
+          ]
+        },
+        {
+          "text": "On the property side, the schools treat engagement gifts as mahr or as gifts, never as contractual entitlements. Egypt's Dar al-Ifta, following the Hanafi position applied in its courts, holds that the ring counts as part of the mahr by custom and returns to the suitor if the engagement ends, whichever side withdrew, while ordinary gifts return only if they still exist.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/16697/حكم-الشبكة-والهدايا-عند-فسخ-الخطبة",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/16205/حكم-الشبكة-والهدايا-عند-فسخ-الخطبة"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The Quran and the hadith give the first proposal a protected status, which sounds like a legal tie, while the same texts describe it ending at marriage or withdrawal. The reconciling principle is that the prohibition creates a right of exclusivity, not a marriage. The hadith's own limit, until he marries her or gives her up, shows the tie is dissolved by the very act of marrying, so the fiancée was never a wife. Ibn Qudama resolves it the same way from the other direction: the act is forbidden, yet a marriage concluded in defiance of it is still valid, which only makes sense if the first engagement was not itself a marriage.",
+          "citations": [
+            "https://quran.com/2/235",
+            "https://sunnah.com/nasai:3241",
+            "https://sunnah.com/muslim:1414",
+            "https://shamela.ws/book/6910/4953"
+          ]
+        },
+        {
+          "text": "The Maliki annulment looks like the strongest counter-evidence, and Ibn Rushd explains it as a disagreement over whether the prohibition entails invalidity, restricted to the case where hearts had settled and completion was near. Even there the remedy operates on the later marriage contract, which presumes the engagement was not one.",
+          "citations": ["https://shamela.ws/book/21739#3:80", "https://shamela.ws/book/21739#3:30"]
+        },
+        {
+          "text": "Breaking an engagement without excuse is treated as wronging the other party, yet Dar al-Ifta states the promise binds neither of them and that the mahr is only established by the contract. The permission to look at one's fiancée is not evidence of marital status: al-Shirbini notes the concession is specific to the fiancée precisely because she is not yet a wife, and the fatwas restrict it to need and to the face and hands.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17378/حقيقة-الخطبة-وحكم-العدول-عنها-دون-موافقة-الخاطب",
+            "https://islamqa.org/hanafi/fatwacentre/270673/calling-off-engagement/",
+            "https://shamela.ws/book/11444/1869",
+            "https://fiqh.islamonline.net/en/looking-at-a-prospective-wife/",
+            "https://fiqh.islamonline.net/%d8%b9%d9%84%d8%a7%d9%82%d8%a9-%d8%a7%d9%84%d8%ae%d8%a7%d8%b7%d8%a8-%d8%a8%d8%a7%d9%84%d9%85%d8%ae%d8%b7%d9%88%d8%a8%d8%a9/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Egypt's Dar al-Ifta ruled in 1967 that reading al-Fatiha, the guardian's agreement, settling the mahr and presenting the ring do not amount to a marriage contract with its effects, but are preparation and a promise that binds neither party; once they withdraw, another man may propose to her without the first suitor's permission, and there is no divorce because there was no contract. An earlier 1957 fatwa added that even paying the mahr and the father's public announcement that his daughter had become the man's wife did not create a contract while its pillars were missing. A 2003 fatwa on the waiting-period verse explained the forbidden secret promise as, for example, asking her to pledge not to marry anyone else.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17378/حقيقة-الخطبة-وحكم-العدول-عنها-دون-موافقة-الخاطب",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/16044/الفرق-بين-الخطبة-والزواج",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/15452/تفسير-آية-التعريض-بخطبة-النساء"
+          ]
+        },
+        {
+          "text": "The Assembly of Muslim Jurists of America answered that the fiancée remains a stranger to her suitor, so a gift or ring is fine but touching her hand is not lawful before the contract, and it treated a Fatiha reading as a promise rather than a contract while a real contract with guardian, witnesses and mahr does make the man her husband. IslamOnline's answers state plainly that engagement does not make the prohibited permissible, that the couple remain non-mahrams, and that only looking at the face and hands is conceded. A 2026 Hanafi answer on SeekersGuidance, citing Ibn Abidin, concluded that a valid contract was never concluded, so the engagement does not count as a marriage contract and there is nothing to be released from.",
+          "citations": [
+            "https://www.amjaonline.org/fatwa/ar/80800/الخطوبة",
+            "https://www.amjaonline.org/fatwa/ar/80940/فترة-الخطوبة",
+            "https://www.amjaonline.org/fatwa/ar/841/فتوى-في-الخطوبة",
+            "https://fiqh.islamonline.net/%d9%87%d9%84-%d8%a7%d9%84%d8%ae%d8%b7%d8%a8%d8%a9-%d9%88%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d8%a7%d9%84%d9%81%d8%a7%d8%aa%d8%ad%d8%a9-%d8%aa%d8%b9%d8%aa%d8%a8%d8%b1-%d8%b2%d9%88%d8%a7%d8%ac%d8%a7/",
+            "https://fiqh.islamonline.net/%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d8%a7%d9%84%d9%81%d8%a7%d8%aa%d8%ad%d8%a9-%d9%87%d9%84-%d8%aa%d8%b9%d8%aa%d8%a8%d8%b1-%d8%b2%d9%88%d8%a7%d8%ac%d8%a7%d8%9f/",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%aa%d8%ad%d8%af%d8%ab-%d9%82%d8%a8%d9%84-%d8%a7%d9%84%d8%b2%d9%88%d8%a7%d8%ac/",
+            "https://seekersguidance.org/answers/hanafi-fiqh/can-i-end-an-engagement-because-i-am-not-attracted-to-him/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
