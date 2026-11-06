@@ -1,0 +1,513 @@
+{
+  "title": "What is the ruling on adoption in Islam?",
+  "headline": "Islam forbids adoption that changes lineage but rewards raising an orphan",
+  "cover": "التبني والكفالة",
+  "slug": "what-is-the-ruling-on-adoption-in-islam",
+  "topic": "Family",
+  "tint": "rose",
+  "summary": {
+    "text": "The four schools agree that adoption in the sense of transferring a child into another lineage is forbidden, and they address it inside claims of lineage, the foundling, and the prohibited women rather than in a chapter on adoption. The child keeps the name of the biological father, takes no fixed inheritance share, and no mahram relationship is created. Raising and sponsoring an orphan without attributing him to oneself is strongly rewarded, with the Prophet ﷺ promising his company in Paradise to the one who looks after an orphan.",
+    "citations": [
+      "https://shamela.ws/book/11820/255",
+      "https://shamela.ws/book/21604/1494",
+      "https://shamela.ws/book/11444/1343",
+      "https://shamela.ws/book/622#9:527",
+      "https://seekersguidance.org/answers/hanafi-fiqh/the-fiqh-of-adoption/",
+      "https://seekersguidance.org/answers/hanafi-fiqh/how-do-we-correctly-manage-an-adopted-child-with-non-mahram-boundaries/",
+      "https://fiqh.islamonline.net/%d8%ad%d9%83%d9%85-%d8%aa%d8%a8%d9%86%d9%8a-%d8%a7%d9%84%d9%84%d9%82%d9%8a%d8%b7/",
+      "https://sunnah.com/riyadussalihin:262",
+      "https://sunnah.com/riyadussalihin:263",
+      "https://al-fatawa.com/en/fatwa/101244/charity-behalf-deceased"
+    ]
+  },
+  "updated": "2026-11-06",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://shamela.ws/book/11820/255",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص186"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/1494",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج3 ص411"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1343",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج3 ص305"
+    },
+    {
+      "url": "https://shamela.ws/book/622#9:527",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج9 ص527"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/the-fiqh-of-adoption/",
+      "title": "The Fiqh of Adoption"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/how-do-we-correctly-manage-an-adopted-child-with-non-mahram-boundaries/",
+      "title": "How Do We Correctly Manage an Adopted Child With Non-Mahram Boundaries?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%ad%d9%83%d9%85-%d8%aa%d8%a8%d9%86%d9%8a-%d8%a7%d9%84%d9%84%d9%82%d9%8a%d8%b7/",
+      "title": "حكم تبني اللقيط"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:262",
+      "title": "Riyad as-Salihin 262"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:263",
+      "title": "Riyad as-Salihin 263"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/101244/charity-behalf-deceased",
+      "title": "Charity on behalf of the deceased"
+    },
+    {
+      "url": "https://quran.com/33/4",
+      "title": "Quran 33:4, Al-Ahzaab"
+    },
+    {
+      "url": "https://quran.com/33/5",
+      "title": "Quran 33:5, Al-Ahzaab"
+    },
+    {
+      "url": "https://quran.com/33/37",
+      "title": "Quran 33:37, Al-Ahzaab"
+    },
+    {
+      "url": "https://quran.com/33/40",
+      "title": "Quran 33:40, Al-Ahzaab"
+    },
+    {
+      "url": "https://quran.com/4/23",
+      "title": "Quran 4:23, An-Nisaa"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1952",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص291"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:3209",
+      "title": "Jami' at-Tirmidhi 3209: Chapters on Tafsir"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:4782",
+      "title": "Sahih al-Bukhari 4782: Prophetic Commentary on the Qur'an (Tafseer of the Prophet (pbuh))"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:4787",
+      "title": "Sahih al-Bukhari 4787: Prophetic Commentary on the Qur'an (Tafseer of the Prophet (pbuh))"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:7420",
+      "title": "Sahih al-Bukhari 7420: Oneness, Uniqueness of Allah (Tawheed)"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/islamicportal/175703/can-wife-change-surname-after-marriage/",
+      "title": "Can wife change surname after marriage"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/56110/benefits-saying-allah-exalted-call-fathers-more-just-sight-allah-but-if-do-not-know-fathers-brothers",
+      "title": "The benefits of the saying of Allah the Exalted: “Call them by their fathers; that is more just in the sight of Allah. But if you do not know their fathers, then they are your brothers in religion and your allies.”"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/107339/ruling-adoption",
+      "title": "The Ruling on Adoption"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/107759/fatwa-no-1623-q-what-story-zayd-ibn-harithah-marriage-zaynab-whom-prophet-peace-blessings-upon",
+      "title": "Fatwa No. (1623) Q: What is the story of Zayd ibn Harithah and his marriage to Zaynab, whom the Prophet (peace and blessings be upon him) married after him, and how did their marriage begin?"
+    },
+    {
+      "url": "https://quran.com/33/6",
+      "title": "Quran 33:6, Al-Ahzaab"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:6766",
+      "title": "Sahih al-Bukhari 6766"
+    },
+    {
+      "url": "https://sunnah.com/muslim:63b",
+      "title": "Sahih Muslim 63b: The Book of Faith"
+    },
+    {
+      "url": "https://sunnah.com/muslim:63a",
+      "title": "Sahih Muslim 63a: The Book of Faith"
+    },
+    {
+      "url": "https://sunnah.com/muslim:61",
+      "title": "Sahih Muslim 61: The Book of Faith"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B3%D9%8A%D8%B1#2417",
+      "title": "Sunan ad-Darimi 2417"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:2609",
+      "title": "Sunan Ibn Majah 2609: The Chapters on Legal Punishments"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/107349/meaning-statement-one-who-claims-father-other-own-fire",
+      "title": "The meaning of the statement that one who claims a father other than his own is in the Fire"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/11421/حكم-كفالة-اليتيم-ومجهول-النسب",
+      "title": "كفالة اليتيم ومجهول النسب"
+    },
+    {
+      "url": "https://www.dar-alifta.org/en/fatwa/details/5965/the-legal-ruling-for-adoption",
+      "title": "The Legal Ruling for Adoption"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/hadithanswers/120044/caring-for-orphans/",
+      "title": "Caring for orphans"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3482",
+      "title": "Sunan an-Nasa'i 3482: The Book of Divorce"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1943",
+      "title": "Sunan Ibn Majah 1943: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3323",
+      "title": "Sunan an-Nasa'i 3323: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3319",
+      "title": "Sunan an-Nasa'i 3319: The Book of Marriage"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1928",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص646"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/3349",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج5 ص616"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/1500",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج3 ص417"
+    },
+    {
+      "url": "https://shamela.ws/book/499#5:429",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج5 ص429"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/4165",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج8 ص366"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%aa%d8%a8%d9%86%d9%8a-%d8%af%d9%88%d9%86-%d9%86%d8%b3%d8%a8%d8%a9-%d8%a7%d9%84%d9%88%d9%84%d8%af/",
+      "title": "التبني دون نسبة الولد"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/95752/inheritance-adopted-child/",
+      "title": "Inheritance – adopted child"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/11839/does-an-adopted-child-have-any-rights-over-the-estate-of-natural-parents-or-adopted-parents/",
+      "title": "Does an adopted child have any rights over the estate of natural parents or adopted parents ?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/themufti/152763/the-inheritance-of-adopted-children/",
+      "title": "The inheritance of adopted children"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/136207",
+      "title": "لا ميراث للابن المتبنى"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%ad%d9%83%d9%85-%d8%a7%d9%84%d8%aa%d8%a8%d9%86%d9%8a-%d9%81%d9%8a-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85/",
+      "title": "حكم التبني في الإسلام"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/86228/how-attain-reward-taking-care-orphan",
+      "title": "How to attain the reward for taking care of an orphan"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/70203/ruling-breastfeeding-adult-70203",
+      "title": "The Ruling on Breastfeeding an Adult"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/breast-feeding-adults-explanation-of-the-hadith-of-salim/",
+      "title": "Breast-feeding Adults: Explanation of the Hadith of Salim"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%82%d8%b5%d8%a9-%d8%b1%d8%b6%d8%a7%d8%b9-%d8%b3%d8%a7%d9%84%d9%85-%d9%85%d9%88%d9%84%d9%89-%d8%a3%d8%a8%d9%8a-%d8%ad%d8%b0%d9%8a%d9%81%d8%a9-%d9%88%d9%87%d9%88-%d9%83%d8%a8%d9%8a%d8%b1-%d9%85%d9%86/",
+      "title": "قصة رضاع سالم مولى أبي حذيفة وهو كبير من سهلة"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/28051/permissible-adult-breastfed-order-become-mahram",
+      "title": "Is it permissible for an adult to be breastfed in order to become a mahram?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/116182/breastfeeding-adult-considered-specific-salim-freed-slave-abu-hudhayfah",
+      "title": "Is the breastfeeding of an adult considered specific to Salim, the freed slave of Abu Hudhayfah?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/36114/specific-age-limit-breastfeeding-how-hadith-regarding-breastfeeding-salim-freed-slave-abu-hudhayfah",
+      "title": "Is there a specific age limit for breastfeeding, and how is the hadith regarding the breastfeeding of Salim, the freed slave of Abu Hudhayfah, and the hadith of Aisha that she used to order her sister Asma to breastfeed a non-mahram man before he entered her presence, answered?"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:59",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص59"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%ad%d9%83%d9%85%d8%a9-%d9%85%d9%86-%d8%a5%d8%a8%d8%b7%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%a8%d9%86%d9%8a-%d9%81%d9%8a-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85/",
+      "title": "الحكمة من إبطال التبني في الإسلام"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/107345/attributing-child-mother",
+      "title": "Attributing a child to his mother"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/109238/ruling-attributing-foundling-adopter-lineage",
+      "title": "Ruling on attributing a foundling to his adopter by lineage"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/18086/حكم-كفالة-مجهولي-النسب-ونسبهم-إلى-الكافل",
+      "title": "حكم كفالة مجهولي النسب ونسبهم إلى الكافل"
+    },
+    {
+      "url": "https://fiqhcouncil.org/fcna-guidelines-on-fostering-and-guardianship/",
+      "title": "FCNA Guidelines on Fostering and Guardianship"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/107400/adopting-foundling-naming-own-name-death-adopter",
+      "title": "Adopting a foundling, naming him with his own name, and the death of the adopter"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/107341/one-who-adopts-child-claims-own-bequeaths",
+      "title": "The one who adopts a child, claims him as his own, and bequeaths to him"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/11502/حكم-التبني",
+      "title": "حكم التبني"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/13376/كفالة-ذكر-وأنثى-معًا",
+      "title": "كفالة ذكر وأنثى معًا"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/101621/adoption-foundling",
+      "title": "Adoption of a foundling"
+    },
+    {
+      "url": "https://fiqhcouncil.org/the-islamic-position-regarding-the-care-of-orphans-and-abandoned-children/",
+      "title": "The Islamic Position Regarding the Care of Orphans and Abandoned Children"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/85890/التبني",
+      "title": "التبني"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "Al-Ahzab 33:4 rejects the claim itself: \"Allāh has not made for a man two hearts in his interior... And He has not made your claimed sons your [true] sons. That is [merely] your saying by your mouths, but Allāh says the truth, and He guides to the [right] way.\". Verse 33:5 gives the command that replaced it: \"Call them by [the names of] their fathers; it is more just in the sight of Allāh. But if you do not know their fathers - then they are [still] your brothers in religion and those entrusted to you. And there is no blame upon you for that in which you have erred but [only for] what your hearts intended.\".",
+          "citations": ["https://quran.com/33/4", "https://quran.com/33/5"]
+        },
+        {
+          "text": "Al-Ahzab 33:37 records the practical demolition of the custom: Zayd ibn Harithah divorced Zaynab bint Jahsh, and Allah married her to the Prophet ﷺ \"in order that there not be upon the believers any discomfort concerning the wives of their claimed sons\". Verse 33:40 closes the argument with \"Muḥammad is not the father of [any] one of your men\". An-Nisa 4:23 restricts the prohibition to \"the wives of your sons who are from your [own] loins\", a restriction the fuqaha read as deliberately excluding the adopted son's wife.",
+          "citations": [
+            "https://quran.com/33/37",
+            "https://quran.com/33/40",
+            "https://quran.com/4/23",
+            "https://shamela.ws/book/11444/1952",
+            "https://shamela.ws/book/11820/255"
+          ]
+        },
+        {
+          "text": "The Companions read these verses as a direct correction of a name they had been using. Ibn Umar said: \"We used to call Zayd ibn Ḥārithah only 'Zayd ibn Muhammad,' until the Qur'an was revealed: 'Call them by the names of their fathers'\" (Jami' at-Tirmidhi 3209, graded hasan sahih; also Sahih al-Bukhari 4782). Anas reported that 33:37 was revealed about Zaynab and Zayd, and that the Prophet ﷺ would have concealed this verse if he concealed anything (Sahih al-Bukhari 4787, 7420).",
+          "citations": [
+            "https://sunnah.com/tirmidhi:3209",
+            "https://sunnah.com/bukhari:4782",
+            "https://sunnah.com/bukhari:4787",
+            "https://sunnah.com/bukhari:7420"
+          ]
+        },
+        {
+          "text": "Al-Qurtubi adds that names already fixed as labels, like al-Miqdad ibn al-Aswad and Salim mawla Abi Hudhayfah, stayed in use after the verse, because the prohibition concerns the ruling and the claim, not a nickname stripped of its legal meaning. The Permanent Committee summarises the sequence: the Prophet ﷺ had adopted Zayd before revelation, so he was called Zayd ibn Muhammad, and the practice continued until the third or fifth year after the Hijrah, when Allah commanded attribution to the real father. Verse 33:6 fixed inheritance on blood ties: \"those of [blood] relationship are more entitled [to inheritance]... than the [other] believers and the emigrants, except that you may do to your close associates a kindness [through bequest]\".",
+          "citations": [
+            "https://islamqa.org/hanafi/islamicportal/175703/can-wife-change-surname-after-marriage/",
+            "https://al-fatawa.com/en/fatwa/56110/benefits-saying-allah-exalted-call-fathers-more-just-sight-allah-but-if-do-not-know-fathers-brothers",
+            "https://al-fatawa.com/en/fatwa/107339/ruling-adoption",
+            "https://al-fatawa.com/en/fatwa/107759/fatwa-no-1623-q-what-story-zayd-ibn-harithah-marriage-zaynab-whom-prophet-peace-blessings-upon",
+            "https://quran.com/33/6"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The prohibition is carried by mutawatir-level wording in the two Sahihs: \"Whoever claims to be the son of someone other than his father, knowing that he is not his father, Paradise is forbidden to him\" (Sahih al-Bukhari 6766; Sahih Muslim 63). That hadith was invoked in a real dispute: when Ziyad was claimed as a son of Abu Sufyan, Abu Bakrah testified he had heard it from the Prophet ﷺ himself (Sahih Muslim 63a). Abu Dharr's version adds that the act is counted disbelief: \"A person who attributes his fatherhood to anyone other than his real father, knowing that he is not his father, commits an act of disbelief\" (Sahih Muslim 61).",
+          "citations": [
+            "https://sunnah.com/bukhari:6766",
+            "https://sunnah.com/muslim:63b",
+            "https://sunnah.com/muslim:63a",
+            "https://sunnah.com/muslim:61"
+          ]
+        },
+        {
+          "text": "The cursing version is also authentic: \"Whoever claims to be the son of someone other than his father, or attaches himself to someone other than his own masters out of aversion to them, upon him is the curse of Allah, the angels, and all people\" (Sunan ad-Darimi 2417; Sunan Ibn Majah 2609; Abu Dawud 5115 graded sahih by al-Albani). On the positive side, the promise for the guardian of an orphan is in the highest grade of authenticity: \"I and the one who looks after an orphan will be in Paradise like this,\" and he indicated with his two fingers, the index finger and the middle finger (Sahih al-Bukhari 5304; Sahih Muslim 263).",
+          "citations": [
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D8%A7%D9%84%D8%B3%D9%8A%D8%B1#2417",
+            "https://sunnah.com/ibnmajah:2609",
+            "https://al-fatawa.com/en/fatwa/107349/meaning-statement-one-who-claims-father-other-own-fire",
+            "https://sunnah.com/riyadussalihin:262",
+            "https://sunnah.com/riyadussalihin:263",
+            "https://al-fatawa.com/en/fatwa/101244/charity-behalf-deceased"
+          ]
+        },
+        {
+          "text": "Muslim's wording widens it beyond relatives: \"The one who looks after an orphan, whether the orphan is his relative or not, he and I will be like these two in Paradise\". Ahmad's report from Malik ibn al-Harith, \"Whoever takes in the orphan of two Muslim parents and provides him with food and drink until he can support himself, will enter Paradise,\" was graded hasan by al-Mundhiri and al-'Iraqi. The popular \"best of homes is the one in which an orphan is treated well\" (Ibn Majah 3679) is in a chain al-Busiri called weak, though it is quoted for encouragement.",
+          "citations": [
+            "https://sunnah.com/riyadussalihin:263",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/11421/حكم-كفالة-اليتيم-ومجهول-النسب",
+            "https://www.dar-alifta.org/en/fatwa/details/5965/the-legal-ruling-for-adoption",
+            "https://islamqa.org/hanafi/hadithanswers/120044/caring-for-orphans/"
+          ]
+        },
+        {
+          "text": "Two further hadiths bear on the mechanics. \"The child belongs to the marriage bed, and for the adulterer is the stone\" (Sunan an-Nasa'i 3482, sahih) is the principle that lineage follows the bed, not a declaration. And the Salim report is authentic: Sahlah bint Suhayl complained that Abu Hudhayfah disliked Salim entering on her, and the Prophet ﷺ said, \"Breastfeed him\" (Sahih Muslim; Sunan Ibn Majah 1943, sahih; Sunan an-Nasa'i 3323).",
+          "citations": [
+            "https://sunnah.com/nasai:3482",
+            "https://sunnah.com/ibnmajah:1943",
+            "https://sunnah.com/nasai:3323",
+            "https://sunnah.com/nasai:3319"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "None of the four schools has a chapter on adoption; they address it inside claims of lineage, the foundling, and the prohibited women, treating it as a question of lineage rather than of charity. In the Hanafi school, al-Marghinani's al-Hidaya (1/186) says the words \"who are from your own loins\" in 4:23 were mentioned \"to nullify the consideration of adoption\", so the adopted son's wife is not forbidden. Ibn Abidin's Radd al-Muhtar (3/646-647) holds that a claim of sonship attaches only where the claimant has no known father; if the child's lineage is known, \"the lineage is not established\".",
+          "citations": [
+            "https://shamela.ws/book/11820/255",
+            "https://shamela.ws/book/21613/1928",
+            "https://shamela.ws/book/21613/3349"
+          ]
+        },
+        {
+          "text": "In the Maliki school, al-Dasuqi's Hashiyat al-Sharh al-Kabir (3/411-412) states \"Only a father claims a child of unknown lineage\"; a known-lineage child cannot be claimed, and the child of established fornication is excluded. Al-Dasuqi (3/417) adds that lineage is not established by mere acknowledgement but by proof, and that acknowledging a \"son\" does not create a mahram or an heir.",
+          "citations": ["https://shamela.ws/book/21604/1494", "https://shamela.ws/book/21604/1500"]
+        },
+        {
+          "text": "In the Shafi'i school, al-Shirbini's Mughni al-Muhtaj (3/305) says of one whose lineage from another is established, or who denies him, \"they do not attach him\". The same work (4/291) says the restriction \"from your own loins\" exists precisely \"to exclude the wife of the adopted one, so a man's wife is not forbidden to him, because he is not truly his son\". Al-Nawawi's al-Rawda (5/429) treats the foundling like other persons of unknown lineage: a free Muslim who claims him attaches him, with the conditions of istilhlaq.",
+          "citations": [
+            "https://shamela.ws/book/11444/1343",
+            "https://shamela.ws/book/11444/1952",
+            "https://shamela.ws/book/499#5:429"
+          ]
+        },
+        {
+          "text": "In the Hanbali school, al-Buhuti's Kashshaf al-Qina' (9/527), in the chapter on the foundling, says: \"If a person acknowledges that he is his son, he attaches to him if it is possible that he be from him, and he is of unknown lineage\". Ibn Qudama's al-Mughni (8/366) holds that where the claimant has a known family and lineage, the claim is not accepted without proof. In all four schools the adopted child takes no fixed share of inheritance, and no mahram relationship is created, so the rules of covering and privacy between the guardian and an opposite-sex child of age remain those of non-relatives; the practical substitute is a gift during life or a bequest within one third.",
+          "citations": [
+            "https://shamela.ws/book/622#9:527",
+            "https://shamela.ws/book/6910/4165",
+            "https://seekersguidance.org/answers/hanafi-fiqh/the-fiqh-of-adoption/",
+            "https://seekersguidance.org/answers/hanafi-fiqh/how-do-we-correctly-manage-an-adopted-child-with-non-mahram-boundaries/",
+            "https://fiqh.islamonline.net/%d8%ad%d9%83%d9%85-%d8%aa%d8%a8%d9%86%d9%8a-%d8%a7%d9%84%d9%84%d9%82%d9%8a%d8%b7/",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%aa%d8%a8%d9%86%d9%8a-%d8%af%d9%88%d9%86-%d9%86%d8%b3%d8%a8%d8%a9-%d8%a7%d9%84%d9%88%d9%84%d8%af/",
+            "https://islamqa.org/hanafi/muftionline/95752/inheritance-adopted-child/",
+            "https://islamqa.org/hanafi/askimam/11839/does-an-adopted-child-have-any-rights-over-the-estate-of-natural-parents-or-adopted-parents/",
+            "https://islamqa.org/hanafi/themufti/152763/the-inheritance-of-adopted-children/",
+            "https://islamqa.info/ar/answers/136207"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "On \"abolish adoption\" versus \"the guardian of an orphan will be with me in Paradise\", the reconciliation is terminological: two different acts share the English word. Qaradawi distinguishes the forbidden adoption, which folds a child into one's lineage with all the rulings of sonship, from taking a child in to raise without attributing him to oneself, which is rewarded. Ibn Baz, asked how to attain the reward, answered that the hadith is general and the reward grows with the length of care, regardless of naming.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%aa%d8%a8%d9%86%d9%8a-%d8%af%d9%88%d9%86-%d9%86%d8%b3%d8%a8%d8%a9-%d8%a7%d9%84%d9%88%d9%84%d8%af/",
+            "https://fiqh.islamonline.net/%d8%ad%d9%83%d9%85-%d8%a7%d9%84%d8%aa%d8%a8%d9%86%d9%8a-%d9%81%d9%8a-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85/",
+            "https://al-fatawa.com/en/fatwa/86228/how-attain-reward-taking-care-orphan"
+          ]
+        },
+        {
+          "text": "On the Salim breastfeeding versus \"no breastfeeding except within two years\", the majority, including Ibn Baz, hold the instruction was specific to Salim, because the authentic reports restrict nursing to the two years. Ibn Taymiyya, and al-Albani after him, held it applies to anyone in a like situation of need, not as a general licence. Uthaymeen laid out both positions and noted that what the Salim report establishes is mahramiyya by milk, not lineage, and Ibn Rushd records the same tension being resolved by treating one set of reports as qualifying the other.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/70203/ruling-breastfeeding-adult-70203",
+            "https://fiqh.islamonline.net/en/breast-feeding-adults-explanation-of-the-hadith-of-salim/",
+            "https://fiqh.islamonline.net/%d9%82%d8%b5%d8%a9-%d8%b1%d8%b6%d8%a7%d8%b9-%d8%b3%d8%a7%d9%84%d9%85-%d9%85%d9%88%d9%84%d9%89-%d8%a3%d8%a8%d9%8a-%d8%ad%d8%b0%d9%8a%d9%81%d8%a9-%d9%88%d9%87%d9%88-%d9%83%d8%a8%d9%8a%d8%b1-%d9%85%d9%86/",
+            "https://al-fatawa.com/en/fatwa/28051/permissible-adult-breastfed-order-become-mahram",
+            "https://al-fatawa.com/en/fatwa/116182/breastfeeding-adult-considered-specific-salim-freed-slave-abu-hudhayfah",
+            "https://al-fatawa.com/en/fatwa/36114/specific-age-limit-breastfeeding-how-hadith-regarding-breastfeeding-salim-freed-slave-abu-hudhayfah",
+            "https://shamela.ws/book/21739#3:59"
+          ]
+        },
+        {
+          "text": "On \"the child belongs to the bed\" versus a declaration of sonship, adoption cannot create a bed, so it cannot create lineage; the hadith is cited as the reason a man \"may not deny the lineage of one born on his bed, nor may he adopt one who is not his child\". On \"no blame for what you erred in\" versus the severity of the threat, the Permanent Committee reads 33:5 as excusing only the slip of the tongue or the pre-Islamic past, not deliberate continuation: informing contrary to reality is \"forgery and pure lying\".",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%ad%d9%83%d9%85%d8%a9-%d9%85%d9%86-%d8%a5%d8%a8%d8%b7%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%a8%d9%86%d9%8a-%d9%81%d9%8a-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85/",
+            "https://sunnah.com/nasai:3482",
+            "https://al-fatawa.com/en/fatwa/107345/attributing-child-mother",
+            "https://al-fatawa.com/en/fatwa/109238/ruling-attributing-foundling-adopter-lineage"
+          ]
+        },
+        {
+          "text": "On surnames, the practical fatwas diverge in emphasis rather than principle. Dar al-Ifta al-Misriyyah permits adding the guardian's family name as a form of wala', provided it does not imply biological sonship; the Fiqh Council of North America allows the family name for legal documents while keeping the biological name; and the Permanent Committee forbids registering a foundling as the adopter's son outright, because of the inheritance and mahram confusion it causes.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/18086/حكم-كفالة-مجهولي-النسب-ونسبهم-إلى-الكافل",
+            "https://fiqhcouncil.org/fcna-guidelines-on-fostering-and-guardianship/",
+            "https://al-fatawa.com/en/fatwa/107400/adopting-foundling-naming-own-name-death-adopter",
+            "https://al-fatawa.com/en/fatwa/107341/one-who-adopts-child-claims-own-bequeaths"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Dar al-Ifta al-Misriyyah has been consistent across muftis. Ali Gomaa's fatwa 2063 (2005) states adoption is haram and Islam abolished all its effects, while listing the orphan hadiths in the same answer; fatwa 7365 (2010) permits the family surname without concealment; fatwa 461 (2012) extends the orphan's reward to the child of unknown lineage, arguing the ratio is deprivation of a father, which is present more intensely; and fatwa 3780 (2017) sets out the privacy rules when two children of different sexes are sponsored.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/11502/حكم-التبني",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/18086/حكم-كفالة-مجهولي-النسب-ونسبهم-إلى-الكافل",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/11421/حكم-كفالة-اليتيم-ومجهول-النسب",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/13376/كفالة-ذكر-وأنثى-معًا"
+          ]
+        },
+        {
+          "text": "The Permanent Committee's fatwa 53 (1392 AH) is the reference text on the abolition of adoption's pre-Islamic effects, especially inheritance, and later fatwas 122, 3000, 17230 and 17904 apply it to registered foundlings and family registries. The Fiqh Council of North America (2021) urges the term guardianship/kafalah and permits the family name for legal necessities, and AMJA answers that a sponsored child remains a non-mahram with no inheritance share, but may receive up to one third by bequest. Hanafi mufti sites reach the same inheritance conclusion from the school's books.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/107339/ruling-adoption",
+            "https://al-fatawa.com/en/fatwa/107400/adopting-foundling-naming-own-name-death-adopter",
+            "https://al-fatawa.com/en/fatwa/107341/one-who-adopts-child-claims-own-bequeaths",
+            "https://al-fatawa.com/en/fatwa/101621/adoption-foundling",
+            "https://al-fatawa.com/en/fatwa/107345/attributing-child-mother",
+            "https://fiqhcouncil.org/fcna-guidelines-on-fostering-and-guardianship/",
+            "https://fiqhcouncil.org/the-islamic-position-regarding-the-care-of-orphans-and-abandoned-children/",
+            "https://www.amjaonline.org/fatwa/ar/85890/التبني",
+            "https://islamqa.org/hanafi/muftionline/95752/inheritance-adopted-child/",
+            "https://islamqa.org/hanafi/askimam/11839/does-an-adopted-child-have-any-rights-over-the-estate-of-natural-parents-or-adopted-parents/",
+            "https://islamqa.org/hanafi/themufti/152763/the-inheritance-of-adopted-children/"
+          ]
+        },
+        {
+          "text": "A couple who take in a foundling girl may name her, feed her, educate her, leave her a third of the estate, and be promised the Prophet's company in Paradise, but she keeps a name that does not assert their parentage, she does not inherit as a daughter, and when she reaches puberty the household arranges covering and privacy as with any non-relative, unless a valid milk relationship was established in infancy.",
+          "citations": [
+            "https://www.dar-alifta.org/en/fatwa/details/5965/the-legal-ruling-for-adoption",
+            "https://seekersguidance.org/answers/hanafi-fiqh/how-do-we-correctly-manage-an-adopted-child-with-non-mahram-boundaries/",
+            "https://fiqhcouncil.org/fcna-guidelines-on-fostering-and-guardianship/",
+            "https://islamqa.org/hanafi/themufti/152763/the-inheritance-of-adopted-children/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
