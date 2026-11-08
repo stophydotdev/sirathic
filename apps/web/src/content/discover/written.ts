@@ -11,6 +11,7 @@ import sleepAndWudu from "./sleepAndWudu.json";
 import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
 import whatIsTheRulingOnAdoptionInIslam from "./whatIsTheRulingOnAdoptionInIslam.json";
 import whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives from "./whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives.json";
+import whyIsIslamStrongDespiteDifferencesOfOpinionAmong from "./whyIsIslamStrongDespiteDifferencesOfOpinionAmong.json";
 import wipingOverSocks from "./wipingOverSocks.json";
 
 export const written = [
@@ -27,5 +28,6 @@ export const written = [
   touchingPrivatePartsAndWudu,
   whatIsTheRulingOnAdoptionInIslam,
   whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives,
+  whyIsIslamStrongDespiteDifferencesOfOpinionAmong,
   wipingOverSocks,
 ];
