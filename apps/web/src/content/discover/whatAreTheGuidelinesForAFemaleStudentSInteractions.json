@@ -1,0 +1,497 @@
+{
+  "title": "What are the guidelines for a female student's interactions with male teachers?",
+  "headline": "Four schools allow a woman to study with a male teacher if seclusion is removed and speech stays modest",
+  "cover": "تعلم المرأة من الرجل",
+  "slug": "what-are-the-guidelines-for-a-female-student-s-interactions",
+  "topic": "Daily life",
+  "tint": "teal",
+  "summary": {
+    "text": "The four schools build the ruling on the same texts and permit a woman to learn from a male teacher when khalwa is absent and both sides keep gaze and voice disciplined. The Hanafis, Shafi'is and Hanbalis state that her voice is not awrah in itself, while the Malikis tie the voice to fitnah in the talbiyah context. Recent fatwa bodies differ mainly on how strictly to apply these limits in mixed institutions.",
+    "citations": [
+      "https://www.dar-alifta.org/ar/Fatwa/Details/16652/مدى-صحة-القول-بأن-صوت-المرأة-عورة",
+      "https://al-fatawa.com/en/fatwa/108744/mixed-gender-education",
+      "https://www.dar-alifta.org/ar/Fatwa/Details/12919/حكم-اختلاط-الذكور-بالإناث-في-التعليم",
+      "https://shamela.ws/book/21613/1183",
+      "https://shamela.ws/book/11444/1871",
+      "https://shamela.ws/book/622#11:137",
+      "https://shamela.ws/book/21604/242"
+    ]
+  },
+  "updated": "2026-11-10",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/16652/مدى-صحة-القول-بأن-صوت-المرأة-عورة",
+      "title": "مدى صحة القول بأن صوت المرأة عورة"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/108744/mixed-gender-education",
+      "title": "Mixed-Gender Education"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/12919/حكم-اختلاط-الذكور-بالإناث-في-التعليم",
+      "title": "اختلاط الذكور بالإناث في التعليم"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1183",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص527"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1871",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص210"
+    },
+    {
+      "url": "https://shamela.ws/book/622#11:137",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج11 ص137"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/242",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص243"
+    },
+    {
+      "url": "https://quran.com/33/32",
+      "title": "Quran 33:32, Al-Ahzaab"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/82218/",
+      "title": "Woman's Voice"
+    },
+    {
+      "url": "https://quran.com/24/30",
+      "title": "Quran 24:30, An-Noor"
+    },
+    {
+      "url": "https://quran.com/24/31",
+      "title": "Quran 24:31, An-Noor"
+    },
+    {
+      "url": "https://quran.com/33/59",
+      "title": "Quran 33:59, Al-Ahzaab"
+    },
+    {
+      "url": "https://quran.com/28/23",
+      "title": "Quran 28:23, Al-Qasas"
+    },
+    {
+      "url": "https://quran.com/28/24",
+      "title": "Quran 28:24, Al-Qasas"
+    },
+    {
+      "url": "https://quran.com/28/25",
+      "title": "Quran 28:25, Al-Qasas"
+    },
+    {
+      "url": "https://sunnah.com/muslim:332c",
+      "title": "Sahih Muslim 332c: The Book of Menstruation"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5234",
+      "title": "Sahih al-Bukhari 5234: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1100",
+      "title": "Sunan Abi Dawud 1100: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/240804",
+      "title": "جواز مشاورة النساء وإبداء المرأة لرأيها فيما تراه حقا"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b5%d9%88%d8%aa-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9/",
+      "title": "صوت المرأة"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:101",
+      "title": "Sahih al-Bukhari 101: Knowledge"
+    },
+    {
+      "url": "https://sunnah.com/muslim:2633",
+      "title": "Sahih Muslim 2633: The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:3006",
+      "title": "Sahih al-Bukhari 3006: Fighting for the Cause of Allah (Jihaad)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1341a",
+      "title": "Sahih Muslim 1341a: The Book of Pilgrimage"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:990",
+      "title": "Riyad as-Salihin 990"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/106509",
+      "title": "التحذير من خلوة المدرس بالطالبة"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%ad%d9%83%d9%85%d8%a9-%d9%85%d9%86-%d8%ad%d8%b1%d9%85%d8%a9-%d8%a7%d9%84%d8%ae%d9%84%d9%88%d8%a9-%d8%a8%d8%a7%d9%84%d8%a3%d8%ac%d9%86%d8%a8%d9%8a%d8%a9/",
+      "title": "الحكمة من حرمة الخلوة بالأجنبية"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1173",
+      "title": "Jami' at-Tirmidhi 1173: The Book on Suckling"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/26835/what-opinion-regarding-hadith-prophet-peace-blessings-upon-woman-awrah",
+      "title": "What is your opinion regarding the hadith of the Prophet (peace and blessings be upon him) that a woman is an awrah?"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1172",
+      "title": "Jami' at-Tirmidhi 1172: The Book on Suckling"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5096",
+      "title": "Sahih al-Bukhari 5096: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:2741a",
+      "title": "Sahih Muslim 2741a: The Book of Heart-Melting Traditions"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:288",
+      "title": "Riyad as-Salihin 288"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:565",
+      "title": "Sunan Abi Dawud 565: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:900",
+      "title": "Sahih al-Bukhari 900: Friday Prayer"
+    },
+    {
+      "url": "https://sunnah.com/muslim:442c",
+      "title": "Sahih Muslim 442c: The Book of Prayers"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/17339/الحث-على-تعليم-البنات-والإحسان-إليهن",
+      "title": "الحث على تعليم البنات والإحسان إليهن"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b6%d9%88%d8%a7%d8%a8%d8%b7-%d8%b9%d9%85%d9%84-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d9%81%d9%8a-%d8%a7%d9%84%d8%a3%d9%85%d8%a7%d9%83%d9%86-%d8%a7%d9%84%d9%85%d8%ae%d8%aa%d9%84%d8%b7%d8%a9/",
+      "title": "ضوابط عمل المرأة في الأماكن المختلطة"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/80299/is-it-permissible-for-men-to-listen-to-a-girl-that-has-reached-puberty/",
+      "title": "Is it permissible for men to listen to a girl that has reached puberty?"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/3810",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص368"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/103240/employing-female-staff-2/",
+      "title": "Employing Female Staff"
+    },
+    {
+      "url": "https://shamela.ws/book/11820/1025",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج4 ص368"
+    },
+    {
+      "url": "https://daruliftaa.us/fatwa/239/",
+      "title": "Males Teaching Quran to Females"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/2308",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج5 ص112"
+    },
+    {
+      "url": "https://shamela.ws/book/499#8:418",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج8 ص418"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1870",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص209"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/972",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج2 ص422"
+    },
+    {
+      "url": "https://shamela.ws/book/11355/30",
+      "title": "مختصر خليل، خليل بن إسحاق الجندي، ج0 ص29"
+    },
+    {
+      "url": "https://shamela.ws/book/622#2:121",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج2 ص121"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1818",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص536"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/124436/the-parameters-of-seclusion-with-a-non-mahram-woman-women-khalwah-bil-ajnabiyyah/",
+      "title": "The Parameters of seclusion with a non-mahram woman/women (Khalwah Bil Ajnabiyyah)"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/19203/حدود-التعارف-بين-الرجل-والمرأة-قبل-الخِطبة-والضوابط-الشرعية-لذلك",
+      "title": "حدود التعارف بين الرجل والمرأة قبل الخِطبة والضوابط الشرعية"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/70714/ruling-man-alone-non-mahram-women",
+      "title": "The Ruling on a Man Being Alone with Non-Mahram Women"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%ae%d9%84%d9%88%d8%a9-%d8%a7%d9%84%d8%b4%d8%a7%d8%a8-%d8%a8%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a7%d9%84%d8%b9%d8%ac%d9%88%d8%b2/",
+      "title": "خلوة الشاب بالمرأة العجوز"
+    },
+    {
+      "url": "https://sunnah.com/muslim:445a",
+      "title": "Sahih Muslim 445a: The Book of Prayers"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1886",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص604"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/79423/male-teacher-and-female-student",
+      "title": "Male Teacher And Female Student"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/en/79423/a-male-teacher-and-a-female-student",
+      "title": "A Male Teacher And A Female Student!"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/335/تدريس-الرجال-للنساء",
+      "title": "تدريس الرجال للنساء"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/12577/حكم-كلام-المرأة-عبر-المذياع-وتصريحها-باسمها",
+      "title": "كلام المرأة عبر المذياع وتصريحها باسمها"
+    },
+    {
+      "url": "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=671",
+      "title": "A man working in a girls' school"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/15601/man-says-teaching-qur-religious-lessons-some-girls-aged-thirteen-home-anything-wrong",
+      "title": "A man says: He is teaching the Qur'an and religious lessons to some girls, aged thirteen, in his home. Is there anything wrong with that?"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/175320",
+      "title": "طالبة علم تسأل عن ضوابط وحدود علاقتها مع المدرسين ؟"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/47554",
+      "title": "حديث الطالبة مع مدرسها في الجامعة"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/103056",
+      "title": "حضور المرأة اختبار التجويد على مشايخ في غرفة مغلقة"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/112709",
+      "title": "حكم تعلم النساء قراءة القرآن على يد رجل في غرفة على الإنترنت"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/30292/what-ruling-man-teaching-female-relative-who-not-mahram-relative-one-may-not-marry-presence-mother",
+      "title": "What is the ruling on a man teaching a female relative who is not a mahram (a relative one may not marry) in the presence of her mother?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/general-counsel/etiquette-follow-woman-towards-male-teacher-habib-umar/",
+      "title": "What Is the Etiquette to Follow for a Woman Towards a Male Teacher? (Habib Umar)"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The central verse is addressed to the Prophet's wives but read by the exegetes as an adab for believing women generally: \"O wives of the Prophet, you are not like anyone among women. If you fear Allāh, then do not be soft in speech [to men], lest he in whose heart is disease should covet, but speak with appropriate speech.\" (Quran 33:32). Al-Sa'di's commentary states that the prohibition is on speaking to non-mahram men in a softened tone that stirs desire, and that this is an obligatory adab for every believing woman, while ordinary speech free of suspicion is what \"a fitting word\" means. The verse therefore forbids a manner of speech, not speech itself, which is why Islamweb cites 33:53 as proof that the voice is not itself an awrah.",
+          "citations": ["https://quran.com/33/32", "https://www.islamweb.net/en/fatwa/82218/"]
+        },
+        {
+          "text": "Two further verses set the frame: the command to both men and women to lower the gaze and guard chastity, with women not striking their feet to advertise adornment (Quran 24:30–31), and the outer garment so that a woman \"will be known and not be abused\" (Quran 33:59). The story of Musa at Madyan supplies the model of approach, where the two women held back from the crowd and one later came \"walking with shyness\" (Quran 28:23–25).",
+          "citations": [
+            "https://quran.com/24/30",
+            "https://quran.com/24/31",
+            "https://quran.com/33/59",
+            "https://quran.com/28/23",
+            "https://quran.com/28/24",
+            "https://quran.com/28/25"
+          ]
+        },
+        {
+          "text": "The Companions' practice is the practical reading of these verses. Women came directly to the Prophet ﷺ to ask about menstruation and washing, one Ansari woman spoke with him while people were present, Umm Hisham learned Surah Qaf from his Friday pulpit recitation, and a woman corrected Umar ibn al-Khattab about dowries in the mosque without being silenced. Al-Nawawi, commenting on Abu Bakr and Umar visiting Umm Ayman after the Prophet's death, derived from it the permissibility of a man visiting a woman and hearing her speech, noting that the women of the Salaf narrated hadith, taught people and gave fatwas.",
+          "citations": [
+            "https://sunnah.com/muslim:332c",
+            "https://sunnah.com/bukhari:5234",
+            "https://sunnah.com/abudawud:1100",
+            "https://islamqa.info/ar/answers/240804",
+            "https://fiqh.islamonline.net/%d8%b5%d9%88%d8%aa-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The women asked the Prophet ﷺ for a day of their own because men had taken his time, and he appointed one and taught them (Sahih al-Bukhari 101, Sahih Muslim 2633), graded sahih. This is the textual basis for women's separate study sessions with a male teacher.",
+          "citations": ["https://sunnah.com/bukhari:101", "https://sunnah.com/muslim:2633"]
+        },
+        {
+          "text": "\"A man must never be alone with a woman, and a woman must not travel except with a mahram\" (Sahih al-Bukhari 3006, Sahih Muslim 1341) is agreed upon. \"No man is alone with a woman except that Satan is the third among them\" (Jami' at-Tirmidhi 2165) is graded sahih by al-Albani and is also reported from Umar with a sound chain.",
+          "citations": [
+            "https://sunnah.com/bukhari:3006",
+            "https://sunnah.com/muslim:1341a",
+            "https://sunnah.com/riyadussalihin:990",
+            "https://islamqa.info/ar/answers/106509",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%ad%d9%83%d9%85%d8%a9-%d9%85%d9%86-%d8%ad%d8%b1%d9%85%d8%a9-%d8%a7%d9%84%d8%ae%d9%84%d9%88%d8%a9-%d8%a8%d8%a7%d9%84%d8%a3%d8%ac%d9%86%d8%a8%d9%8a%d8%a9/"
+          ]
+        },
+        {
+          "text": "\"The woman is awrah; when she goes out, Satan watches her eagerly\" is Jami' at-Tirmidhi 1173, which al-Tirmidhi called hasan gharib; the grading listed is Sahih (Ahmad Muhammad Shakir), Sahih (Al-Albani), Hasan Sahih (Bashar Awad Maarouf), and Daif (Zubair Ali Zai), and al-Albani marked it Da'if (Darussalam). \"Do not enter upon women whose husbands are away, for Satan flows through one of you like blood\" is Jami' at-Tirmidhi 1172, which al-Tirmidhi called gharib from this route and noted that some critics faulted Mujalid ibn Sa'id's memory.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:1173",
+            "https://al-fatawa.com/en/fatwa/26835/what-opinion-regarding-hadith-prophet-peace-blessings-upon-woman-awrah",
+            "https://sunnah.com/tirmidhi:1172"
+          ]
+        },
+        {
+          "text": "\"I have not left behind me a trial more harmful to men than women\" (Sahih al-Bukhari 5096, Sahih Muslim 2741a) is agreed upon. \"Do not prevent the female servants of Allah from the mosques of Allah, but let them go out without perfume and unadorned\" (Sunan Abi Dawud 565) is hasan sahih, and the plain command is in Bukhari and Muslim. Aisha praised the Ansari women because shame did not stop them asking about religion, as reported by Ibn Majah and cited by Egypt's Dar al-Ifta.",
+          "citations": [
+            "https://sunnah.com/bukhari:5096",
+            "https://sunnah.com/muslim:2741a",
+            "https://sunnah.com/riyadussalihin:288",
+            "https://sunnah.com/abudawud:565",
+            "https://sunnah.com/bukhari:900",
+            "https://sunnah.com/muslim:442c",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17339/الحث-على-تعليم-البنات-والإحسان-إليهن",
+            "https://fiqh.islamonline.net/%d8%b6%d9%88%d8%a7%d8%a8%d8%b7-%d8%b9%d9%85%d9%84-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d9%81%d9%8a-%d8%a7%d9%84%d8%a3%d9%85%d8%a7%d9%83%d9%86-%d8%a7%d9%84%d9%85%d8%ae%d8%aa%d9%84%d8%b7%d8%a9/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "In the Hanafi school the voice is not awrah; Ibn Abidin calls the contrary report \"weak,\" and the \"awrah\" wording in al-Nawazil is explained as the tune, not the speech. Being alone with a non-mahram woman is makruh tahriman, and al-Ashbah states it plainly as haram; the \"trustworthy woman\" who removes it is understood as an elderly woman. Looking is restricted to the face and hands, and that on the ground of the need for dealings. A man alone with women in a house is disliked; the Fath al-Qadir cites al-Nawazil preferring a woman to recite Quran to a woman rather than to a blind man.",
+          "citations": [
+            "https://shamela.ws/book/21613/1183",
+            "https://islamqa.org/hanafi/askimam/80299/is-it-permissible-for-men-to-listen-to-a-girl-that-has-reached-puberty/",
+            "https://shamela.ws/book/21613/3810",
+            "https://islamqa.org/hanafi/askimam/103240/employing-female-staff-2/",
+            "https://shamela.ws/book/11820/1025",
+            "https://daruliftaa.us/fatwa/239/"
+          ]
+        },
+        {
+          "text": "In the Shafi'i school \"the woman's voice is not awrah, and listening to it is permitted when safe from fitnah\"; she is told to coarsen her voice at the door rather than answer softly. Khalwa is haram with one woman and permitted with two trustworthy women, while two or more men with one woman is haram. All but the face and hands is her \"greater awrah,\" to be covered before non-mahram men. The ruling on men teaching women is worked out through the chapters on looking and khalwa.",
+          "citations": [
+            "https://shamela.ws/book/11444/1871",
+            "https://shamela.ws/book/11444/2308",
+            "https://shamela.ws/book/499#8:418",
+            "https://shamela.ws/book/11444/1870"
+          ]
+        },
+        {
+          "text": "In the Maliki school al-Dasuqi puts her voice \"like the awrah\" in the talbiyah context on the ground of fitnah, and himself notes the objection to that reasoning. Khalwa is listed among what is haram with a non-mahram woman, alongside eating and conversing with her. Looking at the face and hands without desire is permitted, with desire haram. Khalwa is the governing prohibition for teaching.",
+          "citations": [
+            "https://shamela.ws/book/21604/242",
+            "https://shamela.ws/book/21604/972",
+            "https://shamela.ws/book/11355/30"
+          ]
+        },
+        {
+          "text": "In the Hanbali school \"her voice is not awrah,\" on the more correct view, but enjoying hearing it is haram even in Quran recitation, and she should lower her voice if a non-mahram hears. Being alone with her is forbidden even when the purpose is \"teaching and discipline\". The face and hands are awrah outside prayer. Medical looking is conditioned on a mahram or husband being present, by the same reasoning that removes khalwa.",
+          "citations": ["https://shamela.ws/book/622#11:137", "https://shamela.ws/book/622#2:121"]
+        },
+        {
+          "text": "Two details show how practical the schools were. The Hanafis treat a barrier as removing khalwa, so a screen between a man and a woman in one room is legally significant, and the Shafi'is allow a man to be alone with two trustworthy women but not two men with one woman, because the fear runs the other way.",
+          "citations": ["https://shamela.ws/book/21613/1818", "https://shamela.ws/book/11444/2308"]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The loudest apparent contradiction is the claim that the voice is awrah. Al-Qurtubi answers it directly: when we say the woman's voice is awrah we do not mean her speech, \"for that is not correct,\" since speaking with non-mahram women at need is permitted; what is disallowed is raising, stretching and softening it. Ibn Abidin calls the plain \"awrah\" report weak, and the Hanbali books keep the two apart: not awrah in itself, but hearing it with enjoyment is haram. The Egyptian Dar al-Ifta reaches the same settlement.",
+          "citations": [
+            "https://islamqa.org/hanafi/askimam/124436/the-parameters-of-seclusion-with-a-non-mahram-woman-women-khalwah-bil-ajnabiyyah/",
+            "https://daruliftaa.us/fatwa/239/",
+            "https://shamela.ws/book/21613/1183",
+            "https://shamela.ws/book/622#11:137",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/16652/مدى-صحة-القول-بأن-صوت-المرأة-عورة"
+          ]
+        },
+        {
+          "text": "Al-Albani graded the hadith \"the woman is awrah\" as da'if, while Jami' at-Tirmidhi 1173 records it with at-Tirmidhi saying it is hasan gharib, and the grades listed are Sahih (Ahmad Muhammad Shakir), Sahih (Al-Albani), Hasan Sahih (Bashar Awad Maarouf), and Daif (Zubair Ali Zai).",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/26835/what-opinion-regarding-hadith-prophet-peace-blessings-upon-woman-awrah",
+            "https://sunnah.com/tirmidhi:1173"
+          ]
+        },
+        {
+          "text": "The Prophet's ﷺ private conversation with the Ansari woman (Sahih al-Bukhari 5234) seems to break the khalwa rule. Al-Bukhari himself titled the chapter \"what is permitted of a man being alone with a woman in front of people,\" and Ibn Hajar comments that speaking with a non-mahram woman privately does not detract from religion when fitnah is safe, while al-Mulla Ali al-Qari notes that being alone with her in a street is not the khalwa that occurs in a house. Ibn Baz adds the converse caution: a third person removes the state of khalwa, but where suspicion remains even with more than one woman, prevention is still obligatory.",
+          "citations": [
+            "https://sunnah.com/bukhari:5234",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/19203/حدود-التعارف-بين-الرجل-والمرأة-قبل-الخِطبة-والضوابط-الشرعية-لذلك",
+            "https://al-fatawa.com/en/fatwa/70714/ruling-man-alone-non-mahram-women"
+          ]
+        },
+        {
+          "text": "The Hanafi \"makruh tahriman\" and the majority \"haram\" look like a disagreement but function identically, since makruh tahriman is a prohibition, and the same page of Ibn Abidin records both wordings. Finally, the permission for women to attend the mosque sits beside Aisha's remark that had the Prophet ﷺ seen what women introduced he would have forbidden them; the jurists reconciled them by making the permission conditional on going out without perfume or adornment, as the hadith itself stipulates.",
+          "citations": [
+            "https://islamqa.org/hanafi/askimam/103240/employing-female-staff-2/",
+            "https://fiqh.islamonline.net/%d8%ae%d9%84%d9%88%d8%a9-%d8%a7%d9%84%d8%b4%d8%a7%d8%a8-%d8%a8%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a7%d9%84%d8%b9%d8%ac%d9%88%d8%b2/",
+            "https://shamela.ws/book/21613/3810",
+            "https://sunnah.com/muslim:445a",
+            "https://sunnah.com/abudawud:565",
+            "https://shamela.ws/book/21613/1886"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "The Assembly of Muslim Jurists of America (AMJA), fatwa 79423 (2009, Dr. Salah al-Sawi), on a young man teaching Arabic to a foreign female student: khalwa is not permitted \"for teaching or anything else,\" teaching without khalwa is a means of temptation whose ruling varies with the teacher's age and strength, and it is allowed at need with no suspicion, seriousness and lowered gaze. AMJA fatwa 335 (2004, its standing committee) states no objection to a man teaching adult women, Muslim or not, if khalwa is absent and fitnah is safe, adding that the task is better given to older scholars and not to young men.",
+          "citations": [
+            "https://www.amjaonline.org/fatwa/ar/79423/male-teacher-and-female-student",
+            "https://www.amjaonline.org/fatwa/en/79423/a-male-teacher-and-a-female-student",
+            "https://www.amjaonline.org/fatwa/ar/335/تدريس-الرجال-للنساء"
+          ]
+        },
+        {
+          "text": "Egypt's Dar al-Ifta, fatwa 6064 (2015, Dr. Shawqi Allam): the voice is not awrah in itself and listening is permitted when safe; what is forbidden is softening and beautifying it, a ruling it repeats for radio and for a woman giving her name on air. Dar al-Ifta fatwa 3444 (2003, Dr. Ali Gomaa): mixing in schools and universities is permitted within adab, with modest dress, lowered gaze, and avoidance of khalwa \"under any circumstances\".",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/16652/مدى-صحة-القول-بأن-صوت-المرأة-عورة",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/12577/حكم-كلام-المرأة-عبر-المذياع-وتصريحها-باسمها",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/12919/حكم-اختلاط-الذكور-بالإناث-في-التعليم"
+          ]
+        },
+        {
+          "text": "The Permanent Committee in Saudi Arabia, fatwa 12087: mixing of male and female students and teachers in educational institutions is forbidden for the fitnah it produces; fatwa 9019 forbids a man working in a girls' secondary school. Ibn Uthaymeen, on a man teaching Quran and religious lessons to girls of thirteen in his home: he hoped the man would teach his wife or a mahram and let her pass it on, saying \"I fear for him the trial\".",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/108744/mixed-gender-education",
+            "https://fatwaislam.com/fis/index.cfm?scn=fd&ID=671",
+            "https://al-fatawa.com/en/fatwa/15601/man-says-teaching-qur-religious-lessons-some-girls-aged-thirteen-home-anything-wrong"
+          ]
+        },
+        {
+          "text": "IslamQA's detailed answer to a female Sharia student (2012): no khalwa with the shaykh \"whatever the excuse, whether in the classroom or in his office,\" teachers should be trustworthy elders rather than young men, and women teachers come first if available; an earlier answer permits study questions to a male teacher within the limits of need, with hijab and no softening. It also states that a private tutor and a girl may not be left alone and that someone should sit with them, while a tajwid exam in a room with three scholars is treated as removed from khalwa by their number.",
+          "citations": [
+            "https://islamqa.info/ar/answers/175320",
+            "https://islamqa.info/ar/answers/47554",
+            "https://islamqa.info/ar/answers/106509",
+            "https://islamqa.info/ar/answers/103056"
+          ]
+        },
+        {
+          "text": "On online study, IslamQA sets four conditions for a man teaching women Quran: that he be elderly and known for uprightness, that none of them soften her speech, that talk be limited to need, and that he withdraw if he feels inclination toward any of them. Al-Albani, asked about a man teaching a non-mahram female relative with her mother present, said that without a male mahram it is not permissible, that full hijab is required, and that \"we do not advise this kind of teaching\". Habib Umar bin Hafiz, on the etiquettes of a female student with her teacher: she avoids softening her voice, and his fatherhood is spiritual, not a licence for khalwa or for seeing what only mahrams may see.",
+          "citations": [
+            "https://islamqa.info/ar/answers/112709",
+            "https://al-fatawa.com/en/fatwa/30292/what-ruling-man-teaching-female-relative-who-not-mahram-relative-one-may-not-marry-presence-mother",
+            "https://seekersguidance.org/answers/general-counsel/etiquette-follow-woman-towards-male-teacher-habib-umar/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
