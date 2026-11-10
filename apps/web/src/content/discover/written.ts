@@ -9,6 +9,7 @@ import isShrimpHalal from "./isShrimpHalal.json";
 import isThereASpecificAgeForMarriageInIslam from "./isThereASpecificAgeForMarriageInIslam.json";
 import sleepAndWudu from "./sleepAndWudu.json";
 import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
+import whatAreTheGuidelinesForAFemaleStudentSInteractions from "./whatAreTheGuidelinesForAFemaleStudentSInteractions.json";
 import whatIsTheRulingOnAdoptionInIslam from "./whatIsTheRulingOnAdoptionInIslam.json";
 import whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives from "./whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives.json";
 import whyIsIslamStrongDespiteDifferencesOfOpinionAmong from "./whyIsIslamStrongDespiteDifferencesOfOpinionAmong.json";
@@ -26,6 +27,7 @@ export const written = [
   isThereASpecificAgeForMarriageInIslam,
   sleepAndWudu,
   touchingPrivatePartsAndWudu,
+  whatAreTheGuidelinesForAFemaleStudentSInteractions,
   whatIsTheRulingOnAdoptionInIslam,
   whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives,
   whyIsIslamStrongDespiteDifferencesOfOpinionAmong,
