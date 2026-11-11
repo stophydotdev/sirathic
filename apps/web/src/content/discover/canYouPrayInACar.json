@@ -1,0 +1,451 @@
+{
+  "title": "Can you pray in a car?",
+  "headline": "Four schools allow nafl prayer in a moving vehicle and restrict obligatory prayer to necessity",
+  "cover": "الصلاة في المركبة",
+  "slug": "can-you-pray-in-a-car",
+  "topic": "Prayer",
+  "tint": "rose",
+  "summary": {
+    "text": "The four schools agree that voluntary (nafl) prayer may be offered on a moving mount while travelling, and differ over the obligatory prayer in a moving vehicle. The Hanafis and Hanbalis allow the obligatory prayer on a mount only out of necessity, while the Shafi'is restrict validity to a stationary vehicle, and the relied-upon Maliki view permits it when every pillar and the qiblah can be fulfilled. Recent fatwas turn on whether the vehicle can be stopped and whether the pillars can be performed.",
+    "citations": [
+      "https://al-fatawa.com/en/fatwa/110694/prayer-rider-mount-like",
+      "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%81%d8%b1%d9%8a%d8%b6%d8%a9-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%b1%d8%a7%d8%ad%d9%84%d8%a9/",
+      "https://www.dar-alifta.org/ar/Fatwa/Details/14758/حكم-صلاة-المسافر-في-وسيلة-المواصلات",
+      "https://islamqa.info/ar/answers/171900",
+      "https://shamela.ws/book/21613/696",
+      "https://shamela.ws/book/1679/140",
+      "https://seekersguidance.org/answers/shafii-fiqh/is-it-permissible-to-pray-in-a-moving-vehicle-shafii/",
+      "https://shamela.ws/book/499#1:202",
+      "https://shamela.ws/book/11444/250",
+      "https://fiqh.islamonline.net/en/performing-prayer-in-a-car/"
+    ]
+  },
+  "updated": "2026-11-11",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110694/prayer-rider-mount-like",
+      "title": "The prayer of the rider on a mount and its like"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%81%d8%b1%d9%8a%d8%b6%d8%a9-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%b1%d8%a7%d8%ad%d9%84%d8%a9/",
+      "title": "صلاة الفريضة على الراحلة"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/14758/حكم-صلاة-المسافر-في-وسيلة-المواصلات",
+      "title": "صلاة المسافر في وسيلة المواصلات"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/171900",
+      "title": "حكم صلاة الفرض في الحافلة من غير ضرورة إذا كان يقوم بأركانها"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/696",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص40"
+    },
+    {
+      "url": "https://shamela.ws/book/1679/140",
+      "title": "الروض المربع شرح زاد المستقنع - ط المؤيد والرسالة، البهوتي، ج0 ص141"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/shafii-fiqh/is-it-permissible-to-pray-in-a-moving-vehicle-shafii/",
+      "title": "Is It Permissible to Pray in a Moving Vehicle? (Shafi’i)"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:202",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص202"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/250",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص334"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/performing-prayer-in-a-car/",
+      "title": "Performing Prayer in a Car"
+    },
+    {
+      "url": "https://sunnah.com/muslim:700c",
+      "title": "Sahih Muslim 700c: The Book of Prayer - Travellers"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:2958",
+      "title": "Jami' at-Tirmidhi 2958: Chapters on Tafsir"
+    },
+    {
+      "url": "https://sunnah.com/nasai:491",
+      "title": "Sunan an-Nasa'i 491: The Book of Salah"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/527584",
+      "title": "هل ورد عن السلف تفسير ( فَثَمَّ وَجْهُ اللَّهِ ) بالقبلة؟"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/430",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج1 ص435"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/45745/facing-qiblah-waived-obligatory-prayer-if-one-mount-unable-dismount-due-excuse",
+      "title": "Is facing the qiblah waived in the obligatory prayer if one is on a mount and unable to dismount due to an excuse?"
+    },
+    {
+      "url": "https://quran.com/2/144",
+      "title": "Quran 2:144, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/2/149",
+      "title": "Quran 2:149, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/2/150",
+      "title": "Quran 2:150, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/2/238",
+      "title": "Quran 2:238, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/5/6",
+      "title": "Quran 5:6, Al-Maaida"
+    },
+    {
+      "url": "https://quran.com/22/78",
+      "title": "Quran 22:78, Al-Hajj"
+    },
+    {
+      "url": "https://quran.com/64/16",
+      "title": "Quran 64:16, At-Taghaabun"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:400",
+      "title": "Sahih al-Bukhari 400: Prayers (Salat)"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:1097",
+      "title": "Sahih al-Bukhari 1097: Shortening the Prayers (At-Taqseer)"
+    },
+    {
+      "url": "https://sunnah.com/muslim:700i",
+      "title": "Sahih Muslim 700i: The Book of Prayer - Travellers"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1224",
+      "title": "Sunan Abi Dawud 1224: Prayer (Kitab Al-Salat): Detailed Rules of Law about the Prayer during Journey"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1225",
+      "title": "Sunan Abi Dawud 1225: Prayer (Kitab Al-Salat): Detailed Rules of Law about the Prayer during Journey"
+    },
+    {
+      "url": "https://shamela.ws/book/622#3:253",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج3 ص253"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/110704/validity-performing-obligatory-prayer-mount-whether-stationary-moving",
+      "title": "The validity of performing the obligatory prayer on a mount, whether stationary or moving"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:411",
+      "title": "Jami' at-Tirmidhi 411: The Book on Salat (Prayer)"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%81%d8%b1%d9%8a%d8%b6%d8%a9-%d9%81%d9%8a-%d8%a7%d9%84%d8%b3%d9%8a%d8%a7%d8%b1%d8%a9/",
+      "title": "صلاة الفريضة في السيارة"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:1117",
+      "title": "Sahih al-Bukhari 1117: Shortening the Prayers (At-Taqseer)"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/72605/how-does-muslim-perform-prayer-airplane",
+      "title": "How does a Muslim perform the prayer on an airplane?"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:489",
+      "title": "Sunan Abi Dawud 489: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/94351/namaz-on-the-train-to-do-or-not-to-do/",
+      "title": "Namaz on the Train: To Do or Not to Do?"
+    },
+    {
+      "url": "https://daruliftaa.us/fatwa/1164/",
+      "title": "Praying in the Car for a Cab Driver"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/694",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص38"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/113278/standing-and-performing-salaah-in-a-bus-or-train/",
+      "title": "Standing and performing Salaah in a bus or train"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/224",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص225"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/228",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص229"
+    },
+    {
+      "url": "https://shamela.ws/book/587/61",
+      "title": "المدونة، مالك بن أنس، ج1 ص173"
+    },
+    {
+      "url": "https://shamela.ws/book/499#1:210",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج1 ص210"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/123617/prayer-mount-city",
+      "title": "Prayer on a Mount in the City"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/605",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص99"
+    },
+    {
+      "url": "https://shamela.ws/book/622#2:217",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج2 ص217"
+    },
+    {
+      "url": "https://en.tohed.com/ruling-on-performing-obligatory-prayers-while-riding/",
+      "title": "Ruling on Performing Obligatory Prayers While Riding"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/20310/حكم-صلاة-التراويح-في-وسائل-المواصلات-بالنسبة-للمسافر",
+      "title": "حكم صلاة التراويح في وسائل المواصلات بالنسبة للمسافر"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/17190/حكم-صلاة-الفريضة-في-الطائرة",
+      "title": "حكم صلاة الفريضة في الطائرة"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/41939/obligatory-face-qiblah-airplane-train",
+      "title": "Is it obligatory to face the qiblah in an airplane or a train?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/127667/ruling-praying-duha-prayer-car",
+      "title": "The Ruling on Praying the Duha Prayer in a Car"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/30278/permissible-perform-obligatory-prayer-mount-what-serves-equivalent",
+      "title": "Is it permissible to perform the obligatory prayer on a mount and what serves as its equivalent?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/13212/what-ruling-praying-bus-while-moving",
+      "title": "What is the ruling on praying in a bus while it is moving?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darul-iftaa-chicago/271239/how-to-pray-salah-on-an-airplane-a-detailed-fiqh-guide-2/",
+      "title": "How to Pray Salah on an Airplane A Detailed Fiqh Guide"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/83038/الصلاة-في-السيارة-قاعدا",
+      "title": "الصلاة في السيارة قاعدا"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/en/83251/obligatory-prayers-while-travelling",
+      "title": "Obligatory Prayers While Travelling"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/21869",
+      "title": "الصلاة في السيارة والطائرة"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/91046/",
+      "title": "Performing prayers in a car"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/when-can-someone-pray-sitting-in-a-car/",
+      "title": "When Can Someone Pray Sitting in a Car?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/what-justifies-praying-seated-on-a-plane-or-train/",
+      "title": "What Justifies Praying Seated on a Plane or Train?"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "Ibn Umar said the verse \"wherever you turn, there is the Face of Allah\" (2:115) was revealed about the Prophet's ﷺ voluntary prayer on his mount as it carried him from Makkah to Madinah. Ibn Abbas read \"face\" as \"direction,\" saying it means Allah's qiblah wherever you turn, east or west, and al-Muzani reported from al-Shafi'i that it means the direction Allah has turned you toward. Ibn Abidin cites the verse as evidence for one who cannot determine the qiblah and prays toward whichever direction he chooses.",
+          "citations": [
+            "https://sunnah.com/muslim:700c",
+            "https://sunnah.com/tirmidhi:2958",
+            "https://sunnah.com/nasai:491",
+            "https://islamqa.info/ar/answers/527584",
+            "https://shamela.ws/book/21613/430"
+          ]
+        },
+        {
+          "text": "The verse \"if you fear, then pray on foot or riding\" (2:239) is what the scholars cite for praying while mounted in a state of fear, and Ibn Uthaymeen applied it to one fleeing an enemy, praying toward the qiblah and toward anything else. Set against it are the verses fixing the qiblah, \"wherever you are, turn your faces toward it\" (2:144, also 2:149–150), and the command to stand, \"and stand before Allah, devoutly obedient\" (2:238). Alongside them the jurists place the hardship-lifting verses: \"Allah does not intend to make difficulty for you\" (5:6), \"He has not placed upon you in the religion any difficulty\" (22:78), and \"So fear Allah as much as you are able\" (64:16).",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/45745/facing-qiblah-waived-obligatory-prayer-if-one-mount-unable-dismount-due-excuse",
+            "https://quran.com/2/144",
+            "https://quran.com/2/149",
+            "https://quran.com/2/150",
+            "https://quran.com/2/238",
+            "https://quran.com/5/6",
+            "https://quran.com/22/78",
+            "https://quran.com/64/16"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The core reports are agreed upon: the Prophet ﷺ used to pray on his riding animal regardless of the direction it faced, and when he wanted an obligatory prayer he would dismount and face the Qiblah (Sahih al-Bukhari 400). He was seen on his mount offering voluntary prayer, nodding with his head toward whichever direction he faced, but he would not do that in the obligatory prayer (Sahih al-Bukhari 1097). Ibn Umar's version adds that he prayed Witr on the mount but did not pray the obligatory prayer on it (Sahih Muslim 700i, Sahih), and Anas reported that when the Prophet ﷺ wanted to pray nafl on a journey he turned his she-camel toward the qiblah, said the takbir, then prayed in whatever direction it went (Sunan Abi Dawud 1225, graded hasan).",
+          "citations": [
+            "https://sunnah.com/bukhari:400",
+            "https://sunnah.com/bukhari:1097",
+            "https://sunnah.com/muslim:700i",
+            "https://sunnah.com/abudawud:1224",
+            "https://sunnah.com/abudawud:1225"
+          ]
+        },
+        {
+          "text": "The one report used for the obligatory prayer is Ya'la ibn Umayyah's: at a narrow pass, with rain above and wet ground below, the Prophet ﷺ gave the adhan and iqamah on his mount and led them, gesturing, making the prostration lower than the bowing. Al-Tirmidhi included it and said \"the scholars act upon it,\" while al-Albani and Ahmad Shakir graded its chain weak (Jami' at-Tirmidhi 411). Ibn al-Arabi's verdict was that its chain is weak but its meaning sound.",
+          "citations": [
+            "https://shamela.ws/book/622#3:253",
+            "https://al-fatawa.com/en/fatwa/110704/validity-performing-obligatory-prayer-mount-whether-stationary-moving",
+            "https://sunnah.com/tirmidhi:411",
+            "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%81%d8%b1%d9%8a%d8%b6%d8%a9-%d9%81%d9%8a-%d8%a7%d9%84%d8%b3%d9%8a%d8%a7%d8%b1%d8%a9/"
+          ]
+        },
+        {
+          "text": "Imran ibn Husayn's hadith, \"Pray while standing; if you cannot, then while sitting; and if you cannot, then while lying on your side\" (Sahih al-Bukhari 1117), was applied by Ibn Baz directly to prayer on an airplane according to ability. The general grant that \"the earth has been made for me a means of purification and a place of prayer\" (Sunan Abi Dawud 489, Sahih) frames the whole question.",
+          "citations": [
+            "https://sunnah.com/bukhari:1117",
+            "https://al-fatawa.com/en/fatwa/72605/how-does-muslim-perform-prayer-airplane",
+            "https://sunnah.com/abudawud:489"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "The Hanafis hold that the obligatory prayer on a stopped vehicle is valid if the pillars and qiblah are fulfilled, and the Durr al-Mukhtar conditions the whole discussion on stopping it toward the qiblah \"if possible.\" On a moving vehicle it is not valid except out of necessity; Ibn Abidin says everything other than nafl \"is not valid on the mount except for a necessity,\" such as fear of a thief, a beast or an enemy. Qadi Khan, cited in the Bazzaziyyah, adds that if one cannot stop it, gesturing is permitted, and if one can stop it, it is not. Voluntary prayer while riding is permitted for the resident without excuse, covering the confirmed sunnahs except the sunnah of Fajr, and for the traveller a fortiori; fard, witr, vowed prayer and funeral prayer are excluded.",
+          "citations": [
+            "https://islamqa.org/hanafi/muftionline/94351/namaz-on-the-train-to-do-or-not-to-do/",
+            "https://shamela.ws/book/21613/696",
+            "https://daruliftaa.us/fatwa/1164/",
+            "https://shamela.ws/book/21613/694",
+            "https://islamqa.org/hanafi/muftionline/113278/standing-and-performing-salaah-in-a-bus-or-train/"
+          ]
+        },
+        {
+          "text": "Al-Dasuqi, commenting on al-Dardir, permits the Malikis to pray fard and nafl on the mount with bowing and prostration if that is possible and one faces the qiblah, the view of Sand in al-Tiraz, which al-Dasuqi calls the preponderant one, against Sahnun's refusal; the Kuwaiti Fiqh Encyclopedia calls this the relied-upon Maliki position. Elsewhere al-Dasuqi notes that prayer on the animal's back is invalid where dismounting is possible. Voluntary prayer while riding is permitted, and al-Mudawwana transmits the report of Jaber, Amir ibn Rabi'ah and Anas on praying nafl at night on the mount in travel.",
+          "citations": [
+            "https://shamela.ws/book/21604/224",
+            "https://islamqa.info/ar/answers/171900",
+            "https://shamela.ws/book/21604/228",
+            "https://shamela.ws/book/587/61"
+          ]
+        },
+        {
+          "text": "Al-Nawawi allows the Shafi'is to pray the fard on an animal that is standing, even if not hobbled, and on a bed carried by men, a swing, or a moving boat, and al-Shirbini adds the condition of completing bowing and prostration. On a moving vehicle it is not valid on the more correct transmitted view, \"because its motion is attributed to him\"; practically, one must get out of a car, stand and face the qiblah. Voluntary prayer is permitted on a moving mount in travel, long or short, but not in the city, where it takes the ruling of fard in everything except standing.",
+          "citations": [
+            "https://shamela.ws/book/499#1:202",
+            "https://shamela.ws/book/11444/250",
+            "https://seekersguidance.org/answers/shafii-fiqh/is-it-permissible-to-pray-in-a-moving-vehicle-shafii/",
+            "https://shamela.ws/book/499#1:210"
+          ]
+        },
+        {
+          "text": "The Hanbalis hold the obligatory prayer valid on a mount, \"standing or moving,\" out of fear of harm from mud, rain or the like, or of being cut off from companions, or inability to remount, with facing the qiblah and doing what one can obligatory; the school does not differentiate moving from stationary. Voluntary prayer is permitted while travelling; Ibn Uthaymeen says not in the city. Ibn Qudamah records a separate disagreement about the walking person: one narration from Ahmad permits praying while walking, another does not, and not permitting it is the view of Abu Hanifa.",
+          "citations": [
+            "https://shamela.ws/book/622#3:253",
+            "https://shamela.ws/book/1679/140",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14758/حكم-صلاة-المسافر-في-وسيلة-المواصلات",
+            "https://al-fatawa.com/en/fatwa/123617/prayer-mount-city",
+            "https://shamela.ws/book/6910/605"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The verses appear to collide: 2:115 says wherever you turn there is the Face of Allah, while 2:144 commands turning to al-Masjid al-Haram. The reconciliation offered is threefold: restrict 2:115 to voluntary prayer on a journey, which is how Ibn Umar read it; or read \"face\" as \"direction,\" so the verse says the direction Allah has appointed is not confined to one point of the compass; or apply it to the case of being unable to determine the qiblah, as Ibn Abidin cites. None of these readings abolishes the other, which is why the same verse appears in a chapter on nafl and in a chapter on the unknown qiblah.",
+          "citations": [
+            "https://sunnah.com/muslim:700c",
+            "https://shamela.ws/book/622#2:217",
+            "https://islamqa.info/ar/answers/527584",
+            "https://shamela.ws/book/21613/430"
+          ]
+        },
+        {
+          "text": "The hadith pull in two directions: the agreed-upon reports have the Prophet ﷺ dismounting for every obligatory prayer, while Ya'la's report has him leading the fard on his mount in rain and mud. Scholars reconciled this by treating Ya'la's as a necessity case tied to its circumstances, which is why the Hanafi and Hanbali chapters on the fard on a mount are chapters about excuses. The weakness of that chain is itself part of the reconciliation: al-Albani rejected it, while al-Tirmidhi's report that the scholars act on it, and Ibn al-Arabi's \"weak chain, sound meaning,\" kept it in use.",
+          "citations": [
+            "https://sunnah.com/bukhari:400",
+            "https://sunnah.com/muslim:700i",
+            "https://sunnah.com/bukhari:1097",
+            "https://shamela.ws/book/622#3:253",
+            "https://al-fatawa.com/en/fatwa/110704/validity-performing-obligatory-prayer-mount-whether-stationary-moving",
+            "https://shamela.ws/book/21613/696",
+            "https://shamela.ws/book/1679/140",
+            "https://sunnah.com/tirmidhi:411",
+            "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%81%d8%b1%d9%8a%d8%b6%d8%a9-%d9%81%d9%8a-%d8%a7%d9%84%d8%b3%d9%8a%d8%a7%d8%b1%d8%a9/"
+          ]
+        },
+        {
+          "text": "Ibn Battal and Ibn Abd al-Barr report consensus that the fard may not be prayed on a mount without an excuse, yet the Fiqh Encyclopedia reports that the Shafi'is, the Hanbalis and the relied-upon Malikis validate it when every condition is met, even without an excuse. The reconciliation given in the Egyptian fatwa is that the consensus concerns the ordinary riding posture, in which standing and the qiblah are lost; once those are supplied, the reason for the prohibition no longer exists. That is also why the schools divide over the moving vehicle: the Shafi'is say its motion is attributed to the rider and so the vehicle is not a settled place, whereas the Hanbalis treat moving and stationary alike.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%b5%d9%84%d8%a7%d8%a9-%d8%a7%d9%84%d9%81%d8%b1%d9%8a%d8%b6%d8%a9-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%b1%d8%a7%d8%ad%d9%84%d8%a9/",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14758/حكم-صلاة-المسافر-في-وسيلة-المواصلات",
+            "https://en.tohed.com/ruling-on-performing-obligatory-prayers-while-riding/",
+            "https://islamqa.info/ar/answers/171900",
+            "https://shamela.ws/book/11444/250"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Egypt's Dar al-Ifta (fatwa 4554, 13 October 2008, from the Fatwa Secretariat) lays out the modern map: the written prayer may not be prayed on a mount without an excuse by consensus, quoting Ibn Battal's statement to that effect; but if one can fulfil its pillars and conditions, it is valid according to the Shafi'is, the Hanbalis and the relied-upon Maliki view, with the Shafi'is restricting that to a stationary vehicle and the Hanbalis allowing it while moving. For a traveller in a car, plane or train it gives two cases: if he can pray standing, facing the qiblah, with full pillars, it is valid on the majority view provided the vehicle is stopped, and permitted while moving according to the Hanbalis, whose view may be followed when there is need and the vehicle cannot be stopped; and it recommends making the prayer up afterwards to exit the Shafi'i disagreement. The same body allows tarawih in a moving vehicle with gestures, prostration lower than bowing, facing any direction, and reasons that there is no effective difference between a ship and a plane in this ruling.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14758/حكم-صلاة-المسافر-في-وسيلة-المواصلات",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/20310/حكم-صلاة-التراويح-في-وسائل-المواصلات-بالنسبة-للمسافر",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17190/حكم-صلاة-الفريضة-في-الطائرة"
+          ]
+        },
+        {
+          "text": "The Saudi Permanent Committee (fatwa 1375) answers that facing the qiblah throughout is obligatory if one is able, \"because it is a condition for the validity of the obligatory prayer in travel and residence,\" and otherwise one does what one can; fatwa 5926 permits the obligatory prayer on a mount, stationary or moving, out of fear of mud, rain or the like, citing Ya'la's report. Ibn Baz ruled that one on an airplane prays at the start of the time according to ability, applying the standing-sitting-on-the-side hadith. Ibn Uthaymeen held that the obligatory prayer on a mount is invalid in town or travel except out of dire necessity such as rain-soaked ground, that the qiblah is obligatory on a train and waived only by inability on a plane, and that Duha in a car is permissible though the driver may be distracted. Al-Albani was blunt: \"get down and pray\" is the truth, and anyone who permits praying in the car when a station where one could bow and prostrate is available has erred.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/110694/prayer-rider-mount-like",
+            "https://al-fatawa.com/en/fatwa/110704/validity-performing-obligatory-prayer-mount-whether-stationary-moving",
+            "https://al-fatawa.com/en/fatwa/72605/how-does-muslim-perform-prayer-airplane",
+            "https://al-fatawa.com/en/fatwa/123617/prayer-mount-city",
+            "https://al-fatawa.com/en/fatwa/41939/obligatory-face-qiblah-airplane-train",
+            "https://al-fatawa.com/en/fatwa/127667/ruling-praying-duha-prayer-car",
+            "https://al-fatawa.com/en/fatwa/30278/permissible-perform-obligatory-prayer-mount-what-serves-equivalent",
+            "https://al-fatawa.com/en/fatwa/13212/what-ruling-praying-bus-while-moving"
+          ]
+        },
+        {
+          "text": "Darul Iftaa Chicago (Hanafi) rules that the fard prayer in a car by head gestures is not permissible since it drops standing, bowing and prostration, that a passenger's presence is no excuse, that one should keep a prayer mat and stop at a rest area, and that a prayer offered in the car must be repeated; it also allows the fard on an airplane where one stands and faces the qiblah as far as possible. AMJA (Dr Salah al-Sawi, fatwa 83038) allowed students in Canada to pray the fard seated in their cars when no prayer space existed and the ground was snow-covered, while AMJA's English answer stresses the difference that the Prophet ﷺ controlled when to stop, unlike a passenger. IslamQA's answer sets two conditions: fear that the time will end before arrival, and inability to get down. Islamweb allows prayer in a parked car if one can stand, bow and prostrate on seven limbs, but not by sitting and gesturing. SeekersGuidance (Hanafi) permits nafl seated outside the city limits and not the fard without a genuine excuse, and notes that if standing would harm others on public transport one may sit, but that if prostration on the ground is impossible one gestures and repeats.",
+          "citations": [
+            "https://daruliftaa.us/fatwa/1164/",
+            "https://islamqa.org/hanafi/darul-iftaa-chicago/271239/how-to-pray-salah-on-an-airplane-a-detailed-fiqh-guide-2/",
+            "https://www.amjaonline.org/fatwa/ar/83038/الصلاة-في-السيارة-قاعدا",
+            "https://www.amjaonline.org/fatwa/en/83251/obligatory-prayers-while-travelling",
+            "https://fiqh.islamonline.net/en/performing-prayer-in-a-car/",
+            "https://islamqa.info/ar/answers/21869",
+            "https://www.islamweb.net/en/fatwa/91046/",
+            "https://seekersguidance.org/answers/hanafi-fiqh/when-can-someone-pray-sitting-in-a-car/",
+            "https://seekersguidance.org/answers/hanafi-fiqh/what-justifies-praying-seated-on-a-plane-or-train/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
