@@ -13,6 +13,7 @@ import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
 import whatAreTheGuidelinesForAFemaleStudentSInteractions from "./whatAreTheGuidelinesForAFemaleStudentSInteractions.json";
 import whatIsTheRulingOnAdoptionInIslam from "./whatIsTheRulingOnAdoptionInIslam.json";
 import whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives from "./whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives.json";
+import whoDecidesTheMahr from "./whoDecidesTheMahr.json";
 import whyIsIslamStrongDespiteDifferencesOfOpinionAmong from "./whyIsIslamStrongDespiteDifferencesOfOpinionAmong.json";
 import wipingOverSocks from "./wipingOverSocks.json";
 
@@ -32,6 +33,7 @@ export const written = [
   whatAreTheGuidelinesForAFemaleStudentSInteractions,
   whatIsTheRulingOnAdoptionInIslam,
   whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives,
+  whoDecidesTheMahr,
   whyIsIslamStrongDespiteDifferencesOfOpinionAmong,
   wipingOverSocks,
 ];

@@ -1,0 +1,525 @@
+{
+  "title": "Who decides the mahr?",
+  "headline": "The bride's agreement fixes the mahr, with her like's mahr as the tiebreaker",
+  "cover": "مهر المثل",
+  "slug": "who-decides-the-mahr",
+  "topic": "Family",
+  "tint": "amber",
+  "summary": {
+    "text": "The amount of the mahr is fixed by agreement between the two spouses, with the mahr of her like used when she and her guardian disagree. The Quran makes the mahr the wife's own property, and the schools differ over how far a father may commit a virgin daughter for less than that customary amount.",
+    "citations": [
+      "https://islamqa.info/en/answers/224876",
+      "https://fiqh.islamonline.net/%d9%85%d9%86-%d8%a7%d9%84%d8%b0%d9%8a-%d9%8a%d8%ad%d8%af%d8%af-%d8%a7%d9%84%d9%85%d9%87%d8%b1/",
+      "https://quran.com/4/4"
+    ]
+  },
+  "updated": "2026-11-12",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://islamqa.info/en/answers/224876",
+      "title": "Who Decides Mahr?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d9%86-%d8%a7%d9%84%d8%b0%d9%8a-%d9%8a%d8%ad%d8%af%d8%af-%d8%a7%d9%84%d9%85%d9%87%d8%b1/",
+      "title": "من الذي يحدد المهر"
+    },
+    {
+      "url": "https://quran.com/4/4",
+      "title": "Quran 4:4, An-Nisaa"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%ad%d9%82-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a9-%d9%81%d9%8a-%d8%a7%d9%84%d9%85%d9%87%d8%b1-%d9%88%d8%a7%d9%84%d9%85%d9%8a%d8%b1%d8%a7%d8%ab/",
+      "title": "حق الزوجة في المهر والميراث"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%af%d9%81%d8%b9-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a7%d9%84%d9%85%d9%87%d8%b1-%d9%84%d9%84%d8%b1%d8%ac%d9%84/",
+      "title": "دفع المرأة المهر للرجل"
+    },
+    {
+      "url": "https://quran.com/4/24",
+      "title": "Quran 4:24, An-Nisaa"
+    },
+    {
+      "url": "https://quran.com/4/20",
+      "title": "Quran 4:20, An-Nisaa"
+    },
+    {
+      "url": "https://quran.com/2/236",
+      "title": "Quran 2:236, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/2/237",
+      "title": "Quran 2:237, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/2/229",
+      "title": "Quran 2:229, Al-Baqara"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/240804",
+      "title": "جواز مشاورة النساء وإبداء المرأة لرأيها فيما تراه حقا"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/12572",
+      "title": "مفاسد وأضرار المغالاة في المهور"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/122012/what-authenticity-story-umar-may-allah-pleased-when-woman-objected-regarding-fixing-mahr-where-said",
+      "title": "What is the authenticity of the story of 'Umar (may Allah be pleased with him) when a woman objected to him regarding the fixing of mahr, where he said: \"Umar erred and a woman was correct\"?"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3524",
+      "title": "Sunan an-Nasa'i 3524: The Book of Divorce"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5132",
+      "title": "Sahih al-Bukhari 5132: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5029",
+      "title": "Sahih al-Bukhari 5029: Virtues of the Qur'an"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/9493/what-ruling-bride-s-guardian-specifying-mahr",
+      "title": "What is the ruling on the bride's guardian specifying her mahr?"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1427e",
+      "title": "Sahih Muslim 1427e: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3347",
+      "title": "Sunan an-Nasa'i 3347: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:4201",
+      "title": "Sahih al-Bukhari 4201: Military Expeditions led by the Prophet (pbuh) (Al-Maghaazi)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3350",
+      "title": "Sunan an-Nasa'i 3350: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2108",
+      "title": "Sunan Abi Dawud 2108: Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1114b",
+      "title": "Jami' at-Tirmidhi 1114b: The Book on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1887",
+      "title": "Sunan Ibn Majah 1887: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2106",
+      "title": "Sunan Abi Dawud 2106: Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3349",
+      "title": "Sunan an-Nasa'i 3349: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/muslim:1421c",
+      "title": "Sahih Muslim 1421c: The Book of Marriage"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5138",
+      "title": "Sahih al-Bukhari 5138: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2096",
+      "title": "Sunan Abi Dawud 2096: Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1875",
+      "title": "Sunan Ibn Majah 1875: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1874",
+      "title": "Sunan Ibn Majah 1874: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2083",
+      "title": "Sunan Abi Dawud 2083: Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "url": "https://shamela.ws/book/622#11:243",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج11 ص243"
+    },
+    {
+      "url": "https://shamela.ws/book/11820/271",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص198"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1382",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص100"
+    },
+    {
+      "url": "https://shamela.ws/book/11820/266",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج1 ص195"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1855",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص573"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/137194/",
+      "title": "A woman and her guardian disagreeing over the amount of her Mahr"
+    },
+    {
+      "url": "https://shamela.ws/book/587/603",
+      "title": "المدونة، مالك بن أنس، ج2 ص100"
+    },
+    {
+      "url": "https://shamela.ws/book/587/655",
+      "title": "المدونة، مالك بن أنس، ج2 ص152"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:44",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص44"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/5060",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج10 ص99"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1906",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص245"
+    },
+    {
+      "url": "https://shamela.ws/book/499#7:43",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج7 ص43"
+    },
+    {
+      "url": "https://shamela.ws/book/499#7:268",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج7 ص268"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/5068",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج10 ص107"
+    },
+    {
+      "url": "https://shamela.ws/book/622#11:466",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج11 ص466"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/4796",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج9 ص413"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/daruliftaa/7744/divorced-woman-marrying-without-her-guardians-approval/",
+      "title": "What is the ruling in the Hanafi School concerning a woman who marries herself without her Wali’s permission? The sister in question was previously married. She wants to marry this brother who has also just recently come out of a failed marriage, but her parents are against it. Can she just marry him against the wishes of her parents?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/daruliftaa-birmingham/170716/can-one-get-married-without-the-consent-of-the-parents/",
+      "title": "Can one get Married Without the Consent of the Parents?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a3%d9%87%d9%85%d9%8a%d8%a9-%d8%a7%d9%84%d9%88%d9%84%d8%a7%d9%8a%d8%a9-%d9%81%d9%89-%d8%a7%d9%84%d8%b2%d9%88%d8%a7%d8%ac/",
+      "title": "أهمية الولاية في الزواج"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1375",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص93"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1376",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص94"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1420",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص138"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:52",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص52"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d9%87%d8%b1-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b2%d9%88%d8%ac-%d9%88%d8%a7%d9%84%d8%a3%d9%88%d9%84%d9%8a%d8%a7%d8%a1/",
+      "title": "مهر المرأة بين الزوج والأولياء"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/224876",
+      "title": "من يحدد المهر ؟ وما مقدار المهر ؟ وهل يصح النكاح بدونه؟"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/239041/",
+      "title": "Who determines the Mahr - the bride or her guardian?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/108594/determining-mahr",
+      "title": "Determining the Mahr"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/64639/dislike-exaggeration-women-s-mahr",
+      "title": "The Dislike of Exaggeration in Women's Mahr"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/86266/specific-limit-mahr-86266",
+      "title": "Is there a specific limit for the mahr?"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/10525",
+      "title": "Is It Sunnah to Reduce the Mahr?"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/108251/woman-s-guardian-entitled-take-bridal-gift",
+      "title": "Is the woman's guardian entitled to take from her bridal gift?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/mahr-dower-concept-rulings-2/",
+      "title": "Mahr (Dower): Concept & Rulings"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/declaring-a-big-amount-of-mahr-on-paper/",
+      "title": "Declaring a big amount of Mahr on paper"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/79239/حقوق-المرأة-فبما-ينعلق-بالزواج",
+      "title": "حقوق المرأة فبما ينعلق بالزواج"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1383",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص101"
+    },
+    {
+      "url": "https://en.tohed.com/is-ten-dirhams-the-minimum-mahr-a-detailed-analysis/",
+      "title": "Is Ten Dirhams the Minimum Mahr? A Detailed Analysis"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/113522/seventeenth-deviation-sunnah-hadith-give-mahr-even-if-ring-iron",
+      "title": "The Seventeenth Deviation from the Sunnah: The Hadith (Give her a mahr, even if it is a ring of iron)"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/55004/benefits-hadith-prophet-peace-blessings-upon-married-man-woman-iron-ring-mahr",
+      "title": "Benefits of the Hadith: (The Prophet (peace and blessings be upon him) married a man to a woman with an iron ring as the mahr)."
+    },
+    {
+      "url": "https://islamqa.info/en/answers/12572",
+      "title": "The negative and harmful consequences of exaggerating concerning the dowry"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/67887/if-man-marries-off-daughter-even-if-previously-married-woman-without-mahr-equal-peers-valid",
+      "title": "And if a man marries off his daughter, even if she is a previously married woman, without a mahr equal to that of her peers, it is valid."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/67892/continuation-explanation-author-s-statement-if-guardian-married-another-guardian-permission-valid-if",
+      "title": "Continuation of the explanation of the author's statement: \"And if her guardian married her to another guardian with her permission, it is valid; and if she did not give permission, then she is entitled to the mahr of her like\""
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The command in 4:4 is addressed to husbands, not to guardians, and it makes the gift the woman's own to receive and to remit. The word translated \"graciously\" is niḥlah; ʿĀʾishah read it as \"an obligatory duty\" and Ibn Zayd said niḥlah in Arabic means \"the obligatory,\" so the verse means do not marry her except with something that is binding for her. Al-Qurṭubī drew from the second half that a woman's gift of her mahr back to her husband is valid whether she is virgin or previously married, which is the majority position.",
+          "citations": [
+            "https://quran.com/4/4",
+            "https://fiqh.islamonline.net/%d8%ad%d9%82-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a9-%d9%81%d9%8a-%d8%a7%d9%84%d9%85%d9%87%d8%b1-%d9%88%d8%a7%d9%84%d9%85%d9%8a%d8%b1%d8%a7%d8%ab/",
+            "https://fiqh.islamonline.net/%d8%af%d9%81%d8%b9-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a7%d9%84%d9%85%d9%87%d8%b1-%d9%84%d9%84%d8%b1%d8%ac%d9%84/"
+          ]
+        },
+        {
+          "text": "Verse 4:24 names the mahr a farīḍah and then opens the door to later variation by consent, and the tafsir attached to it says explicitly that the increase or decrease after the obligation is fixed is left to what the two parties mutually agree. Verse 4:20 presupposes that a very large mahr is lawful, since it speaks of a husband who has given a qinṭār, and forbids taking any of it back. Two further verses assume that a marriage can exist with no amount named at all: 2:236 speaks of divorcing women \"you have not touched nor specified for them an obligation,\" and 2:237 then rules on the case where an amount was specified, half of it being due. And 2:229 forbids a husband from reclaiming what he gave her.",
+          "citations": [
+            "https://quran.com/4/24",
+            "https://quran.com/4/20",
+            "https://quran.com/2/236",
+            "https://quran.com/2/237",
+            "https://quran.com/2/229"
+          ]
+        },
+        {
+          "text": "Among the Companions, ʿUmar ibn al-Khaṭṭāb once urged people not to inflate mahr, and a woman of Quraysh confronted him with 4:20's qinṭār; he responded, \"May Allah forgive me; everyone is more knowledgeable than ʿUmar,\" and retracted it from the pulpit, saying that whoever wishes may give from his wealth what he likes. Ibn Kathīr called its chain good and strong, though he noted disagreement over the story, and al-Albānī rejected the woman's exchange because Mujālid ibn Saʿīd, who adds it, is weak. In the opposite direction, when Ibn Masʿūd was asked about a man who died before naming a mahr or consummating, he ruled that she gets the mahr of her like, \"neither less nor more,\" and Maʿqil ibn Sinān al-Ashjaʿī stood up and testified that the Prophet ﷺ had judged exactly that in the case of Birwāʿ bint Wāshiq.",
+          "citations": [
+            "https://islamqa.info/ar/answers/240804",
+            "https://islamqa.info/ar/answers/12572",
+            "https://al-fatawa.com/en/fatwa/122012/what-authenticity-story-umar-may-allah-pleased-when-woman-objected-regarding-fixing-mahr-where-said",
+            "https://sunnah.com/nasai:3524"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The strongest reports show the Prophet ﷺ, acting as guardian, asking the suitor what he had rather than naming a figure. In al-Bukhārī's narration a woman offered herself to him, and when a man asked for her hand he asked, \"Do you have anything you can give her as a dowry?\" The man had nothing, not even an iron ring, so the Prophet ﷺ asked how much Quran he knew and married them on that. Al-Albānī pointed out that the Prophet ﷺ never stipulated a specific amount; he only established that she has a mahr he must fulfil.",
+          "citations": [
+            "https://sunnah.com/bukhari:5132",
+            "https://sunnah.com/bukhari:5029",
+            "https://al-fatawa.com/en/fatwa/9493/what-ruling-bride-s-guardian-specifying-mahr"
+          ]
+        },
+        {
+          "text": "Other sahih reports show how wide the range was in practice: ʿAbd al-Raḥmān ibn ʿAwf gave a nawāh of gold, a date-stone's weight; ʿĀʾishah said the Prophet ﷺ gave twelve ūqiyyah and a nashsh, which is five hundred dirhams; and when he freed Ṣafiyyah, her manumission itself was her mahr. The report that the Negus married Umm Ḥabībah to him for four thousand is graded sahih by Abū Ghuddah and al-Albānī but daif by Zubair Ali Zai, and the mursal version in Sunan Abi Dawud is graded daif.",
+          "citations": [
+            "https://sunnah.com/muslim:1427e",
+            "https://sunnah.com/nasai:3347",
+            "https://sunnah.com/bukhari:4201",
+            "https://sunnah.com/nasai:3350",
+            "https://sunnah.com/abudawud:2108"
+          ]
+        },
+        {
+          "text": "ʿUmar's sermon against inflating mahr is hasan sahih by al-Tirmidhī's own grading and hasan sahih by al-Albānī in Ibn Mājah, Abū Dāwūd and al-Nasāʾī, warning against making women's dowries excessive and stating that the Messenger of Allah ﷺ did not marry any of his wives or give any of his daughters in marriage for more than twelve uqiyyah.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:1114b",
+            "https://sunnah.com/ibnmajah:1887",
+            "https://sunnah.com/abudawud:2106",
+            "https://sunnah.com/nasai:3349"
+          ]
+        },
+        {
+          "text": "On the daughter's consent, the reports pull in two directions and both are authentic. Muslim has \"a previously married woman has more right over herself than her guardian, and a virgin is to be asked for her permission by her father... and her permission is her silence\", and al-Bukhārī records that Khansāʾ bint Khidhām was given in marriage by her father while she was a thayyib who disliked it, and the Prophet ﷺ annulled the marriage. Ibn ʿAbbās's report that a virgin girl told the Prophet ﷺ her father had married her off against her will and he gave her the choice is graded sahih by al-Albānī and hasan by Zubair Ali Zai. The Buraidah report, where the girl says her father married her to his nephew \"to raise his own low standing,\" is graded daif by al-Albānī and al-Bāqī though its isnad is sahih by Zubair Ali Zai's assessment. ʿĀʾishah's report that a woman who marries without her guardians' permission has a void marriage, and that she still gets the mahr if consummated, is graded sahih by al-Albānī. The wording \"do not marry a previously married woman until she is consulted, nor a virgin until her permission is sought\" is quoted as agreed upon in al-Buhūtī's Kashshāf al-Qināʿ.",
+          "citations": [
+            "https://sunnah.com/muslim:1421c",
+            "https://sunnah.com/bukhari:5138",
+            "https://sunnah.com/abudawud:2096",
+            "https://sunnah.com/ibnmajah:1875",
+            "https://sunnah.com/ibnmajah:1874",
+            "https://sunnah.com/abudawud:2083",
+            "https://shamela.ws/book/622#11:243"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "In the Hanafi school the named mahr is whatever the two parties agree on; the marriage is valid without naming any, and mahr al-mithl then falls due by the contract. A father and grandfather may marry off a small daughter for less than mahr al-mithl even with a glaring shortfall, because his compassion is taken as evidence of her interest; Abū Ḥanīfah allows it, while the two students restrict it to slight discrepancies. The floor is ten dirhams, and if less is named she still gets ten.",
+          "citations": [
+            "https://shamela.ws/book/11820/271",
+            "https://shamela.ws/book/21613/1382",
+            "https://shamela.ws/book/11820/266",
+            "https://shamela.ws/book/21613/1855"
+          ]
+        },
+        {
+          "text": "In the Maliki school the wife's agreement governs if she is a thayyib; for a virgin, al-Mudawwanah gives the guardian the say when the named amount is below mahr al-mithl, and her say when it equals it. Mālik held a father may marry off his virgin daughter without her consent, and that doing so for less or more than mahr al-mithl is valid if done out of consideration for her. The floor is a quarter dinar or three dirhams; a marriage for less is valid but completed to a quarter dinar, and annulled before consummation if the husband refuses.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d9%85%d9%86-%d8%a7%d9%84%d8%b0%d9%8a-%d9%8a%d8%ad%d8%af%d8%af-%d8%a7%d9%84%d9%85%d9%87%d8%b1/",
+            "https://www.islamweb.net/en/fatwa/137194/",
+            "https://shamela.ws/book/587/603",
+            "https://shamela.ws/book/587/655",
+            "https://shamela.ws/book/21739#3:44"
+          ]
+        },
+        {
+          "text": "In the Shafi'i school the amount is not capped at either end; anything that can serve as a price can be a mahr. The father may marry off a virgin, small or adult, without her consent, though asking her is recommended; but if he does so for less than mahr al-mithl the naming is void and she gets mahr al-mithl, with the more apparent of two views that the marriage still stands. There is no minimum: the iron ring suffices.",
+          "citations": [
+            "https://shamela.ws/book/6910/5060",
+            "https://shamela.ws/book/11820/271",
+            "https://shamela.ws/book/11444/1906",
+            "https://shamela.ws/book/499#7:43",
+            "https://shamela.ws/book/499#7:268",
+            "https://shamela.ws/book/21739#3:44"
+          ]
+        },
+        {
+          "text": "In the Hanbali school the mahr is whatever the parties agree on, small or large, whether the guardian is the father and she is virgin or previously married, minor or adult. The father may marry off his virgin daughters even after puberty without their consent, and may do so below mahr al-mithl even if she dislikes it; anyone other than the father who does it leaves her entitled to mahr al-mithl. There is no minimum: anything that is wealth; Saʿīd ibn al-Musayyib married his daughter for two dirhams.",
+          "citations": [
+            "https://shamela.ws/book/6910/5068",
+            "https://shamela.ws/book/622#11:466",
+            "https://shamela.ws/book/6910/4796",
+            "https://shamela.ws/book/6910/5060"
+          ]
+        },
+        {
+          "text": "Two Hanafi details sharpen the picture. Abū Ḥanīfah held that a sane adult woman may contract her own marriage, which is why her own agreement to the amount carries weight in that school; but Ibn ʿĀbidīn records that if she marries for less than her mahr, the male relatives on her father's side may object until mahr al-mithl is completed or the judge separates them, to ward off shame. The assessment of mahr al-mithl looks at her age, beauty and the like at the time of marriage, measured against a woman of her father's people, while Ibn Rushd records that Mālik added wealth and social standing, al-Shāfiʿī restricted it to the women of her paternal kin, and Abū Ḥanīfah included kin on both sides.",
+          "citations": [
+            "https://islamqa.org/hanafi/daruliftaa/7744/divorced-woman-marrying-without-her-guardians-approval/",
+            "https://islamqa.org/hanafi/daruliftaa-birmingham/170716/can-one-get-married-without-the-consent-of-the-parents/",
+            "https://fiqh.islamonline.net/%d8%a3%d9%87%d9%85%d9%8a%d8%a9-%d8%a7%d9%84%d9%88%d9%84%d8%a7%d9%8a%d8%a9-%d9%81%d9%89-%d8%a7%d9%84%d8%b2%d9%88%d8%a7%d8%ac/",
+            "https://shamela.ws/book/21613/1375",
+            "https://shamela.ws/book/21613/1376",
+            "https://shamela.ws/book/21613/1420",
+            "https://shamela.ws/book/21739#3:52"
+          ]
+        },
+        {
+          "text": "The Hanbali school is also the most explicit that the mahr must physically reach the wife: Ibn Qudāmah reports that the husband is not discharged by paying her father rather than her or her agent, and Aḥmad said that if the father took it and she denies it, she claims from the husband and the husband claims back from the father.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d9%85%d9%87%d8%b1-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b2%d9%88%d8%ac-%d9%88%d8%a7%d9%84%d8%a3%d9%88%d9%84%d9%8a%d8%a7%d8%a1/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "IslamQA's answer is that fixing the mahr is left to the woman and her guardian together, that there is no set limit, and that if they disagree the reference point is the mahr of a woman of similar standing, so that if she accepts mahr al-mithl and he wants more, his word is not heeded, and if he wants mahr al-mithl and she wants less, his word prevails. Islamweb gives the same structure and adds that the Maliki position, which it calls preponderant in its view, gives a virgin's guardian the say provided the amount matches that of women of her standing.",
+          "citations": [
+            "https://islamqa.info/en/answers/224876",
+            "https://islamqa.info/ar/answers/224876",
+            "https://www.islamweb.net/en/fatwa/137194/",
+            "https://www.islamweb.net/en/fatwa/239041/"
+          ]
+        },
+        {
+          "text": "On the size, the Permanent Committee (fatwa 3424) states that it knows of no evidence in the Book or Sunnah fixing a limit, and that the Quran's language of \"wealth\" and \"wages\" covers small and large amounts alike. Ibn Bāz said there is no specific limit but that excess is disliked, citing 4:20 and noting the Prophet ﷺ gave Umm Ḥabībah four hundred dinars. IslamQA notes that Aḥmad's recommended figure, on Ḥanbal's report, is four hundred dirhams, and quotes Ibn al-Qayyim that the hadiths show no minimum, that excess is disliked, and that it strips the marriage of blessing.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/108594/determining-mahr",
+            "https://al-fatawa.com/en/fatwa/64639/dislike-exaggeration-women-s-mahr",
+            "https://al-fatawa.com/en/fatwa/86266/specific-limit-mahr-86266",
+            "https://islamqa.info/en/answers/10525"
+          ]
+        },
+        {
+          "text": "On ownership, the Permanent Committee (fatwa 4901) holds that the mahr is the woman's property and a guardian may not stipulate anything for himself or take from it without her consent, with the exception of her father, who may take what does not harm her. IslamOnline states that mahr belongs to the wife and is not the property of her parents or guardian, and AMJA that the quantity, form and timing of the mahr are all left to what the parties agree, provided they do not agree to drop it altogether. A 2025 IslamOnline piece works through the bride-versus-guardian disagreement using al-Mudawwanah directly, then notes that she may not marry without her guardian's permission in the majority view, citing the hadith \"no marriage except with a guardian\".",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/108251/woman-s-guardian-entitled-take-bridal-gift",
+            "https://fiqh.islamonline.net/en/mahr-dower-concept-rulings-2/",
+            "https://fiqh.islamonline.net/en/declaring-a-big-amount-of-mahr-on-paper/",
+            "https://www.amjaonline.org/fatwa/ar/79239/حقوق-المرأة-فبما-ينعلق-بالزواج",
+            "https://fiqh.islamonline.net/%d9%85%d9%86-%d8%a7%d9%84%d8%b0%d9%8a-%d9%8a%d8%ad%d8%af%d8%af-%d8%a7%d9%84%d9%85%d9%87%d8%b1/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The sharpest apparent conflict is between the iron-ring hadith and the Hanafi ten-dirham floor. Ibn ʿĀbidīn concedes that the Hanafi position looks contrary to the apparent sense of \"seek, even an iron ring,\" but argues it must be read that way because the Prophet ﷺ went on to marry them \"for what you have of the Quran,\" and because reading it as abolishing the mahr altogether would contradict 4:24's \"that you seek them with your wealth\"; he also notes that the reports implying a minimum are all weakened except that one. Ibn al-Qayyim and al-Albānī took the opposite route, holding that the ten-dirham report is not established, that ʿAlī's statement on it is mawqūf with discussion over its chain, and that authentic explicit Sunnah should not be abandoned for a weak report and analogy.",
+          "citations": [
+            "https://shamela.ws/book/21613/1383",
+            "https://en.tohed.com/is-ten-dirhams-the-minimum-mahr-a-detailed-analysis/",
+            "https://al-fatawa.com/en/fatwa/113522/seventeenth-deviation-sunnah-hadith-give-mahr-even-if-ring-iron",
+            "https://al-fatawa.com/en/fatwa/55004/benefits-hadith-prophet-peace-blessings-upon-married-man-woman-iron-ring-mahr"
+          ]
+        },
+        {
+          "text": "ʿUmar's campaign against high mahr and the qinṭār verse are reconciled by treating his words as guidance rather than a legal cap: the verse permits a large mahr, so he withdrew and left it to a man's own wealth. Ibn Bāz draws the same line, that excess is disliked but the mahr is not forbidden to the woman even when it is large.",
+          "citations": [
+            "https://islamqa.info/ar/answers/240804",
+            "https://islamqa.info/ar/answers/12572",
+            "https://islamqa.info/en/answers/12572",
+            "https://al-fatawa.com/en/fatwa/64639/dislike-exaggeration-women-s-mahr"
+          ]
+        },
+        {
+          "text": "The father's authority over a virgin versus her right to refuse is reconciled differently in each school. The Hanbalis argue from the hadith itself, that since \"the previously married woman has more right over herself than her guardian, and the virgin is to be asked,\" the Prophet ﷺ divided women into two and gave the right to one, meaning the virgin's guardian is the one with the right, and her being \"asked\" is recommended rather than required. The report of Khansāʾ, which the Prophet ﷺ annulled, is in al-Bukhārī's own wording the case of a thayyib, so schools that limit a father's compulsion to virgins see no conflict in it. Ibn ʿUthaymīn explains the Hanbali latitude on price by noting that a father may take from his daughter's wealth, so he may accept a lower mahr for a suitor of good character and religion, and that where a brother rather than the father does it without her permission, the naming fails and mahr al-mithl is owed.",
+          "citations": [
+            "https://shamela.ws/book/622#11:243",
+            "https://sunnah.com/bukhari:5138",
+            "https://al-fatawa.com/en/fatwa/67887/if-man-marries-off-daughter-even-if-previously-married-woman-without-mahr-equal-peers-valid",
+            "https://al-fatawa.com/en/fatwa/67892/continuation-explanation-author-s-statement-if-guardian-married-another-guardian-permission-valid-if"
+          ]
+        },
+        {
+          "text": "\"The mahr is hers\" and \"the father may take from it\" are held together by distinguishing the husband's obligation from the father's right: the husband owes it to her, so paying her father does not discharge him, while the father's access to his child's wealth is a separate parental right conditioned on not harming her.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d9%85%d9%87%d8%b1-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d8%b2%d9%88%d8%ac-%d9%88%d8%a7%d9%84%d8%a3%d9%88%d9%84%d9%8a%d8%a7%d8%a1/",
+            "https://al-fatawa.com/en/fatwa/108251/woman-s-guardian-entitled-take-bridal-gift"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
