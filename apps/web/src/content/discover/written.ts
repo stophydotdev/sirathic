@@ -2,6 +2,7 @@ import canMuslimsCelebrateChristmas from "./canMuslimsCelebrateChristmas.json";
 import canMuslimsHaveDogs from "./canMuslimsHaveDogs.json";
 import canMuslimsMarryChristians from "./canMuslimsMarryChristians.json";
 import canYouPrayInACar from "./canYouPrayInACar.json";
+import doWomenHaveToCoverInFrontOfHomosexualsOr from "./doWomenHaveToCoverInFrontOfHomosexualsOr.json";
 import doesAnEngagementCountAsAMarriageNikah from "./doesAnEngagementCountAsAMarriageNikah.json";
 import isAHairTransplantPermissibleInIslam from "./isAHairTransplantPermissibleInIslam.json";
 import isMeatSlaughteredByThePeopleOfTheBookHalalToEat from "./isMeatSlaughteredByThePeopleOfTheBookHalalToEat.json";
@@ -22,6 +23,7 @@ export const written = [
   canMuslimsHaveDogs,
   canMuslimsMarryChristians,
   canYouPrayInACar,
+  doWomenHaveToCoverInFrontOfHomosexualsOr,
   doesAnEngagementCountAsAMarriageNikah,
   isAHairTransplantPermissibleInIslam,
   isMeatSlaughteredByThePeopleOfTheBookHalalToEat,
