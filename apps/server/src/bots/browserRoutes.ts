@@ -8,7 +8,7 @@ import { respond, StatusError } from "../http";
 import { projectId, requireProject } from "../projects/projects";
 import { saveLogin, vaultLogin } from "../vault/vault";
 import { browserPage, fillBrowser, screenSocket, teachBrowser } from "./browser";
-import { screenTicket, ticketFits } from "./screenTicket";
+import { ticketFits, ticketFor } from "./ticket";
 
 const fillBody = fillRequest
   .omit({ session: true })
@@ -42,7 +42,7 @@ browserRoutes.post("/:id/browser/ticket", (c) =>
   respond(async () => {
     const { botId } = await ownBot(c.req.raw.headers, c.req.param("id"));
     await browserPage(botId);
-    return { ticket: screenTicket(botId) };
+    return { ticket: ticketFor(botId) };
   }),
 );
 

@@ -1,6 +1,8 @@
 import { expect, test } from "bun:test";
+import { RedisClient } from "bun";
 import { validateUIMessages } from "ai";
 import { ownHistory } from "../apps/server/src/chat/ownHistory";
+import { type Device, join, leave, publish } from "../apps/server/src/realtime/hub";
 import {
   type ChatMessage,
   chatData,
@@ -226,4 +228,52 @@ test("an answer variant the server never saved doesn't drop the turns after it",
   const own = await ownHistory(sent, stored);
   expect(own.messages.map(({ id }) => id)).toEqual(["u1", "a1-older", "u2", "a2", "u3"]);
   expect([...own.unverified]).toEqual(["a1-older"]);
+});
+
+type Frame = Parameters<Device["send"]>[0];
+
+const deviceWanting = (count: number) => {
+  const frames: Frame[] = [];
+  const { promise, resolve } = Promise.withResolvers<Frame[]>();
+  const device: Device = {
+    owner: "realtime-test",
+    sessionId: "test",
+    send: (frame) => {
+      frames.push(frame);
+      if (frames.length === count) resolve(frames);
+    },
+    close: () => undefined,
+    ping: () => undefined,
+    arrivedWhileJoining: undefined,
+  };
+  return { device, frames: promise };
+};
+
+test("a device that was offline gets what it missed, or a reset when the events are gone", async () => {
+  const redis = new RedisClient(process.env.REDIS_URL);
+  await redis.del("rt:realtime-test");
+  const laptop = deviceWanting(3);
+  const phone = deviceWanting(1);
+  await join(laptop.device, undefined);
+  await join(phone.device, undefined);
+
+  publish("realtime-test", { kind: "bot", botId: "seen" });
+  const [seen] = await phone.frames;
+  leave(phone.device);
+  publish("realtime-test", { kind: "bot", botId: "missed 1" });
+  publish("realtime-test", { kind: "bot", botId: "missed 2" });
+  await laptop.frames;
+
+  const back = deviceWanting(2);
+  await join(back.device, seen?.id);
+  expect((await back.frames).map((frame) => frame.event)).toEqual([
+    { kind: "bot", botId: "missed 1" },
+    { kind: "bot", botId: "missed 2" },
+  ]);
+
+  const stale = deviceWanting(1);
+  await join(stale.device, "1-0");
+  expect((await stale.frames).map((frame) => frame.event.kind)).toEqual(["reset"]);
+  leave(laptop.device);
+  redis.close();
 });

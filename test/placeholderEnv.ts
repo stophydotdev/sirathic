@@ -22,6 +22,7 @@ const PLACEHOLDERS = {
   STORAGE_ACCESS_KEY_ID: "test",
   STORAGE_SECRET_ACCESS_KEY: "test",
   BETTER_AUTH_SECRET: "test-only-placeholder-secret-32-chars",
+  REALTIME_USERS: "realtime-test",
 };
 
 for (const [key, value] of Object.entries(PLACEHOLDERS)) process.env[key] ??= value;
