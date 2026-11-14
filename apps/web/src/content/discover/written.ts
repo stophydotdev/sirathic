@@ -7,6 +7,7 @@ import doesAnEngagementCountAsAMarriageNikah from "./doesAnEngagementCountAsAMar
 import isAHairTransplantPermissibleInIslam from "./isAHairTransplantPermissibleInIslam.json";
 import isMeatSlaughteredByThePeopleOfTheBookHalalToEat from "./isMeatSlaughteredByThePeopleOfTheBookHalalToEat.json";
 import isMusicHaram from "./isMusicHaram.json";
+import isRecitingTheQuranInArabicWithoutUnderstanding from "./isRecitingTheQuranInArabicWithoutUnderstanding.json";
 import isShrimpHalal from "./isShrimpHalal.json";
 import isThereASpecificAgeForMarriageInIslam from "./isThereASpecificAgeForMarriageInIslam.json";
 import sleepAndWudu from "./sleepAndWudu.json";
@@ -28,6 +29,7 @@ export const written = [
   isAHairTransplantPermissibleInIslam,
   isMeatSlaughteredByThePeopleOfTheBookHalalToEat,
   isMusicHaram,
+  isRecitingTheQuranInArabicWithoutUnderstanding,
   isShrimpHalal,
   isThereASpecificAgeForMarriageInIslam,
   sleepAndWudu,
