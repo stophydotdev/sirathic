@@ -15,6 +15,7 @@ import sleepAndWudu from "./sleepAndWudu.json";
 import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
 import whatAreTheGuidelinesForAFemaleStudentSInteractions from "./whatAreTheGuidelinesForAFemaleStudentSInteractions.json";
 import whatIsTheRulingOnAdoptionInIslam from "./whatIsTheRulingOnAdoptionInIslam.json";
+import whenShouldOneMakeTheIntentionToFastForMissed from "./whenShouldOneMakeTheIntentionToFastForMissed.json";
 import whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives from "./whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives.json";
 import whoDecidesTheMahr from "./whoDecidesTheMahr.json";
 import whyIsIslamStrongDespiteDifferencesOfOpinionAmong from "./whyIsIslamStrongDespiteDifferencesOfOpinionAmong.json";
@@ -38,6 +39,7 @@ export const written = [
   touchingPrivatePartsAndWudu,
   whatAreTheGuidelinesForAFemaleStudentSInteractions,
   whatIsTheRulingOnAdoptionInIslam,
+  whenShouldOneMakeTheIntentionToFastForMissed,
   whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives,
   whoDecidesTheMahr,
   whyIsIslamStrongDespiteDifferencesOfOpinionAmong,
