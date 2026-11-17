@@ -1,0 +1,631 @@
+{
+  "title": "What are the benefits of reciting the Quran?",
+  "headline": "Four schools agree Quran recitation is rewarded and differ on gifting it to the dead",
+  "cover": "ثواب تلاوة القرآن",
+  "slug": "what-are-the-benefits-of-reciting-the-quran",
+  "topic": "Quran",
+  "tint": "indigo",
+  "summary": {
+    "text": "Recitation of the Quran is rewarded letter by letter, and the four schools agree on that core reward and differ mainly over what happens when the reward is gifted to someone else, above all to the dead. On whether the reward reaches the dead, the Hanafis hold that what reaches the dead is the reward itself, the relied-upon view of the later Malikis is permissibility, the well-known Shafi'i position is that the reward of Quran recitation does not reach the dead, and the Hanbalis state that any act of worship whose reward is gifted to a living or dead Muslim is valid and benefits him.",
+    "citations": [
+      "https://www.dar-alifta.org/ar/Fatwa/Details/17050/قراءة-القرآن-للأموات-على-المقابر-وقت-الدفن-أو-غير-ذلك",
+      "https://shamela.ws/book/21613/899",
+      "https://islamqa.org/hanafi/muftionline/93210/conveying-sawaab-to-the-deceased/",
+      "https://shamela.ws/book/11444/1771",
+      "https://shamela.ws/book/622#4:234"
+    ]
+  },
+  "updated": "2026-11-17",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/17050/قراءة-القرآن-للأموات-على-المقابر-وقت-الدفن-أو-غير-ذلك",
+      "title": "قراءة القرآن للأموات على المقابر وقت الدفن أو غير ذلك"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/899",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص243"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/muftionline/93210/conveying-sawaab-to-the-deceased/",
+      "title": "Is it permissible to recite Qur’an for people who have passed away?"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/1771",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص110"
+    },
+    {
+      "url": "https://shamela.ws/book/622#4:234",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج4 ص234"
+    },
+    {
+      "url": "https://quran.com/35/29",
+      "title": "Quran 35:29, Faatir"
+    },
+    {
+      "url": "https://quran.com/35/30",
+      "title": "Quran 35:30, Faatir"
+    },
+    {
+      "url": "https://quran.com/17/9",
+      "title": "Quran 17:9, Al-Israa"
+    },
+    {
+      "url": "https://quran.com/17/82",
+      "title": "Quran 17:82, Al-Israa"
+    },
+    {
+      "url": "https://quran.com/2/121",
+      "title": "Quran 2:121, Al-Baqara"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/56069/allah-exalted-said-recite-what-has-revealed-book-establish-prayer-indeed-prayer-prohibits-immorality",
+      "title": "Allah the Exalted said: “Recite what has been revealed to you of the Book and establish prayer. Indeed, prayer prohibits immorality and wrongdoing, and the remembrance of Allah is greater. And Allah"
+    },
+    {
+      "url": "https://quran.com/73/4",
+      "title": "Quran 73:4, Al-Muzzammil"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/265364",
+      "title": "هل ثبت قول علي رضي الله عنه : الترتيل تجويد الحروف و معرفة الوقوف"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/402",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج1 ص486"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/137288",
+      "title": "Which is better, reading a surah with reflection and understanding, or reading the entire Quran without reflection?"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D9%81%D8%B6%D8%A7%D8%A6%D9%84_%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86#3338",
+      "title": "Sunan ad-Darimi 3338"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/161367",
+      "title": "هل يأثم من ترك قراءة القرآن الكريم ؟"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d9%86-%d9%81%d8%b6%d9%84-%d8%a7%d9%84%d9%82%d8%b1%d8%a2%d9%86-%d8%a7%d9%84%d9%83%d8%b1%d9%8a%d9%85/",
+      "title": "من فضل القرآن الكريم"
+    },
+    {
+      "url": "https://quran.com/7/204",
+      "title": "Quran 7:204, Al-A'raaf"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:991",
+      "title": "Riyad as-Salihin 991"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5027",
+      "title": "Sahih al-Bukhari 5027: Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:993",
+      "title": "Riyad as-Salihin 993"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:994",
+      "title": "Riyad as-Salihin 994"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:2904",
+      "title": "Jami' at-Tirmidhi 2904: Chapters on The Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:3779",
+      "title": "Sunan Ibn Majah 3779: Etiquette"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:2910",
+      "title": "Jami' at-Tirmidhi 2910: Chapters on The Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:1001",
+      "title": "Riyad as-Salihin 1001"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:2915",
+      "title": "Jami' at-Tirmidhi 2915: Chapters on The Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:2891",
+      "title": "Jami' at-Tirmidhi 2891: Chapters on The Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:3786",
+      "title": "Sunan Ibn Majah 3786: Etiquette"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5013",
+      "title": "Sahih al-Bukhari 5013: Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:998",
+      "title": "Riyad as-Salihin 998"
+    },
+    {
+      "url": "https://sunnah.com/muslim:795a",
+      "title": "Sahih Muslim 795a: The Book of Prayer - Travellers"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:1023",
+      "title": "Riyad as-Salihin 1023"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1313",
+      "title": "Sunan Abi Dawud 1313: Prayer (Kitab Al-Salat): Voluntary Prayers"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:2919",
+      "title": "Jami' at-Tirmidhi 2919: Chapters on The Virtues of the Qur'an"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/75047/virtue-reciting-noble-qur-manners",
+      "title": "The Virtue of Reciting the Noble Qur'an and Its Manners"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/589/how-qur-proof-against-carrier",
+      "title": "How is the Qur'an a proof against its carrier?"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:1000",
+      "title": "Riyad as-Salihin 1000"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:2913",
+      "title": "Jami' at-Tirmidhi 2913: Chapters on The Virtues of the Qur'an"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:1453",
+      "title": "Sunan Abi Dawud 1453: Prayer (Kitab Al-Salat): Detailed Injunctions about Witr"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/hadithanswers/120345/reciting-quran-is-among-the-best-act-of-worship/",
+      "title": "Reciting Quran is among the best act of worship"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D9%81%D8%B6%D8%A7%D8%A6%D9%84_%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86#3323",
+      "title": "Sunan ad-Darimi 3323"
+    },
+    {
+      "url": "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D9%81%D8%B6%D8%A7%D8%A6%D9%84_%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86#3307",
+      "title": "Sunan ad-Darimi 3307"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%a3%d9%85%d8%a7%d9%83%d9%86-%d8%a7%d9%84%d8%aa%d9%8a-%d8%aa%d9%83%d8%b1%d9%87-%d9%81%d9%8a%d9%87%d8%a7-%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d8%a7%d9%84%d9%82%d8%b1%d8%a2%d9%86/",
+      "title": "الأماكن التي تكره فيها قراءة القرآن"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/13016/حكم-قراءة-القرآن-على-القبر-ووصول-ثوابه-للميت",
+      "title": "قراءة القرآن على الميت"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/14179/حكم-قراءة-القرآن-وهبة-أجرها-للميت",
+      "title": "قراءة القرآن وهبة أجرها للميت"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/902",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج2 ص246"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/421",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص422"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/422",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص423"
+    },
+    {
+      "url": "https://shamela.ws/book/499#2:139",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج2 ص139"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/585",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج2 ص57"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/1639",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج3 ص518"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/fiqh-answers-2/is-looking-at-the-quran-mushaf-during-tarawih-prayers-and-other-prayers-permissible/",
+      "title": "Is Looking at the Quran (Mushaf) during Tarawih Prayers and Other Prayers Permissible?"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/786",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص280"
+    },
+    {
+      "url": "https://www.dar-alifta.org/en/fatwa/details/6537/what-is-the-ruling-of-reading-from-the-mushaf-during-prayer",
+      "title": "What is the ruling of reading from the mushaf during prayer?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/hanafi-fiqh/reciting-from-a-copy-of-the-quran-mushaf-intarawih-and-other-prayers/",
+      "title": "Reciting From a Copy of the Qur’an (Mushaf) in Tarawih and Other Prayers"
+    },
+    {
+      "url": "https://shamela.ws/book/622#2:441",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج2 ص441"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/3840",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج6 ص398"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/306",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص307"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/307",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج1 ص308"
+    },
+    {
+      "url": "https://shamela.ws/book/587/87",
+      "title": "المدونة، مالك بن أنس، ج1 ص199"
+    },
+    {
+      "url": "https://shamela.ws/book/499#11:222",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج11 ص222"
+    },
+    {
+      "url": "https://shamela.ws/book/622#3:76",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج3 ص76"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/1116",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج2 ص610"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/32594",
+      "title": "Is it better to recite Quran from memory or to read from the Mus-haf?"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d9%85%d9%86-%d8%a7%d9%84%d9%85%d8%b5%d8%ad%d9%81-%d8%a3%d9%85-%d9%85%d9%86-%d8%a7%d9%84%d9%85%d8%ad%d9%81%d9%88%d8%b8/",
+      "title": "القراءة من المصحف أم من المحفوظ"
+    },
+    {
+      "url": "https://shamela.ws/book/622#3:66",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج3 ص66"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/3465",
+      "title": "Which is better, to recite Quran from the Mushaf or from memory?"
+    },
+    {
+      "url": "https://seekersguidance.org/answers/islamic-belief/what-is-the-ruling-on-reciting-the-quran-for-the-souls-of-the-deceased/",
+      "title": "What Is the Ruling on Reciting the Quran for the Souls of the Deceased?"
+    },
+    {
+      "url": "https://thehumblei.com/2012/11/09/reading-quran-for-the-deceased/",
+      "title": "Reading Qur’an for the Deceased"
+    },
+    {
+      "url": "https://hadithunlocked.com/adab:38",
+      "title": "Al-Adab al-Mufrad 38"
+    },
+    {
+      "url": "https://sunnah.com/nasai:3651",
+      "title": "Sunan an-Nasa'i 3651: The Book of Wills"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/80965/explanation-hadith-when-son-adam-dies-deeds-cut-off",
+      "title": "Explanation of the Hadith: \"When a son of Adam dies, his deeds are cut off...\""
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/872/hadith-messenger-peace-blessings-upon-when-son-adam-dies-deeds-cut-off-except-three-ongoing-charity",
+      "title": "In the hadith of the Messenger (peace and blessings be upon him): “When a son of Adam dies, his deeds are cut off except for three: ongoing charity, knowledge that benefits people, or a righteous child who prays for him.”"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/askimam/19018/it-was-related-in-hadith-muslim-that-quran-is-an-argument-for-or-against-you-can-you-explain-to-me-simple-english-understanding-in-details/",
+      "title": "It was related in Hadith Muslim that Qur’an is an argument for or against you.Can you explain to me simple English understanding in details."
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/103496/reward-reciting-qur-dhikr-contemplation-during-recitation-mere-recitation",
+      "title": "The reward for reciting the Qur'an and dhikr: with contemplation during recitation or with mere recitation"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/71186/explanation-riyad-al-salihin-62a",
+      "title": "Explanation of Riyad al-Salihin-62a"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/hadithanswers/155441/gaining-two-rewards-while-reciting-the-quran/",
+      "title": "Gaining two rewards while reciting the Quran"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/18137/بيان-فضل-قراءة-القرآن-الكريم-من-المصحف",
+      "title": "بيان فضل قراءة القرآن الكريم من المصحف"
+    },
+    {
+      "url": "https://www.dar-alifta.org/en/fatwa/details/21787/the-reward-for-listening-to-the-noble-quran",
+      "title": "The reward for listening to the noble Quran"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/103494/reciting-qur-better-listening",
+      "title": "Reciting the Qur'an is better than listening to it"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/75138/ruling-reciting-qur-deceased-benefiting",
+      "title": "The ruling on reciting the Qur'an for the deceased and their benefiting from it"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/en/reciting-the-quran-and-prayer-volumes/",
+      "title": "Reciting the Quran and Prayer Volumes"
+    },
+    {
+      "url": "https://www.islamweb.net/en/fatwa/85360/",
+      "title": "Etiquette and reward of reciting the Qur'an"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband/24790/will-someone-who-recites-the-quran-in-arabic-without-understanding-it-receive-any-reward/",
+      "title": "Will someone who recites the Quran in Arabic without understanding it receive any reward?"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/darulifta-deoband/137039/is-there-a-proof-that-rewards-can-be-sent-to-the-dead-after-reading-the-holy-quran/",
+      "title": "Is there a proof that rewards can be sent to the dead after reading the Holy Quran?"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The Quran frames recitation as a profitable transaction: those who recite the Book, establish prayer and spend are promised a trade that will never perish, and that Allah will pay them in full and add to it from His bounty. Its guidance is described as leading to what is most suitable and as good tidings of a great reward, and it is called healing and mercy for the believers. On \"those to whom We have given the Book recite it with its true recital\", Shaykh Ibn al-Uthaymeen explained that the command covers both verbal recitation and legislative recitation, meaning following and applying it.",
+          "citations": [
+            "https://quran.com/35/29",
+            "https://quran.com/35/30",
+            "https://quran.com/17/9",
+            "https://quran.com/17/82",
+            "https://quran.com/2/121",
+            "https://al-fatawa.com/en/fatwa/56069/allah-exalted-said-recite-what-has-revealed-book-establish-prayer-indeed-prayer-prohibits-immorality"
+          ]
+        },
+        {
+          "text": "On \"recite the Qur'an with measured recitation\", the tafsir given is slow, rhythmic recitation with full attention to what is being recited. The definition often attributed to Ali ibn Abi Talib, that tarteel is perfecting the letters and knowing where to stop, is quoted in the books of tajwid, but a search by IslamQA found no chain for it, the earliest mention being al-Hudhali and then Ibn al-Jazari, so it is a saying transmitted without an isnad rather than a traced report.",
+          "citations": ["https://quran.com/73/4", "https://islamqa.info/ar/answers/265364"]
+        },
+        {
+          "text": "The Companions read it in small, digested portions. Ibn Mas'ud said they would not go beyond ten verses until they knew their command, prohibition and rulings, and he warned against reciting it hastily like poetry or scattering it like bad dates, urging the reciter to pause at its wonders and let it move the heart rather than aiming merely to reach the end of the surah. When Anas ibn Malik was close to finishing the Quran at night he would leave a little until morning, then gather his family and complete it with them.",
+          "citations": [
+            "https://shamela.ws/book/11444/402",
+            "https://islamqa.info/en/answers/137288",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D9%81%D8%B6%D8%A7%D8%A6%D9%84_%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86#3338"
+          ]
+        },
+        {
+          "text": "Uthman said that if their hearts were pure they would never have enough of the speech of their Lord, and Ibn Mas'ud described the Quran as Allah's banquet, telling people to take from it what they can. Listening is itself commanded: \"when the Qur'an is recited, then listen to it and pay attention that you may receive mercy\".",
+          "citations": [
+            "https://islamqa.info/ar/answers/161367",
+            "https://fiqh.islamonline.net/%d9%85%d9%86-%d9%81%d8%b6%d9%84-%d8%a7%d9%84%d9%82%d8%b1%d8%a2%d9%86-%d8%a7%d9%84%d9%83%d8%b1%d9%8a%d9%85/",
+            "https://quran.com/7/204"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The Quran will come on the Day of Resurrection as an intercessor for its companions. The best of people are those who learn the Quran and teach it. The skilled reciter will be with the noble, righteous angelic scribes, and the one who stumbles and finds it hard will have two rewards.",
+          "citations": [
+            "https://sunnah.com/riyadussalihin:991",
+            "https://sunnah.com/bukhari:5027",
+            "https://sunnah.com/riyadussalihin:993",
+            "https://sunnah.com/riyadussalihin:994",
+            "https://sunnah.com/tirmidhi:2904",
+            "https://sunnah.com/ibnmajah:3779"
+          ]
+        },
+        {
+          "text": "Every letter earns a good deed multiplied tenfold, with alif, lam and mim counted as three letters. On the Day of Resurrection it will be said to the companion of the Quran: recite and ascend, and your rank will be at the last verse you recite. The Quran will ask that its companion be adorned, and he will be clothed with the crown and garment of honour.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:2910",
+            "https://sunnah.com/riyadussalihin:1001",
+            "https://sunnah.com/tirmidhi:2915"
+          ]
+        },
+        {
+          "text": "Surah al-Mulk, thirty verses, interceded for a man until he was forgiven. \"Say: He is Allah, the One\" equals a third of the Quran. Tranquility descended as a cloud over a man reciting Surah al-Kahf.",
+          "citations": [
+            "https://sunnah.com/tirmidhi:2891",
+            "https://sunnah.com/ibnmajah:3786",
+            "https://sunnah.com/bukhari:5013",
+            "https://sunnah.com/riyadussalihin:998",
+            "https://sunnah.com/muslim:795a"
+          ]
+        },
+        {
+          "text": "When people gather in a house of Allah reciting and studying it, tranquility descends, mercy covers them, the angels surround them and Allah mentions them among those with Him. Whoever sleeps through his portion and recites it between Fajr and Dhuhr is recorded as if he had recited it at night. Reciting openly is like giving charity openly, and reciting secretly like giving charity secretly.",
+          "citations": [
+            "https://sunnah.com/riyadussalihin:1023",
+            "https://sunnah.com/abudawud:1313",
+            "https://sunnah.com/tirmidhi:2919"
+          ]
+        },
+        {
+          "text": "The Quran is a proof for you or against you. The one in whose heart there is nothing of the Quran is like a ruined house; Tirmidhi said this is a hasan sahih hadith. Whoever recites the Quran and acts on it, his parents will be crowned with a light better than the sun.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/75047/virtue-reciting-noble-qur-manners",
+            "https://al-fatawa.com/en/fatwa/589/how-qur-proof-against-carrier",
+            "https://sunnah.com/riyadussalihin:1000",
+            "https://sunnah.com/tirmidhi:2913",
+            "https://sunnah.com/abudawud:1453"
+          ]
+        },
+        {
+          "text": "\"The most virtuous worship of my nation is reciting the Quran\" is recorded by Abu Nu'aym and al-Bayhaqi, and al-Iraqi declared both of its chains weak. Two Companion statements often repeated carry no prophetic grading: Abu Sa'id al-Khudri said that whoever recites ten verses at night is recorded among those who remember Allah, a hundred among the devoutly obedient, and five hundred to a thousand rises with a qintar of reward, and Tamim al-Dari said that whoever recites ten verses at night is not recorded among the heedless.",
+          "citations": [
+            "https://islamqa.org/hanafi/hadithanswers/120345/reciting-quran-is-among-the-best-act-of-worship/",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D9%81%D8%B6%D8%A7%D8%A6%D9%84_%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86#3323",
+            "https://ar.wikisource.org/wiki/%D8%B3%D9%86%D9%86_%D8%A7%D9%84%D8%AF%D8%A7%D8%B1%D9%85%D9%8A/%D9%83%D8%AA%D8%A7%D8%A8_%D9%81%D8%B6%D8%A7%D8%A6%D9%84_%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86#3307"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "On reward reaching the dead and recitation at the grave, Abu Hanifa disliked it at graves, but Muhammad ibn al-Hasan allowed it and the Hanafi masters followed him; the Fatawa Hindiyya recommends those at the grave reciting and supplicating for the dead; Ibn Abidin says sitting to recite at the grave is not disliked in the preferred view, and that with the Hanafis what reaches the dead is the reward itself.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d8%a3%d9%85%d8%a7%d9%83%d9%86-%d8%a7%d9%84%d8%aa%d9%8a-%d8%aa%d9%83%d8%b1%d9%87-%d9%81%d9%8a%d9%87%d8%a7-%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d8%a7%d9%84%d9%82%d8%b1%d8%a2%d9%86/",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/13016/حكم-قراءة-القرآن-على-القبر-ووصول-ثوابه-للميت",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14179/حكم-قراءة-القرآن-وهبة-أجرها-للميت",
+            "https://shamela.ws/book/21613/902",
+            "https://shamela.ws/book/21613/899",
+            "https://islamqa.org/hanafi/muftionline/93210/conveying-sawaab-to-the-deceased/"
+          ]
+        },
+        {
+          "text": "Dardir and al-Dasuqi list it among disliked acts at death, after death and at the grave; al-Dasuqi then reports three views, that it reaches, that it does not, and that it reaches only at the grave, and cites Ibn Rushd's fatwa that gifting the reward is valid and the dead receives it; Egypt's Dar al-Ifta says the relied-upon view of the later Malikis is permissibility.",
+          "citations": [
+            "https://shamela.ws/book/21604/421",
+            "https://shamela.ws/book/21604/422",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17050/قراءة-القرآن-للأموات-على-المقابر-وقت-الدفن-أو-غير-ذلك"
+          ]
+        },
+        {
+          "text": "Al-Shafi'i himself said it is recommended to recite something near the deceased, and if they complete the Quran there it is good; al-Nawawi explains the reward belongs to the reciter while the dead is like one present, so mercy and blessing are hoped for him, and the dua after recitation is closer to being answered; Mughni al-Muhtaj calls reciting at the graves a sunna, though the well-known Shafi'i position is that the reward of Quran recitation does not reach the dead, which later Shafi'is restricted to benefit through mercy and dua rather than the reward itself.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17050/قراءة-القرآن-للأموات-على-المقابر-وقت-الدفن-أو-غير-ذلك",
+            "https://shamela.ws/book/499#2:139",
+            "https://shamela.ws/book/11444/585",
+            "https://shamela.ws/book/11444/1771",
+            "https://shamela.ws/book/21613/899"
+          ]
+        },
+        {
+          "text": "Kashshaf al-Qina' states that recitation at the grave is not disliked but recommended, that Ahmad retracted his earlier disapproval, and that any act of worship whose reward is gifted to a living or dead Muslim is valid and benefits him; Ibn Qudama records both reports from Ahmad and the retraction.",
+          "citations": ["https://shamela.ws/book/622#4:234", "https://shamela.ws/book/6910/1639"]
+        },
+        {
+          "text": "On reciting from the mushaf during the prayer, Abu Hanifa held that it invalidates the prayer for one who has not memorized, because it is prolonged action, while the two companions held it merely disliked. The Malikis reported it as reprehensible in both obligatory and voluntary prayers, though other reports say Malik permitted it in voluntary and Tarawih prayers.",
+          "citations": [
+            "https://seekersguidance.org/answers/fiqh-answers-2/is-looking-at-the-quran-mushaf-during-tarawih-prayers-and-other-prayers-permissible/",
+            "https://shamela.ws/book/6910/786",
+            "https://www.dar-alifta.org/en/fatwa/details/6537/what-is-the-ruling-of-reading-from-the-mushaf-during-prayer",
+            "https://seekersguidance.org/answers/hanafi-fiqh/reciting-from-a-copy-of-the-quran-mushaf-intarawih-and-other-prayers/"
+          ]
+        },
+        {
+          "text": "The Shafi'is permitted it whether or not one has memorized, following Aisha's practice with her client Dhakwan reciting from the mushaf. The Hanbalis permitted it even for one who has memorized, following the report about Aisha and al-Zuhri's statement that the best of their people recited from the masahif.",
+          "citations": [
+            "https://www.dar-alifta.org/en/fatwa/details/6537/what-is-the-ruling-of-reading-from-the-mushaf-during-prayer",
+            "https://seekersguidance.org/answers/fiqh-answers-2/is-looking-at-the-quran-mushaf-during-tarawih-prayers-and-other-prayers-permissible/",
+            "https://shamela.ws/book/622#2:441"
+          ]
+        },
+        {
+          "text": "On reciting aloud or in a group, the Hanafis held that raising the voice at recitation is disliked. The Malikis held that raising the voice with recitation in the mosque is disliked, as is people gathering and reciting together, because of confusion and inattention; Malik also disliked a man sitting deliberately to recite to a group.",
+          "citations": [
+            "https://shamela.ws/book/21613/3840",
+            "https://shamela.ws/book/21604/306",
+            "https://shamela.ws/book/21604/307",
+            "https://shamela.ws/book/587/87"
+          ]
+        },
+        {
+          "text": "The Shafi'is held that beautifying the voice in Quran is sunna, and reciting with melodies is not disliked in the Mukhtasar, provided the elongation does not distort the letters. The Hanbalis disliked raising the voice in a way that distracts worshippers, and Ibn Aqil disliked reciting where buying and selling is called out; gathering the family at the completion of the Quran is recommended, as Anas did.",
+          "citations": [
+            "https://shamela.ws/book/499#11:222",
+            "https://shamela.ws/book/622#3:76",
+            "https://shamela.ws/book/6910/1116"
+          ]
+        },
+        {
+          "text": "On mushaf or memory, al-Nawawi reports that his companions held reciting from the mushaf better, and that this is well known from the salaf, but he qualifies it: if reciting from memory gives more reflection and presence of heart, memory is better, and if the two are equal the mushaf is better. Ibn Hajar states that many scholars declared reciting while looking at the mushaf better than reciting from memory, and the Hanbali Kashshaf al-Qina' lists reciting in the mushaf as recommended, noting that Ahmad chose it for the reports. Inside the prayer the reasoning reverses, since holding and turning pages interferes with the posture and concentration.",
+          "citations": [
+            "https://islamqa.info/en/answers/32594",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d9%85%d9%86-%d8%a7%d9%84%d9%85%d8%b5%d8%ad%d9%81-%d8%a3%d9%85-%d9%85%d9%86-%d8%a7%d9%84%d9%85%d8%ad%d9%81%d9%88%d8%b8/",
+            "https://shamela.ws/book/622#3:66",
+            "https://islamqa.info/en/answers/3465"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The sharpest apparent conflict is between \"man shall have nothing except what he strove for\" (53:39) and the practice of gifting recitation to the dead. Scholars answered along several lines: that the verse concerns the disbeliever, while the believer benefits from what others do for him; that the verse means nothing is counted against a man except what he strove for; or that the gift is not the dead person's act at all but a gift from the living, so the verse does not address it.",
+          "citations": [
+            "https://seekersguidance.org/answers/islamic-belief/what-is-the-ruling-on-reciting-the-quran-for-the-souls-of-the-deceased/",
+            "https://thehumblei.com/2012/11/09/reading-quran-for-the-deceased/"
+          ]
+        },
+        {
+          "text": "The hadith that a person's deeds end at death except ongoing charity, beneficial knowledge and a righteous child's prayer is read the same way, as describing the end of the deceased's own record rather than barring the living from giving, and the three named are understood as examples, since supplication and charity on the dead's behalf are agreed to benefit him.",
+          "citations": [
+            "https://hadithunlocked.com/adab:38",
+            "https://sunnah.com/nasai:3651",
+            "https://al-fatawa.com/en/fatwa/80965/explanation-hadith-when-son-adam-dies-deeds-cut-off",
+            "https://al-fatawa.com/en/fatwa/872/hadith-messenger-peace-blessings-upon-when-son-adam-dies-deeds-cut-off-except-three-ongoing-charity"
+          ]
+        },
+        {
+          "text": "A second clash is between the promise of ten rewards per letter and the warning that the Quran will be a proof against its bearer. The resolution offered is that the reward attaches to recitation, while the Quran's testimony for or against depends on following or violating it, and that reciting without ever asking what it means leaves a person at the level the Quran criticises, so reflection is what makes it a proof for him rather than against him.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/75047/virtue-reciting-noble-qur-manners",
+            "https://islamqa.org/hanafi/askimam/19018/it-was-related-in-hadith-muslim-that-quran-is-an-argument-for-or-against-you-can-you-explain-to-me-simple-english-understanding-in-details/",
+            "https://al-fatawa.com/en/fatwa/589/how-qur-proof-against-carrier",
+            "https://al-fatawa.com/en/fatwa/103496/reward-reciting-qur-dhikr-contemplation-during-recitation-mere-recitation"
+          ]
+        },
+        {
+          "text": "A third is the two rewards for the faltering reciter alongside the promise that the skilled reciter is with the angels. The two are explained as one reward for the recitation and a second for the effort and difficulty, so the reciter is not a loser in either case.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/71186/explanation-riyad-al-salihin-62a",
+            "https://islamqa.org/hanafi/hadithanswers/155441/gaining-two-rewards-while-reciting-the-quran/"
+          ]
+        },
+        {
+          "text": "A fourth is the difference over the dead, which is not only between schools but within them. Ibn Abidin notes that the later Shafi'is held the dead benefits from the recitation through the mercy that descends and the dua that follows, not by receiving the reward itself, whereas with the Hanafis the reward itself arrives; al-Dasuqi records three Maliki positions on the same question; and the Hanbali school moved from disapproval to recommendation after Ahmad's retraction. On the subsidiary question of mushaf versus memory, the apparent disagreement dissolves once the criterion of presence of heart is applied.",
+          "citations": [
+            "https://shamela.ws/book/21613/899",
+            "https://shamela.ws/book/21604/422",
+            "https://shamela.ws/book/622#4:234",
+            "https://shamela.ws/book/6910/1639",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d9%82%d8%b1%d8%a7%d8%a1%d8%a9-%d9%85%d9%86-%d8%a7%d9%84%d9%85%d8%b5%d8%ad%d9%81-%d8%a3%d9%85-%d9%85%d9%86-%d8%a7%d9%84%d9%85%d8%ad%d9%81%d9%88%d8%b8/",
+            "https://islamqa.info/en/answers/32594"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "Egypt's Dar al-Ifta issued a fatwa in January 2023 (no. 7371) that reciting from the mushaf is better rewarded, because it joins the worship of recitation to the worship of looking, while noting the choice varies with the person's focus; it also holds that reciting and listening are both worship with distinct rewards, and that reading the Quran for the dead and donating the reward is permissible, citing the practice of Muslims across generations and noting that people even gathered to complete the Quran at Ibn Taymiyyah's grave.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/18137/بيان-فضل-قراءة-القرآن-الكريم-من-المصحف",
+            "https://www.dar-alifta.org/en/fatwa/details/21787/the-reward-for-listening-to-the-noble-quran",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/13016/حكم-قراءة-القرآن-على-القبر-ووصول-ثوابه-للميت",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/17050/قراءة-القرآن-للأموات-على-المقابر-وقت-الدفن-أو-غير-ذلك",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/14179/حكم-قراءة-القرآن-وهبة-أجرها-للميت"
+          ]
+        },
+        {
+          "text": "The Permanent Committee in Saudi Arabia (fatwa 15856) held that a reciter who does not understand or contemplate still earns the reward of recitation, and that reciting with contemplation earns more, since he gains the reward of recitation and of contemplation; in fatwa 17775 it added that recitation is better than listening, and recitation with reflection better than without. Shaykh Ibn Baz took a stricter line on one point, saying there is no evidence for reciting the Quran and dedicating its reward to the dead, and that what is prescribed is supplication and charity on their behalf.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/103496/reward-reciting-qur-dhikr-contemplation-during-recitation-mere-recitation",
+            "https://al-fatawa.com/en/fatwa/103494/reciting-qur-better-listening",
+            "https://al-fatawa.com/en/fatwa/75138/ruling-reciting-qur-deceased-benefiting"
+          ]
+        },
+        {
+          "text": "IslamQA (2026) answers that a single surah read with reflection and understanding is better than the whole Quran without it, quoting Ibn al-Qayyim and the position of Ibn Mas'ud and Ibn Abbas; IslamOnline (February 2026) addresses non-Arab reciters and confirms the tenfold reward per letter applies to them too; Islamweb sets out the benefits, chief among them intercession, and the purpose of reciting for guidance, reward and increased faith. Darul Uloom Deoband holds that reward follows recitation whether or not one understands it, and that the relied-upon position across the four schools is that the reward of recitation reaches the dead, since it is a gift and a supplication by means of the Quran.",
+          "citations": [
+            "https://islamqa.info/en/answers/137288",
+            "https://fiqh.islamonline.net/en/reciting-the-quran-and-prayer-volumes/",
+            "https://www.islamweb.net/en/fatwa/85360/",
+            "https://islamqa.org/hanafi/darulifta-deoband/24790/will-someone-who-recites-the-quran-in-arabic-without-understanding-it-receive-any-reward/",
+            "https://islamqa.org/hanafi/darulifta-deoband/137039/is-there-a-proof-that-rewards-can-be-sent-to-the-dead-after-reading-the-holy-quran/"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
