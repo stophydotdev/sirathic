@@ -1,0 +1,477 @@
+{
+  "title": "What are the rights of spouses in Islam?",
+  "headline": "The four schools make maintenance and kind treatment the wife's core rights",
+  "cover": "حقوق الزوجة",
+  "slug": "what-are-the-rights-of-spouses-in-islam",
+  "topic": "Family",
+  "tint": "teal",
+  "summary": {
+    "text": "The answer frames the question with Quran 2:228, where wives have rights like those their husbands have over them, with a degree of responsibility for men, and with the Prophet's words at the Farewell Pilgrimage that each spouse has a right over the other. The four schools agree that the husband owes maintenance and kind treatment, though they differ on why maintenance is owed, on its amount, and on whether the wife must serve him, with the Hanafis holding service owed religiously but not enforceable and the Malikis placing inner service on her unless she is of a household that is served. Recent fatwas from the Saudi Permanent Committee, Dar al-Ifta, the International Islamic Fiqh Academy and AMJA apply these rights to maintenance, a wife's salary, a working wife, and disputes over harm.",
+    "citations": [
+      "https://quran.com/2/228",
+      "https://sunnah.com/tirmidhi:1163",
+      "https://shamela.ws/book/11820/379",
+      "https://shamela.ws/book/21604/1058",
+      "https://shamela.ws/book/11444/2357",
+      "https://shamela.ws/book/6910/5181",
+      "https://shamela.ws/book/6910/5934",
+      "https://al-fatawa.com/en/fatwa/108543/rights-each-spouse-over-other",
+      "https://www.dar-alifta.org/ar/Fatwa/Details/11472/بيان-بعض-حقوق-الزوج-على-زوجته",
+      "https://www.dar-alifta.org/ar/Fatwa/Details/15534/حكم-إجبار-الزوجة-على-الإنفاق-من-راتبها-في-البيت",
+      "https://fiqh.islamonline.net/%d9%82%d8%b1%d8%a7%d8%b1-%d9%85%d8%ac%d9%85%d8%b9-%d8%a7%d9%84%d9%81%d9%82%d9%87-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85%d9%8a-%d8%ad%d9%88%d9%84-%d8%a7%d9%84%d8%b9%d9%86%d9%81-%d8%a7%d9%84%d8%a3/",
+      "https://iifa-aifi.org/ar/2174.html",
+      "https://www.amjaonline.org/fatwa/ar/82476/حقوقه-الزوجية"
+    ]
+  },
+  "updated": "2026-11-18",
+  "reviewed": false,
+  "sources": [
+    {
+      "url": "https://quran.com/2/228",
+      "title": "Quran 2:228, Al-Baqara"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1163",
+      "title": "Jami' at-Tirmidhi 1163: The Book on Suckling"
+    },
+    {
+      "url": "https://shamela.ws/book/11820/379",
+      "title": "الهداية في شرح بداية المبتدي، المرغيناني، ج2 ص285"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/1058",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج2 ص508"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/2357",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج5 ص161"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/5181",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج10 ص220"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/5934",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج11 ص396"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/108543/rights-each-spouse-over-other",
+      "title": "The rights of each spouse over the other"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/11472/بيان-بعض-حقوق-الزوج-على-زوجته",
+      "title": "حقوق الزوج على زوجته"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/15534/حكم-إجبار-الزوجة-على-الإنفاق-من-راتبها-في-البيت",
+      "title": "إجبار الزوجة على الإنفاق من راتبها في البيت"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%82%d8%b1%d8%a7%d8%b1-%d9%85%d8%ac%d9%85%d8%b9-%d8%a7%d9%84%d9%81%d9%82%d9%87-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85%d9%8a-%d8%ad%d9%88%d9%84-%d8%a7%d9%84%d8%b9%d9%86%d9%81-%d8%a7%d9%84%d8%a3/",
+      "title": "قرار مجمع الفقه الإسلامي حول العنف الأسري"
+    },
+    {
+      "url": "https://iifa-aifi.org/ar/2174.html",
+      "title": "قرار بشأن اختلافات الزوج والزوجة الموظفة"
+    },
+    {
+      "url": "https://www.amjaonline.org/fatwa/ar/82476/حقوقه-الزوجية",
+      "title": "حقوقه الزوجية"
+    },
+    {
+      "url": "https://islamqa.info/en/answers/10680",
+      "title": "Rights of Husband and Rights of Wife in Islam"
+    },
+    {
+      "url": "https://islamqa.info/ar/answers/10680",
+      "title": "حقوق الزوجة على زوجها وحقوق الزوج على زوجته"
+    },
+    {
+      "url": "https://quran.com/4/34",
+      "title": "Quran 4:34, An-Nisaa"
+    },
+    {
+      "url": "https://islamonline.net/%d8%a7%d9%84%d8%b1%d8%ac%d8%a7%d9%84-%d9%82%d9%88%d8%a7%d9%85%d9%88%d9%86-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d9%86%d8%b3%d8%a7%d8%a1/",
+      "title": "تفسير الرجال قوامون على النساء لابن عاشور"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%83%d8%b4%d9%81-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a9-%d8%a3%d8%b3%d8%b1%d8%a7%d8%b1-%d8%a8%d9%8a%d8%aa-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d9%8a%d8%a9/",
+      "title": "كشف الزوجة أسرار بيت الزوجية"
+    },
+    {
+      "url": "https://quran.com/4/19",
+      "title": "Quran 4:19, An-Nisaa"
+    },
+    {
+      "url": "https://quran.com/4/21",
+      "title": "Quran 4:21, An-Nisaa"
+    },
+    {
+      "url": "https://quran.com/30/21",
+      "title": "Quran 30:21, Ar-Room"
+    },
+    {
+      "url": "https://quran.com/2/187",
+      "title": "Quran 2:187, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/9/71",
+      "title": "Quran 9:71, At-Tawba"
+    },
+    {
+      "url": "https://quran.com/2/233",
+      "title": "Quran 2:233, Al-Baqara"
+    },
+    {
+      "url": "https://quran.com/65/6",
+      "title": "Quran 65:6, At-Talaaq"
+    },
+    {
+      "url": "https://quran.com/65/7",
+      "title": "Quran 65:7, At-Talaaq"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2142",
+      "title": "Sunan Abi Dawud 2142: Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1850",
+      "title": "Sunan Ibn Majah 1850: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/riyadussalihin:277",
+      "title": "Riyad as-Salihin 277"
+    },
+    {
+      "url": "https://sunnah.com/ibnmajah:1851",
+      "title": "Sunan Ibn Majah 1851: The Chapters on Marriage"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5195",
+      "title": "Sahih al-Bukhari 5195: Wedlock, Marriage (Nikaah)"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2458",
+      "title": "Sunan Abi Dawud 2458: Fasting (Kitab Al-Siyam)"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:2133",
+      "title": "Sunan Abi Dawud 2133: Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "url": "https://sunnah.com/bukhari:5363",
+      "title": "Sahih al-Bukhari 5363: Supporting the Family"
+    },
+    {
+      "url": "https://sunnah.com/tirmidhi:1159",
+      "title": "Jami' at-Tirmidhi 1159: The Book on Suckling"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d9%85%d8%b9%d9%86%d9%89-%d8%ad%d8%af%d9%8a%d8%ab-%d9%84%d8%a3%d9%85%d8%b1%d8%aa-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a3%d9%86-%d8%aa%d8%b3%d8%ac%d8%af-%d9%84%d8%b2%d9%88%d8%ac%d9%87%d8%a7/",
+      "title": "معنى حديث \" لأمرت المرأة أن تسجد لزوجها \""
+    },
+    {
+      "url": "https://shamela.ws/book/11444/2347",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج5 ص151"
+    },
+    {
+      "url": "https://shamela.ws/book/21739#3:76",
+      "title": "بداية المجتهد ونهاية المقتصد، ابن رشد الحفيد، ج3 ص76"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/2358",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج5 ص162"
+    },
+    {
+      "url": "https://shamela.ws/book/6910/5887",
+      "title": "المغني لابن قدامة - ت التركي، ابن قدامة، ج11 ص349"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%ae%d8%af%d9%85%d8%a9-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%b6%d9%8a%d9%88%d9%81-%d8%b2%d9%88%d8%ac%d9%87%d8%a7/",
+      "title": "خدمة المرأة ضيوف زوجها"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1871",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص589"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/1060",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج2 ص510"
+    },
+    {
+      "url": "https://shamela.ws/book/499#9:42",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج9 ص42"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1428",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص146"
+    },
+    {
+      "url": "https://shamela.ws/book/21604/893",
+      "title": "الشرح الكبير للشيخ الدردير وحاشية الدسوقي، محمد بن أحمد الدسوقي، ج2 ص343"
+    },
+    {
+      "url": "https://shamela.ws/book/499#9:58",
+      "title": "روضة الطالبين وعمدة المفتين، النووي، ج9 ص58"
+    },
+    {
+      "url": "https://shamela.ws/book/622#12:77",
+      "title": "كشاف القناع عن متن الإقناع - ط وزارة العدل، البهوتي، ج12 ص77"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/2086",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج4 ص425"
+    },
+    {
+      "url": "https://shamela.ws/book/21613/1876",
+      "title": "حاشية ابن عابدين = رد المحتار - ط الحلبي، ابن عابدين، ج3 ص594"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/89617/detailed-ruling-striking-wife",
+      "title": "The detailed ruling on striking the wife"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b6%d8%b1%d8%a8-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a7%d8%aa/",
+      "title": "ضرب الزوجات"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%b6%d8%b1%d8%a8-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d9%83%d8%b1%d8%a7%d9%87%d8%a9-%d9%88%d8%a7%d9%84%d8%aa%d8%ad%d8%b1%d9%8a%d9%85/",
+      "title": "ضرب الزوجة بين الكراهة والتحريم"
+    },
+    {
+      "url": "https://shamela.ws/book/11444/2722",
+      "title": "مغني المحتاج إلى معرفة معاني ألفاظ المنهاج، الخطيب الشربيني، ج5 ص539"
+    },
+    {
+      "url": "https://islamqa.org/hanafi/fatwaa-dot-com/157930/wife-and-husband-rights/",
+      "title": "Wife and husband rights"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a7%d9%84%d9%82%d9%88%d8%a7%d9%85%d8%a9-%d9%88-%d8%a7%d9%84%d8%a5%d9%86%d9%81%d8%a7%d9%82/",
+      "title": "القوامة والإنفاق"
+    },
+    {
+      "url": "https://sunnah.com/abudawud:565",
+      "title": "Sunan Abi Dawud 565: Prayer (Kitab Al-Salat)"
+    },
+    {
+      "url": "https://fiqh.islamonline.net/%d8%a3%d8%ae%d8%b0-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d9%85%d9%86-%d9%85%d8%a7%d9%84-%d8%b2%d9%88%d8%ac%d9%87%d8%a7/",
+      "title": "أخذ المرأة من مال زوجها"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/108549/what-wife-entitled-what-required-toward-husband",
+      "title": "What the Wife Is Entitled To and What Is Required of Her Toward Her Husband"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/108493/rights-christian-wife",
+      "title": "The Rights of a Christian Wife"
+    },
+    {
+      "url": "https://al-fatawa.com/en/fatwa/108531/maintenance-right-wife-unless-waives-right",
+      "title": "Maintenance is the right of the wife unless she waives her right"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/16522/نصيحة-في-المحافظة-على-حسن-العشرة-بين-الزوجين",
+      "title": "نصيحة في المحافظة على حسن العشرة بين الزوجين"
+    },
+    {
+      "url": "https://www.dar-alifta.org/ar/Fatwa/Details/16589/واجب-كل-من-الزوجين-تجاه-الآخر-عند-التقصير-في-حقوق-الله",
+      "title": "واجب كل من الزوجين تجاه الآخر عند التقصير في حقوق الله"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "What the Quran says",
+      "paragraphs": [
+        {
+          "text": "The Quran says wives have rights over their husbands like those their husbands have over them, according to what is reasonable, and that men have a degree over them in responsibility and authority. Al-Qurtubi gathers three early readings: Ibn Abbas said she is owed good companionship and kind treatment as she owes obedience in what God made obligatory, al-Tabari said neither may harm the other, and Ibn Zayd said each should fear God about the other. Ibn Abbas said he liked to adorn himself for his wife as he liked her to adorn herself for him, and al-Dahhak said that once she obeys God and her husband, the husband must treat her well and stop harming her.",
+          "citations": [
+            "https://quran.com/2/228",
+            "https://islamqa.info/en/answers/10680",
+            "https://islamqa.info/ar/answers/10680",
+            "https://shamela.ws/book/6910/5181"
+          ]
+        },
+        {
+          "text": "The Quran says men are in charge of women by what God has given one over the other and what they spend from their wealth, and that righteous women are devoutly obedient, guarding in the husband's absence what God would have them guard. Ibn Ashur reads qanitat as obedient to God first, placed there to show that fear of God and fidelity to the husband go together, and hafizat li'l-ghayb as guarding the husband's home and honour while he is away. Rashid Rida and Muhammad Abduh take the guarded unseen to be what modesty keeps hidden, the intimate affairs of the marriage, a duty the Quran elsewhere places on both spouses.",
+          "citations": [
+            "https://quran.com/4/34",
+            "https://islamonline.net/%d8%a7%d9%84%d8%b1%d8%ac%d8%a7%d9%84-%d9%82%d9%88%d8%a7%d9%85%d9%88%d9%86-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d9%86%d8%b3%d8%a7%d8%a1/",
+            "https://fiqh.islamonline.net/%d9%83%d8%b4%d9%81-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a9-%d8%a3%d8%b3%d8%b1%d8%a7%d8%b1-%d8%a8%d9%8a%d8%aa-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d9%8a%d8%a9/"
+          ]
+        },
+        {
+          "text": "The same surah commands kind companionship even through dislike and calls the marriage a solemn covenant whose dowry cannot be clawed back. The Quran says spouses were made so you may find tranquility in them with affection and mercy between them, that they are a clothing for one another, and that believing men and women are allies of one another. On the financial side, provision and clothing for the mother are upon the father according to what is acceptable, with no one charged beyond capacity, and housing is owed within means, without harassment, and spending according to wealth.",
+          "citations": [
+            "https://quran.com/4/19",
+            "https://quran.com/4/21",
+            "https://quran.com/30/21",
+            "https://quran.com/2/187",
+            "https://quran.com/9/71",
+            "https://quran.com/2/233",
+            "https://quran.com/65/6",
+            "https://quran.com/65/7"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What the hadith show",
+      "paragraphs": [
+        {
+          "text": "The most explicit answer to what a wife's right over her husband is comes in Mu'awiyah ibn Haydah's report: that you feed her when you eat, clothe her when you clothe yourself, do not strike her face, do not revile her, and do not forsake her except within the house, graded hasan sahih by Abu Dawud, sahih by Ibn Majah, and hasan in Riyad al-Salihin. At the Farewell Pilgrimage the Prophet ﷺ said, \"you have a right over your women and your women have a right over you\", with his right that they not let anyone he dislikes onto his bed or into his houses, and their right that he treat them well in clothing and food, in a report graded hasan sahih. Ibn Majah's parallel version adds that they are captives with you and permits forsaking in bed and a non-severe strike only after clear indecency.",
+          "citations": [
+            "https://sunnah.com/abudawud:2142",
+            "https://sunnah.com/ibnmajah:1850",
+            "https://sunnah.com/riyadussalihin:277",
+            "https://sunnah.com/tirmidhi:1163",
+            "https://sunnah.com/ibnmajah:1851"
+          ]
+        },
+        {
+          "text": "On the husband's side, a wife may not fast a voluntary fast or admit anyone into his house without his permission while he is present. A man with two wives who leans to one will come on the Day of Resurrection with his side tilted, graded sahih by al-Albani and da'if by Zubair Ali Zai, and the Prophet ﷺ himself used to be engaged in serving his family. The hadith that if he were to command anyone to prostrate to another he would command the wife to prostrate to her husband is hasan sahih, and the commentators explain it as a figure for the sheer weight of his right, since prostration belongs to God alone.",
+          "citations": [
+            "https://sunnah.com/bukhari:5195",
+            "https://sunnah.com/abudawud:2458",
+            "https://sunnah.com/abudawud:2133",
+            "https://sunnah.com/bukhari:5363",
+            "https://sunnah.com/tirmidhi:1159",
+            "https://fiqh.islamonline.net/%d9%85%d8%b9%d9%86%d9%89-%d8%ad%d8%af%d9%8a%d8%ab-%d9%84%d8%a3%d9%85%d8%b1%d8%aa-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%a3%d9%86-%d8%aa%d8%b3%d8%ac%d8%af-%d9%84%d8%b2%d9%88%d8%ac%d9%87%d8%a7/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How the four schools rule",
+      "paragraphs": [
+        {
+          "text": "On why maintenance is owed, the Hanafis hold it is the price of her confinement to his house, owed to a Muslim or kitabiyya once she surrenders herself; the Malikis hold it is owed to a wife who is mumakkana, not refusing intimacy; the Shafi'is hold it is an exchange for the husband's access to her, so it is not dropped by time passing; and the Hanbalis hold it is owed in return for full enabling, so that if she withholds herself no maintenance accrues.",
+          "citations": [
+            "https://shamela.ws/book/11820/379",
+            "https://shamela.ws/book/21604/1058",
+            "https://shamela.ws/book/11444/2347",
+            "https://shamela.ws/book/6910/5934"
+          ]
+        },
+        {
+          "text": "On the amount, the Hanafis hold it is not fixed by law, that bi'l-ma'ruf is the middle course, and that al-Shafi'i's fixed measures are rejected. The Malikis hold it is not fixed but varies with husband, wife, place and time, and that Abu Hanifa agreed. The Shafi'is fix it in muds by the husband's means, and their own commentators asked where al-Shafi'i took the figures from. The Hanbalis hold it is by sufficiency, varying with the person, and Ibn Qudama preferred sufficiency over al-Qadi's two ratls of bread for rich and poor alike.",
+          "citations": [
+            "https://shamela.ws/book/11820/379",
+            "https://shamela.ws/book/21739#3:76",
+            "https://shamela.ws/book/11444/2358",
+            "https://shamela.ws/book/6910/5887"
+          ]
+        },
+        {
+          "text": "On domestic service by the wife, Atiyya Saqr summarises the Hanafi school as holding it owed religiously but not enforceable in court, and Radd al-Muhtar holds a servant's upkeep owed only against actual service. The Malikis place the inner service of kneading and sweeping on her even if wealthy, unless she is of a household that is served or the husband is poor. The Shafi'is hold the husband owes a servant to a free wife who is not expected to serve herself, and cannot discharge it by serving her himself. The Hanbalis hold she is not obliged to serve him, since what is contracted from her side is intimacy, while Ibn Taymiyyah held service obligatory by custom.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%ae%d8%af%d9%85%d8%a9-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%b6%d9%8a%d9%88%d9%81-%d8%b2%d9%88%d8%ac%d9%87%d8%a7/",
+            "https://shamela.ws/book/21613/1871",
+            "https://shamela.ws/book/21604/1060",
+            "https://shamela.ws/book/11444/2357",
+            "https://shamela.ws/book/499#9:42",
+            "https://shamela.ws/book/6910/5181",
+            "https://islamqa.info/ar/answers/10680"
+          ]
+        },
+        {
+          "text": "The Hanafis discuss a woman leaving without her husband's permission, with reports differing on whether his permission is required. The Malikis hold that going out without permission, or travel without consent, is nushuz. The Shafi'is hold the same, with exceptions including the house collapsing or belonging to another. The Hanbalis hold he may prevent her going out even to visit or bury a parent, and Ahmad said obeying the husband takes precedence over the mother.",
+          "citations": [
+            "https://shamela.ws/book/21613/1428",
+            "https://shamela.ws/book/21604/893",
+            "https://shamela.ws/book/499#9:58",
+            "https://shamela.ws/book/622#12:77"
+          ]
+        },
+        {
+          "text": "On dealing with nushuz, the Hanafis describe admonition, then abandoning the bed, then a non-injurious strike in defined cases; the Malikis admonish, then forsake the bed, then take the disciplinary step; the Shafi'is hold admonition recommended, then forsaking, then striking; and the Hanbalis follow the same sequence, with the four-month rule on intercourse. The Hanafis hold that a wife's maintenance does not become a debt in his estate merely by passing time, but only by a judge's assessment or mutual agreement, and the Hanbalis hold that the husband must have intercourse with his wife at least once every four months, reasoning that the contract was made for both parties' benefit.",
+          "citations": [
+            "https://islamqa.info/ar/answers/10680",
+            "https://shamela.ws/book/21604/893",
+            "https://shamela.ws/book/11444/2086",
+            "https://shamela.ws/book/622#12:77",
+            "https://shamela.ws/book/21613/1876"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "How scholars reconciled the evidence",
+      "paragraphs": [
+        {
+          "text": "The apparent clash between qiwamah and mutual rights is resolved by reading the degree as function rather than worth. Dar al-Ifta argues that the degree required by 2:228 and the qiwamah of 4:34 do not breach equality, since any shared enterprise needs someone answerable for it, and that the right is bounded by the rule that no harm may follow. Al-Qurtubi's collection shows the Companions and Successors filling the similar rights with companionship and non-harm rather than with privilege.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/11472/بيان-بعض-حقوق-الزوج-على-زوجته",
+            "https://islamqa.info/en/answers/10680"
+          ]
+        },
+        {
+          "text": "The strike verse against the Prophet's conduct is reconciled on timing and intent. Ibn Baz says there is no contradiction: the hadith means do not hasten to strike, and striking is the last resort, after admonition and abandonment, when other means have failed. Ibn Hajar reads Bukhari's chapter title on what is disliked of striking women as a sign that it is not permitted without restriction, disliked either mildly or strongly, and Ibn Ashur says the permission exists only for reform, so a husband who exceeds what the nushuz requires becomes an aggressor. The Academy's 2009 decision follows the same line.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/89617/detailed-ruling-striking-wife",
+            "https://fiqh.islamonline.net/%d8%b6%d8%b1%d8%a8-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a7%d8%aa/",
+            "https://fiqh.islamonline.net/%d8%b6%d8%b1%d8%a8-%d8%a7%d9%84%d8%b2%d9%88%d8%ac%d8%a9-%d8%a8%d9%8a%d9%86-%d8%a7%d9%84%d9%83%d8%b1%d8%a7%d9%87%d8%a9-%d9%88%d8%a7%d9%84%d8%aa%d8%ad%d8%b1%d9%8a%d9%85/",
+            "https://islamonline.net/%d8%a7%d9%84%d8%b1%d8%ac%d8%a7%d9%84-%d9%82%d9%88%d8%a7%d9%85%d9%88%d9%86-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d9%86%d8%b3%d8%a7%d8%a1/",
+            "https://fiqh.islamonline.net/%d9%82%d8%b1%d8%a7%d8%b1-%d9%85%d8%ac%d9%85%d8%b9-%d8%a7%d9%84%d9%81%d9%82%d9%87-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85%d9%8a-%d8%ad%d9%88%d9%84-%d8%a7%d9%84%d8%b9%d9%86%d9%81-%d8%a7%d9%84%d8%a3/"
+          ]
+        },
+        {
+          "text": "Obedience is reconciled with the ban on obeying creatures in sin by limiting it. The Shafi'i text states the principle that there is no obedience to a creature in disobedience to God in the context of an unlawful command, and a Hanafi fatwa states that a wife obeys only what does not contradict the Shariah and is not permitted to obey an unlawful order. The mosque hadith works the same way: a husband may not forbid what the Prophet ﷺ allowed, and the command not to prevent the maidservants of Allah from the mosques of Allah is applied to wives, subject to her going out unadorned and without perfume.",
+          "citations": [
+            "https://shamela.ws/book/11444/2722",
+            "https://islamqa.org/hanafi/fatwaa-dot-com/157930/wife-and-husband-rights/",
+            "https://fiqh.islamonline.net/%d8%a7%d9%84%d9%82%d9%88%d8%a7%d9%85%d8%a9-%d9%88-%d8%a7%d9%84%d8%a5%d9%86%d9%81%d8%a7%d9%82/",
+            "https://sunnah.com/abudawud:565"
+          ]
+        },
+        {
+          "text": "The wife's service is a genuine difference, not a contradiction. Atiyya Saqr summarises that the four schools do not make serving the husband himself an enforceable duty, that the Hanafis make it a religious duty only, and that the Malikis exempt a woman of standing, basing the discussion on the Prophet's division of work between Ali and Fatima. Ibn Taymiyyah's contrary view, that service is owed by custom and varies between a bedouin and a villager, is reported within the Hanbali tradition itself.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d8%ae%d8%af%d9%85%d8%a9-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d8%b6%d9%8a%d9%88%d9%81-%d8%b2%d9%88%d8%ac%d9%87%d8%a7/",
+            "https://islamqa.info/ar/answers/10680"
+          ]
+        },
+        {
+          "text": "On maintenance, Ibn Rushd locates the root of the disagreement: is it owed for the husband's access, or because she is held for his sake. Al-Shafi'i's fixed measures and the Hanafi sufficiency reading both claim 65:7, and al-Hidaya argues that a sum meant to guarantee sufficiency cannot itself be fixed by law. On a wife spending from the house, al-Nawawi reconciles the prohibition with the permission by scale: the prohibition covers sums beyond what owners customarily tolerate, while the reward-verses cover small amounts of food customarily given freely, which is why the Prophet ﷺ said without causing waste.",
+          "citations": [
+            "https://shamela.ws/book/21739#3:76",
+            "https://shamela.ws/book/11820/379",
+            "https://fiqh.islamonline.net/%d8%a3%d8%ae%d8%b0-%d8%a7%d9%84%d9%85%d8%b1%d8%a3%d8%a9-%d9%85%d9%86-%d9%85%d8%a7%d9%84-%d8%b2%d9%88%d8%ac%d9%87%d8%a7/"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "What recent fatwas say",
+      "paragraphs": [
+        {
+          "text": "The Saudi Permanent Committee, in fatwa 19307, grounds the matter in 2:228 and the Farewell Pilgrimage hadith and answers with the feed-clothe-do-not-strike report. In fatwa 6574 it tells a wife to treat her husband with kindness and do what women of her standing do, fatwa 11967 grants a Christian wife identical rights of maintenance, housing, good treatment and fairness, and fatwa 15065 holds maintenance is her right and may be waived by her but not withheld by a husband with two wives.",
+          "citations": [
+            "https://al-fatawa.com/en/fatwa/108543/rights-each-spouse-over-other",
+            "https://al-fatawa.com/en/fatwa/108549/what-wife-entitled-what-required-toward-husband",
+            "https://al-fatawa.com/en/fatwa/108493/rights-christian-wife",
+            "https://al-fatawa.com/en/fatwa/108531/maintenance-right-wife-unless-waives-right"
+          ]
+        },
+        {
+          "text": "Egypt's Dar al-Ifta, in fatwa 566 of 1981, names four leading rights of the husband: managing the household reasonably, reforming her when nushuz is feared, intimacy without harm, and guarding his wealth, secrets and the privacy of his house, under a governing rule of ihsan in treatment and avoiding harm taken from al-Shafi'i's al-Umm and al-Kasani's Bada'i. Fatwa 4885 of 2002, by Ahmad al-Tayyib, forbids a husband to coerce his wife into spending her salary, since her financial liability is separate and maintenance is his. Fatwa 5934 of 2018 warns against couples weaponising rights texts and tells the husband to remember the strain of her day with house and children, and fatwa 6009 of 2021 makes each spouse responsible for gently calling the other to prayer.",
+          "citations": [
+            "https://www.dar-alifta.org/ar/Fatwa/Details/11472/بيان-بعض-حقوق-الزوج-على-زوجته",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/15534/حكم-إجبار-الزوجة-على-الإنفاق-من-راتبها-في-البيت",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/16522/نصيحة-في-المحافظة-على-حسن-العشرة-بين-الزوجين",
+            "https://www.dar-alifta.org/ar/Fatwa/Details/16589/واجب-كل-من-الزوجين-تجاه-الآخر-عند-التقصير-في-حقوق-الله"
+          ]
+        },
+        {
+          "text": "The International Islamic Fiqh Academy's decision 180 of 2009 on domestic violence rules that recourse to striking is contrary to the better course, citing that the best of you will not strike, and requires arbitration when the dispute deepens. Its earlier decision on the working wife affirms separate financial liability, full maintenance that lapses only through nushuz, and forbids a husband to block her work out of a wish to harm her. AMJA's fatwa 82476 holds that a wife humiliated by her husband may demand arbitration and a judicial divorce for harm while keeping her financial rights.",
+          "citations": [
+            "https://fiqh.islamonline.net/%d9%82%d8%b1%d8%a7%d8%b1-%d9%85%d8%ac%d9%85%d8%b9-%d8%a7%d9%84%d9%81%d9%82%d9%87-%d8%a7%d9%84%d8%a5%d8%b3%d9%84%d8%a7%d9%85%d9%8a-%d8%ad%d9%88%d9%84-%d8%a7%d9%84%d8%b9%d9%86%d9%81-%d8%a7%d9%84%d8%a3/",
+            "https://iifa-aifi.org/ar/2174.html",
+            "https://www.amjaonline.org/fatwa/ar/82476/حقوقه-الزوجية"
+          ]
+        }
+      ]
+    }
+  ],
+  "related": []
+}
