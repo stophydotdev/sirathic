@@ -16,6 +16,7 @@ import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
 import whatAreTheBenefitsOfRecitingTheQuran from "./whatAreTheBenefitsOfRecitingTheQuran.json";
 import whatAreTheGuidelinesForAFemaleStudentSInteractions from "./whatAreTheGuidelinesForAFemaleStudentSInteractions.json";
 import whatAreTheRightsOfSpousesInIslam from "./whatAreTheRightsOfSpousesInIslam.json";
+import whatAreTheRulingsOfIddaWaitingPeriod from "./whatAreTheRulingsOfIddaWaitingPeriod.json";
 import whatIsTheRulingOnAdoptionInIslam from "./whatIsTheRulingOnAdoptionInIslam.json";
 import whenShouldOneMakeTheIntentionToFastForMissed from "./whenShouldOneMakeTheIntentionToFastForMissed.json";
 import whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives from "./whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives.json";
@@ -42,6 +43,7 @@ export const written = [
   whatAreTheBenefitsOfRecitingTheQuran,
   whatAreTheGuidelinesForAFemaleStudentSInteractions,
   whatAreTheRightsOfSpousesInIslam,
+  whatAreTheRulingsOfIddaWaitingPeriod,
   whatIsTheRulingOnAdoptionInIslam,
   whenShouldOneMakeTheIntentionToFastForMissed,
   whichTypeOfHajjIsBestForAHanafiPilgrimWhoArrives,
