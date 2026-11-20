@@ -1,12 +1,13 @@
 import { db } from "@sirathic/db";
 import { chatSessions } from "@sirathic/db/schema";
-import { validateUIMessages } from "ai";
+import { isToolUIPart, validateUIMessages } from "ai";
 import { type AnyColumn, and, desc, eq, gt, ilike, lt, ne, or, sql } from "drizzle-orm";
 import { z } from "zod";
 import { type ChatMessage, chatData, feedback, messageMetadata, report } from "../shared/messages";
 import { StatusError } from "../http";
 import { hasTasks } from "../bots/taskBook";
 import { isAnswering } from "./answers";
+import { publish } from "../realtime/hub";
 
 const TITLE_CHARS = 80;
 const PREVIEW_CHARS = 90;
@@ -186,6 +187,19 @@ const withStoredMarks = (stored: readonly ChatMessage[], messages: ChatMessage[]
 
 const SAVE_TRIES = 5;
 
+const approvalIn = (message: ChatMessage | undefined) => {
+  const states = new Set(message?.parts.filter(isToolUIPart).map((part) => part.state));
+  if (states.has("approval-requested")) return "needed";
+  if (states.has("approval-responded")) return "decided";
+  return undefined;
+};
+
+const announceSaved = (id: string, by: string, messages: ChatMessage[]) => {
+  publish(by, { kind: "message", chatId: id });
+  const approval = approvalIn(messages.at(-1));
+  if (approval) publish(by, { kind: "approval", chatId: id, state: approval });
+};
+
 export async function saveSession(
   id: string,
   by: string,
@@ -226,6 +240,7 @@ export async function saveSession(
   };
   const saved = await attempt(SAVE_TRIES);
   if (!saved) throw new StatusError(404, "no such session");
+  announceSaved(id, by, messages);
 }
 
 export async function appendMessages(
@@ -255,6 +270,7 @@ export async function appendMessages(
     })
     .returning({ id: chatSessions.id });
   if (!saved) throw new StatusError(404, "no such session");
+  announceSaved(id, by, added);
 }
 
 export async function titleSession(

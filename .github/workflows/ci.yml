@@ -9,6 +9,10 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
     env:
       NEXT_PUBLIC_SERVER: http://localhost:3000
       DATABASE_URL: postgres://ci@127.0.0.1/ci
@@ -34,6 +38,7 @@ jobs:
       STORAGE_ACCESS_KEY_ID: ci
       STORAGE_SECRET_ACCESS_KEY: ci
       BETTER_AUTH_SECRET: ci-only-placeholder-secret-32-chars
+      REALTIME_USERS: realtime-test
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2

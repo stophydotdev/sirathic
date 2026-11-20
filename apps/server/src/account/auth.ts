@@ -11,6 +11,7 @@ import { deviceSignIn } from "./deviceSignIn";
 import { clientOf } from "../chat/client";
 import { type SignInVia, track } from "../chat/events";
 import { forgetIfSignedOut, SESSION_DAYS, type User } from "./users";
+import { closeSession } from "../realtime/hub";
 
 const socialProvider = z.enum(["google", "github"]).catch("google");
 
@@ -61,7 +62,12 @@ export const auth = betterAuth({
   plugins: [deviceSignIn(), expo()],
   databaseHooks: {
     session: {
-      delete: { after: (session) => forgetIfSignedOut(session.userId) },
+      delete: {
+        after: (session) => {
+          closeSession(session.userId, session.id);
+          return forgetIfSignedOut(session.userId);
+        },
+      },
     },
   },
   hooks: {

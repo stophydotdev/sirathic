@@ -26,6 +26,7 @@ import { DEFAULT_SETTINGS } from "../shared/settings";
 import { dueItems, progressOf } from "../bots/study";
 import type { User } from "../account/users";
 import { postsToday } from "./postsToday";
+import { publish } from "../realtime/hub";
 import { nextRun, schedule } from "./schedule";
 import { routinesChanged } from "./store";
 
@@ -311,6 +312,7 @@ async function runAutomation({
       },
       setWhere: eq(chatSessions.owner, owner),
     });
+  publish(owner, { kind: "run", automationId: id, chatId: sessionId });
   await db.update(automations).set(finished).where(eq(automations.id, id));
 }
 

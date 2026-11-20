@@ -1,3 +1,5 @@
+import { publish } from "../realtime/hub";
+
 type Answer = {
   controller: AbortController;
   continuing: boolean;
@@ -35,8 +37,12 @@ export function startAnswer(owner: string, id: string, { continuing = false } = 
     done,
   };
   running.set(key, answer);
+  publish(owner, { kind: "answering", chatId: id, answering: true });
   const settled = () => {
-    if (running.get(key) === answer) running.delete(key);
+    if (running.get(key) === answer) {
+      running.delete(key);
+      publish(owner, { kind: "answering", chatId: id, answering: false });
+    }
     for (const follower of answer.followers) follower.close();
     finish();
   };
@@ -93,8 +99,12 @@ export function startRound(
     done,
   };
   running.set(key, round);
+  publish(owner, { kind: "answering", chatId: id, answering: true });
   void holdShutdown(work(round.controller.signal)).finally(() => {
-    if (running.get(key) === round) running.delete(key);
+    if (running.get(key) === round) {
+      running.delete(key);
+      publish(owner, { kind: "answering", chatId: id, answering: false });
+    }
     finish();
   });
   return true;
