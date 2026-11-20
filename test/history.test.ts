@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { RedisClient } from "bun";
 import { validateUIMessages } from "ai";
+import { answerIn, waitingIn } from "../apps/server/src/bots/askUser";
 import { ownHistory } from "../apps/server/src/chat/ownHistory";
 import { type Device, join, leave, publish } from "../apps/server/src/realtime/hub";
 import {
@@ -276,4 +277,65 @@ test("a device that was offline gets what it missed, or a reset when the events 
   expect((await stale.frames).map((frame) => frame.event.kind)).toEqual(["reset"]);
   leave(laptop.device);
   redis.close();
+});
+
+test("a task waits on its approval or its question, and the answer lands on that call", async () => {
+  const [approval, question] = await validateUIMessages<ChatMessage>({
+    messages: [
+      {
+        id: "a",
+        role: "assistant",
+        metadata: {},
+        parts: [
+          {
+            type: "tool-update_skill",
+            toolCallId: "call",
+            input: { action: "delete", name: "Haris reply" },
+            state: "approval-requested",
+            approval: { id: "approval" },
+          },
+        ],
+      },
+      {
+        id: "q",
+        role: "assistant",
+        metadata: {},
+        parts: [
+          {
+            type: "tool-ask_user",
+            toolCallId: "ask",
+            input: { question: "Which city?", choices: ["Kuala Lumpur", "Jakarta"] },
+            state: "input-available",
+          },
+        ],
+      },
+    ],
+    dataSchemas: chatData,
+    metadataSchema: messageMetadata,
+  });
+  const needsOk = waitingIn(approval);
+  const asks = waitingIn(question);
+  expect([needsOk, asks]).toEqual([
+    {
+      kind: "approval",
+      action: "update_skill",
+      details: "action: delete\nname: Haris reply",
+      approvalId: "approval",
+    },
+    {
+      kind: "question",
+      question: "Which city?",
+      choices: ["Kuala Lumpur", "Jakarta"],
+      callId: "ask",
+    },
+  ]);
+  if (!approval || !question || !needsOk || !asks) throw new Error("missing");
+
+  answerIn(approval, needsOk, { kind: "approval", approved: true });
+  answerIn(question, asks, { kind: "reply", text: "Jakarta" });
+  expect([approval.parts[0], question.parts[0]]).toMatchObject([
+    { state: "approval-responded", approval: { id: "approval", approved: true } },
+    { state: "output-available", output: { answer: "Jakarta" } },
+  ]);
+  expect([waitingIn(approval), waitingIn(question)]).toEqual([undefined, undefined]);
 });

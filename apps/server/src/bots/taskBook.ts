@@ -8,14 +8,22 @@ export const STEPS_SHOWN = 5;
 const ENDED_KEPT = 8;
 
 export type TaskEnd =
-  | { kind: "done"; text: string }
+  | { kind: "done"; text: string; result: string; sources: string[] }
   | { kind: "failed"; reason: string }
   | { kind: "cutOff" }
   | { kind: "stopped" };
 
+export type Waiting =
+  | { kind: "question"; question: string; choices: string[]; callId: string }
+  | { kind: "approval"; action: string; details: string; approvalId: string };
+
 export type Task = {
   id: string;
   title: string;
+  brief: string;
+  runner: BotScope;
+  style: Style;
+  waiting: Waiting | undefined;
   startedAt: number;
   endedAt: number | undefined;
   end: TaskEnd | undefined;
@@ -30,10 +38,14 @@ export type Task = {
 
 export type TaskView = {
   id: string;
+  parentId: string;
   botId: string;
   title: string;
-  state: "running" | TaskEnd["kind"];
+  state: "running" | "waiting" | TaskEnd["kind"];
   now: Task["now"];
+  waiting: Waiting | undefined;
+  result: string | undefined;
+  reason: string | undefined;
   startedAt: number;
   endedAt: number | undefined;
 };
@@ -92,10 +104,27 @@ export const tasksOf = (bot: BotScope) => [...bookOf(bot).tasks.values()];
 
 export const taskOf = (bot: BotScope, id: string) => bookOf(bot).tasks.get(id);
 
-export const runningTasksOf = (owner: string) =>
+const viewOf = (parent: BotScope, task: Task): TaskView => ({
+  id: task.id,
+  parentId: parent.id,
+  botId: task.runner.id,
+  title: task.title,
+  state: task.waiting ? "waiting" : "running",
+  now: task.now,
+  waiting: task.waiting,
+  result: undefined,
+  reason: undefined,
+  startedAt: task.startedAt,
+  endedAt: undefined,
+});
+
+export const openTasksOf = (owner: string) =>
   [...books.values()]
     .filter((book) => book.bot.owner === owner)
-    .flatMap((book) => runningIn(book).map((task) => ({ botId: book.bot.id, task })));
+    .flatMap((book) => runningIn(book).map((task) => viewOf(book.bot, task)));
+
+export const changed = (parent: BotScope, task: Task) =>
+  publish(parent.owner, { kind: "task", botId: task.runner.id, taskId: task.id });
 
 export const hasTasks = (owner: string, id: string) => {
   const book = books.get(keyOf({ id, owner }));
@@ -106,10 +135,19 @@ export function addTask(
   bot: BotScope,
   {
     title,
+    brief,
+    runner,
     messages,
     style,
     finished,
-  }: { title: string; messages: ChatMessage[]; style: Style; finished: Promise<void> },
+  }: {
+    title: string;
+    brief: string;
+    runner: BotScope;
+    messages: ChatMessage[];
+    style: Style;
+    finished: Promise<void>;
+  },
 ) {
   const book = bookOf(bot);
   if (closing) {
@@ -125,6 +163,10 @@ export function addTask(
   const task: Task = {
     id: crypto.randomUUID().slice(0, 6),
     title,
+    brief,
+    runner,
+    style,
+    waiting: undefined,
     startedAt: Date.now(),
     endedAt: undefined,
     end: undefined,
@@ -138,7 +180,7 @@ export function addTask(
   };
   book.tasks.set(task.id, task);
   book.style = style;
-  publish(bot.owner, { kind: "task", botId: bot.id, taskId: task.id });
+  changed(bot, task);
   return task;
 }
 
@@ -147,22 +189,27 @@ export function endTask(bot: BotScope, task: Task, end: TaskEnd) {
   const book = bookOf(bot);
   task.end = end;
   task.endedAt = Date.now();
+  task.waiting = undefined;
   if (end.kind !== "stopped") book.awaiting.push(task);
-  rememberEndedTask(bot.owner, {
+  void rememberEndedTask(bot.owner, {
     id: task.id,
-    botId: bot.id,
+    botId: task.runner.id,
+    parentId: bot.id,
     title: task.title,
     state: end.kind,
     startedAt: task.startedAt,
     endedAt: task.endedAt,
-  });
+    brief: task.brief,
+    steps: task.steps,
+    ...(end.kind === "done" && { result: end.result, sources: end.sources }),
+    ...(end.kind === "failed" && { reason: end.reason }),
+  }).then(() => changed(bot, task));
   const ended = [...book.tasks.values()].filter(
     (other) => other.end && !book.awaiting.includes(other),
   );
   for (const old of ended.slice(0, Math.max(0, ended.length - ENDED_KEPT))) {
     book.tasks.delete(old.id);
   }
-  publish(bot.owner, { kind: "task", botId: bot.id, taskId: task.id });
   return true;
 }
 

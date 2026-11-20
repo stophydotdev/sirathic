@@ -12,6 +12,12 @@ export const endedTask = z.object({
   state: z.enum(["done", "failed", "cutOff", "stopped"]),
   startedAt: z.number(),
   endedAt: z.number(),
+  parentId: z.string().optional(),
+  brief: z.string().default(""),
+  result: z.string().optional(),
+  reason: z.string().optional(),
+  steps: z.array(z.string()).default([]),
+  sources: z.array(z.string()).default([]),
 });
 
 const endedTasks = z.array(endedTask);
@@ -26,14 +32,24 @@ export async function readEndedTasks(owner: string) {
 
 let writing = Promise.resolve();
 
-export function rememberEndedTask(owner: string, task: z.infer<typeof endedTask>) {
+type EndedTask = z.infer<typeof endedTask>;
+
+const rewrite = (owner: string, change: (earlier: EndedTask[]) => EndedTask[]) => {
   writing = writing
     .then(async () => {
-      const earlier = await readEndedTasks(owner);
-      const next = [task, ...earlier.filter(({ id }) => id !== task.id)].slice(0, KEPT_TASKS);
+      const next = change(await readEndedTasks(owner)).slice(0, KEPT_TASKS);
       await keepFor(keyOf(owner), JSON.stringify(next), KEPT_SECONDS);
     })
     .catch((err: Error) => {
       console.error(`task history not saved: ${reasonOf(err)}`);
     });
-}
+  return writing;
+};
+
+export const rememberEndedTask = (owner: string, task: z.input<typeof endedTask>) => {
+  const kept = endedTask.parse(task);
+  return rewrite(owner, (earlier) => [kept, ...earlier.filter(({ id }) => id !== kept.id)]);
+};
+
+export const forgetEndedTask = (owner: string, id: string) =>
+  rewrite(owner, (earlier) => earlier.filter((task) => task.id !== id));
