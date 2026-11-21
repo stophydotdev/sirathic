@@ -12,6 +12,7 @@ import isMusicHaram from "./isMusicHaram.json";
 import isRecitingTheQuranInArabicWithoutUnderstanding from "./isRecitingTheQuranInArabicWithoutUnderstanding.json";
 import isShrimpHalal from "./isShrimpHalal.json";
 import isThereASpecificAgeForMarriageInIslam from "./isThereASpecificAgeForMarriageInIslam.json";
+import mustAWomanCoverHerHeadWhenTheAdhanIsGiven from "./mustAWomanCoverHerHeadWhenTheAdhanIsGiven.json";
 import sleepAndWudu from "./sleepAndWudu.json";
 import touchingPrivatePartsAndWudu from "./touchingPrivatePartsAndWudu.json";
 import whatAreTheBenefitsOfRecitingTheQuran from "./whatAreTheBenefitsOfRecitingTheQuran.json";
@@ -40,6 +41,7 @@ export const written = [
   isRecitingTheQuranInArabicWithoutUnderstanding,
   isShrimpHalal,
   isThereASpecificAgeForMarriageInIslam,
+  mustAWomanCoverHerHeadWhenTheAdhanIsGiven,
   sleepAndWudu,
   touchingPrivatePartsAndWudu,
   whatAreTheBenefitsOfRecitingTheQuran,
