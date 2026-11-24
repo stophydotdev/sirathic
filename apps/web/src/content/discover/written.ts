@@ -1,3 +1,4 @@
+import canANonMuslimVisitAMuslimGrave from "./canANonMuslimVisitAMuslimGrave.json";
 import canMuslimsCelebrateChristmas from "./canMuslimsCelebrateChristmas.json";
 import canMuslimsHaveDogs from "./canMuslimsHaveDogs.json";
 import canMuslimsMarryChristians from "./canMuslimsMarryChristians.json";
@@ -29,6 +30,7 @@ import whyIsIslamStrongDespiteDifferencesOfOpinionAmong from "./whyIsIslamStrong
 import wipingOverSocks from "./wipingOverSocks.json";
 
 export const written = [
+  canANonMuslimVisitAMuslimGrave,
   canMuslimsCelebrateChristmas,
   canMuslimsHaveDogs,
   canMuslimsMarryChristians,
