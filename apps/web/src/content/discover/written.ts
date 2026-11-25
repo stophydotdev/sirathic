@@ -7,6 +7,7 @@ import doWomenHaveToCoverInFrontOfHomosexualsOr from "./doWomenHaveToCoverInFron
 import doYouHaveToWearHijabInFrontOfYourMotherSUncle from "./doYouHaveToWearHijabInFrontOfYourMotherSUncle.json";
 import doesAnEngagementCountAsAMarriageNikah from "./doesAnEngagementCountAsAMarriageNikah.json";
 import doesIslamAllowPeopleToDoWhateverTheyWant from "./doesIslamAllowPeopleToDoWhateverTheyWant.json";
+import doesMakeupInvalidateWuduAndGhusl from "./doesMakeupInvalidateWuduAndGhusl.json";
 import isAHairTransplantPermissibleInIslam from "./isAHairTransplantPermissibleInIslam.json";
 import isHalalMeatPermissibleToEat from "./isHalalMeatPermissibleToEat.json";
 import isItPermissibleToTakeASecondWifeInIslam from "./isItPermissibleToTakeASecondWifeInIslam.json";
@@ -39,6 +40,7 @@ export const written = [
   doYouHaveToWearHijabInFrontOfYourMotherSUncle,
   doesAnEngagementCountAsAMarriageNikah,
   doesIslamAllowPeopleToDoWhateverTheyWant,
+  doesMakeupInvalidateWuduAndGhusl,
   isAHairTransplantPermissibleInIslam,
   isHalalMeatPermissibleToEat,
   isItPermissibleToTakeASecondWifeInIslam,
