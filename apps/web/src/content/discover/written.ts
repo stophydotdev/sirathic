@@ -13,6 +13,7 @@ import isHalalMeatPermissibleToEat from "./isHalalMeatPermissibleToEat.json";
 import isItPermissibleToTakeASecondWifeInIslam from "./isItPermissibleToTakeASecondWifeInIslam.json";
 import isMeatSlaughteredByThePeopleOfTheBookHalalToEat from "./isMeatSlaughteredByThePeopleOfTheBookHalalToEat.json";
 import isMusicHaram from "./isMusicHaram.json";
+import isPorkGelatinHalalToEat from "./isPorkGelatinHalalToEat.json";
 import isRecitingTheQuranInArabicWithoutUnderstanding from "./isRecitingTheQuranInArabicWithoutUnderstanding.json";
 import isShrimpHalal from "./isShrimpHalal.json";
 import isThereASpecificAgeForMarriageInIslam from "./isThereASpecificAgeForMarriageInIslam.json";
@@ -46,6 +47,7 @@ export const written = [
   isItPermissibleToTakeASecondWifeInIslam,
   isMeatSlaughteredByThePeopleOfTheBookHalalToEat,
   isMusicHaram,
+  isPorkGelatinHalalToEat,
   isRecitingTheQuranInArabicWithoutUnderstanding,
   isShrimpHalal,
   isThereASpecificAgeForMarriageInIslam,
